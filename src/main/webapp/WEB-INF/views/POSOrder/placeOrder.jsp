@@ -183,7 +183,7 @@ input:checked+.slider:before {
 							<c:forEach items="${custList}" var="custList" varStatus="count">
 
 								<option value="${custList.custId}"><c:out
-										value="${custList.custName}" /></option>
+										value="${custList.custName}-${custList.phoneNumber}" /></option>
 							</c:forEach>
 
 						</select>
