@@ -131,7 +131,7 @@ public class HistoryController {
 		List<FrMenu> list=new ArrayList<>();
 		try {
 		int type=Integer.parseInt(request.getParameter("type"));
-		if(type==1)
+		if(type==1 || type==3)
 		{
 			list=regOrderMenuList;
 		}else
@@ -171,7 +171,7 @@ public class HistoryController {
 	    			 	}
 	    			
 	    	       }
-	    	 if(orderType==1)
+	    	 if(orderType==1 )
  			{
 	    		 menuListNotSelected=regOrderMenuList;
  			}else

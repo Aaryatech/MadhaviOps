@@ -207,7 +207,7 @@ a:hover {
 	width: 21px;
 	left: 5px;
 	bottom: 4px;
-	background-color: white;
+	/* 	background-color: white; */
 	-webkit-transition: .3s;
 	transition: .3s;
 }
@@ -238,6 +238,7 @@ input:checked+.slider:before {
 
 
 <c:url var="qtyValidation" value="/quantityValidation"></c:url>
+<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 
 <!--topLeft-nav-->
 <div class="sidebarOuter"></div>
@@ -272,226 +273,79 @@ input:checked+.slider:before {
 			<!--leftNav-->
 			<!--rightSidebar-->
 			<div class="sidebarright">
+				<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
+					name="form1" method="post">
 
-				<div class="order-left">
-					<h2 class="pageTitle">Place Order</h2>
-
-				</div>
-
-				<div class="order-right"></div>
-
-				<div class="colOuter">
-
-
-					<div class="col-md-1">
-						<div class="col1title">Select Customer</div>
-					</div>
-					<div class="col-md-2">
-						<select name="select_cust" class="form-control chosen"
-							tabindex="4" id="select_cust" required>
-
-							<option value="-1">Select Customer</option>
-							<c:forEach items="${custList}" var="custList" varStatus="count">
-
-								<option value="${custList.custId}"><c:out
-										value="${custList.custName}-${custList.phoneNumber}" /></option>
-							</c:forEach>
-
-						</select>
+					<div class="order-left">
+						<h2 class="pageTitle">Place Order</h2>
 
 					</div>
 
-					<!-- <div class="col-md-1">
+					<div class="order-right"></div>
+
+					<div class="colOuter">
+
+
+						<div class="col-md-1">
+							<div class="col1title">Select Customer</div>
+						</div>
+						<div class="col-md-2">
+							<select name="custId" class="form-control chosen" tabindex="4"
+								id="custId" required>
+
+								<option value="-1">Select Customer</option>
+								<c:forEach items="${custList}" var="custList" varStatus="count">
+
+									<option value="${custList.custId}">
+										${custList.custName}-${custList.phoneNumber}</option>
+								</c:forEach>
+
+							</select>
+
+						</div>
+
+						<!-- <div class="col-md-1">
 						<div class="col1title">
 							<img src="images/userimg.jpg" class="btn btn-big openmodale">
 						</div>
 
 					</div>
 					 -->
-					<div class="col-md-1">
+						<div class="col-md-1">
 
 
-						<button class="btn btn-big openmodale" type="button">
-							<i class="fa fa-plus"></i>
-						</button>
-					</div>
-
-					<div class="col-md-2">
-						<div class="col1title">Delivery Date</div>
-					</div>
-					<div class="col-md-2">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							placeholder="From Date" name="devDate" autocomplete="off"
-							type="text"">
-
-					</div>
-					<div class="col-md-1">
-						<div class="col1title">Dailymart</div>
-					</div>
-					<div class="col-md-1">
-						<label class="switch"> <input type="checkbox"  name="dm" id="dm">
-							<span class="slider round"></span>
-					</div>
-					</label>
-
-				</div>
-				<!--  MODAL DIV  -->
-				<div class="modale" ria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-header">
-							<h2>Quick Customer Add</h2>
-							<a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
-						</div>
-						<div class="modal-body">
-
-							<form action="${pageContext.request.contextPath}/saveQuickCust"
-								name="form2" id="modalfrm4" method="post">
-
-								<div class="colOuter">
-
-
-									<div class="col-md-3">
-										<div class="col1title">Customer Name</div>
-									</div>
-									<div class="col-md-6">
-
-										<input type="text" name="custName" id="custName"
-											class="texboxitemcode texboxcal2" autocomplete="off" required
-											placeholder="Customer Name" class="form-control" size="20" />
-									</div>
-								</div>
-
-								<div class="colOuter">
-
-
-									<div class="col-md-3">
-										<div class="col1title">Phone No.</div>
-									</div>
-									<div class="col-md-6">
-
-										<input type="text" name="phoneNum" id="phoneNum"
-											class="texboxitemcode texboxcal2" autocomplete="off" required
-											placeholder="Phone No" class="form-control" size="20" />
-									</div>
-								</div>
-								<div class="colOuter">
-
-
-									<div class="col-md-3">
-										<div class="col1title">Age Group</div>
-									</div>
-									<div class="col-md-6">
-										<input type="text" name="ageGrp" placeholder="Age Group"
-											class="texboxitemcode texboxcal2" autocomplete="off" required
-											class="form-control" size="20" />
-									</div>
-								</div>
-								<div class="colOuter">
-
-									<div class="col-md-3">
-										<div class="col1title">DOB</div>
-									</div>
-									<div class="col-md-6">
-										<input id="fromdatepicker" type="date"
-											class="texboxitemcode texboxcal" placeholder="Date of Birth"
-											class="texboxitemcode texboxcal2" autocomplete="off" required
-											id="dob" name="dob" autocomplete="off" type="text"">
-
-									</div>
-
-								</div>
-								<div class="colOuter">
-									<div class="col-md-3">Please select your gender:</div>
-
-									<div class="col-md-2">
-										<input type="radio" name="gender" id="gender" value="Male"
-											checked="checked"> Male<br>
-									</div>
-									<div class="col-md-2">
-										<input type="radio" name="gender" id="gender" value="Female">
-										Female
-
-									</div>
-									<div class="col-md-2">
-										<input type="radio" name="gender" id="gender" value="Other">
-										Other
-									</div>
-								</div>
-
-
-
-
-
-								<div class="colOuter">
-									<div class="col-md-3">Is Buisness Head:</div>
-									<div class="col-md-2">
-										<input type="radio" name="isBuiss" id="isBuiss" value="1"
-											onclick="showDiv(this.value)"> Yes
-									</div>
-									<div class="col-md-2">
-										<input type="radio" name="isBuiss" id="isBuiss" value="2"
-											onclick="showDiv(this.value)"> No
-									</div>
-								</div>
-								<div id="ihide">
-									<div class="colOuter">
-
-
-										<div class="col-md-3">
-											<div class="col1title">GST No.</div>
-										</div>
-										<div class="col-md-6">
-
-											<input type="text" name="gstNo" placeholder="GST No."
-												class="texboxitemcode texboxcal2" autocomplete="off"
-												required class="form-control" size="20" />
-										</div>
-									</div>
-									<div class="colOuter">
-
-
-										<div class="col-md-3">
-											<div class="col1title">Company Name</div>
-										</div>
-										<div class="col-md-6">
-
-											<input type="text" name="compName" placeholder="Company Name"
-												class="texboxitemcode texboxcal2" autocomplete="off"
-												required id="compName" class="form-control" size="20" />
-										</div>
-									</div>
-
-									<div class="col-md-3">
-										<div class="col1title">Address</div>
-									</div>
-									<div class="col-md-6">
-
-										<textarea name="address" id="address" placeholder="Address"
-											class="col1full" rows="" style="width: 250px; height: 60px"
-											maxlength="300" autocomplete="off" required
-											class="form-control" /></textarea>
-									</div>
-								</div>
-								<div class="colOuter">
-									<input name="" id="sbtbtn4" class="buttonsaveorder" value="Add"
-										type="button">
-
-
-								</div>
-							</form>
+							<button class="btn btn-big openmodale" type="button"
+								style="height: 2%; width: 2%">
+								<i class="fa fa-plus"></i>
+							</button>
 						</div>
 
+						<div class="col-md-2">
+							<div class="col1title">Delivery Date</div>
+						</div>
+						<div class="col-md-2">
+							<input id="fromdatepicker" class="texboxitemcode texboxcal"
+								placeholder="From Date" name="devDate" autocomplete="off"
+								type="text"">
+
+						</div>
+						<div class="col-md-1">
+							<div class="col1title">Dailymart</div>
+						</div>
+						<div class="col-md-1">
+							<label class="switch"> <input type="checkbox" name="dm"
+								id="dm"> <span class="slider round"></span>
+						</div>
+						</label>
+
 					</div>
-				</div>
 
 
-				<!-- <div class="order-btn textcenter">
+					<!-- <div class="order-btn textcenter">
 <a href="#" class="btn btn-big openmodale">Open Modal</a>
 </div> -->
-				<!-- MODAL END -->
+					<!-- MODAL END -->
 
-				<form action="${pageContext.request.contextPath}/saveOrder"
-					name="form1" method="post">
 
 					<input type="hidden" name="menuTitle" value="${menuTitle}">
 
@@ -797,7 +651,6 @@ input:checked+.slider:before {
 					</div>
 					<!--tabNavigation-->
 
-					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 
 
 
@@ -862,9 +715,202 @@ input:checked+.slider:before {
 </div>
 <!--rightContainer-->
 
+<!--  MODAL DIV  -->
+<div class="modale" ria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-header">
+			<h2>Quick Customer Add</h2>
+			<a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+		</div>
+		<div class="modal-body">
+
+			<form action="${pageContext.request.contextPath}/saveQuickCust"
+				name="form2" id="modalfrm4" method="post">
+
+				<div class="colOuter">
+
+
+					<div class="col-md-3">
+						<div class="col1title">Customer Name</div>
+					</div>
+					<div class="col-md-6">
+
+						<input type="text" name="custName" id="custName"
+							class="texboxitemcode texboxcal2" autocomplete="off" required
+							placeholder="Customer Name" class="form-control" size="20" />
+					</div>
+				</div>
+
+				<div class="colOuter">
+
+
+					<div class="col-md-3">
+						<div class="col1title">Phone No.</div>
+					</div>
+					<div class="col-md-6">
+
+						<input type="text" name="phoneNum" id="phoneNum"
+							onchange="uniqueEmail()" class="texboxitemcode texboxcal2"
+							autocomplete="off" required placeholder="Phone No"
+							class="form-control" size="20" />
+					</div>
+					<div class="col-md-3">
+						<span class="col1title" id="error_phn"
+							style="display: none; color: red">Please enter email.</span>
+					</div>
+				</div>
+				<div class="colOuter">
+
+
+					<div class="col-md-3">
+						<div class="col1title">Age Group</div>
+					</div>
+					<div class="col-md-6">
+						<input type="text" name="ageGrp" placeholder="Age Group"
+							class="texboxitemcode texboxcal2" autocomplete="off" required
+							class="form-control" size="20" />
+					</div>
+				</div>
+				<div class="colOuter">
+
+					<div class="col-md-3">
+						<div class="col1title">DOB</div>
+					</div>
+					<div class="col-md-6">
+						<input id="fromdatepicker" type="date"
+							class="texboxitemcode texboxcal" placeholder="Date of Birth"
+							class="texboxitemcode texboxcal2" autocomplete="off" required
+							id="dob" name="dob" autocomplete="off" type="text"">
+
+					</div>
+
+				</div>
+				<div class="colOuter">
+					<div class="col-md-3">Please select your gender:</div>
+
+					<div class="col-md-2">
+						<input type="radio" name="gender" id="gender" value="Male"
+							checked="checked"> Male<br>
+					</div>
+					<div class="col-md-2">
+						<input type="radio" name="gender" id="gender" value="Female">
+						Female
+
+					</div>
+					<div class="col-md-2">
+						<input type="radio" name="gender" id="gender" value="Other">
+						Other
+					</div>
+				</div>
+
+
+
+
+
+				<div class="colOuter">
+					<div class="col-md-3">Is Buisness Head:</div>
+					<div class="col-md-2">
+						<input type="radio" name="isBuiss" id="isBuiss" value="1"
+							onclick="showDiv(this.value)"> Yes
+					</div>
+					<div class="col-md-2">
+						<input type="radio" name="isBuiss" id="isBuiss" value="2"
+							onclick="showDiv(this.value)"> No
+					</div>
+				</div>
+				<div id="ihide">
+					<div class="colOuter">
+
+
+						<div class="col-md-3">
+							<div class="col1title">GST No.</div>
+						</div>
+						<div class="col-md-6">
+
+							<input type="text" name="gstNo" placeholder="GST No."
+								class="texboxitemcode texboxcal2" autocomplete="off" required
+								class="form-control" size="20" />
+						</div>
+					</div>
+					<div class="colOuter">
+
+
+						<div class="col-md-3">
+							<div class="col1title">Company Name</div>
+						</div>
+						<div class="col-md-6">
+
+							<input type="text" name="compName" placeholder="Company Name"
+								class="texboxitemcode texboxcal2" autocomplete="off" required
+								id="compName" class="form-control" size="20" />
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="col1title">Address</div>
+					</div>
+					<div class="col-md-6">
+
+						<textarea name="address" id="address" placeholder="Address"
+							class="col1full" rows="" style="width: 250px; height: 60px"
+							maxlength="300" autocomplete="off" required class="form-control" /></textarea>
+					</div>
+				</div>
+				<div class="colOuter">
+					<input name="" id="sbtbtn4" class="buttonsaveorder" value="Add"
+						type="button">
+
+
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>
 
 
 <!--wrapper-end-->
+<script type="text/javascript">
+function uniquePhnNum(){
+	
+	alert("hii");
+	var phoneNo = $("#phoneNum").val();
+alert("hii"+phoneNo);
+	  
+
+ 	  var valid = true;
+			if (phoneNo == null || phoneNo == "") {
+				valid = false;
+			} 
+
+			if(valid == true){
+				$.post('${checkEmailText}', {
+					phoneNo : phoneNo,	
+ 					ajax : 'true',
+				},
+
+				function(data) {
+					alert("LogList:"+JSON.stringify(data));
+					
+					 if(parseInt(data)==1){		
+						 alert("This Contact Number already exist.");
+						 
+							document.getElementById("sbtbtn4").disabled = true;
+							document.getElementById("phoneNum").value = "";
+													
+						
+						return false;
+					}
+					 
+				});
+			} 
+			return true;
+	 
+	//alert("Got It"+email+" "+eid);
+		
+}
+</script>
+
 <script type="text/javascript">
 function showDiv(typdId){
 	//alert("Id="+typdId);

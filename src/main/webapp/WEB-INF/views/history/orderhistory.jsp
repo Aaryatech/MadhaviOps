@@ -233,14 +233,22 @@ jQuery(document).ready(function(){
 						<c:when test="${orderType==1}">
 						        <option value="1" selected>Regular Order</option>
 								<option value="2">Sp Order</option>
+									<option value="3" >Advance Order</option>
 						</c:when>
 						<c:when test="${orderType==2}">
 						        <option value="1">Regular Order</option>
 								<option value="2" selected>Sp Order</option>
+									<option value="3" >Advance Order</option>
+						</c:when>
+							<c:when test="${orderType==3}">
+						        <option value="1">Regular Order</option>
+								<option value="2"  >Sp Order</option>
+								<option value="3" selected>Advance Order</option>
 						</c:when>
 						<c:otherwise>
 						 <option value="1">Regular Order</option>
 								<option value="2" >Sp Order</option>
+								<option value="3" >Advance Order</option>
 						</c:otherwise>
 						</c:choose>
 								

@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -380,16 +381,17 @@ public class PosPlaceOrderController {
 
 		return model;
 	}
-	
+
 	private Date yesterday() {
-	    final Calendar cal = Calendar.getInstance();
-	    cal.add(Calendar.DATE, -1);
-	    return cal.getTime();
+		final Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1);
+		return cal.getTime();
 	}
 
 	@RequestMapping("/saveAdvanceOrder")
-	public String saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	public ModelAndView saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
+		System.err.println("inside saveAdvanceOrder");
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
@@ -402,20 +404,33 @@ public class PosPlaceOrderController {
 		String currentDate = df.format(date);
 		String currentDateFc = dfdmy.format(date);
 		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
-	 
+
 		String todaysDate = dfReg.format(date);
 		String yyestDate = dfReg.format(yesterday());
-
+		ModelAndView mav = new ModelAndView("redirect:/showsPlaceOrder");
 
 		try {
 
-			int custId = Integer.parseInt(request.getParameter("select_cust"));
-			String total = request.getParameter("");
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			/* String total = request.getParameter(""); */
 			String devDate = request.getParameter("devDate");
-			int Dm = Integer.parseInt(request.getParameter("dm"));
+			int dm = 0;
+			String af = null;
+
+			try {
+				af = request.getParameter("dm");
+				if (af.equals("on")) {
+					dm = 1;
+				}
+			} catch (Exception e) {
+
+				dm = 2;
+
+			}
+
 			String advanceAmt = request.getParameter("advanceAmt");
 			String remainAmt = request.getParameter("remainAmt");
-
+			System.err.println("inside saveAdvanceOrder 1:" + custId);
 			AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
 			advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
 			advHeader.setCustId(custId);
@@ -426,21 +441,33 @@ public class PosPlaceOrderController {
 			advHeader.setExInt2(1);
 			advHeader.setExVar1("NA");
 			advHeader.setExVar2("NA");
-			advHeader.setIsDailyMart(Dm);
+			advHeader.setIsDailyMart(dm);
 			advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
-			advHeader.setTotal(Float.parseFloat(total));
+			advHeader.setTotal(Float.parseFloat("100.0"));
 			advHeader.setFrId(frDetails.getFrId());
 			advHeader.setOrderDate(todaysDate);
 			advHeader.setProdDate(yyestDate);
 			advHeader.setDeliveryDate(todaysDate);
 			advHeader.setDiscAmt(0);
-			
-			
 
 			for (int i = 0; i < frItemList.size(); i++) {
-
-				int qty = Integer.parseInt(request.getParameter("" + frItemList.get(i).getItemId()));
 				GetFrItem item = frItemList.get(i);
+
+				// int qty = Integer.parseInt(request.getParameter("" +
+				// frItemList.get(i).getItemId()));
+				// int qty =
+				// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
+				String strQty = null;
+				int qty = 0;
+				try {
+					strQty = request.getParameter(item.getItemId());
+					qty = Integer.parseInt(strQty);
+
+				} catch (Exception e) {
+					strQty = null;
+					qty = 0;
+
+				}
 
 				if (qty > 0) {
 					AdvanceOrderDetail det = new AdvanceOrderDetail();
@@ -468,7 +495,7 @@ public class PosPlaceOrderController {
 
 						det.setGrnType(2);
 					}
-					
+
 					det.setIsBillGenerated(0);
 					det.setItemId(Integer.parseInt(item.getItemId()));
 					det.setMenuId(1);
@@ -478,30 +505,34 @@ public class PosPlaceOrderController {
 					det.setDeliveryDate(todaysDate);
 					det.setQty(qty);
 					det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
-					float subtot=(Float.parseFloat(String.valueOf(item.getItemRate1())))*qty;
-					
+					float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+
 					det.setSubTotal(subtot);
 					det.setTax1(0);
 					det.setTax1Amt(0);
 					det.setTax2(0);
 					det.setTax2Amt(0);
+					det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
+
+					advDetailList.add(det);
 
 				}
 
 			}
-
+			advHeader.setDetailList(advDetailList);
 			RestTemplate restTemplate = new RestTemplate();
 
-			Customer info = restTemplate.postForObject(Constant.URL + "/saveAdvHe", advHeader, Customer.class);
-			System.out.println("Response: " + info.toString());
+			AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail",
+					advHeader, AdvanceOrderHeader.class);
+			System.err.println("inside saveAdvanceOrder 2");
 
 		} catch (Exception e) {
 
-			System.out.println("Exception In Add Other Item Process:" + e.getMessage());
+			System.err.println("Exception In saveAdvanceOrder" + e.getMessage());
 
 		}
 
-		return "a";
+		return mav;
 
 	}
 
@@ -583,6 +614,42 @@ public class PosPlaceOrderController {
 		date = sdf.format(c.getTime());
 
 		return date;
+
+	}
+	
+	
+	@RequestMapping(value = "/checkEmailText", method = RequestMethod.POST)
+	@ResponseBody
+	public int checkEmailText(HttpServletRequest request, HttpServletResponse response) {
+
+		Info info = new Info();
+		int res = 0;
+		 
+		try {
+			 
+
+			String phoneNo = request.getParameter("phoneNo");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("phoneNo", phoneNo);
+			RestTemplate restTemplate = new RestTemplate();
+			info = restTemplate.postForObject(Constant.URL+ "/checkCustPhone", map, Info.class);
+			System.out.println("Info" + info);
+			if (info.isError() == false) {
+				res = 1;//exists
+				System.out.println("1" + res);
+			} else {
+				res = 0;
+				System.out.println("0" + res);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exception in checkEmailText : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return res;
 
 	}
 
