@@ -311,7 +311,7 @@ input:checked+.slider:before {
 
 					</div>
 					 -->
-						<div class="col-md-1">
+						<div class="col-md-1" >
 
 
 							<button class="btn btn-big openmodale" type="button"
@@ -656,44 +656,34 @@ input:checked+.slider:before {
 
 
 					<div class="row">
-						<div class="order-left">
-							<div class="ordermto20px">
-								<div class="order-price">Advance Amount:</div>
+					
+								<div class="col-md-1">Advance:</div>
 
-								<div class="order-amount">
+								<div class="col-md-2">
 
 									<input type="text" name="advanceAmt"
 										class="texboxitemcode texboxcal2" autocomplete="off" required
 										class="form-control" size="20" />
 								</div>
 
-							</div>
-						</div>
-						<div class="order-left">
-							<div class="ordermto20px">
-								<div class="order-price">Remaining Amount:</div>
-
-								<div class="order-amount">
+						      <div class="col-md-1">Remaining Amt:</div>
+                              <div class="col-md-2">
 
 									<input type="text" name="remainAmt"
 										class="texboxitemcode texboxcal2" autocomplete="off" required
 										class="form-control" size="20" />
-								</div>
+							 </div>
 
-							</div>
-						</div>
-						<div class="order-right">
-							<div class="ordermto20px">
-								<div class="order-price">Total Amount :</div>
-								<div class="order-amount">
+							
+								<div class="col-md-1">Total:</div>
+								<div class="col-md-2">
 									INR :
 									<fmt:formatNumber type="number" minFractionDigits="2"
 										maxFractionDigits="2" value="${grandTotal}" />
 								</div>
 
 
-							</div>
-						</div>
+							
 					</div>
 
 					<div class="order-btn textcenter">
@@ -786,19 +776,19 @@ input:checked+.slider:before {
 
 				</div>
 				<div class="colOuter">
-					<div class="col-md-3">Please select your gender:</div>
+					<div class="col-md-3">Gender:</div>
 
 					<div class="col-md-2">
 						<input type="radio" name="gender" id="gender" value="Male"
-							checked="checked"> Male<br>
+							checked="checked" style="width:10px;"> Male
 					</div>
 					<div class="col-md-2">
-						<input type="radio" name="gender" id="gender" value="Female">
+						<input type="radio" name="gender" id="gender" value="Female" style="width: 10px;">
 						Female
 
 					</div>
 					<div class="col-md-2">
-						<input type="radio" name="gender" id="gender" value="Other">
+						<input type="radio" name="gender" id="gender" value="Other"style="width: 10px;">
 						Other
 					</div>
 				</div>
@@ -811,11 +801,11 @@ input:checked+.slider:before {
 					<div class="col-md-3">Is Buisness Head:</div>
 					<div class="col-md-2">
 						<input type="radio" name="isBuiss" id="isBuiss" value="1"
-							onclick="showDiv(this.value)"> Yes
+							onclick="showDiv(this.value)" style="width: 10px;"> Yes
 					</div>
 					<div class="col-md-2">
 						<input type="radio" name="isBuiss" id="isBuiss" value="2"
-							onclick="showDiv(this.value)"> No
+							onclick="showDiv(this.value)" style="width: 10px;"> No
 					</div>
 				</div>
 				<div id="ihide">
