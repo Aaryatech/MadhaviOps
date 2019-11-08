@@ -21,108 +21,118 @@ jQuery(document).ready(function(){
 
 
 <style>
-
-<!--  MODAL CSS   -->
-.btn {
-  background: #428bca;
-  border: #357ebd solid 0px;
-  border-radius: 3px;
-  color: #fff;
-  display: inline-block;
-  font-size: 14px;
-  padding: 8px 15px;
-  text-decoration: none;
-  text-align: center;
-  min-width: 60px;
-  position: relative;
-  transition: color .1s ease;
+<!--
+MODAL CSS   -->.btn {
+	background: #428bca;
+	border: #357ebd solid 0px;
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: 14px;
+	padding: 8px 15px;
+	text-decoration: none;
+	text-align: center;
+	min-width: 60px;
+	position: relative;
+	transition: color .1s ease;
 }
+
 .btn:hover {
-  background: #357ebd;
+	background: #357ebd;
 }
+
 .btn.btn-big {
-  font-size: 18px;
-  padding: 15px 20px;
-  min-width: 100px;
+	font-size: 18px;
+	padding: 15px 20px;
+	min-width: 100px;
 }
+
 .btn-close {
-  color: #aaaaaa;
-  font-size: 20px;
-  text-decoration: none;
-  padding:10px;
-  position: absolute;
-  right: 7px;
-  top: 0;
+	color: #aaaaaa;
+	font-size: 20px;
+	text-decoration: none;
+	padding: 10px;
+	position: absolute;
+	right: 7px;
+	top: 0;
 }
+
 .btn-close:hover {
-  color: #919191;
+	color: #919191;
 }
+
 .modale:before {
-  content: "";
-  display: none;
-  background: rgba(0, 0, 0, 0.6);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
+	content: "";
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 10;
 }
+
 .opened:before {
-  display: block;
+	display: block;
 }
+
 .opened .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  transform: translate(0, 0);
-  top: 20%;
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	transform: translate(0, 0);
+	top: 20%;
 }
+
 .modal-dialog {
-  background: #fefefe;
-  border: #333333 solid 0px;
-  border-radius: 5px;
-  margin-left: -200px;
-  text-align:center;
-  position: fixed;
-  left: 50%;
-  top: -100%;
-  z-index: 11;
-  width: 360px;
-  box-shadow:0 5px 10px rgba(0,0,0,0.3);
-  -webkit-transform: translate(0, -500%);
-  -ms-transform: translate(0, -500%);
-  transform: translate(0, -500%);
-  -webkit-transition: -webkit-transform 0.3s ease-out;
-  -moz-transition: -moz-transform 0.3s ease-out;
-  -o-transition: -o-transform 0.3s ease-out;
-  transition: transform 0.3s ease-out;
+	background: #fefefe;
+	border: #333333 solid 0px;
+	border-radius: 5px;
+	margin-left: -200px;
+	text-align: center;
+	position: fixed;
+	left: 50%;
+	top: -100%;
+	z-index: 11;
+	width: 700px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+	-webkit-transform: translate(0, -500%);
+	-ms-transform: translate(0, -500%);
+	transform: translate(0, -500%);
+	-webkit-transition: -webkit-transform 0.3s ease-out;
+	-moz-transition: -moz-transform 0.3s ease-out;
+	-o-transition: -o-transform 0.3s ease-out;
+	transition: transform 0.3s ease-out;
 }
+
 .modal-body {
-  padding: 20px;
+	padding: 20px;
 }
-.modal-body input{
-  width:200px;
-  padding:8px;
-  border:1px solid #ddd;
-  color:#888;
-  outline:0;
-  font-size:14px;
-  font-weight:bold
+
+.modal-body input {
+	width: 200px;
+	padding: 8px;
+	border: 1px solid #ddd;
+	color: #888;
+	outline: 0;
+	font-size: 14px;
+	font-weight: bold
 }
-.modal-header,
-.modal-footer {
-  padding: 10px 20px;
+
+.modal-header, .modal-footer {
+	padding: 10px 20px;
 }
+
 .modal-header {
-  border-bottom: #eeeeee solid 1px;
+	border-bottom: #eeeeee solid 1px;
 }
+
 .modal-header h2 {
-  font-size: 20px;
+	font-size: 20px;
 }
 
-<!--  MODAL CSS END  -->
-
-.myInput1 {
+<!--
+MODAL CSS END  -->.myInput1 {
 	margin-top: 10px;
 	margin-bottom: 0px;
 	margin-left: 0px;
@@ -271,8 +281,8 @@ input:checked+.slider:before {
 				<div class="order-right"></div>
 
 				<div class="colOuter">
-					 
-				 
+
+
 					<div class="col-md-1">
 						<div class="col1title">Select Customer</div>
 					</div>
@@ -291,11 +301,19 @@ input:checked+.slider:before {
 
 					</div>
 
-					<div class="col-md-1">
+					<!-- <div class="col-md-1">
 						<div class="col1title">
-							<img src="images/userimg.jpg" onclick="openMod()">
+							<img src="images/userimg.jpg" class="btn btn-big openmodale">
 						</div>
 
+					</div>
+					 -->
+					<div class="col-md-1">
+
+
+						<button class="btn btn-big openmodale" type="button">
+							<i class="fa fa-plus"></i>
+						</button>
 					</div>
 
 					<div class="col-md-2">
@@ -303,7 +321,7 @@ input:checked+.slider:before {
 					</div>
 					<div class="col-md-2">
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							placeholder="From Date" name="from_datepicker" autocomplete="off"
+							placeholder="From Date" name="devDate" autocomplete="off"
 							type="text"">
 
 					</div>
@@ -311,13 +329,166 @@ input:checked+.slider:before {
 						<div class="col1title">Dailymart</div>
 					</div>
 					<div class="col-md-1">
-						<label class="switch"> <input type="checkbox" id="id">
+						<label class="switch"> <input type="checkbox"  name="dm" id="dm">
 							<span class="slider round"></span>
 					</div>
 					</label>
 
 				</div>
+				<!--  MODAL DIV  -->
+				<div class="modale" ria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-header">
+							<h2>Quick Customer Add</h2>
+							<a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+						</div>
+						<div class="modal-body">
 
+							<form action="${pageContext.request.contextPath}/saveQuickCust"
+								name="form2" id="modalfrm4" method="post">
+
+								<div class="colOuter">
+
+
+									<div class="col-md-3">
+										<div class="col1title">Customer Name</div>
+									</div>
+									<div class="col-md-6">
+
+										<input type="text" name="custName" id="custName"
+											class="texboxitemcode texboxcal2" autocomplete="off" required
+											placeholder="Customer Name" class="form-control" size="20" />
+									</div>
+								</div>
+
+								<div class="colOuter">
+
+
+									<div class="col-md-3">
+										<div class="col1title">Phone No.</div>
+									</div>
+									<div class="col-md-6">
+
+										<input type="text" name="phoneNum" id="phoneNum"
+											class="texboxitemcode texboxcal2" autocomplete="off" required
+											placeholder="Phone No" class="form-control" size="20" />
+									</div>
+								</div>
+								<div class="colOuter">
+
+
+									<div class="col-md-3">
+										<div class="col1title">Age Group</div>
+									</div>
+									<div class="col-md-6">
+										<input type="text" name="ageGrp" placeholder="Age Group"
+											class="texboxitemcode texboxcal2" autocomplete="off" required
+											class="form-control" size="20" />
+									</div>
+								</div>
+								<div class="colOuter">
+
+									<div class="col-md-3">
+										<div class="col1title">DOB</div>
+									</div>
+									<div class="col-md-6">
+										<input id="fromdatepicker" type="date"
+											class="texboxitemcode texboxcal" placeholder="Date of Birth"
+											class="texboxitemcode texboxcal2" autocomplete="off" required
+											id="dob" name="dob" autocomplete="off" type="text"">
+
+									</div>
+
+								</div>
+								<div class="colOuter">
+									<div class="col-md-3">Please select your gender:</div>
+
+									<div class="col-md-2">
+										<input type="radio" name="gender" id="gender" value="Male"
+											checked="checked"> Male<br>
+									</div>
+									<div class="col-md-2">
+										<input type="radio" name="gender" id="gender" value="Female">
+										Female
+
+									</div>
+									<div class="col-md-2">
+										<input type="radio" name="gender" id="gender" value="Other">
+										Other
+									</div>
+								</div>
+
+
+
+
+
+								<div class="colOuter">
+									<div class="col-md-3">Is Buisness Head:</div>
+									<div class="col-md-2">
+										<input type="radio" name="isBuiss" id="isBuiss" value="1"
+											onclick="showDiv(this.value)"> Yes
+									</div>
+									<div class="col-md-2">
+										<input type="radio" name="isBuiss" id="isBuiss" value="2"
+											onclick="showDiv(this.value)"> No
+									</div>
+								</div>
+								<div id="ihide">
+									<div class="colOuter">
+
+
+										<div class="col-md-3">
+											<div class="col1title">GST No.</div>
+										</div>
+										<div class="col-md-6">
+
+											<input type="text" name="gstNo" placeholder="GST No."
+												class="texboxitemcode texboxcal2" autocomplete="off"
+												required class="form-control" size="20" />
+										</div>
+									</div>
+									<div class="colOuter">
+
+
+										<div class="col-md-3">
+											<div class="col1title">Company Name</div>
+										</div>
+										<div class="col-md-6">
+
+											<input type="text" name="compName" placeholder="Company Name"
+												class="texboxitemcode texboxcal2" autocomplete="off"
+												required id="compName" class="form-control" size="20" />
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="col1title">Address</div>
+									</div>
+									<div class="col-md-6">
+
+										<textarea name="address" id="address" placeholder="Address"
+											class="col1full" rows="" style="width: 250px; height: 60px"
+											maxlength="300" autocomplete="off" required
+											class="form-control" /></textarea>
+									</div>
+								</div>
+								<div class="colOuter">
+									<input name="" id="sbtbtn4" class="buttonsaveorder" value="Add"
+										type="button">
+
+
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+
+
+				<!-- <div class="order-btn textcenter">
+<a href="#" class="btn btn-big openmodale">Open Modal</a>
+</div> -->
+				<!-- MODAL END -->
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
 					name="form1" method="post">
@@ -428,7 +599,7 @@ input:checked+.slider:before {
 												<c:set var="menuTime" value="${menu.timing}" />
 
 												<c:forEach var="items" items="${itemList}" varStatus="loop">
-													<c:if test="${items.subCatName eq tabs.name}">
+													<c:if test="${items.catName eq tabs.name}">
 
 														<c:choose>
 															<c:when test="${frDetails.frRateCat=='1'}">
@@ -609,6 +780,8 @@ input:checked+.slider:before {
 											</tbody>
 
 										</table>
+
+
 									</div>
 								</div>
 
@@ -625,6 +798,51 @@ input:checked+.slider:before {
 					<!--tabNavigation-->
 
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
+
+
+
+
+					<div class="row">
+						<div class="order-left">
+							<div class="ordermto20px">
+								<div class="order-price">Advance Amount:</div>
+
+								<div class="order-amount">
+
+									<input type="text" name="advanceAmt"
+										class="texboxitemcode texboxcal2" autocomplete="off" required
+										class="form-control" size="20" />
+								</div>
+
+							</div>
+						</div>
+						<div class="order-left">
+							<div class="ordermto20px">
+								<div class="order-price">Remaining Amount:</div>
+
+								<div class="order-amount">
+
+									<input type="text" name="remainAmt"
+										class="texboxitemcode texboxcal2" autocomplete="off" required
+										class="form-control" size="20" />
+								</div>
+
+							</div>
+						</div>
+						<div class="order-right">
+							<div class="ordermto20px">
+								<div class="order-price">Total Amount :</div>
+								<div class="order-amount">
+									INR :
+									<fmt:formatNumber type="number" minFractionDigits="2"
+										maxFractionDigits="2" value="${grandTotal}" />
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+
 					<div class="order-btn textcenter">
 
 						<input name="" id="subm" class="buttonsaveorder"
@@ -641,33 +859,46 @@ input:checked+.slider:before {
 		</div>
 		<!--fullGrid-->
 	</div>
-	<!--rightContainer-->
-<!--  MODAL DIV  -->
-<div class="modale" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <h2>Please Login</h2>
-      <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
-    </div>
-    <div class="modal-body">
-      <input type="text" name="u" placeholder="User" size="20" /><br>
-      <input type="text" name="p" placeholder="&bull;&bull;&bull;&bull;" size="20" /></div>
-    <div class="modal-footer">
-  
-
-      <a href="#" class="btn" id="btn_ingresar">Login</a>
-    </div>
-  </div>
 </div>
+<!--rightContainer-->
 
-<div class="order-btn textcenter">
-<a href="#" class="btn btn-big openmodale">Open Modal</a>
-</div>
-<!-- MODAL END -->
 
 
 <!--wrapper-end-->
+<script type="text/javascript">
+function showDiv(typdId){
+	//alert("Id="+typdId);
+		if (typdId == 1) {
+ 			document.getElementById("ihide").style = "visible"
+		  
+		} else if (typdId == 0) {
+			document.getElementById("ihide").style = "display:none"
+			 
+	}
+}
 
+	
+</script>
+<script type="text/javascript">
+    $('#sbtbtn4').click(function(){
+
+$.ajax({
+   type: "POST",
+            url: "${pageContext.request.contextPath}/saveQuickCust",
+            data: $("#modalfrm4").serialize(),
+            dataType: 'json',
+success: function(data){
+/* if(data==1)
+{
+$("#closeHrefModel4")[0].click()
+} */
+}
+}).done(function() {
+setTimeout(function(){
+},500);
+});
+});
+    </script>
 <script>
 
 (function() {
