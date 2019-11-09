@@ -12,15 +12,12 @@ public class GetFrItem  {
 	private double itemRate1;
 	private double itemRate2;
 	private double itemRate3;
-	
 	private double itemMrp1;
-	private double itemMrp2;
+	private double itemMrp2;//dairyMart Limit
 	private double itemMrp3;
-
 	private String itemImage;
 	private double itemTax1;
 	private double itemTax2;
-	
 	private double itemTax3;
 	private Integer itemIsUsed;
 	private Double itemSortId;
@@ -29,14 +26,18 @@ public class GetFrItem  {
 	private Integer delStatus;
 	private String subCatName;
 	private int menuId;
-	
 	private int minQty;
-
 	private float discPer;//new
+	private String catName;//new
+	private float dmDiscPer;//dMartPer
 	
-	private String catName;
-	
-	
+	public float getDmDiscPer() {
+		return dmDiscPer;
+	}
+	public void setDmDiscPer(float dmDiscPer) {
+		this.dmDiscPer = dmDiscPer;
+	}
+
 	public String getCatName() {
 		return catName;
 	}
@@ -199,8 +200,6 @@ public class GetFrItem  {
 	public void setMinQty(int minQty) {
 		this.minQty = minQty;
 	}
-
-	
 	
 	public double getItemRate1() {
 		return itemRate1;
@@ -249,7 +248,6 @@ public class GetFrItem  {
 	public void setItemMrp3(double itemMrp3) {
 		this.itemMrp3 = itemMrp3;
 	}
-
 	@Override
 	public String toString() {
 		return "GetFrItem [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
@@ -259,9 +257,8 @@ public class GetFrItem  {
 				+ itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId
 				+ ", grnTwo=" + grnTwo + ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName="
 				+ subCatName + ", menuId=" + menuId + ", minQty=" + minQty + ", discPer=" + discPer + ", catName="
-				+ catName + "]";
+				+ catName + ", dmDiscPer=" + dmDiscPer + "]";
 	}
 
- 
-     
+	
 }
