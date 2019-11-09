@@ -244,7 +244,7 @@ input:checked+.slider:before {
 </style>
 
 
-<body onload="showDiv(2)">
+<body onload="showDivOn()">
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 
@@ -342,7 +342,8 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-1">
 								<label class="switch"> <input type="checkbox" name="dm"
-									id="dm" onchange="checkAdd() "> <span class="slider round" ></span>
+									id="dm" onchange="checkAdd() "> <span
+									class="slider round"></span>
 							</div>
 							</label>
 
@@ -426,12 +427,15 @@ input:checked+.slider:before {
 													<tr class="bgpink">
 														<th class="col-md-2">Item Name</th>
 														<th class="col-md-1">Min Quantity</th>
-														<th class="col-md-1">Limit</th>
-														<th class="col-md-1">Quantity</th>
+														<th class="col-md-1-3">Limit</th>
+														<th class="col-md-1-5">Quantity</th>
+														<th class="col-md-1-6">Quantity(1)</th>
 														<th class="col-md-1">MRP</th>
 														<th class="col-md-1">Rate</th>
-														<th class="col-md-1">Disc</th>
-														<th class="col-md-1">Total</th>
+														<th class="col-md-1-4">Disc</th>
+
+														<th class="col-md-1-7">Total</th>
+														<th class="col-md-1-8">Total(1)</th>
 														<c:choose>
 															<c:when test="${menuIdFc eq menuIdShow}">
 																<th class="col-md-1">Order1</th>
@@ -451,12 +455,14 @@ input:checked+.slider:before {
 													<tr class="bgpink">
 														<th class="col-md-2">Item Name</th>
 														<th class="col-md-1">Min Quantity</th>
-														<th class="col-md-1">Limit</th>
-														<th class="col-md-1">Quantity</th>
+														<th class="col-md-1-3">Limit</th>
+														<th class="col-md-1-5">Quantity</th>
+														<th class="col-md-1-6">Quantity(1)</th>
 														<th class="col-md-1">MRP</th>
 														<th class="col-md-1">Rate</th>
-														<th class="col-md-1">Disc</th>
-														<th class="col-md-1">Total</th>
+														<th class="col-md-1-4">Disc</th>
+														<th class="col-md-1-7">Total</th>
+														<th class="col-md-1-8">Total(1)</th>
 														<c:choose>
 															<c:when test="${menuIdFc eq menuIdShow}">
 																<th class="col-md-1">Order1</th>
@@ -479,14 +485,19 @@ input:checked+.slider:before {
 																			data-lightbox="image-1" tabindex="-1"><i
 																				class="fa fa-file-image-o"
 																				style="font-size: 16px; color: green"></i></a></td>
+																		
+																		
+																		
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
-																		<td class="col-md-1"><c:out
+																		<td class="col-md-1-3"><c:out
 																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.minQty}" id="limit${items.id}" /></td>
+																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
 
-																		<td class="col-md-1"><input name='${items.id}'
+
+																	<!-- qty -->
+																		<td class="col-md-1-5"><input name='${items.id}'
 																			id='${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onkeydown="myFunction()"
@@ -494,6 +505,19 @@ input:checked+.slider:before {
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty${items.id}" /></td>
+																			
+																			<!-- qty1 -->
+																		<td class="col-md-1-6"><input name='dmQty${items.id}'
+																			id='dmQty${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onkeydown="myFunction()"
+																			onchange="onChangeDm('${items.itemRate1}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty${items.id}" /></td>
+																			
+																			
+																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp1}' /></td>
 
@@ -503,9 +527,17 @@ input:checked+.slider:before {
 																		<c:set var="rate" value="${items.itemRate1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
-																		<td class="col-md-1"><c:out
-																				value='${items.dmDiscPer}' /></td>
-																		<td class="col-md-1-2" id="total${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-4"><c:out
+																				value='${items.dmDiscPer}' /><input type="hidden"
+																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
+																			
+																		<!-- 	total -->
+																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																				<!-- 	total1 -->	
+																	<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -550,19 +582,33 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
-																		<td class="col-md-1"><c:out
+																		<td class="col-md-1-3"><c:out
 																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.minQty}" id="limit${items.id}" /></td>
+																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
 
 
 
-																		<td class="col-md-1"><input name='${items.id}'
+																		<td class="col-md-1-5"><input name='${items.id}'
 																			id='${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onchange="onChange('${items.itemRate2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty${items.id}" /></td>
+																			
+																			<td class="col-md-1-6"><input name='dmQty${items.id}'
+																			id='dmQty${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChangeDm('${items.itemRate2}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty${items.id}" /></td>
+																			
+																			
+																			
+																			
+																			
+																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp2}' /></td>
 
@@ -571,13 +617,24 @@ input:checked+.slider:before {
 																		<c:set var="rate" value="${items.itemRate2}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
-																		<td class="col-md-1"><c:out
-																				value='${items.dmDiscPer}' /></td>
+																		<td class="col-md-1-4"><c:out
+																				value='${items.dmDiscPer}' /><input type="hidden"
+																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
 
 
-																		<td class="col-md-1-2" id="total${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																				
+																		<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																				
+																				
+																				
+																				
 																		<c:choose>
 																			<c:when test="${menuIdFc eq menuIdShow}">
 																				<c:choose>
@@ -617,19 +674,30 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
-																		<td class="col-md-1"><c:out
+																		<td class="col-md-1-3"><c:out
 																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.minQty}" id="limit${items.id}" /></td>
+																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
 
 
 
-																		<td class="col-md-1"><input name='${items.id}'
+																		<td class="col-md-1-5"><input name='${items.id}'
 																			id='${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onchange="onChange('${items.itemRate3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty${items.id}" /></td>
+																			
+																			
+																			<td class="col-md-1-6"><input name='dmQty${items.id}'
+																			id='dmQty${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChangeDm('${items.itemRate3}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty${items.id}" /></td>
+																			
+																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp3}' /></td>
 
@@ -638,10 +706,15 @@ input:checked+.slider:before {
 																		<c:set var="rate" value="${items.itemRate3}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
-																		<td class="col-md-1"><c:out
-																				value='${items.dmDiscPer}' /></td>
+																		<td class="col-md-1-4"><c:out
+																				value='${items.dmDiscPer}' /><input type="hidden"
+																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
 
-																		<td class="col-md-1-2" id="total${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																				<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -926,23 +999,55 @@ input:checked+.slider:before {
 	<!--wrapper-end-->
 	<script>
 	 
-	
 	 
- 
-	
 		function checkAdd() {
 		//	alert("hii");
+			 
 			
 			if (document.getElementById("dm").checked == true) {
 
-				//alert("y");
+				///alert("y");
+				
+				  $('table .col-md-1-6').toggle();
+				  $('table .col-md-1-8').toggle();
+				  $('table .col-md-1-3').toggle();
+				  $('table .col-md-1-4').toggle();
+				 
+					$('table .col-md-1-5').hide();
+					$('table .col-md-1-7').hide();
 
 			} else {
 
 				//alert("n");
+				
+				$('table .col-md-1-6').hide();
+				$('table .col-md-1-8').hide();
+				$('table .col-md-1-3').hide();
+				  $('table .col-md-1-4').hide();
+				  
+				  $('table .col-md-1-5').toggle();
+				  $('table .col-md-1-7').toggle();
+
 			}
 
 		}
+		
+		
+		function showDivOn(){
+ 				 
+					document.getElementById("ihide").style = "display:none"
+						$('table .col-md-1-6').hide();
+					$('table .col-md-1-8').hide();
+					$('table .col-md-1-3').hide();
+					  $('table .col-md-1-4').hide();
+					  
+					  $('table .col-md-1-5').toggle();
+					  $('table .col-md-1-7').toggle();
+
+					 
+			 
+		}
+
         
  
 	
@@ -958,31 +1063,79 @@ input:checked+.slider:before {
 			
 			
 			var minqty = $('#minqty'+id).val();
-			
-			var limit = $('#limit'+id).val();
-			alert("limit"+limit);
-			
-			if(qty % minqty==0  &&  qty >= limit){
+			 
+				if(qty % minqty==0 ){
+					
+					//alert("if"+limit);
+				    var total = rate * qty;
 				
-				alert("if"+limit);
-			    var total = rate * qty;
+				   $('#total'+id).html(total.toFixed(2));
+				}else
+				{
+					
+					//alert("else"+limit);
+					 var total =0;
+					 
+					alert("Please Enter Qty Multiple of Minimum Qty ");
+					$('#'+id).val('0');
+					
+					$('#total'+id).html(total);
+					$('#'+id).focus();
+				}
 			
-			   $('#total'+id).html(total.toFixed(2));
-			}else
-			{
-				
-				alert("else"+limit);
-				 var total =0;
-				 
-				alert("Please Enter Qty Multiple of Minimum Qty & Less than or Equal to Limit");
-				$('#'+id).val('0');
-				
-				$('#total'+id).html(total);
-				$('#'+id).focus();
-			}
+			 
+			
 			var sum = 0;
 			   
-		    $('.responsive-table').find('.col-md-1-2').each(function (index, element) {
+		    $('.responsive-table').find('.col-md-1-7').each(function (index, element) {
+		        sum += parseFloat($(element).text());
+		    });
+		    alert(sum);
+		 $('#calTotal').text(sum);
+	// $('#fintotal1').val()=sum;
+ 		 document.getElementById("fintotal1").value = sum;
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function onChangeDm(rate,id) {
+			 
+			var qty = $('#dmQty'+id).val();
+			
+			
+			var minqty = $('#minqty'+id).val();
+			
+			var limit = $('#limit'+id).val();
+			
+			//alert("limit"+limit);
+			
+			 
+				if(qty % minqty==0  &&  qty >= limit){
+					
+					//alert("if"+limit);
+					var discPer = $('#dmDisc'+id).val();
+				    var total = rate * qty;
+				    var finAmt=(total*discPer)/100;
+				    var x=total-finAmt;
+				
+				   $('#dmTotal'+id).html(x.toFixed(2));
+				}else
+				{
+					
+					//alert("else"+limit);
+					 var total =0;
+					 
+					alert("Please Enter Qty Multiple of Minimum Qty & Less than or Equal to Limit");
+					$('#'+id).val('0');
+					
+					$('#dmTotal'+id).html(total);
+					$('#'+id).focus();
+				}
+			 
+			
+			var sum = 0;
+			   
+		    $('.responsive-table').find('.col-md-1-8').each(function (index, element) {
 		        sum += parseFloat($(element).text());
 		    });
 		    alert(sum);

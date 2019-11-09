@@ -481,7 +481,15 @@ public class PosPlaceOrderController {
 					det.setCatId(Integer.parseInt(item.getItemGrp1()));
 					det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
 					det.setDelStatus(0);
-					det.setDiscPer(0);
+					if(dm==1) {
+						det.setDiscPer(item.getDmDiscPer());
+					}else {
+						det.setDiscPer(item.getDiscPer());
+					}
+					
+					
+					
+					
 					det.setEvents("");
 					det.setEventsName("");
 					det.setExFloat1(0);
