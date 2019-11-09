@@ -539,11 +539,11 @@ public class PosPlaceOrderController {
 	@RequestMapping(value = "/saveQuickCust", method = RequestMethod.POST)
 	@ResponseBody
 	public Customer editFrSupplier(HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		Customer cust = new Customer();
 		try {
-			HttpSession session = request.getSession();
-
+ 
 			String custName = request.getParameter("custName");
 			String phoneNum = request.getParameter("phoneNum");
 			String ageGrp = request.getParameter("ageGrp");
@@ -552,16 +552,16 @@ public class PosPlaceOrderController {
 			String compName = null;
 
 			String address = null;
-			/*
-			 * int isBuiss = Integer.parseInt(request.getParameter("isBuiss")); int gender =
-			 * Integer.parseInt(request.getParameter("gender"));
-			 */
+			
+			  int isBuiss = Integer.parseInt(request.getParameter("isBuiss")); int gender =
+			  Integer.parseInt(request.getParameter("gender"));
+			 
 
-			/* if (isBuiss == 1) { */
+			 if (isBuiss == 1) { 
 			gstNo = request.getParameter("gstNo");
 			compName = request.getParameter("compName");
 			address = request.getParameter("address");
-			/* } */
+			 } 
 
 			cust.setAddress(address);
 			cust.setAgeGroup(ageGrp);
@@ -573,7 +573,7 @@ public class PosPlaceOrderController {
 			cust.setExInt2(1);
 			cust.setExVar1("NA");
 			cust.setExVar2("NA");
-			cust.setFrId(0);
+			cust.setFrId(frDetails.getFrId());
 			cust.setGender(1);
 			cust.setIsBuissHead(1);
 			cust.setPhoneNumber(phoneNum);

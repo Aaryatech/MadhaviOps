@@ -171,7 +171,7 @@ public class HistoryController {
 	    			 	}
 	    			
 	    	       }
-	    	 if(orderType==1 )
+	    	 if(orderType==1 || orderType==3)
  			{
 	    		 menuListNotSelected=regOrderMenuList;
  			}else
@@ -250,6 +250,49 @@ public class HistoryController {
 				// if (catId != 5)  prev
 				flag=2;
 				itemOrderHistory = orderHistory(catIdStr, parsedDate, frId);
+				model.addObject("orderHistory", itemOrderHistory);
+				
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+				
+				rowData.add("Item name");
+
+				rowData.add("MRP");
+
+				rowData.add("Qty.");
+				rowData.add("Rate");
+
+				rowData.add("Total");
+																//orderList.spGrandTotal-orderList.spTotalAddRate					
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				for (int i = 0; i < itemOrderHistory.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+					double total = itemOrderHistory.get(i).getOrderQty()*itemOrderHistory.get(i).getOrderRate();
+					rowData.add("" + itemOrderHistory.get(i).getItemName());
+					rowData.add("" + itemOrderHistory.get(i).getOrderMrp() );
+					rowData.add("" + itemOrderHistory.get(i).getOrderQty());
+				
+					rowData.add("" + itemOrderHistory.get(i).getOrderRate());
+					rowData.add("" + total);
+					
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+				}
+
+				//HttpSession session = request.getSession();
+				session.setAttribute("exportExcelList", exportToExcelList);
+				session.setAttribute("excelName", "ItemHistoryReport");
+				
+			}else if(orderType==3){
+				//new added
+				// if (catId != 5)  prev
+				flag=2;
+				itemOrderHistory = advanceOrderHistory(catIdStr, parsedDate, frId);
 				model.addObject("orderHistory", itemOrderHistory);
 				
 				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
@@ -404,6 +447,24 @@ public class HistoryController {
 	        map.add("frId",frId);
 		ItemOrderList itemOrderList=rest.postForObject(
 				Constant.URL+"/orderHistory",map,
+				ItemOrderList.class);
+		List<ItemOrderHis> itemHistory=itemOrderList.getItemOrderList();
+		System.out.println("OrderList"+itemHistory.toString());
+		return itemHistory;
+	
+	}
+	
+	public List<ItemOrderHis> advanceOrderHistory(String catId,String parsedDate,int frId)
+	{
+	
+		
+		RestTemplate rest=new RestTemplate();
+		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	        map.add("catId",catId);
+	        map.add("deliveryDt",parsedDate);
+	        map.add("frId",frId);
+		ItemOrderList itemOrderList=rest.postForObject(
+				Constant.URL+"/advanceOrderHistory",map,
 				ItemOrderList.class);
 		List<ItemOrderHis> itemHistory=itemOrderList.getItemOrderList();
 		System.out.println("OrderList"+itemHistory.toString());
