@@ -101,9 +101,10 @@
 
 
 
+
 <style>
 .chosen-container {
-	width: 80% !important;
+	width: 100% !important;
 }
 
 /* Paste this css to your style sheet file or under head tag */
@@ -145,7 +146,8 @@ if it's not present, don't show loader */
 }
 
 body {
-	font-family: sans-serif
+	font-family: sans-serif;
+	height: 100%;
 }
 
 .option {
@@ -248,6 +250,15 @@ body {
 		border-radius: 10px 10px 0 0;
 	}
 }
+
+.sidebarright {
+	width: 100%;
+	float: left;
+	padding-left: 170px;
+	position: relative;
+	padding-right: 30px;
+	z-index: 1;
+}
 </style>
 <style>
 .switch {
@@ -316,12 +327,21 @@ label:before {
 <body>
 
 	<style type="text/css">
-.topSlide2 {
-	padding: 20px 60px 20px 20px;
+.wrapperIn2 {
+	padding-top: 0px;
 }
 
-.sidebarOuter {
-	width: 80px;
+.sidebarright {
+	width: 100%;
+	float: left;
+	padding-left: 170px;
+	position: relative;
+	padding-right: 30px;
+	z-index: 1;
+}
+
+.topSlide2 {
+	padding: 20px 60px 20px 20px;
 }
 
 .sidebarhome li a {
@@ -348,7 +368,8 @@ label:before {
 }
 
 .sidebarright {
-	padding-left: 100px;
+	margin-left: 5px;
+	padding-left: 10px;
 	padding-right: 10px;
 }
 
@@ -363,7 +384,7 @@ div.scrollmenu a {
 	display: inline-block;
 	color: black;
 	text-align: center;
-	padding: 14px;
+	padding: 9px;
 	text-decoration: none;
 }
 
@@ -375,14 +396,31 @@ div.scrollmenu a:hover {
 .grid-container {
 	display: grid;
 	grid-template-columns: auto auto auto auto;
-	grid-gap: 10px;
-	padding: 10px;
+	/* grid-gap: 10px;
+	padding: 10px; */
 }
 
 .grid-container>div {
+	text-align: -webkit-center;
+	/* padding: 20px 0;
+	display: flex; */
+}
+
+div.scrollmenu1 {
+	background-color: #ffffff;
+	white-space: nowrap;
+}
+
+div.scrollmenu1 a {
+	display: inline-block;
+	color: black;
 	text-align: center;
-	padding: 20px 0;
-	display: flex;
+	/* padding: 14px; */
+	text-decoration: none;
+}
+
+div.scrollmenu1 a:hover {
+	background-color: #FFE8FB;
 }
 
 /* ----RADIO-------------- */
@@ -465,28 +503,128 @@ table.responsive-table {
 }
 
 .responsive-table td {
-    text-align: left;
-    padding: 5px;
-    font-size: inherit;
+	text-align: left;
+	padding: 5px;
+	font-size: inherit;
 }
 
+/* ----------POPOUP-------------- */
+/* Button used to open the contact form - fixed at the bottom of the page */
+
+/* The popup form - hidden by default */
+/* .form-popup {
+	display: none;
+	position: inherit;
+	bottom: 0;
+	right: 15px;
+	border: 3px solid #f1f1f1;
+	z-index: 9;
+} */
+.form-popup {
+	display: none;
+	position: fixed;
+	z-index: 9;
+	margin-top: 50px;
+	margin-left: 200px;
+	margin-right: 200px;
+	margin-bottom: 200px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/* Add styles to the form container */
+.form-container {
+	max-width: 8000px;
+	padding: 10px;
+	background-color: lightpink;
+}
+
+.form-popup-qty {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	z-index: 9;
+	top: 0;
+	right: 0;
+	margin: 200px;
+}
+
+.form-container-qty {
+	padding: 10px;
+	background-color: lightpink;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+	opacity: 1;
+}
+
+/* ---SUBMIT BUTTON------  */
+.loginfildset {
+	width: 100%;
+	float: left;
+}
+
+.table-wrap-custbill {
+	margin-bottom: 10px;
+}
+
+.cd-tabs-navigation a {
+	padding: 3px 3px;
+}
+
+.cd-tabs-content li {
+	padding: 5px 5px 5px 5px;
+}
+
+.cd-tabs-navigation a.selected {
+	background-color: #343690 !important;
+	font-weight: bold;
+	color: #ce5353;
+	border-top: 1px solid #73bd00;
+	border-right: 1px solid #73bd00;
+	border-left: 1px solid #73bd00;
+	border-bottom: 1px solid #73bd00;
+	/* background: #eeeeee; */
+	background: -moz-linear-gradient(top, #eeeeee 0%, #f6f6f6 38%, #ffffff 100%);
+	/* background: -webkit-linear-gradient(top, #eeeeee 0%,#f6f6f6 38%,#ffffff 100%); */
+	background: linear-gradient(to bottom, #73bd00 0%, #73bd00 38%, #73bd00 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee',
+		endColorstr='#73bd00', GradientType=0);
+	color: white;
+}
+
+.cd-tabs-navigation a {
+	position: relative;
+	display: block;
+	text-align: center;
+	font-size: 18px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #c51b1b;
+	border: 1px solid #ccc;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 1px;
+}
+
+.modal-backdrop {
+	z-index: 0 !important;
+}
+
+.cd-tabs-content {
+	border: 0 !important
+}
 </style>
 
 
 
 
-	<div class="sidebarOuter"></div>
 
 
 	<div class="wrapper">
-
-		<!--topHeader-->
-		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
-
-
-
-		<!--topHeader-->
-
 
 
 
@@ -499,168 +637,482 @@ table.responsive-table {
 				<!--rightSidebar-->
 
 				<!------------ Place Actual content of page inside this div ----------->
-				<div class="sidebarright">
-
-
-					<div class="sidebarhome">
-						<div class="content mCustomScrollbar">
-							<ul>
-								<li style="background-color: #7EE146"><a href="#"
-									onClick="openNav()"> C1 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C2 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C3 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C4 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C5 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C6 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C7 </a></li>
-
-								<li><a href="#" onClick="openNav()"> C8 </a></li>
-							</ul>
-						</div>
-					</div>
-
+				<div class="sidebarright" id="sidebarright">
 
 					<div class="row">
 
-						<div class="col-sm-7">
-
-							<h2 class="pageTitle">Billing</h2>
-
-							<br>
-							<div class="row">
-								<div class="col-md-2">
-									<div class="col1title">Customer</div>
-								</div>
-								<div class="col-md-10" style="text-align: left;">
-									<!-- class="chosen-select"  -->
-									<select name="cust" id="cust"
-										data-placeholder="Select Customer" class="chosen-select"
-										style="text-align: left;" tabindex="6" required>
-
-										<option value="-1" style="text-align: left;">Anmol</option>
-										<option value="-1" style="text-align: left;">Sachin</option>
 
 
-									</select>
-									<button class="btn">
-										<i class="fa fa-plus"></i>
-									</button>
-									<button class="btn">
-										<i class="fa fa-edit"></i>
-									</button>
-								</div>
+						<div class="col-sm-6"
+							style="padding-left: 1px; padding-right: 2px;">
+
+							<div class="cd-tabs" style="display: flex; margin-top: 2px;">
+								<nav style="display: table;">
+									<ul class="cd-tabs-navigation" style="display: grid;">
+
+										<li><a onclick="refreshPage()" href="#"><i
+												class="fa fa-home"></i></a></li>
+
+										<li id="li1"><a data-content="c1" class="selected"
+											href="#0" onclick="onloadTab(1)">C1</a></li>
+										<li id="li2"><a data-content="c1" href="#0"
+											onclick="onloadTab(2)">C2</a></li>
+										<li id="li3"><a data-content="c1" href="#0"
+											onclick="onloadTab(3)">C3</a></li>
+										<li id="li4"><a data-content="c1" href="#0"
+											onclick="onloadTab(4)">C4</a></li>
+										<li id="li5"><a data-content="c1" href="#0"
+											onclick="onloadTab(5)">C5</a></li>
+										<li id="li6"><a data-content="c1" href="#0"
+											onclick="onloadTab(6)">C6</a></li>
+										<li id="li7"><a data-content="c1" href="#0"
+											onclick="onloadTab(7)">C7</a></li>
+										<li id="li8"><a data-content="c1" href="#0"
+											onclick="onloadTab(8)">C8</a></li>
+									</ul>
+
+								</nav>
+
+								<ul class="cd-tabs-content" style="width: 95%;">
+
+									<li data-content="c1" class="selected" onshow="onloadTab(1)">
+
+										<!-- TAB1  -->
+
+										<div class="row" style="margin-top: 5px;">
+
+											<div class="col-md-4" style="text-align: center;">
+												<button style="background: #FFFFC4; border: 0px;"
+													data-toggle="modal" data-target="#myModalPendingAmt">
+													Pending Amt : &nbsp; <span style="font-weight: bold;">550.00000</span>
+												</button>
+											</div>
+
+											<div class="col-md-4" style="text-align: center;">
+												<button style="background: #DAF5FF; border: 0px;"
+													data-toggle="modal" data-target="#myModalAdvAmt">
+													Advance Amt : &nbsp; <span style="font-weight: bold;">550.00000</span>
+												</button>
+											</div>
+
+											<div class="col-md-4" style="text-align: center;">
+												<button style="background: #DBFFD2; border: 0px;"
+													data-toggle="modal" data-target="#myModalTotalAmt">
+													Total Amt : &nbsp; <span style="font-weight: bold;">550.00000</span>
+												</button>
+											</div>
+
+										</div>
 
 
+
+
+
+
+
+
+
+										<div class="row" style="margin-top: 10px;">
+											<div class="col-md-2">
+												<div class="col1title">Customer</div>
+											</div>
+											<div class="col-md-8"
+												style="text-align: left; padding-right: 1px;">
+												<!-- class="chosen-select"  -->
+												<select name="cust" id="cust"
+													data-placeholder="Select Customer" class="chosen-select"
+													style="text-align: left;" required>
+
+													<option value="-1" style="text-align: left;">Anmol</option>
+													<option value="-1" style="text-align: left;">Sachin</option>
+
+												</select>
+
+											</div>
+
+											<div class="col-md-2"
+												style="text-align: left; padding-left: 1px;">
+												<button class="btn" data-toggle="modal"
+													data-target="#myModalAdd">
+													<i class="fa fa-plus"></i>
+												</button>
+												<button class="btn" data-toggle="modal"
+													data-target="#myModalEdit">
+													<i class="fa fa-edit"></i>
+												</button>
+											</div>
+
+
+										</div>
+
+										<div class="row">
+											<div class="col-md-2">
+												<div class="col1title">Item</div>
+											</div>
+											<div class="col-md-8"
+												style="text-align: left; padding-right: 1px;">
+
+												<input list="items" id="itemName" name="itemName"
+													class="form-control chosen" autocomplete="off"
+													placeholder="Item Name" onchange="onSelectItem()"
+													style="border-radius: 5px; padding: 2px 1px 0px 8px; height: 26px; text-align: left; background: linear-gradient(#fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%);color: #444;"
+													type="text">
+												<datalist id="items">
+													<option value='101' data-value='Cakes' data-id='101'>Cakes</option>
+													<option value='102' data-value='Chocolates' data-id='101'>Chocolates</option>
+													<option value='103' data-value='Ice Cream' data-id='101'>Ice
+														Cream</option>
+													<option value='104' data-value='Samosa' data-id='101'>Samosa</option>
+													<option value='105' data-value='Sandwich' data-id='101'>Sandwich</option>
+												</datalist>
+
+
+
+												<!-- <select name="cust" id="cust"
+													data-placeholder="Select Customer" class="chosen-select"
+													style="text-align: left;" tabindex="6" required>
+
+													<option value="-1" style="text-align: left;">Cake</option>
+													<option value="-1" style="text-align: left;">Chocolates</option>
+
+
+												</select> -->
+
+
+											</div>
+
+											<div class="col-md-2"
+												style="text-align: left; padding-left: 1px;">
+												<button class="btn">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+
+
+
+										</div>
+
+
+										<div id="table-scroll">
+											<!-- class="table-scroll" -->
+											<div id="faux-table" aria="hidden"></div>
+											<!-- class="faux-table"  -->
+											<div class="table-wrap table-wrap-custbill">
+												<table id="table_grid1" class="responsive-table">
+													<!--  class="main-table small-td"> -->
+													<thead>
+														<tr class="bgpink">
+															<th class="col-md-1">Sno.</th>
+															<th>Item</th>
+															<th>Price</th>
+															<th>Qty</th>
+															<th>UOM</th>
+															<th>Total</th>
+															<th class="col-md-1" style="width: 12px;"><i
+																class="fa fa-trash"></i></th>
+														</tr>
+													</thead>
+													<tbody>
+
+
+														<tr>
+															<td>1</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Cakes</td>
+															<td>350</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>350</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+														<tr>
+															<td>2</td>
+															<td data-toggle="modal" data-target="#myModalItemDesc">Chocolates</td>
+															<td>200</td>
+															<td class="col-md-1"><input type="text" value="1"
+																style="width: 50px;"></td>
+															<td>kg</td>
+															<td>200</td>
+															<td><a href="#" title="Delete"><i
+																	class="fa fa-trash"></i></a></td>
+
+														</tr>
+
+
+
+													</tbody>
+
+												</table>
+											</div>
+										</div>
+
+										<div class="row" style="margin-right: 2px;">
+
+											<div class="col-md-2" style="text-align: left;">
+												Items : &nbsp; <label>2</label>
+											</div>
+											<div class="col-md-3" style="text-align: left;">
+												Total : &nbsp; <label>550.00</label>
+											</div>
+
+											<div class="col-md-4"
+												style="text-align: left; display: flex;">
+												Discount&nbsp;<input type="text" value="0"
+													style="width: 40px;">&nbsp;<i
+													class="fa fa-info-circle"
+													style="font-size: x-large; color: #ec268f;"></i>
+											</div>
+
+											<div class="col-md-3"
+												style="text-align: center; display: flex; background-color: #ec268f; color: white; font-size: medium;">
+												PAY :&nbsp; 5550.00</div>
+
+										</div>
+
+										<div class="row"
+											style="margin: 2px; padding-top: 5px; border: solid; border-width: 0.2px; padding: 3px;">
+
+											<div class="row" style="text-align: left; margin-left: 2px;">
+
+												<div class="col-md-4">Mode of Pay : &nbsp;</div>
+												<div class="col-md-2">
+													<label class="container" style="font-weight: normal;">Single
+														<input type="radio" checked="checked" name="radio1"
+														id="single1" value="1" onclick="paymentMode(this.value)">
+														<span class="checkmark"></span>
+													</label>
+												</div>
+												<div class="col-md-2">
+													<label class="container" style="font-weight: normal;">Split
+														<input type="radio" name="radio1" id="split1" value="2"
+														onclick="paymentMode(this.value)"> <span
+														class="checkmark"></span>
+													</label>
+												</div>
+												<div class="col-md-2">
+													<input type="text" id="tabId" value="1">
+												</div>
+
+											</div>
+
+											<div class="row" style="margin: 2px;" id="singleDiv">
+
+
+												<div class="col-md-4"
+													style="text-align: left; display: flex;">
+													Type&nbsp;&nbsp; <select name="payType" id="payType"
+														onchange="dropdownChange()" data-placeholder="Select Type"
+														class="chosen-select" style="text-align: left;"
+														tabindex="6" required>
+
+														<option value="1" style="text-align: left;">Cash</option>
+														<option value="2" style="text-align: left;">Card</option>
+														<option value="3" style="text-align: left;">ePay</option>
+
+													</select>
+												</div>
+
+												<div class="col-md-4"
+													style="text-align: left; display: none;" id="epayDiv">
+													<div style="display: flex;">
+														ePay&nbsp;&nbsp; <select name="cust" id="cust"
+															data-placeholder="Select ePay Mode" class="chosen-select"
+															style="text-align: left;" tabindex="6" required>
+
+															<option value="1" style="text-align: left;">Google
+																Pay</option>
+															<option value="2" style="text-align: left;">Paytm</option>
+															<option value="3" style="text-align: left;">Phonepay</option>
+
+														</select>
+													</div>
+												</div>
+
+
+												<div class="col-md-2"
+													style="text-align: right; display: flex;">
+													Amount&nbsp;&nbsp;<input type="text" style="width: 50px;">
+												</div>
+
+											</div>
+
+											<div class="row" style="margin: 2px; display: none;"
+												id="splitDiv">
+
+												<div class="col-md-3"
+													style="text-align: left; display: flex;">
+													<input type="checkbox">Cash&nbsp;<input type="text"
+														style="width: 50px;">
+												</div>
+
+												<div class="col-md-4"
+													style="text-align: left; display: flex;">
+													<input type="checkbox">Card&nbsp;<input type="text"
+														style="width: 50px;">
+												</div>
+
+												<div class="col-md-5"
+													style="text-align: right; display: flex;">
+													<input type="checkbox">ePay&nbsp; <select
+														name="cust" id="cust" data-placeholder="Select ePay Mode"
+														class="chosen-select"
+														style="text-align: left; width: 50px;" required>
+
+														<option value="1" style="text-align: left;">Google
+															Pay</option>
+														<option value="2" style="text-align: left;">Paytm</option>
+														<option value="3" style="text-align: left;">Phonepay</option>
+
+													</select><input type="text" style="width: 50px;">
+												</div>
+
+											</div>
+
+
+										</div>
+
+										<div class="row"
+											style="border: inherit; margin: 2px; padding-top: 5px;">
+
+											<div class="row" style="text-align: left; margin-left: 2px;">
+
+												<div class="col-md-4">Credit Bill : &nbsp;</div>
+												<div class="col-md-2">
+													<label class="container" style="font-weight: normal;">Yes
+														<input type="radio" name="radio"> <span
+														class="checkmark"></span>
+													</label>
+												</div>
+												<div class="col-md-2">
+													<label class="container" style="font-weight: normal;">No
+														<input type="radio" checked="checked" name="radio">
+														<span class="checkmark"></span>
+													</label>
+												</div>
+												<div class="col-md-2"></div>
+
+											</div>
+
+										</div>
+
+										<div class="loginfildset">
+											<input name="" class="buttonlogin" value="SUBMIT"
+												type="submit">
+										</div> <!-- TAB1  -->
+
+
+
+									</li>
+
+
+
+
+								</ul>
 
 							</div>
-
-							<div class="row">
-								<div class="col-md-2">
-									<div class="col1title">Item</div>
-								</div>
-								<div class="col-md-10" style="text-align: left;">
-									<!-- class="chosen-select"  -->
-									<select name="cust" id="cust"
-										data-placeholder="Select Customer" class="chosen-select"
-										style="text-align: left;" tabindex="6" required>
-
-										<option value="-1" style="text-align: left;">Cake</option>
-										<option value="-1" style="text-align: left;">Chocolates</option>
-
-
-									</select>
-									<button class="btn">
-										<i class="fa fa-plus"></i>
-									</button>
-
-								</div>
-
-
-
-							</div>
-
-
-
-							<div id="table-scroll">
-								<!-- class="table-scroll" -->
-								<div id="faux-table" aria="hidden"></div>
-								<!-- class="faux-table"  -->
-								<div class="table-wrap table-wrap-custbill">
-									<table id="table_grid1" class="responsive-table">
-										<!--  class="main-table small-td"> -->
-										<thead>
-											<tr class="bgpink">
-												<th class="col-sm-1">Sr no.</th>
-												<th class="col-md-2">Item</th>
-												<th class="col-md-1">Price</th>
-												<th class="col-md-1">Qty</th>
-												<th class="col-md-1">UOM</th>
-												<th class="col-md-1">Total</th>
-												<th class="col-md-1">Delete</th>
-											</tr>
-										</thead>
-										<tbody>
-
-
-											<tr>
-												<td>1</td>
-												<td>Cakes</td>
-												<td>350</td>
-												<td class="col-md-1"><input type="text" value="1"></td>
-												<td>kg</td>
-												<td>350</td>
-												<td><a href="#" title="Delete"><i class="fa fa-trash"></i></a></td>
-
-											</tr>
-											
-											<tr>
-												<td>2</td>
-												<td>Chocolates</td>
-												<td>200</td>
-												<td class="col-md-1"><input type="text" value="1"></td>
-												<td>kg</td>
-												<td>200</td>
-												<td><a href="#" title="Delete"><i class="fa fa-trash"></i></a></td>
-
-											</tr>
-
-										</tbody>
-
-									</table>
-								</div>
-							</div>
-							
-							<div>
-							
-							<div class="row">
-							
-							<div class="col-md-3">Items<input type="text" value="2" readonly="readonly"></div>
-							<div class="col-md-3">Total<input type="text" value="2" readonly="readonly"></div>
-							<div class="col-md-3">Order Tax<input type="checkbox" name="vehicle1" value="Bike"> I have a bike<input type="text" value="2" readonly="readonly"></div>
-							<div class="col-md-3">Discount<input type="text" value="2" readonly="readonly"></div>
-							
-							</div>
-							
-							</div>
-
-							<div class="cd-tabs">
-
-								<div class="cd-tabs-content"></div>
-
-							</div>
-
 						</div>
 
 
-						<div class="col-sm-5">
+
+						<!-- ################################# ITEM #################################################### -->
 
 
+
+						<div class="col-sm-6">
 
 							<div class="row">
 								<div class="col-sm-4">
@@ -669,16 +1121,20 @@ table.responsive-table {
 
 								<div class="col-sm-8" style="display: flex; margin-top: 15px;">
 									<label class="container" style="font-weight: normal;">Category
-										<input type="radio" checked="checked" name="radio"> <span
+										<input type="radio" checked="checked" name="radio" value=1
+										id="radioCat" onclick="itemSearchRadio(this.value)"> <span
 										class="checkmark"></span>
 									</label> <label class="container" style="font-weight: normal;">Sub
-										Category <input type="radio" checked="checked" name="radio">
+										Category <input type="radio" name="radio" value=2
+										id="radioSubCat" onclick="itemSearchRadio(this.value)">
 										<span class="checkmark"></span>
 									</label> <label class="container" style="font-weight: normal;">All
-										<input type="radio" checked="checked" name="radio"> <span
-										class="checkmark"></span>
+										Items <input type="radio" name="radio" value=3
+										id="radioAllItem" onclick="itemSearchRadio(this.value)">
+										<span class="checkmark"></span>
 									</label>
 								</div>
+
 
 							</div>
 
@@ -686,58 +1142,39 @@ table.responsive-table {
 
 
 
-							<div class="cd-tabs">
-								<div class="cd-tabs-content">
 
-									<div class="scrollmenu">
+							<div class="scrollmenu" style="border: solid 1px;" id="catDiv">
 
-										<a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/mongi.png"
-													alt="img">
-											</div>
-											<div class="title">
-												Order <span>Booking</span>
-											</div>
-										</a> <a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/mongi.png"
-													alt="img">
-											</div>
-											<div class="title">
-												Order <span>Booking</span>
-											</div>
-										</a> <a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/mongi.png"
-													alt="img">
-											</div>
-											<div class="title">
-												Order <span>Booking</span>
-											</div>
-										</a> <a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/mongi.png"
-													alt="img">
-											</div>
-											<div class="title">
-												Order <span>Booking</span>
-											</div>
-										</a> <a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/mongi.png"
-													alt="img">
-											</div>
-											<div class="title">
-												Order <span>Booking</span>
-											</div>
-										</a> <a style="border: 1px;" href="#" onClick="openNav()">
-											<div class="img" style="width: 80px; height: 80px;">
+								<c:forEach var="i" begin="1" end="10">
+
+									<a style="border: 1px; text-align: -webkit-center;" href="#"
+										onClick="openNav()">
+										<div class="img" style="width: 50px; height: 50px;">
+											<img
+												src="${pageContext.request.contextPath}/resources/images/mongi.png"
+												alt="img">
+										</div>
+										<div class="title">
+											Order <span>Booking</span>
+										</div>
+									</a>
+
+								</c:forEach>
+
+							</div>
+
+
+
+							<div class="grid-container" id="itemDiv"
+								style="overflow: scroll; height: 450px; width: 100%; border: solid 1px;">
+
+
+								<c:forEach var="i" begin="1" end="40">
+
+									<div class="scrollmenu1">
+										<a style="border: 1px; text-align: -webkit-center;" href="#"
+											onClick="openFormQty()">
+											<div class="img" style="width: 50px; height: 50px;">
 												<img
 													src="${pageContext.request.contextPath}/resources/images/mongi.png"
 													alt="img">
@@ -746,129 +1183,18 @@ table.responsive-table {
 												Order <span>Booking</span>
 											</div>
 										</a>
-
-									</div>
-								</div>
-							</div>
-
-							<div class="cd-tabs">
-								<div class="cd-tabs-content">
-
-									<div class="grid-container">
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
-										<div>
-											<a style="border: 1px;" href="#" onClick="openNav()">
-												<div class="img" style="width: 80px; height: 80px;">
-													<img
-														src="${pageContext.request.contextPath}/resources/images/mongi.png"
-														alt="img">
-												</div>
-												<div class="title">
-													Order <span>Booking</span>
-												</div>
-											</a>
-										</div>
-
 									</div>
 
-								</div>
+								</c:forEach>
 
 
 							</div>
+
+
+
 
 
 						</div>
-
 					</div>
 
 
@@ -878,6 +1204,7 @@ table.responsive-table {
 				</div>
 				<!--rightSidebar-->
 
+
 			</div>
 			<!--fullGrid-->
 		</div>
@@ -886,6 +1213,395 @@ table.responsive-table {
 	</div>
 	<!--wrapper-end-->
 
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModalAdd" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add Customer</h4>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="row">
+						<div class="col-md-4" style="text-align: right;">Customer
+							Name : &nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Customer Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Mobile
+							Number :&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Mobile Number" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">DOB :&nbsp;</div>
+						<div class="col-md-6">
+							<input id="datepicker1" class="form-control" autocomplete="off"
+								placeholder="Delivery Date" name="datepicker1" type="text"
+								value="08-11-2019">
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Business
+							:&nbsp;</div>
+						<div class="col-md-6" style="margin-top: 10px; display: flex;">
+
+							<label class="container"
+								style="font-weight: normal; padding-left: 1px;">Yes <input
+								type="radio" checked="checked" name="radio"> <span
+								class="checkmark"></span>
+							</label> <label class="container"
+								style="font-weight: normal; padding-left: 1px;">No <input
+								type="radio" checked="checked" name="radio"> <span
+								class="checkmark"></span>
+							</label>
+
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Company
+							Name :&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Company Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">GST Number
+							:&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter GST Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Address
+							:&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Address" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- EDIT MODAL -->
+	<div class="modal fade" id="myModalEdit" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Edit Customer</h4>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="row">
+						<div class="col-md-4" style="text-align: right;">Customer
+							Name : &nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Customer Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Mobile
+							Number :&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Mobile Number" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">DOB :&nbsp;</div>
+						<div class="col-md-6">
+							<input id="datepicker1" class="form-control" autocomplete="off"
+								placeholder="Delivery Date" name="datepicker1" type="text"
+								value="08-11-2019">
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Business
+							:&nbsp;</div>
+						<div class="col-md-6" style="margin-top: 10px; display: flex;">
+
+							<label class="container"
+								style="font-weight: normal; padding-left: 1px;">Yes <input
+								type="radio" checked="checked" name="radio"> <span
+								class="checkmark"></span>
+							</label> <label class="container"
+								style="font-weight: normal; padding-left: 1px;">No <input
+								type="radio" checked="checked" name="radio"> <span
+								class="checkmark"></span>
+							</label>
+
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Company
+							Name :&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Company Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">GST Number
+							:&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter GST Name" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4" style="text-align: right;">Address
+							:&nbsp;</div>
+						<div class="col-md-6">
+							<input type="text" style="width: 100%;" class="form-control"
+								placeholder="Enter Address" name="name1" required>
+						</div>
+						<div class="col-md-2"></div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- ITEM DESC MODAL -->
+	<div class="modal fade" id="myModalItemDesc" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Item Description</h4>
+				</div>
+				<div class="modal-body">
+
+
+					<div class="row" style="padding: 5px">
+						<div class="col-md-3" style="text-align: right;">Name :
+							&nbsp;</div>
+						<div class="col-md-9" style="text-align: left;">
+							<span>Cakes</span>
+						</div>
+					</div>
+
+					<div class="row" style="padding: 5px">
+
+						<div class="col-md-3" style="text-align: right;">Quantity
+							Available :&nbsp;</div>
+						<div class="col-md-9" style="text-align: left;">
+							<span>520</span>
+						</div>
+					</div>
+
+					<div class="row" style="padding: 5px">
+
+						<div class="col-md-3" style="text-align: right;">Weight
+							:&nbsp;</div>
+						<div class="col-md-9" style="text-align: left;">
+							<span>120 Kg</span>
+						</div>
+					</div>
+
+					<div class="row" style="padding: 5px">
+
+						<div class="col-md-3" style="text-align: right;">Contents
+							:&nbsp;</div>
+						<div class="col-md-9" style="text-align: left;">
+							<span>Commercially prepared stabilizers are used in sponge
+								batters to help keep the batter from breaking down, thus forming
+								a perfect, light emulsion. It is available in powder forms or
+								even gel forms.</span>
+						</div>
+					</div>
+
+
+					<div class="row" style="padding: 5px">
+
+						<div class="col-md-3" style="text-align: right;">Notes
+							:&nbsp;</div>
+						<div class="col-md-9" style="text-align: left;">
+							<span>Commercially prepared stabilizers are used in sponge
+								batters to help keep the batter from breaking down, thus forming
+								a perfect, light emulsion. It is available in powder forms or
+								even gel forms.</span>
+						</div>
+					</div>
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- Pending AMT MODAL -->
+	<div class="modal fade" id="myModalPendingAmt" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Pending Amount</h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- ADVANCE AMT MODAL -->
+	<div class="modal fade" id="myModalAdvAmt" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Advance Amount</h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- TOTAL AMT MODAL -->
+	<div class="modal fade" id="myModalTotalAmt" role="dialog"
+		data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Total Amount</h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<!-- QTY POPUP -->
+	<div class="form-popup-qty" id="myFormQty">
+		<form action="#" class="form-container-qty">
+			<h3>Quantity</h3>
+
+			<div class="row">
+				<div class="col-md-6" style="text-align: center;">
+					Kg wise <br> <input type="text">
+				</div>
+				<div class="col-md-6" style="text-align: center;">
+					Rate wise<br> <input type="text">
+				</div>
+			</div>
+			<br>
+			<div class="row" style="text-align: center;">
+				<div>Kg wise : 1</div>
+				<div>Rate wise : 100.00</div>
+			</div>
+
+			<br>
+			<button type="submit" class="btn">Save</button>
+			<button type="button" class="btn cancel" onclick="closeFormQty()">Close</button>
+		</form>
+	</div>
+	<!-- QTY POPUP -->
+
+
+
+
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
@@ -893,19 +1609,82 @@ table.responsive-table {
 
 
 
+	<script>
+		function paymentMode(val) {
 
-	<!-- document.getElementById("mySelect").value = "orange"; -->
-	<!----------------------------------------Dropdown With Search----------------------------------------------- -->
-	<%-- <script
-		src="${pageContext.request.contextPath}/resources/customerBill/jquery-3.2.1.min.js"
-		type="text/javascript"></script> --%>
+			if (val == 1) {
+				$("#splitDiv").hide();
+				$("#singleDiv").show();
+			} else if (val == 2) {
+				$("#singleDiv").hide();
+				$("#splitDiv").show();
+			}
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function onloadTab(token) {
+
+			//$("#tabId").value=token;
+			document.getElementById("tabId").value = token;
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function refreshPage() {
+
+			window.location = "${pageContext.request.contextPath}/home"
+
+		}
+
+		function openFormQty() {
+			document.getElementById("myFormQty").style.display = "block";
+		}
+
+		function closeFormQty() {
+			document.getElementById("myFormQty").style.display = "none";
+		}
+	</script>
+
+	<script>
+		function dropdownChange() {
+
+			var val = $("#payType").val();
+
+			if (val == 3) {
+				document.getElementById("epayDiv").style.display = "block";
+			} else {
+				document.getElementById("epayDiv").style.display = "none";
+			}
+
+		}
+	</script>
+
+
+	<script>
+		function itemSearchRadio(val) {
+
+			if (val == 3) {
+				$("#catDiv").hide();
+			} else {
+				$("#catDiv").show();
+			}
+
+		}
+	</script>
+
+
+
+
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
 		type="text/javascript" charset="utf-8"></script>
-
 
 
 </body>
