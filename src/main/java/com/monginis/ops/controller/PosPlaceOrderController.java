@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.advorder.model.AdvanceOrderDetail;
 import com.monginis.ops.advorder.model.AdvanceOrderHeader;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
@@ -406,14 +407,17 @@ public class PosPlaceOrderController {
 		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
 
 		String todaysDate = dfReg.format(date);
-		String yyestDate = dfReg.format(yesterday());
+
 		ModelAndView mav = new ModelAndView("redirect:/showsPlaceOrder");
 
 		try {
 
 			int custId = Integer.parseInt(request.getParameter("custId"));
-			/* String total = request.getParameter(""); */
+			String total = request.getParameter("fintotal1");
 			String devDate = request.getParameter("devDate");
+
+			String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
+			String yyestDate = dfReg.format(yesterday());
 			int dm = 0;
 			String af = null;
 
@@ -427,6 +431,9 @@ public class PosPlaceOrderController {
 				dm = 2;
 
 			}
+			System.err.println("Order date: " + todaysDate);
+			System.err.println("Production date: " + yyestDate);
+			System.err.println("Delivery date: " + devDate);
 
 			String advanceAmt = request.getParameter("advanceAmt");
 			String remainAmt = request.getParameter("remainAmt");
@@ -443,11 +450,11 @@ public class PosPlaceOrderController {
 			advHeader.setExVar2("NA");
 			advHeader.setIsDailyMart(dm);
 			advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
-			advHeader.setTotal(Float.parseFloat("100.0"));
+			advHeader.setTotal(Float.parseFloat(total));
 			advHeader.setFrId(frDetails.getFrId());
 			advHeader.setOrderDate(todaysDate);
-			advHeader.setProdDate(yyestDate);
-			advHeader.setDeliveryDate(todaysDate);
+			advHeader.setProdDate(x1);
+			advHeader.setDeliveryDate(DateConvertor.convertToYMD(devDate));
 			advHeader.setDiscAmt(0);
 
 			for (int i = 0; i < frItemList.size(); i++) {
@@ -472,7 +479,7 @@ public class PosPlaceOrderController {
 				if (qty > 0) {
 					AdvanceOrderDetail det = new AdvanceOrderDetail();
 					det.setCatId(Integer.parseInt(item.getItemGrp1()));
-					det.setDeliveryDate(devDate);
+					det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
 					det.setDelStatus(0);
 					det.setDiscPer(0);
 					det.setEvents("");
@@ -501,8 +508,7 @@ public class PosPlaceOrderController {
 					det.setMenuId(1);
 					det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
 					det.setOrderDate(todaysDate);// curr
-					det.setProdDate(yyestDate);// devdate-1
-					det.setDeliveryDate(todaysDate);
+					det.setProdDate(x1);// devdate-1
 					det.setQty(qty);
 					det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
 					float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
@@ -543,7 +549,7 @@ public class PosPlaceOrderController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		Customer cust = new Customer();
 		try {
- 
+
 			String custName = request.getParameter("custName");
 			String phoneNum = request.getParameter("phoneNum");
 			String ageGrp = request.getParameter("ageGrp");
@@ -552,16 +558,15 @@ public class PosPlaceOrderController {
 			String compName = null;
 
 			String address = null;
-			
-			  int isBuiss = Integer.parseInt(request.getParameter("isBuiss")); int gender =
-			  Integer.parseInt(request.getParameter("gender"));
-			 
 
-			 if (isBuiss == 1) { 
-			gstNo = request.getParameter("gstNo");
-			compName = request.getParameter("compName");
-			address = request.getParameter("address");
-			 } 
+			int isBuiss = Integer.parseInt(request.getParameter("isBuiss"));
+			int gender = Integer.parseInt(request.getParameter("gender"));
+
+			if (isBuiss == 1) {
+				gstNo = request.getParameter("gstNo");
+				compName = request.getParameter("compName");
+				address = request.getParameter("address");
+			}
 
 			cust.setAddress(address);
 			cust.setAgeGroup(ageGrp);
@@ -616,17 +621,15 @@ public class PosPlaceOrderController {
 		return date;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/checkEmailText", method = RequestMethod.POST)
 	@ResponseBody
 	public int checkEmailText(HttpServletRequest request, HttpServletResponse response) {
 
 		Info info = new Info();
 		int res = 0;
-		 
+
 		try {
-			 
 
 			String phoneNo = request.getParameter("phoneNo");
 
@@ -634,10 +637,10 @@ public class PosPlaceOrderController {
 
 			map.add("phoneNo", phoneNo);
 			RestTemplate restTemplate = new RestTemplate();
-			info = restTemplate.postForObject(Constant.URL+ "/checkCustPhone", map, Info.class);
+			info = restTemplate.postForObject(Constant.URL + "/checkCustPhone", map, Info.class);
 			System.out.println("Info" + info);
 			if (info.isError() == false) {
-				res = 1;//exists
+				res = 1;// exists
 				System.out.println("1" + res);
 			} else {
 				res = 0;
