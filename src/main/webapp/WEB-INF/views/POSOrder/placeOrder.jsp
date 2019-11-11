@@ -311,18 +311,18 @@ input:checked+.slider:before {
 
 						</div>
 
-						<div class="order-right"><div class="col-md-1">
+						<div class="order-right"><div class="col-md-2">
 							<div class="col1title">Dairy mart</div>
 						</div>
-						<div class="col-md-1">
+						<div class="col-md-1" style="width:16.333333%">
 							<label class="switch"> <input type="checkbox" name="dm"
 								id="dm" onchange="checkAdd() "> <span
-								class="slider round"></span>
+								class="slider round" ></span>
 						</div>
 						</label>
 						</div>
 						
-					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
+				 	<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
 
 						
@@ -357,18 +357,10 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 									placeholder="From Date" name="devDate" autocomplete="off"
-									type="text"">
+									type="text">
 
 							</div>
-							<!-- <div class="col-md-1">
-								<div class="col1title">Dairy mart</div>
-							</div>
-							<div class="col-md-1">
-								<label class="switch"> <input type="checkbox" name="dm"
-									id="dm" onchange="checkAdd() "> <span
-									class="slider round"></span>
-							</div>
-							</label> -->
+							
 
 						</div>
 						<input type="hidden" name="menuTitle" value="${menuTitle}">
@@ -587,7 +579,7 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt1"
+									<input type="text" name="advanceAmt" id="advanceAmt1" 
 										onchange="setAmt(1)" class="texboxitemcode texboxcal2"
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
@@ -611,7 +603,7 @@ input:checked+.slider:before {
 							<div class="order-btn textcenter">
 
 								<input name="" id="subm1" class="buttonsaveorder"
-									value="SAVE ORDER" type="button" ONCLICK="button1()">
+									value="SAVE ORDER" type="submit" >
 							</div>
 						</div>
 						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart"
@@ -657,7 +649,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 									placeholder="From Date" name="devDate" autocomplete="off"
-									type="text"">
+									type="text">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -917,7 +909,7 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt2" id="advanceAmt2"
+									<input type="text" name="advanceAmt" id="advanceAmt2"
 										onchange="setAmt(2)" class="texboxitemcode texboxcal2"
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
@@ -944,7 +936,7 @@ input:checked+.slider:before {
 							<div class="order-btn textcenter">
 
 								<input name="" id="subm2" class="buttonsaveorder"
-									value="SAVE ORDER" type="button" ONCLICK="button2()">
+									value="SAVE ORDER" type="submit" >
 							</div>
 						</div>
 
@@ -1445,7 +1437,8 @@ function showDiv(typdId){
                 var isSubmit=confirm("Do you want to save Order?");
                 if(isSubmit==true){    
                 	document.getElementById("subm1").disabled = true;
-                    form1.submit();
+                	$("#form1"). submit(); // Submit the form.
+
                 }
             }    
             
@@ -1454,7 +1447,7 @@ function showDiv(typdId){
                 var isSubmit=confirm("Do you want to save Order?");
                 if(isSubmit==true){    
                 	document.getElementById("subm2").disabled = true;
-                    form2.submit();
+                	$("#form2"). submit(); // Submit the form.
                 }
             }    
            

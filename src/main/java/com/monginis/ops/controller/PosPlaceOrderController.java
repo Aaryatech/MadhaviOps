@@ -389,8 +389,8 @@ public class PosPlaceOrderController {
 		return cal.getTime();
 	}
 
-	@RequestMapping("/saveAdvanceOrder")
-	public ModelAndView saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	@RequestMapping(value="/saveAdvanceOrder", method = RequestMethod.POST)
+	public String saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		System.err.println("inside saveAdvanceOrder");
 		HttpSession session = request.getSession();
@@ -408,7 +408,7 @@ public class PosPlaceOrderController {
 
 		String todaysDate = dfReg.format(date);
 
-		ModelAndView mav = new ModelAndView("redirect:/showsPlaceOrder");
+	//	ModelAndView mav = new ModelAndView("showsPlaceOrder");
  
 			int custId = Integer.parseInt(request.getParameter("custId"));
 			String total = request.getParameter("fintotal1");
@@ -429,7 +429,7 @@ public class PosPlaceOrderController {
 
 			String advanceAmt = request.getParameter("advanceAmt");
 			String remainAmt = request.getParameter("remainAmt");
-			System.err.println("inside saveAdvanceOrder 1:" + custId);
+			System.err.println("inside saveAdvanceOrder 1:" + advanceAmt+"remainAmt"+remainAmt);
 			AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
 			advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
 			advHeader.setCustId(custId);
@@ -539,7 +539,7 @@ public class PosPlaceOrderController {
 		 * 
 		 * }
 		 */
-		return mav;
+		return "redirect:/showsPlaceOrder";
 
 	}
 
