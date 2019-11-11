@@ -445,7 +445,7 @@
 							%> <abbr title='${menu.menuDesc}'>
 								<div class="listareaBoxBlue">
 						</abbr> <a class="listareaBoximg"
-							href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}">
+							href="${pageContext.request.contextPath}/showsPlaceOrder/${loop.index}">
 
 
 
@@ -453,7 +453,7 @@
 									//else
 													} else {
 								%> <abbr title='${menu.menuDesc}'><a class="listareaBox"
-									href="${pageContext.request.contextPath}/showRegularSpCakeOrder/${loop.index}"><div
+									href="${pageContext.request.contextPath}/showsPlaceOrder/${loop.index}"><div
 											class="listareaBoximg"></abbr> <%
  	}
 

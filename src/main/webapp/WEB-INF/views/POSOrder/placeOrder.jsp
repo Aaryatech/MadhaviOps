@@ -637,7 +637,7 @@ input:checked+.slider:before {
 								<select name="custId" class="form-control chosen" tabindex="4"
 									id="custId2" required>
 
-									<option value="-1">Select Customer</option>
+									 
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
 										<option value="${custList.custId}">

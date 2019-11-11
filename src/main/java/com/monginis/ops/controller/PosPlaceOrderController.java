@@ -29,6 +29,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,8 +72,10 @@ public class PosPlaceOrderController {
 	public MultiValueMap<String, Object> map;
 	public String qtyAlert = "Enter the Quantity as per the Limit.";
 
-	@RequestMapping(value = "/showsPlaceOrder")
-	public ModelAndView showsPlaceOrder(HttpServletRequest request, HttpServletResponse response) {
+	 
+		@RequestMapping(value = "/showsPlaceOrder/{index}", method = RequestMethod.GET)
+		public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
+				HttpServletResponse response) throws ParseException {
 
 		HttpSession session = request.getSession();
 
@@ -104,8 +107,8 @@ public class PosPlaceOrderController {
 		// new*****************
 
 		catList = new ArrayList<>();
-		globalIndex = 1;
-		int index = 1;
+		globalIndex =index;
+		 
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -541,7 +544,7 @@ public class PosPlaceOrderController {
 		 * 
 		 * }
 		 */
-		return "redirect:/showsPlaceOrder";
+		return "redirect:/showsPlaceOrder/"+globalIndex;
 
 	}
 
