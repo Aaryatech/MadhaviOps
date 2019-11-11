@@ -301,8 +301,17 @@ input:checked+.slider:before {
 				<!--rightSidebar-->
 				<div class="sidebarright">
 
-					<div class="colOuter">
-						<div class="col-md-1">
+					<!-- <div class="colOuter">
+						
+					</div>
+					 -->
+					
+					<div class="order-left">
+							<h2 class="pageTitle">Place Order</h2>
+
+						</div>
+
+						<div class="order-right"><div class="col-md-1">
 							<div class="col1title">Dairy mart</div>
 						</div>
 						<div class="col-md-1">
@@ -311,18 +320,12 @@ input:checked+.slider:before {
 								class="slider round"></span>
 						</div>
 						</label>
-
-					</div>
+						</div>
+						
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
 
-						<div class="order-left">
-							<h2 class="pageTitle">Place Order</h2>
-
-						</div>
-
-						<div class="order-right"></div>
-
+						
 						<div class="colOuter">
 
 
@@ -607,7 +610,7 @@ input:checked+.slider:before {
 							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
 							<div class="order-btn textcenter">
 
-								<input name="" id="subm" class="buttonsaveorder"
+								<input name="" id="subm1" class="buttonsaveorder"
 									value="SAVE ORDER" type="button" ONCLICK="button1()">
 							</div>
 						</div>
@@ -619,13 +622,9 @@ input:checked+.slider:before {
 
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						id="form2" name="form2" method="post">
+ 
 
-						<div class="order-left">
-							<h2 class="pageTitle">Place Order</h2>
-
-						</div>
-
-						<div class="order-right"></div>
+					 
 
 						<div class="colOuter">
 
@@ -944,8 +943,8 @@ input:checked+.slider:before {
 								value="0">
 							<div class="order-btn textcenter">
 
-								<input name="" id="subm" class="buttonsaveorder"
-									value="SAVE ORDER" type="button" ONCLICK="button1()">
+								<input name="" id="subm2" class="buttonsaveorder"
+									value="SAVE ORDER" type="button" ONCLICK="button2()">
 							</div>
 						</div>
 
@@ -1149,7 +1148,7 @@ input:checked+.slider:before {
 		function checkAdd() {
 			if (document.getElementById("dm").checked == true) {
 				
-				alert("dairyMart");
+				//alert("dairyMart");
               		$('#form1').hide();
               		$('#form2').show();		
               		calTotal(1);
@@ -1159,7 +1158,7 @@ input:checked+.slider:before {
               		
 			} else {
 				
-				alert("without dairyMart");
+				//alert("without dairyMart");
 				    $('#form1').show();
 				    $('#form2').hide();
 				    document.getElementById("dailyFlagMart").value = 1;
@@ -1445,8 +1444,17 @@ function showDiv(typdId){
             {
                 var isSubmit=confirm("Do you want to save Order?");
                 if(isSubmit==true){    
-                	document.getElementById("subm").disabled = true;
+                	document.getElementById("subm1").disabled = true;
                     form1.submit();
+                }
+            }    
+            
+            function button2()
+            {
+                var isSubmit=confirm("Do you want to save Order?");
+                if(isSubmit==true){    
+                	document.getElementById("subm2").disabled = true;
+                    form2.submit();
                 }
             }    
            
