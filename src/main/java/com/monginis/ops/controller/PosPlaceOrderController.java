@@ -409,9 +409,7 @@ public class PosPlaceOrderController {
 		String todaysDate = dfReg.format(date);
 
 		ModelAndView mav = new ModelAndView("redirect:/showsPlaceOrder");
-
-		try {
-
+ 
 			int custId = Integer.parseInt(request.getParameter("custId"));
 			String total = request.getParameter("fintotal1");
 			String devDate = request.getParameter("devDate");
@@ -421,16 +419,10 @@ public class PosPlaceOrderController {
 			int dm = 0;
 			String af = null;
 
-			try {
-				af = request.getParameter("dm");
-				if (af.equals("on")) {
-					dm = 1;
-				}
-			} catch (Exception e) {
-
-				dm = 2;
-
-			}
+		 
+		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
+				 
+			 
 			System.err.println("Order date: " + todaysDate);
 			System.err.println("Production date: " + yyestDate);
 			System.err.println("Delivery date: " + devDate);
@@ -467,8 +459,12 @@ public class PosPlaceOrderController {
 				String strQty = null;
 				int qty = 0;
 				try {
-					strQty = request.getParameter(item.getItemId());
-					qty = Integer.parseInt(strQty);
+					
+					 
+						strQty = request.getParameter(item.getItemId());
+						qty = Integer.parseInt(strQty);
+				 
+					
 
 				} catch (Exception e) {
 					strQty = null;
@@ -481,15 +477,12 @@ public class PosPlaceOrderController {
 					det.setCatId(Integer.parseInt(item.getItemGrp1()));
 					det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
 					det.setDelStatus(0);
-					if(dm==1) {
+					if(dm==2) {
 						det.setDiscPer(item.getDmDiscPer());
 					}else {
 						det.setDiscPer(item.getDiscPer());
 					}
-					
-					
-					
-					
+					 
 					det.setEvents("");
 					det.setEventsName("");
 					det.setExFloat1(0);
@@ -539,13 +532,13 @@ public class PosPlaceOrderController {
 			AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail",
 					advHeader, AdvanceOrderHeader.class);
 			System.err.println("inside saveAdvanceOrder 2");
-
-		} catch (Exception e) {
-
-			System.err.println("Exception In saveAdvanceOrder" + e.getMessage());
-
-		}
-
+		/*
+		 * } catch (Exception e) {
+		 * 
+		 * System.err.println("Exception In saveAdvanceOrder" + e.getMessage());
+		 * 
+		 * }
+		 */
 		return mav;
 
 	}
