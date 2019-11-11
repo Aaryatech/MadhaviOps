@@ -9,18 +9,38 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 
-<!--rightNav
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	
-	
-	
-});
-</script>-->
-
-
-
 <style>
+.plus-button {
+	border: 2px solid lightgrey;
+	background-color: #fff;
+	font-size: 16px;
+	height: 1.8em;
+	width: 2.5em;
+	border-radius: 999px;
+	position: relative;
+	}
+	.plus-button:after,
+	.plus-button:before {
+		content: "";
+		display: block;
+		background-color: grey;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	
+	.plus-button:before {
+		height: 1em;
+		width: 0.2em;
+	}
+
+	.plus-button:after {
+		height: 0.2em;
+		width: 1em;
+	}
+
+
 <!--
 MODAL CSS   -->.btn {
 	background: #428bca;
@@ -99,10 +119,10 @@ MODAL CSS   -->.btn {
 	-webkit-transform: translate(0, -500%);
 	-ms-transform: translate(0, -500%);
 	transform: translate(0, -500%);
-	-webkit-transition: -webkit-transform 0.3s ease-out;
-	-moz-transition: -moz-transform 0.3s ease-out;
-	-o-transition: -o-transform 0.3s ease-out;
-	transition: transform 0.3s ease-out;
+	-webkit-transition: -webkit-transform 0.9s ease-out;
+	-moz-transition: -moz-transform 0.9s ease-out;
+	-o-transition: -o-transform 0.9s ease-out;
+	transition: transform 0.9s ease-out;
 }
 
 .modal-body {
@@ -311,21 +331,9 @@ input:checked+.slider:before {
 								</select>
 
 							</div>
-
-							<!-- <div class="col-md-1">
-						<div class="col1title">
-							<img src="images/userimg.jpg" class="btn btn-big openmodale">
-						</div>
-
-					</div>
-					 -->
 							<div class="col-md-1">
+								<button class="plus-button openmodale"></button>
 
-
-								<button class="btn btn-big openmodale" type="button"
-									style="height: 2%; width: 2%">
-									<i class="fa fa-plus"></i>
-								</button>
 							</div>
 
 							<div class="col-md-2">
@@ -338,7 +346,7 @@ input:checked+.slider:before {
 
 							</div>
 							<div class="col-md-1">
-								<div class="col1title">Dailymart</div>
+								<div class="col1title">Dairy mart</div>
 							</div>
 							<div class="col-md-1">
 								<label class="switch"> <input type="checkbox" name="dm"
@@ -348,27 +356,13 @@ input:checked+.slider:before {
 							</label>
 
 						</div>
-
-
-						<!-- <div class="order-btn textcenter">
-<a href="#" class="btn btn-big openmodale">Open Modal</a>
-</div> -->
-						<!-- MODAL END -->
-
-
 						<input type="hidden" name="menuTitle" value="${menuTitle}">
 
-
 						<!--tabNavigation-->
-						<div class="cd-tabs" style="margin-top: 2px;">
-							<!--tabMenu-->
+						<div class="cd-tabs" style="margin-top: 2px;" id="sub1">
 							<nav>
 								<ul class="cd-tabs-navigation">
-
-									<c:forEach var="tab" items="${subCatListTitle}"
-										varStatus="loop">
-
-
+									<c:forEach var="tab" items="${subCatListTitle}"	varStatus="loop">
 										<c:choose>
 											<c:when test='${loop.index==0}'>
 												<li><a data-content='${tab.name}' href="#0"
@@ -379,22 +373,14 @@ input:checked+.slider:before {
 											<c:otherwise>
 												<li><a data-content='${tab.name}' href="#0"
 													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
-
 											</c:otherwise>
 										</c:choose>
-
-
 									</c:forEach>
-
 								</ul>
 							</nav>
-							<!--tabMenu-->
 							<ul class="cd-tabs-content">
-								<!--tab1-->
-
 								<c:forEach var="tabs" items="${subCatListTitle}"
 									varStatus="loop">
-
 									<c:choose>
 										<c:when test='${loop.index==0}'>
 											<li data-content='${tabs.name}' class="selected">
@@ -404,11 +390,7 @@ input:checked+.slider:before {
 										</c:otherwise>
 									</c:choose>
 
-
-
-
-
-									<div class="col-md-9"></div>
+						<div class="col-md-9"></div>
 									<label for="search" class="col-md-3" id="search"> <i
 										class="fa fa-search" style="font-size: 20px"></i> <input
 										class="myInput1" type="text" id="myInput${loop.index}"
@@ -416,6 +398,7 @@ input:checked+.slider:before {
 										style="border-radius: 25px;"
 										placeholder="Search items by name" title="Type item name">
 									</label>
+									
 									<div id="table-scroll"
 										class="table-scroll responsive-table-one">
 										<!-- class="table-scroll" -->
@@ -425,22 +408,12 @@ input:checked+.slider:before {
 											<table id="table_grid" class="main-table">
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2">Item Name</th>
-														<th class="col-md-1">Min Quantity</th>
-														<th class="col-md-1-3">Limit</th>
-														<th class="col-md-1-5">Quantity</th>
-														<th class="col-md-1-6">Quantity(1)</th>
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Qty</th>
 														<th class="col-md-1">MRP</th>
 														<th class="col-md-1">Rate</th>
-														<th class="col-md-1-4">Disc</th>
-
-														<th class="col-md-1-7">Total</th>
-														<th class="col-md-1-8">Total(1)</th>
-														<c:choose>
-															<c:when test="${menuIdFc eq menuIdShow}">
-																<th class="col-md-1">Order1</th>
-															</c:when>
-														</c:choose>
+														<th class="col-md-1">Total</th>
 													</tr>
 												</thead>
 											</table>
@@ -448,26 +421,17 @@ input:checked+.slider:before {
 										</div>
 										<div class="table-wrap">
 
-											<table id="table_grid${loop.index}" class="responsive-table"
+											<table id="table_grid${loop.index}" class="responsive-table1"
 												style="margin: 0px;">
 												<!--   class="main-table" -->
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2">Item Name</th>
-														<th class="col-md-1">Min Quantity</th>
-														<th class="col-md-1-3">Limit</th>
-														<th class="col-md-1-5">Quantity</th>
-														<th class="col-md-1-6">Quantity(1)</th>
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Qty</th>
 														<th class="col-md-1">MRP</th>
 														<th class="col-md-1">Rate</th>
-														<th class="col-md-1-4">Disc</th>
-														<th class="col-md-1-7">Total</th>
-														<th class="col-md-1-8">Total(1)</th>
-														<c:choose>
-															<c:when test="${menuIdFc eq menuIdShow}">
-																<th class="col-md-1">Order1</th>
-															</c:when>
-														</c:choose>
+														<th class="col-md-1">Total</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -479,95 +443,34 @@ input:checked+.slider:before {
 															<c:choose>
 																<c:when test="${frDetails.frRateCat=='1'}">
 																	<tr>
-
 																		<td class="col-md-2">${items.itemName}<a
 																			href="${url}${items.itemImage}"
 																			data-lightbox="image-1" tabindex="-1"><i
 																				class="fa fa-file-image-o"
 																				style="font-size: 16px; color: green"></i></a></td>
 																		
-																		
-																		
-																		<td class="col-md-1"><c:out
-																				value='${items.minQty}' /></td>
+																		<td class="col-md-1"><c:out value='${items.minQty}' /></td>
 
-																		<td class="col-md-1-3"><c:out
-																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
-
-
-																	<!-- qty -->
-																		<td class="col-md-1-5"><input name='${items.id}'
-																			id='${items.id}' value='${items.itemQty}'
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onkeydown="myFunction()"
 																			onchange="onChange('${items.itemRate1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
-																			
-																			<!-- qty1 -->
-																		<td class="col-md-1-6"><input name='dmQty${items.id}'
-																			id='dmQty${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
-																			onkeydown="myFunction()"
-																			onchange="onChangeDm('${items.itemRate1}',${items.id})">
-
-																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
-																			
-																			
+																			id="minqty1${items.id}" /></td>
 																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp1}' /></td>
-
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate1}' /></td>
 																		<c:set var="rate" value="${items.itemRate1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-
-																		<td class="col-md-1-4"><c:out
-																				value='${items.dmDiscPer}' /><input type="hidden"
-																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
-																			
-																		<!-- 	total -->
-																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 																				
-																				<!-- 	total1 -->	
-																	<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
-
-
-																		<c:choose>
-																			<c:when test="${menuIdFc eq menuIdShow}">
-
-																				<c:choose>
-																					<c:when test="${flagRes==1}">
-																						<c:set var="orderQty" value="0" />
-																						<c:forEach var="orderListRes" items="${orderList}"
-																							varStatus="cnt">
-																							<c:choose>
-																								<c:when test="${orderListRes.id==items.id}">
-																									<c:set var="orderQty"
-																										value="${orderListRes.orderQty}" />
-																								</c:when>
-
-																							</c:choose>
-
-																						</c:forEach>
-																						<td class="col-md-1">${orderQty}</td>
-																					</c:when>
-																					<c:otherwise>
-																						<td class="col-md-1">0</td>
-																					</c:otherwise>
-																				</c:choose>
-																			</c:when>
-																		</c:choose>
-
 																	</tr>
 																</c:when>
 
@@ -582,32 +485,13 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
-																		<td class="col-md-1-3"><c:out
-																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
-
-
-
-																		<td class="col-md-1-5"><input name='${items.id}'
-																			id='${items.id}' value='${items.itemQty}'
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onchange="onChange('${items.itemRate2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
-																			
-																			<td class="col-md-1-6"><input name='dmQty${items.id}'
-																			id='dmQty${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
-																			onchange="onChangeDm('${items.itemRate2}',${items.id})">
-
-																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
-																			
-																			
-																			
-																			
-																			
+																			id="minqty1${items.id}" /></td>
 																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp2}' /></td>
@@ -617,49 +501,13 @@ input:checked+.slider:before {
 																		<c:set var="rate" value="${items.itemRate2}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
-																		<td class="col-md-1-4"><c:out
-																				value='${items.dmDiscPer}' /><input type="hidden"
-																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
 
-
-																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 																				
 																				
-																		<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
-																				
-																				
-																				
-																				
-																				
-																		<c:choose>
-																			<c:when test="${menuIdFc eq menuIdShow}">
-																				<c:choose>
-																					<c:when test="${flagRes==1}">
-																						<c:set var="orderQty" value="0" />
-																						<c:forEach var="orderListRes" items="${orderList}"
-																							varStatus="cnt">
-																							<c:choose>
-																								<c:when test="${orderListRes.id==items.id}">
-																									<c:set var="orderQty"
-																										value="${orderListRes.orderQty}" />
-																								</c:when>
-
-																							</c:choose>
-
-																						</c:forEach>
-																						<td class="col-md-1">${orderQty}</td>
-																					</c:when>
-																					<c:otherwise>
-																						<td class="col-md-1">0</td>
-																					</c:otherwise>
-																				</c:choose>
-																			</c:when>
-																		</c:choose>
-
+															
 																	</tr>
 																</c:when>
 
@@ -674,74 +522,24 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
-																		<td class="col-md-1-3"><c:out
-																				value='${items.itemMrp2}' /><input type="hidden"
-																			value="${items.itemMrp2}" id="limit${items.id}" /></td>
-
-
-
-																		<td class="col-md-1-5"><input name='${items.id}'
-																			id='${items.id}' value='${items.itemQty}'
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onchange="onChange('${items.itemRate3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
-																			
-																			
-																			<td class="col-md-1-6"><input name='dmQty${items.id}'
-																			id='dmQty${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
-																			onchange="onChangeDm('${items.itemRate3}',${items.id})">
-
-																			<input type="hidden" value="${items.minQty}"
-																			id="minqty${items.id}" /></td>
+																			id="minqty1${items.id}" /></td>
 																			
 																			
 																		<td class="col-md-1"><c:out
 																				value='${items.itemMrp3}' /></td>
 
-																		<td class="col-md-1"><c:out
-																				value='${items.itemRate3}' /></td>
-																		<c:set var="rate" value="${items.itemRate3}" />
-																		<c:set var="qty" value="${items.itemQty}" />
-
-																		<td class="col-md-1-4"><c:out
-																				value='${items.dmDiscPer}' /><input type="hidden"
-																			value="${items.dmDiscPer}" id="dmDisc${items.id}" /></td>
-
-																		<td class="col-md-1-7" id="total${items.id}"><fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
-																				
-																				<td class="col-md-1-8" id="dmTotal${items.id}"><fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
-
-																		<c:choose>
-																			<c:when test="${menuIdFc eq menuIdShow}">
-																				<c:choose>
-																					<c:when test="${flagRes==1}">
-																						<c:set var="orderQty" value="0" />
-																						<c:forEach var="orderListRes" items="${orderList}"
-																							varStatus="cnt">
-																							<c:choose>
-																								<c:when test="${orderListRes.id==items.id}">
-																									<c:set var="orderQty"
-																										value="${orderListRes.orderQty}" />
-																								</c:when>
-
-																							</c:choose>
-
-																						</c:forEach>
-																						<td class="col-md-1">${orderQty}</td>
-																					</c:when>
-																					<c:otherwise>
-																						<td class="col-md-1">0</td>
-																					</c:otherwise>
-																				</c:choose>
-																			</c:when>
-																		</c:choose>
+												<td class="col-md-1"><c:out value='${items.itemRate3}' /></td>
+												<c:set var="rate" value="${items.itemRate3}" />
+												<c:set var="qty" value="${items.itemQty}" />
+												<td class="col-md-1-1" id="total1${items.id}">
+												<fmt:formatNumber	type="number" minFractionDigits="2"	maxFractionDigits="2" value="${rate * qty}" /></td>
+																					
 																	</tr>
 																</c:when>
 															</c:choose>
@@ -762,35 +560,30 @@ input:checked+.slider:before {
 
 
 							</ul>
-						</div>
-						<!--tabNavigation-->
-
-
-
-
+							
 
 						<div class="row">
 
 							<div class="col-md-1">Advance:</div>
 
-							<div class="col-md-2">
+							<div class="col-md-1">
 
-								<input type="text" name="advanceAmt" id="advanceAmt"
-									onchange="setAmt()" class="texboxitemcode texboxcal2"
+								<input type="text" name="advanceAmt" id="advanceAmt1"
+									onchange="setAmt(1)" class="texboxitemcode texboxcal2"
 									autocomplete="off" required class="form-control" size="20" />
 							</div>
 
-							<div class="col-md-1">Remaining Amt:</div>
-							<div class="col-md-2">
+							<div class="col-md-2">Pending Amt:</div>
+							<div class="col-md-1">
 
-								<input type="text" name="remainAmt" id="remainAmt"
+								<input type="text" name="remainAmt" id="remainAmt1"
 									class="texboxitemcode texboxcal2" autocomplete="off" required
 									class="form-control" size="20" />
 							</div>
 
 
 							<div class="col-md-1">Total:</div>
-							<div class="col-md-2" id="calTotal" style="color: red;">00
+							<div class="col-md-1" id="calTotal1" style="color: red;">00
 							</div>
 
 
@@ -801,6 +594,276 @@ input:checked+.slider:before {
 							<input name="" id="subm" class="buttonsaveorder"
 								value="SAVE ORDER" type="button" ONCLICK="button1()">
 						</div>
+						</div>
+<!-------------------------------------TABS FOR DAIRY MART----------------------------------------------------------->
+
+			<div class="cd-tabs" style="margin-top: 2px;display: none;" id="sub2" >
+							<nav>
+								<ul class="cd-tabs-navigation">
+									<c:forEach var="tab" items="${subCatListTitle}"	varStatus="loop">
+										<c:choose>
+											<c:when test='${loop.index==0}'>
+												<li><a data-content='${tab.name}' href="#0"
+													class="selected"
+													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
+											</c:when>
+											<c:otherwise>
+												<li><a data-content='${tab.name}' href="#0"
+													onClick="javascript:se_tab_id('${loop.index}')">${tab.header}</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</ul>
+							</nav>
+							<ul class="cd-tabs-content">
+								<c:forEach var="tabs" items="${subCatListTitle}"
+									varStatus="loop">
+									<c:choose>
+										<c:when test='${loop.index==0}'>
+											<li data-content='${tabs.name}' class="selected">
+										</c:when>
+										<c:otherwise>
+											<li data-content='${tabs.name}'>
+										</c:otherwise>
+									</c:choose>
+
+						<div class="col-md-9"></div>
+									<label for="search" class="col-md-3" id="search"> <i
+										class="fa fa-search" style="font-size: 20px"></i> <input
+										class="myInput1" type="text" id="myInput${loop.index}"
+										onkeyup="myFunction1(${loop.index})"
+										style="border-radius: 25px;"
+										placeholder="Search items by name" title="Type item name">
+									</label>
+									
+									<div id="table-scroll"
+										class="table-scroll responsive-table-one">
+										<!-- class="table-scroll" -->
+
+										<div id="faux-table" class="faux-table" aria="hidden">
+											<!-- style="display:none" -->
+											<table id="table_grid" class="main-table">
+												<thead>
+													<tr class="bgpink">
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Min Limit</th>
+														<th class="col-md-1">Qty</th>
+														<th class="col-md-1">MRP</th>
+														<th class="col-md-1">Rate</th>
+														<th class="col-md-1">Disc %</th>
+														<th class="col-md-1">Total</th>
+													</tr>
+												</thead>
+											</table>
+
+										</div>
+										<div class="table-wrap">
+
+											<table id="table_grid${loop.index}" class="responsive-table2"
+												style="margin: 0px;">
+												<!--   class="main-table" -->
+												<thead>
+													<tr class="bgpink">
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Min Limit</th>
+														<th class="col-md-1">Qty</th>
+														<th class="col-md-1">MRP</th>
+														<th class="col-md-1">Rate</th>
+														<th class="col-md-1">Disc %</th>
+														<th class="col-md-1">Total</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:set var="menuTime" value="${menu.timing}" />
+
+													<c:forEach var="items" items="${itemList}" varStatus="loop">
+														<c:if test="${items.catName eq tabs.name}">
+
+															<c:choose>
+																<c:when test="${frDetails.frRateCat=='1'}">
+																	<tr>
+																		<td class="col-md-2">${items.itemName}<a
+																			href="${url}${items.itemImage}"
+																			data-lightbox="image-1" tabindex="-1"><i
+																				class="fa fa-file-image-o"
+																				style="font-size: 16px; color: green"></i></a></td>
+																		
+																		<td class="col-md-1"><c:out value='${items.minQty}' /></td>
+
+																		<td class="col-md-1"><c:out value='${items.itemMrp2}' />
+																		<input type="hidden" value="${items.itemMrp2}" id="limit2${items.id}" /></td>
+
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty2${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onkeydown="myFunction()"
+																			onchange="onChangeDm('${items.itemRate1}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty2${items.id}" /></td>
+																			
+																		<td class="col-md-1"><c:out
+																				value='${items.itemMrp1}' /></td>
+
+																		<td class="col-md-1"><c:out
+																				value='${items.itemRate1}' /></td>
+																		<c:set var="rate" value="${items.itemRate1}" />
+																		<c:set var="qty" value="${items.itemQty}" />
+
+																		<td class="col-md-1"><c:out
+																				value='${items.dmDiscPer}' /><input type="hidden"
+																			value="${items.dmDiscPer}" id="dmDisc2${items.id}" /></td>
+																			
+																		<!-- 	total -->
+																		<td class="col-md-1-2" id="total2${items.id}"><fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																	</tr>
+																</c:when>
+
+																<c:when test="${frDetails.frRateCat=='2'}">
+																	<tr>
+
+																		<td class="col-md-1">${items.itemName}<a
+																			href="${url}${items.itemImage}"
+																			data-lightbox="image-1" tabindex="-1"><i
+																				class="fa fa-file-image-o"
+																				style="font-size: 16px; color: green"></i></a></td>
+																		<td class="col-md-1"><c:out
+																				value='${items.minQty}' /></td>
+
+																		<td class="col-md-1"><c:out
+																				value='${items.itemMrp2}' /><input type="hidden"
+																			value="${items.itemMrp2}" id="limit2${items.id}" /></td>
+
+
+
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty2${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChangeDm('${items.itemRate2}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty2${items.id}" /></td>
+																			
+																		<td class="col-md-1"><c:out
+																				value='${items.itemMrp2}' /></td>
+
+																		<td class="col-md-1"><c:out
+																				value='${items.itemRate2}' /></td>
+																		<c:set var="rate" value="${items.itemRate2}" />
+																		<c:set var="qty" value="${items.itemQty}" />
+
+																		<td class="col-md-1"><c:out
+																				value='${items.dmDiscPer}' /><input type="hidden"
+																			value="${items.dmDiscPer}" id="dmDisc2${items.id}" /></td>
+
+
+																		<td class="col-md-1-2" id="total2${items.id}"><fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				
+																				
+															
+																	</tr>
+																</c:when>
+
+																<c:when test="${frDetails.frRateCat=='3'}">
+																	<tr>
+
+																		<td class="col-md-1">${items.itemName}<a
+																			href="${url}${items.itemImage}"
+																			data-lightbox="image-1" tabindex="-1"><i
+																				class="fa fa-file-image-o"
+																				style="font-size: 16px; color: green"></i></a></td>
+																		<td class="col-md-1"><c:out
+																				value='${items.minQty}' /></td>
+
+																		<td class="col-md-1"><c:out
+																				value='${items.itemMrp2}' /><input type="hidden"
+																			value="${items.itemMrp2}" id="limit2${items.id}" /></td>
+
+
+
+																		<td class="col-md-1"><input name='${items.id}'
+																			id='qty2${items.id}' value='${items.itemQty}'
+																			class="tableInput" type="text"
+																			onchange="onChangeDm('${items.itemRate3}',${items.id})">
+
+																			<input type="hidden" value="${items.minQty}"
+																			id="minqty2${items.id}" /></td>
+																			
+																			
+																		<td class="col-md-1"><c:out
+																				value='${items.itemMrp3}' /></td>
+
+												<td class="col-md-1"><c:out value='${items.itemRate3}' /></td>
+												<c:set var="rate" value="${items.itemRate3}" />
+												<c:set var="qty" value="${items.itemQty}" />
+												<td class="col-md-1"><c:out	value='${items.dmDiscPer}' /><input type="hidden"	value="${items.dmDiscPer}" id="dmDisc2${items.id}" /></td>
+												<td class="col-md-1-2" id="total2${items.id}">
+												<fmt:formatNumber	type="number" minFractionDigits="2"	maxFractionDigits="2" value="${rate * qty}" /></td>
+																					
+																	</tr>
+																</c:when>
+															</c:choose>
+
+														</c:if>
+													</c:forEach>
+
+												</tbody>
+
+											</table>
+
+
+										</div>
+									</div>
+
+
+								</c:forEach>
+
+
+							</ul>
+							
+
+						<div class="row">
+
+							<div class="col-md-1">Advance:</div>
+
+							<div class="col-md-1">
+
+								<input type="text" name="advanceAmt" id="advanceAmt2"
+									onchange="setAmt(2)" class="texboxitemcode texboxcal2"
+									autocomplete="off" required class="form-control" size="20" />
+							</div>
+
+							<div class="col-md-2">Pending Amt:</div>
+							<div class="col-md-1">
+
+								<input type="text" name="remainAmt" id="remainAmt2"
+									class="texboxitemcode texboxcal2" autocomplete="off" required
+									class="form-control" size="20" />
+							</div>
+
+
+							<div class="col-md-1">Total:</div>
+							<div class="col-md-1" id="calTotal2" style="color: red;">00
+							</div>
+
+
+						</div>
+						<input type="hidden" name="fintotal1"  id="fintotal2" value="0">
+						<div class="order-btn textcenter">
+
+							<input name="" id="subm" class="buttonsaveorder"
+								value="SAVE ORDER" type="button" ONCLICK="button1()">
+						</div>
+						</div>
+
+
 
 
 
@@ -819,7 +882,7 @@ input:checked+.slider:before {
 	<div class="modale" id="abs" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-header">
-				<h2>Quick Customer Add</h2>
+				<h2>Add Customer</h2>
 				<a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
 			</div>
 			<div class="modal-body">
@@ -996,236 +1059,113 @@ input:checked+.slider:before {
 	</div>
 
 
-	<!--wrapper-end-->
 	<script>
-	 
-	 
 		function checkAdd() {
-		//	alert("hii");
-			 
-			
 			if (document.getElementById("dm").checked == true) {
-
-				///alert("y");
-				
-				  $('table .col-md-1-6').toggle();
-				  $('table .col-md-1-8').toggle();
-				  $('table .col-md-1-3').toggle();
-				  $('table .col-md-1-4').toggle();
-				 
-					$('table .col-md-1-5').hide();
-					$('table .col-md-1-7').hide();
-
+              		$('#sub1').hide();
+              		$('#sub2').show();		
+              		calTotal(1);
 			} else {
-
-				//alert("n");
-				
-				$('table .col-md-1-6').hide();
-				$('table .col-md-1-8').hide();
-				$('table .col-md-1-3').hide();
-				  $('table .col-md-1-4').hide();
-				  
-				  $('table .col-md-1-5').toggle();
-				  $('table .col-md-1-7').toggle();
-
+				    $('#sub1').show();
+				    $('#sub2').hide();
+				    calTotal(0);
 			}
-
 		}
-		
-		
 		function showDivOn(){
- 				 
 					document.getElementById("ihide").style = "display:none"
-						$('table .col-md-1-6').hide();
-					$('table .col-md-1-8').hide();
-					$('table .col-md-1-3').hide();
-					  $('table .col-md-1-4').hide();
-					  
-					  $('table .col-md-1-5').toggle();
-					  $('table .col-md-1-7').toggle();
-
-					 
-			 
 		}
 
-        
- 
-	
 	</script>
-	<script type="text/javascript">
-		function onChange(rate,id) {
-			//to calculate grandtotal
-			
-		 //ends
-		 
-			//calculate total value  
-			var qty = $('#'+id).val();
-			
-			
-			var minqty = $('#minqty'+id).val();
-			 
-				if(qty % minqty==0 ){
-					
-					//alert("if"+limit);
-				    var total = rate * qty;
-				
-				   $('#total'+id).html(total.toFixed(2));
-				}else
-				{
-					
-					//alert("else"+limit);
-					 var total =0;
-					 
-					alert("Please Enter Qty Multiple of Minimum Qty ");
-					$('#'+id).val('0');
-					
-					$('#total'+id).html(total);
-					$('#'+id).focus();
-				}
-			
-			 
-			
-			var sum = 0;
-			   
-		    $('.responsive-table').find('.col-md-1-7').each(function (index, element) {
-		        sum += parseFloat($(element).text());
-		    });
-		    alert(sum);
-		 $('#calTotal').text(sum);
-	// $('#fintotal1').val()=sum;
- 		 document.getElementById("fintotal1").value = sum;
-		}
-	</script>
-	
 	<script type="text/javascript">
 		function onChangeDm(rate,id) {
-			 
-			var qty = $('#dmQty'+id).val();
-			
-			
-			var minqty = $('#minqty'+id).val();
-			
-			var limit = $('#limit'+id).val();
-			
-			//alert("limit"+limit);
-			
-			 
-				if(qty % minqty==0  &&  qty >= limit){
-					
-					//alert("if"+limit);
-					var discPer = $('#dmDisc'+id).val();
+			var qty = $('#qty2'+id).val();
+			var minqty = $('#minqty2'+id).val();
+			var limit = $('#limit2'+id).val();
+				if(qty % minqty==0  ||  qty >= limit){
+					var discPer = $('#dmDisc2'+id).val();
 				    var total = rate * qty;
 				    var finAmt=(total*discPer)/100;
 				    var x=total-finAmt;
-				
-				   $('#dmTotal'+id).html(x.toFixed(2));
+				   $('#total2'+id).html(x.toFixed(2));
 				}else
 				{
-					
-					//alert("else"+limit);
 					 var total =0;
-					 
 					alert("Please Enter Qty Multiple of Minimum Qty & Less than or Equal to Limit");
-					$('#'+id).val('0');
-					
-					$('#dmTotal'+id).html(total);
-					$('#'+id).focus();
+					$('#qty2'+id).val('0');
+					$('#total2'+id).html(total);
+					$('#qty2'+id).focus();
 				}
-			 
-			
-			var sum = 0;
-			   
-		    $('.responsive-table').find('.col-md-1-8').each(function (index, element) {
-		        sum += parseFloat($(element).text());
-		    });
-		    alert(sum);
-		 $('#calTotal').text(sum);
-	// $('#fintotal1').val()=sum;
- 		 document.getElementById("fintotal1").value = sum;
+				calTotal(2);
 		}
 	</script>
-	<script>
+	<script type="text/javascript">
+		function onChange(rate,id) {
+			var qty = $('#qty1'+id).val();
+			var minqty = $('#minqty1'+id).val();
+				if(qty % minqty==0 ){
+				    var total = rate * qty;
+				   $('#total1'+id).html(total.toFixed(2));
+				}else
+				{
+					 var total =0;
+					alert("Please Enter Qty Multiple of Minimum Qty ");
+					$('#qty1'+id).val('0');
+					$('#total1'+id).html(total);
+					$('#qty1'+id).focus();
+				}
+				calTotal(1);
+		}
+	</script>
 	
-	function setAmt(){ 
-		var  adv=$("#advanceAmt").val();
-		var tot=$("#fintotal1").val();
-		
-		
+
+	<script>
+	function calTotal(flag)
+	{
+		var sum = 0;
+		    $('.responsive-table'+flag).find('.col-md-1-'+flag).each(function (index, element) {
+		        sum += parseFloat($(element).text());
+		    });
+		 $('#calTotal'+flag).text(sum);
+ 		 document.getElementById("fintotal"+flag).value = sum;
+	}
+	function setAmt(flag){ 
+		var  adv=$("#advanceAmt"+flag).val();
+		var tot=$("#fintotal"+flag).val();
 		var rem=parseFloat(tot)-parseFloat(adv);
-		
-		document.getElementById("remainAmt").value = rem;
-		
-		
-		
+		document.getElementById("remainAmt"+flag).value = rem;
 	}
 function validateMobile(mobile) {
 	var mob = /^[1-9]{1}[0-9]{9}$/;
-
 	if (mob.test($.trim(mobile)) == false) {
-
 		//alert("Please enter a valid email address .");
 		return false;
-
 	}
 	return true;
-
 } 
-		$(document).ready(function($) {
-
+$(document).ready(function($) {
 			   $('#sbtbtn4').click(function(){
-				  // document.getElementById("sbtbtn4").disabled = false;
-			
 				var isError = false;
 				var errMsg = "";
- 
 				if ($("#custName").val() == "") {
-				 
-
 					isError = true;
-
 					$("#custName_err").show()
-					
 				} else {
-				 
 					$("#custName_err").hide()
 				}
-
 				 if (!$("#phoneNum").val() || !validateMobile($("#phoneNum").val())) {
-
 					isError = true;
-
 					$("#error_phoneNum").show()
-
 				} else {
 					$("#error_phoneNum").hide()
 				}
-				 
-				/*  if (!$("#dob").val() ) {
-
-						isError = true;
-
-						$("#error_dob").show()
-
-					} else {
-						$("#error_dob").hide()
-					} */
-				 
-				 
 				 if (!$("#ageGrp").val() ) {
-
 						isError = true;
-
 						$("#error_ageGrp").show()
-
 					} else {
 						$("#error_ageGrp").hide()
 					}
-				 
-					
 					var x = document.getElementById("isBuiss").value; 
 				 if(x==1){
-					 
-				alert("hii"+x);
 				 if (!$("#gstNo").val() ) {
 
 						isError = true;
@@ -1257,10 +1197,7 @@ function validateMobile(mobile) {
 					$("#error_address").hide()
 				} 
 				}
-				
-				//uniqueEmail();
-				alert(isError);
-				if (isError==true) {
+			if (isError==true) {
 					alert("error")
 					var x = true;
 					if (x == true) {
@@ -1273,9 +1210,6 @@ function validateMobile(mobile) {
 				}
 				
 				else{
-					alert("no error ")
-				//	document.getElementById("sbtbtn4").disabled = false;
-					 
 					$.ajax({
 					   type: "POST",
 					            url: "${pageContext.request.contextPath}/saveQuickCust",
@@ -1288,8 +1222,6 @@ function validateMobile(mobile) {
 					 document.getElementById("custId").label =data.custName; 
 					 document.getElementById("custId").value = data.custId; 
 					 document.getElementById("custId").selectedIndex = "0";
-					 
- 					
 					}
 					}
 					}).done(function() {
@@ -1306,16 +1238,11 @@ function validateMobile(mobile) {
 
 function uniquePhnNum(){
 	
-	//alert("hii");
 	var phoneNo = $("#phoneNum").val();
-//alert("hii"+phoneNo);
-	  
-
  	  var valid = true;
 			if (phoneNo == null || phoneNo == "") {
 				valid = false;
 			} 
-
 			if(valid == true){
 				$.post('${checkEmailText}', {
 					phoneNo : phoneNo,	
@@ -1323,15 +1250,11 @@ function uniquePhnNum(){
 				},
 
 				function(data) {
-				//	alert("LogList:"+JSON.stringify(data));
-					
 					 if(parseInt(data)==1){		
 						 alert("This Contact Number already exist.");
 						 
 							document.getElementById("sbtbtn4").disabled = true;
 							document.getElementById("phoneNum").value = "";
-													
-						
 						return false;
 					}else{
 						document.getElementById("sbtbtn4").disabled = false;
@@ -1341,28 +1264,21 @@ function uniquePhnNum(){
 			} 
 			return true;
 	 
-	//alert("Got It"+email+" "+eid);
-		
 }
 </script>
-
-	<script type="text/javascript">
+<script type="text/javascript">
 function showDiv(typdId){
 	//alert("Id="+typdId);
 		if (typdId == 1) {
  			document.getElementById("ihide").style = "visible"
-		  
 		} else if (typdId == 2) {
 			document.getElementById("ihide").style = "display:none"
-			 
 	}
 }
 
 	
 </script>
-
-	<script>
-
+<script>
 (function() {
   var fauxTable = document.getElementById("faux-table");
   var mainTable = document.getElementById("table_grid");
@@ -1378,8 +1294,6 @@ function showDiv(typdId){
 	</script>
 	<script>
 	function openMod() {
-		
-		alert("hii");
 	$('#modal_small').modal('show'); 
 	}
 	</script>
@@ -1414,59 +1328,19 @@ function showDiv(typdId){
 	</script>
 
 	<script type="text/javascript">
-           
             function button1()
             {
                 var isSubmit=confirm("Do you want to save Order?");
                 if(isSubmit==true){    
                 	document.getElementById("subm").disabled = true;
-
-                       form1.submit();
+                    form1.submit();
                 }
-                
-    		/* 	if(isSameDayApplicable!=2)
-    				{
-    				   form1.submit();
-    				}
-    		else if(isSameDayApplicable==2)
-    				{
-   			   
-    				  $.getJSON(
-    							'${qtyValidation}',
-    							{
-    								
-    								ajax : 'true'
-    							},
-    							function(data) {
-    							
-    							//	alert(data.error);
-        							
-   								if (data.error) {parseFloat
-   								//	alert("hii");
-    									alert(data.message);
-    									 window.location.reload();
-    								
-    								}
-    								else
-    								{
-    									 form1.submit();
-    								
-    								}	
-    							});
-    				}   
- */
             }    
            
         </script>
-
-
-
-
 	<script type="text/javascript">
 		function onKeyDown(id) {
-			alert("alert");
 			var e = $('#'+id).val();
-			
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 		             // Allow: Ctrl/cmd+A
 		            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -1483,14 +1357,11 @@ function showDiv(typdId){
 		        if (((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105))) {
 		            e.preventDefault();
 		        }
-		   
-			
 		}
 </script>
 	<script type="text/javascript">
 $(document).ready(function() {
     $("#5").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
              // Allow: Ctrl/cmd+A
             (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
@@ -1510,49 +1381,30 @@ $(document).ready(function() {
     });
 });
 </script>
+<script type="text/javascript"	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-
-	<script>
+<script>
 function sortTable() {
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("table_grid1");
   switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
   while (switching) {
-    //start by saying: no switching is done:
     switching = false;
     rows = table.getElementsByTagName("TR");
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
     for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
       shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
       x = rows[i].getElementsByTagName("TD")[0];
       y = rows[i + 1].getElementsByTagName("TD")[0];
-      //check if the two rows should switch place:
       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        //if so, mark as a switch and break the loop:
         shouldSwitch = true;
         break;
       }
     }
     if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
     }
   }
-}
-</script>
-	<script>
-function reload() {
-    location.reload();
 }
 </script>
 	<script>
@@ -1592,8 +1444,8 @@ function reload() {
 		}
 	}
 </script>
-	<!-- MODAL SCRIPT -->
-	<script>
+<!-- MODAL SCRIPT -->
+<script>
 $('.openmodale').click(function (e) {
          e.preventDefault();
          $('.modale').addClass('opened');
@@ -1603,9 +1455,8 @@ $('.closemodale').click(function (e) {
          $('.modale').removeClass('opened');
     });
 </script>
-	<!-- MODAL SCRIPT END-->
-
-	<script>    
+<!-- MODAL SCRIPT END-->
+<script>    
 		$(function() {
 			$("#fromdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
@@ -1616,6 +1467,6 @@ $('.closemodale').click(function (e) {
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-	</script>
+</script>
 </body>
 </html>
