@@ -421,6 +421,8 @@ public class PosPlaceOrderController {
 
 		 
 		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
+		
+		System.err.println("dm");
 				 
 			 
 			System.err.println("Order date: " + todaysDate);
@@ -572,7 +574,7 @@ public class PosPlaceOrderController {
 			cust.setAddress(address);
 			cust.setAgeGroup(ageGrp);
 			cust.setCompanyName(compName);
-			cust.setCustDob(dob);
+			cust.setCustDob(DateConvertor.convertToYMD(dob));
 			cust.setCustName(custName);
 			cust.setDelStatus(0);
 			cust.setExInt1(1);

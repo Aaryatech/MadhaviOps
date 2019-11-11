@@ -263,7 +263,7 @@ input:checked+.slider:before {
 </style>
 
 
-<body onload="showDivOn()">
+<body>
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 
@@ -305,27 +305,28 @@ input:checked+.slider:before {
 						
 					</div>
 					 -->
-					
+
 					<div class="order-left">
-							<h2 class="pageTitle">Place Order</h2>
+						<h2 class="pageTitle">Advance Order</h2>
 
-						</div>
+					</div>
 
-						<div class="order-right"><div class="col-md-2">
+					<div class="order-right">
+						<div class="col-md-2">
 							<div class="col1title">Dairy mart</div>
 						</div>
-						<div class="col-md-1" style="width:16.333333%">
+						<div class="col-md-2">
 							<label class="switch"> <input type="checkbox" name="dm"
 								id="dm" onchange="checkAdd() "> <span
-								class="slider round" ></span>
+								class="slider round"></span>
 						</div>
 						</label>
-						</div>
-						
-				 	<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
+					</div>
+
+					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
 
-						
+
 						<div class="colOuter">
 
 
@@ -334,9 +335,9 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<select name="custId" class="form-control chosen" tabindex="4"
-									id="custId" required>
+									id="custId1" required>
 
-									<option value="-1">Select Customer</option>
+									 
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
 										<option value="${custList.custId}">
@@ -355,12 +356,20 @@ input:checked+.slider:before {
 								<div class="col1title">Delivery Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
 									placeholder="From Date" name="devDate" autocomplete="off"
-									type="text">
+									type="text"">
 
 							</div>
-							
+							<!-- <div class="col-md-1">
+								<div class="col1title">Dairy mart</div>
+							</div>
+							<div class="col-md-1">
+								<label class="switch"> <input type="checkbox" name="dm"
+									id="dm" onchange="checkAdd() "> <span
+									class="slider round"></span>
+							</div>
+							</label> -->
 
 						</div>
 						<input type="hidden" name="menuTitle" value="${menuTitle}">
@@ -579,7 +588,7 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt1" 
+									<input type="text" name="advanceAmt" id="advanceAmt1"
 										onchange="setAmt(1)" class="texboxitemcode texboxcal2"
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
@@ -603,20 +612,20 @@ input:checked+.slider:before {
 							<div class="order-btn textcenter">
 
 								<input name="" id="subm1" class="buttonsaveorder"
-									value="SAVE ORDER" type="submit" >
+									value="SAVE ORDER" type="submit">
 							</div>
 						</div>
-						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart"
-							value="0">
+						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1"
+							value="1">
 					</form>
 					<!-------------------------------------TABS FOR DAIRY MART----------------------------------------------------------->
 
 
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
-						id="form2" name="form2" method="post">
- 
+						id="form2" name="form2" method="post" style="display: none;">
 
-					 
+
+
 
 						<div class="colOuter">
 
@@ -626,7 +635,7 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<select name="custId" class="form-control chosen" tabindex="4"
-									id="custId" required>
+									id="custId2" required>
 
 									<option value="-1">Select Customer</option>
 									<c:forEach items="${custList}" var="custList" varStatus="count">
@@ -647,9 +656,9 @@ input:checked+.slider:before {
 								<div class="col1title">Delivery Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
 									placeholder="From Date" name="devDate" autocomplete="off"
-									type="text">
+									type="text"">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -931,8 +940,8 @@ input:checked+.slider:before {
 							</div>
 							<input type="hidden" name="fintotal1" id="fintotal2" value="0">
 
-							<input type="hidden" name="dailyFlagMart" id="dailyFlagMart"
-								value="0">
+							<input type="hidden" name="dailyFlagMart" id="dailyFlagMart2"
+								value="2">
 							<div class="order-btn textcenter">
 
 								<input name="" id="subm2" class="buttonsaveorder"
@@ -1025,9 +1034,9 @@ input:checked+.slider:before {
 							<div class="col1title">DOB</div>
 						</div>
 						<div class="col-md-6">
-							<input id="fromdatepicker" type="date"
+							<input id="popdatepicker" type="text"
 								class="texboxitemcode texboxcal" placeholder="Date of Birth"
-								class="texboxitemcode texboxcal2" autocomplete="off" id="dob"
+								class="texboxitemcode texboxcal2" autocomplete="off"  
 								name="dob" autocomplete="off" type="text"">
 
 						</div>
@@ -1062,16 +1071,16 @@ input:checked+.slider:before {
 					<div class="colOuter">
 						<div class="col-md-3">Is Buisness Head:</div>
 						<div class="col-md-2">
-							<input type="radio" name="isBuiss" value="1"
+							<input type="radio" name="isBuiss" id="isBuiss" value="1"
 								onclick="showDiv(this.value)" style="width: 10px;"> Yes
 						</div>
 						<div class="col-md-2">
-							<input type="radio" name="isBuiss"  value="2"
+							<input type="radio" name="isBuiss" id="isBuiss" value="2"
 								checked="checked" onclick="showDiv(this.value)"
 								style="width: 10px;"> No
 						</div>
 					</div>
-					<div id="ihide">
+					<div id="ihide"  style="display: none;">
 						<div class="colOuter">
 
 
@@ -1145,7 +1154,8 @@ input:checked+.slider:before {
               		$('#form2').show();		
               		calTotal(1);
               		
-            		 document.getElementById("dailyFlagMart").value = 2;
+            		// document.getElementById("dailyFlagMart2").value = 2;
+            		// document.getElementById("dailyFlagMart1").value = 0;
  
               		
 			} else {
@@ -1153,7 +1163,8 @@ input:checked+.slider:before {
 				//alert("without dairyMart");
 				    $('#form1').show();
 				    $('#form2').hide();
-				    document.getElementById("dailyFlagMart").value = 1;
+				  //  document.getElementById("dailyFlagMart2").value = 0;
+           		// document.getElementById("dailyFlagMart1").value = 1;
  
 				    calTotal(0);
 			}
@@ -1163,7 +1174,8 @@ input:checked+.slider:before {
 			 $('#form1').show();
 			    $('#form2').hide();
 					document.getElementById("ihide").style = "display:none"
-						  document.getElementById("dailyFlagMart").value =1 ;
+						  document.getElementById("dailyFlagMart2").value = 0;
+	           		 document.getElementById("dailyFlagMart1").value = 1;
  		}
 
 	</script>
@@ -1208,7 +1220,51 @@ input:checked+.slider:before {
 		}
 	</script>
 
-
+	<script type="text/javascript">
+            function button1(flag)
+            {
+             //alert("hii");
+                
+                var  adv=$("#advanceAmt"+flag).val();
+        		var tot=$("#fintotal"+flag).val();
+        		var remAmt=$("#remainAmt"+flag).val();
+        		 var x=parseFloat(adv)+parseFloat(remAmt);
+        		 
+        		// alert("sum"+x);
+        		 //alert("tot"+tot);
+                if(  parseFloat(x)== parseFloat(tot)){
+                	
+                	   var isSubmit=confirm("Do you want to save Order?");
+               
+                if(isSubmit==true   ){    
+                	document.getElementById("subm1").disabled = true;
+                    form1.submit();
+                }
+                } 
+                
+            }
+            function button2(flag)
+            { 
+            	
+            	var  adv=$("#advanceAmt"+flag).val();
+    		var tot=$("#fintotal"+flag).val();
+    		var remAmt=$("#remainAmt"+flag).val();
+    		 var x=parseFloat(adv)+parseFloat(remAmt);
+            	
+            	 
+                 if(  parseFloat(x)== parseFloat(tot)){
+                	 var isSubmit=confirm("Do you want to save Order?");
+                 
+                if(isSubmit==true  ){    
+                	document.getElementById("subm2").disabled = true;
+                    form2.submit();
+                } 
+            }    else{
+            	alert("Enter Advance & Remaining Amount Properly");
+            }
+            }
+           
+        </script>
 	<script>
 	function calTotal(flag)
 	{
@@ -1218,6 +1274,9 @@ input:checked+.slider:before {
 		    });
 		 $('#calTotal'+flag).text(sum);
  		 document.getElementById("fintotal"+flag).value = sum;
+ 		 document.getElementById("remainAmt"+flag).value = sum;
+ 		 
+ 		
 	}
 	function setAmt(flag){ 
 		
@@ -1234,7 +1293,7 @@ input:checked+.slider:before {
 			//alert("else");
 			alert("Enter Advance Amount Less than Total Amount");
 			document.getElementById("advanceAmt"+flag).value = 0.00;
-			document.getElementById("remainAmt"+flag).value = 0.00;
+			//document.getElementById("remainAmt"+flag).value = 0.00;
 		}
 		
 	}
@@ -1268,8 +1327,23 @@ $(document).ready(function($) {
 					} else {
 						$("#error_ageGrp").hide()
 					}
-					var x = $("input[name='isBuiss']:checked").val(); alert(x)
-				 if(x==1){
+					 
+				 
+				 
+				 if (!$("#popdatepicker").val() ) {
+
+						isError = true;
+
+						$("#error_dob").show()
+
+					} else {
+						$("#error_dob").hide()
+					}
+				
+
+			 
+					var x = $("input[name='isBuiss']:checked").val();  
+				 if(parseInt(x) == 1){
 				 if (!$("#gstNo").val() ) {
 
 						isError = true;
@@ -1289,8 +1363,7 @@ $(document).ready(function($) {
 						$("#error_compName").hide()
 					}
 				
-
-			 
+				
 				if (!$("#address").val() ) {
 
 					isError = true;
@@ -1302,7 +1375,7 @@ $(document).ready(function($) {
 				} 
 				}
 			if (isError==true) {
-					alert("error")
+					//alert("error")
 					var x = true;
 					if (x == true) {
 
@@ -1322,10 +1395,8 @@ $(document).ready(function($) {
 					success: function(data){
 				 if(data!==null)
 					{
-					 $('#abs').modal('hide');
-					 document.getElementById("custId").label =data.custName; 
-					 document.getElementById("custId").value = data.custId; 
-					 document.getElementById("custId").selectedIndex = "0";
+					  $('.modale').removeClass('opened');
+					 
 					}
 					}
 					}).done(function() {
@@ -1431,27 +1502,7 @@ function showDiv(typdId){
 		}
 	</script>
 
-	<script type="text/javascript">
-            function button1()
-            {
-                var isSubmit=confirm("Do you want to save Order?");
-                if(isSubmit==true){    
-                	document.getElementById("subm1").disabled = true;
-                	$("#form1"). submit(); // Submit the form.
 
-                }
-            }    
-            
-            function button2()
-            {
-                var isSubmit=confirm("Do you want to save Order?");
-                if(isSubmit==true){    
-                	document.getElementById("subm2").disabled = true;
-                	$("#form2"). submit(); // Submit the form.
-                }
-            }    
-           
-        </script>
 	<script type="text/javascript">
 		function onKeyDown(id) {
 			var e = $('#'+id).val();
@@ -1579,6 +1630,13 @@ $('.closemodale').click(function (e) {
 		});
 		$(function() {
 			$("#todatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		
+		
+		$(function() {
+			$("#popdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
