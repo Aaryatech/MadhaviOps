@@ -1062,11 +1062,11 @@ input:checked+.slider:before {
 					<div class="colOuter">
 						<div class="col-md-3">Is Buisness Head:</div>
 						<div class="col-md-2">
-							<input type="radio" name="isBuiss" id="isBuiss" value="1"
+							<input type="radio" name="isBuiss" value="1"
 								onclick="showDiv(this.value)" style="width: 10px;"> Yes
 						</div>
 						<div class="col-md-2">
-							<input type="radio" name="isBuiss" id="isBuiss" value="2"
+							<input type="radio" name="isBuiss"  value="2"
 								checked="checked" onclick="showDiv(this.value)"
 								style="width: 10px;"> No
 						</div>
@@ -1268,7 +1268,7 @@ $(document).ready(function($) {
 					} else {
 						$("#error_ageGrp").hide()
 					}
-					var x = document.getElementById("isBuiss").value; 
+					var x = $("input[name='isBuiss']:checked").val(); alert(x)
 				 if(x==1){
 				 if (!$("#gstNo").val() ) {
 
