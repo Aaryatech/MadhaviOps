@@ -208,8 +208,8 @@ public class ExpressBillController {
 			StringBuilder builder = new StringBuilder();
 			for (FrMenu frMenu : menuList) {
 
-				if (frMenu.getMenuId() == 26 || frMenu.getMenuId() == 31 || frMenu.getMenuId() == 33
-						|| frMenu.getMenuId() == 34 || frMenu.getMenuId()==63 || frMenu.getMenuId()==49||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId()==5 || frMenu.getMenuId()==6||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
 
 					String str = frMenu.getItemShow();
 					System.out.println("getItemShow" + frMenu.getItemShow());
