@@ -367,14 +367,14 @@ public class ExpressBillController {
 	}
 
 	@RequestMapping(value = "/calcStock", method = RequestMethod.GET)
-	public @ResponseBody int getStock(HttpServletRequest request, HttpServletResponse response,
+	public @ResponseBody float getStock(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "itemId", required = true) String itemId,
 			@RequestParam(value = "qty", required = true) int qty) {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		int curStock = 0;
+		float curStock = 0;
 		try {
 			boolean isPrevItem = false;
 
@@ -408,7 +408,7 @@ if(catId!=7) {
 				if (id == currentStockDetailList.get(i).getId()) {
 					isPrevItem = true;
 
-					curStock = (currentStockDetailList.get(i).getCurrentRegStock());
+					curStock = currentStockDetailList.get(i).getCurrentRegStock();
 				}
 			}
 }//end of if catId!=5;

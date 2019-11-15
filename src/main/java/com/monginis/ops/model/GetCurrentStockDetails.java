@@ -10,38 +10,29 @@ public class GetCurrentStockDetails {
 
 	private String itemName;
 
-	private int regOpeningStock;
+	private float regOpeningStock;
 
-	private double spOpeningStock;
+	private float spOpeningStock;
 
-	private int regTotalPurchase;
+	private float regTotalPurchase;
 
-	private double spTotalPurchase;
+	private float spTotalPurchase;
 
-	private int regTotalGrnGvn;
+	private float regTotalGrnGvn;
 
-	private int regTotalSell;
+	private float regTotalSell;
 
-	private int spTotalSell;
+	private float spTotalSell;
 
 	private int stockHeaderId;
 
-	private int currentRegStock;
+	private float currentRegStock;
 
-	private int currentSpStock;
+	private float currentSpStock;
 
-	private int reOrderQty;
+	private float reOrderQty;
 	
-	private int subCatId;//new for stock match utility --and add sell bill
-
-
-	public int getSubCatId() {
-		return subCatId;
-	}
-
-	public void setSubCatId(int subCatId) {
-		this.subCatId = subCatId;
-	}
+	private int subCatId;
 
 	public int getStockDetailId() {
 		return stockDetailId;
@@ -75,59 +66,59 @@ public class GetCurrentStockDetails {
 		this.itemName = itemName;
 	}
 
-	public int getRegOpeningStock() {
+	public float getRegOpeningStock() {
 		return regOpeningStock;
 	}
 
-	public void setRegOpeningStock(int regOpeningStock) {
+	public void setRegOpeningStock(float regOpeningStock) {
 		this.regOpeningStock = regOpeningStock;
 	}
 
-	public double getSpOpeningStock() {
+	public float getSpOpeningStock() {
 		return spOpeningStock;
 	}
 
-	public void setSpOpeningStock(double spOpeningStock) {
+	public void setSpOpeningStock(float spOpeningStock) {
 		this.spOpeningStock = spOpeningStock;
 	}
 
-	public int getRegTotalPurchase() {
+	public float getRegTotalPurchase() {
 		return regTotalPurchase;
 	}
 
-	public void setRegTotalPurchase(int regTotalPurchase) {
+	public void setRegTotalPurchase(float regTotalPurchase) {
 		this.regTotalPurchase = regTotalPurchase;
 	}
 
-	public double getSpTotalPurchase() {
+	public float getSpTotalPurchase() {
 		return spTotalPurchase;
 	}
 
-	public void setSpTotalPurchase(double spTotalPurchase) {
+	public void setSpTotalPurchase(float spTotalPurchase) {
 		this.spTotalPurchase = spTotalPurchase;
 	}
 
-	public int getRegTotalGrnGvn() {
+	public float getRegTotalGrnGvn() {
 		return regTotalGrnGvn;
 	}
 
-	public void setRegTotalGrnGvn(int regTotalGrnGvn) {
+	public void setRegTotalGrnGvn(float regTotalGrnGvn) {
 		this.regTotalGrnGvn = regTotalGrnGvn;
 	}
 
-	public int getRegTotalSell() {
+	public float getRegTotalSell() {
 		return regTotalSell;
 	}
 
-	public void setRegTotalSell(int regTotalSell) {
+	public void setRegTotalSell(float regTotalSell) {
 		this.regTotalSell = regTotalSell;
 	}
 
-	public int getSpTotalSell() {
+	public float getSpTotalSell() {
 		return spTotalSell;
 	}
 
-	public void setSpTotalSell(int spTotalSell) {
+	public void setSpTotalSell(float spTotalSell) {
 		this.spTotalSell = spTotalSell;
 	}
 
@@ -139,28 +130,36 @@ public class GetCurrentStockDetails {
 		this.stockHeaderId = stockHeaderId;
 	}
 
-	public int getCurrentRegStock() {
+	public float getCurrentRegStock() {
 		return currentRegStock;
 	}
 
-	public void setCurrentRegStock(int currentRegStock) {
+	public void setCurrentRegStock(float currentRegStock) {
 		this.currentRegStock = currentRegStock;
 	}
 
-	public int getCurrentSpStock() {
+	public float getCurrentSpStock() {
 		return currentSpStock;
 	}
 
-	public void setCurrentSpStock(int currentSpStock) {
+	public void setCurrentSpStock(float currentSpStock) {
 		this.currentSpStock = currentSpStock;
 	}
 
-	public int getReOrderQty() {
+	public float getReOrderQty() {
 		return reOrderQty;
 	}
 
-	public void setReOrderQty(int reOrderQty) {
+	public void setReOrderQty(float reOrderQty) {
 		this.reOrderQty = reOrderQty;
+	}
+
+	public int getSubCatId() {
+		return subCatId;
+	}
+
+	public void setSubCatId(int subCatId) {
+		this.subCatId = subCatId;
 	}
 
 	@Override
@@ -172,7 +171,7 @@ public class GetCurrentStockDetails {
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
 				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + ", subCatId=" + subCatId + "]";
 	}
-
     
+	
 
 }

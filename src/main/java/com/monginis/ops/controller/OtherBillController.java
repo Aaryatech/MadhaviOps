@@ -165,16 +165,16 @@ public class OtherBillController {
 			item.setItemName(itemName);
 			item.setItemImage("-");
 			item.setItemIsUsed(isActive);
-			item.setItemMrp1(roundUp((double)saleRate));
-			item.setItemMrp2(0.00);
-			item.setItemMrp3(roundUp((double)saleRate));
-			item.setItemRate1(roundUp((double)purchaseRate));
-			item.setItemRate2((double)frDetails.getFrId());
-			item.setItemRate3(roundUp((double)purchaseRate));
-			item.setItemSortId(0.00);
-			item.setItemTax1(roundUp((double)sgstPer));
-			item.setItemTax2(roundUp((double)cgstPer));
-			item.setItemTax3(roundUp((double)igstPer));
+			item.setItemMrp1(roundUp(saleRate));
+			item.setItemMrp2(0.0f);
+			item.setItemMrp3(roundUp(saleRate));
+			item.setItemRate1(roundUp(purchaseRate));
+			item.setItemRate2(frDetails.getFrId());
+			item.setItemRate3(roundUp(purchaseRate));
+			item.setItemSortId(0.0f);
+			item.setItemTax1(roundUp(sgstPer));
+			item.setItemTax2(roundUp(cgstPer));
+			item.setItemTax3(roundUp(igstPer));
 			item.setMinQty(1);
 			item.setShelfLife(1);
 			item.setGrnTwo(0);
@@ -226,7 +226,7 @@ public class OtherBillController {
 
 		return "redirect:/addOtherItem";
 	}
-	public static double roundUp(double d) {
+	public static float roundUp(float d) {
 
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 
@@ -479,15 +479,15 @@ public class OtherBillController {
 					item.setItemTax1(itemsList.get(i).getItemTax1());
 					item.setItemTax2(itemsList.get(i).getItemTax2());
 					item.setItemTax3(itemsList.get(i).getItemTax3());
-					item.setBaseRate(Double.valueOf(df.format((item.getItemRate1()*100)/(100+item.getItemTax3()))));
+					item.setBaseRate((item.getItemRate1()*100)/(100+item.getItemTax3()));
 					System.out.println("baseRate " + item.getBaseRate());
 					item.setDiscPer(discPer);
-					Double value = Double.valueOf(df.format(item.getBaseRate()*qty1));
-					item.setDiscAmt(Float.valueOf(df.format(((discPer/100)*value))));
-					Double taxableAmt = value-item.getDiscAmt();
-					item.setTaxableAmt(Double.valueOf(df.format(taxableAmt)));
-					item.setItemTax3rs(Double.valueOf(df.format((item.getItemTax3()/100)*item.getTaxableAmt())));
-					item.setGrandTotal(Double.valueOf(df.format(item.getTaxableAmt()+item.getItemTax3rs())));
+					float value = item.getBaseRate()*qty1;
+					item.setDiscAmt((discPer/100)*value);
+					float taxableAmt = value-item.getDiscAmt();
+					item.setTaxableAmt(taxableAmt);
+					item.setItemTax3rs((item.getItemTax3()/100)*item.getTaxableAmt());
+					item.setGrandTotal(item.getTaxableAmt()+item.getItemTax3rs());
 					item.setShelfLife(itemsList.get(i).getShelfLife());
 					break;
 				}
@@ -517,13 +517,13 @@ public class OtherBillController {
 			float discPer = Float.parseFloat(request.getParameter("discPer"));
 			additemsList.get(index).setQty(updateQty);
 			additemsList.get(index).setDiscPer(discPer);
-			Double value = Double.valueOf(df.format(additemsList.get(index).getBaseRate()*updateQty));
-			Double discAmt = (additemsList.get(index).getDiscPer()/100)*value;
+			float value = additemsList.get(index).getBaseRate()*updateQty;
+			float discAmt = (additemsList.get(index).getDiscPer()/100)*value;
 			additemsList.get(index).setDiscAmt(Float.valueOf(df.format((discAmt)))); 
-			Double taxableAmt = value-additemsList.get(index).getDiscAmt();
-			additemsList.get(index).setTaxableAmt(Double.valueOf(df.format(taxableAmt)));
-			additemsList.get(index).setItemTax3rs(Double.valueOf(df.format((additemsList.get(index).getItemTax3()/100)*additemsList.get(index).getTaxableAmt())));
-			additemsList.get(index).setGrandTotal(Double.valueOf(df.format(additemsList.get(index).getTaxableAmt()+additemsList.get(index).getItemTax3rs())));
+			float taxableAmt = value-additemsList.get(index).getDiscAmt();
+			additemsList.get(index).setTaxableAmt(taxableAmt);
+			additemsList.get(index).setItemTax3rs((additemsList.get(index).getItemTax3()/100)*additemsList.get(index).getTaxableAmt());
+			additemsList.get(index).setGrandTotal((additemsList.get(index).getTaxableAmt()+additemsList.get(index).getItemTax3rs()));
 		}catch(Exception e)
 		{
 			e.printStackTrace();

@@ -1233,9 +1233,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken1.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken1.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken1.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1245,7 +1245,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1253,7 +1253,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1285,9 +1285,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken2.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken2.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken2.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1297,7 +1297,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1305,7 +1305,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1336,9 +1336,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken3.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken3.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken3.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1348,7 +1348,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1356,7 +1356,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1388,9 +1388,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken4.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken4.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken4.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1400,7 +1400,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1408,7 +1408,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1440,9 +1440,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken5.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken5.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken5.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1452,7 +1452,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1460,7 +1460,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1492,9 +1492,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken6.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken6.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken6.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1504,7 +1504,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1512,7 +1512,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1544,9 +1544,9 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = customerBillDataToken7.getCustomerBillList().get(i).getBillStockType();
 
-						int prevQty = customerBillDataToken7.getCustomerBillList().get(i).getQty();
+						float prevQty = customerBillDataToken7.getCustomerBillList().get(i).getQty();
 						if (prevQty < qty) {
-							int newQty = qty - prevQty;
+							float newQty = qty - prevQty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
@@ -1556,7 +1556,7 @@ if(currentNewItem.getCatId()==7) {
 						} else if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1564,7 +1564,7 @@ if(currentNewItem.getCatId()==7) {
 								currentStockDetailList.get(j)
 										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						} else {
-							int newQty = prevQty - qty;
+							float newQty = prevQty - qty;
 							if (stockType == 1)
 								currentStockDetailList.get(j).setCurrentRegStock(
 										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
@@ -1609,7 +1609,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList1.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList1.get(i).getQty();
+						float prevQty = prevCustomerBillItemList1.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1641,7 +1641,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList2.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList2.get(i).getQty();
+						float prevQty = prevCustomerBillItemList2.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1673,7 +1673,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList3.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList3.get(i).getQty();
+						float prevQty = prevCustomerBillItemList3.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1705,7 +1705,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList4.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList4.get(i).getQty();
+						float prevQty = prevCustomerBillItemList4.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1744,7 +1744,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList5.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList5.get(i).getQty();
+						float prevQty = prevCustomerBillItemList5.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1783,7 +1783,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList6.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList6.get(i).getQty();
+						float prevQty = prevCustomerBillItemList6.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -1822,7 +1822,7 @@ if(currentNewItem.getCatId()==7) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList7.get(i).getBillStockType();
 
-						int prevQty = prevCustomerBillItemList7.get(i).getQty();
+						float prevQty = prevCustomerBillItemList7.get(i).getQty();
 
 						if (stockType == 1)
 							currentStockDetailList.get(j)
@@ -2088,7 +2088,7 @@ if(currentNewItem.getCatId()==7) {
 				Float tax2 = (float) customerBillItemList.get(i).getItemTax2();
 				Float tax3 = (float) customerBillItemList.get(i).getItemTax3();
 
-				int qty = customerBillItemList.get(i).getQty();
+				float qty = customerBillItemList.get(i).getQty();
 
 				Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
 				mrpBaseRate = roundUp(mrpBaseRate);

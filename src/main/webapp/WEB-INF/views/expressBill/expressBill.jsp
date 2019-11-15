@@ -813,7 +813,7 @@ function onRateChange(rate)
 
 	    $('#qty1').focus();
 	    
-	    $.getJSON('${calcStock}',{
+	/*     $.getJSON('${calcStock}',{
 
 	    	itemId : val,
             qty:qty,
@@ -831,7 +831,7 @@ function onRateChange(rate)
 			 
 			}
 		else
-	    {
+	    { */
 		
 
 		 $.getJSON('${insertItemOrder}',{
@@ -899,8 +899,8 @@ function onRateChange(rate)
 				 }
 	         });
 		
-	}
-	});
+	//}
+	//});
 	    document.getElementById("input").value="";
 
 		//$('#itemName').selectpicker('val',''+"");

@@ -8,7 +8,7 @@ public class OtherBillDetail {
 	private int menuId; 
 	private int catId; 
 	private int itemId; 
-	private int billQty; 
+	private float billQty; 
 	private float mrp; 
 	private float rate; 
 	private float baseRate; 
@@ -60,10 +60,10 @@ public class OtherBillDetail {
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-	public int getBillQty() {
+	public float getBillQty() {
 		return billQty;
 	}
-	public void setBillQty(int billQty) {
+	public void setBillQty(float billQty) {
 		this.billQty = billQty;
 	}
 	public float getMrp() {

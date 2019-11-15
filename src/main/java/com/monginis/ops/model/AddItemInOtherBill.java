@@ -5,22 +5,22 @@ public class AddItemInOtherBill {
 	private int id;
 	private String itemId;
 	private String itemName;
-	private Integer itemGrp1;
-	private Double itemRate1;
-	private Integer qty;
-	private Double baseRate;
+	private int itemGrp1;
+	private float itemRate1;
+	private float qty;
+	private float baseRate;
 	private float discPer;
 	private float discAmt;
-	private Double taxableAmt;
-	private Double itemMrp1;
-	private Double itemTax1;
-	private Double itemTax2;
-	private Double itemTax3;
-	private Double itemTax1rs;
-	private Double itemTax2rs;
-	private Double itemTax3rs;
-	private Double grandTotal;
-	private Integer shelfLife;
+	private float taxableAmt;
+	private float itemMrp1;
+	private float itemTax1;
+	private float itemTax2;
+	private float itemTax3;
+	private float itemTax1rs;
+	private float itemTax2rs;
+	private float itemTax3rs;
+	private float grandTotal;
+	private int shelfLife;
 	public int getId() {
 		return id;
 	}
@@ -39,90 +39,30 @@ public class AddItemInOtherBill {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public Integer getItemGrp1() {
+	public int getItemGrp1() {
 		return itemGrp1;
 	}
-	public void setItemGrp1(Integer itemGrp1) {
+	public void setItemGrp1(int itemGrp1) {
 		this.itemGrp1 = itemGrp1;
 	}
-	public Integer getQty() {
-		return qty;
-	}
-	public void setQty(Integer qty) {
-		this.qty = qty;
-	}
-	public Double getItemMrp1() {
-		return itemMrp1;
-	}
-	public void setItemMrp1(Double itemMrp1) {
-		this.itemMrp1 = itemMrp1;
-	}
-	public Double getItemTax1() {
-		return itemTax1;
-	}
-	public void setItemTax1(Double itemTax1) {
-		this.itemTax1 = itemTax1;
-	}
-	public Double getItemTax2() {
-		return itemTax2;
-	}
-	public void setItemTax2(Double itemTax2) {
-		this.itemTax2 = itemTax2;
-	}
-	public Double getItemTax3() {
-		return itemTax3;
-	}
-	public void setItemTax3(Double itemTax3) {
-		this.itemTax3 = itemTax3;
-	}
-	public Double getItemTax1rs() {
-		return itemTax1rs;
-	}
-	public void setItemTax1rs(Double itemTax1rs) {
-		this.itemTax1rs = itemTax1rs;
-	}
-	public Double getItemTax2rs() {
-		return itemTax2rs;
-	}
-	public void setItemTax2rs(Double itemTax2rs) {
-		this.itemTax2rs = itemTax2rs;
-	}
-	public Double getItemTax3rs() {
-		return itemTax3rs;
-	}
-	public void setItemTax3rs(Double itemTax3rs) {
-		this.itemTax3rs = itemTax3rs;
-	} 
-	public Double getItemRate1() {
+	public float getItemRate1() {
 		return itemRate1;
 	}
-	public void setItemRate1(Double itemRate1) {
+	public void setItemRate1(float itemRate1) {
 		this.itemRate1 = itemRate1;
 	}
-	
-
-	public Double getTaxableAmt() {
-		return taxableAmt;
+	public float getQty() {
+		return qty;
 	}
-	public void setTaxableAmt(Double taxableAmt) {
-		this.taxableAmt = taxableAmt;
+	public void setQty(float qty) {
+		this.qty = qty;
 	}
-	
-	public Double getGrandTotal() {
-		return grandTotal;
-	}
-	public void setGrandTotal(Double grandTotal) {
-		this.grandTotal = grandTotal;
-	}
-	
-	
-	public Double getBaseRate() {
+	public float getBaseRate() {
 		return baseRate;
 	}
-	public void setBaseRate(Double baseRate) {
+	public void setBaseRate(float baseRate) {
 		this.baseRate = baseRate;
 	}
-	
 	public float getDiscPer() {
 		return discPer;
 	}
@@ -135,11 +75,64 @@ public class AddItemInOtherBill {
 	public void setDiscAmt(float discAmt) {
 		this.discAmt = discAmt;
 	}
-	
-	public Integer getShelfLife() {
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
+	}
+	public float getItemMrp1() {
+		return itemMrp1;
+	}
+	public void setItemMrp1(float itemMrp1) {
+		this.itemMrp1 = itemMrp1;
+	}
+	public float getItemTax1() {
+		return itemTax1;
+	}
+	public void setItemTax1(float itemTax1) {
+		this.itemTax1 = itemTax1;
+	}
+	public float getItemTax2() {
+		return itemTax2;
+	}
+	public void setItemTax2(float itemTax2) {
+		this.itemTax2 = itemTax2;
+	}
+	public float getItemTax3() {
+		return itemTax3;
+	}
+	public void setItemTax3(float itemTax3) {
+		this.itemTax3 = itemTax3;
+	}
+	public float getItemTax1rs() {
+		return itemTax1rs;
+	}
+	public void setItemTax1rs(float itemTax1rs) {
+		this.itemTax1rs = itemTax1rs;
+	}
+	public float getItemTax2rs() {
+		return itemTax2rs;
+	}
+	public void setItemTax2rs(float itemTax2rs) {
+		this.itemTax2rs = itemTax2rs;
+	}
+	public float getItemTax3rs() {
+		return itemTax3rs;
+	}
+	public void setItemTax3rs(float itemTax3rs) {
+		this.itemTax3rs = itemTax3rs;
+	}
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+	public int getShelfLife() {
 		return shelfLife;
 	}
-	public void setShelfLife(Integer shelfLife) {
+	public void setShelfLife(int shelfLife) {
 		this.shelfLife = shelfLife;
 	}
 	@Override
@@ -151,7 +144,6 @@ public class AddItemInOtherBill {
 				+ itemTax1rs + ", itemTax2rs=" + itemTax2rs + ", itemTax3rs=" + itemTax3rs + ", grandTotal="
 				+ grandTotal + ", shelfLife=" + shelfLife + "]";
 	}
-	
 	
 
 }

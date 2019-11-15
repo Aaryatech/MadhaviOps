@@ -441,9 +441,9 @@ public class PhysicalStockController {
 
 				System.out.println("intStockDiffintStockDiffintStockDiffintStockDiffintStockDiff" + physicalStockQty);
 
-				int intStockDiff = 0;
+				float intStockDiff = 0;
 
-				int currentStock = (stockDetails.getCurrentRegStock());
+				float currentStock = (stockDetails.getCurrentRegStock());
 
 				intStockDiff = currentStock - physicalStockQty;
 

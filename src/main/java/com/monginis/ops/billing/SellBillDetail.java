@@ -25,7 +25,7 @@ public class SellBillDetail implements Serializable{
 	private float mrp;
 	
 	
-	private int qty;
+	private float qty;
 	
 	
 	private float mrpBaseRate;
@@ -120,11 +120,11 @@ public class SellBillDetail implements Serializable{
 		this.mrp = mrp;
 	}
 
-	public int getQty() {
+	public float getQty() {
 		return qty;
 	}
 
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 

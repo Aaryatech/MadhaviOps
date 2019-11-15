@@ -2403,14 +2403,14 @@ label:before{
 																					.remove();
 
 																			if (data.totalSpStock < qty) {
-																				//var spLess = confirm("  SP Stock Lessthan Qty. You want Avail.Qty: "+data.totalSpStock);
+																			
 																				Confirm(
 																						'Sp Stock is less than quantity',
 																						"Special Stock quantity is less than required quantity if you want use available quantity",
 																						'CANCEL',
 																						'Use Availabe Qty ('
 																								+ data.totalSpStock
-																								+ ')'); /*change*/
+																								+ ')'); 
 
 																				$(
 																						'.cancelAction')
@@ -2473,7 +2473,7 @@ label:before{
 
 																													}); //g
 																								});//g
-																				//}
+																			
 																				$(
 																						'.doAction')
 																						.click(
@@ -2540,8 +2540,8 @@ label:before{
 
 																		}); //g
 													});//g
-									//}  //g
-									//else{   use Regular
+									//  //g
+									// use Regular
 									$('.doAction')
 											.click(
 													function() {
@@ -2654,8 +2654,8 @@ label:before{
 																																			});
 																														}); //g
 																									});//g
-																					//}
-																					//else{
+																					
+																					
 																					$(
 																							'.doAction')
 																							.click(
@@ -2722,7 +2722,7 @@ label:before{
 																								});
 																			}
 
-																			//}
+																			
 																		});
 													});
 
@@ -2825,8 +2825,7 @@ label:before{
 																									});
 																				}); //g
 															});//g
-											//	}
-											//else{
+											
 											$('.doAction')
 													.click(
 															function() {

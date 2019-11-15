@@ -754,9 +754,9 @@ public class StockController {
 			postFrItemStockDetail.setPhysicalStock(intPhysicalStock);
 			postFrItemStockDetail.setRemark("");
 
-			int intStockDiff = 0;
+			float intStockDiff = 0;
 
-			int currentStock = (stockDetails.getCurrentRegStock() + stockDetails.getRegTotalPurchase())
+			float currentStock = (stockDetails.getCurrentRegStock() + stockDetails.getRegTotalPurchase())
 					- (stockDetails.getRegTotalGrnGvn() + stockDetails.getRegTotalSell());
 
 			if (currentStock > intPhysicalStock) {
@@ -1373,7 +1373,7 @@ public class StockController {
 
 					}
 
-					menuIdList.add(1);
+					menuIdList.add(26);
 
 				} else if (catId.equalsIgnoreCase("2")) {
 					menuIdList =new ArrayList<>();
@@ -1385,7 +1385,7 @@ public class StockController {
 						}
 
 					}
-						menuIdList.add(5);
+						menuIdList.add(82);
 				} else if (catId.equalsIgnoreCase("3")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1395,7 +1395,7 @@ public class StockController {
 						}
 
 					}
-					menuIdList.add(2);
+					menuIdList.add(33);
 				} else if (catId.equalsIgnoreCase("4")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1405,7 +1405,7 @@ public class StockController {
 						}
 
 					}
-					menuIdList.add(6);
+					menuIdList.add(34);
 				} else if (catId.equalsIgnoreCase("6")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1511,8 +1511,8 @@ public class StockController {
 				
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("itemGrp1", catId);
-				Item[] itemList = restTemplate.postForObject(Constant.URL + "getSalableItemsByCatId",
-					map,Item[].class);	// 	getItemsByCatId
+				Item[] itemList = restTemplate.postForObject(Constant.URL + "getItemsByCatId",
+					map,Item[].class);
 				ArrayList<Item> itemListRes = new ArrayList<Item>(Arrays.asList(itemList));
 
 				
@@ -1636,7 +1636,7 @@ public class StockController {
 				Float tax2 = (float) customerBillItemList.get(i).getItemTax2();
 				Float tax3 = (float) customerBillItemList.get(i).getItemTax3();
 
-				int qty = customerBillItemList.get(i).getQty();
+				float qty = customerBillItemList.get(i).getQty();
 
 				Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
 				mrpBaseRate = roundUp(mrpBaseRate);
