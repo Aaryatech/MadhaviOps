@@ -110,7 +110,8 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("login");
+		//ModelAndView model = new ModelAndView("login");
+		ModelAndView model = new ModelAndView("customerBill/customerbilling");
 
 		logger.info("/login request mapping.");
 
