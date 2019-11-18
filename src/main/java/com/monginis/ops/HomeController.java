@@ -500,18 +500,5 @@ public class HomeController {
 		return model;
 
 	}
-	
-	
-	@RequestMapping(value = "/customerBill", method = RequestMethod.GET)
-	public ModelAndView displayCustomerBill(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("customerBill/customerbilling");
-
-		
-
-		return model;
-
-	}
-	
-	
+	 
 }

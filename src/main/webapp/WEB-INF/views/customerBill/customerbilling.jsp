@@ -30,31 +30,21 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/images/feviconicon.png"
 	type="image/x-icon" />
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+
 
 <!--autocomplete-->
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/autocomplete.css">
 <script
 	src="${pageContext.request.contextPath}/resources/css/easy-responsive-tabs.css"></script>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+
 
 <!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
@@ -63,27 +53,18 @@
 		});
 	});
 </script>
-<!--rightNav-->
 
-<!--new css added by kalpesh -->
-<!-- <link href='http://fonts.googleapis.com/css?family=Cuprum&subset=latin' rel='stylesheet' type='text/css'> -->
 
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 
-<%--   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/styles.css" />   --%>
-
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
-<!--new css added by kalpesh -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
-<script
-	src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
-<script
-	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script>
+
 <!-- 1 css and 2 js for search item   -->
 
 <!----------------------------------------Dropdown With Search----------------------------------------------- -->
@@ -95,9 +76,6 @@
 
 
 
-<!-- custom scrollbar plugin added by kalpesh -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
 
@@ -621,8 +599,9 @@ table.responsive-table {
 
 
 
-
-
+	<c:url var="saveCustomerFromBill" value="/saveCustomerFromBill" />
+	<c:url var="editCustomerFromBill" value="/editCustomerFromBill" />
+	<c:url var="submitEditCustomer" value="/submitEditCustomer" />
 
 	<div class="wrapper">
 
@@ -704,14 +683,6 @@ table.responsive-table {
 
 										</div>
 
-
-
-
-
-
-
-
-
 										<div class="row" style="margin-top: 10px;">
 											<div class="col-md-2">
 												<div class="col1title">Customer</div>
@@ -722,10 +693,13 @@ table.responsive-table {
 												<select name="cust" id="cust"
 													data-placeholder="Select Customer" class="chosen-select"
 													style="text-align: left;" required>
-
-													<option value="-1" style="text-align: left;">Anmol</option>
-													<option value="-1" style="text-align: left;">Sachin</option>
-
+													<option value="0" style="text-align: left;">Select
+														Customer</option>
+													<c:forEach items="${customerList}" var="customerList">
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:forEach>
 												</select>
 
 											</div>
@@ -736,15 +710,17 @@ table.responsive-table {
 													data-target="#myModalAdd">
 													<i class="fa fa-plus"></i>
 												</button>
-												<button class="btn" data-toggle="modal"
+												<!-- <button class="btn" data-toggle="modal"
 													data-target="#myModalEdit">
+													<i class="fa fa-edit"></i>
+												</button> -->
+												<button class="btn" onclick="editCustomer()">
 													<i class="fa fa-edit"></i>
 												</button>
 											</div>
 
 
 										</div>
-
 										<div class="row">
 											<div class="col-md-2">
 												<div class="col1title">Item</div>
@@ -755,7 +731,7 @@ table.responsive-table {
 												<input list="items" id="itemName" name="itemName"
 													class="form-control chosen" autocomplete="off"
 													placeholder="Item Name" onchange="onSelectItem()"
-													style="border-radius: 5px; padding: 2px 1px 0px 8px; height: 26px; text-align: left; background: linear-gradient(#fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%);color: #444;"
+													style="border-radius: 5px; padding: 2px 1px 0px 8px; height: 26px; text-align: left; background: linear-gradient(#fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%); color: #444;"
 													type="text">
 												<datalist id="items">
 													<option value='101' data-value='Cakes' data-id='101'>Cakes</option>
@@ -1009,9 +985,10 @@ table.responsive-table {
 												<div class="col-md-4"
 													style="text-align: left; display: none;" id="epayDiv">
 													<div style="display: flex;">
-														ePay&nbsp;&nbsp; <select name="cust" id="cust"
-															data-placeholder="Select ePay Mode" class="chosen-select"
-															style="text-align: left;" tabindex="6" required>
+														ePay&nbsp;&nbsp; <select name="paymentMode"
+															id="paymentMode" data-placeholder="Select ePay Mode"
+															class="chosen-select" style="text-align: left;"
+															tabindex="6" required>
 
 															<option value="1" style="text-align: left;">Google
 																Pay</option>
@@ -1048,8 +1025,8 @@ table.responsive-table {
 												<div class="col-md-5"
 													style="text-align: right; display: flex;">
 													<input type="checkbox">ePay&nbsp; <select
-														name="cust" id="cust" data-placeholder="Select ePay Mode"
-														class="chosen-select"
+														name="onlineType" id="onlineType"
+														data-placeholder="Select ePay Mode" class="chosen-select"
 														style="text-align: left; width: 50px;" required>
 
 														<option value="1" style="text-align: left;">Google
@@ -1233,7 +1210,8 @@ table.responsive-table {
 							Name : &nbsp;</div>
 						<div class="col-md-6">
 							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Customer Name" name="name1" required>
+								placeholder="Enter Customer Name" name="customerName"
+								onchange="trim(this)" id="customerName">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1244,7 +1222,8 @@ table.responsive-table {
 							Number :&nbsp;</div>
 						<div class="col-md-6">
 							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Mobile Number" name="name1" required>
+								placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
+								onchange="trim(this)" maxlength="10">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1253,9 +1232,9 @@ table.responsive-table {
 
 						<div class="col-md-4" style="text-align: right;">DOB :&nbsp;</div>
 						<div class="col-md-6">
-							<input id="datepicker1" class="form-control" autocomplete="off"
-								placeholder="Delivery Date" name="datepicker1" type="text"
-								value="08-11-2019">
+							<input id="dateOfBirth" class="form-control " autocomplete="off"
+								placeholder="Date Of Birth" name="dateOfBirth" type="date">
+							<!-- datepicker -->
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1268,54 +1247,59 @@ table.responsive-table {
 
 							<label class="container"
 								style="font-weight: normal; padding-left: 1px;">Yes <input
-								type="radio" checked="checked" name="radio"> <span
-								class="checkmark"></span>
+								type="radio" name="isBuissness" id="buisnessyes"
+								onclick="isBuissness(1)"> <span class="checkmark"></span>
 							</label> <label class="container"
 								style="font-weight: normal; padding-left: 1px;">No <input
-								type="radio" checked="checked" name="radio"> <span
+								type="radio" checked="checked" name="isBuissness"
+								id="buisnessno" onclick="isBuissness(0)"> <span
 								class="checkmark"></span>
 							</label>
 
 						</div>
 						<div class="col-md-2"></div>
 					</div>
+					<div style="display: none;" id="isbuissnessdiv">
+						<div class="row">
 
-					<div class="row">
-
-						<div class="col-md-4" style="text-align: right;">Company
-							Name :&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Company Name" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">Company
+								Name :&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter Company Name" name="companyName"
+									onchange="trim(this)" id="companyName">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
-					</div>
 
-					<div class="row">
+						<div class="row">
 
-						<div class="col-md-4" style="text-align: right;">GST Number
-							:&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter GST Name" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">GST Number
+								:&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter GST Name" name="gstNo" id="gstNo"
+									onchange="trim(this)">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
-					</div>
 
-					<div class="row">
+						<div class="row">
 
-						<div class="col-md-4" style="text-align: right;">Address
-							:&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Address" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">Address
+								:&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter Address" name="custAdd" id="custAdd"
+									onchange="trim(this)">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
 					</div>
-
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default"
+						onclick="addCustomer()">Save</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -1343,7 +1327,8 @@ table.responsive-table {
 							Name : &nbsp;</div>
 						<div class="col-md-6">
 							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Customer Name" name="name1" required>
+								placeholder="Enter Customer Name" name="customerNameEdit"
+								id="customerNameEdit" onchange="trim(this)">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1354,7 +1339,8 @@ table.responsive-table {
 							Number :&nbsp;</div>
 						<div class="col-md-6">
 							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Mobile Number" name="name1" required>
+								placeholder="Enter Mobile Number" name="mobileNoEdit"
+								id="mobileNoEdit" onchange="trim(this)">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1363,9 +1349,9 @@ table.responsive-table {
 
 						<div class="col-md-4" style="text-align: right;">DOB :&nbsp;</div>
 						<div class="col-md-6">
-							<input id="datepicker1" class="form-control" autocomplete="off"
-								placeholder="Delivery Date" name="datepicker1" type="text"
-								value="08-11-2019">
+							<input id="" class="form-control datepicker" autocomplete="off"
+								placeholder="Delivery Date" name="dateOfBirthEdit"
+								id="dateOfBirthEdit" type="date">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1378,54 +1364,57 @@ table.responsive-table {
 
 							<label class="container"
 								style="font-weight: normal; padding-left: 1px;">Yes <input
-								type="radio" checked="checked" name="radio"> <span
-								class="checkmark"></span>
+								type="radio" name="isBuissnessEdit" id="buisnessyesEdit"
+								onclick="isBuissnessEdit(1)"> <span class="checkmark"></span>
 							</label> <label class="container"
 								style="font-weight: normal; padding-left: 1px;">No <input
-								type="radio" checked="checked" name="radio"> <span
+								type="radio" checked="checked" name="isBuissnessEdit"
+								id="buisnessnoEdit" onclick="isBuissnessEdit(0)"> <span
 								class="checkmark"></span>
 							</label>
 
 						</div>
 						<div class="col-md-2"></div>
 					</div>
+					<div style="display: none;" id="isbuissnessdivedit">
+						<div class="row">
 
-					<div class="row">
-
-						<div class="col-md-4" style="text-align: right;">Company
-							Name :&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Company Name" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">Company
+								Name :&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter Company Name" name="companyNameEdit"
+									id="companyNameEdit">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
-					</div>
 
-					<div class="row">
+						<div class="row">
 
-						<div class="col-md-4" style="text-align: right;">GST Number
-							:&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter GST Name" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">GST Number
+								:&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter GST Name" name="gstNoEdit" id="gstNoEdit">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
-					</div>
 
-					<div class="row">
+						<div class="row">
 
-						<div class="col-md-4" style="text-align: right;">Address
-							:&nbsp;</div>
-						<div class="col-md-6">
-							<input type="text" style="width: 100%;" class="form-control"
-								placeholder="Enter Address" name="name1" required>
+							<div class="col-md-4" style="text-align: right;">Address
+								:&nbsp;</div>
+							<div class="col-md-6">
+								<input type="text" style="width: 100%;" class="form-control"
+									placeholder="Enter Address" name="custAddEdit" id="custAddEdit">
+							</div>
+							<div class="col-md-2"></div>
 						</div>
-						<div class="col-md-2"></div>
 					</div>
-
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-default"
+						onclick="submitEditCustomer()">Save</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -1599,16 +1588,40 @@ table.responsive-table {
 	</div>
 	<!-- QTY POPUP -->
 
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/autocomplete.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script>
 
 
-
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 	<!--easyTabs-->
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<!--easyTabs-->
-
-
-
-
+	<script>
+		$(function() {
+			$(".datepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+	</script>
 	<script>
 		function paymentMode(val) {
 
@@ -1624,6 +1637,24 @@ table.responsive-table {
 	</script>
 
 	<script type="text/javascript">
+		function isBuissness(value) {
+
+			if (value == 1) {
+				$("#isbuissnessdiv").show();
+			} else {
+				$("#isbuissnessdiv").hide();
+			}
+
+		}
+		function isBuissnessEdit(value) {
+
+			if (value == 1) {
+				$("#isbuissnessdivedit").show();
+			} else {
+				$("#isbuissnessdivedit").hide();
+			}
+
+		}
 		function onloadTab(token) {
 
 			//$("#tabId").value=token;
@@ -1632,7 +1663,230 @@ table.responsive-table {
 		}
 	</script>
 
+	<script type="text/javascript">
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
 
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+
+		function editCustomer() {
+
+			var custId = document.getElementById("cust").value;
+
+			if (custId != 0) {
+
+				$
+						.post(
+								'${editCustomerFromBill}',
+								{
+									custId : custId,
+									ajax : 'true'
+								},
+								function(data) {
+
+									$('#myModalEdit').modal('show');
+									document.getElementById("customerNameEdit").value = data.custName;
+									document.getElementById("mobileNoEdit").value = data.phoneNumber;
+
+									/* var parts = data.custDob.split('-');
+
+									var mydate = new Date(parts[0],
+											parts[1] - 1, parts[2]);
+									alert(mydate)
+									document.getElementById("dateOfBirthEdit").value = mydate; */
+
+									if (data.isBuissHead == 1) {
+
+										$("#isbuissnessdivedit").show();
+										document
+												.getElementById("buisnessyesEdit").checked = true;
+										document
+												.getElementById("companyNameEdit").value = data.companyName;
+										document.getElementById("gstNoEdit").value = data.gstNo;
+										document.getElementById("custAddEdit").value = data.address;
+									} else {
+										$("#isbuissnessdivedit").hide();
+										document
+												.getElementById("buisnessyesEdit").checked = false;
+									}
+
+								});
+
+			} else {
+				alert("Select Customer ");
+			}
+
+		}
+
+		function submitEditCustomer() {
+
+			var customerName = document.getElementById("customerNameEdit").value;
+			var mobileNo = document.getElementById("mobileNoEdit").value;
+			alert("asdf");
+			var dateOfBirth = document.getElementById("dateOfBirthEdit").value;
+			//var isBuissness = document.getElementById("isBuissness").value;
+			
+			var buisness = 0;
+			if (document.getElementById('buisnessyesEdit').checked) {
+				buisness = 1;
+			}
+			
+			var companyName = document.getElementById("companyNameEdit").value;
+			var gstNo = document.getElementById("gstNoEdit").value;
+			var custAdd = document.getElementById("custAddEdit").value;
+			
+			var flag = 0;
+
+			if (customerName == "") {
+				alert("Enter Customer Name");
+				flag = 1;
+			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
+				alert("Enter Valid Mobile No");
+				flag = 1;
+			} else if (dateOfBirth == "") {
+				alert("Enter Date of Birth");
+				flag = 1;
+			} else if (buisness == 1) {
+
+				if (companyName == "") {
+					alert("Enter Company Name");
+					flag = 1;
+				} else if (gstNo == "") {
+					alert("Enter GST No");
+					flag = 1;
+				} else if (custAdd == "") {
+					alert("Enter Address");
+					flag = 1;
+				}
+			}
+
+			if (flag == 0) {
+				$.post('${submitEditCustomer}', {
+					customerName : customerName,
+					mobileNo : mobileNo,
+					dateOfBirth : dateOfBirth,
+					buisness : buisness,
+					companyName : companyName,
+					gstNo : gstNo,
+					custAdd : custAdd,
+					ajax : 'true'
+				}, function(data) {
+
+				});
+			}
+
+		}
+
+		function addCustomer() {
+
+			var customerName = document.getElementById("customerName").value;
+			var mobileNo = document.getElementById("mobileNo").value;
+			var dateOfBirth = document.getElementById("dateOfBirth").value;
+			//var isBuissness = document.getElementById("isBuissness").value;
+			var buisness = 0;
+			if (document.getElementById('buisnessyes').checked) {
+				buisness = 1;
+			}
+			var companyName = document.getElementById("companyName").value;
+			var gstNo = document.getElementById("gstNo").value;
+			var custAdd = document.getElementById("custAdd").value;
+
+			var flag = 0;
+
+			if (customerName == "") {
+				alert("Enter Customer Name");
+				flag = 1;
+			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
+				alert("Enter Valid Mobile No");
+				flag = 1;
+			} else if (dateOfBirth == "") {
+				alert("Enter Date of Birth");
+				flag = 1;
+			} else if (buisness == 1) {
+
+				if (companyName == "") {
+					alert("Enter Company Name");
+					flag = 1;
+				} else if (gstNo == "") {
+					alert("Enter GST No");
+					flag = 1;
+				} else if (custAdd == "") {
+					alert("Enter Address");
+					flag = 1;
+				}
+			}
+
+			if (flag == 0) {
+				$
+						.post(
+								'${saveCustomerFromBill}',
+								{
+									customerName : customerName,
+									mobileNo : mobileNo,
+									dateOfBirth : dateOfBirth,
+									buisness : buisness,
+									companyName : companyName,
+									gstNo : gstNo,
+									custAdd : custAdd,
+									ajax : 'true'
+								},
+								function(data) {
+
+									//alert(JSON.stringify(data));
+
+									if (data.error == false) {
+
+										var html = '<option value="0" selected>Select Customer</option>';
+										var len = data.customerList.length;
+										//alert(data.addCustomerId);
+										for (var i = 0; i < len; i++) {
+
+											if (data.customerList[i].custId == data.addCustomerId) {
+												html += '<option value="' + data.customerList[i].custId + '" selected>'
+														+ data.customerList[i].custName
+														+ '&nbsp;'
+														+ data.customerList[i].phoneNumber
+														+ '</option>';
+											} else {
+												html += '<option value="' + data.customerList[i].custId + '">'
+														+ data.customerList[i].custName
+														+ '&nbsp;'
+														+ data.customerList[i].phoneNumber
+														+ '</option>';
+											}
+
+										}
+
+										$('#cust').html(html);
+
+										alert("Customer Add Successfully");
+										$("#cust").trigger("chosen:updated");
+										$('.chosen-select').trigger(
+												'chosen:updated');
+										$('#myModalAdd').modal('hide');
+									} else {
+										alert("Failed To Add Customer");
+									}
+
+								});
+			}
+
+		}
+	</script>
 	<script type="text/javascript">
 		function refreshPage() {
 
@@ -1679,12 +1933,7 @@ table.responsive-table {
 
 
 
-	<script
-		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
-		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
-		type="text/javascript" charset="utf-8"></script>
+
 
 
 </body>
