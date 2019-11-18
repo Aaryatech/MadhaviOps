@@ -1349,9 +1349,9 @@ table.responsive-table {
 
 						<div class="col-md-4" style="text-align: right;">DOB :&nbsp;</div>
 						<div class="col-md-6">
-							<input id="" class="form-control datepicker" autocomplete="off"
-								placeholder="Delivery Date" name="dateOfBirthEdit"
-								id="dateOfBirthEdit" type="date">
+							<input class="form-control" autocomplete="off"
+								placeholder="Delivery Date" name="dobEdit" id="dobEdit"
+								type="date">
 						</div>
 						<div class="col-md-2"></div>
 					</div>
@@ -1384,7 +1384,7 @@ table.responsive-table {
 							<div class="col-md-6">
 								<input type="text" style="width: 100%;" class="form-control"
 									placeholder="Enter Company Name" name="companyNameEdit"
-									id="companyNameEdit">
+									id="companyNameEdit" onchange="trim(this)">
 							</div>
 							<div class="col-md-2"></div>
 						</div>
@@ -1395,7 +1395,8 @@ table.responsive-table {
 								:&nbsp;</div>
 							<div class="col-md-6">
 								<input type="text" style="width: 100%;" class="form-control"
-									placeholder="Enter GST Name" name="gstNoEdit" id="gstNoEdit">
+									placeholder="Enter GST Name" name="gstNoEdit" id="gstNoEdit"
+									onchange="trim(this)">
 							</div>
 							<div class="col-md-2"></div>
 						</div>
@@ -1406,7 +1407,8 @@ table.responsive-table {
 								:&nbsp;</div>
 							<div class="col-md-6">
 								<input type="text" style="width: 100%;" class="form-control"
-									placeholder="Enter Address" name="custAddEdit" id="custAddEdit">
+									placeholder="Enter Address" name="custAddEdit" id="custAddEdit"
+									onchange="trim(this)">
 							</div>
 							<div class="col-md-2"></div>
 						</div>
@@ -1702,12 +1704,7 @@ table.responsive-table {
 									document.getElementById("customerNameEdit").value = data.custName;
 									document.getElementById("mobileNoEdit").value = data.phoneNumber;
 
-									/* var parts = data.custDob.split('-');
-
-									var mydate = new Date(parts[0],
-											parts[1] - 1, parts[2]);
-									alert(mydate)
-									document.getElementById("dateOfBirthEdit").value = mydate; */
+									document.getElementById("dobEdit").value = data.custDob;
 
 									if (data.isBuissHead == 1) {
 
@@ -1736,19 +1733,20 @@ table.responsive-table {
 
 			var customerName = document.getElementById("customerNameEdit").value;
 			var mobileNo = document.getElementById("mobileNoEdit").value;
-			alert("asdf");
-			var dateOfBirth = document.getElementById("dateOfBirthEdit").value;
+
+			var dateOfBirth = document.getElementById("dobEdit").value;
+
 			//var isBuissness = document.getElementById("isBuissness").value;
-			
+
 			var buisness = 0;
 			if (document.getElementById('buisnessyesEdit').checked) {
 				buisness = 1;
 			}
-			
+
 			var companyName = document.getElementById("companyNameEdit").value;
 			var gstNo = document.getElementById("gstNoEdit").value;
 			var custAdd = document.getElementById("custAddEdit").value;
-			
+
 			var flag = 0;
 
 			if (customerName == "") {
@@ -1775,18 +1773,61 @@ table.responsive-table {
 			}
 
 			if (flag == 0) {
-				$.post('${submitEditCustomer}', {
-					customerName : customerName,
-					mobileNo : mobileNo,
-					dateOfBirth : dateOfBirth,
-					buisness : buisness,
-					companyName : companyName,
-					gstNo : gstNo,
-					custAdd : custAdd,
-					ajax : 'true'
-				}, function(data) {
+				$
+						.post(
+								'${submitEditCustomer}',
+								{
+									customerName : customerName,
+									mobileNo : mobileNo,
+									dateOfBirth : dateOfBirth,
+									buisness : buisness,
+									companyName : companyName,
+									gstNo : gstNo,
+									custAdd : custAdd,
+									ajax : 'true'
+								},
+								function(data) {
+									$('#myModalEdit').modal('hide');
 
-				});
+									var html = '<option value="0" selected>Select Customer</option>';
+									var len = data.customerList.length;
+									//alert(data.addCustomerId);
+									for (var i = 0; i < len; i++) {
+
+										if (data.customerList[i].custId == data.addCustomerId) {
+											html += '<option value="' + data.customerList[i].custId + '" selected>'
+													+ data.customerList[i].custName
+													+ '&nbsp;'
+													+ data.customerList[i].phoneNumber
+													+ '</option>';
+										} else {
+											html += '<option value="' + data.customerList[i].custId + '">'
+													+ data.customerList[i].custName
+													+ '&nbsp;'
+													+ data.customerList[i].phoneNumber
+													+ '</option>';
+										}
+
+									}
+
+									$('#cust').html(html);
+
+									alert("Update Information Successfully ");
+									$("#cust").trigger("chosen:updated");
+									$('.chosen-select').trigger(
+											'chosen:updated');
+
+									document.getElementById("customerNameEdit").value = "";
+									document.getElementById("mobileNoEdit").value = "";
+
+									document.getElementById("dobEdit").value = "";
+
+									document.getElementById("buisnessnoEdit").checked = true;
+									document.getElementById("companyNameEdit").value = "";
+									document.getElementById("gstNoEdit").value = "";
+									document.getElementById("custAddEdit").value = "";
+
+								});
 			}
 
 		}
@@ -1878,6 +1919,17 @@ table.responsive-table {
 										$('.chosen-select').trigger(
 												'chosen:updated');
 										$('#myModalAdd').modal('hide');
+
+										document.getElementById("customerName").value = "";
+										document.getElementById("mobileNo").value = "";
+
+										document.getElementById("dateOfBirth").value = "";
+
+										document.getElementById("buisnessno").checked = true;
+										document.getElementById("companyName").value = "";
+										document.getElementById("gstNo").value = "";
+										document.getElementById("custAdd").value = "";
+
 									} else {
 										alert("Failed To Add Customer");
 									}

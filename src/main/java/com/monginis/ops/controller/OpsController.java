@@ -110,12 +110,14 @@ public class OpsController {
 		}
 		return info;
 	}
-
+	
+	Customer edit = new Customer();
+	
 	@RequestMapping(value = "/editCustomerFromBill", method = RequestMethod.POST)
 	@ResponseBody
 	public Customer editCustomerFromBill(HttpServletRequest request, HttpServletResponse responsel) {
 
-		Customer edit = new Customer();
+		edit = new Customer();
 
 		try {
 
@@ -130,5 +132,59 @@ public class OpsController {
 		}
 		return edit;
 	}
+	
+	
+	@RequestMapping(value = "/submitEditCustomer", method = RequestMethod.POST)
+	@ResponseBody
+	public AddCustemerResponse submitEditCustomer(HttpServletRequest request, HttpServletResponse responsel) {
 
+		AddCustemerResponse info = new AddCustemerResponse();
+
+		try {
+
+			String customerName = request.getParameter("customerName");
+			String mobileNo = request.getParameter("mobileNo");
+			String dateOfBirth = request.getParameter("dateOfBirth");
+			int buisness = Integer.parseInt(request.getParameter("buisness"));
+			String companyName = request.getParameter("companyName");
+			String gstNo = request.getParameter("gstNo");
+			String custAdd = request.getParameter("custAdd");
+
+			 
+			edit.setCustName(customerName);
+			edit.setPhoneNumber(mobileNo);
+			edit.setIsBuissHead(buisness);
+			edit.setCustDob(dateOfBirth);
+			if(buisness==0) {
+				edit.setCompanyName("");
+				edit.setAddress("");
+				edit.setGstNo("");
+			}else {
+				edit.setCompanyName(companyName);
+				edit.setAddress(custAdd);
+				edit.setGstNo(gstNo);
+			}
+			
+			
+			 
+			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", edit, Customer.class);
+
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+
+			if (res == null) {
+
+				info.setError(true);
+			} else {
+				info.setCustomerList(customerList);
+				info.setAddCustomerId(res.getCustId());
+				info.setError(false);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		return info;
+	}
 }
