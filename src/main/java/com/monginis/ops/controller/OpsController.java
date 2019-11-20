@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,11 @@ import org.springframework.web.client.RestTemplate;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.Customer;
+import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
+import com.monginis.ops.model.Item;
+import com.monginis.ops.model.ItemResponse;
 
 @Controller
 @Scope("session")
@@ -34,11 +39,37 @@ public class OpsController {
 		String mav = "customerBill/customerbilling";
 
 		try {
-
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+			 
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
 
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId()==5 || frMenu.getMenuId()==6||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
+  
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length()); 
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>(); 
+			mvm.add("itemList", items);
+			mvm.add("frId", frDetails.getFrId());
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
+					ItemResponse.class); 
+			List<Item> newItemsList = itemsList.getItemList();
+			model.addAttribute("newItemsList", newItemsList);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,12 +80,39 @@ public class OpsController {
 	public String newcustomerbill(HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		String mav = "customerBill/newcustomerbill";
-
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
+			
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+			 
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
+
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId()==5 || frMenu.getMenuId()==6||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
+  
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length()); 
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>(); 
+			mvm.add("itemList", items);
+			mvm.add("frId", frDetails.getFrId());
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
+					ItemResponse.class); 
+			List<Item> newItemsList = itemsList.getItemList();
+			
+			System.out.println(newItemsList);
+			model.addAttribute("newItemsList", newItemsList);
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -116,12 +116,11 @@
 									style="border-radius: 5px; padding: 2px 1px 0px 8px; height: 26px; text-align: left; background: linear-gradient(#fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%); color: #444;"
 									type="text">
 								<datalist id="items">
-									<option value='101' data-value='Cakes' data-id='101'>Cakes</option>
-									<option value='102' data-value='Chocolates' data-id='101'>Chocolates</option>
-									<option value='103' data-value='Ice Cream' data-id='101'>Ice
-										Cream</option>
-									<option value='104' data-value='Samosa' data-id='101'>Samosa</option>
-									<option value='105' data-value='Sandwich' data-id='101'>Sandwich</option>
+									<c:forEach items="${newItemsList}" var="newItemsList">
+										<option value='${newItemsList.id}'
+											data-value='${newItemsList.itemName}'
+											data-id='${newItemsList.id}'>${newItemsList.itemName}</option>
+									</c:forEach>
 								</datalist>
 							</div>
 							<div class="customer_three">
@@ -737,7 +736,7 @@
 									ajax : 'true'
 								},
 								function(data) {
-
+									$('.addcust_open').trigger('click');
 									//$('#myModalEdit').modal('show');
 									document
 											.getElementById("add_cust_head_name").innerHTML = "Edit Customer";
@@ -874,7 +873,7 @@
 										} else {
 											alert("Customer Add Successfully");
 										}
-
+										$('.addcust_close').trigger('click');
 									} else {
 										alert("Failed To Add Customer");
 									}
@@ -924,8 +923,8 @@
 		function clearAddCustomerpopup() {
 
 			document.getElementById("customerName").value = "";
-			document.getElementById("mobileNo").value = ""; 
-			document.getElementById("dateOfBirth").value = ""; 
+			document.getElementById("mobileNo").value = "";
+			document.getElementById("dateOfBirth").value = "";
 			document.getElementById("n-option").checked = true;
 			document.getElementById("companyName").value = "";
 			document.getElementById("gstNo").value = "";
