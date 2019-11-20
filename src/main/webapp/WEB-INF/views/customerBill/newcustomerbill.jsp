@@ -1,1054 +1,940 @@
-
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>POS | SimplePOS</title>
-
+<meta charset="utf-8" />
+<title>Monginis</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
+<meta name="keywords" content="Monginis" />
+<meta name="description" content="Monginis" />
+<meta name="author" content="Monginis">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/newpos/css/monginis.css"
+	type="text/css" />
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
+	type="images/png" sizes="32x32">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
-	href="${pageContext.request.contextPath}/resources/poscss/style.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="${pageContext.request.contextPath}/resources/posjs/jQuery-2.1.4.min.js"></script>
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
+<!--font-family: 'Source Sans Pro', sans-serif;-->
+
 </head>
-<body class="skin-green sidebar-collapse sidebar-mini pos">
-	<div class="wrapper rtl rtl-inv">
 
-		<jsp:include page="/WEB-INF/views/posinclude/header.jsp"></jsp:include>
-		<div class="content-wrapper">
+<!--commanJS-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery-1.10.2.min.js"></script>
+<!--commanJS-->
+<!-- jQuery Popup Overlay -->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.popupoverlay.js"></script>
+<c:url var="saveCustomerFromBill" value="/saveCustomerFromBill" />
+<c:url var="editCustomerFromBill" value="/editCustomerFromBill" />
+<body>
+	<form action="" method="get">
 
-			<div class="col-lg-12 alerts"></div>
+		<!--wrapper-start-->
+		<div class="wrapper">
 
-			<table style="width: 100%;" class="layout-table">
-				<tr>
-					<td style="width: 460px;">
-
-						<div id="pos">
-							<form action="https://spos.tecdiary.net/pos" id="pos-sale-form"
-								method="post" accept-charset="utf-8">
-								<input type="hidden" name="spos_token"
-									value="5a7f0721753a0ade542a62d111fd4805" />
-								<div class="well well-sm" id="leftdiv">
-									<div id="lefttop" style="margin-bottom: 5px;">
-										<div class="form-group" style="margin-bottom: 5px;">
-											<div class="input-group">
-												<select name="customer_id" id="spos_customer"
-													data-placeholder="Select Customer" required="required"
-													class="form-control select2"
-													style="width: 100%; position: absolute;">
-													<option value="1">Walk-in Client</option>
-												</select>
-												<div class="input-group-addon no-print"
-													style="padding: 2px 5px;">
-													<a href="#" id="add-customer" class="external"
-														data-toggle="modal" data-target="#myModal"><i
-														class="fa fa-plus"></i></a>
-												</div>
-											</div>
-											<div style="clear: both;"></div>
-										</div>
-										<div class="form-group" style="margin-bottom: 5px;">
-											<input type="text" name="hold_ref" value="" id="hold_ref"
-												class="form-control kb-text" placeholder="Reference Note" />
-										</div>
-										<div class="form-group" style="margin-bottom: 5px;">
-											<input type="text" name="code" id="add_item"
-												class="form-control"
-												placeholder="Search product by code or name, you can scan barcode too" />
-										</div>
-									</div>
-									<div id="printhead" class="print">
-										<h2>
-											<strong>Simple POS</strong>
-										</h2>
-										My Shop Lot, Shopping Mall,<br> Post Code, City<br>
-										<p>Date: Fri 15 Nov 2019</p>
-									</div>
-									<div id="print" class="fixed-table-container">
-										<div id="list-table-div">
-											<div class="fixed-table-header">
-												<table
-													class="table table-striped table-condensed table-hover list-table"
-													style="margin: 0;">
-													<thead>
-														<tr class="success">
-															<th>Product</th>
-															<th style="width: 15%; text-align: center;">Price</th>
-															<th style="width: 15%; text-align: center;">Qty</th>
-															<th style="width: 20%; text-align: center;">Subtotal</th>
-															<th style="width: 20px;" class="satu"><i
-																class="fa fa-trash-o"></i></th>
-														</tr>
-													</thead>
-												</table>
-											</div>
-											<table id="posTable"
-												class="table table-striped table-condensed table-hover list-table"
-												style="margin: 0px;" data-height="100">
-												<thead>
-													<tr class="success">
-														<th>Product</th>
-														<th style="width: 15%; text-align: center;">Price</th>
-														<th style="width: 15%; text-align: center;">Qty</th>
-														<th style="width: 20%; text-align: center;">Subtotal</th>
-														<th style="width: 20px;" class="satu"><i
-															class="fa fa-trash-o"></i></th>
-													</tr>
-												</thead>
-												<tbody></tbody>
-											</table>
-										</div>
-										<div style="clear: both;"></div>
-										<div id="totaldiv">
-											<table id="totaltbl" class="table table-condensed totals"
-												style="margin-bottom: 10px;">
-												<tbody>
-													<tr class="info">
-														<td width="25%">Total Items</td>
-														<td class="text-right" style="padding-right: 10px;"><span
-															id="count">0</span></td>
-														<td width="25%">Total</td>
-														<td class="text-right" colspan="2"><span id="total">0</span></td>
-													</tr>
-													<tr class="info">
-														<td width="25%"><a href="#" id="add_discount">Discount</a></td>
-														<td class="text-right" style="padding-right: 10px;"><span
-															id="ds_con">0</span></td>
-														<td width="25%"><a href="#" id="add_tax">Order
-																Tax</a></td>
-														<td class="text-right"><span id="ts_con">0</span></td>
-													</tr>
-													<tr class="success">
-														<td colspan="2" style="font-weight: bold;">Total
-															Payable <a role="button" data-toggle="modal"
-															data-target="#noteModal"> <i class="fa fa-comment"></i>
-														</a>
-														</td>
-														<td class="text-right" colspan="2"
-															style="font-weight: bold;"><span id="total-payable">0</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="botbuttons" class="col-xs-12 text-center">
-										<div class="row">
-											<div class="col-xs-4" style="padding: 0;">
-												<div class="btn-group-vertical btn-block">
-													<button type="button"
-														class="btn btn-warning btn-block btn-flat" id="suspend">Hold</button>
-													<button type="button"
-														class="btn btn-danger btn-block btn-flat" id="reset">Cancel</button>
-												</div>
-
-											</div>
-											<div class="col-xs-4" style="padding: 0 5px;">
-												<div class="btn-group-vertical btn-block">
-													<button type="button"
-														class="btn bg-purple btn-block btn-flat" id="print_order">Print
-														Order</button>
-
-													<button type="button"
-														class="btn bg-navy btn-block btn-flat" id="print_bill">Print
-														Bill</button>
-												</div>
-											</div>
-											<div class="col-xs-4" style="padding: 0;">
-												<button type="button"
-													class="btn btn-success btn-block btn-flat" id="payment"
-													style="height: 67px;">Payment</button>
-											</div>
-										</div>
-
-									</div>
-									<div class="clearfix"></div>
-									<span id="hidesuspend"></span> <input type="hidden"
-										name="spos_note" value="" id="spos_note">
-
-									<div id="payment-con">
-										<input type="hidden" name="amount" id="amount_val" value="" />
-										<input type="hidden" name="balance_amount" id="balance_val"
-											value="" /> <input type="hidden" name="paid_by"
-											id="paid_by_val" value="cash" /> <input type="hidden"
-											name="cc_no" id="cc_no_val" value="" /> <input type="hidden"
-											name="paying_gift_card_no" id="paying_gift_card_no_val"
-											value="" /> <input type="hidden" name="cc_holder"
-											id="cc_holder_val" value="" /> <input type="hidden"
-											name="cheque_no" id="cheque_no_val" value="" /> <input
-											type="hidden" name="cc_month" id="cc_month_val" value="" />
-										<input type="hidden" name="cc_year" id="cc_year_val" value="" />
-										<input type="hidden" name="cc_type" id="cc_type_val" value="" />
-										<input type="hidden" name="cc_cvv2" id="cc_cvv2_val" value="" />
-										<input type="hidden" name="balance" id="balance_val" value="" />
-										<input type="hidden" name="payment_note" id="payment_note_val"
-											value="" />
-									</div>
-									<input type="hidden" name="customer" id="customer" value="3" />
-									<input type="hidden" name="order_tax" id="tax_val" value="" />
-									<input type="hidden" name="order_discount" id="discount_val"
-										value="" /> <input type="hidden" name="count" id="total_item"
-										value="" /> <input type="hidden" name="did" id="is_delete"
-										value="0" /> <input type="hidden" name="eid" id="is_delete"
-										value="0" /> <input type="hidden" name="total_items"
-										id="total_items" value="0" /> <input type="hidden"
-										name="total_quantity" id="total_quantity" value="0" /> <input
-										type="submit" id="submit" value="Submit Sale"
-										style="display: none;" />
-								</div>
-							</form>
-						</div>
-
-					</td>
-					<td>
-						<div class="contents" id="right-col">
-							<div id="item-list">
-								<div class="items">
-									<div>
-										<button type="button" data-name="Minion Hi" id="product-0101"
-											value='TOY01' class="btn btn-both btn-flat product">
-											<span class="bg-img"><img
-												src="${pageContext.request.contextPath}/resources/images/mongi.png"
-												alt="Minion Hi" style="width: 100px; height: 100px;"></span><span><span>Minion
-													Hi</span></span>
-										</button>
-										<button type="button" data-name="Minion Banana"
-											id="product-0102" type="button" value='TOY02'
-											class="btn btn-both btn-flat product">
-											<span class="bg-img"><img
-												src="${pageContext.request.contextPath}/resources/images/mongi.png"
-												alt="Minion Banana" style="width: 100px; height: 100px;"></span><span><span>Minion
-													Banana</span></span>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-
-
-
-	<div id="order_tbl" style="display: none;">
-		<span id="order_span"></span>
-		<table id="order-table"
-			class="prT table table-striped table-condensed"
-			style="width: 100%; margin-bottom: 0;"></table>
-	</div>
-	<div id="bill_tbl" style="display: none;">
-		<span id="bill_span"></span>
-		<table id="bill-table" width="100%"
-			class="prT table table-striped table-condensed"
-			style="width: 100%; margin-bottom: 0;"></table>
-		<table id="bill-total-table" width="100%"
-			class="prT table table-striped table-condensed"
-			style="width: 100%; margin-bottom: 0;"></table>
-	</div>
-	<div style="width: 380px; background: #FFF; display: block">
-		<div id="order-data" style="display: none;" class="text-center">
-			<h1>SimplePOS</h1>
-			<h2>Order</h2>
-			<div id="preo" class="text-left"></div>
-		</div>
-		<div id="bill-data" style="display: none;" class="text-center">
-			<h1>SimplePOS</h1>
-			<h2>Bill</h2>
-			<div id="preb" class="text-left"></div>
-		</div>
-	</div>
-
-	<div id="ajaxCall">
-		<i class="fa fa-spinner fa-pulse"></i>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="gcModal" tabindex="-1"
-		role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Sell Gift Card</h4>
+			<header>
+				<div class="logo">
+					<img
+						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
+						alt="madhvi_logo">
 				</div>
-				<div class="modal-body">
-					<p>Please fill in the information below</p>
-
-					<div class="alert alert-danger gcerror-con" style="display: none;">
-						<button data-dismiss="alert" class="close" type="button">×</button>
-						<span id="gcerror"></span>
+				<div class="drop_menu">
+					<div class="dropdown">
+						<div class="select">
+							<span>Hold Bill</span>
+						</div>
+						<input type="hidden" name="gender">
+						<ul class="dropdown-menu">
+							<li id="male">Bill No. 1</li>
+							<li id="female">Bill No. 1</li>
+						</ul>
 					</div>
-					<div class="form-group">
-						<label for="gccard_no">Card No</label> *
-						<div class="input-group">
-							<input type="text" name="gccard_no" value="" class="form-control"
-								id="gccard_no" />
-							<div class="input-group-addon"
-								style="padding-left: 10px; padding-right: 10px;">
-								<a href="#" id="genNo"><i class="fa fa-cogs"></i></a>
+				</div>
+				<div class="clr"></div>
+			</header>
+
+			<section class="main_container">
+				<div class="cat_l">
+					<!--top-buttons row-->
+					<div class="pending_row">
+						<a href="#" class="pending_btn initialism slide_open">Pending
+							Amt : <span>550.00000</span>
+						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>550.00000</span>
+						</a> <a href="#" class="pending_btn">Total Amt : <span>550.00000</span></a>
+					</div>
+
+					<!--customer drop down here-->
+					<div class="add_customer_bx">
+						<!--customer row 1-->
+						<div class="customer_row">
+							<div class="customer_one">Customer</div>
+							<div class="customer_two">
+								<select name="cust" id="cust" data-placeholder="Select Customer"
+									class="input_add chosen-select" style="text-align: left;"
+									required>
+									<option value="0" style="text-align: left;">Select
+										Customer</option>
+									<c:forEach items="${customerList}" var="customerList">
+										<option value="${customerList.custId}"
+											style="text-align: left;">${customerList.custName}
+											&nbsp;${customerList.phoneNumber}</option>
+									</c:forEach>
+								</select>
 							</div>
+							<div class="customer_three">
+								<button class="plus_btn addcust_open" type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+							</div>
+							<div class="customer_three">
+								<button class="plus_btn" type="button" onclick="editCustomer()">
+									<i class="fa fa-pencil" aria-hidden="true"></i>
+								</button>
+							</div>
+							<div class="clr"></div>
+						</div>
+						<!--customer row 2-->
+						<div class="customer_row">
+							<div class="customer_one">Item</div>
+							<div class="customer_two">
+								<input list="items" id="itemName" name="itemName"
+									class="input_add chosen" autocomplete="off"
+									placeholder="Select Item" onchange="onSelectItem()"
+									style="border-radius: 5px; padding: 2px 1px 0px 8px; height: 26px; text-align: left; background: linear-gradient(#fff 20%, #f6f6f6 50%, #eee 52%, #f4f4f4 100%); color: #444;"
+									type="text">
+								<datalist id="items">
+									<option value='101' data-value='Cakes' data-id='101'>Cakes</option>
+									<option value='102' data-value='Chocolates' data-id='101'>Chocolates</option>
+									<option value='103' data-value='Ice Cream' data-id='101'>Ice
+										Cream</option>
+									<option value='104' data-value='Samosa' data-id='101'>Samosa</option>
+									<option value='105' data-value='Sandwich' data-id='101'>Sandwich</option>
+								</datalist>
+							</div>
+							<div class="customer_three">
+								<button class="plus_btn">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+							</div>
+							<div class="clr"></div>
 						</div>
 					</div>
-					<input type="hidden" name="gcname" value="Gift Card" id="gcname" />
-					<div class="form-group">
-						<label for="gcvalue">Value</label> * <input type="text"
-							name="gcvalue" value="" class="form-control" id="gcvalue" />
+
+					<!--product table-->
+					<div class="total_table_one">
+						<table>
+							<tr>
+								<th>Product</th>
+								<th>Price</th>
+								<th>Qty</th>
+								<th>Sub Total</th>
+							</tr>
+							<tr>
+								<td>Cakes</td>
+								<td>350</td>
+								<td>2</td>
+								<td>350</td>
+							</tr>
+							<tr>
+								<td>Chocolates</td>
+								<td>200</td>
+								<td>1</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td>Cakes</td>
+								<td>350</td>
+								<td>2</td>
+								<td>350</td>
+							</tr>
+							<tr>
+								<td>Chocolates</td>
+								<td>200</td>
+								<td>1</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td>Cakes</td>
+								<td>350</td>
+								<td>2</td>
+								<td>350</td>
+							</tr>
+							<tr>
+								<td>Chocolates</td>
+								<td>200</td>
+								<td>1</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td>Cakes</td>
+								<td>350</td>
+								<td>2</td>
+								<td>350</td>
+							</tr>
+							<tr>
+								<td>Chocolates</td>
+								<td>200</td>
+								<td>1</td>
+								<td>200</td>
+							</tr>
+							<tr>
+								<td>Cakes</td>
+								<td>350</td>
+								<td>2</td>
+								<td>350</td>
+							</tr>
+							<tr>
+								<td>Chocolates</td>
+								<td>200</td>
+								<td>1</td>
+								<td>200</td>
+							</tr>
+						</table>
 					</div>
-					<div class="form-group">
-						<label for="gcprice">Price</label> * <input type="text"
-							name="gcprice" value="" class="form-control" id="gcprice" />
+
+					<!--total-table start here-->
+					<div class="total_tab">
+						<table width="100%">
+							<tr bgcolor="#ffe5e6">
+								<td>Total Items</td>
+								<td>1 (3.00)</td>
+								<td>Total :</td>
+								<td align="right">45.00</td>
+							</tr>
+							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
+								<td>Discount</td>
+								<td>(0.00) 0.00</td>
+								<td>Order Tax</td>
+								<td align="right">2.25</td>
+							</tr>
+							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+								<td style="font-weight: 600;">Total Payable</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td style="font-weight: 600;" align="right">47.25</td>
+							</tr>
+						</table>
 					</div>
-					<div class="form-group">
-						<label for="gcexpiry">Expiry Date</label> <input type="text"
-							name="gcexpiry" value="" class="form-control" id="gcexpiry" />
+
+
+					<!--five button here-->
+					<div class="buttons_row">
+						<div class="button_one">
+							<a href="#" class="hold hold_btn">Hold</a> <a href="#"
+								class="hold can_btn">Cancel</a>
+						</div>
+						<div class="button_one">
+							<a href="#" class="hold print_btn">Print Order</a> <a href="#"
+								class="hold bill_btn">Print Bill</a>
+						</div>
+						<div class="button_two">
+							<a href="#" class="hold pay_btn">Payment</a>
+						</div>
 					</div>
+
 
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">Close</button>
-					<button type="button" id="addGiftCard" class="btn btn-primary">Sell
-						Gift Card</button>
+
+				<!--right-side-box-->
+				<div class="cat_r">
+					<!--item search row-->
+					<div class="radio_row_one">
+						<h3 class="item_head">Item Search</h3>
+						<div class="radio_row">
+							<ul>
+								<li><input type="radio" id="f-option" name="selector">
+									<label for="f-option">Category</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="s-option" name="selector">
+									<label for="s-option">Sub Category </label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+								<li><input type="radio" id="g-option" name="selector">
+									<label for="g-option">All Items</label>
+									<div class="check"></div></li>
+
+
+							</ul>
+						</div>
+					</div>
+
+					<!--category box start here-->
+					<div class="cat_bx_one">
+						<div class="category_list">
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu"> <span>Order Booking</span></a>
+							</div>
+						</div>
+					</div>
+
+					<!--listing box start here-->
+					<div class="cat_list_bx">
+						<div class="cat_srach">
+							<input name="" type="text" class="input_cat" />
+						</div>
+						<div class="cat_list">
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+							<div class="cat_one cat">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+									alt="laddu">
+									<p>210</p> <span>Order Booking</span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+
+		</div>
+
+		<!--Add Customer-->
+		<div id="addcust" class="add_customer">
+			<button class="addcust_close close_popup"
+				onclick="clearAddCustomerpopup()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<h3 class="pop_head" id="add_cust_head_name">Add Customer</h3>
+
+			<div class="add_frm">
+				<div class="add_frm_one">
+					<div class="add_customer_one">Customer Name</div>
+					<div class="add_input">
+						<input type="text" class="input_add"
+							placeholder="Enter Customer Name" name="customerName"
+							onchange="trim(this)" id="customerName" /> <input type="hidden"
+							name="custId" id="custId" value="0" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Mobile Number</div>
+					<div class="add_input">
+						<input type="text" class="input_add"
+							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
+							onchange="trim(this)" maxlength="10" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">DOB</div>
+					<div class="add_input">
+						<input autocomplete="off" placeholder="Date Of Birth"
+							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Business</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" type="radio" name="selector"
+									id="y-option" onclick="isBuissness(1)"> <label
+									for="y-option">Yes</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="n-option" name="selector"
+									onclick="isBuissness(0)" checked> <label for="n-option">No
+								</label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div style="display: none;" id="isbuissnessdiv">
+					<div class="add_frm_one">
+						<div class="add_customer_one">Company Name</div>
+						<div class="add_input">
+							<input placeholder="Enter Company Name" name="companyName"
+								onchange="trim(this)" id="companyName" type="text"
+								class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="add_frm_one">
+						<div class="add_customer_one">GST Number</div>
+						<div class="add_input">
+							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
+								onchange="trim(this)" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="add_frm_one">
+						<div class="add_customer_one">Address</div>
+						<div class="add_input">
+							<input placeholder="Enter Address" name="custAdd" id="custAdd"
+								onchange="trim(this)" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<div class="modal" data-easein="flipYIn" id="dsModal" tabindex="-1"
-		role="dialog" aria-labelledby="dsModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="dsModalLabel">Discount (5 or 5%)</h4>
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="addcust_close close_btn"
+						onclick="clearAddCustomerpopup()">Close</button>
 				</div>
-				<div class="modal-body">
-					<input type='text' class='form-control input-sm kb-pad' id='get_ds'
-						onClick='this.select();' value=''> <label class="checkbox"
-						for="apply_to_order"> <input type="radio" name="apply_to"
-						value="order" id="apply_to_order" checked="checked" /> Apply to
-						order total
-					</label> <label class="checkbox" for="apply_to_products"> <input
-						type="radio" name="apply_to" value="products"
-						id="apply_to_products" /> Apply to all order items
-					</label>
+				<div class="close_r">
+					<a href="#" onclick="addCustomer()">Save</a>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn-sm pull-left"
-						data-dismiss="modal">Close</button>
-					<button type="button" id="updateDiscount"
-						class="btn btn-primary btn-sm">Update</button>
-				</div>
+				<div class="clr"></div>
+			</div>
+
+
+		</div>
+
+		<!--pending amount popup-->
+		<div id="slide" class="pending_pop">
+			<button class="slide_close">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<div style="overflow-x: auto;">
+				<table class="pending_tab">
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Points</th>
+						<th>Points</th>
+						<th>Points</th>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Eve</td>
+						<td>Jackson</td>
+						<td>94</td>
+						<td>94</td>
+						<td>94</td>
+					</tr>
+					<tr>
+						<td>Adam</td>
+						<td>Johnson</td>
+						<td>67</td>
+						<td>67</td>
+						<td>67</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Eve</td>
+						<td>Jackson</td>
+						<td>94</td>
+						<td>94</td>
+						<td>94</td>
+					</tr>
+					<tr>
+						<td>Adam</td>
+						<td>Johnson</td>
+						<td>67</td>
+						<td>67</td>
+						<td>67</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+					<tr>
+						<td>Eve</td>
+						<td>Jackson</td>
+						<td>94</td>
+						<td>94</td>
+						<td>94</td>
+					</tr>
+					<tr>
+						<td>Adam</td>
+						<td>Johnson</td>
+						<td>67</td>
+						<td>67</td>
+						<td>67</td>
+					</tr>
+					<tr>
+						<td>Jill</td>
+						<td>Smith</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+
+
+				</table>
 			</div>
 		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="tsModal" tabindex="-1"
-		role="dialog" aria-labelledby="tsModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="tsModalLabel">Tax (5 or 5%)</h4>
-				</div>
-				<div class="modal-body">
-					<input type='text' class='form-control input-sm kb-pad' id='get_ts'
-						onClick='this.select();' value=''>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn-sm pull-left"
-						data-dismiss="modal">Close</button>
-					<button type="button" id="updateTax" class="btn btn-primary btn-sm">Update</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="noteModal" tabindex="-1"
-		role="dialog" aria-labelledby="noteModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="noteModalLabel">Note</h4>
-				</div>
-				<div class="modal-body">
-					<textarea name="snote" id="snote" class="pa form-control kb-text"></textarea>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default btn-sm pull-left"
-						data-dismiss="modal">Close</button>
-					<button type="button" id="update-note"
-						class="btn btn-primary btn-sm">Update</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="proModal" tabindex="-1"
-		role="dialog" aria-labelledby="proModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header modal-primary">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="proModalLabel">Payment</h4>
-				</div>
-				<div class="modal-body">
-					<table class="table table-bordered table-striped">
-						<tr>
-							<th style="width: 25%;">Net Price</th>
-							<th style="width: 25%;"><span id="net_price"></span></th>
-							<th style="width: 25%;">Product Tax</th>
-							<th style="width: 25%;"><span id="pro_tax"></span> <span
-								id="pro_tax_method"></span></th>
-						</tr>
-					</table>
-					<input type="hidden" id="row_id" /> <input type="hidden"
-						id="item_id" />
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="nPrice">Unit Price</label> <input type="text"
-									class="form-control input-sm kb-pad" id="nPrice"
-									onClick="this.select();" placeholder="New Price">
-							</div>
-							<div class="form-group">
-								<label for="nDiscount">Discount</label> <input type="text"
-									class="form-control input-sm kb-pad" id="nDiscount"
-									onClick="this.select();" placeholder="Discount">
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label for="nQuantity">Quantity</label> <input type="text"
-									class="form-control input-sm kb-pad" id="nQuantity"
-									onClick="this.select();" placeholder="Current Quantity">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label for="nComment">Comment</label>
-								<textarea class="form-control kb-text" id="nComment"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">Close</button>
-					<button class="btn btn-success" id="editItem">Update</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="susModal" tabindex="-1"
-		role="dialog" aria-labelledby="susModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="susModalLabel">Suspend Sale</h4>
-				</div>
-				<div class="modal-body">
-					<p>Type Reference Note</p>
-
-					<div class="form-group">
-						<label for="reference_note">Reference Note</label> <input
-							type="text" name="reference_note" value=""
-							class="form-control kb-text" id="reference_note" />
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">Close</button>
-					<button type="button" id="suspend_sale" class="btn btn-primary">Submit</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
-
-	<div class="modal" data-easein="flipYIn" id="saleModal" tabindex="-1"
-		role="dialog" aria-labelledby="saleModalLabel" aria-hidden="true"></div>
-	<div class="modal" data-easein="flipYIn" id="opModal" tabindex="-1"
-		role="dialog" aria-labelledby="opModalLabel" aria-hidden="true"></div>
-
-	<div class="modal" data-easein="flipYIn" id="payModal" tabindex="-1"
-		role="dialog" aria-labelledby="payModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-success">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="payModalLabel">Payment</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-xs-9">
-							<div class="font16">
-								<table class="table table-bordered table-condensed"
-									style="margin-bottom: 0;">
-									<tbody>
-										<tr>
-											<td width="25%" style="border-right-color: #FFF !important;">Total
-												Items</td>
-											<td width="25%" class="text-right"><span id="item_count">0.00</span></td>
-											<td width="25%" style="border-right-color: #FFF !important;">Total
-												Payable</td>
-											<td width="25%" class="text-right"><span id="twt">0.00</span></td>
-										</tr>
-										<tr>
-											<td style="border-right-color: #FFF !important;">Total
-												Paying</td>
-											<td class="text-right"><span id="total_paying">0.00</span></td>
-											<td style="border-right-color: #FFF !important;">Balance</td>
-											<td class="text-right"><span id="balance">0.00</span></td>
-										</tr>
-									</tbody>
-								</table>
-								<div class="clearfix"></div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="form-group">
-										<label for="note">Note</label>
-										<textarea name="note" id="note"
-											class="pa form-control kb-text"></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-6">
-									<div class="form-group">
-										<label for="amount">Amount</label> <input name="amount"
-											type="text" id="amount" class="pa form-control kb-pad amount" />
-									</div>
-								</div>
-								<div class="col-xs-6">
-									<div class="form-group">
-										<label for="paid_by">Paying by</label> <select id="paid_by"
-											class="form-control paid_by select2" style="width: 100%;">
-											<option value="cash">Cash</option>
-											<option value="CC">Credit Card</option>
-											<option value="cheque">Cheque</option>
-											<option value="gift_card">Gift Card</option>
-											<option value="stripe">Stripe</option>
-											<option value="other">Other</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="form-group gc" style="display: none;">
-										<label for="gift_card_no">Gift Card No</label> <input
-											type="text" id="gift_card_no"
-											class="pa form-control kb-pad gift_card_no gift_card_input" />
-
-										<div id="gc_details"></div>
-									</div>
-									<div class="pcc" style="display: none;">
-										<div class="form-group">
-											<input type="text" id="swipe"
-												class="form-control swipe swipe_input"
-												placeholder="Swipe card here then write security code manually" />
-										</div>
-										<div class="row">
-											<div class="col-xs-6">
-												<div class="form-group">
-													<input type="text" id="pcc_no" class="form-control kb-pad"
-														placeholder="Credit Card No" />
-												</div>
-											</div>
-											<div class="col-xs-6">
-												<div class="form-group">
-
-													<input type="text" id="pcc_holder"
-														class="form-control kb-text" placeholder="Holder Name" />
-												</div>
-											</div>
-											<div class="col-xs-3">
-												<div class="form-group">
-													<select id="pcc_type" class="form-control pcc_type select2"
-														placeholder="Card Type">
-														<option value="Visa">Visa</option>
-														<option value="MasterCard">MasterCard</option>
-														<option value="Amex">Amex</option>
-														<option value="Discover">Discover</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xs-3">
-												<div class="form-group">
-													<input type="text" id="pcc_month"
-														class="form-control kb-pad" placeholder="Month" />
-												</div>
-											</div>
-											<div class="col-xs-3">
-												<div class="form-group">
-
-													<input type="text" id="pcc_year"
-														class="form-control kb-pad" placeholder="Year" />
-												</div>
-											</div>
-											<div class="col-xs-3">
-												<div class="form-group">
-
-													<input type="text" id="pcc_cvv2"
-														class="form-control kb-pad" placeholder="CVV2" />
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="pcheque" style="display: none;">
-										<div class="form-group">
-											<label for="cheque_no">Cheque No</label> <input type="text"
-												id="cheque_no" class="form-control cheque_no kb-text" />
-										</div>
-									</div>
-									<div class="pcash">
-										<div class="form-group">
-											<label for="payment_note">Payment Note</label> <input
-												type="text" id="payment_note"
-												class="form-control payment_note kb-text" />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-3 text-center">
-							<!-- <span style="font-size: 1.2em; font-weight: bold;">Quick Cash</span> -->
-
-							<div class="btn-group btn-group-vertical" style="width: 100%;">
-								<button type="button" class="btn btn-info btn-block quick-cash"
-									id="quick-payable">0.00</button>
-								<button type="button"
-									class="btn btn-block btn-warning quick-cash">10</button>
-								<button type="button"
-									class="btn btn-block btn-warning quick-cash">20</button>
-								<button type="button"
-									class="btn btn-block btn-warning quick-cash">50</button>
-								<button type="button"
-									class="btn btn-block btn-warning quick-cash">100</button>
-								<button type="button"
-									class="btn btn-block btn-warning quick-cash">500</button>
-								<button type="button" class="btn btn-block btn-danger"
-									id="clear-cash-notes">Clear</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left"
-						data-dismiss="modal">Close</button>
-					<button class="btn btn-primary" id="submit-sale">Submit</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="customerModal"
-		tabindex="-1" role="dialog" aria-labelledby="cModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header modal-primary">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<i class="fa fa-times"></i>
-					</button>
-					<h4 class="modal-title" id="cModalLabel">Add Customer</h4>
-				</div>
-				<form action="https://spos.tecdiary.net/pos/add_customer"
-					id="customer-form" method="post" accept-charset="utf-8">
-					<input type="hidden" name="spos_token"
-						value="5a7f0721753a0ade542a62d111fd4805" />
-					<div class="modal-body">
-						<div id="c-alert" class="alert alert-danger"
-							style="display: none;"></div>
-						<div class="row">
-							<div class="col-xs-12">
-								<div class="form-group">
-									<label class="control-label" for="code"> Name </label> <input
-										type="text" name="name" value=""
-										class="form-control input-sm kb-text" id="cname" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								<div class="form-group">
-									<label class="control-label" for="cemail"> Email
-										Address </label> <input type="text" name="email" value=""
-										class="form-control input-sm kb-text" id="cemail" />
-								</div>
-							</div>
-							<div class="col-xs-6">
-								<div class="form-group">
-									<label class="control-label" for="phone"> Phone </label> <input
-										type="text" name="phone" value=""
-										class="form-control input-sm kb-pad" id="cphone" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								<div class="form-group">
-									<label class="control-label" for="cf1"> Custom Field 1
-									</label> <input type="text" name="cf1" value=""
-										class="form-control input-sm kb-text" id="cf1" />
-								</div>
-							</div>
-							<div class="col-xs-6">
-								<div class="form-group">
-									<label class="control-label" for="cf2"> Custom Field 2
-									</label> <input type="text" name="cf2" value=""
-										class="form-control input-sm kb-text" id="cf2" />
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<div class="modal-footer" style="margin-top: 0;">
-						<button type="button" class="btn btn-default pull-left"
-							data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary" id="add_customer">
-							Add Customer</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal" data-easein="flipYIn" id="posModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-	<div class="modal" data-easein="flipYIn" id="posModal2" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true"></div>
-
-	 
+		<!--wrapper-end-->
+	</form>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		var base_url = 'https://spos.tecdiary.net/', assets = 'https://spos.tecdiary.net/themes/default/assets/';
-		var dateformat = 'D j M Y', timeformat = 'h:i A';
-		var Settings = {
-			"logo" : "logo1.png",
-			"site_name" : "SimplePOS",
-			"tel" : "0105292122",
-			"dateformat" : "D j M Y",
-			"timeformat" : "h:i A",
-			"language" : "english",
-			"theme" : "default",
-			"mmode" : "0",
-			"captcha" : "0",
-			"currency_prefix" : "USD",
-			"default_customer" : "3",
-			"default_tax_rate" : "5%",
-			"rows_per_page" : "10",
-			"total_rows" : "30",
-			"header" : "<h2><strong>Simple POS<\/strong><\/h2>\r\n       My Shop Lot, Shopping Mall,<br>\r\n                                                                                              Post Code, City<br>",
-			"footer" : "Thank you for your business!\r\n<br>",
-			"bsty" : "3",
-			"display_kb" : "0",
-			"default_category" : "1",
-			"default_discount" : "0",
-			"item_addition" : "1",
-			"barcode_symbology" : "",
-			"pro_limit" : "10",
-			"decimals" : "2",
-			"thousands_sep" : ",",
-			"decimals_sep" : ".",
-			"focus_add_item" : "ALT+F1",
-			"add_customer" : "ALT+F2",
-			"toggle_category_slider" : "ALT+F10",
-			"cancel_sale" : "ALT+F5",
-			"suspend_sale" : "ALT+F6",
-			"print_order" : "ALT+F11",
-			"print_bill" : "ALT+F12",
-			"finalize_sale" : "ALT+F8",
-			"today_sale" : "Ctrl+F1",
-			"open_hold_bills" : "Ctrl+F2",
-			"close_register" : "ALT+F7",
-			"java_applet" : "0",
-			"receipt_printer" : "",
-			"pos_printers" : "",
-			"cash_drawer_codes" : "",
-			"char_per_line" : "42",
-			"rounding" : "1",
-			"pin_code" : "abdbeb4d8dbe30df8430a8394b7218ef",
-			"purchase_code" : null,
-			"envato_username" : null,
-			"theme_style" : "green",
-			"after_sale_page" : null,
-			"overselling" : "1",
-			"multi_store" : "1",
-			"qty_decimals" : "2",
-			"symbol" : null,
-			"sac" : "0",
-			"display_symbol" : null,
-			"remote_printing" : "1",
-			"printer" : null,
-			"order_printers" : null,
-			"auto_print" : "0",
-			"local_printers" : null,
-			"rtl" : null,
-			"print_img" : null,
-			"selected_language" : "english"
-		};
-		var sid = false, username = 'admin', spositems = {};
-		$(window).load(function() {
-			$('#mm_pos').addClass('active');
-			$('#pos_index').addClass('active');
-		});
-		var pro_limit = 10, java_applet = 0, count = 1, total = 0, an = 1, p_page = 0, page = 0, cat_id = 1, tcp = 2;
-		var gtotal = 0, order_discount = 0, order_tax = 0, protect_delete = 0;
-		var order_data = {}, bill_data = {};
-		var csrf_hash = '5a7f0721753a0ade542a62d111fd4805';
-		var lang = new Array();
-		lang['code_error'] = 'Code Error';
-		lang['r_u_sure'] = '<strong>Are you sure?</strong>';
-		lang['please_add_product'] = 'Please add product';
-		lang['paid_less_than_amount'] = 'Paid amount is less than paying';
-		lang['x_suspend'] = 'Sale can not be suspended';
-		lang['discount_title'] = 'Discount (5 or 5%)';
-		lang['update'] = 'Update';
-		lang['tax_title'] = 'Tax (5 or 5%)';
-		lang['leave_alert'] = 'You will loss the data, are you sure?';
-		lang['close'] = 'Close';
-		lang['delete'] = 'Delete';
-		lang['no_match_found'] = 'No match found';
-		lang['wrong_pin'] = 'Wrong Pin';
-		lang['file_required_fields'] = 'Please fill required fields';
-		lang['enter_pin_code'] = 'Enter Pin code';
-		lang['incorrect_gift_card'] = 'Gift card number is wrong or card is already used.';
-		lang['card_no'] = 'Card No';
-		lang['value'] = 'Value';
-		lang['balance'] = 'Balance';
-		lang['unexpected_value'] = 'Unexpected Value Provided!';
-		lang['inclusive'] = 'Inclusive';
-		lang['exclusive'] = 'Exclusive';
-		lang['total'] = 'Total';
-		lang['total_items'] = 'Total Items';
-		lang['order_tax'] = 'Order Tax';
-		lang['order_discount'] = 'Order Discount';
-		lang['total_payable'] = 'Total Payable';
-		lang['rounding'] = 'Rounding';
-		lang['grand_total'] = 'Grand Total';
-		lang['register_open_alert'] = 'Register is open, are you sure to sign out?';
-		lang['discount'] = 'Discount';
-		lang['order'] = 'Order';
-		lang['bill'] = 'Bill';
-		lang['merchant_copy'] = 'Merchant Copy';
-
 		$(document).ready(function() {
-
-			if (get('rmspos')) {
-				if (get('spositems')) {
-					remove('spositems');
-				}
-				if (get('spos_discount')) {
-					remove('spos_discount');
-				}
-				if (get('spos_tax')) {
-					remove('spos_tax');
-				}
-				if (get('spos_note')) {
-					remove('spos_note');
-				}
-				if (get('spos_customer')) {
-					remove('spos_customer');
-				}
-				if (get('amount')) {
-					remove('amount');
-				}
-				remove('rmspos');
-			}
-			if (!get('spos_discount')) {
-				store('spos_discount', '0');
-				$('#discount_val').val('0');
-			}
-			if (!get('spos_tax')) {
-				store('spos_tax', '5%');
-				$('#tax_val').val('5%');
-			}
-
-			if (ots = get('spos_tax')) {
-				$('#tax_val').val(ots);
-			}
-			if (ods = get('spos_discount')) {
-				$('#discount_val').val(ods);
-			}
-			bootbox.addLocale('bl', {
-				OK : 'OK',
-				CANCEL : 'No',
-				CONFIRM : 'Yes'
-			});
-			bootbox.setDefaults({
-				closeButton : false,
-				locale : "bl"
+			$('#slide').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
 			});
 		});
 	</script>
-
 	<script type="text/javascript">
-		var socket = null;
-		function printBill(bill) {
-			if (Settings.remote_printing == 1) {
-				Popup($('#bill_tbl').html());
-			} else if (Settings.remote_printing == 2) {
-				if (socket.readyState == 1) {
-					if (Settings.print_img == 1) {
-						$('#bill-data').show();
-						$('#preb')
-								.html(
-										'<pre style="background:#FFF;font-size:20px;margin:0;border:0;color:#000 !important;">'
-												+ bill_data.info
-												+ bill_data.items
-												+ '\n'
-												+ bill_data.totals + '</pre>');
-						var element = $('#bill-data').get(0);
-						html2canvas(element, {
-							scrollY : 0,
-							scale : 1.7
-						}).then(function(canvas) {
-							var dataURL = canvas.toDataURL();
-							var socket_data = {
-								'printer' : false,
-								'text' : dataURL,
-								'cash_drawer' : 0
-							};
-							socket.send(JSON.stringify({
-								type : 'print-img',
-								data : socket_data
-							}));
-							// return Canvas2Image.saveAsPNG(canvas);
-						});
-						setTimeout(function() {
-							$('#bill-data').hide();
-						}, 500);
-					} else {
-						var socket_data = {
-							'printer' : false,
-							'logo' : 'https://spos.tecdiary.net/uploads/logo.png',
-							'text' : bill
-						};
-						socket.send(JSON.stringify({
-							type : 'print-receipt',
-							data : socket_data
-						}));
-					}
-					return false;
-				} else {
-					bootbox
-							.alert('Unable to connect to socket, please make sure that server is up and running fine.');
-					return false;
-				}
-			}
-		}
-		var order_printers = [];
-		function printOrder(order) {
-			if (Settings.remote_printing == 1) {
-				Popup($('#order_tbl').html());
-			} else if (Settings.remote_printing == 2) {
-				if (socket.readyState == 1) {
-					if (Settings.print_img == 1) {
-						$('#order-data').show();
-						$('#preo')
-								.html(
-										'<pre style="background:#FFF;font-size:20px;margin:0;border:0;color:#000 !important;">'
-												+ order_data.info
-												+ order_data.items + '</pre>');
-						var element = $('#order-data').get(0);
-						html2canvas(element, {
-							scrollY : 0,
-							scale : 1.7
-						}).then(function(canvas) {
-							var dataURL = canvas.toDataURL();
-							var socket_data = {
-								'printer' : false,
-								'text' : dataURL,
-								'order' : 1,
-								'cash_drawer' : 0
-							};
-							socket.send(JSON.stringify({
-								type : 'print-img',
-								data : socket_data
-							}));
-							// return Canvas2Image.saveAsPNG(canvas);
-						});
-						setTimeout(function() {
-							$('#order-data').hide();
-						}, 500);
-					} else {
-						if (order_printers == '') {
-							var socket_data = {
-								'printer' : false,
-								'order' : true,
-								'logo' : 'https://spos.tecdiary.net/uploads/logo.png',
-								'text' : order
-							};
-							socket.send(JSON.stringify({
-								type : 'print-receipt',
-								data : socket_data
-							}));
-						} else {
-							$
-									.each(
-											order_printers,
-											function() {
-												var socket_data = {
-													'printer' : this,
-													'logo' : 'https://spos.tecdiary.net/uploads/logo.png',
-													'text' : order
-												};
-												socket.send(JSON.stringify({
-													type : 'print-receipt',
-													data : socket_data
-												}));
-											});
-						}
-					}
-					return false;
-				} else {
-					bootbox
-							.alert('Unable to connect to socket, please make sure that server is up and running fine.');
-					return false;
-				}
-			}
-		}
+		$(document).ready(function() {
+			$('#addcust').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			});
+		});
+	</script>
+	<script type="text/javascript">
+		/*Dropdown Menu*/
+		$('.dropdown').click(function() {
+			$(this).attr('tabindex', 1).focus();
+			$(this).toggleClass('active');
+			$(this).find('.dropdown-menu').slideToggle(300);
+		});
+		$('.dropdown').focusout(function() {
+			$(this).removeClass('active');
+			$(this).find('.dropdown-menu').slideUp(300);
+		});
+		$('.dropdown .dropdown-menu li').click(
+				function() {
+					$(this).parents('.dropdown').find('span').text(
+							$(this).text());
+					$(this).parents('.dropdown').find('input').attr('value',
+							$(this).attr('id'));
+				});
+		/*End Dropdown Menu*/
 	</script>
 
-	<script
-		src="https://spos.tecdiary.net/themes/default/assets/dist/js/libraries.min.js"
-		type="text/javascript"></script>
-	<script
-		src="https://spos.tecdiary.net/themes/default/assets/dist/js/scripts.min.js"
-		type="text/javascript"></script>
-	 
+	<script type="text/javascript">
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+
+		function editCustomer() {
+
+			var custId = document.getElementById("cust").value;
+
+			if (custId != 0) {
+
+				$
+						.post(
+								'${editCustomerFromBill}',
+								{
+									custId : custId,
+									ajax : 'true'
+								},
+								function(data) {
+
+									//$('#myModalEdit').modal('show');
+									document
+											.getElementById("add_cust_head_name").innerHTML = "Edit Customer";
+									document.getElementById("customerName").value = data.custName;
+									document.getElementById("mobileNo").value = data.phoneNumber;
+									document.getElementById("custId").value = data.custId;
+									document.getElementById("dateOfBirth").value = data.custDob;
+
+									if (data.isBuissHead == 1) {
+
+										$("#isbuissnessdiv").show();
+										document.getElementById("y-option").checked = true;
+										document.getElementById("companyName").value = data.companyName;
+										document.getElementById("gstNo").value = data.gstNo;
+										document.getElementById("custAdd").value = data.address;
+									} else {
+										$("#isbuissnessdiv").hide();
+										document.getElementById("y-option").checked = false;
+									}
+
+								});
+
+			} else {
+				alert("Select Customer ");
+			}
+
+		}
+
+		function addCustomer() {
+			//$('#addcust').modal('hide');
+
+			var custId = document.getElementById("custId").value;
+			var customerName = document.getElementById("customerName").value;
+			var mobileNo = document.getElementById("mobileNo").value;
+			var dateOfBirth = document.getElementById("dateOfBirth").value;
+			//var isBuissness = document.getElementById("isBuissness").value;
+			var buisness = 0;
+			if (document.getElementById('y-option').checked) {
+				buisness = 1;
+			}
+			var companyName = document.getElementById("companyName").value;
+			var gstNo = document.getElementById("gstNo").value;
+			var custAdd = document.getElementById("custAdd").value;
+
+			var flag = 0;
+
+			if (customerName == "") {
+				alert("Enter Customer Name");
+				flag = 1;
+			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
+				alert("Enter Valid Mobile No");
+				flag = 1;
+			} else if (dateOfBirth == "") {
+				alert("Enter Date of Birth");
+				flag = 1;
+			} else if (buisness == 1) {
+
+				if (companyName == "") {
+					alert("Enter Company Name");
+					flag = 1;
+				} else if (gstNo == "") {
+					alert("Enter GST No");
+					flag = 1;
+				} else if (custAdd == "") {
+					alert("Enter Address");
+					flag = 1;
+				}
+			}
+
+			if (flag == 0) {
+				$
+						.post(
+								'${saveCustomerFromBill}',
+								{
+									customerName : customerName,
+									mobileNo : mobileNo,
+									dateOfBirth : dateOfBirth,
+									buisness : buisness,
+									companyName : companyName,
+									gstNo : gstNo,
+									custAdd : custAdd,
+									custId : custId,
+									ajax : 'true'
+								},
+								function(data) {
+
+									//alert(JSON.stringify(data));
+
+									if (data.error == false) {
+
+										var html = '<option value="0" selected>Select Customer</option>';
+										var len = data.customerList.length;
+										//alert(data.addCustomerId);
+										for (var i = 0; i < len; i++) {
+
+											if (data.customerList[i].custId == data.addCustomerId) {
+												html += '<option value="' + data.customerList[i].custId + '" selected>'
+														+ data.customerList[i].custName
+														+ '&nbsp;'
+														+ data.customerList[i].phoneNumber
+														+ '</option>';
+											} else {
+												html += '<option value="' + data.customerList[i].custId + '">'
+														+ data.customerList[i].custName
+														+ '&nbsp;'
+														+ data.customerList[i].phoneNumber
+														+ '</option>';
+											}
+
+										}
+
+										$('#cust').html(html);
+
+										$("#cust").trigger("chosen:updated");
+										$('.chosen-select').trigger(
+												'chosen:updated');
+
+										document.getElementById("customerName").value = "";
+										document.getElementById("mobileNo").value = "";
+
+										document.getElementById("dateOfBirth").value = "";
+
+										document.getElementById("n-option").checked = true;
+										document.getElementById("companyName").value = "";
+										document.getElementById("gstNo").value = "";
+										document.getElementById("custAdd").value = "";
+										document.getElementById("custId").value = 0;
+										document
+												.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+										$("#isbuissnessdiv").hide();
+
+										if (custId != 0) {
+											alert("Update Successfully");
+										} else {
+											alert("Customer Add Successfully");
+										}
+
+									} else {
+										alert("Failed To Add Customer");
+									}
+
+								});
+			}
+
+		}
+	</script>
+	<script type="text/javascript">
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+		function isBuissness(value) {
+
+			if (value == 1) {
+				$("#isbuissnessdiv").show();
+			} else {
+				$("#isbuissnessdiv").hide();
+			}
+
+		}
+		function isBuissnessEdit(value) {
+
+			if (value == 1) {
+				$("#isbuissnessdivedit").show();
+			} else {
+				$("#isbuissnessdivedit").hide();
+			}
+
+		}
+		function clearAddCustomerpopup() {
+
+			document.getElementById("customerName").value = "";
+			document.getElementById("mobileNo").value = ""; 
+			document.getElementById("dateOfBirth").value = ""; 
+			document.getElementById("n-option").checked = true;
+			document.getElementById("companyName").value = "";
+			document.getElementById("gstNo").value = "";
+			document.getElementById("custAdd").value = "";
+			document.getElementById("custId").value = 0;
+			document.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+			$("#isbuissnessdiv").hide();
+		}
+	</script>
 </body>
+
 </html>

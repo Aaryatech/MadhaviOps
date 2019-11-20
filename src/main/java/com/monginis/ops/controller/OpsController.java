@@ -52,12 +52,9 @@ public class OpsController {
 
 		try {
 
-			/*
-			 * Customer[] customer = restTemplate.getForObject(Constant.URL +
-			 * "/getAllCustomers", Customer[].class); List<Customer> customerList = new
-			 * ArrayList<>(Arrays.asList(customer));
-			 * model.addAttribute("customerList",customerList);
-			 */
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addAttribute("customerList", customerList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +77,8 @@ public class OpsController {
 			String companyName = request.getParameter("companyName");
 			String gstNo = request.getParameter("gstNo");
 			String custAdd = request.getParameter("custAdd");
-
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			
 			Customer save = new Customer();
 			save.setCustName(customerName);
 			save.setPhoneNumber(mobileNo);
@@ -90,6 +88,7 @@ public class OpsController {
 			save.setAddress(custAdd);
 			save.setGstNo(gstNo);
 			save.setDelStatus(1);
+			save.setCustId(custId);
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
@@ -110,9 +109,9 @@ public class OpsController {
 		}
 		return info;
 	}
-	
+
 	Customer edit = new Customer();
-	
+
 	@RequestMapping(value = "/editCustomerFromBill", method = RequestMethod.POST)
 	@ResponseBody
 	public Customer editCustomerFromBill(HttpServletRequest request, HttpServletResponse responsel) {
@@ -132,8 +131,7 @@ public class OpsController {
 		}
 		return edit;
 	}
-	
-	
+
 	@RequestMapping(value = "/submitEditCustomer", method = RequestMethod.POST)
 	@ResponseBody
 	public AddCustemerResponse submitEditCustomer(HttpServletRequest request, HttpServletResponse responsel) {
@@ -150,23 +148,20 @@ public class OpsController {
 			String gstNo = request.getParameter("gstNo");
 			String custAdd = request.getParameter("custAdd");
 
-			 
 			edit.setCustName(customerName);
 			edit.setPhoneNumber(mobileNo);
 			edit.setIsBuissHead(buisness);
 			edit.setCustDob(dateOfBirth);
-			if(buisness==0) {
+			if (buisness == 0) {
 				edit.setCompanyName("");
 				edit.setAddress("");
 				edit.setGstNo("");
-			}else {
+			} else {
 				edit.setCompanyName(companyName);
 				edit.setAddress(custAdd);
 				edit.setGstNo(gstNo);
 			}
-			
-			
-			 
+
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", edit, Customer.class);
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
