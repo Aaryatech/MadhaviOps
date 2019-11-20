@@ -819,7 +819,7 @@
 			} else if (document.getElementById('s-option').checked) {
 				searchBy = 2;
 			}
-			$(".itemDummyClass").remove();
+			
 			$
 					.post(
 							'${getItemListByCatSubCatForCustomerBill}',
@@ -829,7 +829,7 @@
 								ajax : 'true'
 							},
 							function(data) {
-
+								$(".itemDummyClass").remove();
 								for (var i = 0; i < data.length; i++) {
 									var timeDiv = '<a href="#" title="' + data[i].itemName + '"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
 											+ ' <p>'
@@ -849,7 +849,7 @@
 
 		function getCatListAndSubCatList(value) {
 
-			$(".catDummyClass").remove();
+			
 			document.getElementById("catSubCatDivHideShow").style.display = "block";
 
 			if (value == 1) {
@@ -858,7 +858,7 @@
 				getsubcatlist();
 			} else {
 				document.getElementById("catSubCatDivHideShow").style.display = "none";
-				$(".itemDummyClass").remove();
+				
 				getAllItemlist();
 			}
 
@@ -873,6 +873,7 @@
 								ajax : 'true'
 							},
 							function(data) {
+								$(".catDummyClass").remove();
 								for (var i = 0; i < data.mCategoryList.length; i++) {
 									var timeDiv = '<a href="#" title="'
 											+ data.mCategoryList[i].catName
@@ -901,7 +902,7 @@
 								ajax : 'true'
 							},
 							function(data) {
-
+								$(".catDummyClass").remove();
 								for (var i = 0; i < data.length; i++) {
 									var timeDiv = '<a href="#" title="'
 											+ data[i].subCatName
@@ -922,7 +923,7 @@
 
 		}
 		function getAllItemlist() {
-
+			$(".itemDummyClass").remove();
 			$
 					.post(
 							'${getAllItemlistForCustomerBill}',
