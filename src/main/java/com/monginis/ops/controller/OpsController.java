@@ -20,12 +20,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddCustemerResponse;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.SubCategory;
 
 @Controller
 @Scope("session")
@@ -41,35 +43,35 @@ public class OpsController {
 		try {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			
+
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
-			 
+
 			String items;
 			StringBuilder builder = new StringBuilder();
 			for (FrMenu frMenu : menuList) {
 
 				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
-						|| frMenu.getMenuId() == 4 || frMenu.getMenuId()==5 || frMenu.getMenuId()==6||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
-  
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
+						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
+
 					builder.append("," + frMenu.getItemShow());
 
 				}
 
 			}
 			items = builder.toString();
-			items = items.substring(1, items.length()); 
-			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>(); 
+			items = items.substring(1, items.length());
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			mvm.add("frId", frDetails.getFrId());
 			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
-					ItemResponse.class); 
+					ItemResponse.class);
 			List<Item> newItemsList = itemsList.getItemList();
 			model.addAttribute("newItemsList", newItemsList);
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,37 +89,167 @@ public class OpsController {
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
-			
+
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
-			 
+
 			String items;
 			StringBuilder builder = new StringBuilder();
 			for (FrMenu frMenu : menuList) {
 
 				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
-						|| frMenu.getMenuId() == 4 || frMenu.getMenuId()==5 || frMenu.getMenuId()==6||frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
-  
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
+						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
+
 					builder.append("," + frMenu.getItemShow());
 
 				}
 
 			}
 			items = builder.toString();
-			items = items.substring(1, items.length()); 
-			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>(); 
+			items = items.substring(1, items.length());
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			mvm.add("frId", frDetails.getFrId());
 			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
-					ItemResponse.class); 
+					ItemResponse.class);
 			List<Item> newItemsList = itemsList.getItemList();
-			
-			System.out.println(newItemsList);
+
 			model.addAttribute("newItemsList", newItemsList);
+
+			CategoryList categoryList = restTemplate.getForObject(Constant.URL + "findAllOnlyCategory", CategoryList.class);
+			model.addAttribute("catList", categoryList.getmCategoryList());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+
+	@RequestMapping(value = "/getAllItemlistForCustomerBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Item> getAllItemlistForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		List<Item> newItemsList = new ArrayList<>();
+
+		try {
+
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
+
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
+						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
+
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length());
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("itemList", items);
+			mvm.add("frId", frDetails.getFrId());
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
+					ItemResponse.class);
+			 newItemsList = itemsList.getItemList();
+		 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return newItemsList;
+	}
+	
+	@RequestMapping(value = "/getItemListByCatSubCatForCustomerBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Item> getItemListByCatSubCatForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		List<Item> newItemsList = new ArrayList<>();
+
+		try {
+
+			int searchBy = Integer.parseInt(request.getParameter("searchBy"));
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
+
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
+						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
+
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length());
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("itemList", items);
+			mvm.add("frId", frDetails.getFrId());
+			mvm.add("searchBy", searchBy);
+			mvm.add("catId", catId);
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItemCateIdOrSubCatId", mvm,
+					ItemResponse.class);
+			 newItemsList = itemsList.getItemList();
+		 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return newItemsList;
+	}
+	
+	@RequestMapping(value = "/getCategoryListForCustomerBill", method = RequestMethod.POST)
+	@ResponseBody
+	public CategoryList getCategoryListForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		CategoryList categoryList = new CategoryList();
+
+		try {
+
+			categoryList = restTemplate.getForObject(Constant.URL + "findAllOnlyCategory", CategoryList.class);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return categoryList;
+	}
+
+	@RequestMapping(value = "/getSubCategoryListForCustomerBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SubCategory> getSubCategoryListForCustomerBill(HttpServletRequest request,
+			HttpServletResponse responsel) {
+
+		List<SubCategory> categoryList = new ArrayList<>();
+
+		try {
+
+			SubCategory[] subCatList = restTemplate.getForObject(Constant.URL + "getAllSubCatList",
+					SubCategory[].class);
+			categoryList = new ArrayList<>(Arrays.asList(subCatList));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return categoryList;
 	}
 
 	@RequestMapping(value = "/saveCustomerFromBill", method = RequestMethod.POST)
@@ -136,7 +268,7 @@ public class OpsController {
 			String gstNo = request.getParameter("gstNo");
 			String custAdd = request.getParameter("custAdd");
 			int custId = Integer.parseInt(request.getParameter("custId"));
-			
+
 			Customer save = new Customer();
 			save.setCustName(customerName);
 			save.setPhoneNumber(mobileNo);

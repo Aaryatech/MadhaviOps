@@ -39,6 +39,14 @@
 	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.popupoverlay.js"></script>
 <c:url var="saveCustomerFromBill" value="/saveCustomerFromBill" />
 <c:url var="editCustomerFromBill" value="/editCustomerFromBill" />
+<c:url var="getCategoryListForCustomerBill"
+	value="/getCategoryListForCustomerBill" />
+<c:url var="getSubCategoryListForCustomerBill"
+	value="/getSubCategoryListForCustomerBill" />
+<c:url var="getAllItemlistForCustomerBill"
+	value="/getAllItemlistForCustomerBill" />
+<c:url var="getItemListByCatSubCatForCustomerBill"
+	value="/getItemListByCatSubCatForCustomerBill" />
 <body>
 	<form action="" method="get">
 
@@ -254,16 +262,19 @@
 						<h3 class="item_head">Item Search</h3>
 						<div class="radio_row">
 							<ul>
-								<li><input type="radio" id="f-option" name="selector">
-									<label for="f-option">Category</label>
+								<li><input type="radio" id="f-option" name="serachBy"
+									checked onclick="getCatListAndSubCatList(1)"> <label
+									for="f-option">Category</label>
 									<div class="check"></div></li>
-								<li><input type="radio" id="s-option" name="selector">
-									<label for="s-option">Sub Category </label>
+								<li><input type="radio" id="s-option" name="serachBy"
+									onclick="getCatListAndSubCatList(2)"> <label
+									for="s-option">Sub Category </label>
 									<div class="check">
 										<div class="inside"></div>
 									</div></li>
-								<li><input type="radio" id="g-option" name="selector">
-									<label for="g-option">All Items</label>
+								<li><input type="radio" id="g-option" name="serachBy"
+									onclick="getCatListAndSubCatList(3)"> <label
+									for="g-option">All Items</label>
 									<div class="check"></div></li>
 
 
@@ -272,170 +283,35 @@
 					</div>
 
 					<!--category box start here-->
-					<div class="cat_bx_one">
-						<div class="category_list">
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu"> <span>Order Booking</span></a>
+					<div id="catSubCatDivHideShow">
+						<div class="cat_bx_one">
+							<div class="category_list" id="catSubCatDiv">
+
+								<c:forEach items="${catList}" var="catList">
+									<div class="cat_one catDummyClass">
+										<a href="#" onclick="getItemList(${catList.catId})"><img
+											title="${catList.catName}"
+											src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+											alt="laddu"> <span>${catList.catName}</span></a>
+									</div>
+								</c:forEach>
+
 							</div>
 						</div>
 					</div>
-
 					<!--listing box start here-->
 					<div class="cat_list_bx">
 						<div class="cat_srach">
 							<input name="" type="text" class="input_cat" />
 						</div>
-						<div class="cat_list">
-							<div class="cat_one cat">
+						<div class="cat_list" id="itemDiv">
+							<%-- <div class="cat_one cat itemDummyClass">
 								<a href="#"><img
 									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
 									alt="laddu">
 									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
-							<div class="cat_one cat">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div>
+							</div> --%>
+
 						</div>
 					</div>
 				</div>
@@ -738,6 +614,7 @@
 								function(data) {
 									$('.addcust_open').trigger('click');
 									//$('#myModalEdit').modal('show');
+									//$('#addcust').popup('show');
 									document
 											.getElementById("add_cust_head_name").innerHTML = "Edit Customer";
 									document.getElementById("customerName").value = data.custName;
@@ -767,7 +644,7 @@
 
 		function addCustomer() {
 			//$('#addcust').modal('hide');
-
+			//$('#addcust').popup('hide'); //for close popup;
 			var custId = document.getElementById("custId").value;
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
@@ -932,6 +809,144 @@
 			document.getElementById("custId").value = 0;
 			document.getElementById("add_cust_head_name").innerHTML = "Add Customer";
 			$("#isbuissnessdiv").hide();
+		}
+
+		function getItemList(catId) {
+			//alert(catId)
+			var searchBy = 0;
+			if (document.getElementById('f-option').checked) {
+				searchBy = 1;
+			} else if (document.getElementById('s-option').checked) {
+				searchBy = 2;
+			}
+			$(".itemDummyClass").remove();
+			$
+					.post(
+							'${getItemListByCatSubCatForCustomerBill}',
+							{
+								searchBy : searchBy,
+								catId : catId,
+								ajax : 'true'
+							},
+							function(data) {
+
+								for (var i = 0; i < data.length; i++) {
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+											+ ' <p>'
+											+ data[i].itemMrp1
+											+ ' </p> <span>'
+											+ data[i].itemName
+											+ '</span></a>';
+
+									$("#itemDiv")
+											.append(
+													$(
+															'<div class="cat_one itemDummyClass"></li>')
+															.html(timeDiv));
+								}
+							});
+		}
+
+		function getCatListAndSubCatList(value) {
+
+			$(".catDummyClass").remove();
+			document.getElementById("catSubCatDivHideShow").style.display = "block";
+
+			if (value == 1) {
+				getcatlist();
+			} else if (value == 2) {
+				getsubcatlist();
+			} else {
+				document.getElementById("catSubCatDivHideShow").style.display = "none";
+				$(".itemDummyClass").remove();
+				getAllItemlist();
+			}
+
+		}
+
+		function getcatlist() {
+
+			$
+					.post(
+							'${getCategoryListForCustomerBill}',
+							{
+								ajax : 'true'
+							},
+							function(data) {
+								for (var i = 0; i < data.mCategoryList.length; i++) {
+									var timeDiv = '<a href="#" title="'
+											+ data.mCategoryList[i].catName
+											+ '" onclick="getItemList('
+											+ data.mCategoryList[i].catId
+											+ ')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"'+
+							'alt="laddu"> <span>'
+											+ data.mCategoryList[i].catName
+											+ '</span></a>';
+
+									$("#catSubCatDiv")
+											.append(
+													$(
+															'<div class="cat_one catDummyClass"></li>')
+															.html(timeDiv));
+								}
+							});
+
+		}
+		function getsubcatlist() {
+
+			$
+					.post(
+							'${getSubCategoryListForCustomerBill}',
+							{
+								ajax : 'true'
+							},
+							function(data) {
+
+								for (var i = 0; i < data.length; i++) {
+									var timeDiv = '<a href="#" title="'
+											+ data[i].subCatName
+											+ '" onclick="getItemList('
+											+ data[i].subCatId
+											+ ')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"'+
+											'alt="laddu"> <span>'
+											+ data[i].subCatName
+											+ '</span></a>';
+
+									$("#catSubCatDiv")
+											.append(
+													$(
+															'<div class="cat_one catDummyClass"></li>')
+															.html(timeDiv));
+								}
+							});
+
+		}
+		function getAllItemlist() {
+
+			$
+					.post(
+							'${getAllItemlistForCustomerBill}',
+							{
+								ajax : 'true'
+							},
+							function(data) {
+
+								for (var i = 0; i < data.length; i++) {
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+											+ ' <p>'
+											+ data[i].itemMrp1
+											+ ' </p> <span>'
+											+ data[i].itemName
+											+ '</span></a>';
+
+									$("#itemDiv")
+											.append(
+													$(
+															'<div class="cat_one itemDummyClass"></li>')
+															.html(timeDiv));
+								}
+							});
+
 		}
 	</script>
 </body>
