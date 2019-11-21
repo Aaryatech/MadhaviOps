@@ -28,12 +28,14 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.SubCategory;
+import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 
 @Controller
 @Scope("session")
 public class OpsController {
 
 	RestTemplate restTemplate = new RestTemplate();
+	List<ItemListForCustomerBill> itemBillList = new ArrayList<>();
 
 	@RequestMapping(value = "/customerBill", method = RequestMethod.GET)
 	public String displayCustomerBill(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -42,35 +44,6 @@ public class OpsController {
 
 		try {
 			HttpSession session = request.getSession();
-			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
-			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
-			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
-			model.addAttribute("customerList", customerList);
-			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
-
-			String items;
-			StringBuilder builder = new StringBuilder();
-			for (FrMenu frMenu : menuList) {
-
-				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
-						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
-						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
-
-					builder.append("," + frMenu.getItemShow());
-
-				}
-
-			}
-			items = builder.toString();
-			items = items.substring(1, items.length());
-			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
-			mvm.add("itemList", items);
-			mvm.add("frId", frDetails.getFrId());
-			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
-					ItemResponse.class);
-			List<Item> newItemsList = itemsList.getItemList();
-			model.addAttribute("newItemsList", newItemsList);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +58,7 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
-
+			itemBillList = new ArrayList<>();
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
@@ -116,9 +89,10 @@ public class OpsController {
 
 			model.addAttribute("newItemsList", newItemsList);
 
-			CategoryList categoryList = restTemplate.getForObject(Constant.URL + "findAllOnlyCategory", CategoryList.class);
+			CategoryList categoryList = restTemplate.getForObject(Constant.URL + "findAllOnlyCategory",
+					CategoryList.class);
 			model.addAttribute("catList", categoryList.getmCategoryList());
-
+			model.addAttribute("frRateCat", frDetails.getFrRateCat());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -135,7 +109,7 @@ public class OpsController {
 
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			
+
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 
 			String items;
@@ -158,8 +132,7 @@ public class OpsController {
 			mvm.add("frId", frDetails.getFrId());
 			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
 					ItemResponse.class);
-			 newItemsList = itemsList.getItemList();
-		 
+			newItemsList = itemsList.getItemList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,7 +140,7 @@ public class OpsController {
 		}
 		return newItemsList;
 	}
-	
+
 	@RequestMapping(value = "/getItemListByCatSubCatForCustomerBill", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Item> getItemListByCatSubCatForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
@@ -180,7 +153,7 @@ public class OpsController {
 			int catId = Integer.parseInt(request.getParameter("catId"));
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			
+
 			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 
 			String items;
@@ -203,10 +176,9 @@ public class OpsController {
 			mvm.add("frId", frDetails.getFrId());
 			mvm.add("searchBy", searchBy);
 			mvm.add("catId", catId);
-			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItemCateIdOrSubCatId", mvm,
-					ItemResponse.class);
-			 newItemsList = itemsList.getItemList();
-		 
+			ItemResponse itemsList = restTemplate.postForObject(
+					Constant.URL + "/getItemsNameByIdWithOtherItemCateIdOrSubCatId", mvm, ItemResponse.class);
+			newItemsList = itemsList.getItemList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -214,7 +186,7 @@ public class OpsController {
 		}
 		return newItemsList;
 	}
-	
+
 	@RequestMapping(value = "/getCategoryListForCustomerBill", method = RequestMethod.POST)
 	@ResponseBody
 	public CategoryList getCategoryListForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
@@ -250,6 +222,23 @@ public class OpsController {
 
 		}
 		return categoryList;
+	}
+
+	@RequestMapping(value = "/addItemInBillList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemListForCustomerBill> addItemInBillList(HttpServletRequest request, HttpServletResponse responsel) {
+
+		try {
+
+			float orignalrate = Float.parseFloat(request.getParameter("rateHidden"));
+			float total = Float.parseFloat(request.getParameter("rate"));
+			float qty = Float.parseFloat(request.getParameter("qty"));
+			int itemId = Integer.parseInt(request.getParameter("itemIdHidden"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemBillList;
 	}
 
 	@RequestMapping(value = "/saveCustomerFromBill", method = RequestMethod.POST)

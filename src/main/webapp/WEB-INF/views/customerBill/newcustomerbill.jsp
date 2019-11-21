@@ -54,6 +54,7 @@
 	value="/getAllItemlistForCustomerBill" />
 <c:url var="getItemListByCatSubCatForCustomerBill"
 	value="/getItemListByCatSubCatForCustomerBill" />
+<c:url var="addItemInBillList" value="/addItemInBillList" />
 <body>
 	<form action="" method="get">
 
@@ -121,6 +122,8 @@
 							</div>
 							<div class="clr"></div>
 						</div>
+						<input id=frRateCat name="frRateCat" value="${frRateCat}"
+							type="hidden">
 						<!--customer row 2-->
 						<div class="customer_row">
 							<div class="customer_one">Item</div>
@@ -151,72 +154,37 @@
 					<div class="total_table_one">
 						<div class="scrollbars">
 							<table>
-								<tr>
-									<th>Product</th>
-									<th>Price</th>
-									<th>Qty</th>
-									<th>Sub Total</th>
-								</tr>
-								<tr>
-									<td>Cakes</td>
-									<td>350</td>
-									<td>2</td>
-									<td>350</td>
-								</tr>
-								<tr>
-									<td>Chocolates</td>
-									<td>200</td>
-									<td>1</td>
-									<td>200</td>
-								</tr>
-								<tr>
-									<td>Cakes</td>
-									<td>350</td>
-									<td>2</td>
-									<td>350</td>
-								</tr>
-								<tr>
-									<td>Chocolates</td>
-									<td>200</td>
-									<td>1</td>
-									<td>200</td>
-								</tr>
-								<tr>
-									<td>Cakes</td>
-									<td>350</td>
-									<td>2</td>
-									<td>350</td>
-								</tr>
-								<tr>
-									<td>Chocolates</td>
-									<td>200</td>
-									<td>1</td>
-									<td>200</td>
-								</tr>
-								<tr>
-									<td>Cakes</td>
-									<td>350</td>
-									<td>2</td>
-									<td>350</td>
-								</tr>
-								<tr>
-									<td>Chocolates</td>
-									<td>200</td>
-									<td>1</td>
-									<td>200</td>
-								</tr>
-								<tr>
-									<td>Cakes</td>
-									<td>350</td>
-									<td>2</td>
-									<td>350</td>
-								</tr>
-								<tr>
-									<td>Chocolates</td>
-									<td>200</td>
-									<td>1</td>
-									<td>200</td>
-								</tr>
+
+								<thead>
+									<tr>
+										<th style="text-align: center;" width="2%">Sr.No</th>
+										<th style="text-align: center;">Product</th>
+										<th style="text-align: center;" width="13%">Price</th>
+										<th style="text-align: center;" width="10%">QTY</th>
+										<th style="text-align: center;" width="13%">Total</th>
+										<th style="text-align: center;" width="2%">Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- <tr>
+										<td>1</td>
+										<td>Cakes</td>
+										<td style="text-align: right;">350</td>
+										<td style="text-align: right;">2</td>
+										<td style="text-align: right;">350</td>
+										<td style="text-align: center;"><a href="#"
+											title="Delete"><i class="fa fa-trash"></i></a></td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>Chocolates</td>
+										<td style="text-align: right;">200</td>
+										<td style="text-align: right;">1</td>
+										<td style="text-align: right;">200</td>
+										<td style="text-align: center;"><a href="#"
+											title="Delete"><i class="fa fa-trash"></i></a></td>
+									</tr> -->
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -633,7 +601,50 @@
 
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
+		<div id="quantity" class="category_popup">
+			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
 
+			<div class="add_frm">
+
+				<div class="add_row">
+					<div class="add_row_l">
+						<span class="add_txt">Enter QTY</span> <input name="enterQty"
+							id="enterQty" type="text" value="1" class="input_add numberOnly"
+							placeholder="QTY" onkeyup="itemRateCalculation(1)" />
+					</div>
+					<input name="rateHidden" id="rateHidden" type="hidden" /><input
+						name="itemIdHidden" id="itemIdHidden" type="hidden" />
+					<div class="add_row_r">
+						<span class="add_txt">Rate </span> <input name="enterRate"
+							id="enterRate" type="text" class="input_add numberOnly"
+							placeholder="Enter Rate" onkeyup="itemRateCalculation(2)" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_row add_row_marg">
+					<div class="add_row_l">
+						<span class="add_txt" id="qty_lable">QTY : 1</span>
+					</div>
+					<div class="add_row_r">
+						<span class="add_txt" id="rate_lable">Rate: 100.00</span>
+					</div>
+					<div class="clr"></div>
+				</div>
+			</div>
+
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="quantity_close close_btn">Close</button>
+				</div>
+				<div class="close_r">
+					<a href="#" onclick="addItemInBillList()">Add</a>
+				</div>
+				<div class="clr"></div>
+			</div>
+
+			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
+		</div>
 		<!--wrapper-end-->
 	</form>
 	<script
@@ -933,8 +944,19 @@
 							},
 							function(data) {
 								$(".itemDummyClass").remove();
-								for (var i = 0; i < data.length; i++) {
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+								var frRateCat =  $('#frRateCat').val();
+								
+								for (var i = 0; i < data.length; i++) { 
+									var mrp=0; 
+									if(frRateCat==1){
+										mrp=data[i].itemMrp1;
+									}else if(frRateCat==2){
+										mrp=data[i].itemMrp2;
+									}else if(frRateCat==3){
+										mrp=data[i].itemMrp3;
+									}
+									
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
 											+ ' <p>'
 											+ data[i].itemMrp1
 											+ ' </p> <span>'
@@ -969,7 +991,7 @@
 		}
 
 		function getcatlist() {
-
+			
 			$
 					.post(
 							'${getCategoryListForCustomerBill}',
@@ -980,6 +1002,7 @@
 								$(".itemDummyClass").remove();
 								$(".catDummyClass").remove();
 								for (var i = 0; i < data.mCategoryList.length; i++) {
+									 
 									var timeDiv = '<a href="#" title="'
 											+ data.mCategoryList[i].catName
 											+ '" onclick="getItemList('
@@ -1040,11 +1063,24 @@
 								ajax : 'true'
 							},
 							function(data) {
-
+								
+								var frRateCat =  $('#frRateCat').val();
+								
 								for (var i = 0; i < data.length; i++) {
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+									
+									var mrp=0;
+									
+									if(frRateCat==1){
+										mrp=data[i].itemMrp1;
+									}else if(frRateCat==2){
+										mrp=data[i].itemMrp2;
+									}else if(frRateCat==3){
+										mrp=data[i].itemMrp3;
+									}
+									
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
 											+ ' <p>'
-											+ data[i].itemMrp1
+											+ mrp
 											+ ' </p> <span>'
 											+ data[i].itemName
 											+ '</span></a>';
@@ -1083,6 +1119,15 @@
 			    });
 			});
 			</script>
+	<script type="text/javascript">
+			$(document).ready(function () {
+			    $('#quantity').popup({
+			        focusdelay: 400,
+			        outline: true,
+			        vertical: 'top'
+			    });
+			});
+			</script>
 	<script>
 				$(document).ready(function() {
 						$('.category_scrollbars').ClassyScroll();
@@ -1094,6 +1139,66 @@
 					$('.scrollbars').ClassyScroll();
 			});
 		</script>
+
+	<script>
+	$('.numberOnly').on('input', function() {
+		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
+		function opnItemPopup(itemId,mrp,itemName) {
+			  
+			$('#quantity').popup('show');
+		    
+			document
+			.getElementById("itemNmaeHeadeing").innerHTML = itemName;
+			document.getElementById("enterRate").value = mrp;
+			document.getElementById("enterQty").value = 1;
+			document.getElementById("rateHidden").value = mrp;
+			document.getElementById("itemIdHidden").value = itemId;
+			document
+			.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
+		}
+		function itemRateCalculation(flag) {
+			
+			var rateHidden = parseFloat($('#rateHidden').val());
+			var rate = parseFloat($('#enterRate').val());
+			var qty = parseFloat($('#enterQty').val());
+			 
+			 
+				if(flag==1){
+					var newrate = parseFloat(rateHidden*qty);
+					document.getElementById("enterRate").value = newrate;
+					 
+				}else{
+					var newQty = (rate/rateHidden).toFixed(3);
+					document.getElementById("enterQty").value = newQty;
+				}
+			 
+		}
+		
+	function addItemInBillList() {
+			 
+			var rateHidden = parseFloat($('#rateHidden').val());
+			var rate = parseFloat($('#enterRate').val());
+			var qty = parseFloat($('#enterQty').val());
+			var itemIdHidden =  $('#itemIdHidden').val() ;
+			
+			$
+			.post(
+					'${addItemInBillList}',
+					{
+						rateHidden : rateHidden,
+						rate : rate,
+						qty : qty,
+						itemIdHidden : itemIdHidden, 
+						ajax : 'true'
+					},
+					function(data) {
+						 
+					});
+			  
+		}
+	</script>
 </body>
 
 </html>
