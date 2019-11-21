@@ -16,6 +16,9 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/newpos/css/monginis.css"
 	type="text/css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/newpos/css/jquery.classyscroll.css"
+	type="text/css" />
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
 	type="images/png" sizes="32x32">
@@ -33,6 +36,10 @@
 <!--commanJS-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/newpos/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.classyscroll.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mousewheel.js"></script>
 <!--commanJS-->
 <!-- jQuery Popup Overlay -->
 <script type="text/javascript"
@@ -142,74 +149,76 @@
 
 					<!--product table-->
 					<div class="total_table_one">
-						<table>
-							<tr>
-								<th>Product</th>
-								<th>Price</th>
-								<th>Qty</th>
-								<th>Sub Total</th>
-							</tr>
-							<tr>
-								<td>Cakes</td>
-								<td>350</td>
-								<td>2</td>
-								<td>350</td>
-							</tr>
-							<tr>
-								<td>Chocolates</td>
-								<td>200</td>
-								<td>1</td>
-								<td>200</td>
-							</tr>
-							<tr>
-								<td>Cakes</td>
-								<td>350</td>
-								<td>2</td>
-								<td>350</td>
-							</tr>
-							<tr>
-								<td>Chocolates</td>
-								<td>200</td>
-								<td>1</td>
-								<td>200</td>
-							</tr>
-							<tr>
-								<td>Cakes</td>
-								<td>350</td>
-								<td>2</td>
-								<td>350</td>
-							</tr>
-							<tr>
-								<td>Chocolates</td>
-								<td>200</td>
-								<td>1</td>
-								<td>200</td>
-							</tr>
-							<tr>
-								<td>Cakes</td>
-								<td>350</td>
-								<td>2</td>
-								<td>350</td>
-							</tr>
-							<tr>
-								<td>Chocolates</td>
-								<td>200</td>
-								<td>1</td>
-								<td>200</td>
-							</tr>
-							<tr>
-								<td>Cakes</td>
-								<td>350</td>
-								<td>2</td>
-								<td>350</td>
-							</tr>
-							<tr>
-								<td>Chocolates</td>
-								<td>200</td>
-								<td>1</td>
-								<td>200</td>
-							</tr>
-						</table>
+						<div class="scrollbars">
+							<table>
+								<tr>
+									<th>Product</th>
+									<th>Price</th>
+									<th>Qty</th>
+									<th>Sub Total</th>
+								</tr>
+								<tr>
+									<td>Cakes</td>
+									<td>350</td>
+									<td>2</td>
+									<td>350</td>
+								</tr>
+								<tr>
+									<td>Chocolates</td>
+									<td>200</td>
+									<td>1</td>
+									<td>200</td>
+								</tr>
+								<tr>
+									<td>Cakes</td>
+									<td>350</td>
+									<td>2</td>
+									<td>350</td>
+								</tr>
+								<tr>
+									<td>Chocolates</td>
+									<td>200</td>
+									<td>1</td>
+									<td>200</td>
+								</tr>
+								<tr>
+									<td>Cakes</td>
+									<td>350</td>
+									<td>2</td>
+									<td>350</td>
+								</tr>
+								<tr>
+									<td>Chocolates</td>
+									<td>200</td>
+									<td>1</td>
+									<td>200</td>
+								</tr>
+								<tr>
+									<td>Cakes</td>
+									<td>350</td>
+									<td>2</td>
+									<td>350</td>
+								</tr>
+								<tr>
+									<td>Chocolates</td>
+									<td>200</td>
+									<td>1</td>
+									<td>200</td>
+								</tr>
+								<tr>
+									<td>Cakes</td>
+									<td>350</td>
+									<td>2</td>
+									<td>350</td>
+								</tr>
+								<tr>
+									<td>Chocolates</td>
+									<td>200</td>
+									<td>1</td>
+									<td>200</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 
 					<!--total-table start here-->
@@ -285,26 +294,30 @@
 					<!--category box start here-->
 					<div id="catSubCatDivHideShow">
 						<div class="cat_bx_one">
-							<div class="category_list" id="catSubCatDiv">
+							<div class="category_list">
+								<div class="category_scrollbars" id="catSubCatDiv">
+									<c:forEach items="${catList}" var="catList">
+										<div class="cat_one catDummyClass">
+											<a href="#" onclick="getItemList(${catList.catId})"><img
+												title="${catList.catName}"
+												src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+												alt="laddu"> <span>${catList.catName}</span></a>
+										</div>
+									</c:forEach>
 
-								<c:forEach items="${catList}" var="catList">
-									<div class="cat_one catDummyClass">
-										<a href="#" onclick="getItemList(${catList.catId})"><img
-											title="${catList.catName}"
-											src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-											alt="laddu"> <span>${catList.catName}</span></a>
-									</div>
-								</c:forEach>
-
+								</div>
 							</div>
 						</div>
 					</div>
 					<!--listing box start here-->
 					<div class="cat_list_bx">
 						<div class="cat_srach">
-							<input name="" type="text" class="input_cat" />
+							<input name="myInput1" id="myInput1" type="text"
+								class="input_cat" onkeyup="myFunction1()"
+								placeholder="Search Item" />
 						</div>
-						<div class="cat_list" id="itemDiv">
+						<div class="cat_list">
+							<div class="carlist_scrollbars" id="itemDiv"></div>
 							<%-- <div class="cat_one cat itemDummyClass">
 								<a href="#"><img
 									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
@@ -315,7 +328,6 @@
 						</div>
 					</div>
 				</div>
-
 			</section>
 
 		</div>
@@ -844,6 +856,7 @@
 															'<div class="cat_one itemDummyClass"></li>')
 															.html(timeDiv));
 								}
+								$('.carlist_scrollbars').ClassyScroll();
 							});
 		}
 
@@ -873,6 +886,7 @@
 								ajax : 'true'
 							},
 							function(data) {
+								$(".itemDummyClass").remove();
 								$(".catDummyClass").remove();
 								for (var i = 0; i < data.mCategoryList.length; i++) {
 									var timeDiv = '<a href="#" title="'
@@ -890,6 +904,7 @@
 															'<div class="cat_one catDummyClass"></li>')
 															.html(timeDiv));
 								}
+								$('.category_scrollbars').ClassyScroll();
 							});
 
 		}
@@ -903,6 +918,7 @@
 								ajax : 'true'
 							},
 							function(data) {
+								$(".itemDummyClass").remove();
 								$(".catDummyClass").remove();
 								for (var i = 0; i < data.length; i++) {
 									var timeDiv = '<a href="#" title="'
@@ -920,6 +936,7 @@
 															'<div class="cat_one catDummyClass"></li>')
 															.html(timeDiv));
 								}
+								$('.category_scrollbars').ClassyScroll();
 							});
 
 		}
@@ -947,10 +964,37 @@
 															'<div class="cat_one itemDummyClass"></li>')
 															.html(timeDiv));
 								}
+								$('.carlist_scrollbars').ClassyScroll();
 							});
 
 		}
 	</script>
+
+	<script>
+		function myFunction1() {
+			  
+		    $('.itemDummyClass').hide();
+		    var txt = $('#myInput1').val();
+		    $('.itemDummyClass').each(function(){
+		       if($(this).text().toUpperCase().indexOf(txt.toUpperCase()) != -1){
+		           $(this).show();
+		       }
+		    });
+		     
+		}
+	</script>
+
+	<script>
+				$(document).ready(function() {
+						$('.category_scrollbars').ClassyScroll();
+				});
+				$(document).ready(function() {
+					$('.carlist_scrollbars').ClassyScroll();
+			});
+				$(document).ready(function() {
+					$('.scrollbars').ClassyScroll();
+			});
+		</script>
 </body>
 
 </html>
