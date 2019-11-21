@@ -257,7 +257,7 @@
 								class="hold bill_btn">Print Bill</a>
 						</div>
 						<div class="button_two">
-							<a href="#" class="hold pay_btn">Payment</a>
+							<a href="#" class="hold pay_btn initialism payment_open">Payment</a>
 						</div>
 					</div>
 
@@ -541,7 +541,98 @@
 				</table>
 			</div>
 		</div>
+		<div id="payment" class="add_customer">
+			<button class="payment_close close_popup">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<h3 class="pop_head">Payment</h3>
 
+			<div class="add_frm">
+				<div class="add_frm_one">
+					<div class="add_customer_one">Mode of Pay</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" id="z-option" name="selector">
+									<label for="z-option">Single</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="x-option" name="selector">
+									<label for="x-option">Split </label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Quantity</div>
+					<div class="add_input">
+						<input name="" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Type</div>
+					<div class="add_input">
+
+						<div class="dropdown popup_drop">
+							<div class="select">
+								<span>Payment Mode</span>
+							</div>
+							<input type="hidden" name="gender">
+							<ul class="dropdown-menu">
+								<li id="male">Case</li>
+								<li id="female">Card</li>
+								<li id="female">E-pay</li>
+							</ul>
+						</div>
+
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Amount</div>
+					<div class="add_input">
+						<input name="" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Credit Bill</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" id="yes" name="selector"> <label
+									for="yes">Yes</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="no" name="selector"> <label
+									for="no">No </label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+
+			</div>
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="payment_close close_btn">Close</button>
+				</div>
+				<div class="close_r">
+					<a href="#">Submit</a>
+				</div>
+				<div class="clr"></div>
+			</div>
+
+			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
+		</div>
 
 		<!--wrapper-end-->
 	</form>
@@ -983,7 +1074,15 @@
 		     
 		}
 	</script>
-
+	<script type="text/javascript">
+			$(document).ready(function () {
+			    $('#payment').popup({
+			        focusdelay: 400,
+			        outline: true,
+			        vertical: 'top'
+			    });
+			});
+			</script>
 	<script>
 				$(document).ready(function() {
 						$('.category_scrollbars').ClassyScroll();
