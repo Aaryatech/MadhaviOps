@@ -55,6 +55,8 @@
 <c:url var="getItemListByCatSubCatForCustomerBill"
 	value="/getItemListByCatSubCatForCustomerBill" />
 <c:url var="addItemInBillList" value="/addItemInBillList" />
+<c:url var="deleteItemInBillList" value="/deleteItemInBillList" />
+<c:url var="getCurrentItemList" value="/getCurrentItemList" />
 <body>
 	<form action="" method="get">
 
@@ -153,7 +155,7 @@
 					<!--product table-->
 					<div class="total_table_one">
 						<div class="scrollbars">
-							<table>
+							<table id="itemBillTable">
 
 								<thead>
 									<tr>
@@ -194,21 +196,21 @@
 						<table width="100%">
 							<tr bgcolor="#ffe5e6">
 								<td>Total Items</td>
-								<td>1 (3.00)</td>
+								<td id="totalItemLable">0</td>
 								<td>Total :</td>
-								<td align="right">45.00</td>
+								<td align="right" id="taxableAmtLable">0.00</td>
 							</tr>
 							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
 								<td>Discount</td>
 								<td>(0.00) 0.00</td>
 								<td>Order Tax</td>
-								<td align="right">2.25</td>
+								<td align="right" id="taxAmtLable">0.00</td>
 							</tr>
 							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
 								<td style="font-weight: 600;">Total Payable</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
-								<td style="font-weight: 600;" align="right">47.25</td>
+								<td style="font-weight: 600;" align="right" id="totalLable">0.00</td>
 							</tr>
 						</table>
 					</div>
@@ -613,7 +615,9 @@
 							placeholder="QTY" onkeyup="itemRateCalculation(1)" />
 					</div>
 					<input name="rateHidden" id="rateHidden" type="hidden" /><input
-						name="itemIdHidden" id="itemIdHidden" type="hidden" />
+						name="itemIdHidden" id="itemIdHidden" type="hidden" /><input
+						name="taxperHidden" id="taxperHidden" type="hidden" /><input
+						name="itemNameHidden" id="itemNameHidden" type="hidden" />
 					<div class="add_row_r">
 						<span class="add_txt">Rate </span> <input name="enterRate"
 							id="enterRate" type="text" class="input_add numberOnly"
@@ -955,8 +959,8 @@
 									}else if(frRateCat==3){
 										mrp=data[i].itemMrp3;
 									}
-									
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+									var taxper=data[i].itemTax1+data[i].itemTax2;
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
 											+ ' <p>'
 											+ data[i].itemMrp1
 											+ ' </p> <span>'
@@ -1078,7 +1082,8 @@
 										mrp=data[i].itemMrp3;
 									}
 									
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+									var taxper=data[i].itemTax1+data[i].itemTax2;
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
 											+ ' <p>'
 											+ mrp
 											+ ' </p> <span>'
@@ -1145,7 +1150,7 @@
 		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 		});
 	
-		function opnItemPopup(itemId,mrp,itemName) {
+		function opnItemPopup(taxper,itemId,mrp,itemName) {
 			  
 			$('#quantity').popup('show');
 		    
@@ -1154,6 +1159,8 @@
 			document.getElementById("enterRate").value = mrp;
 			document.getElementById("enterQty").value = 1;
 			document.getElementById("rateHidden").value = mrp;
+			document.getElementById("taxperHidden").value = taxper;
+			document.getElementById("itemNameHidden").value = itemName;
 			document.getElementById("itemIdHidden").value = itemId;
 			document
 			.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
@@ -1182,22 +1189,128 @@
 			var rate = parseFloat($('#enterRate').val());
 			var qty = parseFloat($('#enterQty').val());
 			var itemIdHidden =  $('#itemIdHidden').val() ;
+			var itemNameHidden =  $('#itemNameHidden').val() ;
+			var taxperHidden =  $('#taxperHidden').val() ;
+			var flag=0;
+			if(isNaN(rate)){
+				alert("Enter Valid Rate ");
+				flag=1;
+			}else if(isNaN(qty)){
+				alert("Enter Valid QTY ");
+				flag=1;
+			}
 			
-			$
+			 
+			if(flag==0){
+				 
+				$
+				.post(
+						'${addItemInBillList}',
+						{
+							rateHidden : rateHidden,
+							rate : rate,
+							qty : qty,
+							itemIdHidden : itemIdHidden, 
+							itemNameHidden : itemNameHidden,
+							taxperHidden : taxperHidden,
+							ajax : 'true'
+						},
+						function(data) {
+							 
+							$('#quantity').popup('hide');  
+							getCurrentItemList();
+									 
+						});
+			}
+			
+			  
+		}
+	
+	function deleteItemInBillList(index) {
+		   
+			  $
 			.post(
-					'${addItemInBillList}',
+					'${deleteItemInBillList}',
 					{
-						rateHidden : rateHidden,
-						rate : rate,
-						qty : qty,
-						itemIdHidden : itemIdHidden, 
+						index : index, 
 						ajax : 'true'
 					},
 					function(data) {
-						 
-					});
-			  
-		}
+						  
+						getCurrentItemList();
+								 
+					});   
+	}
+	
+	function getCurrentItemList() {
+		
+		$
+		.post(
+				'${getCurrentItemList}',
+				{ 
+					ajax : 'true'
+				},
+				function(data) {
+					 
+					$('#quantity').popup('hide'); 
+					$('#itemBillTable td').remove();
+					
+					var taxableAmt=0;
+					var taxAmt=0;
+					var total=0;
+					$
+					.each(
+							data,
+							function(key, item) {
+								 
+								var tr = $('<tr></tr>');
+								 
+								tr
+										.append($(
+												'<td ></td>')
+												.html(key+1));
+								tr
+										.append($(
+												'<td ></td>')
+												.html(
+														item.itemName));
+								tr
+										.append($(
+												'<td style="text-align: right;"></td>')
+												.html(
+														item.orignalMrp));
+								tr
+										.append($(
+												'<td style="text-align: right;"></td>')
+												.html(
+														(item.qty).toFixed(3)));
+								tr
+										.append($(
+												'<td style="text-align: right;"></td>')
+												.html(
+														item.total));
+								tr
+								.append($(
+										'<td style="text-align: center;"></td>')
+										.html('<a href="#" title="Delete" onclick="deleteItemInBillList('+key+')"><i class="fa fa-trash"></i></a>'));
+								
+								taxableAmt=taxableAmt+item.taxableAmt;
+								taxAmt=taxAmt+item.taxAmt;
+								total=total+item.total;
+								
+								$('#itemBillTable tbody').append(
+										tr);
+
+							})
+							
+							document.getElementById("taxableAmtLable").innerHTML = taxableAmt.toFixed(2); 
+							document.getElementById("taxAmtLable").innerHTML = taxAmt.toFixed(2); 
+							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
+							document.getElementById("totalItemLable").innerHTML = data.length; 
+							
+				});
+		
+	}
 	</script>
 </body>
 

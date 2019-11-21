@@ -4,7 +4,7 @@ public class ItemListForCustomerBill {
 	
 	private int itemId;
 	private float orignalMrp;
-	private float Qty; 
+	private float qty; 
 	private String itemName;
 	private float taxPer;
 	private float taxableAmt;
@@ -21,12 +21,12 @@ public class ItemListForCustomerBill {
 	}
 	public void setOrignalMrp(float orignalMrp) {
 		this.orignalMrp = orignalMrp;
-	}
+	} 
 	public float getQty() {
-		return Qty;
+		return qty;
 	}
 	public void setQty(float qty) {
-		Qty = qty;
+		this.qty = qty;
 	}
 	public String getItemName() {
 		return itemName;
@@ -60,7 +60,7 @@ public class ItemListForCustomerBill {
 	}
 	@Override
 	public String toString() {
-		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", Qty=" + Qty
+		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", qty=" + qty
 				+ ", itemName=" + itemName + ", taxPer=" + taxPer + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt
 				+ ", total=" + total + "]";
 	}

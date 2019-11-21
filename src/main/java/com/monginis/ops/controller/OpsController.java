@@ -234,7 +234,53 @@ public class OpsController {
 			float total = Float.parseFloat(request.getParameter("rate"));
 			float qty = Float.parseFloat(request.getParameter("qty"));
 			int itemId = Integer.parseInt(request.getParameter("itemIdHidden"));
+			float taxperHidden = Float.parseFloat(request.getParameter("taxperHidden"));
+			String itemNameHidden =request.getParameter("itemNameHidden");
+			
+			/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", itemId); 
+			Item item = restTemplate.postForObject(Constant.URL + "getItem", map, Item.class);*/
+			
+			ItemListForCustomerBill add = new ItemListForCustomerBill();
+			add.setItemId(itemId);
+			add.setItemName(itemNameHidden);
+			add.setOrignalMrp(orignalrate);
+			add.setTotal(total);
+			add.setQty(qty);
+			add.setTaxPer(taxperHidden); 
+			Float taxableAmt = (total * 100) / (100 + add.getTaxPer());
+			add.setTaxableAmt(taxableAmt);
+			add.setTaxAmt(total-taxableAmt); 
+			//System.out.println(add);
+			itemBillList.add(add);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemBillList;
+	}
+	
+	@RequestMapping(value = "/getCurrentItemList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemListForCustomerBill> getCurrentItemList(HttpServletRequest request, HttpServletResponse responsel) {
 
+		try {
+  
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemBillList;
+	}
+	
+	@RequestMapping(value = "/deleteItemInBillList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemListForCustomerBill> deleteItemInBillList(HttpServletRequest request, HttpServletResponse responsel) {
+
+		try {
+			
+			int index = Integer.parseInt(request.getParameter("index"));
+			itemBillList.remove(index);
+  
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
