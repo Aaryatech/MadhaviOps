@@ -41,7 +41,7 @@ public class OpsController {
 	List<ItemListForCustomerBill> itemBillList = new ArrayList<>();
 	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
 	int key = 0;
-
+	int tempBillNo = 0;
 	@RequestMapping(value = "/customerBill", method = RequestMethod.GET)
 	public String displayCustomerBill(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -131,9 +131,10 @@ public class OpsController {
 				hashMap.get(key).setItemList(itemBillList);
 			} else {
 				CustomerBillOnHold addNew = new CustomerBillOnHold();
+				tempBillNo=tempBillNo+1;
 				addNew.setCustId(custId);
 				addNew.setItemList(itemBillList);
-				hashMap.put(hashMap.size()+1, addNew);
+				hashMap.put(tempBillNo, addNew);
 			}
 			System.out.println(hashMap);
 			info.setError(false);
@@ -159,6 +160,25 @@ public class OpsController {
 
 			info.setError(false);
 			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+	
+	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
+	@ResponseBody
+	public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			hashMap.remove(index);
+			  
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);

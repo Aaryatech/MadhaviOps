@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -57,6 +59,9 @@
 <c:url var="addItemInBillList" value="/addItemInBillList" />
 <c:url var="deleteItemInBillList" value="/deleteItemInBillList" />
 <c:url var="getCurrentItemList" value="/getCurrentItemList" />
+<c:url var="billOnHold" value="/billOnHold" />
+<c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
+<c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
 <body>
 	<form action="" method="get">
 
@@ -75,12 +80,17 @@
 						<div class="select">
 							<span>Hold Bill</span>
 						</div>
-						<input type="hidden" name="gender">
+
 						<ul class="dropdown-menu">
-							<li id="male">Bill No. 1</li>
-							<li id="female">Bill No. 1</li>
+							<c:forEach items="${holdingList}" var="holdingList">
+								<a href="#"
+									onclick="revertHoldBillOnCurrent(${holdingList.key})"><li
+									id="${holdingList.key}">${holdingList.key}</li></a>
+							</c:forEach>
+
 						</ul>
 					</div>
+
 				</div>
 				<div class="clr"></div>
 			</header>
@@ -107,9 +117,19 @@
 									<option value="0" style="text-align: left;">Select
 										Customer</option>
 									<c:forEach items="${customerList}" var="customerList">
-										<option value="${customerList.custId}"
-											style="text-align: left;">${customerList.custName}
-											&nbsp;${customerList.phoneNumber}</option>
+										<c:choose>
+											<c:when test="${customerList.custId==holdBill.custId}">
+												<option value="${customerList.custId}"
+													style="text-align: left;" selected>${customerList.custName}
+													&nbsp;${customerList.phoneNumber}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${customerList.custId}"
+													style="text-align: left;">${customerList.custName}
+													&nbsp;${customerList.phoneNumber}</option>
+											</c:otherwise>
+										</c:choose>
+
 									</c:forEach>
 								</select>
 							</div>
@@ -126,9 +146,10 @@
 							<div class="clr"></div>
 						</div>
 						<input id=frRateCat name="frRateCat" value="${frRateCat}"
+							type="hidden"> <input id=key name="key" value="${key}"
 							type="hidden">
 						<!--customer row 2-->
-						<div class="customer_row">
+						<%-- <div class="customer_row">
 							<div class="customer_one">Item</div>
 							<div class="customer_two">
 								<input list="items" id="itemName" name="itemName"
@@ -150,9 +171,12 @@
 								</button>
 							</div>
 							<div class="clr"></div>
-						</div>
+						</div> --%>
 					</div>
-
+					<c:set var="totalItemCount" value="0"></c:set>
+					<c:set var="totalTaxableAmt" value="0"></c:set>
+					<c:set var="totalTaxAmt" value="0"></c:set>
+					<c:set var="totalAmt" value="0"></c:set>
 					<!--product table-->
 					<div class="total_table_one">
 						<div class="scrollbars">
@@ -169,6 +193,26 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach items="${holdBill.itemList}" var="itemList"
+										varStatus="count">
+										<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
+										<tr>
+											<td>${count.index+1}</td>
+											<td>${itemList.itemName}</td>
+											<td style="text-align: right;">${itemList.orignalMrp}</td>
+											<td style="text-align: right;">${itemList.qty}</td>
+											<td style="text-align: right;">${itemList.total}</td>
+											<td style="text-align: center;"><a href="#"
+												title="Delete"
+												onclick="deleteItemInBillList(${count.index})"><i
+													class="fa fa-trash"></i></a></td>
+										</tr>
+										<c:set var="totalTaxableAmt"
+											value="${totalTaxableAmt+itemList.taxableAmt}"></c:set>
+										<c:set var="totalTaxAmt"
+											value="${totalTaxAmt+itemList.taxAmt}"></c:set>
+										<c:set var="totalAmt" value="${totalAmt+itemList.total}"></c:set>
+									</c:forEach>
 									<!-- <tr>
 										<td>1</td>
 										<td>Cakes</td>
@@ -194,34 +238,69 @@
 
 					<!--total-table start here-->
 					<div class="total_tab">
-						<table width="100%">
-							<tr bgcolor="#ffe5e6">
-								<td>Total Items</td>
-								<td id="totalItemLable">0</td>
-								<td>Total :</td>
-								<td align="right" id="taxableAmtLable">0.00</td>
-							</tr>
-							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-								<td>Discount</td>
-								<td>(0.00) 0.00</td>
-								<td>Order Tax</td>
-								<td align="right" id="taxAmtLable">0.00</td>
-							</tr>
-							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
-								<td style="font-weight: 600;">Total Payable</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td style="font-weight: 600;" align="right" id="totalLable">0.00</td>
-							</tr>
-						</table>
+						<c:choose>
+							<c:when test="${key>0}">
+								<table width="100%">
+									<tr bgcolor="#ffe5e6">
+										<td>Total Items</td>
+										<td id="totalItemLable">${totalItemCount}</td>
+										<td>Total :</td>
+										<td align="right" id="taxableAmtLable"><fmt:formatNumber
+												type="number" groupingUsed="false"
+												value="${totalTaxableAmt}" maxFractionDigits="2"
+												minFractionDigits="2" /></td>
+									</tr>
+									<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
+										<td>Discount</td>
+										<td>(0.00) 0.00</td>
+										<td>Order Tax</td>
+										<td align="right" id="taxAmtLable"><fmt:formatNumber
+												type="number" groupingUsed="false" value="${totalTaxAmt}"
+												maxFractionDigits="2" minFractionDigits="2" /></td>
+									</tr>
+									<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+										<td style="font-weight: 600;">Total Payable</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+										<td style="font-weight: 600;" align="right" id="totalLable"><fmt:formatNumber
+												type="number" groupingUsed="false" value="${totalAmt}"
+												maxFractionDigits="2" minFractionDigits="2" /></td>
+									</tr>
+								</table>
+							</c:when>
+							<c:otherwise>
+								<table width="100%">
+									<tr bgcolor="#ffe5e6">
+										<td>Total Items</td>
+										<td id="totalItemLable">0</td>
+										<td>Total :</td>
+										<td align="right" id="taxableAmtLable">0.00</td>
+									</tr>
+									<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
+										<td>Discount</td>
+										<td>(0.00) 0.00</td>
+										<td>Order Tax</td>
+										<td align="right" id="taxAmtLable">0.00</td>
+									</tr>
+									<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+										<td style="font-weight: 600;">Total Payable</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+										<td style="font-weight: 600;" align="right" id="totalLable">0.00</td>
+									</tr>
+								</table>
+							</c:otherwise>
+						</c:choose>
+
 					</div>
 
 
 					<!--five button here-->
 					<div class="buttons_row">
 						<div class="button_one">
-							<a href="#" class="hold hold_btn">Hold</a> <a href="#"
-								class="hold can_btn">Cancel</a>
+							<a href="#" class="hold hold_btn" onclick="billOnHold()">Hold</a>
+							<a href="#" class="hold can_btn"
+								onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
 							<a href="#" class="hold print_btn">Print Order</a> <a href="#"
@@ -1060,7 +1139,7 @@
 
 		}
 		function getAllItemlist() {
-			$(".itemDummyClass").remove();
+			
 			$
 					.post(
 							'${getAllItemlistForCustomerBill}',
@@ -1068,7 +1147,7 @@
 								ajax : 'true'
 							},
 							function(data) {
-								
+								$(".itemDummyClass").remove();
 								var frRateCat =  $('#frRateCat').val();
 								
 								for (var i = 0; i < data.length; i++) {
@@ -1312,6 +1391,65 @@
 				});
 		
 	}
+	function billOnHold() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		
+		var rowcount = $('#itemBillTable tr').length;
+	 if(rowcount>1){
+		 $
+			.post(
+					'${billOnHold}',
+					{
+						key : key, 
+						custId : custId, 
+						ajax : 'true'
+					},
+					function(data) {
+						  
+						window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+								 
+					});
+	 }else{
+		 alert("Add Minimum One Product");
+	 }
+		    
+	}
+	
+	function revertHoldBillOnCurrent(index) {
+		   
+		 
+		  $
+		.post(
+				'${revertHoldBillOnCurrent}',
+				{
+					key : index,  
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					window.location = "${pageContext.request.contextPath}/newcustomerbill/1";
+							 
+				});   
+	}
+	
+	function cancelFromHoldBill(index) {
+		   
+		 
+		  $
+		.post(
+				'${cancelFromHoldBill}',
+				{
+					key : index,  
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+							 
+				});   
+	}	
 	</script>
 </body>
 
