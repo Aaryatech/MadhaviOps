@@ -383,7 +383,7 @@
 		</div>
 
 		<!--Add Customer-->
-		<div id="addcust" class="add_customer">
+		<div id="addcust" class="add_customer" style="display: none;">
 			<button class="addcust_close close_popup"
 				onclick="clearAddCustomerpopup()">
 				<i class="fa fa-times" aria-hidden="true"></i>
@@ -482,7 +482,7 @@
 		</div>
 
 		<!--pending amount popup-->
-		<div id="slide" class="pending_pop">
+		<div id="slide" class="pending_pop" style="display: none;">
 			<button class="slide_close">
 				<i class="fa fa-times" aria-hidden="true"></i>
 			</button>
@@ -591,7 +591,7 @@
 				</table>
 			</div>
 		</div>
-		<div id="payment" class="add_customer">
+		<div id="payment" class="add_customer" style="display: none;" >
 			<button class="payment_close close_popup">
 				<i class="fa fa-times" aria-hidden="true"></i>
 			</button>
@@ -683,7 +683,7 @@
 
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
-		<div id="quantity" class="category_popup">
+		<div id="quantity" class="category_popup" style="display: none;">
 			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
 
 			<div class="add_frm">
