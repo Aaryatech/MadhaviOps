@@ -2347,7 +2347,7 @@ label:before{
 			//alert(phoneNo);
 			var gstNo = $("#gstNo" + token).val();
 			//alert(token);
-
+         
 			$('#loader').show();
 			$
 					.getJSON(
@@ -2364,536 +2364,16 @@ label:before{
 								if (data == "") {
 									alert("No records found !!");
 								}
-
-								var allTotal = 0;
-
-								//**----------Check first Special Opening Stock is gretor Show Prompt!!---------**
-								if (data.totalSpStock > 0) {
-
-									//var retVal = confirm("Use from SP or Reg Avail.Sp Qty: "+data.totalSpStock+"Avail.Reg Qty: "+data.totalRegStock);
-									Confirm(
-											'Use Stock',
-											"Use from Special Stock OR Regular Stock",
-											'Use Reg Stock ('
-													+ data.totalRegStock + ')',
-											'Use SpStock (' + data.totalSpStock
-													+ ')'); /*change*/
-
-									//document.getElementById("dialog-ovelay").focus();
-									// document.getElementById("ok").focus();
-									$(
-											".dialog-ovelay .dialog footer .controls .doAction")
-											.focus();
-									//-------------------- Use From Special Opening Stock-----------------------------
-									//if (retVal== true) {
-
-									$('.cancelAction')
-											.click(
-													function() {
-
-														$(this)
-																.parents(
-																		'.dialog-ovelay')
-																.fadeOut(
-																		500,
-																		function() {
-
-																			$(
-																					this)
-																					.remove();
-
-																			if (data.totalSpStock < qty) {
-																			
-																				Confirm(
-																						'Sp Stock is less than quantity',
-																						"Special Stock quantity is less than required quantity if you want use available quantity",
-																						'CANCEL',
-																						'Use Availabe Qty ('
-																								+ data.totalSpStock
-																								+ ')'); 
-
-																				$(
-																						'.cancelAction')
-																						.click(
-																								function() {
-
-																									$(
-																											this)
-																											.parents(
-																													'.dialog-ovelay')
-																											.fadeOut(
-																													500,
-																													function() {
-
-																														$(
-																																this)
-																																.remove();
-
-																														qty = data.totalSpStock;
-
-																														$
-																																.getJSON(
-																																		'${useSpStock}',//function, when  User Selected availble Sp Opening Stock
-																																		{
-																																			qty : qty,
-																																			token : token,
-																																			ajax : 'true'
-																																		},
-																																		function(
-																																				data) {
-
-																																			if (data == "") {
-																																				alert("No records found !!");
-																																			} else {
-																																				$(
-																																						'#table_grid'
-																																								+ token
-																																								+ ' td')
-																																						.remove();
-																																			}
-
-																																			$
-																																					.each(
-																																							data,
-																																							function(
-																																									key,
-																																									spData) {
-																																								allTotal = allTotal
-																																										+ appendToTable(
-																																												key,
-																																												spData,
-																																												token,
-																																												allTotal);
-																																							})
-																																			calTotal(
-																																					allTotal,
-																																					token);
-
-																																		});
-
-																													}); //g
-																								});//g
-																			
-																				$(
-																						'.doAction')
-																						.click(
-																								function() {
-																									// window.open($link, "_blank"); /*new*/
-																									$(
-																											this)
-																											.parents(
-																													'.dialog-ovelay')
-																											.fadeOut(
-																													500,
-																													function() {
-
-																														$(
-																																this)
-																																.remove();
-
-																														return false;
-																													}); //g
-																								});//g
-
-																			} else {
-																				$
-																						.getJSON(
-																								'${useSpStock}',//function, when  User Selected Special Opening Stock
-																								{
-																									qty : qty,
-																									token : token,
-																									ajax : 'true'
-																								},
-																								function(
-																										data) {
-
-																									if (data == "") {
-																										alert("No records found !!");
-																									} else {
-																										$(
-																												'#table_grid'
-																														+ token
-																														+ ' td')
-																												.remove();
-																									}
-
-																									$
-																											.each(
-																													data,
-																													function(
-																															key,
-																															spData) {
-																														//appensFuction
-																														allTotal = allTotal
-																																+ appendToTable(
-																																		key,
-																																		spData,
-																																		token,
-																																		allTotal);
-																													})
-																									calTotal(
-																											allTotal,
-																											token)
-
-																								});
-																			}
-
-																		}); //g
-													});//g
-									//  //g
-									// use Regular
-									$('.doAction')
-											.click(
-													function() {
-														// window.open($link, "_blank"); /*new*/
-														$(this)
-																.parents(
-																		'.dialog-ovelay')
-																.fadeOut(
-																		500,
-																		function() {
-
-																			$(
-																					this)
-																					.remove();
-
-																			if (data.totalRegStock < qty) {
-																				if (data.totalRegStock <= 0) {
-																					// alert("Sorry Item Not Available !!");
-																					emptyStock(
-																							'OUT OF STOCK !!',
-																							"Sorry, Item is not available in Regular Stock",
-																							'OK'); /*change*/
-																					$(
-																							'.doAction')
-																							.click(
-																									function() {
-																										// window.open($link, "_blank"); /*new*/
-																										$(
-																												this)
-																												.parents(
-																														'.dialog-ovelay')
-																												.fadeOut(
-																														500,
-																														function() {
-
-																															$(
-																																	this)
-																																	.remove();
-																															return false;
-																														}); //g
-																									});
-																				} else {
-																					//var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
-																					//if(regLess==true){
-																					Confirm(
-																							'Regular Stock is less than quantity',
-																							"Regular Stock quantity is less than required quantity if you want use available quantity",
-																							'CANCEL',
-																							'Use Availabe Qty ('
-																									+ data.totalRegStock
-																									+ ')'); /*change*/
-
-																					$(
-																							'.cancelAction')
-																							.click(
-																									function() {
-
-																										$(
-																												this)
-																												.parents(
-																														'.dialog-ovelay')
-																												.fadeOut(
-																														500,
-																														function() {
-
-																															$(
-																																	this)
-																																	.remove();
-
-																															qty = data.totalRegStock;
-																															$
-																																	.getJSON(
-																																			'${useRegStock}',//function, when  User Selected available Reg Opening Stock
-																																			{
-																																				qty : qty,
-																																				token : token,
-																																				ajax : 'true'
-																																			},
-																																			function(
-																																					data) {
-
-																																				if (data == "") {
-																																					alert("No records found !!");
-																																				} else {
-																																					$(
-																																							'#table_grid'
-																																									+ token
-																																									+ ' td')
-																																							.remove();
-																																				}
-
-																																				$
-																																						.each(
-																																								data,
-																																								function(
-																																										key,
-																																										regData) {
-																																									//appensFuction
-																																									allTotal = allTotal
-																																											+ appendToTable(
-																																													key,
-																																													regData,
-																																													token,
-																																													allTotal);
-																																								})
-																																				calTotal(
-																																						allTotal,
-																																						token)
-
-																																			});
-																														}); //g
-																									});//g
-																					
-																					
-																					$(
-																							'.doAction')
-																							.click(
-																									function() {
-																										// window.open($link, "_blank"); /*new*/
-																										$(
-																												this)
-																												.parents(
-																														'.dialog-ovelay')
-																												.fadeOut(
-																														500,
-																														function() {
-
-																															$(
-																																	this)
-																																	.remove();
-
-																															return false;
-																															//}
-																														}); //g
-																									});//g
-																				}
-																			} else {
-
-																				$
-																						.getJSON(
-																								'${useRegStock}',//function, when  User Selected available Reg Opening Stock
-																								{
-																									qty : qty,
-																									token : token,
-																									ajax : 'true'
-																								},
-																								function(
-																										data) {
-
-																									if (data == "") {
-																										alert("No records found !!");
-																									} else {
-																										$(
-																												'#table_grid'
-																														+ token
-																														+ ' td')
-																												.remove();
-																									}
-
-																									$
-																											.each(
-																													data,
-																													function(
-																															key,
-																															regData) {
-																														//appensFuction
-																														allTotal = allTotal
-																																+ appendToTable(
-																																		key,
-																																		regData,
-																																		token,
-																																		allTotal);
-																													})
-																									calTotal(
-																											allTotal,
-																											token)
-
-																								});
-																			}
-
-																			
-																		});
-													});
-
-								}
-
-								else {
-
-									if (data.totalRegStock < qty) {
-										if (data.totalRegStock <= 0) {
-											// alert("Sorry Item Not Available !!");
-
-											emptyStock(
-													'OUT OF STOCK !!',
-													"Sorry, Item is not available in Regular Stock",
-													'OK'); /*change*/
-
-											$('.doAction')
-													.click(
-															function() {
-																// window.open($link, "_blank"); /*new*/
-																$(this)
-																		.parents(
-																				'.dialog-ovelay')
-																		.fadeOut(
-																				500,
-																				function() {
-
-																					$(
-																							this)
-																							.remove();
-																					return false;
-																				}); //g
-															});
-										} else {
-											//var regLess = confirm("  Reg Stock Lessthan Qty. You want Avail.Qty: "+data.totalRegStock);
-											//if(regLess==true){
-											Confirm(
-													'Regular Stock is less than quantity',
-													"Regular Stock quantity is less than required quantity if you want use available quantity",
-													'CANCEL',
-													'Use Availabe Qty ('
-															+ data.totalRegStock
-															+ ')'); /*change*/
-
-											$('.cancelAction')
-													.click(
-															function() {
-
-																$(this)
-																		.parents(
-																				'.dialog-ovelay')
-																		.fadeOut(
-																				500,
-																				function() {
-
-																					$(
-																							this)
-																							.remove();
-
-																					qty = data.totalRegStock;
-																					$
-																							.getJSON(
-																									'${useRegStock}',//function, when  User Selected available Reg Opening Stock
-																									{
-																										qty : qty,
-																										token : token,
-																										ajax : 'true'
-																									},
-																									function(
-																											data) {
-
-																										if (data == "") {
-																											alert("No records found !!");
-																										} else {
-																											$(
-																													'#table_grid'
-																															+ token
-																															+ ' td')
-																													.remove();
-																										}
-
-																										$
-																												.each(
-																														data,
-																														function(
-																																key,
-																																regData) {
-																															//appensFuction
-																															allTotal = allTotal
-																																	+ appendToTable(
-																																			key,
-																																			regData,
-																																			token,
-																																			allTotal);
-																														})
-																										calTotal(
-																												allTotal,
-																												token)
-
-																									});
-																				}); //g
-															});//g
-											
-											$('.doAction')
-													.click(
-															function() {
-																// window.open($link, "_blank"); /*new*/
-																$(this)
-																		.parents(
-																				'.dialog-ovelay')
-																		.fadeOut(
-																				500,
-																				function() {
-
-																					$(
-																							this)
-																							.remove();
-																					return false;
-																					//}
-																				}); //g
-															});//g
-										}
-									} else {
-
-										$
-												.getJSON(
-														'${useRegStock}',//function, when  User Selected available Reg Opening Stock
-														{
-															qty : qty,
-															token : token,
-															ajax : 'true'
-														},
-														function(data) {
-
-															if (data == "") {
-																alert("No records found !!");
-															} else {
-																$(
-																		'#table_grid'
-																				+ token
-																				+ ' td')
-																		.remove();
-															}
-
-															$
-																	.each(
-																			data,
-																			function(
-																					key,
-																					regData) {
-																				//appensFuction
-																				allTotal = allTotal
-																						+ appendToTable(
-																								key,
-																								regData,
-																								token,
-																								allTotal);
-																			})
-															calTotal(allTotal,
-																	token)
-
-														});
-									}
-
-								}
+								
+								var	allTotal=appendToTable(0, data, token, 0);
+								  calTotal(allTotal, token);
+								//PreCode
 								//first each 
 							}); //ajax
 			document.getElementById("barcode" + token).value = "";
 			//document.getElementById("itemName" + token).value = "";
 	       // $("#itemName" + token).val("").change();
-
+	   
 				
 			//	document.getElementById("generateBill"+token).focus();	
 		} //main function
@@ -2901,7 +2381,8 @@ label:before{
 
 	<script type="text/javascript">
 		function appendToTable(key, data, token, allTotal) {
-			
+			$('#table_grid' + token + ' tbody').empty();
+			var allTotal=0;
 			if(data.length>0){
 				document.getElementById("generateBill"+token).disabled=false;
 				document.getElementById("pdfBtn"+token).disabled=false;
@@ -2910,7 +2391,7 @@ label:before{
 				document.getElementById("generateBill"+token).disabled=true;
 				document.getElementById("pdfBtn"+token).disabled=true;
 				}
-
+			$.each(data, function(key, data) {
 			var tr = $('<tr></tr>');
 
 			tr.append($('<td></td>').html(key + 1));
@@ -2942,7 +2423,8 @@ label:before{
 											+ " ></div>"));
 			tr.append($('<td></td>').html(data.mrp));
 
-			var total = parseFloat(data.mrp) * parseFloat(data.qty);
+			allTotal =allTotal+( parseFloat(data.mrp) * parseFloat(data.qty));
+		     var total=(parseFloat(data.mrp) * parseFloat(data.qty));
 			//tr.append($('<td></td>').html("<label id=total"+token+""+key+" for=>"+total+" </label>" ));
 			tr.append($('<td></td>').html(
 					"<div id=total"+token+key+">" + total + "</div>"));
@@ -2965,20 +2447,17 @@ label:before{
 											+ ")'><abbr title='Delete'><i  class='fa fa-trash'></i></abbr> </a>"));
 
 			$('#table_grid' + token + ' tbody').append(tr);
+			});
 
 			var container = document.getElementById('table-scroll');
 		
 			var rowToScrollTo = document.getElementById("edit"+token+""+key);
 			rowToScrollTo.scrollIntoView(true); 
-
-			
-
 			container.scrollTop = rowToScrollTo.offsetTop;
 		
 		$('.table-scroll').scrollTop(0);
-
 		
-			return total;
+			return allTotal;
 		}
 	</script>
 
@@ -3154,12 +2633,12 @@ label:before{
 			}, function(data) {
 
 				$('#table_grid' + token + ' td').remove();
-				
-				$.each(data, function(key, regData) {
+				allTotal=appendToTable(0, data, token, 0);
+			/* 	$.each(data, function(key, regData) {
 					//appensFuction
 					allTotal = allTotal
 							+ appendToTable(key, regData, token, allTotal);
-				})
+				}) */
 				calTotal(allTotal, token);
 				  $('#discount' + token).val(0);
 				  $('#discountRs' + token).val(0);

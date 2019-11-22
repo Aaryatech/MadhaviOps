@@ -9,22 +9,20 @@ public class SellBillHeader implements Serializable{
 	
 	private int sellBillNo;
 	
-
 	private String invoiceNo;
-	
-	
+		
 	private String billDate;
-	
-	
+		
 	private int frId;
-	
-	
+		
 	private String frCode;
 	
+	private int discType;   //new
+	
+	private float discAmtItem; //new
 	
 	private float taxableAmt;
-	
-	
+		
 	private float discountPer;
 	
 	private float discountAmt;
@@ -33,34 +31,104 @@ public class SellBillHeader implements Serializable{
 	
 	private float totalTax;
 	
-
 	private float grandTotal;
-	
-	
+		
 	private float paidAmt;
 	
-
 	private float remainingAmt;
 	
-
 	private int paymentMode;
 	
+	private int isDairyMartBill;//new
+	
+	private float advanceAmt;  //new     
+	
+	private String couponNo;//new
+	
+	private int custId;//new
+	
+	private float custLoyaltyPtRate;//new
 
+	private float custLoyaltyPt;//new
+	
 	private String userName;
-	
-	
+		
 	private String userGstNo;
-	
-	
+		
 	private String userPhone;
 	
-
 	private int status;
 	
-	private int DelStatus;
- 
 	private char billType;
+
+	private int delStatus;
+	
+	
    
+	public int getCustId() {
+		return custId;
+	}
+
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+
+	public int getDiscType() {
+		return discType;
+	}
+
+	public void setDiscType(int discType) {
+		this.discType = discType;
+	}
+
+	public float getDiscAmtItem() {
+		return discAmtItem;
+	}
+
+	public void setDiscAmtItem(float discAmtItem) {
+		this.discAmtItem = discAmtItem;
+	}
+
+	public int getIsDairyMartBill() {
+		return isDairyMartBill;
+	}
+
+	public void setIsDairyMartBill(int isDairyMartBill) {
+		this.isDairyMartBill = isDairyMartBill;
+	}
+
+	public float getAdvanceAmt() {
+		return advanceAmt;
+	}
+
+	public void setAdvanceAmt(float advanceAmt) {
+		this.advanceAmt = advanceAmt;
+	}
+
+	public String getCouponNo() {
+		return couponNo;
+	}
+
+	public void setCouponNo(String couponNo) {
+		this.couponNo = couponNo;
+	}
+
+	public float getCustLoyaltyPtRate() {
+		return custLoyaltyPtRate;
+	}
+
+	public void setCustLoyaltyPtRate(float custLoyaltyPtRate) {
+		this.custLoyaltyPtRate = custLoyaltyPtRate;
+	}
+
+	public float getCustLoyaltyPt() {
+		return custLoyaltyPt;
+	}
+
+	public void setCustLoyaltyPt(float custLoyaltyPt) {
+		this.custLoyaltyPt = custLoyaltyPt;
+	}
+
 	public char getBillType() {
 		return billType;
 	}
@@ -127,8 +195,6 @@ public class SellBillHeader implements Serializable{
 	public void setTaxableAmt(float taxableAmt) {
 		this.taxableAmt = taxableAmt;
 	}
-
-	
 
 	public float getDiscountPer() {
 		return discountPer;
@@ -210,8 +276,6 @@ public class SellBillHeader implements Serializable{
 		this.userGstNo = userGstNo;
 	}
 
-	
-
 	public String getUserPhone() {
 		return userPhone;
 	}
@@ -229,23 +293,24 @@ public class SellBillHeader implements Serializable{
 	}
 
 	public int getDelStatus() {
-		return DelStatus;
+		return delStatus;
 	}
 
 	public void setDelStatus(int delStatus) {
-		DelStatus = delStatus;
+		this.delStatus = delStatus;
 	}
 
 	@Override
 	public String toString() {
 		return "SellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
-				+ ", frId=" + frId + ", frCode=" + frCode + ", taxableAmt=" + taxableAmt + ", discountPer="
-				+ discountPer + ", discountAmt=" + discountAmt + ", payableAmt=" + payableAmt + ", totalTax=" + totalTax
-				+ ", grandTotal=" + grandTotal + ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt
-				+ ", paymentMode=" + paymentMode + ", userName=" + userName + ", userGstNo=" + userGstNo
-				+ ", userPhone=" + userPhone + ", status=" + status + ", DelStatus=" + DelStatus
-				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
+				+ ", frId=" + frId + ", frCode=" + frCode + ", discType=" + discType + ", discAmtItem=" + discAmtItem
+				+ ", taxableAmt=" + taxableAmt + ", discountPer=" + discountPer + ", discountAmt=" + discountAmt
+				+ ", payableAmt=" + payableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt="
+				+ paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", isDairyMartBill="
+				+ isDairyMartBill + ", advanceAmt=" + advanceAmt + ", couponNo=" + couponNo + ", custId=" + custId
+				+ ", custLoyaltyPtRate=" + custLoyaltyPtRate + ", custLoyaltyPt=" + custLoyaltyPt + ", userName="
+				+ userName + ", userGstNo=" + userGstNo + ", userPhone=" + userPhone + ", status=" + status
+				+ ", billType=" + billType + ", delStatus=" + delStatus + ", sellBillDetailsList=" + sellBillDetailsList
+				+ "]";
 	}
-   
-	
 }

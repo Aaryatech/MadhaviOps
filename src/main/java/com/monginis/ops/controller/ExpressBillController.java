@@ -55,6 +55,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Menus;
 import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SellBillDetailList;
+import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
 //import com.sun.org.apache.regexp.internal.RE;
 
@@ -361,7 +362,7 @@ public class ExpressBillController {
 
 			model.addObject("itemsList", customerBillItemList);
 
-			System.out.println("Exception In ExpressBillController View Page");
+			System.out.println("Exception In ExpressBillController View Page"+e.getMessage());
 		}
 		return model;
 	}
@@ -388,7 +389,7 @@ public class ExpressBillController {
 
 				}
 			}
-if(catId!=7) {
+            if(catId!=7) {
 			// ------------------------------------------------------------------------------------------
 			if (currentStockDetailList != null) {
 				for (int i = 0; i < currentStockDetailList.size(); i++) {
@@ -737,7 +738,7 @@ if(ses==null) {
 
 		SellBillHeader sellBillHeader = new SellBillHeader();
 		String invNo = getInvoiceNo(request,response);
-
+        
 		sellBillHeader.setFrId(frDetails.getFrId());
 		sellBillHeader.setFrCode(frDetails.getFrCode());
 		sellBillHeader.setDelStatus(0);
@@ -767,14 +768,25 @@ if(ses==null) {
 
 		sellBillHeader.setStatus(1);
 		sellBillHeader.setBillType('E');
-
+		
+		sellBillHeader.setAdvanceAmt(0);
+		sellBillHeader.setDiscType(0);
+		sellBillHeader.setDiscountPer(0);
+		sellBillHeader.setDiscountAmt(0);
+		sellBillHeader.setDiscAmtItem(0);
+		sellBillHeader.setCustLoyaltyPtRate(0);
+		sellBillHeader.setCustLoyaltyPt(0);
+		sellBillHeader.setCouponNo("-");
+		sellBillHeader.setIsDairyMartBill(0);
+		
 		RestTemplate restTemplate = new RestTemplate();
-
+		  System.err.println("sellBillHeader"+sellBillHeader.toString());     
 		sellBillHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", sellBillHeader,
 				SellBillHeader.class);
-	
-		sellInvoiceGlobal=sellBillHeader.getInvoiceNo();
 		
+		 System.err.println("SellBillHeader"+sellBillHeader.toString());    
+		sellInvoiceGlobal=sellBillHeader.getInvoiceNo();
+		System.err.println("sellBillHeader"+sellBillHeader.toString());
 		if (sellBillHeader != null) {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map = new LinkedMultiValueMap<String, Object>();
@@ -899,7 +911,40 @@ if(ses==null) {
 			
 			billHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", billHeader,
 					SellBillHeader.class);
-
+             if(billHeader!=null)
+             {
+            	 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+     		    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+     		    String transactionDate="";
+            	 try {
+            		 transactionDate=sdf2.format(sdf.parse(billHeader.getBillDate()));
+            		} catch (ParseException e) {
+            		    e.printStackTrace();
+            		}
+            	 
+            	 List<TransactionDetail> dList=new ArrayList<>();
+            	 TransactionDetail transactionDetail=new TransactionDetail();
+            	 transactionDetail.setTrId(0);
+            	 transactionDetail.setTransactionDate(transactionDate);
+            	 transactionDetail.setSellBillNo(billHeader.getSellBillNo());
+            	 transactionDetail.setPayMode(billHeader.getPaymentMode());
+            	 transactionDetail.setCashAmt(billHeader.getGrandTotal());
+            	 transactionDetail.setCardAmt(0);
+            	 transactionDetail.setePayType(0);
+            	 transactionDetail.setePayAmt(0);
+            	 transactionDetail.setDiscType(0);
+            	 transactionDetail.setDelStatus(0);
+            	 transactionDetail.setExInt1(0);
+            	 transactionDetail.setExInt2(0);
+            	 transactionDetail.setExFloat1(0); 
+            	 transactionDetail.setExFloat2(0);  
+            	 transactionDetail.setExVar1("-");
+            	 transactionDetail.setExVar2("-");
+            	 dList.add(transactionDetail);
+            	 List<TransactionDetail>	transactionDetailRes = restTemplate.postForObject(Constant.URL + "saveTransactionDetail", dList,
+            			 List.class);
+            	
+             }
 			
 			sellInvoiceGlobal=billHeader.getInvoiceNo();
 			System.out.println("Bill Header Response if Bill Detail Not Empty " + billHeader.toString());

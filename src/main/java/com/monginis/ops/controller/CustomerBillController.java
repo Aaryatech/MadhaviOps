@@ -942,7 +942,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 		CustomerBillData customerBillData = new CustomerBillData();
 
 		System.out.println("In Reg Stock method");
-		for (int i = 0; i < currentStockDetailList.size(); i++) {
+		/*for (int i = 0; i < currentStockDetailList.size(); i++) {
 
 			System.out.println("useRegStock Stock" + currentStockDetailList.get(i).toString());
 			System.out.println("useRegStock New Item " + customerBillItem.toString());
@@ -957,7 +957,8 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 			}
 
-		}
+		}*/
+		customerBillItem.setBillStockType(1);
 		switch (token) {
 		case 1:
 			System.out.println("useRegStock token list before insertion: "
@@ -1144,7 +1145,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 	// ---------------------first Ajax Call----------------------
 
 	@RequestMapping(value = "/currentNewItem", method = RequestMethod.GET)
-	public @ResponseBody CustomerBillItem getAllAddedItem1(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<CustomerBillItem> getAllAddedItem1(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -1160,11 +1161,14 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 		int itemQty = Integer.parseInt(request.getParameter("qty"));
 		System.out.println("itemQty : " + itemQty);
+		
+		CustomerBillItem currentNewItem=setNewItem(id,itemQty);
+		CustomerBillData	customerBillData = useRegStock(currentNewItem, token);
 
 		// List<CustomerBillItem> prevCustomerBillItemList =
 		// customerBillDataToken1.getCustomerBillList();
 
-		try {
+		/*try {
 
 			// CustomerBillItem currentNewItem=setNewItem(id,itemQty);
 			currentNewItem = setNewItem(id, itemQty);
@@ -1197,9 +1201,9 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 			System.out.println("Exception adding item: " + e.getMessage());
 			e.printStackTrace();
 
-		}
+		}*/
 		
-		
+		/*
 if(currentNewItem.getCatId()==7) {
 	currentNewItem.setTotalRegStock(itemQty+5);
 	currentNewItem.setTotalSpStock(0);
@@ -1209,8 +1213,8 @@ if(currentNewItem.getCatId()==7) {
 }		
 
 		System.out.println("Customer   " + currentNewItem.toString());
-
-		return currentNewItem;
+*/
+		return customerBillData.getCustomerBillList();
 	}
 
 	@RequestMapping(value = "/editQty", method = RequestMethod.GET)
@@ -1227,45 +1231,14 @@ if(currentNewItem.getCatId()==7) {
 		switch (token) {
 		case 1:
 			System.out.println("token list before edit:  " + customerBillDataToken1.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken1.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken1.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken1.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken1.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken1.getCustomerBillList().get(i).getQty();
 
@@ -1279,45 +1252,14 @@ if(currentNewItem.getCatId()==7) {
 
 		case 2:
 			System.out.println("token list before edit:  " + customerBillDataToken2.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken2.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken2.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken2.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken2.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken2.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken2.getCustomerBillList().get(i).getQty();
 
@@ -1329,104 +1271,41 @@ if(currentNewItem.getCatId()==7) {
 
 			break;
 		case 3:
-			System.out.println("token list before edit:  " + customerBillDataToken3.getCustomerBillList().toString());
-
+			System.out.println("  token list before edit: " + customerBillDataToken3.getCustomerBillList().toString());
 			for (int i = 0; i < customerBillDataToken3.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken3.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken3.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken3.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken3.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken3.getCustomerBillList().get(i).getQty();
 
 			}
 			if (deleteFlag) {
-				customerBillDataToken7.getCustomerBillList().remove(deleteIndex);
+				customerBillDataToken3.getCustomerBillList().remove(deleteIndex);
 
 			}
-
 			break;
 
 		case 4:
 			System.out.println("token list before edit: : " + customerBillDataToken4.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken4.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken4.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken4.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken4.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken4.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken4.getCustomerBillList().get(i).getQty();
 
 			}
 			if (deleteFlag) {
-				customerBillDataToken7.getCustomerBillList().remove(deleteIndex);
+				customerBillDataToken4.getCustomerBillList().remove(deleteIndex);
 
 			}
 
@@ -1434,51 +1313,20 @@ if(currentNewItem.getCatId()==7) {
 
 		case 5:
 			System.out.println("token list before edit: " + customerBillDataToken5.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken5.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken5.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken5.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken5.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken5.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken5.getCustomerBillList().get(i).getQty();
 
 			}
 			if (deleteFlag) {
-				customerBillDataToken7.getCustomerBillList().remove(deleteIndex);
+				customerBillDataToken5.getCustomerBillList().remove(deleteIndex);
 
 			}
 
@@ -1486,51 +1334,20 @@ if(currentNewItem.getCatId()==7) {
 
 		case 6:
 			System.out.println("  token list before edit: " + customerBillDataToken6.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken6.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken6.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken6.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken6.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken6.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken6.getCustomerBillList().get(i).getQty();
 
 			}
 			if (deleteFlag) {
-				customerBillDataToken7.getCustomerBillList().remove(deleteIndex);
+				customerBillDataToken6.getCustomerBillList().remove(deleteIndex);
 
 			}
 
@@ -1538,45 +1355,14 @@ if(currentNewItem.getCatId()==7) {
 
 		case 7:
 			System.out.println("  token list before edit: " + customerBillDataToken7.getCustomerBillList().toString());
-
 			for (int i = 0; i < customerBillDataToken7.getCustomerBillList().size(); i++) {
-				for (int j = 0; j < currentStockDetailList.size(); j++) {
-					if (i == key && currentStockDetailList.get(j).getId() == id) {
-						int stockType = customerBillDataToken7.getCustomerBillList().get(i).getBillStockType();
-
-						float prevQty = customerBillDataToken7.getCustomerBillList().get(i).getQty();
-						if (prevQty < qty) {
-							float newQty = qty - prevQty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() - newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() - newQty);
-						} else if (qty == 0) {
+					if (i == key) {
+						 if (qty == 0) {
 							deleteFlag = true;
 							deleteIndex = i;
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
-						} else {
-							float newQty = prevQty - qty;
-							if (stockType == 1)
-								currentStockDetailList.get(j).setCurrentRegStock(
-										currentStockDetailList.get(j).getCurrentRegStock() + newQty);
-							else
-								currentStockDetailList.get(j)
-										.setCurrentSpStock(currentStockDetailList.get(j).getCurrentSpStock() + newQty);
 						}
 						customerBillDataToken7.getCustomerBillList().get(i).setQty(qty);
 					}
-
-				}
-				// customerBillDataToken1.getCustomerBillList().get(i).setQty(qty);
 				alltotal += customerBillDataToken7.getCustomerBillList().get(i).getMrp()
 						* customerBillDataToken7.getCustomerBillList().get(i).getQty();
 
@@ -1604,7 +1390,7 @@ if(currentNewItem.getCatId()==7) {
 
 			System.out.println("token list before Delete:  " + customerBillDataToken1.getCustomerBillList().toString());
 
-			for (int i = 0; i < prevCustomerBillItemList1.size(); i++) {
+		/*	for (int i = 0; i < prevCustomerBillItemList1.size(); i++) {
 				for (int j = 0; j < currentStockDetailList.size(); j++) {
 					if (i == key && currentStockDetailList.get(j).getId() == id) {
 						int stockType = prevCustomerBillItemList1.get(i).getBillStockType();
@@ -1622,7 +1408,7 @@ if(currentNewItem.getCatId()==7) {
 
 				}
 
-			}
+			}*/
 			prevCustomerBillItemList1.remove(key);
 			customerBillDataToken1.setCustomerBillList(prevCustomerBillItemList1);
 

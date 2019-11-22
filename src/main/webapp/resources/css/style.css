@@ -129,7 +129,7 @@ margin: 0px auto;
 .table-wrap {
 	width: 100%;
 	display:block;
-	overflow: auto;
+	/* overflow: auto; */
 	position:relative;
 	z-index:1;
 	

@@ -50,7 +50,8 @@ public class SellBillDetail implements Serializable{
 	
 
 	private float igstRs;
-	
+	private float discPer;//new
+	private float discAmt;//new
 	
 	private float totalTax;
 	
@@ -64,6 +65,23 @@ public class SellBillDetail implements Serializable{
 	private int delStatus;
 
 	
+	
+	public float getDiscPer() {
+		return discPer;
+	}
+
+	public void setDiscPer(float discPer) {
+		this.discPer = discPer;
+	}
+
+	public float getDiscAmt() {
+		return discAmt;
+	}
+
+	public void setDiscAmt(float discAmt) {
+		this.discAmt = discAmt;
+	}
+
 	public int getBillStockType() {
 		return billStockType;
 	}
@@ -230,8 +248,9 @@ public class SellBillDetail implements Serializable{
 				+ catId + ", itemId=" + itemId + ", itemName=" + itemName + ", mrp=" + mrp + ", qty=" + qty
 				+ ", mrpBaseRate=" + mrpBaseRate + ", billStockType=" + billStockType + ", taxableAmt=" + taxableAmt
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
-				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", totalTax=" + totalTax + ", grandTotal="
-				+ grandTotal + ", remark=" + remark + ", delStatus=" + delStatus + "]";
+				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt
+				+ ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus="
+				+ delStatus + "]";
 	}
 
 	

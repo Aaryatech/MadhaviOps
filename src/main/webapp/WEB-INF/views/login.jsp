@@ -39,7 +39,7 @@ jQuery(document).ready(function(){
 <!--topHeader-->
 <div class="fullGrid center logoBarbg slideposi">
 	<div class="wrapperIn positionR">
-    	<div class="logoBarLeft"><a href=""><img src="${pageContext.request.contextPath}/resources/images/monginis1.png" alt="monginis"></a></div>  
+    	<div class="logoBarLeft"><a href=""><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="monginis"></a></div>  
         <div class="logoBarRight"><div id="menuzord" class="menuzord red menuzord-responsive">
             <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
                <%--  <li><a href="#"><div class="usericon">John doe</div> <div class="userimg"><img src="${pageContext.request.contextPath}/resources/images/userimg.jpg"></div> </a>
@@ -71,12 +71,12 @@ jQuery(document).ready(function(){
     <input type="submit" value="Upload">
 </form> -->
 
-
+<%-- 
 <c:if test="${not empty message}">
    <!-- here would be a message with a result of processing -->
     <div class="messages messagesErr"> ${message} </div>
         	
-</c:if>
+</c:if> --%>
 
 
 	<form id="form-login" action="loginProcess" method="post">

@@ -68,7 +68,9 @@
 					<img
 						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 						alt="madhvi_logo">
-				</div>
+				</div><div class="drop_menu"><div class="dropdown"><a href="${pageContext.request.contextPath}/home"><div class="select">
+							<span>BACK</span>
+						</div></a></div></div>
 				<div class="drop_menu">
 					<div class="dropdown">
 						<div class="select">
@@ -960,7 +962,7 @@
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" alt="laddu">'
 											+ ' <p>'
 											+ data[i].itemMrp1
 											+ ' </p> <span>'
