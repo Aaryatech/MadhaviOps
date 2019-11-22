@@ -65,12 +65,11 @@
 
 			<header>
 				<div class="logo">
-					<img
+					<a href="${pageContext.request.contextPath}/home"><img
 						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
-						alt="madhvi_logo">
-				</div><div class="drop_menu"><div class="dropdown"><a href="${pageContext.request.contextPath}/home"><div class="select">
-							<span>BACK</span>
-						</div></a></div></div>
+						alt="madhvi_logo"></a>
+				</div>
+
 				<div class="drop_menu">
 					<div class="dropdown">
 						<div class="select">
@@ -962,7 +961,7 @@
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" alt="laddu">'
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" onerror="this.src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"" alt="'+data[i].itemName+'">'
 											+ ' <p>'
 											+ data[i].itemMrp1
 											+ ' </p> <span>'
@@ -1085,7 +1084,7 @@
 									}
 									
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg" alt="laddu">'
+									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" onerror="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg;"     alt="'+data[i].itemName+'">'
 											+ ' <p>'
 											+ mrp
 											+ ' </p> <span>'

@@ -54,10 +54,12 @@ public class OpsController {
 	@RequestMapping(value = "/newcustomerbill", method = RequestMethod.GET)
 	public String newcustomerbill(HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		
 		String mav = "customerBill/newcustomerbill";
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
+			
 			itemBillList = new ArrayList<>();
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
