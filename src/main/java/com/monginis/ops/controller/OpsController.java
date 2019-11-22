@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +30,7 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.SubCategory;
+import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 
 @Controller
@@ -36,6 +39,8 @@ public class OpsController {
 
 	RestTemplate restTemplate = new RestTemplate();
 	List<ItemListForCustomerBill> itemBillList = new ArrayList<>();
+	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
+	int key = 0;
 
 	@RequestMapping(value = "/customerBill", method = RequestMethod.GET)
 	public String displayCustomerBill(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -51,16 +56,15 @@ public class OpsController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/newcustomerbill", method = RequestMethod.GET)
-	public String newcustomerbill(HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping(value = "/newcustomerbill/{type}", method = RequestMethod.GET)
+	public String newcustomerbill(@PathVariable int type, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
-		
 		String mav = "customerBill/newcustomerbill";
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
-			
-			itemBillList = new ArrayList<>();
+
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
@@ -95,10 +99,72 @@ public class OpsController {
 					CategoryList.class);
 			model.addAttribute("catList", categoryList.getmCategoryList());
 			model.addAttribute("frRateCat", frDetails.getFrRateCat());
+			model.addAttribute("holdingList", hashMap);
+
+			if (type == 1) {
+				model.addAttribute("holdBill", hashMap.get(key));
+				itemBillList = hashMap.get(key).getItemList();
+				model.addAttribute("key", key);
+			} else {
+				itemBillList = new ArrayList<>();
+				model.addAttribute("key", 0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+
+	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
+	@ResponseBody
+	public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int key = Integer.parseInt(request.getParameter("key"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			if (hashMap.containsKey(key)) {
+				hashMap.get(key).setCustId(custId);
+				hashMap.get(key).setItemList(itemBillList);
+			} else {
+				CustomerBillOnHold addNew = new CustomerBillOnHold();
+				addNew.setCustId(custId);
+				addNew.setItemList(itemBillList);
+				hashMap.put(hashMap.size()+1, addNew);
+			}
+			System.out.println(hashMap);
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
+	@ResponseBody
+	public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			key = index;
+
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
 	}
 
 	@RequestMapping(value = "/getAllItemlistForCustomerBill", method = RequestMethod.POST)
@@ -237,52 +303,55 @@ public class OpsController {
 			float qty = Float.parseFloat(request.getParameter("qty"));
 			int itemId = Integer.parseInt(request.getParameter("itemIdHidden"));
 			float taxperHidden = Float.parseFloat(request.getParameter("taxperHidden"));
-			String itemNameHidden =request.getParameter("itemNameHidden");
-			
-			/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("id", itemId); 
-			Item item = restTemplate.postForObject(Constant.URL + "getItem", map, Item.class);*/
-			
+			String itemNameHidden = request.getParameter("itemNameHidden");
+
+			/*
+			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+			 * Object>(); map.add("id", itemId); Item item =
+			 * restTemplate.postForObject(Constant.URL + "getItem", map, Item.class);
+			 */
+
 			ItemListForCustomerBill add = new ItemListForCustomerBill();
 			add.setItemId(itemId);
 			add.setItemName(itemNameHidden);
 			add.setOrignalMrp(orignalrate);
 			add.setTotal(total);
 			add.setQty(qty);
-			add.setTaxPer(taxperHidden); 
+			add.setTaxPer(taxperHidden);
 			Float taxableAmt = (total * 100) / (100 + add.getTaxPer());
 			add.setTaxableAmt(taxableAmt);
-			add.setTaxAmt(total-taxableAmt); 
-			//System.out.println(add);
+			add.setTaxAmt(total - taxableAmt);
+			// System.out.println(add);
 			itemBillList.add(add);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return itemBillList;
 	}
-	
+
 	@RequestMapping(value = "/getCurrentItemList", method = RequestMethod.POST)
 	@ResponseBody
 	public List<ItemListForCustomerBill> getCurrentItemList(HttpServletRequest request, HttpServletResponse responsel) {
 
 		try {
-  
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return itemBillList;
 	}
-	
+
 	@RequestMapping(value = "/deleteItemInBillList", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ItemListForCustomerBill> deleteItemInBillList(HttpServletRequest request, HttpServletResponse responsel) {
+	public List<ItemListForCustomerBill> deleteItemInBillList(HttpServletRequest request,
+			HttpServletResponse responsel) {
 
 		try {
-			
+
 			int index = Integer.parseInt(request.getParameter("index"));
 			itemBillList.remove(index);
-  
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
