@@ -591,7 +591,7 @@
 				</table>
 			</div>
 		</div>
-		<div id="payment" class="add_customer" style="display: none;" >
+		<div id="payment" class="add_customer" style="display: none;">
 			<button class="payment_close close_popup">
 				<i class="fa fa-times" aria-hidden="true"></i>
 			</button>
@@ -1333,8 +1333,22 @@
 				function(data) {
 					 
 					$('#quantity').popup('hide'); 
-					$('#itemBillTable td').remove();
+					$('#itemBillTable tr').remove();
 					
+					var mainTrStr = '<tr>'
+					+'<th style="text-align: center;" width="2%">Sr.No</th>'
+					+'<th style="text-align: center;">Product</th>'
+					+'<th style="text-align: center;" width="13%">Price</th>'
+					+'<th style="text-align: center;" width="10%">QTY</th>'
+					+'<th style="text-align: center;" width="13%">Total</th>'
+					+'<th style="text-align: center;" width="2%">Delete</th>'
+					+'</tr>';
+				var mainTr = $(mainTrStr);
+				$('#itemBillTable tbody').append(
+						mainTr);
+				
+				
+				
 					var taxableAmt=0;
 					var taxAmt=0;
 					var total=0;
@@ -1397,6 +1411,7 @@
 		var custId =  $('#cust').val() ;
 		
 		var rowcount = $('#itemBillTable tr').length;
+		 
 	 if(rowcount>1){
 		 $
 			.post(
