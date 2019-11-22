@@ -165,7 +165,7 @@ input[type=radio]:checked ~ label{color: #ed1c24;}
 .cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 111px; background: #FFF; position: relative;}
 .cat_one.cat{margin: 4px;}
 .cat_one p{background: #ed1c24; color: #FFF; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute; right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
-.cat_one img{display: block; width: 80px; height: 80px; margin: 0 auto;}
+.cat_one img{display: block;  height: 80px; margin: 0 auto;}  /* width: 80px; */
 .cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 10px; font-size: 14px; text-overflow:ellipsis;vertical-align:middle;white-space:nowrap;overflow:hidden;}
 .cat_one:hover{border: 3px solid #cccccc;}
 
