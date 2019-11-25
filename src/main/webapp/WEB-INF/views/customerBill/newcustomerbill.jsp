@@ -67,6 +67,49 @@
 <c:url var="billOnHold" value="/billOnHold" />
 <c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 <c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 20%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+</style>
 <body>
 	<form action="" method="get">
 
@@ -81,7 +124,7 @@
 				</div>
 
 				<div class="drop_menu">
-					<div class="dropdown">
+					<%-- <div class="dropdown">
 						<div class="select">
 							<span>Hold Bill</span>
 						</div>
@@ -94,20 +137,43 @@
 							</c:forEach>
 
 						</ul>
+
+					</div> --%>
+					<select name="holdBillNo" id="holdBillNo"
+						data-placeholder="Select Bill No" class="input_add chosen-select"
+						style="text-align: left;" onchange="revertHoldBillOnCurrent()">
+						<option value="" style="text-align: left;" selected>Select
+							Bill No</option>
+						<c:forEach items="${holdingList}" var="holdingList">
+							<option value="${holdingList.key}" style="text-align: left;">${holdingList.key}</option>
+						</c:forEach>
+					</select>
+					<div class="logout_btn">
+						<a href="${pageContext.request.contextPath}/logout"><i
+							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
 					</div>
 
 				</div>
 				<div class="clr"></div>
 			</header>
+			<div id="myModal" class="modal">
 
+				<!-- Modal content -->
+				<div class="modal-content">
+					<span class="close">&times;</span>
+					<p>Some text in the Modal..</p>
+				</div>
+
+			</div>
 			<section class="main_container">
 				<div class="cat_l">
 					<!--top-buttons row-->
 					<div class="pending_row">
 						<a href="#" class="pending_btn initialism slide_open">Pending
-							Amt : <span>550.00000</span>
-						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>550.00000</span>
-						</a> <a href="#" class="pending_btn">Total Amt : <span>550.00000</span></a>
+							Amt : <span>00.00</span>
+						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>00.00</span>
+						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
+						<button id="myBtn">Open Modal</button>
 					</div>
 
 					<!--customer drop down here-->
@@ -401,7 +467,7 @@
 												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
 											</div>
 										</li> -->
-										 
+
 									</ul>
 								</div>
 
@@ -771,9 +837,8 @@
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
-		type="text/javascript"></script>
-
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#slide').popup({
@@ -1478,9 +1543,9 @@
 		    
 	}
 	
-	function revertHoldBillOnCurrent(index) {
+	function revertHoldBillOnCurrent() {
 		   
-		 
+		var index =  $('#holdBillNo').val() ;
 		  $
 		.post(
 				'${revertHoldBillOnCurrent}',
@@ -1517,6 +1582,34 @@
 	    return true;
 	}
 	</script>
+
+	<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 </body>
 
 </html>

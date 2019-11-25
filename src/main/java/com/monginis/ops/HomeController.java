@@ -466,7 +466,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/logout")
-	public ModelAndView logout(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+	public String logout(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
 		ModelAndView model = new ModelAndView("login");
 		HttpServletResponse response = (HttpServletResponse) res;
@@ -485,7 +485,7 @@ public class HomeController {
 
 		// session.invalidate();
 
-		return model;
+		return "redirect:/";
 		// return "redirect:/";
 	}
 
