@@ -301,10 +301,15 @@ public class OpsController {
 
 		try {
 
-			SubCategory[] subCatList = restTemplate.getForObject(Constant.URL + "getAllSubCatList",
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("catId", catId);
+			SubCategory[] subCatList = restTemplate.postForObject(Constant.URL + "getSubCatList",map,
 					SubCategory[].class);
 			categoryList = new ArrayList<>(Arrays.asList(subCatList));
-
+ 
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 

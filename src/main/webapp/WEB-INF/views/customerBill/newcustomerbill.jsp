@@ -21,6 +21,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/newpos/css/jquery.classyscroll.css"
 	type="text/css" />
+
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
 	type="images/png" sizes="32x32">
@@ -42,6 +43,10 @@
 	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.classyscroll.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mousewheel.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mousewheel.js"></script>
+
+
 <!--commanJS-->
 <!-- jQuery Popup Overlay -->
 <script type="text/javascript"
@@ -245,7 +250,7 @@
 										<td>Total Items</td>
 										<td id="totalItemLable">${totalItemCount}</td>
 										<td>Total :</td>
-										<td align="right" id="taxableAmtLable"><fmt:formatNumber
+										<td style="text-align: right;" id="taxableAmtLable"><fmt:formatNumber
 												type="number" groupingUsed="false"
 												value="${totalTaxableAmt}" maxFractionDigits="2"
 												minFractionDigits="2" /></td>
@@ -254,7 +259,7 @@
 										<td>Discount</td>
 										<td>(0.00) 0.00</td>
 										<td>Order Tax</td>
-										<td align="right" id="taxAmtLable"><fmt:formatNumber
+										<td style="text-align: right;" id="taxAmtLable"><fmt:formatNumber
 												type="number" groupingUsed="false" value="${totalTaxAmt}"
 												maxFractionDigits="2" minFractionDigits="2" /></td>
 									</tr>
@@ -262,8 +267,9 @@
 										<td style="font-weight: 600;">Total Payable</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
-										<td style="font-weight: 600;" align="right" id="totalLable"><fmt:formatNumber
-												type="number" groupingUsed="false" value="${totalAmt}"
+										<td style="font-weight: 600; text-align: right;"
+											id="totalLable"><fmt:formatNumber type="number"
+												groupingUsed="false" value="${totalAmt}"
 												maxFractionDigits="2" minFractionDigits="2" /></td>
 									</tr>
 								</table>
@@ -274,19 +280,20 @@
 										<td>Total Items</td>
 										<td id="totalItemLable">0</td>
 										<td>Total :</td>
-										<td align="right" id="taxableAmtLable">0.00</td>
+										<td style="text-align: right;" id="taxableAmtLable">0.00</td>
 									</tr>
 									<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
 										<td>Discount</td>
 										<td>(0.00) 0.00</td>
 										<td>Order Tax</td>
-										<td align="right" id="taxAmtLable">0.00</td>
+										<td style="text-align: right;" id="taxAmtLable">0.00</td>
 									</tr>
 									<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
 										<td style="font-weight: 600;">Total Payable</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
-										<td style="font-weight: 600;" align="right" id="totalLable">0.00</td>
+										<td style="font-weight: 600; text-align: right;"
+											id="totalLable">0.00</td>
 									</tr>
 								</table>
 							</c:otherwise>
@@ -325,12 +332,13 @@
 									checked onclick="getCatListAndSubCatList(1)"> <label
 									for="f-option">Category</label>
 									<div class="check"></div></li>
-								<li><input type="radio" id="s-option" name="serachBy"
-									onclick="getCatListAndSubCatList(2)"> <label
+								<!-- <li><label
 									for="s-option">Sub Category </label>
 									<div class="check">
 										<div class="inside"></div>
-									</div></li>
+									</div></li> -->
+								<input type="hidden" id="s-option" name="serachBy"
+									onclick="getCatListAndSubCatList(2)">
 								<li><input type="radio" id="g-option" name="serachBy"
 									onclick="getCatListAndSubCatList(3)"> <label
 									for="g-option">All Items</label>
@@ -348,7 +356,7 @@
 								<div class="category_scrollbars" id="catSubCatDiv">
 									<c:forEach items="${catList}" var="catList">
 										<div class="cat_one catDummyClass">
-											<a href="#" onclick="getItemList(${catList.catId})"><img
+											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
 												title="${catList.catName}"
 												src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
 												onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
@@ -358,8 +366,23 @@
 								</div>
 							</div>
 						</div>
+						<br>
+						<div class="bx_tabs">
+							<ul id="subcatUl">
+								<!-- <li class="subCatDummyClass"><a href="#">Sweet</a></li>
+								<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+								<li class="subCatDummyClass"><a href="#">Kaju &amp;
+										Combo</a></li>
+								<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
+								<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+								<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
+
+								<ul>
+						</div>
+
 					</div>
 					<!--listing box start here-->
+
 					<div class="cat_list_bx">
 						<div class="cat_srach">
 							<input name="myInput1" id="myInput1" type="text"
@@ -367,16 +390,27 @@
 								placeholder="Search Item" />
 						</div>
 						<div class="cat_list">
-							<div class="carlist_scrollbars" id="itemDiv"></div>
-							<%-- <div class="cat_one cat itemDummyClass">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
-									alt="laddu">
-									<p>210</p> <span>Order Booking</span></a>
-							</div> --%>
+							<div class="carlist_scrollbars">
+								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
+
+								<div class="sweet_list">
+									<ul id="itemDiv">
+										<!-- <li class="itemDummyClass">
+											<div class="sweet_one">
+												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
+											</div>
+										</li> -->
+										 
+									</ul>
+								</div>
+
+
+
+							</div>
 						</div>
 					</div>
+
 				</div>
 			</section>
 
@@ -729,14 +763,17 @@
 
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
+
 		<!--wrapper-end-->
 	</form>
+
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
-		type="text/javascript" charset="utf-8"></script>
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#slide').popup({
@@ -1011,12 +1048,15 @@
 
 		function getItemList(catId) {
 			//alert(catId)
-			var searchBy = 0;
-			if (document.getElementById('f-option').checked) {
+			  
+					$(".act_subcat").removeClass('act');
+					$("#subcat"+catId).addClass('act');
+			var searchBy = 2;
+			/* if (document.getElementById('f-option').checked) {
 				searchBy = 1;
 			} else if (document.getElementById('s-option').checked) {
 				searchBy = 2;
-			}
+			} */
 			
 			$
 					.post(
@@ -1040,20 +1080,19 @@
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '" onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" onerror="imgError(this);" alt="'+data[i].itemName+'">'
-											+ ' <p>'
-											+ data[i].itemMrp1
-											+ ' </p> <span>'
-											+ data[i].itemName
-											+ '</span></a>';
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><p>'
+									+ mrp
+									+ ' </p> '
+									+ data[i].itemName
+									+ '<span></span></a></div>';
 
 									$("#itemDiv")
 											.append(
 													$(
-															'<div class="cat_one itemDummyClass"></li>')
+															'<li class="itemDummyClass"></li>')
 															.html(timeDiv));
 								}
-								$('.carlist_scrollbars').ClassyScroll();
+								//$('.carlist_scrollbars').ClassyScroll();
 							});
 		}
 
@@ -1063,9 +1102,10 @@
 			document.getElementById("catSubCatDivHideShow").style.display = "block";
 
 			if (value == 1) {
-				getcatlist();
+				//getcatlist();
+				$(".itemDummyClass").remove();
 			} else if (value == 2) {
-				getsubcatlist();
+				//getsubcatlist();
 			} else {
 				document.getElementById("catSubCatDivHideShow").style.display = "none";
 				
@@ -1089,7 +1129,7 @@
 									 
 									var timeDiv = '<a href="#" title="'
 											+ data.mCategoryList[i].catName
-											+ '" onclick="getItemList('
+											+ '" onclick="getsubcatlist('
 											+ data.mCategoryList[i].catId
 											+ ')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"'+
 							'alt="laddu"> <span>'
@@ -1099,7 +1139,7 @@
 									$("#catSubCatDiv")
 											.append(
 													$(
-															'<div class="cat_one catDummyClass"></li>')
+															'<div class="cat_one catDummyClass"></div>')
 															.html(timeDiv));
 								}
 								$('.category_scrollbars').ClassyScroll();
@@ -1107,34 +1147,37 @@
 
 		}
 		
-		function getsubcatlist() {
+		function getsubcatlist(catId) {
 
 			$
 					.post(
 							'${getSubCategoryListForCustomerBill}',
 							{
+								catId : catId,
 								ajax : 'true'
 							},
 							function(data) {
 								$(".itemDummyClass").remove();
-								$(".catDummyClass").remove();
+								$(".subCatDummyClass").remove();
+								
+								
 								for (var i = 0; i < data.length; i++) {
-									var timeDiv = '<a href="#" title="'
-											+ data[i].subCatName
-											+ '" onclick="getItemList('
-											+ data[i].subCatId
-											+ ')"><img src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"'+
-											'alt="laddu"> <span>'
-											+ data[i].subCatName
-											+ '</span></a>';
+									
+									
+									var timeDiv = '<a href="#" class="act_subcat" id="subcat'+data[i].subCatId+'"  title="'
+										+ data[i].subCatName
+										+ '" onclick="getItemList('
+										+ data[i].subCatId
+										+ ')">'+ data[i].subCatName
+										+'</a>';
 
-									$("#catSubCatDiv")
+									$("#subcatUl")
 											.append(
 													$(
-															'<div class="cat_one catDummyClass"></li>')
+															'<li class="subCatDummyClass "></li>')
 															.html(timeDiv));
 								}
-								$('.category_scrollbars').ClassyScroll();
+								//$('.category_scrollbars').ClassyScroll();
 							});
 
 		}
@@ -1150,6 +1193,8 @@
 								$(".itemDummyClass").remove();
 								var frRateCat =  $('#frRateCat').val();
 								
+								
+								
 								for (var i = 0; i < data.length; i++) {
 									
 									var mrp=0;
@@ -1161,22 +1206,21 @@
 									}else if(frRateCat==3){
 										mrp=data[i].itemMrp3;
 									}
-									
+									 
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><img src="http://97.74.228.55:8080/uploads/DAIRYITEM/'+data[i].itemImage+'" onerror="imgError(this);" alt="'+data[i].itemName+'">'
-											+ ' <p>'
-											+ mrp
-											+ ' </p> <span>'
-											+ data[i].itemName
-											+ '</span></a>';
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><p>'
+									+ mrp
+									+ ' </p> '
+									+ data[i].itemName
+									+ '<span></span></a></div>';
 
 									$("#itemDiv")
 											.append(
 													$(
-															'<div class="cat_one itemDummyClass"></li>')
+															'<li class="itemDummyClass"></li>')
 															.html(timeDiv));
 								}
-								$('.carlist_scrollbars').ClassyScroll();
+								//$('.carlist_scrollbars').ClassyScroll();
 							});
 
 		}
@@ -1197,6 +1241,8 @@
 	</script>
 	<script type="text/javascript">
 			$(document).ready(function () {
+		 
+				 
 			    $('#payment').popup({
 			        focusdelay: 400,
 			        outline: true,
