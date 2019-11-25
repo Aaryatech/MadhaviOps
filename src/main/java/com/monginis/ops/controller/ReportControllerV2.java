@@ -1253,10 +1253,10 @@ public class ReportControllerV2 {
 		HttpSession session = request.getSession();
 		String fromDate = "";
 		String toDate = "";
-
+		String typeIds = "";
+		System.out.println("");
 		model = new ModelAndView("reports/tax1Report");
-		// Constants.mainAct =2;
-		// Constants.subAct =20;
+		 
 		List<Tax1Report> taxReportList = null;
 
 		try {
@@ -1268,7 +1268,8 @@ public class ReportControllerV2 {
 
 			fromDate = request.getParameter("fromDate");
 			toDate = request.getParameter("toDate");
-
+			typeIds = request.getParameter("type_id");
+			System.err.println("type list "+typeIds);
 			if (fromDate == null && toDate == null) {
 				Date date = new Date();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
