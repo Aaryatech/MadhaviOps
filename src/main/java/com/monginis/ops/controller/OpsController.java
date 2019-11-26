@@ -125,6 +125,7 @@ public class OpsController {
 
 			int key = Integer.parseInt(request.getParameter("key"));
 			int custId = Integer.parseInt(request.getParameter("custId"));
+			String holdCustName =  request.getParameter("holdCustName");
 
 			if (hashMap.containsKey(key)) {
 				hashMap.get(key).setCustId(custId);
@@ -134,6 +135,7 @@ public class OpsController {
 				tempBillNo=tempBillNo+1;
 				addNew.setCustId(custId);
 				addNew.setItemList(itemBillList);
+				addNew.setTempCustomerName(holdCustName);
 				hashMap.put(tempBillNo, addNew);
 			}
 			System.out.println(hashMap);

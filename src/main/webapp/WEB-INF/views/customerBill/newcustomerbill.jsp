@@ -93,7 +93,7 @@ body {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 20%;
+	width: 30%;
 }
 
 /* The Close Button */
@@ -108,6 +108,29 @@ body {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(101, 113, 119, 0.5);
+	z-index: 2;
+	cursor: pointer;
+} 
+#text2 {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
 }
 </style>
 <body>
@@ -145,7 +168,7 @@ body {
 						<option value="" style="text-align: left;" selected>Select
 							Bill No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
-							<option value="${holdingList.key}" style="text-align: left;">${holdingList.key}</option>
+							<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
 						</c:forEach>
 					</select>
 					<div class="logout_btn">
@@ -156,15 +179,7 @@ body {
 				</div>
 				<div class="clr"></div>
 			</header>
-			<div id="myModal" class="modal">
 
-				<!-- Modal content -->
-				<div class="modal-content">
-					<span class="close">&times;</span>
-					<p>Some text in the Modal..</p>
-				</div>
-
-			</div>
 			<section class="main_container">
 				<div class="cat_l">
 					<!--top-buttons row-->
@@ -173,7 +188,7 @@ body {
 							Amt : <span>00.00</span>
 						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>00.00</span>
 						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
-						<button id="myBtn">Open Modal</button>
+
 					</div>
 
 					<!--customer drop down here-->
@@ -829,7 +844,42 @@ body {
 
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
+		<div id="myModal" class="modal">
 
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<p>Enter Customer Name</p>
+
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Customer Name</div>
+					<div class="add_input">
+						<input placeholder="Customer Name" name="holdCustName"
+							onchange="trim(this)" id="holdCustName" type="text"
+							class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="pop_btns">
+
+					<div class="close_r">
+						<a href="#" onclick="submitBillOnHold()">Submit</a>
+					</div>
+
+					<div class="clr"></div>
+				</div>
+
+			</div>
+		</div>
+		<div id="overlay2">
+			<div id="text2">
+				<img
+					src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
+					alt="madhvi_logo">
+			</div>
+		</div>
 		<!--wrapper-end-->
 	</form>
 
@@ -903,7 +953,7 @@ body {
 			var custId = document.getElementById("cust").value;
 
 			if (custId != 0) {
-
+				document.getElementById("overlay2").style.display = "block";
 				$
 						.post(
 								'${editCustomerFromBill}',
@@ -912,6 +962,7 @@ body {
 									ajax : 'true'
 								},
 								function(data) {
+									document.getElementById("overlay2").style.display = "none";
 									$('.addcust_open').trigger('click');
 									//$('#myModalEdit').modal('show');
 									//$('#addcust').popup('show');
@@ -1344,7 +1395,7 @@ body {
 		function opnItemPopup(taxper,itemId,mrp,itemName) {
 			  
 			$('#quantity').popup('show');
-		    
+			
 			document
 			.getElementById("itemNmaeHeadeing").innerHTML = itemName;
 			document.getElementById("enterRate").value = mrp;
@@ -1355,6 +1406,8 @@ body {
 			document.getElementById("itemIdHidden").value = itemId;
 			document
 			.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
+			$("#enterQty").focus(); 
+			
 		}
 		function itemRateCalculation(flag) {
 			
@@ -1393,7 +1446,7 @@ body {
 			
 			 
 			if(flag==0){
-				 
+				 document.getElementById("overlay2").style.display = "block";
 				$
 				.post(
 						'${addItemInBillList}',
@@ -1407,7 +1460,7 @@ body {
 							ajax : 'true'
 						},
 						function(data) {
-							 
+							 document.getElementById("overlay2").style.display = "none";
 							$('#quantity').popup('hide');  
 							getCurrentItemList();
 									 
@@ -1524,22 +1577,50 @@ body {
 		var rowcount = $('#itemBillTable tr').length;
 		 
 	 if(rowcount>1){
-		 $
+		 
+		 if(key>0){
+			 submitBillOnHold();
+		 }else{
+			 var modal = document.getElementById("myModal");
+			 modal.style.display = "block"; 
+			 document.getElementById("holdCustName").focus();
+		 }
+		  
+	 }else{
+		 alert("Add Minimum One Product");
+	 }
+		    
+	}
+	
+	function submitBillOnHold() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		var holdCustName =  $('#holdCustName').val() ;
+		 
+		if(holdCustName!="" || key>0){
+			 
+			var modal = document.getElementById("myModal");
+			 modal.style.display = "none";
+			  $
 			.post(
 					'${billOnHold}',
 					{
 						key : key, 
-						custId : custId, 
+						custId : custId,
+						holdCustName : holdCustName,
 						ajax : 'true'
 					},
 					function(data) {
-						  
+						
 						window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
 								 
-					});
-	 }else{
-		 alert("Add Minimum One Product");
-	 }
+					});  
+		}else{
+			alert("Enter Customer Name");
+			document.getElementById("holdCustName").focus();
+		}
+		  
 		    
 	}
 	
@@ -1585,30 +1666,11 @@ body {
 
 	<script>
 // Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
+var modal = document.getElementById("myModal");  
+var span = document.getElementsByClassName("close")[0]; 
 span.onclick = function() {
   modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+} 
 </script>
 </body>
 
