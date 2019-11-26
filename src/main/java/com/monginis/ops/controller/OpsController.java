@@ -230,6 +230,55 @@ public class OpsController {
 		}
 		return newItemsList;
 	}
+	
+	@RequestMapping(value = "/submitBill", method = RequestMethod.POST)
+	@ResponseBody
+	public Info submitBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			/*int index = Integer.parseInt(request.getParameter("key"));
+			key = index;
+
+			info.setError(false);
+			info.setMessage("Successfully");*/
+			
+			/*sellBillDetail.setCatId(customerBillItemList.get(i).getCatId());
+			sellBillDetail.setSgstPer(tax1);
+			sellBillDetail.setSgstRs(sgstRs);
+			sellBillDetail.setCgstPer(tax2);
+			sellBillDetail.setCgstRs(cgstRs);
+			sellBillDetail.setDelStatus(0);
+			sellBillDetail.setGrandTotal(grandTotal);
+			sellBillDetail.setIgstPer(tax3);
+			sellBillDetail.setIgstRs(igstRs);
+			sellBillDetail.setItemId(customerBillItemList.get(i).getId());
+			sellBillDetail.setMrp(rate);
+			sellBillDetail.setMrpBaseRate(mrpBaseRate);
+			sellBillDetail.setQty(customerBillItemList.get(i).getQty());
+			sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());//new for hsn
+			sellBillDetail.setSellBillDetailNo(0);
+			sellBillDetail.setSellBillNo(0);
+			sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());
+
+			sumMrp = sumMrp + (rate * qty);
+			sumTaxableAmt = sumTaxableAmt + taxableAmt;
+			sumTotalTax = sumTotalTax + totalTax;
+			sumGrandTotal = sumGrandTotal + grandTotal;
+
+			sellBillDetail.setTaxableAmt(taxableAmt);
+			sellBillDetail.setTotalTax(totalTax);
+
+			sellBillDetailList.add(sellBillDetail);*/
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
 
 	@RequestMapping(value = "/getItemListByCatSubCatForCustomerBill", method = RequestMethod.POST)
 	@ResponseBody

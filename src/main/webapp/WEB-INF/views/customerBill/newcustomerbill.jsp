@@ -67,6 +67,7 @@
 <c:url var="billOnHold" value="/billOnHold" />
 <c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 <c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
+<c:url var="submitBill" value="/submitBill" />
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -122,7 +123,8 @@ body {
 	background-color: rgba(101, 113, 119, 0.5);
 	z-index: 2;
 	cursor: pointer;
-} 
+}
+
 #text2 {
 	position: absolute;
 	top: 50%;
@@ -264,7 +266,7 @@ body {
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
 					<!--product table-->
-					<div class="total_table_one">
+					<div class="total_table_one" id="printDivid">
 						<div class="scrollbars">
 							<table id="itemBillTable">
 
@@ -391,11 +393,12 @@ body {
 								onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
-							<a href="#" class="hold print_btn">Print Order</a> <a href="#"
-								class="hold bill_btn">Print Bill</a>
+							<a href="#" class="hold print_btn initialism payment_open">Payment
+								Option</a> <a href="#" class="hold bill_btn "
+								onclick="printDiv('printDivid')">Print Bill</a>
 						</div>
 						<div class="button_two">
-							<a href="#" class="hold pay_btn initialism payment_open">Payment</a>
+							<a href="#" class="hold pay_btn " onclick="submitBill()">Bill</a>
 						</div>
 					</div>
 
@@ -713,55 +716,12 @@ body {
 			<h3 class="pop_head">Payment</h3>
 
 			<div class="add_frm">
-				<div class="add_frm_one">
-					<div class="add_customer_one">Mode of Pay</div>
-					<div class="add_input">
-						<div class="radio_row popup_radio">
-							<ul>
-								<li><input type="radio" id="z-option" name="selector">
-									<label for="z-option">Single</label>
-									<div class="check"></div></li>
-								<li><input type="radio" id="x-option" name="selector">
-									<label for="x-option">Split </label>
-									<div class="check">
-										<div class="inside"></div>
-									</div></li>
-							</ul>
-						</div>
-					</div>
-					<div class="clr"></div>
-				</div>
 
 				<div class="add_frm_one">
-					<div class="add_customer_one">Quantity</div>
-					<div class="add_input">
-						<input name="" type="text" class="input_add" />
-					</div>
-					<div class="clr"></div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Type</div>
-					<div class="add_input">
-
-						<div class="dropdown popup_drop">
-							<div class="select">
-								<span>Payment Mode</span>
-							</div>
-							<input type="hidden" name="gender">
-							<ul class="dropdown-menu">
-								<li id="male">Case</li>
-								<li id="female">Card</li>
-								<li id="female">E-pay</li>
-							</ul>
-						</div>
-
-					</div>
-					<div class="clr"></div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Amount</div>
-					<div class="add_input">
-						<input name="" type="text" class="input_add" />
+					<div class="add_customer_one">Total AMT</div>
+					<div class="add_input" id="totalAmtPopup">
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -771,11 +731,13 @@ body {
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
-								<li><input type="radio" id="yes" name="selector"> <label
-									for="yes">Yes</label>
+								<li><input type="radio" id="creditBillyes"
+									name="creditBill" onclick="modeOfPayDivHideShow(1)"> <label
+									for="creditBillyes">Yes</label>
 									<div class="check"></div></li>
-								<li><input type="radio" id="no" name="selector"> <label
-									for="no">No </label>
+								<li><input type="radio" id="creditBillno" name="creditBill"
+									checked onclick="modeOfPayDivHideShow(2)"> <label
+									for="creditBillno">No </label>
 									<div class="check">
 										<div class="inside"></div>
 									</div></li>
@@ -784,7 +746,56 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
+				<div id="modeOfPayDiv">
 
+					<div class="add_frm_one">
+						<div class="add_customer_one">Mode of Pay</div> 
+						<div class="add_input">
+							<div class="radio_row popup_radio">
+								<ul>
+									<li><input type="radio" id="single" name="modePay" checked>
+										<label for="single">Single</label>
+										<div class="check"></div></li>
+									<li><input type="radio" id="split" name="modePay">
+										<label for="split">Split </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li>
+								</ul>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+
+
+					<div class="add_frm_one">
+						<div class="add_customer_one">Type</div>
+
+						<div class="add_input">
+
+							<div class="dropdown popup_drop">
+								<div class="select">
+									<span>Payment Mode</span>
+								</div>
+
+								<ul class="dropdown-menu">
+									<li id="male">Cash</li>
+									<li id="female">Card</li>
+									<li id="female">E-pay</li>
+								</ul>
+							</div>
+
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="add_frm_one">
+						<div class="add_customer_one">Amount</div>
+						<div class="add_input">
+							<input name="" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>
 			</div>
 			<div class="pop_btns">
 				<div class="close_l">
@@ -1145,6 +1156,15 @@ body {
 				$("#isbuissnessdivedit").show();
 			} else {
 				$("#isbuissnessdivedit").hide();
+			}
+
+		}
+		function modeOfPayDivHideShow(value) {
+
+			if (value == 2) {
+				$("#modeOfPayDiv").show();
+			} else {
+				$("#modeOfPayDiv").hide();
 			}
 
 		}
@@ -1565,7 +1585,7 @@ body {
 							document.getElementById("taxAmtLable").innerHTML = taxAmt.toFixed(2); 
 							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
 							document.getElementById("totalItemLable").innerHTML = data.length; 
-							
+							document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
 				});
 		
 	}
@@ -1663,7 +1683,47 @@ body {
 	    return true;
 	}
 	</script>
+	<script type="text/javascript">
+	
+	function submitBill() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		var rowcount = $('#itemBillTable tr').length;
+		  
+		 if(rowcount<=1){
+			 alert("Select Minimum Product");
+		 }else if(custId==0){
+			 alert("Select Customer");
+		 }
+		 
+		   $
+			.post(
+					'${submitBill}',
+					{
+						key : key,  
+						custId : custId,
+						ajax : 'true'
+					},
+					function(data) {
+						  
+						 
+								 
+					});    
+		  
+	}
+	
+	/* function printDiv(divName) {
+	     var printContents = document.getElementById(divName).innerHTML;
+	     var originalContents = document.body.innerHTML;
 
+	     document.body.innerHTML = printContents;
+
+	     window.print();
+
+	     document.body.innerHTML = originalContents;
+	} */
+</script>
 	<script>
 // Get the modal
 var modal = document.getElementById("myModal");  
