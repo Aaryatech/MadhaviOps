@@ -51,8 +51,20 @@
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
 				<div class="sidebarright">
+				
+				<div class="order-left">
+						<h2 class="pageTitle">Add Expense</h2>
+
+					</div>
+					<br>
+					<div class="order-right" align="right">
+						<a href="${pageContext.request.contextPath}/showExpenseList"><button
+								class="btn btn-success">Expense List</button></a>
+					</div>
+				
 
 					<form name="frm_search" id="frm_search" method="post"
+						enctype="multipart/form-data"
 						action="${pageContext.request.contextPath}/addSubmitExpense">
 
 						<div class="col-md -3">
@@ -65,15 +77,8 @@
 						</c:otherwise>
 						</c:choose>
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
-							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	 --%>
-							<div class="col1title" align="right">
-
-
-								<div class="col1title" align="left">
-									<h3>Add Expense</h3>
-								</div>
-
-							</div>
+							<input id="id" class="form-constrol"	  name="id"  value="${item.id}" type="hidden" >	 --%>
+						 
 						</div>
 
 						<div class="colOuter">
@@ -81,18 +86,32 @@
 								<div class="col1title" align="left">Chalan No *:</div>
 							</div>
 							<div class="col-md-3">
-								<input id="itemCode" class="form-control"
-									placeholder="Chalan No" name="chalanNo" autocomplete="off"
-									type="text" required>
+
+
+								<c:if test="${isEdit==0}">
+									<input id="itemCode" class="form-control"
+										placeholder="Chalan No" name="chalanNo" autocomplete="off"
+										readonly="readonly" value="${chSeq}" type="text" required>
+								</c:if>
+
+
+								<c:if test="${isEdit==1}">
+									<input id="itemCode" class="form-control"
+										placeholder="Chalan No" name="chalanNo" autocomplete="off"
+										readonly="readonly" value="${expEdit.chalanNo}" type="text"
+										required>
+								</c:if>
 
 							</div>
 							<div class="col-md-1"></div>
 							<div class="col-md-2">
-								<div class="col1title" align="left">Date*:</div>
+								<div class="col1title">Date</div>
 							</div>
 							<div class="col-md-3">
-								<input id="expDate" class="form-control" placeholder="Date"
-									name="expDate" autocomplete="off" type="text" required>
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+									required placeholder=" Date" name="fromdatepicker"
+									value="${expEdit.expDate}" autocomplete="off" type="text">
+
 							</div>
 
 						</div>
@@ -105,20 +124,21 @@
 							</div>
 							<div class="col-md-3">
 								<input id="amount" class="form-control" placeholder="Amount"
-									autocomplete="off" name="amount" type="text" required>
+									value="${expEdit.chAmt}" autocomplete="off" name="amount"
+									type="text" required>
 
 							</div>
 							<div class="col-md-1"></div>
 
 							<div class="col-md-2">
-								<div class="col1title" align="left">Type *:</div>
+								<div class="col1title">Type *:</div>
 							</div>
 							<div class="col-md-3">
 								<select name="isActive" id="isActive" class="form-control"
 									data-rule-required="true">
-									<option value="1">Regular</option>
-									<option value="2">Payment Chalan</option>
-
+									<option value="1" ${expEdit.expType == 1 ? 'selected' : ''}>Regular</option>
+									<option value="2" ${expEdit.expType == 2 ? 'selected' : ''}>Payment Chalan</option>
+									 
 								</select>
 							</div>
 
@@ -129,11 +149,11 @@
 							<div class="col-md-2">
 								<div class="col1title" align="left">Image*:</div>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-3">
 								<div class="form-group">
 									<div class="fileUpload">
-										<input class="upload upld" type='file' name="photo" id="photo"
-											data-rule-required="true" /> <img style="width: 45px"
+										<input class="upload upld" type='file' name="photo" id="photo"  value="${expEdit.imgName}"
+											data-rule-required="true" /> <img style="width: 45px" 
 											src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
 											alt="" />
 									</div>
@@ -144,14 +164,14 @@
 							<div class="col-md-1"></div>
 
 							<div class="col-md-2">
-								<div class="col1title" align="left">Remark</div>
+								<div class="col1title">Remark</div>
 							</div>
 							<div class="col-md-3">
 								<textarea id="remark" class="form-control" autocomplete="off"
-									name="cgstPer" onkeyup="changeTax()"></textarea>
+									name="remark" onkeyup="changeTax()">${expEdit.remark}</textarea>
 
 							</div>
-
+							<input type="hidden" name="expId" value="${expEdit.expId}">
 						</div>
 
 
@@ -162,7 +182,7 @@
 							</div>
 
 						</div>
-						<div id="table-scroll">
+						<%-- <div id="table-scroll">
 							<!-- class="table-scroll"> -->
 							<div id="faux-table" class="faux-table" aria="hidden"
 								style="display: none;"></div>
@@ -185,7 +205,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<%-- 
+										
 										<c:forEach items="${itemList}" var="itemList"
 											varStatus="count">
 											<c:set var="color" value=""></c:set>
@@ -233,12 +253,12 @@
 
 													</div></td>
 											</tr>
-										</c:forEach> --%>
+										</c:forEach>
 								</table>
 
 							</div>
 						</div>
-
+ --%>
 					</form>
 
 
@@ -260,7 +280,7 @@
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
-	<script>
+	<!--  <script>
 		$('#amount').on(
 				'input',
 				function() {
@@ -274,10 +294,7 @@
 				var isError = false;
 				var errMsg = "";
 
-				if (!$("#isActive").val()) {
-
-					isError = true;
-				}
+				 
 
 				if (!$("#amount").val()) {
 
@@ -312,9 +329,8 @@
 			});
 		});
 		//
-	</script>
-
-
+	</script>  
+ -->
 	<script>
 		(function() {
 			var fauxTable = document.getElementById("faux-table");
@@ -332,23 +348,25 @@
 			document.getElementById("selectedUom").value = sel.options[sel.selectedIndex].text;
 		}
 	</script>
-	<script type="text/javascript">
-		function changeTax() {
-			var cgstPer = document.getElementById("cgstPer").value;
-			if (cgstPer.length != "") {
-				cgstPer = parseInt(cgstPer);
-			} else {
-				cgstPer = 0;
-			}
-			var sgstPer = document.getElementById("sgstPer").value;
-			if (sgstPer.length != "") {
-				sgstPer = parseInt(sgstPer);
-			} else {
-				sgstPer = 0;
-			}
-			document.getElementById("igstPer").value = (cgstPer + sgstPer)
-					.toFixed(2);
-		}
+
+	<script>
+		$(function() {
+			$("#fromdatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		$(function() {
+			$("#todatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+
+		$(function() {
+			$("#popdatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
 	</script>
+
 </body>
 </html>

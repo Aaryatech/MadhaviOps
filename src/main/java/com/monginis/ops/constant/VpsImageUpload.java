@@ -20,6 +20,7 @@ public class VpsImageUpload {
 	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/SPCAKE/";
 	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/CUSTCHOICEPHOTOCAKE/";
 	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/";
+	private static final String CH_PHOTO_FOLDER = "/home/lenovo/Downloads/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {
 
@@ -57,7 +58,12 @@ public class VpsImageUpload {
 			else if (imageType == 6) {
 
 				path = Paths.get(GVN_PHOTO_FOLDER + imageName);
+				 
+			}
+			else if (imageType == 7) {
 
+				path = Paths.get(CH_PHOTO_FOLDER + imageName);
+				 
 			}
 
 
