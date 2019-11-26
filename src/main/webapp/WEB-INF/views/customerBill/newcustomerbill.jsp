@@ -749,7 +749,7 @@ body {
 				<div id="modeOfPayDiv">
 
 					<div class="add_frm_one">
-						<div class="add_customer_one">Mode of Pay</div> 
+						<div class="add_customer_one">Mode of Pay</div>
 						<div class="add_input">
 							<div class="radio_row popup_radio">
 								<ul>
@@ -1622,8 +1622,7 @@ body {
 			 
 			var modal = document.getElementById("myModal");
 			 modal.style.display = "none";
-			  $
-			.post(
+			  $.post(
 					'${billOnHold}',
 					{
 						key : key, 
@@ -1689,27 +1688,45 @@ body {
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
+		var selectedText = $("#cust option:selected").text(); 
+		alert(selectedText);
+		
 		var rowcount = $('#itemBillTable tr').length;
+		var flag = 0;
 		  
 		 if(rowcount<=1){
 			 alert("Select Minimum Product");
+			 flag=1;
 		 }else if(custId==0){
+			 flag=1;
 			 alert("Select Customer");
 		 }
 		 
+		 if(flag==0){
+		 document.getElementById("overlay2").style.display = "block";
 		   $
 			.post(
 					'${submitBill}',
 					{
 						key : key,  
 						custId : custId,
+						selectedText : selectedText,
 						ajax : 'true'
 					},
 					function(data) {
 						  
-						 
-								 
+						 if(key==0){
+								getCurrentItemList();
+								document.getElementById("cust").value = 0; 
+								$('.chosen-select').trigger(
+								'chosen:updated');
+								document.getElementById("overlay2").style.display = "none";	 
+						 }else{
+							 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+						 }
+						
 					});    
+		 }
 		  
 	}
 	

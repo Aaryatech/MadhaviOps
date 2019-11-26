@@ -1,7 +1,11 @@
 package com.monginis.ops.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.monginis.ops.billing.SellBillDetail;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.CategoryList;
@@ -30,6 +36,7 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.SubCategory;
+import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 
@@ -244,6 +251,103 @@ public class OpsController {
 
 			info.setError(false);
 			info.setMessage("Successfully");*/
+			int index = Integer.parseInt(request.getParameter("key"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			String customerName =  request.getParameter("selectedText");
+			
+			
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			String items = "0";
+			for(int i=0 ; i<itemBillList.size() ; i++) {
+				items=items+","+itemBillList.get(i).getItemId();
+			}
+			
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("itemList", items); 
+			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
+					ItemResponse.class);
+			List<Item> itemsListByIds = itemResponse.getItemList();
+			
+			List<SellBillDetail> sellbilldetaillist = new ArrayList<>();
+			
+			float total=0;
+			float taxableAmt=0;
+			float taxAmt=0;
+			
+			for(int i=0 ; i<itemBillList.size() ; i++) {
+				
+				for(int j=0 ; j<itemsListByIds.size() ; j++) {
+					
+					if(itemsListByIds.get(j).getId()==itemBillList.get(i).getItemId()) {
+						
+						SellBillDetail sellBillDetail = new SellBillDetail();
+						
+						sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
+						sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
+						sellBillDetail.setSgstRs(itemBillList.get(i).getTaxAmt()/2);
+						sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
+						sellBillDetail.setCgstRs(itemBillList.get(i).getTaxAmt()/2);
+						sellBillDetail.setDelStatus(0); 
+						sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
+						sellBillDetail.setIgstRs(itemBillList.get(i).getTaxAmt());
+						sellBillDetail.setItemId(itemBillList.get(i).getItemId());
+						sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
+						
+						Float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 + itemBillList.get(i).getTaxPer());
+						sellBillDetail.setMrpBaseRate(mrpBaseRate);
+						
+						sellBillDetail.setQty(itemBillList.get(i).getQty());
+						//sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
+						sellBillDetail.setSellBillDetailNo(0);
+						sellBillDetail.setSellBillNo(0);
+						sellBillDetail.setBillStockType(0); 
+						sellBillDetail.setTaxableAmt(itemBillList.get(i).getTaxableAmt());
+						sellBillDetail.setTotalTax(itemBillList.get(i).getTaxAmt()); 
+						sellBillDetail.setGrandTotal(itemBillList.get(i).getTotal());
+						sellBillDetail.setItemName(itemBillList.get(i).getItemName());
+						sellbilldetaillist.add(sellBillDetail);
+						total=total+sellBillDetail.getGrandTotal();
+						taxableAmt=taxableAmt+sellBillDetail.getTaxableAmt();
+						taxAmt=taxAmt+sellBillDetail.getTotalTax();
+						
+						break;
+					}
+				}
+				 
+			}
+			
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			
+			SellBillHeader sellBillHeader = new SellBillHeader();
+
+			sellBillHeader.setFrId(frDetails.getFrId());
+			sellBillHeader.setFrCode(frDetails.getFrCode());
+			sellBillHeader.setDelStatus(0);
+			sellBillHeader.setUserName(customerName);
+			sellBillHeader.setBillDate(sf.format(date));
+			sellBillHeader.setCustId(custId);
+			sellBillHeader.setInvoiceNo(getInvoiceNo(request,responsel));
+			sellBillHeader.setPaidAmt(Math.round(total));
+			sellBillHeader.setPaymentMode(1);
+			sellBillHeader.setSellBillNo(0); 
+			sellBillHeader.setUserGstNo("NA"); 
+			sellBillHeader.setUserPhone("NA");
+			sellBillHeader.setBillType('R');
+			sellBillHeader.setTaxableAmt(taxableAmt);
+			sellBillHeader.setDiscountPer(0);
+			sellBillHeader.setDiscountAmt(0);
+			sellBillHeader.setPayableAmt(Math.round(total));
+			sellBillHeader.setTotalTax(taxAmt);
+			sellBillHeader.setGrandTotal(Math.round(total));
+			sellBillHeader.setRemainingAmt(0);
+			sellBillHeader.setStatus(2);
+			
+			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
+			
+			System.err.println(sellBillHeader);
 			
 			/*sellBillDetail.setCatId(customerBillItemList.get(i).getCatId());
 			sellBillDetail.setSgstPer(tax1);
@@ -272,6 +376,40 @@ public class OpsController {
 			sellBillDetail.setTotalTax(totalTax);
 
 			sellBillDetailList.add(sellBillDetail);*/
+			
+			info.setError(false);
+			info.setMessage("Bill Submited");
+			
+			
+			hashMap.remove(index);
+			itemBillList = new ArrayList<>();
+			
+			RestTemplate restTemplate = new RestTemplate(); 
+			SellBillHeader sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
+					SellBillHeader.class);
+			
+			if (sellBillHeaderRes != null) {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+						FrSetting.class);
+
+				int sellBillNo = frSetting.getSellBillNo();
+
+				sellBillNo = sellBillNo + 1;
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				map.add("sellBillNo", sellBillNo);
+
+				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);
@@ -280,6 +418,94 @@ public class OpsController {
 		return info;
 	}
 
+	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		RestTemplate restTemplate = new RestTemplate();
+
+
+		HttpSession session = request.getSession();
+
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		int frId = frDetails.getFrId();
+
+		// String frCode = frDetails.getFrCode();
+
+		map.add("frId", frId);
+		FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map, FrSetting.class);
+
+		int billNo = frSetting.getSellBillNo();
+
+		int settingValue =billNo;
+
+		System.out.println("Setting Value Received " + settingValue);
+		int year = Year.now().getValue();
+		String curStrYear = String.valueOf(year);
+		curStrYear = curStrYear.substring(2);
+
+		int preMarchYear = Year.now().getValue() - 1;
+		String preMarchStrYear = String.valueOf(preMarchYear);
+		preMarchStrYear = preMarchStrYear.substring(2);
+
+		System.out.println("Pre MArch year ===" + preMarchStrYear);
+
+		int nextYear = Year.now().getValue() + 1;
+		String nextStrYear = String.valueOf(nextYear);
+		nextStrYear = nextStrYear.substring(2);
+
+		System.out.println("Next  year ===" + nextStrYear);
+
+		int postAprilYear = nextYear + 1;
+		String postAprilStrYear = String.valueOf(postAprilYear);
+		postAprilStrYear = postAprilStrYear.substring(2);
+
+		System.out.println("Post April   year ===" + postAprilStrYear);
+
+		java.util.Date date = new Date();
+		Calendar cale = Calendar.getInstance();
+		cale.setTime(date);
+		int month = cale.get(Calendar.MONTH);
+		
+		month=month+1;
+
+		if (month <= 3) {
+
+			curStrYear = preMarchStrYear + curStrYear;
+			System.out.println("Month <= 3::Cur Str Year " + curStrYear);
+		} else if (month >= 4) {
+
+			curStrYear = curStrYear + nextStrYear;
+			System.out.println("Month >=4::Cur Str Year " + curStrYear);
+		}
+
+		////
+
+		int length = String.valueOf(settingValue).length();
+
+		String invoiceNo = null;
+
+		if (length == 1)
+
+			invoiceNo = curStrYear + "-" + "0000" + settingValue;
+		if (length == 2)
+
+			invoiceNo = curStrYear + "-" + "000" + settingValue;
+
+		if (length == 3)
+
+			invoiceNo = curStrYear + "-" + "00" + settingValue;
+
+		if (length == 4)
+
+			invoiceNo = curStrYear + "-" + "0" + settingValue;
+
+		invoiceNo=frDetails.getFrCode()+invoiceNo;
+		System.out.println("*** settingValue= " + settingValue);
+		return invoiceNo;
+
+	}
+	
 	@RequestMapping(value = "/getItemListByCatSubCatForCustomerBill", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Item> getItemListByCatSubCatForCustomerBill(HttpServletRequest request, HttpServletResponse responsel) {
