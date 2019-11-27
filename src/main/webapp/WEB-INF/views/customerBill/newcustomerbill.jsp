@@ -134,6 +134,8 @@ body {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
+.itemDummyClass{
+ cursor: pointer; }
 </style>
 <body>
 	<form action="" method="get">
@@ -287,9 +289,17 @@ body {
 										<tr>
 											<td>${count.index+1}</td>
 											<td>${itemList.itemName}</td>
-											<td style="text-align: right;">${itemList.orignalMrp}</td>
-											<td style="text-align: right;">${itemList.qty}</td>
-											<td style="text-align: right;">${itemList.total}</td>
+											<td style="text-align: right;"><fmt:formatNumber
+													type="number" groupingUsed="false"
+													value="${itemList.orignalMrp}" maxFractionDigits="0"
+													minFractionDigits="0" /></td>
+											<td style="text-align: right;"><fmt:formatNumber
+													type="number" groupingUsed="false" value="${itemList.qty}"
+													maxFractionDigits="3" minFractionDigits="3" /></td>
+											<td style="text-align: right;"><fmt:formatNumber
+													type="number" groupingUsed="false"
+													value="${itemList.total}" maxFractionDigits="2"
+													minFractionDigits="2" /></td>
 											<td style="text-align: center;"><a href="#"
 												title="Delete"
 												onclick="deleteItemInBillList(${count.index})"><i
@@ -809,7 +819,8 @@ body {
 
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
-		<div id="quantity" class="category_popup" style="display: none;">
+
+		<!-- <div id="quantity" class="category_popup" style="display: none;">
 			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
 
 			<div class="add_frm">
@@ -853,7 +864,128 @@ body {
 				<div class="clr"></div>
 			</div>
 
-			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
+
+		</div> -->
+
+		<!--pending amount popup-->
+		<div id="quantity" class="add_customer calcy" style="display: none;">
+			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
+			<div class="calcy_bx">
+				<div class="calcy_1">
+					<div class="calculator_bx">
+						<input name="rateHidden" id="rateHidden" type="hidden" /><input
+							name="itemIdHidden" id="itemIdHidden" type="hidden" /><input
+							name="taxperHidden" id="taxperHidden" type="hidden" /><input
+							name="itemNameHidden" id="itemNameHidden" type="hidden" />
+						<div class="cal_quan">
+							<div class="qty_l">QTY</div>
+							<div class="qty_m">
+								<input name="enterQty" id="enterQty" type="text" value="1"
+									class="qty_one numberOnly" placeholder="QTY"
+									onkeyup="itemRateCalculation(1)" />
+							</div>
+							<div class="qty_r">
+								<button type="submit" class="go_btn" onclick="calPad(1,10)"></button>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="calc_no">
+							<div class="calc_no_l">
+								<ul>
+									<li><a href="#" onclick="calPad(1,7)">7</a></li>
+									<li><a href="#" onclick="calPad(1,8)">8</a></li>
+									<li><a href="#" onclick="calPad(1,9)">9</a></li>
+									<li><a href="#" onclick="calPad(1,4)">4</a></li>
+									<li><a href="#" onclick="calPad(1,5)">5</a></li>
+									<li><a href="#" onclick="calPad(1,6)">6</a></li>
+									<li><a href="#" onclick="calPad(1,1)">1</a></li>
+									<li><a href="#" onclick="calPad(1,2)">2</a></li>
+									<li><a href="#" onclick="calPad(1,3)">3</a></li>
+									<li><a href="#" onclick="calPad(1,0)">0</a></li>
+									<li><a href="#" onclick="calPad(1,'.')">.</a></li>
+									<li><a href="#"><img
+											src="${pageContext.request.contextPath}/resources/newpos/images/next_arrow_one.png"
+											alt="next_arrow_one"> </a></li>
+								</ul>
+							</div>
+							<div class="calc_no_r">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/right_arrow_one.png"
+									alt="right_arrow_one"></a>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+					</div>
+				</div>
+				<div class="calcy_2">
+					<div class="calculator_bx">
+						<div class="cal_quan">
+							<div class="qty_l">AMT</div>
+							<div class="qty_m">
+								<input name="enterRate" id="enterRate" type="text"
+									class="qty_one numberOnly" placeholder="Enter Rate"
+									onkeyup="itemRateCalculation(2)" />
+							</div>
+							<div class="qty_r">
+								<button type="submit" class="go_btn" onclick="calPad(2,10)"></button>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="calc_no">
+							<div class="calc_no_l">
+								<ul>
+									<li><a href="#" onclick="calPad(2,7)">7</a></li>
+									<li><a href="#" onclick="calPad(2,8)">8</a></li>
+									<li><a href="#" onclick="calPad(2,9)">9</a></li>
+									<li><a href="#" onclick="calPad(2,4)">4</a></li>
+									<li><a href="#" onclick="calPad(2,5)">5</a></li>
+									<li><a href="#" onclick="calPad(2,6)">6</a></li>
+									<li><a href="#" onclick="calPad(2,1)">1</a></li>
+									<li><a href="#" onclick="calPad(2,2)">2</a></li>
+									<li><a href="#" onclick="calPad(2,3)">3</a></li>
+									<li><a href="#" onclick="calPad(2,0)">0</a></li>
+									<li><a href="#" onclick="calPad(2,'.')">.</a></li>
+									<li><a href="#"><img
+											src="${pageContext.request.contextPath}/resources/newpos/images/next_arrow_one.png"
+											alt="next_arrow_one"> </a></li>
+								</ul>
+							</div>
+							<div class="calc_no_r">
+								<a href="#"><img
+									src="${pageContext.request.contextPath}/resources/newpos/images/right_arrow_one.png"
+									alt="right_arrow_one"></a>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="add_row add_row_marg">
+					<div class="add_row_l">
+						<span class="add_txt" id="qty_lable">QTY : 1</span>
+					</div>
+					<div class="add_row_r">
+						<span class="add_txt" id="rate_lable">Rate: 100.00</span>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="clr"></div>
+			</div>
+
+
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="quantity_close close_btn">Close</button>
+				</div>
+				<div class="close_r">
+					<a href="#" onclick="addItemInBillList()">Submit</a>
+				</div>
+				<div class="clr"></div>
+			</div>
 		</div>
 		<div id="myModal" class="modal">
 
@@ -1222,11 +1354,15 @@ body {
 									+ data[i].itemName
 									+ '<span></span></a></div>';
 
-									$("#itemDiv")
+									/* $("#itemDiv")
 											.append(
 													$(
 															'<li class="itemDummyClass"></li>')
-															.html(timeDiv));
+															.html(timeDiv)); */
+									$("#itemDiv")
+									.append(
+											$(
+											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
 							});
@@ -1344,17 +1480,17 @@ body {
 									}
 									 
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><p>'
+									var timeDiv = '<div class="sweet_one"><p>'
 									+ mrp
 									+ ' </p> '
 									+ data[i].itemName
-									+ '<span></span></a></div>';
+									+ '<span></span></div>';
 
 									$("#itemDiv")
 											.append(
 													$(
-															'<li class="itemDummyClass"></li>')
-															.html(timeDiv));
+													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
+															 
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
 							});
@@ -1408,6 +1544,62 @@ body {
 		</script>
 
 	<script>
+	
+	function calPad(side,value) {
+		var qty =  $('#enterQty').val() ;
+		var rate =  $('#enterRate').val() ;
+		//alert(value);
+		 if(side==1){
+			 
+			 if(qty=="NaN"){
+				 qty="";
+			 }
+			 
+			  if(value=="."){
+				 qty += value
+				 qty = qty.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); 
+				 
+			 }else if(value==10){
+				  
+				 if(qty.length!=0){
+					 
+					 qty  = qty.substring(0, qty.length - 1);
+				 }
+				  
+			 }else{
+				 qty += value
+			 }
+			 document.getElementById("enterQty").value = qty;
+			 itemRateCalculation(1);
+			 $("#enterQty").focus(); 
+			 
+		 }else if(side==2){
+			 
+			  
+			 if(rate=="NaN"){ 
+				 rate="";
+			 } 
+			 if(value=="."){ 
+				  rate += value
+				  rate = rate.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'); 
+				 
+			 }else if(value==10){
+				  
+				 if(rate.length!=0){
+					 
+					 rate  = rate.substring(0, rate.length - 1);
+				 }
+				  
+			 }else{
+				 rate += value
+			 }
+			 document.getElementById("enterRate").value = rate;
+			 itemRateCalculation(2);
+			 $("#enterRate").focus(); 
+		 }
+		 
+	}
+	
 	$('.numberOnly').on('input', function() {
 		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 		});
@@ -1427,6 +1619,7 @@ body {
 			document
 			.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
 			$("#enterQty").focus(); 
+			
 			
 		}
 		function itemRateCalculation(flag) {
@@ -1566,7 +1759,7 @@ body {
 										.append($(
 												'<td style="text-align: right;"></td>')
 												.html(
-														item.total));
+														(item.total).toFixed(2)));
 								tr
 								.append($(
 										'<td style="text-align: center;"></td>')
