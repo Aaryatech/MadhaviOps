@@ -464,29 +464,47 @@ body {
 								</div>
 							</div>
 						</div>
-						<br>
-						<div class="bx_tabs">
-							<ul id="subcatUl">
-								<!-- <li class="subCatDummyClass"><a href="#">Sweet</a></li>
-								<li class="subCatDummyClass"><a href="#">Lassi</a></li>
-								<li class="subCatDummyClass"><a href="#">Kaju &amp;
-										Combo</a></li>
-								<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
-								<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-								<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
-
-								<ul>
-						</div>
 
 					</div>
 					<!--listing box start here-->
 
-					<div class="cat_list_bx">
-						<div class="cat_srach">
-							<input name="myInput1" id="myInput1" type="text"
-								class="input_cat" onkeyup="myFunction1()"
-								placeholder="Search Item" />
+
+					<div class="a"
+						style="display: inline-block; width: 100%; margin: 20px 0 0 0;">
+						<div class="a" style="float: left; width: 70%">
+							<div class="bx_tabs">
+								<ul id="subcatUl">
+									<!-- <li class="subCatDummyClass"><a href="#"
+										style="margin-bottom: 5px;">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Kaju &amp;
+											Combo</a></li>
+									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Kaju &amp;
+											Combo</a></li>
+									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
+
+									<ul>
+							</div>
 						</div>
+						<div class="a" style="float: right; width: 30%">
+							<div class="cat_srach">
+								<input name="myInput1" id="myInput1" type="text"
+									class="input_cat" onkeyup="myFunction1()"
+									placeholder="Search Item" />
+							</div>
+						</div>
+					</div>
+
+
+					<div class="cat_list_bx">
+
 						<div class="cat_list">
 							<div class="carlist_scrollbars">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
