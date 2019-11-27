@@ -191,13 +191,13 @@ body {
 			<section class="main_container">
 				<div class="cat_l">
 					<!--top-buttons row-->
-					<div class="pending_row">
+					<!-- <div class="pending_row">
 						<a href="#" class="pending_btn initialism slide_open">Pending
 							Amt : <span>00.00</span>
 						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>00.00</span>
 						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
 
-					</div>
+					</div> -->
 
 					<!--customer drop down here-->
 					<div class="add_customer_bx">
@@ -1514,9 +1514,13 @@ body {
 								$(".itemDummyClass").remove();
 								$(".subCatDummyClass").remove();
 								
+								var subcatid=0;
 								
 								for (var i = 0; i < data.length; i++) {
 									
+									if(i==0){
+										subcatid=data[i].subCatId;
+									}
 									
 									var timeDiv = '<a href="#" class="act_subcat" id="subcat'+data[i].subCatId+'"  title="'
 										+ data[i].subCatName
@@ -1531,6 +1535,8 @@ body {
 															'<li class="subCatDummyClass "></li>')
 															.html(timeDiv));
 								}
+								
+								getItemList(subcatid);
 								//$('.category_scrollbars').ClassyScroll();
 							});
 
@@ -1544,6 +1550,7 @@ body {
 								ajax : 'true'
 							},
 							function(data) {
+								$(".subCatDummyClass").remove();
 								$(".itemDummyClass").remove();
 								var frRateCat =  $('#frRateCat').val();
 								
