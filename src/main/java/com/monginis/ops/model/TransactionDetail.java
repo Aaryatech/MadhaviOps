@@ -31,7 +31,7 @@ public class TransactionDetail implements Serializable{
 	
 	private float exFloat2;
 	
-	private String exVar1;
+	private String exVar1;// Payment type
 		
 	private String exVar2;
 

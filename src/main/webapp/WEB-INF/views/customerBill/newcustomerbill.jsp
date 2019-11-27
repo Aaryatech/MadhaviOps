@@ -68,6 +68,8 @@
 <c:url var="revertHoldBillOnCurrent" value="/revertHoldBillOnCurrent" />
 <c:url var="cancelFromHoldBill" value="/cancelFromHoldBill" />
 <c:url var="submitBill" value="/submitBill" />
+<c:url var="submitBillByPaymentOption"
+	value="/submitBillByPaymentOption" />
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -134,8 +136,10 @@ body {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
-.itemDummyClass{
- cursor: pointer; }
+
+.itemDummyClass {
+	cursor: pointer;
+}
 </style>
 <body>
 	<form action="" method="get">
@@ -403,7 +407,7 @@ body {
 								onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
-							<a href="#" class="hold print_btn initialism payment_open">Payment
+							<a href="#" class="hold print_btn" onclick="openPaymentPopup()">Payment
 								Option</a> <a href="#" class="hold bill_btn "
 								onclick="printDiv('printDivid')">Print Bill</a>
 						</div>
@@ -763,11 +767,13 @@ body {
 						<div class="add_input">
 							<div class="radio_row popup_radio">
 								<ul>
-									<li><input type="radio" id="single" name="modePay" checked>
-										<label for="single">Single</label>
+									<li><input type="radio" id="single" name="modePay"
+										onclick="changeSplitSingle(1)" checked> <label
+										for="single">Single</label>
 										<div class="check"></div></li>
-									<li><input type="radio" id="split" name="modePay">
-										<label for="split">Split </label>
+									<li><input type="radio" id="split" name="modePay"
+										onclick="changeSplitSingle(2)"> <label for="split">Split
+									</label>
 										<div class="check">
 											<div class="inside"></div>
 										</div></li>
@@ -776,35 +782,100 @@ body {
 						</div>
 						<div class="clr"></div>
 					</div>
-
-
-					<div class="add_frm_one">
-						<div class="add_customer_one">Type</div>
-
-						<div class="add_input">
-
-							<div class="dropdown popup_drop">
-								<div class="select">
-									<span>Payment Mode</span>
+					<div id="splitDiv" style="display: none;">
+						<div class="add_frm_one">
+							<div class="add_customer_one">Cash</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cashCheck"
+											name="cashCheck" checked> &nbsp;  --> <input type="text"
+											id="cashAmt" name="cashAmt" class=" input_add numberOnly"
+											placeholder="Cash Ammount" value="0">
+										</li>
+									</ul>
 								</div>
-
-								<ul class="dropdown-menu">
-									<li id="male">Cash</li>
-									<li id="female">Card</li>
-									<li id="female">E-pay</li>
-								</ul>
 							</div>
-
+							<div class="clr"></div>
 						</div>
-						<div class="clr"></div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">Card</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cardCheck"
+											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
+											name="cardAmt" class=" input_add numberOnly"
+											placeholder="Card Ammount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clr"></div>
+						</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">E-Pay</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="epayCheck"
+											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
+											name="epayAmt" class="input_add numberOnly"
+											placeholder="E-Pay Ammount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clr"></div>
+						</div>
 					</div>
-					<div class="add_frm_one">
+					<div id="singleDiv">
+						<div class="add_frm_one">
+							<div class="add_customer_one">Type</div>
+							<div class="add_input">
+								<select name="billType" id="billType" data-placeholder="Type"
+									class="input_add " style="text-align: left;">
+									<option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option>
+								</select>
+								<!-- <div class="dropdown popup_drop">
+									<div class="select">
+										<span>Payment Mode</span>
+									</div>
+
+									<ul class="dropdown-menu">
+										<li id="male">Cash</li>
+										<li id="female">Card</li>
+										<li id="female">E-pay</li>
+									</ul>
+								</div> -->
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one">
+							<div class="add_customer_one">Amount</div>
+							<div class="add_input">
+								<input name="payAmt" id="payAmt" type="text"
+									class="input_add numberOnly" placeholder="Enter Ammount"
+									value="0" />
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+					<!-- <div class="add_frm_one">
 						<div class="add_customer_one">Amount</div>
 						<div class="add_input">
 							<input name="" type="text" class="input_add" />
 						</div>
 						<div class="clr"></div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="pop_btns">
@@ -812,7 +883,7 @@ body {
 					<button class="payment_close close_btn">Close</button>
 				</div>
 				<div class="close_r">
-					<a href="#">Submit</a>
+					<a href="#" onclick="submitBillByPaymentOption()">Submit</a>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -1297,6 +1368,17 @@ body {
 				$("#modeOfPayDiv").show();
 			} else {
 				$("#modeOfPayDiv").hide();
+			}
+
+		}
+		function changeSplitSingle(value) {
+
+			if (value == 2) {
+				$("#splitDiv").show();
+				$("#singleDiv").hide();
+			} else {
+				$("#singleDiv").show();
+				$("#splitDiv").hide();
 			}
 
 		}
@@ -1882,7 +1964,7 @@ body {
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
 		var selectedText = $("#cust option:selected").text(); 
-		alert(selectedText);
+		//alert(selectedText);
 		
 		var rowcount = $('#itemBillTable tr').length;
 		var flag = 0;
@@ -1923,6 +2005,107 @@ body {
 		  
 	}
 	
+	function openPaymentPopup() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		 
+		//alert(selectedText);
+		
+		var rowcount = $('#itemBillTable tr').length;
+		var flag = 0;
+		  
+		 if(rowcount<=1){
+			 alert("Select Minimum Product");
+			 flag=1;
+		 }else if(custId==0){
+			 flag=1;
+			 alert("Select Customer");
+		 }
+		 
+		 if(flag==0){
+			 $('#payment').popup('show');
+		 }
+		  
+	}
+	
+	function submitBillByPaymentOption() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		var cashAmt =  $('#cashAmt').val() ;
+		var cardAmt =  $('#cardAmt').val() ;
+		var epayAmt =  $('#epayAmt').val() ;
+		var billType =  $('#billType').val() ;
+		var payAmt =  $('#payAmt').val() ;
+		var creditBill = 1;
+		var single = 1;
+		var selectedText = $("#cust option:selected").text(); 
+		var flag=0;
+		
+		if (document.getElementById('creditBillno').checked) {
+			creditBill = 2;
+		}
+		if (document.getElementById('split').checked) {
+			single = 2;
+		}
+		
+		if (cashAmt=="") {
+			cashAmt=0;
+		}
+		if (cardAmt=="") {
+			cardAmt=0;
+		}
+		if (epayAmt=="") {
+			epayAmt=0;
+		}
+		
+		if(creditBill==2 && single==1 && payAmt==""){
+			alert("Enter Ammount");
+		}else{
+			 $('#payment').popup('hide');
+			  document.getElementById("overlay2").style.display = "block";
+			   $
+				.post(
+						'${submitBillByPaymentOption}',
+						{
+							key : key,  
+							custId : custId,
+							creditBill : creditBill,
+							paymentMode : single,
+							billType : billType,
+							cashAmt : cashAmt,
+							cardAmt : cardAmt,
+							epayAmt : epayAmt,
+							selectedText : selectedText,
+							payAmt : payAmt,
+							ajax : 'true'
+						},
+						function(data) {
+							  
+							 if(key==0){
+									getCurrentItemList();
+									document.getElementById("cust").value = 0; 
+									$('.chosen-select').trigger(
+									'chosen:updated');
+									document.getElementById("overlay2").style.display = "none";	
+									
+									 
+									 document.getElementById('creditBillno').checked = true;
+									 document.getElementById('single').checked = true;
+									 document.getElementById("cashAmt").value = 0; 
+									 document.getElementById("cardAmt").value = 0; 
+									 document.getElementById("epayAmt").value = 0; 
+									 document.getElementById("payAmt").value = 0; 
+									 $("#splitDiv").hide();
+									 $("#singleDiv").show();
+							 }else{
+								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+							 }
+							
+						});   
+		} 
+	}
 	/* function printDiv(divName) {
 	     var printContents = document.getElementById(divName).innerHTML;
 	     var originalContents = document.body.innerHTML;
