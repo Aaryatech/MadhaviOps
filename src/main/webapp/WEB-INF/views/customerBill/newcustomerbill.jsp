@@ -203,6 +203,8 @@ body {
 					<div class="add_customer_bx">
 						<!--customer row 1-->
 						<div class="customer_row">
+							<input name="defaultCustomer" id="defaultCustomer" type="hidden"
+								value="${defaultCustomer}" />
 							<div class="customer_one">Customer</div>
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
@@ -210,21 +212,44 @@ body {
 									required>
 									<option value="0" style="text-align: left;">Select
 										Customer</option>
-									<c:forEach items="${customerList}" var="customerList">
-										<c:choose>
-											<c:when test="${customerList.custId==holdBill.custId}">
-												<option value="${customerList.custId}"
-													style="text-align: left;" selected>${customerList.custName}
-													&nbsp;${customerList.phoneNumber}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${customerList.custId}"
-													style="text-align: left;">${customerList.custName}
-													&nbsp;${customerList.phoneNumber}</option>
-											</c:otherwise>
-										</c:choose>
 
-									</c:forEach>
+									<c:choose>
+										<c:when test="${key>0}">
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==holdBill.custId}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==defaultCustomer}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+
 								</select>
 							</div>
 							<div class="customer_three">
@@ -280,8 +305,8 @@ body {
 									<tr>
 										<th style="text-align: center;" width="2%">Sr.No</th>
 										<th style="text-align: center;">Product</th>
-										<th style="text-align: center;" width="13%">Price</th>
 										<th style="text-align: center;" width="10%">QTY</th>
+										<th style="text-align: center;" width="13%">Price</th>
 										<th style="text-align: center;" width="13%">Total</th>
 										<th style="text-align: center;" width="2%">Delete</th>
 									</tr>
@@ -294,12 +319,12 @@ body {
 											<td>${count.index+1}</td>
 											<td>${itemList.itemName}</td>
 											<td style="text-align: right;"><fmt:formatNumber
+													type="number" groupingUsed="false" value="${itemList.qty}"
+													maxFractionDigits="3" minFractionDigits="3" /></td>
+											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.orignalMrp}" maxFractionDigits="0"
 													minFractionDigits="0" /></td>
-											<td style="text-align: right;"><fmt:formatNumber
-													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="3" minFractionDigits="3" /></td>
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.total}" maxFractionDigits="2"
@@ -1841,8 +1866,8 @@ body {
 					var mainTrStr = '<tr>'
 					+'<th style="text-align: center;" width="2%">Sr.No</th>'
 					+'<th style="text-align: center;">Product</th>'
-					+'<th style="text-align: center;" width="13%">Price</th>'
 					+'<th style="text-align: center;" width="10%">QTY</th>'
+					+'<th style="text-align: center;" width="13%">Price</th>' 
 					+'<th style="text-align: center;" width="13%">Total</th>'
 					+'<th style="text-align: center;" width="2%">Delete</th>'
 					+'</tr>';
@@ -1872,15 +1897,15 @@ body {
 												.html(
 														item.itemName));
 								tr
-										.append($(
-												'<td style="text-align: right;"></td>')
-												.html(
-														item.orignalMrp));
+								.append($(
+										'<td style="text-align: right;"></td>')
+										.html(
+												(item.qty).toFixed(3))); 
 								tr
 										.append($(
 												'<td style="text-align: right;"></td>')
 												.html(
-														(item.qty).toFixed(3)));
+														item.orignalMrp)); 
 								tr
 										.append($(
 												'<td style="text-align: right;"></td>')
@@ -2035,8 +2060,10 @@ body {
 					function(data) {
 						  
 						 if(key==0){
-								getCurrentItemList();
-								document.getElementById("cust").value = 0; 
+							 	var defaultCustomer =  $('#defaultCustomer').val() ;
+							 	//alert(defaultCustomer)
+							 	document.getElementById("cust").value = defaultCustomer;
+								getCurrentItemList(); 
 								$('.chosen-select').trigger(
 								'chosen:updated');
 								document.getElementById("overlay2").style.display = "none";	 
@@ -2128,8 +2155,10 @@ body {
 						function(data) {
 							  
 							 if(key==0){
-									getCurrentItemList();
-									document.getElementById("cust").value = 0; 
+								 
+								 var defaultCustomer =  $('#defaultCustomer').val() ;
+									document.getElementById("cust").value = defaultCustomer;
+									getCurrentItemList(); 
 									$('.chosen-select').trigger(
 									'chosen:updated');
 									document.getElementById("overlay2").style.display = "none";	

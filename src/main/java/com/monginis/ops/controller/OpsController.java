@@ -40,6 +40,7 @@ import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -58,7 +59,24 @@ public class OpsController {
 
 		try {
 			HttpSession session = request.getSession();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
+	@RequestMapping(value = "/printKotBill", method = RequestMethod.GET)
+	public String printKotBill(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String mav = "customerBill/printKotBill";
+
+		try {
+			HttpSession session = request.getSession();
+			model.addAttribute("itemBillList", itemBillList);
+			 
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,6 +136,14 @@ public class OpsController {
 				itemBillList = new ArrayList<>();
 				model.addAttribute("key", 0);
 			}
+
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("settingKey", "DEFLTCUST");
+			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
+					NewSetting.class);
+
+			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -567,7 +593,6 @@ public class OpsController {
 					}
 
 				}
-				 
 
 				dList.add(transactionDetail);
 
