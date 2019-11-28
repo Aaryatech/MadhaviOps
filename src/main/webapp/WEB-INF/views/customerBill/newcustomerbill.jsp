@@ -456,7 +456,7 @@ body {
 										<div class="cat_one catDummyClass">
 											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
 												title="${catList.catName}"
-												src="${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg"
+												src="${pageContext.request.contextPath}/resources/newpos/images/${catList.itemImage}"
 												onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
 										</div>
 									</c:forEach>
@@ -506,7 +506,7 @@ body {
 					<div class="cat_list_bx">
 
 						<div class="cat_list">
-							<div class="carlist_scrollbars">
+							<div class="carlist_scrollbars" id="scrollDiv">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
@@ -1599,6 +1599,10 @@ body {
 													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
 															 
 								}
+								//$('#scrollingDiv').scrollTop(0);
+								 
+								  document.getElementById("scrollDiv").style.top = "0px";
+								//$('#scrollingDiv').load('a.html #scrollingDiv');
 								//$('.carlist_scrollbars').ClassyScroll();
 							});
 
