@@ -510,7 +510,7 @@ body {
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
-								<div class="sweet_list">
+								<div class="sweet_list" id="aaaaaa">
 									<ul id="itemDiv">
 										<!-- <li class="itemDummyClass">
 											<div class="sweet_one">
@@ -993,13 +993,14 @@ body {
 									<li><a href="#" onclick="calPad(1,3)">3</a></li>
 									<li><a href="#" onclick="calPad(1,0)">0</a></li>
 									<li><a href="#" onclick="calPad(1,'.')">.</a></li>
-									<li><a href="#"><img
+									<li><a href="#" onclick="calPad(1,11)">C<%-- <img
 											src="${pageContext.request.contextPath}/resources/newpos/images/next_arrow_one.png"
-											alt="next_arrow_one"> </a></li>
+											alt="next_arrow_one"> --%>
+									</a></li>
 								</ul>
 							</div>
 							<div class="calc_no_r">
-								<a href="#"><img
+								<a href="#" onclick="addItemInBillList()"><img
 									src="${pageContext.request.contextPath}/resources/newpos/images/right_arrow_one.png"
 									alt="right_arrow_one"></a>
 							</div>
@@ -1037,13 +1038,14 @@ body {
 									<li><a href="#" onclick="calPad(2,3)">3</a></li>
 									<li><a href="#" onclick="calPad(2,0)">0</a></li>
 									<li><a href="#" onclick="calPad(2,'.')">.</a></li>
-									<li><a href="#"><img
+									<li><a href="#" onclick="calPad(2,11)">C<%-- <img
 											src="${pageContext.request.contextPath}/resources/newpos/images/next_arrow_one.png"
-											alt="next_arrow_one"> </a></li>
+											alt="next_arrow_one"> --%>
+									</a></li>
 								</ul>
 							</div>
 							<div class="calc_no_r">
-								<a href="#"><img
+								<a href="#" onclick="addItemInBillList()"><img
 									src="${pageContext.request.contextPath}/resources/newpos/images/right_arrow_one.png"
 									alt="right_arrow_one"></a>
 							</div>
@@ -1070,9 +1072,9 @@ body {
 				<div class="close_l">
 					<button class="quantity_close close_btn">Close</button>
 				</div>
-				<div class="close_r">
+				<!-- <div class="close_r">
 					<a href="#" onclick="addItemInBillList()">Submit</a>
-				</div>
+				</div> -->
 				<div class="clr"></div>
 			</div>
 		</div>
@@ -1465,6 +1467,8 @@ body {
 											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
+								 $(".scrollbar-content").css("top", "0");
+								 $(".scrollbar-handle").css("top", "0");
 							});
 		}
 
@@ -1599,10 +1603,14 @@ body {
 													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
 															 
 								}
-								//$('#scrollingDiv').scrollTop(0);
+							//	$('#scrollDiv').removeClass('carlist_scrollbars');
+								 //$('.scrollbar-content').animate({ scrollTop: 0 }, "fast");
+								 $(".scrollbar-content").css("top", "0");
+								 $(".scrollbar-handle").css("top", "0");
 								 
-								  document.getElementById("scrollDiv").style.top = "0px";
+								//  document.getElementById("scrollDiv").style.top = "0px";
 								//$('#scrollingDiv').load('a.html #scrollingDiv');
+								//$('#scrollDiv').addClass('carlist_scrollbars');
 								//$('.carlist_scrollbars').ClassyScroll();
 							});
 
@@ -1611,7 +1619,9 @@ body {
 
 	<script>
 		function myFunction1() {
-			  
+			
+			$(".scrollbar-content").css("top", "0");
+			 $(".scrollbar-handle").css("top", "0");
 		    $('.itemDummyClass').hide();
 		    var txt = $('#myInput1').val();
 		    $('.itemDummyClass').each(function(){
@@ -1709,6 +1719,11 @@ body {
 			 $("#enterRate").focus(); 
 		 }
 		 
+		 if(value==11){
+			 document.getElementById("enterQty").value = "";
+			 document.getElementById("enterRate").value = "";
+		 }
+		 
 	}
 	
 	$('.numberOnly').on('input', function() {
@@ -1721,8 +1736,8 @@ body {
 			
 			document
 			.getElementById("itemNmaeHeadeing").innerHTML = itemName;
-			document.getElementById("enterRate").value = mrp;
-			document.getElementById("enterQty").value = 1;
+			document.getElementById("enterRate").value = 0;
+			document.getElementById("enterQty").value = 0;
 			document.getElementById("rateHidden").value = mrp;
 			document.getElementById("taxperHidden").value = taxper;
 			document.getElementById("itemNameHidden").value = itemName;
@@ -1760,10 +1775,10 @@ body {
 			var itemNameHidden =  $('#itemNameHidden').val() ;
 			var taxperHidden =  $('#taxperHidden').val() ;
 			var flag=0;
-			if(isNaN(rate)){
+			if(isNaN(rate) || rate==0){
 				alert("Enter Valid Rate ");
 				flag=1;
-			}else if(isNaN(qty)){
+			}else if(isNaN(qty) || qty==0){
 				alert("Enter Valid QTY ");
 				flag=1;
 			}
