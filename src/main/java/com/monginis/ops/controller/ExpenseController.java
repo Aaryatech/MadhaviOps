@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.monginis.ops.common.DateConvertor;
+ import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.Company;
@@ -49,8 +50,7 @@ public class ExpenseController {
 		ModelAndView mav = new ModelAndView("expense/addExpense");
 
 		try {
-			
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -65,6 +65,7 @@ public class ExpenseController {
 			chSeq = frSetting.getCount();
 
 			String gfg3 = String.format("%04d", chSeq);
+			mav.addObject("imageUrl", Constant.GVN_IMAGE_URL);
 
 			// System.out.println(frDetails.getFrCode());
 
@@ -81,8 +82,8 @@ public class ExpenseController {
 					.concat(String.valueOf(myString.charAt(4))).concat("-").concat(String.valueOf(myString1.charAt(3)))
 					.concat(String.valueOf(myString1.charAt(4))).concat("-").concat(gfg3);
 			mav.addObject("chSeq", a);
-			Expense ep=new Expense();
-			
+			Expense ep = new Expense();
+
 			mav.addObject("expEdit", ep);
 			mav.addObject("isEdit", 0);
 
@@ -93,8 +94,7 @@ public class ExpenseController {
 
 		return mav;
 	}
-	
-	
+
 	@RequestMapping(value = "/showEditExpense/{id}", method = RequestMethod.GET)
 	public ModelAndView updateOtherItem(@PathVariable("id") int id, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -105,15 +105,15 @@ public class ExpenseController {
 		try {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("expId", id);
 
 			Expense expEdit = restTemplate.postForObject("" + Constant.URL + "getExpenseByExpId", map, Expense.class);
 			mav.addObject("expEdit", expEdit);
 			mav.addObject("isEdit", 1);
-			 
-            
+			mav.addObject("imageUrl", Constant.GVN_IMAGE_URL);
+
 		} catch (Exception e) {
 			System.out.println("Exc In /updateOtherItem" + e.getMessage());
 		}
@@ -131,16 +131,13 @@ public class ExpenseController {
 		String toDate = "";
 		String type = "";
 		model = new ModelAndView("expense/expenseList");
-		
 
-	
 		fromDate = request.getParameter("fromDate");
 		toDate = request.getParameter("toDate");
 		type = request.getParameter("type");
 
 		if (fromDate == null && toDate == null) {
 
-			
 			System.err.println("in catch");
 			type = "1";
 			Date date = new Date();
@@ -148,7 +145,7 @@ public class ExpenseController {
 			fromDate = formatter.format(date);
 			toDate = formatter.format(date);
 
-		}  
+		}
 
 		model.addObject("fromDate", fromDate);
 		model.addObject("toDate", toDate);
@@ -171,7 +168,6 @@ public class ExpenseController {
 
 			model.addObject("expList", expList);
 
-
 		} catch (Exception e) {
 			System.out.println("Exception In Add  showAddExpense Process:" + e.getMessage());
 
@@ -184,124 +180,124 @@ public class ExpenseController {
 	public String addSubmitExpense(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("photo") List<MultipartFile> photo) {
 
-		 try { 
+		try {
 
-		HttpSession session = request.getSession();
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-		
-		
-		
-		String expId = request.getParameter("expId");
-		
-		Expense exp = new Expense();
-		if(expId!=null || expId!="")
-		{
-			exp.setExpId(Integer.parseInt(expId));
-		}
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		String chalanNo = request.getParameter("chalanNo");
+			String expId = request.getParameter("expId");
 
-		String expDate = request.getParameter("fromdatepicker");
-
-		String amount = request.getParameter("amount");
-
-		String isActive = request.getParameter("isActive");
-		String remark = request.getParameter("remark");
-
-		System.err.println("asda" + isActive);
-
-		VpsImageUpload upload = new VpsImageUpload();
-
-		Calendar cale = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		System.out.println(sdf.format(cale.getTime()));
-
-		String curTimeStamp = sdf.format(cale.getTime());
-		String gvnPhoto1 = null;
-
-		for (int i = 0; i < photo.size(); i++) {
-			try {
-				gvnPhoto1 = curTimeStamp + "-" + photo.get(i).getOriginalFilename();
-
-				upload.saveUploadedFiles(photo, Constant.CH_IMAGE_TYPE,
-						curTimeStamp + "-" + photo.get(i).getOriginalFilename());
-
-			} catch (IOException e) {
-
-				System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
-				e.printStackTrace();
+			Expense exp = new Expense();
+			if (expId != null || expId != "") {
+				exp.setExpId(Integer.parseInt(expId));
 			}
+
+			System.out.println("expId: " + expId);
+			String chalanNo = request.getParameter("chalanNo");
+
+			String expDate = request.getParameter("fromdatepicker");
+
+			String amount = request.getParameter("amount");
+
+			String isActive = request.getParameter("isActive");
+			String remark = request.getParameter("remark");
+
+			System.err.println("asda" + isActive);
+
+			VpsImageUpload upload = new VpsImageUpload();
+
+			Calendar cale = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			System.out.println(sdf.format(cale.getTime()));
+
+			String curTimeStamp = sdf.format(cale.getTime());
+			String gvnPhoto1 = null;
+
+			for (int i = 0; i < photo.size(); i++) {
+				
+				if (photo.get(i).getOriginalFilename() != "") {
+				try {
+					gvnPhoto1 = curTimeStamp + "-" + photo.get(i).getOriginalFilename();
+
+					upload.saveUploadedFiles(photo, Constant.CH_IMAGE_TYPE,
+							curTimeStamp + "-" + photo.get(i).getOriginalFilename());
+
+				} catch (IOException e) {
+
+					System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
+					e.printStackTrace();
+				}
+				} else {
+
+					gvnPhoto1 = request.getParameter("profPic");
+					System.out.println(gvnPhoto1);
+				}
+				
+			
+			}
+
+			exp.setChalanNo(chalanNo);
+			exp.setChAmt(amount);
+			exp.setDelStatus(0);
+			exp.setExpDate(expDate);
+			exp.setExpType(isActive);
+			exp.setRemark(remark);
+			exp.setStatus(Integer.parseInt(isActive));
+			exp.setImgName(gvnPhoto1);
+
+			exp.setExInt1(0);
+			exp.setExInt2(0);
+			exp.setExInt3(0);
+			exp.setExInt4(0);
+
+			exp.setExVar1("NA");
+			exp.setExVar2("NA");
+			exp.setExVar3("NA");
+			exp.setExVar4("NA");
+
+			exp.setFrId(frDetails.getFrId());
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveExpense", exp, Info.class);
+			System.out.println("Response: " + errorMessage.toString());
+
+			if (errorMessage.isError() == false  && expId.equals("0")) {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				System.err.println("incr " + chSeq + 1);
+				map.add("frId", frDetails.getFrId());
+				map.add("chSeq", chSeq + 1);
+
+				Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingCount", map, Info.class);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("Exception In Add  SubCategory Process:" + e.getMessage());
+
+			return "redirect:/showAddExpense";
+
 		}
-		
-
-		exp.setChalanNo(chalanNo);
-		exp.setChAmt(amount);
-		exp.setDelStatus(0);
-		exp.setExpDate(expDate);
-		exp.setExpType(isActive);
-		exp.setRemark(remark);
-		exp.setStatus(Integer.parseInt(isActive));
-		exp.setImgName(gvnPhoto1);
-
-		exp.setExInt1(0);
-		exp.setExInt2(0);
-		exp.setExInt3(0);
-		exp.setExInt4(0);
-
-		exp.setExVar1("NA");
-		exp.setExVar2("NA");
-		exp.setExVar3("NA");
-		exp.setExVar4("NA");
-
-		exp.setFrId(frDetails.getFrId());
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		Expense errorMessage = restTemplate.postForObject(Constant.URL + "/saveExpense", exp, Expense.class);
-		System.out.println("Response: " + errorMessage.toString());
-
-		if (errorMessage != null && expId==null ) {
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("frId", frDetails.getFrId());
-			map.add("chSeq", chSeq + 1);
-
-			Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingCount", map, Info.class);
-
-		}
-
-		
-		  } catch (Exception e) {
-		  System.out.println("Exception In Add  SubCategory Process:" +
-		  e.getMessage());
-		  
-		  return "redirect:/showAddExpense";
-		  
-		  }
-		 
 
 		return "redirect:/showExpenseList";
 	}
-	
-	
+
 	@RequestMapping(value = "/deleteExpense/{id}", method = RequestMethod.GET)
-	public String deleteOtherItem(@PathVariable int id,HttpServletRequest request, HttpServletResponse response) {
-		 
-		try
-		{
+	public String deleteOtherItem(@PathVariable int id, HttpServletRequest request, HttpServletResponse response) {
+
+		try {
 			RestTemplate rest = new RestTemplate();
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("expId", id);
- 			Info info = rest.postForObject("" + Constant.URL + "deleteExpense", map, Info.class);
+			Info info = rest.postForObject("" + Constant.URL + "deleteExpense", map, Info.class);
 			System.out.println(info.toString());
 
 			System.out.println("info " + info);
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
- 	 
-		return "redirect:/showExpenseList"; 
+
+		return "redirect:/showExpenseList";
 	}
 
 }

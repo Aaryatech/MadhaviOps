@@ -51,8 +51,8 @@
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
 				<div class="sidebarright">
-				
-				<div class="order-left">
+
+					<div class="order-left">
 						<h2 class="pageTitle">Add Expense</h2>
 
 					</div>
@@ -61,7 +61,7 @@
 						<a href="${pageContext.request.contextPath}/showExpenseList"><button
 								class="btn btn-success">Expense List</button></a>
 					</div>
-				
+
 
 					<form name="frm_search" id="frm_search" method="post"
 						enctype="multipart/form-data"
@@ -78,7 +78,7 @@
 						</c:choose>
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-constrol"	  name="id"  value="${item.id}" type="hidden" >	 --%>
-						 
+
 						</div>
 
 						<div class="colOuter">
@@ -137,8 +137,9 @@
 								<select name="isActive" id="isActive" class="form-control"
 									data-rule-required="true">
 									<option value="1" ${expEdit.expType == 1 ? 'selected' : ''}>Regular</option>
-									<option value="2" ${expEdit.expType == 2 ? 'selected' : ''}>Payment Chalan</option>
-									 
+									<option value="2" ${expEdit.expType == 2 ? 'selected' : ''}>Payment
+										Chalan</option>
+
 								</select>
 							</div>
 
@@ -146,24 +147,46 @@
 
 						<div class="colOuter">
 
+
+
 							<div class="col-md-2">
 								<div class="col1title" align="left">Image*:</div>
 							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<div class="fileUpload">
-										<input class="upload upld" type='file' name="photo" id="photo"  value="${expEdit.imgName}"
-											data-rule-required="true" /> <img style="width: 45px" 
-											src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image"
-											alt="" />
+							<div class="col-lg-4">
+								<div class="input-group-btn  ">
+									<c:if test="${not empty expEdit.imgName}">
+										<img src="${imageUrl}${expEdit.imgName}"
+											style="width: 200px; height: auto;">
+									</c:if>
+
+									<span class="filename" style="user-select: none1;"><img
+										id="temppreviewimageki1" name="image1"
+										class="temppreviewimageki1" alt="l"
+										style="width: 200px; height: auto; display: none"> </span>
+									<!-- image-preview-clear button -->
+									
+
+									<div class="btn btn-primary btn-file legitRipple">
+										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
+											type="file" class="file-input browseimage browseimage1"  
+											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
 									</div>
-								</div>
-							</div>
+									
+									<div class="col-md-3"></div>
+									
+									<button type="button" title="Clear selected files"
+										class="btn btn-default btn-secondary fileinput-remove fileinput-remove-button legitRipple image-preview-clear image-preview-clear1"
+										id="1" style="display: none;">
+										<i class="icon-cross2 font-size-base mr-2"></i> Clear
+									</button>
+								</div><input type="hidden" value="${expEdit.imgName}"
+										name="profPic">
+ 							</div>
+						</div>
+ 
+						<div class="colOuter">
 
-
-							<div class="col-md-1"></div>
-
-							<div class="col-md-2">
+							<div class="col-md-2"  align="left">
 								<div class="col1title">Remark</div>
 							</div>
 							<div class="col-md-3">
@@ -172,9 +195,8 @@
 
 							</div>
 							<input type="hidden" name="expId" value="${expEdit.expId}">
+
 						</div>
-
-
 						<div class="colOuter">
 							<div align="center">
 								<input name="submit" class="buttonsaveorder" value="Submit"
@@ -367,6 +389,69 @@
 			});
 		});
 	</script>
+	<script type="text/javascript">
+		function readURL(input) {
+			/* 
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
 
+				reader.onload = function(e) {
+					$('#image1').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			} */
+		}
+
+		$("#profilePic").change(function() {
+
+			//readURL(this);
+		});
+
+		$(function() {
+
+			//image 1
+			// Create the close button
+
+			// Clear event
+			$('.image-preview-clear').click(function() {
+				var imgid = $(this).attr('id');
+
+				$('.browseimage' + imgid).val("");
+				$('.image-preview-clear' + imgid).hide();
+
+				//$('.image-preview-input-title'+imgid).text("Browse"); 
+				$('.temppreviewimageki' + imgid).attr("src", '');
+				$('.temppreviewimageki' + imgid).hide();
+			});
+			// Create the preview image
+			$(".browseimage").change(
+					function() {
+						var img = $('<img/>', {
+							id : 'dynamic',
+							width : 250,
+							height : 200,
+						});
+						var imgid = $(this).attr('id');
+						var file = this.files[0];
+						var reader = new FileReader();
+						// Set preview image into the popover data-content
+						reader.onload = function(e) {
+
+							//	$('.image-preview-input-title'+imgid).text("Change");
+							$('.image-preview-clear' + imgid).show();
+							//	$('.image-preview-filename'+imgid).val(file.name);   
+							img.attr('src', e.target.result);
+
+							$(".temppreviewimageki" + imgid).attr("src",
+									$(img)[0].src);
+							$(".temppreviewimageki" + imgid).show();
+
+						}
+						reader.readAsDataURL(file);
+					});
+			//end  
+		});
+	</script>
 </body>
 </html>

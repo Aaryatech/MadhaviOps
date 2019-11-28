@@ -176,7 +176,7 @@
 														</c:if>
 														
 														<c:if test="${expList.expType==2}">
-																<c:if test="${expList.status==1}">
+																<c:if test="${expList.status==2}">
 														
 														<a
 															href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
