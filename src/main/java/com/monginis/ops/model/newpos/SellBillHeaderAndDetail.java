@@ -1,7 +1,7 @@
 package com.monginis.ops.model.newpos;
 
 import java.util.List;
-
+  
 public class SellBillHeaderAndDetail {
 	
 	 
@@ -34,7 +34,11 @@ public class SellBillHeaderAndDetail {
 	private float custLoyaltyPtRate; 
 	private float custLoyaltyPt; 
 	private int delStatus; 
+	private String custName;
+	private String gstNo; 
 	private List<SellBillDetailForPos> list;
+	private List<TaxLabListForPos> taxlabList;
+	
 	public int getSellBillNo() {
 		return sellBillNo;
 	}
@@ -215,6 +219,24 @@ public class SellBillHeaderAndDetail {
 	public void setList(List<SellBillDetailForPos> list) {
 		this.list = list;
 	}
+	public String getCustName() {
+		return custName;
+	}
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+	public String getGstNo() {
+		return gstNo;
+	}
+	public void setGstNo(String gstNo) {
+		this.gstNo = gstNo;
+	}
+	public List<TaxLabListForPos> getTaxlabList() {
+		return taxlabList;
+	}
+	public void setTaxlabList(List<TaxLabListForPos> taxlabList) {
+		this.taxlabList = taxlabList;
+	}
 	@Override
 	public String toString() {
 		return "SellBillHeaderAndDetail [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate="
@@ -226,7 +248,8 @@ public class SellBillHeaderAndDetail {
 				+ ", custId=" + custId + ", userName=" + userName + ", userGstNo=" + userGstNo + ", userPhone="
 				+ userPhone + ", status=" + status + ", isDairyMartBill=" + isDairyMartBill + ", couponNo=" + couponNo
 				+ ", custLoyaltyPtRate=" + custLoyaltyPtRate + ", custLoyaltyPt=" + custLoyaltyPt + ", delStatus="
-				+ delStatus + ", list=" + list + "]";
+				+ delStatus + ", custName=" + custName + ", gstNo=" + gstNo + ", list=" + list + ", taxlabList="
+				+ taxlabList + "]";
 	}
 	
 	

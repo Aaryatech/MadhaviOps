@@ -31,6 +31,7 @@ import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.FrMenu;
+import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
@@ -80,9 +81,82 @@ public class OpsController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
+			map.add("flag", 0);
 			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
 					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/printBillOfSupply/{billNo}", method = RequestMethod.GET)
+	public String printBillOfSupply(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		String mav = "customerBill/printBillOfSupply";
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billId", billNo);
+			map.add("flag", 0);
+			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
+					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
+			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+			model.addAttribute("frDetails", frDetails);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
+			try {
+				FranchiseSup frSup = restTemplate.postForObject(Constant.URL + "/getFrSupByFrId", map,
+						FranchiseSup.class);
+				model.addAttribute("frSup", frSup);
+			} catch (Exception e) {
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/printBillOfInvoice/{billNo}", method = RequestMethod.GET)
+	public String printBillOfInvoice(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		String mav = "customerBill/printBillOfInvoice";
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billId", billNo);
+			map.add("flag", 1);
+			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
+					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
+			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+			model.addAttribute("frDetails", frDetails);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
+			try {
+				FranchiseSup frSup = restTemplate.postForObject(Constant.URL + "/getFrSupByFrId", map,
+						FranchiseSup.class);
+				model.addAttribute("frSup", frSup);
+			} catch (Exception e) {
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,6 +224,8 @@ public class OpsController {
 					NewSetting.class);
 
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
+			
+			model.addAttribute("frtype", frDetails.getFrGstType());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -423,7 +499,7 @@ public class OpsController {
 				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
 			}
-
+			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);
@@ -625,7 +701,7 @@ public class OpsController {
 				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
 			}
-
+			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);

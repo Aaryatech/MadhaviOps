@@ -204,7 +204,8 @@ body {
 						<!--customer row 1-->
 						<div class="customer_row">
 							<input name="defaultCustomer" id="defaultCustomer" type="hidden"
-								value="${defaultCustomer}" />
+								value="${defaultCustomer}" /><input name="frtype" id="frtype"
+								type="hidden" value="${frtype}" />
 							<div class="customer_one">Customer</div>
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
@@ -434,10 +435,10 @@ body {
 						<div class="button_one">
 							<a href="#" class="hold print_btn" onclick="openPaymentPopup()">Payment
 								Option</a> <a href="#" class="hold bill_btn "
-								onclick="printDiv('printDivid')">Print Bill</a>
+								onclick="submitBill(2)">Print Bill</a>
 						</div>
 						<div class="button_two">
-							<a href="#" class="hold pay_btn " onclick="submitBill()">Bill</a>
+							<a href="#" class="hold pay_btn " onclick="submitBill(1)">Bill</a>
 						</div>
 					</div>
 
@@ -925,8 +926,10 @@ body {
 				<div class="close_l">
 					<button class="payment_close close_btn">Close</button>
 				</div>
+
 				<div class="close_r">
-					<a href="#" onclick="submitBillByPaymentOption()">Submit</a>
+					<a href="#" onclick="submitBillByPaymentOption(2)">GST Bill</a>
+					&nbsp;<a href="#" onclick="submitBillByPaymentOption(1)">KOT</a>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -2028,16 +2031,16 @@ body {
 	</script>
 	<script type="text/javascript">
 	
-	function submitBill() {
+	function submitBill(printbilltype) {
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
 		var selectedText = $("#cust option:selected").text(); 
 		//alert(selectedText);
-		
+		var frtype =  $('#frtype').val() ;
 		var rowcount = $('#itemBillTable tr').length;
 		var flag = 0;
-		  
+		   
 		 if(rowcount<=1){
 			 alert("Select Minimum Product");
 			 flag=1;
@@ -2059,17 +2062,46 @@ body {
 					},
 					function(data) {
 						  
-						 if(key==0){
-							 	var defaultCustomer =  $('#defaultCustomer').val() ;
-							 	//alert(defaultCustomer)
-							 	document.getElementById("cust").value = defaultCustomer;
-								getCurrentItemList(); 
-								$('.chosen-select').trigger(
-								'chosen:updated');
-								document.getElementById("overlay2").style.display = "none";	 
-						 }else{
-							 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-						 }
+						
+							if(key==0){
+								
+								if(printbilltype==1){
+									
+									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+									 
+								}else if(printbilltype==2){
+									 
+									if(frtype<=10000000){
+										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+									}else{
+										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+									}
+								}
+								
+								 	var defaultCustomer =  $('#defaultCustomer').val() ;
+								 	//alert(defaultCustomer)
+								 	document.getElementById("cust").value = defaultCustomer;
+									getCurrentItemList(); 
+									$('.chosen-select').trigger(
+									'chosen:updated');
+									document.getElementById("overlay2").style.display = "none";	 
+							 }else{
+								 if(printbilltype==1){
+										
+									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+									 
+								}else if(printbilltype==2){
+									 
+									if(frtype<=10000000){
+										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+									}else{
+										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+									}
+								}
+								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+							 }
+						 
+						 
 						
 					});    
 		 }
@@ -2100,7 +2132,7 @@ body {
 		  
 	}
 	
-	function submitBillByPaymentOption() {
+	function submitBillByPaymentOption(printbilltype) {
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
@@ -2109,6 +2141,8 @@ body {
 		var epayAmt =  $('#epayAmt').val() ;
 		var billType =  $('#billType').val() ;
 		var payAmt =  $('#payAmt').val() ;
+		var frtype =  $('#frtype').val() ;
+		
 		var creditBill = 1;
 		var single = 1;
 		var selectedText = $("#cust option:selected").text(); 
@@ -2155,7 +2189,18 @@ body {
 						function(data) {
 							  
 							 if(key==0){
-								 
+								 if(printbilltype==1){
+										
+									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+									 
+								}else if(printbilltype==2){
+									 
+									if(frtype<=10000000){
+										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+									}else{
+										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+									}
+								}
 								 var defaultCustomer =  $('#defaultCustomer').val() ;
 									document.getElementById("cust").value = defaultCustomer;
 									getCurrentItemList(); 
@@ -2173,6 +2218,18 @@ body {
 									 $("#splitDiv").hide();
 									 $("#singleDiv").show();
 							 }else{
+								 if(printbilltype==1){
+										
+									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+									 
+								}else if(printbilltype==2){
+									 
+									if(frtype<=10000000){
+										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+									}else{
+										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+									}
+								}
 								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
 							 }
 							
