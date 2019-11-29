@@ -2022,7 +2022,7 @@ body {
 	}	
 	function imgError(image) {
 	    image.onerror = "";
-	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/laddu.jpg";
+	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/noimage.jpeg";
 	    return true;
 	}
 	</script>
