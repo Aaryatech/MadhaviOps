@@ -206,12 +206,10 @@
 						</tr>
 						<tr>
 							<td style="border-top: 1px solid #E7E7E7; padding: 2px;"
-								colspan="6">We declare that this invoice shows the actual
-								price of the goods<br /> described and that all particulars are
-								true and correct.<br /> <span style="font-size: 10px">
-									I/ We hereby certify that food/oods mentioned in this invoice
-									are warranted to be the nature and quality which this
-									purports/purport to be.</span>
+								colspan="6">-For wholesale inquiry contact DairyMart Team
+								82600 60049/50<br>-visit us on www.madhvi.in<br>-Email
+								feedback/suggestions on madhvidairy@gmail.com<br>-This is a
+								computer generated invoice
 							</td>
 						</tr>
 					</table></td>
