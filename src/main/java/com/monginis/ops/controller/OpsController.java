@@ -40,6 +40,7 @@ import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
+import com.monginis.ops.model.newpos.SellBillHeaderAndDetail;
 import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
@@ -59,24 +60,30 @@ public class OpsController {
 
 		try {
 			HttpSession session = request.getSession();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
 
-	@RequestMapping(value = "/printKotBill", method = RequestMethod.GET)
-	public String printKotBill(HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping(value = "/printKotBill/{billNo}", method = RequestMethod.GET)
+	public String printKotBill(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
 		String mav = "customerBill/printKotBill";
 
 		try {
 			HttpSession session = request.getSession();
-			model.addAttribute("itemBillList", itemBillList);
-			 
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billId", billNo);
+			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
+					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
+			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

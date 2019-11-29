@@ -71,8 +71,8 @@
 												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
-											<c:forEach items="${itemBillList}" var="itemBillList"
-												varStatus="count">
+											<c:forEach items="${sellBillHeaderAndDetail.list}"
+												var="itemBillList" varStatus="count">
 												<tr>
 													<td><span style="font-size: 11px">${itemBillList.itemName}</span>
 													</td>
@@ -82,15 +82,15 @@
 																minFractionDigits="3" /> </span></td>
 													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
 																type="number" groupingUsed="false"
-																value="${itemBillList.orignalMrp}" maxFractionDigits="0"
+																value="${itemBillList.mrp}" maxFractionDigits="0"
 																minFractionDigits="0" /> </span></td>
 													<td align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.total}" maxFractionDigits="2"
+																value="${itemBillList.grandTotal}" maxFractionDigits="2"
 																minFractionDigits="2" />
 													</span></td>
 													<c:set var="totalAmt"
-														value="${totalAmt+itemBillList.total}"></c:set>
+														value="${totalAmt+itemBillList.grandTotal}"></c:set>
 												</tr>
 											</c:forEach>
 
