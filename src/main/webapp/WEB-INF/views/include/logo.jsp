@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!--topHeader-->
-<div class="fullGrid center logoBarbg slideposi">
+ <%-- <div class="fullGrid center logoBarbg slideposi">
 	<div class="wrapperIn positionR">
     	<div class="logoBarLeft"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="monginis"></a></div>  
-       
          <c:choose>
                <c:when test = "${isSpDayShow ==true}">
                     <a class="special-day" href="${pageContext.request.contextPath}/showSpDayCake"> Advance Order </a>
@@ -16,16 +12,15 @@
                <c:otherwise>
               </c:otherwise>
               </c:choose>
- 
  <input type="hidden" id="achievedTarget" value="${sessionScope.achievedTarget}">
        <input type="hidden" id="target" value="${sessionScope.fraTarget}">
         <div class="logoBarRight">
        
         <a href="#" class="signout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
       
-        <div id="menuzord" class="menuzord red menuzord-responsive">
+        <div id="menuzord" class="menuzord red menuzord-responsive"> --%>
 <!--            <div id="chart_div" style="width: 120px;height: 70px;  float: left;margin-right: 20px;"></div>
- -->           <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
+ -->          <%--  <ul class="menuzord-menu menuzord-right menuzord-indented scrollable">
            
                <c:choose>
                   <c:when test="${frDetails.frRate=='0'}"> <li><img class="mngimg" src="${pageContext.request.contextPath}/resources/images/star0.5.png" alt="monginis" style="height: 30px;"></li> </c:when>
@@ -43,9 +38,7 @@
                     
                 </c:otherwise>    
               </c:choose>
-              
-               
-                <li><a href="#"><div class="usericon">${frDetails.frName} </div>
+               <li><a href="#"><div class="usericon">${frDetails.frName} </div>
                  <div class="userimg">
                 <img src="${frDetails.frImage}"  height="70" width="70" this.src='${pageContext.request.contextPath}/resources/images/user.png';">
                 	</div> </a>
@@ -59,59 +52,11 @@
         </div>
         </div>
     </div>
-</div>
-<!--topHeader-->
-
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
- <!--  <script type="text/javascript">
-	var achievedTarget=document.getElementById("achievedTarget").value;
-	var target=document.getElementById("target").value;
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawMultSeries);
-
-function drawMultSeries() {
-	 
-	achievedTarget=Math.ceil(achievedTarget);
-	 
-	if(achievedTarget>=target)
-		{
-		 
-		target=0;
-		}
-	else{
-		 
-		 
-		target=target-achievedTarget;
-		
-	}
-	
-      var data = google.visualization.arrayToDataTable([
-        ['Target In Lakhs', 'Assigned Target'],
-        ['Franchise Target',target],
-        ['Franchise Target',achievedTarget],
-     
-      
-      ]);
-
-      var options = {
-    	        title: 'Franchise Target',
-    	        chartArea: {width: '790',height: '790'},
-    	        hAxis: {
-    	          title: 'Target Details',
-    	          minValue: 0
-    	        },
-    	        vAxis: {
-    	          title: 'Target In Lakhs'
-    	        }
-    	     
-    	      };
-
-
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-
-   
-      chart.draw(data, options);
-    }
-
-
-</script> -->
+</div> --%>
+<header>
+	<div class="logo"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="madhvi_logo"> </div>
+	<div class="drop_menu">
+		<div class="logout_btn"><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></div>
+	</div>
+	<div class="clr"></div>
+</header>

@@ -168,7 +168,7 @@ input[type=radio]:checked ~ label{color: #ed1c24;}
 .cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 111px; background: #FFF; position: relative;}
 .cat_one.cat{margin: 4px;}
 .cat_one p{background: #ed1c24; color: #FFF; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute; right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
-.cat_one img{display: block;  height: 80px; margin: 0 auto;} /* width: 80px; */
+.cat_one img{display: block; width: 80px; height: 80px; margin: 0 auto;}
 .cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 10px; font-size: 14px; text-overflow:ellipsis;vertical-align:middle;white-space:nowrap;overflow:hidden;}
 .cat_one:hover{border: 3px solid #cccccc;}
 
@@ -232,7 +232,7 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 .top_menu ul{margin: 0px; padding: 0px;}
 .top_menu ul li{list-style-type: none; float: left;}
 .top_menu ul li i{display: block; text-align: center; width: 100%; margin: 0 0 8px 0; font-size: 18px;}
-.top_menu ul li a{background: #ed1c24; padding: 20px 15px 25px 20px; display: block; border-right: 1px solid #e1001b; color: #FFF; font-size: 14px;}
+.top_menu ul li a{background: #ed1c24; padding: 15px 15px 20px 10px; display: block; border-right: 1px solid #e1001b; color: #FFF; font-size: 14px;}
 .top_menu ul li a:hover{background: #fff200; color: #333;}
 
 /*---------- order booking page css start here ----------*/
@@ -256,10 +256,10 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 .listareaBlue{ width:100%; float:left; padding:0px 10%;}
 .listareaBlue ul{ width:100%; float:left; margin:0px; padding:0px;}
 .listareaBlue li{ width:33.33%; float:left; margin:0px; padding:15px;}
-.listareaBoxBlue{width:100%; float:left; text-align:left; background:#343690; padding-left:78px; position:relative; height:79px;
--webkit-border-radius:40px;-moz-border-radius:40px;-o-border-radius:40px;-ms-border-radius:40px;border-radius:40px; color:#fff; border:3px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.listareaBoxBlue{width:100%; float:left; text-align:left; background:#343690; padding-left:78px; position:relative; height:71px;
+-webkit-border-radius:0px;-moz-border-radius:0px;-o-border-radius:0px;-ms-border-radius:0px;border-radius:0px; color:#fff; border:3px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .listareaBoxBlue:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.listareaBoxBlue img{ position:absolute; left:6px; top:4px;}
+.listareaBoxBlue img{ position:absolute; left:0px; top:0px;}
 .listareaBoximgBlue{position:absolute; left:6px; top:4px;}
 .listareaBoxBlue h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;color:#fff;}
 .listareaBoxBlue h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;color:#fff;}

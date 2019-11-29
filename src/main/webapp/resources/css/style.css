@@ -97,7 +97,7 @@ margin: 0px auto;
 }
 
 .wrapperIn2 {
-    padding-top: 56px /*61px*/;
+    padding-top: 0px /*61px*/;
     vertical-align: top;
 }
 
@@ -148,7 +148,7 @@ min-height: 90px;
 .table-scroll th{
 	padding: 22px 0px;
 	vertical-align: top;
-	background: #ec268f !important;
+	background: #ed3f3c !important;
 color: #fff !important;
 font-size: 16px;
 }
@@ -212,7 +212,7 @@ font-size: 16px;
 }
 
 .sidenav {
-    top: 62px;
+    top: 99px;
     left: 0px;
 }
 
@@ -271,7 +271,7 @@ font-size: 16px;
  align-items:center;
  height:45px;
  margin-bottom:10px;
-background-color: #343690 !important;
+background-color: #f9cc3b !important;
 }
 .ibox .ibox-head .ibox-title {
  font-size:20px;

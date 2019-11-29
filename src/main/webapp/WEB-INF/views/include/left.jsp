@@ -11,9 +11,12 @@
 	padding: 20px 60px 20px 20px;
 }
 </style>
-<div class="sidebarhome">
-	<div class="content mCustomScrollbar">
-		<ul>
+<div id="demo">
+	<section id="examples" class="snap-scrolling-example">
+
+		<div id="content-1" class="content horizontal-images">
+			<div class="top_menu">
+				<ul>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -29,16 +32,14 @@
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1 }">
 				<li style="border: 1px;"><a href="#" onClick="openNav()"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/nav-orderbook.png"
-								alt="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Order <span>Booking</span>
 						</div></a></li>
 			</c:if>
 <li><a
-					href="${pageContext.request.contextPath}/newcustomerbill"><div
+					href="${pageContext.request.contextPath}/newcustomerbill/0"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"
 								style="font-size: 22px !important;"></i>
@@ -68,7 +69,7 @@
 							Express Bill <span></span>
 						</div></a></li>
 			</c:if>
-			<c:set var="flag" value="${0}"></c:set>
+		<%-- 	<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
@@ -89,9 +90,9 @@
 
 
 				</c:choose>
-			</c:forEach>
+			</c:forEach> --%>
 			<c:if test="${  flag==1 }">
-				<li><a
+				<%-- <li><a
 					href="${pageContext.request.contextPath}/showCustomerBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"
@@ -99,15 +100,13 @@
 						</div>
 						<div class="title">
 							Customer Bill <span></span>
-						</div></a></li>
+						</div></a></li> --%>
 							<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flagForPhyStk==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Bill As Per <span>Physical Stock </span>
@@ -138,9 +137,7 @@
 			<c:if
 				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
 				<li><a href="#" onClick="openNav1()"><div class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/nav-goodsreturn.png"
-								alt="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Goods <span>Return</span>
@@ -190,7 +187,7 @@
 							<i class="fa fa-money icon" style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
-							View Purchase <span>Bills</span>
+							Purchase Bills
 						</div></a></li>
 			</c:if>
 
@@ -299,9 +296,7 @@
 				<li><a
 					href="${pageContext.request.contextPath}/showstockdetail"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Stock <span>Details</span>
@@ -310,9 +305,7 @@
 				<li><a
 					href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div
 							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Petty <span>Cash</span>
@@ -339,9 +332,7 @@
 					href="${pageContext.request.contextPath}/showeditprofile"><div
 							class="img">
 
-							<img
-								src="${pageContext.request.contextPath}/resources/images/nav-editprofile.png"
-								alt="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 						</div>
 						<div class="title">
 							Edit <span>Profile</span>
@@ -497,9 +488,9 @@
 
  			}
  %> <img
-								src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
+								src="${pageContext.request.contextPath}/resources/newpos/images/${menu.menuImage}"
 								alt="monginis"> <img
-								src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
+								src="${pageContext.request.contextPath}/resources/newpos/images/${menu.selectedMenuImage}"
 								alt="monginis">
 			</div>
 			<h2>
@@ -525,9 +516,9 @@
 				<div class="listareaBox" style="background-color: #eedfdf;">
 
 					<a class="listareaBoximg"> <img
-						src="${pageContext.request.contextPath}/resources/images/${menu.menuImage}"
+						src="${pageContext.request.contextPath}/resources/newpos/images/${menu.menuImage}"
 						alt="monginis"> <img
-						src="${pageContext.request.contextPath}/resources/images/${menu.selectedMenuImage}"
+						src="${pageContext.request.contextPath}/resources/newpos/images/${menu.selectedMenuImage}"
 						alt="monginis">
 					</a>
 
@@ -564,7 +555,7 @@
 
 
 <!--2nav-->
-<div id="mySidenav1" class="sidenav">
+<div id="mySidenav1" class="sidenav" >
 	<div class="topSlide">
 		<div class="topSlide2">
 			<a href="javascript:void(0)" class="closebtn" onClick="closeNav1()"><img
@@ -616,39 +607,6 @@
 
 					</li>
 
-					<%-- <li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon8-h.png"
-									alt="monginis"></a>
-								<h2>GRN2</h2>
-								<h3>Booking Up to 12.30 PM</h3>
-								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Add <i class="fa fa-pencil"></i></a>
-								</div>
-								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Upload <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-							</div></li>
-
-						<li><div class="listareaBox">
-								<a class="listareaBoximg"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon9.png"
-									alt="monginis"> <img
-									src="${pageContext.request.contextPath}/resources/images/icon9-h.png"
-									alt="monginis"></a>
-								<h2>GVN</h2>
-								<h3>At Any Time Till Shop Closing</h3>
-								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Add <i class="fa fa-pencil"></i></a>
-								</div>
-								<div class="listareaBoxdown">
-									<a href="order-savouries.html">Upload <i
-										class="fa fa-cloud-upload"></i></a>
-								</div>
-							</div></li> --%>
 
 				</ul>
 			</div>
@@ -667,6 +625,63 @@
 				alt="monginis"></a>
 			<div class="listarea">
 				<ul><div class="row">
+					
+							
+					<li class="small-box">
+
+						<div class="ibox">
+							<div class="ibox-head">
+								<div class="ibox-title">Purchase Reports</div>
+							</div>
+
+							<a
+								href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i
+								class="fa fa-files-o icon"></i>Billwise Purchase Report</a> <a
+								href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i
+								class="fa fa-files-o icon"></i>Monthwise Purchase Report</a> <a
+								href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i
+								class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
+								Purchase Report</a> <a
+								href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
+								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
+								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
+								class="fa fa-files-o icon"></i> Bill Credit Note Summery Report</a>
+							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
+								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
+
+<a
+								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
+								class="fa fa-files-o icon"></i>Month Wise Sub Category Purchase
+								Report Or Month Wise Item Purchase Report</a>
+								
+
+						</div>
+					</li>
+				
+
+					<li class="small-box">
+
+						<div class="ibox">
+							<div class="ibox-head">
+								<div class="ibox-title">Other Reports</div>
+							</div>
+
+							<a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
+								class="fa fa-files-o icon"></i>SP Advance Report</a><%--  <a
+								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
+								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%> <a
+								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
+								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
+								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
+								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> <a
+								href="${pageContext.request.contextPath}/grnReport"><i
+								class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
+								href="${pageContext.request.contextPath}/gvnReport"><i
+								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <a
+								href="${pageContext.request.contextPath}/showCutomerList"><i
+								class="fa fa-files-o icon"></i>Customer List(Sale)</a> 
+						</div>
+					</li>
 					<li class="small-box">
 
 						<div class="ibox">
@@ -703,92 +718,6 @@
 								
 						</div>
 								
-					</li>
-							
-					<li class="small-box">
-
-						<div class="ibox">
-							<div class="ibox-head">
-								<div class="ibox-title">Purchase Reports</div>
-							</div>
-
-							<a
-								href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i
-								class="fa fa-files-o icon"></i>Billwise Purchase Report</a> <a
-								href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i
-								class="fa fa-files-o icon"></i>Monthwise Purchase Report</a> <a
-								href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i
-								class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
-								Purchase Report</a> <a
-								href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
-								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
-								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
-								class="fa fa-files-o icon"></i> Bill Credit Note Summery Report</a>
-							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
-								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
-
-<a
-								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
-								class="fa fa-files-o icon"></i>Month Wise Sub Category Purchase
-								Report Or Month Wise Item Purchase Report</a>
-								
-
-						</div>
-					</li>
-					<!-- 	
-							<li class="small-box">
-							
-								<div class="ibox">
-						<div class="ibox-head">
-						<div class="ibox-title">Item wise</div>
-						</div>
-						
-								
-						</div>
-						
-							</li> -->
-
-					<%-- <li class="small-box">
-
-
-						<div class="ibox">
-							<div class="ibox-head">
-								<div class="ibox-title">GRN GVN Report</div>
-							</div>
-						 
-							<a href="${pageContext.request.contextPath}/grnReport"><i
-								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
-								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sell)</a>
-
-
-
-						</div>
-
-					</li> --%>
-
-					<li class="small-box">
-
-						<div class="ibox">
-							<div class="ibox-head">
-								<div class="ibox-title">Other Reports</div>
-							</div>
-
-							<a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
-								class="fa fa-files-o icon"></i>SP Advance Report</a><%--  <a
-								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
-								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%> <a
-								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
-								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
-								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> <a
-								href="${pageContext.request.contextPath}/grnReport"><i
-								class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
-								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <a
-								href="${pageContext.request.contextPath}/showCutomerList"><i
-								class="fa fa-files-o icon"></i>Customer List(Sale)</a> 
-						</div>
 					</li>
 </div>
 <div class="row">
@@ -847,129 +776,11 @@
 </div>
 				</ul>
 			</div>
-
 		</div>
-	</div>
-</div>
-<!--4nav-->
 
-<!--3nav-->
-<%-- <div id="mySidenav3" class="sidenav">
+	</section>
+</div> 
 
-		<div class="topSlide">
-			<div class="topSlide2 textcen">
-				<a href="javascript:void(0)" class="closebtn" onClick="closeNav3()"><img
-					src="${pageContext.request.contextPath}/resources/images/closebtn.png"
-					alt="monginis"></a>
-				<div class="profileinsite">
-
-					<div class="profileinsiteLeft">
-
-						<div class="profile">
-							<div class="profilefildset">Franchisee Name</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="franchisee Name"
-									name="fr_name" type="text">
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Franchisee Profile Pic</div>
-							<div class="profileinput">
-								<div class="editimg">
-									<div class="editpics">
-										<div class="fileUpload">
-											<span><i class="fa fa-pencil"></i></span> <input type="file"
-												class="upload" />
-										</div>
-									</div>
-									<img
-										src="${pageContext.request.contextPath}/resources/images/editimg.jpg"
-										alt="img">
-								</div>
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">City</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="City Name"
-									name="fr_city" type="text">
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Email id</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" name="fr_email"
-									placeholder="example@gmail.com" type="text">
-							</div>
-						</div>
-
-
-
-					</div>
-
-					<div class="profileinsiteRight">
-						<div class="profile">
-							<div class="profilefildset">Mobile No.</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="9876543201"
-									name="fr_mobile" type="text">
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Owner Name</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Owner Name"
-									name="fr_owner" type="text">
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Shop Opening Date</div>
-							<div class="profileinput mardis">26 Feb. 2017</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Edit Password</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Edit Password"
-									name="fr_password" type="text">
-							</div>
-						</div>
-
-						<div class="profile">
-							<div class="profilefildset">Confirm Password</div>
-							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Confirm Password"
-									name="fr_password" type="text" data-rule-equalTo="#fr_password">
-							</div>
-						</div>
-
-
-						<div class="profile">
-							<div class="profileinput">
-								<input name="" class="buttonsaveorder" value="SUBMIT"
-									type="button">
-							</div>
-						</div>
-
-					</div>
-
-					<div class="messages messagesErr">err message</div>
-					<div class="messages messagesInfo">info message</div>
-					<div class="messages messagesSuccess">success message</div>
-
-
-				</div>
-			</div>
-		</div>
-	</div> --%>
-<!--3nav-->
-
-<!--navInner-->
 <script>
 	function openNav() {
 		document.getElementById("mySidenav").style.width = "100%";
@@ -994,6 +805,7 @@
 	}
 	function openNav4() {
 		document.getElementById("mySidenav4").style.width = "100%";
+
 	}
 
 	function closeNav4() {
@@ -1031,3 +843,56 @@
 <!-- custom scrollbar plugin added by kalpesh -->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
+	
+
+<script type="text/javascript">
+/*Dropdown Menu*/
+$('.dropdown').click(function () {
+  $(this).attr('tabindex', 1).focus();
+  $(this).toggleClass('active');
+  $(this).find('.dropdown-menu').slideToggle(300);
+    });
+    $('.dropdown').focusout(function () {
+        $(this).removeClass('active');
+        $(this).find('.dropdown-menu').slideUp(300);
+    });
+    $('.dropdown .dropdown-menu li').click(function () {
+        $(this).parents('.dropdown').find('span').text($(this).text());
+        $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
+    });
+/*End Dropdown Menu*/
+</script>
+
+<!-- custom scrollbar plugin -->
+<script src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script>
+	(function($){
+		$(window).on("load",function(){
+
+			/*
+			get snap amount programmatically or just set it directly (e.g. "273")
+			in this example, the snap amount is list item's (li) outer-width (width+margins)
+			*/
+			var amount=Math.max.apply(Math,$("#content-1 li").map(function(){return $(this).outerWidth(true);}).get());
+
+			$("#content-1").mCustomScrollbar({
+				axis:"x",
+				theme:"inset",
+				advanced:{
+					autoExpandHorizontalScroll:true
+				},
+				scrollButtons:{
+					enable:true,
+					scrollType:"stepped"
+				},
+				keyboard:{scrollType:"stepped"},
+				snapAmount:amount,
+				mouseWheel:{scrollAmount:amount}
+			});
+
+		});
+	})(jQuery);
+</script>
+	
+	

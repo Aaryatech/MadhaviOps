@@ -10,48 +10,6 @@ table, th, td {
 	border: 1px solid #9da88d;
 }
 </style>
-
-<%-- <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
-<title>Monginis</title>
-
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet" type="text/css"/>	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-	
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
-	
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-	
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
-
-
-</head>
-<body> --%>
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -68,22 +26,14 @@ jQuery(document).ready(function(){
 	});
 </script>
 <!--datepicker-->
-
 <c:url var="getBillWisePurchase" value="/findBillWisePurchase" />
-
 <div class="sidebarOuter"></div>
-
 <div class="wrapper">
-
 	<!--topHeader-->
-
 	<jsp:include page="/WEB-INF/views/include/logo.jsp">
 		<jsp:param name="frDetails" value="${frDetails}" />
-
 	</jsp:include>
-
 	<!--topHeader-->
-
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
@@ -223,18 +173,12 @@ jQuery(document).ready(function(){
 					</div>
 				</div>
 			</div>
-
-
-
-
 		</div>
 		<!--rightSidebar-->
-
 	</div>
 	<!--fullGrid-->
 </div>
 <!--rightContainer-->
-
 </div>
 <!--wrapper-end-->
 

@@ -112,7 +112,7 @@ box-shadow:         0px 2px 14px 0px rgba(0, 0, 0, 0.25);}
 -ms-border-radius:50%;
 border-radius:50%;}
 
-.sidebarOuter{ position:fixed; z-index:0; left:0px; top:0px; bottom:0px; width:130px; background:#ce5553; height:100%;box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;}
+.sidebarOuter{ position:fixed; z-index:0; left:0px; top:0px; bottom:0px; width:130px; background:#ce5553; height:100%;box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;display: none;}
 .sidebarhome{float:left; width:130px; position:absolute; left:0px; z-index:999;}
 .sidebarhome ul{ margin:0px; padding:66px 0px 0px 0px; list-style-type:none; width:100%; float:left;}
 .sidebarhome li{ margin:0px; padding:0px; list-style-type:none; width:100%; float:left; position:relative; display:table; box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;}
@@ -123,7 +123,7 @@ border-radius:50%;}
 .sidebarhome .img{ width:100%; float:left; padding-bottom:12px; text-align:center;}
 .sidebarhome .img img{ max-width:100%;}
 .sidebarhome .title{ width:100%; float:left;}
-.sidebarright{width:100%;float:left;padding-left:170px;padding-top:30px;position:relative;padding-right:30px; z-index:1;}
+.sidebarright{width:100%;float:left;padding-left:33px;padding-top:30px;position:relative;padding-right:30px; z-index:1;}
 .pageTitle{ width:100%; float:left; text-align:left; font-size:24px; color:#333; padding-bottom:25px;}
 .pageTitle span{ color:#ada330;}
 .pageTitle2{ width:100%; float:left; text-align:left; font-size:18px; color:#333; padding-bottom:20px;}
@@ -256,18 +256,18 @@ a.saveOrder:hover{background:#343690;}
 -o-border-radius:5px;-ms-border-radius:5px;border-radius:5px;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .btnReset:hover{background:#eee;border:2px solid #ccc;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
-.buttonsaveorder{background:#ec268f;text-align:center; margin:0px; padding:8px 15px;cursor:pointer;border:2px solid #ec268f; color:#fff; font-size:16px; line-height:20px; font-weight:bold; display:inline-block; vertical-align:top;
+.buttonsaveorder{background:#fcf300;text-align:center; margin:0px; padding:8px 15px;cursor:pointer;border:2px solid #fcf300; color:#333; font-size:16px; line-height:20px; font-weight:bold; display:inline-block; vertical-align:top;
 -webkit-border-radius:5px;-moz-border-radius:5px;
 -o-border-radius:5px;-ms-border-radius:5px;border-radius:5px;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.buttonsaveorder:hover{background:#343690;border:2px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.buttonsaveorder:hover{background:#ef2929;border:2px solid #ef2929; color:#fff;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
 
 
 .sidenav {
-    height:150%;
+    height:500px;
     width: 0;
     position:absolute;
-    z-index:999;
+    z-index:9999;
     top: 0; bottom:0px;
     left:0; color:#000;overflow:auto;
 	-webkit-transition: all ease 0.2s;-moz-transition: all ease 0.2s;-o-transition: all ease 0.2s;-ms-transition: all ease 0.2s;transition: all ease 0.2s;
@@ -300,11 +300,11 @@ a.saveOrder:hover{background:#343690;}
 .listarea{ width:100%; float:left; padding:0px 10%;}
 .listarea ul{ width:100%; float:left; margin:0px; padding:0px;}
 .listarea li{ width:33.33%; float:left; margin:0px; padding:15px;}
-.listareaBox{width:100%; float:left; text-align:left; background:#ec268f; padding-left:78px; position:relative; height:79px;
--webkit-border-radius:40px;-moz-border-radius:40px;-o-border-radius:40px;-ms-border-radius:40px;border-radius:40px; color:#fff; border:3px solid #ec268f;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.listareaBox{width:100%; float:left; text-align:left; background:#ed3f3c; padding-left:78px; position:relative; height:71px;
+-webkit-border-radius:0px;-moz-border-radius:0px;-o-border-radius:0px;-ms-border-radius:0px;border-radius:0px; color:#fff; border:3px solid #ed3f3c;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .listareaBox:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.listareaBox img{ position:absolute; left:6px; top:4px;}
-.listareaBoximg{position:absolute; left:6px; top:4px;}
+.listareaBox img{ position:absolute; left:0px; top:0px;}
+.listareaBoximg{position:absolute; left:0px; top:0px;}
 .listareaBox h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;color:#fff;}
 .listareaBox h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;color:#fff;}
 .listareaBoxdown{ float:left; padding-right:13px;font-size:13px;}
@@ -319,10 +319,10 @@ a.saveOrder:hover{background:#343690;}
 .listareaBlue{ width:100%; float:left; padding:0px 10%;}
 .listareaBlue ul{ width:100%; float:left; margin:0px; padding:0px;}
 .listareaBlue li{ width:33.33%; float:left; margin:0px; padding:15px;}
-.listareaBoxBlue{width:100%; float:left; text-align:left; background:#343690; padding-left:78px; position:relative; height:79px;
--webkit-border-radius:40px;-moz-border-radius:40px;-o-border-radius:40px;-ms-border-radius:40px;border-radius:40px; color:#fff; border:3px solid #343690;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
+.listareaBoxBlue{width:100%; float:left; text-align:left; background:#ff5d0b; padding-left:78px; position:relative; height:71px;
+-webkit-border-radius:0px;-moz-border-radius:0px;-o-border-radius:0px;-ms-border-radius:0px;border-radius:0px; color:#fff; border:3px solid #ff5d0b;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .listareaBoxBlue:hover{ background:#fff;border:3px solid #dfdfdf;-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.listareaBoxBlue img{ position:absolute; left:6px; top:4px;}
+.listareaBoxBlue img{ position:absolute; left:0px; top:0px;}
 .listareaBoximgBlue{position:absolute; left:6px; top:4px;}
 .listareaBoxBlue h2{ width:100%; float:left; margin:4px 0px; padding-top:6px; font-size:18px; line-height:18px;color:#fff;}
 .listareaBoxBlue h3{ width:100%; float:left; font-size:13px; padding-bottom:6px;color:#fff;}
@@ -447,7 +447,7 @@ input[type=checkbox]:checked + label:before {
 /*new css start here*/
 
 table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto; margin: 1.5em 0; background-color: transparent;}
-.responsive-table th{padding: 8px 3px; vertical-align: top; background: #ec268f !important; color: #fff !important; font-size: 16px;}
+.responsive-table th{padding: 8px 3px; vertical-align: top; background: #ed3f3c !important; color: #fff !important; font-size: 16px;}
 .responsive-table tr:nth-child(2n+1) {background: #e1e1e1;}
 .responsive-table td{text-align: right; padding: 10px; font-size: 18px;}
 #insertItemButton,#printExBill {margin: 0 0 15px 0; }

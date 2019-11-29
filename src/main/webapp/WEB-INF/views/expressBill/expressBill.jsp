@@ -11,9 +11,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Monginis</title>
-<link
+<%-- <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
+	rel="stylesheet" type="text/css" /> --%>
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
 	type="image/x-icon" />
@@ -48,6 +48,7 @@
 	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <script>
   $( function() {
@@ -64,7 +65,7 @@
 			align : "left"
 		});
 	});
-</script>
+</script><%-- 
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
@@ -74,7 +75,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
 <script
-	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script> --%>
 <!-- 1 css and 2 js for search item   -->
 <style>
 .switch {

@@ -681,7 +681,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 					ItemResponse.class);
 
 			newItemsList = itemsList.getItemList();
-
+            System.err.println("newItemsList"+newItemsList.toString());
 			customerBillItemList = new ArrayList<CustomerBillItem>();
 
 			for (int i = 0; i < newItemsList.size(); i++) {
