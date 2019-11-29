@@ -138,11 +138,11 @@
 </body>
 <body onload="directPrint()">
 	<script>
-		function directPrint() {
+		/* function directPrint() {
 			//alert("JJ");
 			window.print();
 			//window.close();
-		}
+		} */
 	</script>
 </body>
 </html>
