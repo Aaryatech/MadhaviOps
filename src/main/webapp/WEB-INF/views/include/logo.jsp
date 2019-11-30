@@ -54,9 +54,13 @@
     </div>
 </div> --%>
 <header>
-	<div class="logo"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="madhvi_logo"> </div>
+	<div class="logo"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="madhvi_logo"></a> </div>
 	<div class="drop_menu">
+	
+		<img src="${pageContext.request.contextPath}/resources/newpos/images/fullscreen.png"  id="fs-doc-button" alt="F" style="margin-top:8px;">
+		<img src="${pageContext.request.contextPath}/resources/newpos/images/normal.png"  id="fs-exit-doc-button" alt="N" style="margin-top:8px;">
 		<div class="logout_btn"><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></div>
 	</div>
 	<div class="clr"></div>
+	
 </header>

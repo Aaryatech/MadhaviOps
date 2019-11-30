@@ -153,8 +153,15 @@ color: #fff !important;
 font-size: 16px;
 }
 
-.table-scroll th, .table-scroll td {
-	padding:8px 3px;
+.table-scroll th {
+	padding:8px 16px;
+	vertical-align: top;
+	text-align: left;
+	font-size: 18px;
+	
+}
+.table-scroll td {
+	padding:8px 10px;
 	vertical-align: top;
 	text-align: left;
 	font-size: 18px;

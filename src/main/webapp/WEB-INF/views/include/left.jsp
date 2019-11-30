@@ -13,7 +13,7 @@
 </style>
 <div id="demo">
 	<section id="examples" class="snap-scrolling-example">
-
+      <a href="#" id="button"></a>
 		<div id="content-1" class="content horizontal-images">
 			<div class="top_menu">
 				<ul>
@@ -311,14 +311,7 @@
 							Petty <span>Cash</span>
 						</div></a></li>
 			</c:if>
-		<li><a
-					href="${pageContext.request.contextPath}/showExpenseList"><div
-							class="img">
-							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-						</div>
-						<div class="title">
-							Expense List <span></span>
-						</div></a></li>
+		
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -787,7 +780,71 @@
 
 	</section>
 </div> 
+<script type="text/javascript">
+	var btn = $('#button');
 
+	$(window).scroll(function() {
+	  if ($(window).scrollTop() > 300) {
+	    btn.addClass('show');
+	  } else {
+	    btn.removeClass('show');
+	  }
+	});
+
+	btn.on('click', function(e) {
+	  e.preventDefault();
+	  $('html, body').animate({scrollTop:0}, '300');
+	});
+/* 	$('html, body').animate({scrollTop:170}, '300'); */
+
+
+	</script>
+	<script type="text/javascript">
+	var requestFullscreen = function (ele) {
+		if (ele.requestFullscreen) {
+			ele.requestFullscreen();
+		} else if (ele.webkitRequestFullscreen) {
+			ele.webkitRequestFullscreen();
+		} else if (ele.mozRequestFullScreen) {
+			ele.mozRequestFullScreen();
+		} else if (ele.msRequestFullscreen) {
+			ele.msRequestFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+	var exitFullscreen = function () {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+
+
+
+	var fsDocButton = document.getElementById('fs-doc-button');
+	var fsExitDocButton = document.getElementById('fs-exit-doc-button');
+
+	fsDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		requestFullscreen(document.documentElement);
+	});
+
+	fsExitDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		exitFullscreen();
+	});
+
+	</script>
 <script>
 	function openNav() {
 		document.getElementById("mySidenav").style.width = "100%";
@@ -901,5 +958,3 @@ $('.dropdown').click(function () {
 		});
 	})(jQuery);
 </script>
-	
-	

@@ -200,15 +200,7 @@ a:hover {
 	display: inline-block;
 	width: 60px;
 	height: 25px;
-	margin-top: 14px;
-}
-
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 25px;
-	margin-top: 14px;
+	margin-top: 7px;
 }
 
 .switch input {
@@ -311,9 +303,9 @@ input:checked+.slider:before {
 
 					</div>
 
-					<div class="order-right">
-						<div class="col-md-2">
-							<div class="col1title">Dairy mart</div>
+					<div class="row"><div class="col-md-3"></div>
+						<div class="col-md-1">
+							Dairy mart
 						</div>
 						<div class="col-md-2">
 							<label class="switch"> <input type="checkbox" name="dm"

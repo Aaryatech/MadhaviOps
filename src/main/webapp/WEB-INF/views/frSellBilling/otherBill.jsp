@@ -11,29 +11,20 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-<title>Monginis</title>
+<title>Madhvi</title>
 
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
 <link href="${pageContext.request.contextPath}/resources/css/custom.css"
 	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="icon"
+
+<%-- <link rel="icon"
 	href="${pageContext.request.contextPath}/images/feviconicon.png"
-	type="image/x-icon" />
+	type="image/x-icon" /> --%><%-- 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
+ --%>
 <!--autocomplete-->
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>

@@ -264,79 +264,15 @@ jQuery(document).ready(function(){
 													}
 													
 													$('#table_grid tbody').append(tr);
-													/* var tr = "<tr>";
-
-													
-
-													var sellBillNo = "<td>&nbsp;&nbsp;&nbsp;"
-															+ sellBillData.sellBillNo
-															+ "</td>";
-															var invoiceNo = "<td>&nbsp;&nbsp;&nbsp;"
-																+ sellBillData.invoiceNo
-																+ "</td>";
-																var billDate = "<td>&nbsp;&nbsp;&nbsp;"
-																	+ sellBillData.billDate
-																	+ "</td>";
-
-																	var grandTotal = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
-																		+ (sellBillData.grandTotal).toFixed(2)
-																		+ "</td>";
-
-																		var PayableAmt = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
-						 													+ (sellBillData.payableAmt).toFixed(2)
-						 													+ "</td>";
-																			
-						  													var paidAmt = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;"
-																				+ (sellBillData.paidAmt).toFixed(2)
-																				+ "</td>";
-                                                                            
-																		   
-																			var paymentMode = "<td>&nbsp;&nbsp;&nbsp;"
-																				+ sellBillData.paymentMode
-																				+ "</td>";
-																				
-																				var viewBill = '<td>&nbsp;&nbsp;&nbsp;'
-																				+'<a href="${pageContext.request.contextPath}/viewBillDetails?sellBillNo='+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+'" class="action_btn" name='+'><abbr title="Details"><i class="fa fa-list"></i></abbr></a>'
-																				+ "</td>";
-
-
-
-													
-
-													var trclosed = "</tr>";
-
-													$('#table_grid tbody')
-															.append(tr);
-													$('#table_grid tbody')
-															.append(sellBillNo);
-													$('#table_grid tbody')
-													.append(invoiceNo);
-													$('#table_grid tbody')
-													.append(billDate);
-													$('#table_grid tbody')
-													.append(grandTotal);
-													$('#table_grid tbody')
-													.append(PayableAmt);
-													$('#table_grid tbody')
-													.append(paidAmt);
-													
-													$('#table_grid tbody')
-													.append(paymentMode);
-													
-													$('#table_grid tbody')
-													.append(viewBill);
-													
-													$('#table_grid tbody')
-													.append(trclosed); */
-													
-													
-
+												
 												})
 													
 
 							});
 
 		}
+	
+
 	}
 	
 	function custBillPdf(sellBillNo,type)

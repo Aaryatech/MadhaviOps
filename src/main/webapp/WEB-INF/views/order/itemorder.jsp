@@ -133,7 +133,7 @@ a:hover {
 
 
 				<div class="order-right">
-					<div class="ordermto2px">
+					<div class="ordermto2px" style="margin-left: 38px;">
 						<div class="orderclose">Order Closing Time :</div>
 						<div class="ordercloser2">
 							<span>${toTime}</span>

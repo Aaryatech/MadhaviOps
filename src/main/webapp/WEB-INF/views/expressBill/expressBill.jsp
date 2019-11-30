@@ -10,10 +10,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
-<%-- <link
+<title>Madhvi</title>
+<link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" /> --%>
+	rel="stylesheet" type="text/css" />
+	<link
+	href="${pageContext.request.contextPath}/resources/newpos/css/monginis.css"
+	rel="stylesheet" type="text/css" />
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
 	type="image/x-icon" />
@@ -25,7 +28,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon"
-	href="${pageContext.request.contextPath}/images/feviconicon.png"
+	href="${pageContext.request.contextPath}/images/newpos/feviconicon.png"
 	type="image/x-icon" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
@@ -48,7 +51,6 @@
 	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <script>
   $( function() {
@@ -65,7 +67,7 @@
 			align : "left"
 		});
 	});
-</script><%-- 
+</script>
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
@@ -75,7 +77,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
 <script
-	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script> --%>
+	src="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.js"></script>
 <!-- 1 css and 2 js for search item   -->
 <style>
 .switch {
@@ -115,11 +117,11 @@
 }
 
 input:checked+.slider {
-	background-color: #2196F3;
+	background-color: #c3b52d;
 }
 
 input:focus+.slider {
-	box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #c3b52d;
 }
 
 input:checked+.slider:before {
@@ -182,6 +184,7 @@ input:checked+.slider:before {
 	<c:url var="dayClose" value="/dayClose" />
 	<c:url var="getSpBill" value="/getSpBill" />
 	
+	
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 		<!--rightContainer-->
@@ -197,9 +200,9 @@ input:checked+.slider:before {
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 					<div class="col-md-2">
-						<h2 class="pageTitle" style="color: #e53878;">Express Bill</h2>
+						<h2 class="pageTitle" >Express Bill</h2>
 					</div>
-					<div class="col-md-12 text-left bill-date">
+					<div class="col-md-8 text-left bill-date">
 						<c:choose>
 
 							<c:when test="${count == 0}">
@@ -219,8 +222,8 @@ input:checked+.slider:before {
 								<div>
 
 									<h4>
-										<B> Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp;
-											&nbsp; Bill Date :${sellBillHeader.billDate}</B>
+										 Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp;
+											&nbsp; Bill Date :${sellBillHeader.billDate}
 									</h4>
 								</div>
 					</div>
@@ -231,7 +234,7 @@ input:checked+.slider:before {
 							id="id"> <span class="slider round"></span>
 					</div>
 					</label>
-					<div class="row">
+				<%-- 	<div class="row">
 						<div class="col-md-2">
 							<span
 								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px;width:100px;">SP</span>
@@ -331,14 +334,14 @@ input:checked+.slider:before {
 								</table>
 							</div>
 						</div>
-					</div>
+					</div> --%>
 					<div class="table">
 						<div class="shInnerwidth">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0"
 								class="table">
 								<tr>
 									<td align="center" valign="middle" style="padding: 0px;">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<table width="100%" border="0" cellspacing="0" cellpadding="0" style=" margin-bottom: 0em;">
 											<tr class="bgpink">
 												<td>BARCODE</td>
 												<td>QTY</td>
@@ -629,7 +632,7 @@ input:checked+.slider:before {
 							<div class="shInnerwidth">
 
 								<table class="table table-bordered" width="100%" border="0"
-									cellspacing="0" cellpadding="0 " id="table_grid">
+									cellspacing="0" cellpadding="0 " id="table_grid" style="  margin-bottom: 0em;">
 									<tr class="bgpink">
 										<th style="width: 130px;">Sr no.</th>
 										<th>Barcode</th>
@@ -1386,7 +1389,9 @@ $('#sp').change(function() {
           $(this).css('background', 'white');
       } */
 	</script>
+	
 	<script>
+
 function on() {
     document.getElementById("overlay").style.display = "block";
 }

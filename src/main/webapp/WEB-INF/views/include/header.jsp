@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
+<title>Madhvi</title>
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
@@ -24,9 +21,9 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/lightbox.css">
-<link rel="icon"
+<%-- <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
+	type="image/x-icon" /> --%>
 	
 	<link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
@@ -41,6 +38,9 @@
  --%>	<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
+<!--datepicker-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 	
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
@@ -65,9 +65,6 @@
 
 <!--selectlistbox-->
 
-<!--datepicker-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 	
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -80,7 +77,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/js/jquery.classyscroll.js"></script>	
 	
+<!--datepicker-->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
+
 	$(function() {
 		$("#datepicker").datepicker({
 			dateFormat : 'dd-mm-yy'
