@@ -311,7 +311,14 @@
 							Petty <span>Cash</span>
 						</div></a></li>
 			</c:if>
-		
+		<li><a
+					href="${pageContext.request.contextPath}/showExpenseList"><div
+							class="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+						</div>
+						<div class="title">
+							Expense List <span></span>
+						</div></a></li>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
