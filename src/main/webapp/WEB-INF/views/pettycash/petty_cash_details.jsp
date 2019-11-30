@@ -147,7 +147,7 @@ table, th, td {
 				<div class="order-right" align="right" style="padding-top:2%;">
 
 					<a href="${pageContext.request.contextPath}/showPattyCashMgmnt"><input
-						type="button" value="Petty Cash" class="btn btn-info">
+						type="button" value="Petty Cash" class="buttonsaveorder">
 					</a>
 				</div>
 		<!-- <form action="addPettyCash" method="post"> -->
@@ -174,11 +174,6 @@ table, th, td {
 					
 				</div>
 				
-				
-
-				
-				
-
 				<div class="colOuter">
 					<div class="col1">
 						<div class="col1title"></div>
@@ -200,10 +195,10 @@ table, th, td {
 					</div>
 
 
-							<div class="col1">
+							<div class="col1" style="padding-left: 22%;">
  
 								<button type="button" class="btn btn-primary" onclick="genPdf()" disabled
-									id="pdf"
+									id="pdf" 
 									>
 									PDF</button>
 							</div>

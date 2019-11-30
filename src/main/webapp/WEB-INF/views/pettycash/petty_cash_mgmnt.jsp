@@ -67,7 +67,7 @@ table, th, td {
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
 
 </head> --%>
-<body onload="getData()">
+<body onload="calClosingAmt()">	<!-- getData() -->
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -91,6 +91,7 @@ table, th, td {
 
 
 <c:url var="getPettyCashData" value="/getPettyCashData"></c:url>
+<c:url var="getPettyCashHandOverData" value="/getPettyCashHandOverData"></c:url>
 
 
 <!--topLeft-nav-->
@@ -144,10 +145,16 @@ table, th, td {
 					<h2 class="pageTitle">Petty Cash Management</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
+				
+				
+				
 				 <div class="order-right" align="right" style="padding-top:2%; padding-bottom: 2%;">
 
+					<a href="#" class="buttonsaveorder initialism slide_open" id="popbtn" style="display: none;">
+					Cash Hand Over Data</a>
+
 					<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
-						type="button" value="Petty Cash Details" class="btn btn-info">
+						type="button" value="Petty Cash Details" class="buttonsaveorder">
 					</a>
 				</div> 
 		<form action="addPettyCash" method="post">
@@ -159,7 +166,7 @@ table, th, td {
 						<div class="col1title" align="left">Date</div>
 					</div>
 					<div class="col-md-3">
-							<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							<input id="fromdate" class="form-control" readonly="readonly"
 							autocomplete="off" placeholder="Date" name="cash_date"
 							type="text" value="${pettycash.date}" onchange="compareDate()">
 					</div>
@@ -196,7 +203,7 @@ table, th, td {
 					<div class="col-md-3">
 							<input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
 							autocomplete="off" placeholder="Withdrawal Amt" name="withdrawal_amt"
-							type="text" onchange="calClosingAmt()">
+							type="text" onblur="calClosingAmt()">
 					</div>
 					
 					
@@ -230,7 +237,7 @@ table, th, td {
 					</div>
 					
 					<div class="col-md-3">
-							<input id="closing_amt"  class="form-control" value="${pettycash.closingAmt}" readonly="readonly"
+							<input id="closing_amt"  class="form-control" readonly="readonly"
 							autocomplete="off" placeholder="Closing Amt" name="closing_amt"
 							type="text">
 					</div>
@@ -262,7 +269,7 @@ table, th, td {
 						<div class="col1title"></div>
 					</div>
 					<div class="col2">
-						<input class="buttonsaveorder" value="Submit"
+						<input class="buttonsaveorder" value="Day End"
 							type="submit" id="btnsub">
 
 						<!-- <div align="center" id="loader" style="display: none">
@@ -276,19 +283,156 @@ table, th, td {
 							<span class="l-6"></span>
 						</div> -->
 					</div>
+					
+					<div class="col-md-1">
+						<input class="buttonsaveorder" value="Cash Hand Over"
+							type="button" id="show">					
+					</div>
+					
 
 
 
 				</div>
 				
 				</form>
+				
+				<!-- <div class="col2">
+						<input class="buttonsaveorder" value="Cash Hand Over"
+							type="button" id="btnsub" onclick="showDiv()">
+
+						<div align="center" id="loader" style="display: none">
+
+							<span>
+								<h4>
+									<font color="#343690">Loading</font>
+								</h4>
+							</span> <span class="l-1"></span> <span class="l-2"></span> <span
+								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+							<span class="l-6"></span>
+						</div>
+					</div> -->
+
+			<!-- Petti Cash Hand Over Div -->
+				<div class="row" id="pc_div" style="display: none;">
+				<h2 class="pageTitle">Petty Cash Hand Over</h2>
+					<div class="col-md-12">
+						<!--table-->
+						<form action="insertPettyCashHandOver" method="POST"
+							id="petty_cash_hand" name="petty_cash_hand">
+							<div class="colOuter">
+								<div class="col-md-2">
+									<div class="col1title" align="left">Opening Amt</div>
+								</div>
+								<div class="col-md-3">
+										<input id="open_amt"  class="form-control" value="${openAmt}"
+										autocomplete="off" placeholder="Opening Amt" name="open_amt"
+										readonly="readonly" type="text">
+								</div>
+								
+								<div class="col-md-1"></div>
+								
+								<div class="col-md-2">
+									<div class="col1title" align="left">Selling Amt</div>
+								</div>
+								<div class="col-md-3">
+										<input id="sell_amt"  class="form-control" value="${sellAmt}"
+										autocomplete="off" placeholder="Selling Amt" name="sell_amt"
+										readonly="readonly"type="text">
+								</div>
+						 </div>
+						 
+						 
+						 
+						  <div class="colOuter">
+								<div class="col-md-2">
+									<div class="col1title" align="left">Total Cash Hand Over Amt</div>
+								</div>
+								<div class="col-md-3">
+										<input id="total_cash_amt"  class="form-control" value="${totalCash}"
+										autocomplete="off" placeholder="Total Cash Amt" name="total_cash_amt" 
+										readonly="readonly" type="text">
+								</div>
+								
+								<div class="col-md-1"></div>
+								<div class="col-md-2">
+									<div class="col1title" align="left">Actual Cash Hand Over Amt</div>
+								</div>
+								<div class="col-md-3">
+										<input id="actual_cash_amt"  class="form-control" value="${totalCash}"
+										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
+										type="text">
+								</div>
+						 </div>
+						 
+						 
+						  <div class="colOuter">
+					<div class="col-md-2">
+						<div class="col1title" align="left">From Employee</div>
+					</div>
+					<div class="col-md-3">
+							<select name="from_emp" id="from_emp" class="form-control" required>
+								<option style="text-align:left;" value="0">Select Employee</option>
+								<c:forEach items="${empList}" var="empList" >
+								<option value="${empList.pettyEmpId}-${empList.empName}" style="text-align:left;">${empList.empName}</option>
+								</c:forEach>
+							</select>
+					</div>					
+					
+					<div class="col-md-1"></div>
+					
+					<div class="col-md-2">
+						<div class="col1title" align="left">To Employee</div>
+					</div>
+					<div class="col-md-3">
+							<select name="to_emp" id="to_emp" class="form-control" required>
+								<option style="text-align:left;" value="0">Select Employee</option>
+								<c:forEach items="${empList}" var="empList" >
+								<option value="${empList.pettyEmpId}-${empList.empName}" style="text-align:left;">${empList.empName}</option>
+								</c:forEach>
+
+							</select>
+					</div>
+					
+					
+				</div>
+						<div class="colOuter">
+							<div class="col1">
+								<div class="col1title"></div>
+							</div>
+							<div class="col2">
+								<input class="buttonsaveorder" value="Submit"
+									type="submit" id="btnsub2">
+		
+								<!-- <div align="center" id="loader" style="display: none">
+		
+									<span>
+										<h4>
+											<font color="#343690">Loading</font>
+										</h4>
+									</span> <span class="l-1"></span> <span class="l-2"></span> <span
+										class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+									<span class="l-6"></span>
+								</div> -->
+							</div>	
+							
+							<div class="col-md-1">
+								<input class="buttonsaveorder" value="Close"
+									type="button" id="hide">
+							</div>	
+					</div>
+					
+					
+							
+							</form>
+						</div>
+						<!-- </div> -->
 
 
-
+<!-- Table Div Close -->
 				<%-- <div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="monthEndProcess" method="POST"
+						<form action="" method="POST"
 							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
 							<div class="clearfix"></div>
 							<div class="col-md-9"></div>
@@ -298,33 +442,36 @@ table, th, td {
 								style="border-radius: 25px;" placeholder="Search items by name"
 								title="Type item name">
 							</label>
-
-
-							<div id="table-scroll"  class="table-scroll responsive-table-one"><!-- class="table-scroll" -->								
+							
+							<div id="table-scroll"  class="table-scroll responsive-table-one" style="display: none;"><!-- class="table-scroll" -->								
 								<div><!--  class="table-wrap" -->
 									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-1">Sr. No</th>
-												<th class="col-md-1">Date</th>
+												<th class="col-md-1">Transaction Date</th>
 												<th class="col-md-1">Opening Amt</th>
-												<th class="col-md-1">Cash Amt</th>
-												<th class="col-md-1">Withdrawal Amt</th>
-												<th class="col-md-1">Closing Amt</th>
-												<th class="col-md-1">Action</th>
+												<th class="col-md-1">Selling Amt</th>
+												<th class="col-md-1">Total Cash Amt</th>
+												<th class="col-md-1">Actual Cash Hand Over</th>
+												<th class="col-md-1">From Employee</th>
+												<th class="col-md-1">To Employee</th>
+												<!-- <th class="col-md-1">Action</th> -->
 
 											</tr>
 										</thead>
 										<tbody>
-										<c:forEach items="${pettyList}" var="pettyList"
+										<c:forEach items="${cashHndOvrList}" var="list"
 														varStatus="count">
 											<tr>
 												<td >${count.index+1}</td>
-												<td>${pettyList.date}</td>
-												<td>${pettyList.openingAmt}</td>
-												<td>${pettyList.cashAmt}</td>
-												<td>${pettyList.withdrawalAmt}</td>
-												<td>${pettyList.closingAmt}</td>
+												<td>${list.transactionDate}</td>
+												<td>${list.openingAmt}</td>
+												<td>${list.sellingAmt}</td>
+												<td>${list.actualAmtHandover}</td>
+												<td>${list.amtHandover}</td>
+												<td>${list.fromUsername}</td>
+												<td>${list.toUsername}</td>
 												<!-- pettycashId -->
 												<td>
 														<a href="${pageContext.request.contextPath}/editPettyCash?pettyCashIdId=${pettyList.pettycashId}" title="Edit">
@@ -346,7 +493,7 @@ table, th, td {
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel();" id="expExcel">
 									Export To Excel</button>
-						 	</div> -->
+						 	</div> 
 
 
 							<div class="col-md-3">
@@ -354,11 +501,14 @@ table, th, td {
 								<button type="button" class="btn btn-primary" onclick="genPdf()"
 									id="PDFButton">
 									PDF</button>
-							</div>
+							</div>-->
 
 						</form>
 					</div>
 				</div> --%>
+				<!-- Table Div Close -->
+				</div>
+				<!-- Petti Cash Hand Over Div Close -->
 			</div>
 
 		</div>
@@ -373,13 +523,122 @@ table, th, td {
 
 </div>
 <!--wrapper-end-->
+<div>
+<div id="slide" class="pending_pop">
 
+<div class="row">
+	<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>
+	<h3 class="pop_head" id="add_cust_head_name">Petty Cash Hand Over Transaction</h3>
+		<div class="col-md-2 from_date">
+		    <h4 class="pull-left">From Date:-</h4>
+		</div>
+		<div class="col-md-2 ">
+			<input autocomplete="off" placeholder="dd-mm-yyy"
+							name="fromDate" id="fromDate" type="date" class="input_add" />
+		</div>
+		<div class="col-md-2">
+		    <h4 class="pull-left">To Date:-</h4>
+		</div>
+		<div class="col-md-2 ">
+			<input autocomplete="off" placeholder="dd-mm-yyy"
+							name="toDate" id="toDate" type="date" class="input_add" />
+		</div>
+		<div class="col-md-2">
+		    <button class="btn search_btn pull-left" onclick="getData()">Search </button>
+		</div>
+		
+    </div>
+<div class="row">
+		<div class="col-md-12">
+		<!--table-->
+			<div class="clearfix"></div>
+				
+					<div class="pending_tab" style="overflow-x:auto;">
+					  <table class="pending_tab1" id="table_grid">
+					    <thead>
+						    <tr>
+							     <th>Sr. No</th>
+								 <th>Transaction Date</th>
+								 <th>Opening Amt</th>
+								 <th>Selling Amt</th>
+								 <th>Total Cash Amt</th>
+								 <th>Actual Cash Hand Over</th>
+								 <th>Expenses</th>
+								 <th>From Employee</th>
+								 <th>To Employee</th>
+						    </tr>
+					    </thead>
+						    <tbody>
+									
+							</tbody>
+					  </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+			
+			<script type="text/javascript">
+			$(document).ready(function () {
+			    $('#slide').popup({
+			        focusdelay: 400,
+			        outline: true,
+			        vertical: 'top'
+			    });
+			});
+			</script>
 <!--easyTabs-->
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
 
 <script>
+
+$(document).ready(function($){
+	
+	$("#petty_cash_hand").submit(function(e) {
+	
+		var isError=false;
+		 var errMsg="";
+			
+		 var e1 = $("#from_emp").val();
+		 if(e1 == 0){			 
+			 alert("Select From Employee");
+			 return false;
+		 }
+		 
+		 var e2 = $("#to_emp").val();
+		 if(e2 == 0){
+			 
+			 alert("Select To Employee");
+			 return false;
+		 }
+			
+				 
+		});
+});
+
+$(document).ready(function(){
+	  $("#hide").click(function(){
+	    $("#pc_div").hide();
+	  });
+	  $("#show").click(function(){
+	    $("#pc_div").show();
+	  });
+	  
+	 	 $("#hide").click(function(){
+		    $("#popbtn").hide();
+		  });
+		  $("#show").click(function(){
+		    $("#popbtn").show();
+		  });
+	  
+	  
+});
+	
+	
+
+
 function compareDate(){
 	var selDate = $("#fromdatepicker").val();
 	
@@ -425,969 +684,92 @@ function calClosingAmt(){
 
 <!-- Select Only Month and Year -->
 <script>
-function getData(){
-	var openAmt = parseFloat($("#opening_amt").val());
-	var cashAmt = parseFloat($("#cash_amt").val());
-	
-	var sum = openAmt+cashAmt;
-	document.getElementById("closing_amt").value = parseFloat(sum);
-	
-	var selectedFromDate = $("#fromdatepicker").val();
+ function getData(){
+	 $('#table_grid td').remove();
+		var isValid = validate();
+		
+		if (isValid) {
+			
+			var fromDate = document.getElementById("fromDate").value;
+			var toDate = document.getElementById("toDate").value;
 	$
 	.getJSON(
-			'${getPettyCashData}',
+			'${getPettyCashHandOverData}',
 
 			{
 				 
-				fromDate : selectedFromDate,
+				fromDate : fromDate,
+				toDate : toDate,
 				ajax : 'true'
 
 			},
 			function(data) {
 				
-				$('#table_grid tbody').remove(); 
+				//$('#table_grid tbody').remove(); 
 				
 
 			  $.each(
 							data,
-							function(data) {
+							function(key, cashHndOvr) {								
+								//alert(JSON.stringify(cashHndOvr));
 								$('#loader').hide();
 
-								document.getElementById("expExcel").disabled = false;
+								/* document.getElementById("expExcel").disabled = false;
 								document.getElementById("PDFButton").disabled = false;
 
 								if (data == "") {
 									alert("No records found !!");
 									document.getElementById("expExcel").disabled = true;
 									document.getElementById("PDFButton").disabled = true;
+								
+								} */
 
-								}
-
-								var tr = $('<tr></tr>');
+								var tr = $('<tr  ></tr>');
 								 
-								tr.append($('<td></td>').html(key+1));
-								tr.append($('<td></td>').html("FGHJ"));
-								tr.append($('<td></td>').html("FGHJ"));
-							  	tr.append($('<td></td>').html("FGHJ"));
-							  	tr.append($('<td></td>').html("FGHJ"));
-							  	tr.append($('<td></td>').html("FGHJ"));
-							  	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
+								tr.append($('<td  ></td>').html(key+1));
+								tr.append($('<td  ></td>').html(cashHndOvr.transactionDate));
+								tr.append($('<td style="text-align:right"></td>').html(cashHndOvr.openingAmt));
+							  	tr.append($('<td style="text-align:right;"></td>').html(cashHndOvr.sellingAmt));
+							  	tr.append($('<td style="text-align:right;"></td>').html(cashHndOvr.actualAmtHandover));
+							  	tr.append($('<td style="text-align:right;"></td>').html(cashHndOvr.amtHandover));
+							  	
+							  	tr.append($('<td style="text-align:right;"></td>').html(cashHndOvr.amtHandover-cashHndOvr.actualAmtHandover));
+							  	
+							  	tr.append($('<td  ></td>').html(cashHndOvr.fromUsername));
+							  	tr.append($('<td  ></td>').html(cashHndOvr.toUsername));
+							  //	tr.append($('<td></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="glyphicon glyphicon-ok" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
 							  	$('#table_grid tbody').append(tr);
 
-								 
-
 							})  
-				
 			});
+		}
+	
+}
+</script>
+<script type="text/javascript">
+	function validate() {
 	
 	
-} 
-</script>
+		var fromDate =$("#fromDate").val();
+		var toDate =$("#toDate").val();
+		
 
-<script>
-	$(document)
-			.ready(
-					function() {
-						$('#txtDateto')
-								.datepicker(
-										{
-											changeMonth : true,
-											changeYear : true,
-											dateFormat : 'MM yy',
+		var isValid = true;
 
-											onClose : function() {
-												var iMonth = $(
-														"#ui-datepicker-div .ui-datepicker-month :selected")
-														.val();
-												var iYear = $(
-														"#ui-datepicker-div .ui-datepicker-year :selected")
-														.val();
-												$(this).datepicker(
-														'setDate',
-														new Date(iYear, iMonth,
-																1));
-											},
+	 if (fromDate == "" || fromDate == null) {
 
-											beforeShow : function() {
-												if ((selDate = $(this).val()).length > 0) {
-													iYear = selDate.substring(
-															selDate.length - 4,
-															selDate.length);
-													iMonth = jQuery
-															.inArray(
-																	selDate
-																			.substring(
-																					0,
-																					selDate.length - 5),
-																	$(this)
-																			.datepicker(
-																					'option',
-																					'monthNames'));
-													$(this).datepicker(
-															'option',
-															'defaultDate',
-															new Date(iYear,
-																	iMonth, 1));
-													$(this).datepicker(
-															'setDate',
-															new Date(iYear,
-																	iMonth, 1));
-												}
-											}
-										});
-					});
-</script>
-<script>
-	function showDiv(elem) {
-		if (elem.value == 1) {
-			document.getElementById('select_month_year').style = "display:none";
-			document.getElementById('select_date').style = "display:none";
-		} else if (elem.value == 2) {
-			document.getElementById('select_month_year').style.display = "block";
-			document.getElementById('select_date').style = "display:none";
-		} else if (elem.value == 3) {
-			document.getElementById('select_date').style.display = "block";
-			document.getElementById('select_month_year').style = "display:none";
+			isValid = false;
+			alert("Please select From Date");
 		}
-	}
-</script>
+	 else if (toDate == "" || toDate == null) {
 
-<script type="text/javascript">
-	function searchStock() {
-
-		var selectRate = document.getElementById('select_rate').value;
-
-		$('#loader').show();
-
-		var isMonthClose = ${isMonthCloseApplicable};
-
-		//alert(isMonthClose);
-
-		var selectedCat = $("#selectCategory").val();
-		var stType = $("#st_type").val();
-		var selectedStockOption = $("#selectStock").val();
-
-		var selectedFromDate = $("#fromdatepicker").val();
-		var selectedToDate = $("#todatepicker").val();
-
-		$
-				.getJSON(
-						'${getStock}',
-						{
-							cat_id : selectedCat,
-							show_option : selectedStockOption,
-							fromDate : selectedFromDate,
-							toDate : selectedToDate,
-							selectRate : selectRate,
-							ajax : 'true'
-						},
-						function(data) {
-							$('#loader').hide();
-
-							document.getElementById("expExcel").disabled = false;
-							document.getElementById("PDFButton").disabled = false;
-
-							if (data == "") {
-								alert("No records found !!");
-								document.getElementById("expExcel").disabled = true;
-								document.getElementById("PDFButton").disabled = true;
-
-							}
-
-							var len = data.length;
-							$('#table_grid td').remove();
-							//alert(isMonthClose+ "month close");			
-							var list = data.currentStockDetailList; //alert(data.monthClosed);	alert(selectedStockOption);
-
-							if (data.monthClosed && selectedStockOption == 1) {
-
-								if (stType == 1) {
-									document.getElementById('monthEnd').style.display = "block";
-								}
-
-								$('#table_grid th').remove();
-								var tr = $('<tr class=bgpink></tr>');
-								tr.append($('<th align=left>Item Id</th>'));
-								tr.append($('<th align=left>Item Name</th>'));
-								tr.append($('<th align=center>Rate/MRP</th>'));
-								tr.append($('<th align=left>Op Stock</th>'));
-								tr
-										.append($('<th align=left>Op Stock Value</th>'));
-								tr.append($('<th align=left>Pur Qty</th>'));
-								tr.append($('<th align=left>Pur Value</th>'));
-								tr.append($('<th align=left>Grn-Gvn Qty</th>'));
-								tr
-										.append($('<th align=left>Grn-Gvn Value</th>'));
-								tr
-										.append($('<th align=left>Regular Sale</th>'));
-
-								/* tr.append($('<th align=left>Reorder Qty</th>')); */
-								tr
-										.append($('<th align=left>Reg Sale Val</th>'));
-								tr.append($('<th align=center>Cur Stock</th>'));
-								tr
-										.append($('<th align=center>CurStock Val</th>'));
-								tr
-										.append($('<th align=left>Physical Stock</th>'));
-
-								tr.append($('<th align=left>Stock Diff</th>'));
-
-								$('#table_grid').append(tr);
-							}
-
-							$
-									.each(
-											list,
-											function(key, item) {
-
-												var regCurrentStock = item.currentRegStock;
-												var reOrderQty = item.reOrderQty;
-												if (stType == 1) {
-													if (regCurrentStock > reOrderQty) {
-														var tr = $('<tr ></tr>');
-
-													} else {
-														var tr = $('<tr class="re-order" ></tr>');
-													}
-
-													tr
-															.append($(
-																	'<td class="col-md-1"></td>')
-																	.html(
-																			item.itemId));
-													tr
-															.append($(
-																	'<td class="col-md-1" ></td>')
-																	.html(
-																			item.itemName));
-													if (selectRate == 1) {
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.spOpeningStock));
-													} else
-
-													{
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.spTotalPurchase));
-													}
-													tr
-															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(
-																			item.regOpeningStock));
-													var regOpStockValue;
-													if (selectRate == 1) {
-														regOpStockValue = item.spOpeningStock
-																* item.regOpeningStock;
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regOpStockValue.toFixed(2)));
-													} else
-
-													{
-														regOpStockValue = item.spTotalPurchase
-																* item.regOpeningStock;
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regOpStockValue
-																						.toFixed(2)));
-													}
-
-													tr
-															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(
-																			item.regTotalPurchase
-																					.toFixed(2)));
-
-													if (selectRate == 1) {
-														var regTotalPurchaseVal = item.spOpeningStock
-																* item.regTotalPurchase;
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regTotalPurchaseVal
-																						.toFixed(2)));
-													} else
-
-													{
-														var regTotalPurchaseVal = item.spTotalPurchase
-																* item.regTotalPurchase;
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regTotalPurchaseVal
-																						.toFixed(2)));
-													}
-													tr
-															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(
-																			item.regTotalGrnGvn));
-
-													if (selectRate == 1) {
-														var regTotalGrnGvnVal = item.spOpeningStock
-																* item.regTotalGrnGvn;
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regTotalGrnGvnVal
-																						.toFixed(2)));
-													} else
-
-													{
-														var regTotalGrnGvnVal = item.spTotalPurchase
-																* item.regTotalGrnGvn;
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regTotalGrnGvnVal
-																						.toFixed(2)));
-													}
-
-													if (item.regTotalSell < 0) {
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(0));
-													} else {
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regTotalSell
-																						.toFixed(2)));
-													}
-													if (selectRate == 1) {
-														var regTotalSellVal = item.spOpeningStock
-																* item.regTotalSell;
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;" ></td>')
-																		.html(
-																				regTotalSellVal
-																						.toFixed(2)));
-													} else
-
-													{
-														var regTotalSellVal = item.spTotalPurchase
-																* item.regTotalSell;
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				regTotalSellVal
-																						.toFixed(2)));
-													}
-
-													/* tr
-															.append($(
-																	'<td class="col-md-1"> </td>')
-																	.html(
-																			reOrderQty));
-													 */
-													if (regCurrentStock < 0) {
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"> </td>')
-																		.html(0));
-													} else {
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"> </td>')
-																		.html(
-																				regCurrentStock));
-													}
-
-													if (selectRate == 1) {
-														if (regCurrentStock < 0) {
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					0));
-														} else {
-															var regCurrentStockVal = item.spOpeningStock
-																	* regCurrentStock;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regCurrentStockVal
-																							.toFixed(2)));
-														}
-													} else {
-														if (regCurrentStock < 0) {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					0));
-														} else {
-															var regCurrentStockVal = item.spTotalPurchase
-																	* regCurrentStock;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regCurrentStockVal
-																							.toFixed(2)));
-														}
-													}
-
-													if (data.monthClosed
-															&& selectedStockOption == 1) {
-
-														tr
-																.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
-																		+ item.itemId
-																		+ ','
-																		+ regCurrentStock
-																		+ ') onchange= updateStockDiff('
-																		+ item.itemId
-																		+ ','
-																		+ regCurrentStock
-																		+ ')  id= physicalStockQty'
-																		+ item.itemId
-																		+ ' name=physicalStockQty'
-																		+ item.itemId
-																		+ ' value = '
-																		+ regCurrentStock
-																		+ '></td>'));
-
-														tr
-																.append($('<td class="col-md-1"  style="text-align:right;"   name=stockDiff'+ item.itemId + ' id=stockDiff'+ item.itemId + ' value =' + 0 + '  > 0</td>'));
-													}
-
-													$('#table_grid tbody')
-															.append(tr);
-
-												} else if (stType == 2) {
-													if (regCurrentStock > 0) {
-														var tr = $('<tr ></tr>');
-
-														tr
-																.append($(
-																		'<td class="col-md-1"></td>')
-																		.html(
-																				item.itemId));
-														tr
-																.append($(
-																		'<td class="col-md-1" ></td>')
-																		.html(
-																				item.itemName));
-														if (selectRate == 1) {
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.spOpeningStock));
-														} else
-
-														{
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.spTotalPurchase));
-														}
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regOpeningStock));
-
-														if (selectRate == 1) {
-															var regOpStockValue = item.spOpeningStock
-																	* item.regOpeningStock;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regOpStockValue
-																							.toFixed(2)));
-														} else
-
-														{
-															var regOpStockValue = item.spTotalPurchase
-																	* item.regOpeningStock;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regOpStockValue
-																							.toFixed(2)));
-														}
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regTotalPurchase));
-
-														if (selectRate == 1) {
-															var regTotalPurchaseVal = item.spOpeningStock
-																	* item.regTotalPurchase;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalPurchaseVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalPurchaseVal = item.spTotalPurchase
-																	* item.regTotalPurchase;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalPurchaseVal
-																							.toFixed(2)));
-														}
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regTotalGrnGvn));
-
-														if (selectRate == 1) {
-															var regTotalGrnGvnVal = item.spOpeningStock
-																	* item.regTotalGrnGvn;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalGrnGvnVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalGrnGvnVal = item.spTotalPurchase
-																	* item.regTotalGrnGvn;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalGrnGvnVal
-																							.toFixed(2)));
-														}
-
-														if (item.regTotalSell < 0) {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					0));
-														} else {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.regTotalSell
-																							.toFixed(2)));
-														}
-														if (selectRate == 1) {
-															var regTotalSellVal = item.spOpeningStock
-																	* item.regTotalSell;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalSellVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalSellVal = item.spTotalPurchase
-																	* item.regTotalSell;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalSellVal
-																							.toFixed(2)));
-														}
-
-														/* 	tr
-																	.append($(
-																			'<td class="col-md-1"> </td>')
-																			.html(
-																					reOrderQty)); */
-
-														if (regCurrentStock < 0) {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"> </td>')
-																			.html(
-																					0));
-														} else {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"> </td>')
-																			.html(
-																					regCurrentStock
-																							.toFixed(2)));
-														}
-
-														if (selectRate == 1) {
-															if (regCurrentStock < 0) {
-
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						0));
-															} else {
-																var regCurrentStockVal = item.spOpeningStock
-																		* regCurrentStock;
-
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						regCurrentStockVal
-																								.toFixed(2)));
-															}
-														} else {
-															if (regCurrentStock < 0) {
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						0));
-															} else {
-																var regCurrentStockVal = item.spTotalPurchase
-																		* regCurrentStock;
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						regCurrentStockVal
-																								.toFixed(2)));
-															}
-														}
-
-														if (data.monthClosed
-																&& selectedStockOption == 1) {
-
-															tr
-																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
-																			+ item.itemId
-																			+ ','
-																			+ regCurrentStock
-																			+ ') onchange= updateStockDiff('
-																			+ item.itemId
-																			+ ','
-																			+ regCurrentStock
-																			+ ')  id= physicalStockQty'
-																			+ item.itemId
-																			+ ' name=physicalStockQty'
-																			+ item.itemId
-																			+ ' value = '
-																			+ regCurrentStock
-																			+ '></td>'));
-
-															tr
-																	.append($('<td class="col-md-1"  style="text-align:right;"  name=stockDiff'+ item.itemId + ' id=stockDiff'+ item.itemId + ' value =' + 0 + '  > 0</td>'));
-														}
-
-														$('#table_grid tbody')
-																.append(tr);
-													}
-												} else if (stType == 3) {
-													if (regCurrentStock == 0) {
-
-														var tr = $('<tr class="re-order" ></tr>');
-
-														tr
-																.append($(
-																		'<td class="col-md-1"></td>')
-																		.html(
-																				item.itemId));
-														tr
-																.append($(
-																		'<td class="col-md-1" ></td>')
-																		.html(
-																				item.itemName));
-														if (selectRate == 1) {
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.spOpeningStock));
-														} else
-
-														{
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.spTotalPurchase));
-														}
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regOpeningStock));
-
-														if (selectRate == 1) {
-															var regOpStockValue = item.spOpeningStock
-																	* item.regOpeningStock;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regOpStockValue.toFixed(2))
-																			.toFixed(
-																					2));
-														} else
-
-														{
-															var regOpStockValue = item.spTotalPurchase
-																	* item.regOpeningStock;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regOpStockValue
-																							.toFixed(2)));
-														}
-
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regTotalPurchase
-																						.toFixed(2)));
-
-														if (selectRate == 1) {
-															var regTotalPurchaseVal = item.spOpeningStock
-																	* item.regTotalPurchase;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalPurchaseVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalPurchaseVal = item.spTotalPurchase
-																	* item.regTotalPurchase;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalPurchaseVal
-																							.toFixed(2)));
-														}
-														tr
-																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
-																		.html(
-																				item.regTotalGrnGvn));
-
-														if (selectRate == 1) {
-															var regTotalGrnGvnVal = item.spOpeningStock
-																	* item.regTotalGrnGvn;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalGrnGvnVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalGrnGvnVal = item.spTotalPurchase
-																	* item.regTotalGrnGvn;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalGrnGvnVal
-																							.toFixed(2)));
-														}
-
-														if (item.regTotalSell < 0) {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					0));
-														} else {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					item.regTotalSell));
-														}
-														if (selectRate == 1) {
-															var regTotalSellVal = item.spOpeningStock
-																	* item.regTotalSell;
-
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalSellVal
-																							.toFixed(2)));
-														} else
-
-														{
-															var regTotalSellVal = item.spTotalPurchase
-																	* item.regTotalSell;
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"></td>')
-																			.html(
-																					regTotalSellVal
-																							.toFixed(2)));
-														}
-
-														/* 	tr
-																	.append($(
-																			'<td class="col-md-1"> </td>')
-																			.html(
-																					reOrderQty));
-														 */
-														if (regCurrentStock < 0) {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"> </td>')
-																			.html(
-																					0));
-														} else {
-															tr
-																	.append($(
-																			'<td class="col-md-1" style="text-align:right;"> </td>')
-																			.html(
-																					regCurrentStock));
-														}
-
-														if (selectRate == 1) {
-															if (regCurrentStock < 0) {
-
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						0));
-															} else {
-																var regCurrentStockVal = item.spOpeningStock
-																		* regCurrentStock;
-
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						regCurrentStockVal
-																								.toFixed(2)));
-															}
-														} else {
-															if (regCurrentStock < 0) {
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						0));
-															} else {
-																var regCurrentStockVal = item.spTotalPurchase
-																		* regCurrentStock;
-																tr
-																		.append($(
-																				'<td class="col-md-1" style="text-align:right;"></td>')
-																				.html(
-																						regCurrentStockVal
-																								.toFixed(2)));
-															}
-														}
-
-														if (data.monthClosed
-																&& selectedStockOption == 1) {
-
-															tr
-																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
-																			+ item.itemId
-																			+ ','
-																			+ regCurrentStock
-																			+ ') onchange= updateStockDiff('
-																			+ item.itemId
-																			+ ','
-																			+ regCurrentStock
-																			+ ')  id= physicalStockQty'
-																			+ item.itemId
-																			+ ' name=physicalStockQty'
-																			+ item.itemId
-																			+ ' value = '
-																			+ regCurrentStock
-																			+ '></td>'));
-
-															tr
-																	.append($('<td style="text-align:right;"  class="col-md-1" name=stockDiff'+ item.itemId + ' id=stockDiff'+ item.itemId + ' value =' + 0 + '  > 0</td>'));
-														}
-
-														$('#table_grid tbody')
-																.append(tr);
-													}
-												}
-
-											})
-						});
-	}
-</script>
-
-<script type="text/javascript">
-	function updateStockDiff(id, currentStock) {
-
-		var physicalStockQty = $("#physicalStockQty" + id).val();
-		var oldDiff = $('#stockDiff' + id).val();
-
-		var stockDiff = 0;
-
-		if (currentStock > physicalStockQty) {
-
-			stockDiff = currentStock - physicalStockQty;
-
-		} else {
-
-			stockDiff = physicalStockQty - currentStock;
-
+			isValid = false;
+			alert("Please select To Date");
 		}
+		return isValid;
 
-		$('#stockDiff' + id).html(stockDiff);
 	}
+	
 </script>
 
 <script>

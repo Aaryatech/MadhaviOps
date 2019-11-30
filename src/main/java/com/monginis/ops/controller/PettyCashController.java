@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
@@ -44,10 +48,14 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.monginis.ops.HomeController;
+import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.PettyCashEmp;
+import com.monginis.ops.model.PettyCashHandover;
 import com.monginis.ops.model.othitemstock.OtherItemCurStock;
 import com.monginis.ops.model.pettycash.PettyCashDao;
 import com.monginis.ops.model.pettycash.PettyCashData;
@@ -59,6 +67,9 @@ public class PettyCashController {
 	
 	public List<PettyCashManagmt> pettyList = null; 
 	
+	private static final Logger logger = LoggerFactory.getLogger(PettyCashController.class);
+	SimpleDateFormat ymdSDF ;
+	Calendar cal;
 	@RequestMapping(value = "/showPattyCashMgmnt", method = RequestMethod.GET)
 	public ModelAndView showPattyCashMgmnt(HttpServletRequest request, HttpServletResponse response ) {
 		
@@ -89,8 +100,8 @@ public class PettyCashController {
 			PettyCashManagmt petty = rest.postForObject(Constant.URL + "/getPettyCashDetails",map,	PettyCashManagmt.class);
 			System.out.println("Petty Cash----"+petty);
 			
-			SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal= Calendar.getInstance();
+			ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+			cal= Calendar.getInstance();
 			cal.setTimeInMillis(Long.parseLong(petty.getDate()));
 			System.out.println("Date=============="+ymdSDF.format(cal.getTime()));
 			
@@ -181,8 +192,7 @@ public class PettyCashController {
 			model.addObject("isEdit", 0);
 		
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("frId", frid);
-			
+			map.add("frId", frid);			
 			
 			PettyCashManagmt[] list = rest.postForObject(Constant.URL + "/getPettyCashList",map,
 					PettyCashManagmt[].class);
@@ -195,10 +205,108 @@ public class PettyCashController {
 					cal1.setTimeInMillis(Long.parseLong(pettyList.get(i).getDate()));
 					pettyList.get(i).setDate(ymdSDF1.format(cal1.getTime()));	
 				}
+			}			
+			
+			model.addObject("pettyList", pettyList);// Petty Cash List
+			
+			//-----------------------------Petty Cash Hand Over--------------------------------//
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			PettyCashManagmt pettyCashMgmt = rest.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+			cal= Calendar.getInstance();
+			cal.setTimeInMillis(Long.parseLong(pettyCashMgmt.getDate()));
+			//System.out.println("CashHAndDate=============="+ymdSDF.format(cal.getTime()));
+			
+			//Add Day 1
+			cal.add(Calendar.DAY_OF_MONTH, 1); 
+			String plusDate = ymdSDF.format(cal.getTime());
+			logger.info("Plus Date-----------"+plusDate);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			map.add("lastdate", plusDate);
+			PettyCashHandover cashHandOvr = rest.postForObject(Constant.URL + "/getPettyCashHandOvrLastRecrd", map,
+					PettyCashHandover.class);
+			
+			
+			// From Time
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate localDate = LocalDate.now();
+			logger.info("Time Zone-----" + dtf.format(localDate) + " " + "06:00:00"); // 2019-11-29 06:00:00
+
+			// To Time
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			logger.info(dateFormat.format(date)); // Current Date Time
+			
+			try {
+
+				if (cashHandOvr!=null) {	
+					System.out.println("Data Found");
+					model.addObject("openAmt", cashHandOvr.getAmtHandover());
+					
+					map = new LinkedMultiValueMap<String, Object>();
+					logger.info("Close DateTime---------"+cashHandOvr.getTransactionDate());
+					logger.info("Current DateTime---------"+dateFormat.format(date));
+					
+					map.add("fromTime", cashHandOvr.getTransactionDate());
+					map.add("toTime", dateFormat.format(date));
+					map.add("frId", frid);
+					
+					SellBillHeader sellAmt = rest.postForObject(Constant.URL + "/getPettyCashSellAmt", map,
+							SellBillHeader.class);
+					float sellingAmt = 0;						
+					try {
+						sellingAmt = sellAmt.getGrandTotal();
+					
+					}catch (Exception e) {
+						sellingAmt = 0;
+					}
+					logger.info("sell Amt--------" + sellingAmt);
+					model.addObject("sellAmt", sellingAmt);
+					logger.info("totalCash1--------" + cashHandOvr.getAmtHandover() + sellingAmt);
+					model.addObject("totalCash", cashHandOvr.getAmtHandover() + sellingAmt);
+					
+				} else {		
+					System.out.println("No Data Found");
+					
+					model.addObject("openAmt", pettyCashMgmt.getClosingAmt());				
+
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("fromTime", dtf.format(localDate) + " " + "06:00:00");
+					map.add("toTime", dateFormat.format(date));
+					map.add("frId", frid);
+					
+					SellBillHeader sellAmt = rest.postForObject(Constant.URL + "/getPettyCashSellAmt", map,
+							SellBillHeader.class);
+					logger.info("sell Amt--------" + sellAmt);
+					model.addObject("sellAmt", sellAmt.getGrandTotal());
+					
+					logger.info("totalCash2--------"+ pettyCashMgmt.getClosingAmt() + sellAmt.getGrandTotal());
+					model.addObject("totalCash", pettyCashMgmt.getClosingAmt() + sellAmt.getGrandTotal());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			
-			model.addObject("pettyList", pettyList);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
 			
+			PettyCashEmp[] empArr = rest.postForObject(Constant.URL + "/getAllPettyCashEmp", map,
+					PettyCashEmp[].class);
+			List<PettyCashEmp> empList = new ArrayList<PettyCashEmp>(Arrays.asList(empArr));
+			logger.info("---------------------------"+empList);
+			model.addObject("empList", empList);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			PettyCashHandover[] cashHandOvrArr = rest.postForObject(Constant.URL + "/getPettyCashHandByFrid", map,
+					PettyCashHandover[].class);
+			List<PettyCashHandover> pcHndOvrList = new ArrayList<PettyCashHandover>(Arrays.asList(cashHandOvrArr));
+			model.addObject("cashHndOvrList", pcHndOvrList);
 			
 		}catch (Exception e) {
 			System.err.println("Exception in showPattyCashMgmnt : "+e.getMessage());		
@@ -597,5 +705,97 @@ public class PettyCashController {
 
 		}
 
+	}
+	
+	@RequestMapping(value="/insertPettyCashHandOver", method = RequestMethod.POST)
+	public String insertPettyCashHandOver(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		try {
+			
+			PettyCashHandover cashHndOvr = new PettyCashHandover();
+			session = req.getSession();			
+			int frid = (int) session.getAttribute("frId");
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			//logger.info(dateFormat.format(date)); // Current Date Time
+			
+			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal1= Calendar.getInstance();
+			String str = req.getParameter("from_emp");
+			
+			String[] part = str.split("-");
+			String fromEmpId = part[0];
+			String FromEmpName = part[1];
+			
+			String str2 = req.getParameter("to_emp");
+			String[] parts = str2.split("-");
+			String toEmpId = parts[0];
+			String toEmpName = parts[1];
+			
+			cashHndOvr.setActualAmtHandover(Float.parseFloat(req.getParameter("total_cash_amt")));
+			cashHndOvr.setAmtHandover(Float.parseFloat(req.getParameter("actual_cash_amt")));
+			cashHndOvr.setClosingDate(ymdSDF1.format(cal1.getTime()));
+			cashHndOvr.setDelStatus(0);
+			cashHndOvr.setExInt1(0);
+			cashHndOvr.setExInt2(0);
+			cashHndOvr.setExInt3(0);
+			cashHndOvr.setExVar1("NA");
+			cashHndOvr.setExVar2("NA");
+			cashHndOvr.setExVar3("NA");
+			cashHndOvr.setFrId(frid);
+			cashHndOvr.setFromUserId(Integer.parseInt(fromEmpId));
+			cashHndOvr.setFromUsername(FromEmpName);
+			cashHndOvr.setOpeningAmt(Float.parseFloat(req.getParameter("open_amt")));
+			cashHndOvr.setSellingAmt(Float.parseFloat(req.getParameter("sell_amt")));
+			cashHndOvr.setToUserId(Integer.parseInt(toEmpId));
+			cashHndOvr.setToUsername(toEmpName);
+			cashHndOvr.setTransactionDate(dateFormat.format(date));
+			cashHndOvr.setUpdateDatetime(dateFormat.format(date));
+			
+			PettyCashHandover cash = rest.postForObject(Constant.URL+"/savePettyCashHandOver", cashHndOvr, PettyCashHandover.class);
+			if(cash!=null) {
+				logger.info("Data Saved Successfully"+cash);
+			}else {
+				logger.info("Data Not Saved");
+			}			
+			
+		}catch (Exception e) {
+			System.out.println("Exception in insertPettyCashHandOver" + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return "redirect:/showPattyCashMgmnt";		
+	}
+	
+	
+	@RequestMapping(value="/getPettyCashHandOverData", method = RequestMethod.GET)
+	public @ResponseBody List<PettyCashHandover> getPettyCashHandOverData(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		List<PettyCashHandover> cashList = null;
+		try {
+			
+			String fromDate = req.getParameter("fromDate");
+			String toDate = req.getParameter("toDate");
+			logger.info("Datesssssssssss"+fromDate+" -- "+toDate);
+			
+			session = req.getSession();
+			int frid = (int) session.getAttribute("frId");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frId", frid);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			
+			PettyCashHandover[] list = rest.postForObject(Constant.URL + "/getCashHandOverTransctn",map,
+					PettyCashHandover[].class);
+			cashList = new ArrayList<>(Arrays.asList(list)); 
+			logger.info("cashList-----------------------"+cashList);
+		}catch (Exception e) {
+			System.out.println("Exception in getPettyCashHandOverData" + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return cashList;
+		
 	}
 }
