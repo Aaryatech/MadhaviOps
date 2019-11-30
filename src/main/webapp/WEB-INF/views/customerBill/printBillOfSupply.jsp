@@ -57,7 +57,7 @@
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
-					src="/ops/resources/newpos/images/madhvi_logo.jpg"
+					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 					alt="madhvi_logo"></td>
 			</tr>
 
