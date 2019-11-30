@@ -61,6 +61,7 @@ public class AdvanceOrderDetail {
 	private float exFloat1;
 
 	private float exFloat2;
+	private int isSellBillGenerated;
 
 	public int getAdvDetailId() {
 		return advDetailId;
@@ -301,6 +302,16 @@ public class AdvanceOrderDetail {
 	public void setDeliveryDate(String deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
+	
+	
+
+	public int getIsSellBillGenerated() {
+		return isSellBillGenerated;
+	}
+
+	public void setIsSellBillGenerated(int isSellBillGenerated) {
+		this.isSellBillGenerated = isSellBillGenerated;
+	}
 
 	@Override
 	public String toString() {
@@ -311,7 +322,9 @@ public class AdvanceOrderDetail {
 				+ ", tax1Amt=" + tax1Amt + ", tax2=" + tax2 + ", tax2Amt=" + tax2Amt + ", isBillGenerated="
 				+ isBillGenerated + ", advHeaderId=" + advHeaderId + ", discPer=" + discPer + ", grnType=" + grnType
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + "]";
+				+ ", exVar2=" + exVar2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", isSellBillGenerated="
+				+ isSellBillGenerated + "]";
 	}
 
+	 
 }

@@ -41,6 +41,11 @@ public class AdvanceOrderHeader {
 	private String deliveryDate;
 
 	List<AdvanceOrderDetail> detailList;
+	
+	
+	private int isBillGenerated;
+	
+	private int isSellBillGenerated;
 
 	public int getFrId() {
 		return frId;
@@ -194,13 +199,35 @@ public class AdvanceOrderHeader {
 		this.detailList = detailList;
 	}
 
+	
+	
+	public int getIsBillGenerated() {
+		return isBillGenerated;
+	}
+
+	public void setIsBillGenerated(int isBillGenerated) {
+		this.isBillGenerated = isBillGenerated;
+	}
+
+	public int getIsSellBillGenerated() {
+		return isSellBillGenerated;
+	}
+
+	public void setIsSellBillGenerated(int isSellBillGenerated) {
+		this.isSellBillGenerated = isSellBillGenerated;
+	}
+
 	@Override
 	public String toString() {
 		return "AdvanceOrderHeader [advHeaderId=" + advHeaderId + ", advanceAmt=" + advanceAmt + ", remainingAmt="
 				+ remainingAmt + ", total=" + total + ", custId=" + custId + ", isDailyMart=" + isDailyMart
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", detailList="
-				+ detailList + "]";
+				+ ", exVar2=" + exVar2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", frId=" + frId
+				+ ", discAmt=" + discAmt + ", orderDate=" + orderDate + ", prodDate=" + prodDate + ", deliveryDate="
+				+ deliveryDate + ", detailList=" + detailList + ", isBillGenerated=" + isBillGenerated
+				+ ", isSellBillGenerated=" + isSellBillGenerated + "]";
 	}
+
+	 
 
 }

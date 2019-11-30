@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.monginis.ops.advorder.model.AdvanceOrderHeader;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
@@ -214,8 +215,34 @@ public class OpsController {
 				itemBillList = hashMap.get(key).getItemList();
 				model.addAttribute("key", key);
 			} else {
-				itemBillList = new ArrayList<>();
-				model.addAttribute("key", 0);
+				 
+				try {
+					String custId = String.valueOf(session.getAttribute("advCustId"));
+					List<ItemListForCustomerBill> itemBillList1 = (List<ItemListForCustomerBill>) session
+							.getAttribute("advItemList");
+					itemBillList = itemBillList1;
+					
+					CustomerBillOnHold addNew = new CustomerBillOnHold();
+ 					addNew.setCustId(Integer.parseInt(custId));
+					addNew.setItemList(itemBillList);
+					addNew.setTempCustomerName("NA");
+					hashMap.put(tempBillNo, addNew);
+					model.addAttribute("holdBill", hashMap.get(key));
+					
+					System.out.println("list fro sess" + itemBillList.toString());
+					
+					model.addAttribute("tempCust", custId);
+					session.removeAttribute("advItemList");
+			
+					model.addAttribute("key", 1);
+				 
+					
+				} catch (Exception e) {
+					itemBillList = new ArrayList<>();
+					model.addAttribute("key", 0);
+					e.printStackTrace();
+				}
+
 			}
 
 			mvm = new LinkedMultiValueMap<String, Object>();
@@ -224,13 +251,46 @@ public class OpsController {
 					NewSetting.class);
 
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
-			
+
 			model.addAttribute("frtype", frDetails.getFrGstType());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+
+	@RequestMapping(value = "/getItemOfAdv", method = RequestMethod.GET)
+	@ResponseBody
+	public Info showCustBillForAdvOrder(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+		HttpSession session = request.getSession();
+		Info inf = new Info();
+
+		try {
+			
+			int headId = Integer.parseInt(request.getParameter("headId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("headId", headId);
+			ItemListForCustomerBill[] itemsList = restTemplate.postForObject(
+					Constant.URL + "/getAdvanceOrderItemsByHeadId", mvm, ItemListForCustomerBill[].class);
+			List<ItemListForCustomerBill> advHeadList = new ArrayList<ItemListForCustomerBill>(
+					Arrays.asList(itemsList));
+			if (itemsList != null) {
+				inf.setError(false);
+			} else {
+				inf.setMessage("0");
+				inf.setError(true);
+			}
+
+			session.setAttribute("advItemList", advHeadList);
+			session.setAttribute("advCustId", custId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return inf;
 	}
 
 	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)

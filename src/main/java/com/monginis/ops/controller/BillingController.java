@@ -158,6 +158,8 @@ public class BillingController {
 		map.add("toDate", toDate);
 		
 		map.add("frId", frId);
+		map.add("typeIdList", -1);
+		
 		
 	
 		

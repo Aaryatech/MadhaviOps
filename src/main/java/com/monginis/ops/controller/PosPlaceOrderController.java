@@ -27,6 +27,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetOrder;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
+import com.monginis.ops.model.ItemResponse;
 import com.monginis.ops.model.ItemSup;
 import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.MCategory;
@@ -72,10 +74,9 @@ public class PosPlaceOrderController {
 	public MultiValueMap<String, Object> map;
 	public String qtyAlert = "Enter the Quantity as per the Limit.";
 
-	 
-		@RequestMapping(value = "/showsPlaceOrder/{index}", method = RequestMethod.GET)
-		public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
-				HttpServletResponse response) throws ParseException {
+	@RequestMapping(value = "/showsPlaceOrder/{index}", method = RequestMethod.GET)
+	public ModelAndView displaySavouries(@PathVariable("index") int index, HttpServletRequest request,
+			HttpServletResponse response) throws ParseException {
 
 		HttpSession session = request.getSession();
 
@@ -107,8 +108,7 @@ public class PosPlaceOrderController {
 		// new*****************
 
 		catList = new ArrayList<>();
-		globalIndex =index;
-		 
+		globalIndex = index;
 
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -392,7 +392,7 @@ public class PosPlaceOrderController {
 		return cal.getTime();
 	}
 
-	@RequestMapping(value="/saveAdvanceOrder", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
 	public String saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		System.err.println("inside saveAdvanceOrder");
@@ -411,132 +411,135 @@ public class PosPlaceOrderController {
 
 		String todaysDate = dfReg.format(date);
 
-	//	ModelAndView mav = new ModelAndView("showsPlaceOrder");
- 
-			int custId = Integer.parseInt(request.getParameter("custId"));
-			String total = request.getParameter("fintotal1");
-			String devDate = request.getParameter("devDate");
+		// ModelAndView mav = new ModelAndView("showsPlaceOrder");
 
-			String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
-			String yyestDate = dfReg.format(yesterday());
-			int dm = 0;
-			String af = null;
+		int custId = Integer.parseInt(request.getParameter("custId"));
+		String total = request.getParameter("fintotal1");
+		String devDate = request.getParameter("devDate");
 
-		 
+		String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
+		String yyestDate = dfReg.format(yesterday());
+		int dm = 0;
+		String af = null;
+
 		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
-		
-		System.err.println("dm");
-				 
-			 
-			System.err.println("Order date: " + todaysDate);
-			System.err.println("Production date: " + yyestDate);
-			System.err.println("Delivery date: " + devDate);
 
-			String advanceAmt = request.getParameter("advanceAmt");
-			String remainAmt = request.getParameter("remainAmt");
-			System.err.println("inside saveAdvanceOrder 1:" + advanceAmt+"remainAmt"+remainAmt);
-			AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
-			advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
-			advHeader.setCustId(custId);
-			advHeader.setDelStatus(0);
-			advHeader.setExFloat1(0);
-			advHeader.setExFloat2(0);
-			advHeader.setExInt1(1);
-			advHeader.setExInt2(1);
-			advHeader.setExVar1("NA");
-			advHeader.setExVar2("NA");
-			advHeader.setIsDailyMart(dm);
-			advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
-			advHeader.setTotal(Float.parseFloat(total));
-			advHeader.setFrId(frDetails.getFrId());
-			advHeader.setOrderDate(todaysDate);
-			advHeader.setProdDate(x1);
-			advHeader.setDeliveryDate(DateConvertor.convertToYMD(devDate));
-			advHeader.setDiscAmt(0);
+		//System.err.println("dm");
 
-			for (int i = 0; i < frItemList.size(); i++) {
-				GetFrItem item = frItemList.get(i);
+		//System.err.println("Order date: " + todaysDate);
+		//System.err.println("Production date: " + yyestDate);
+		//System.err.println("Delivery date: " + devDate);
 
-				// int qty = Integer.parseInt(request.getParameter("" +
-				// frItemList.get(i).getItemId()));
-				// int qty =
-				// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
-				String strQty = null;
-				int qty = 0;
-				try {
-					
-					 
-						strQty = request.getParameter(item.getItemId());
-						qty = Integer.parseInt(strQty);
-				 
-					
+		String advanceAmt = request.getParameter("advanceAmt");
+		String remainAmt = request.getParameter("remainAmt");
+		//System.err.println("inside saveAdvanceOrder 1:" + advanceAmt + "remainAmt" + remainAmt);
+		AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
+		advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
+		advHeader.setCustId(custId);
+		advHeader.setDelStatus(0);
+		advHeader.setExFloat1(0);
+		advHeader.setExFloat2(0);
+		advHeader.setExInt1(1);
+		advHeader.setExInt2(1);
+		advHeader.setExVar1("NA");
+		advHeader.setExVar2("NA");
+		advHeader.setIsDailyMart(dm);
+		advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
+		advHeader.setTotal(Float.parseFloat(total));
+		advHeader.setFrId(frDetails.getFrId());
+		advHeader.setOrderDate(todaysDate);
+		advHeader.setProdDate(x1);
+		advHeader.setDeliveryDate(DateConvertor.convertToYMD(devDate));
+		advHeader.setDiscAmt(0);
+		advHeader.setIsBillGenerated(0);
+		advHeader.setIsSellBillGenerated(0);
+		System.err.println("fr itm"+frItemList.toString());
 
-				} catch (Exception e) {
-					strQty = null;
-					qty = 0;
+		for (int i = 0; i < frItemList.size(); i++) {
+			GetFrItem item = frItemList.get(i);
 
-				}
+			// int qty = Integer.parseInt(request.getParameter("" +
+			// frItemList.get(i).getItemId()));
+			// int qty =
+			// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
+			String strQty = null;
+			int qty = 0;
+			try {
 
-				if (qty > 0) {
-					AdvanceOrderDetail det = new AdvanceOrderDetail();
-					det.setCatId(Integer.parseInt(item.getItemGrp1()));
-					det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
-					det.setDelStatus(0);
-					if(dm==2) {
-						det.setDiscPer(item.getDmDiscPer());
-					}else {
-						det.setDiscPer(item.getDiscPer());
-					}
-					 
-					det.setEvents("");
-					det.setEventsName("");
-					det.setExFloat1(0);
-					det.setExFloat2(0);
-					det.setExInt1(0);
-					det.setExInt2(0);
-					det.setExVar1("NA");
-					det.setExVar2("NA");
-					det.setFrId(frDetails.getFrId());
+				strQty = request.getParameter(item.getItemId());
+				System.err.println("inside det"+qty);
+				qty = Integer.parseInt(strQty);
 
-					int frGrnTwo = frDetails.getGrnTwo();
-
-					if (frGrnTwo == 1) {
-
-						det.setGrnType(frDetails.getGrnTwo());
-
-					} else {
-
-						det.setGrnType(2);
-					}
-
-					det.setIsBillGenerated(0);
-					det.setItemId(Integer.parseInt(item.getItemId()));
-					det.setMenuId(1);
-					det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
-					det.setOrderDate(todaysDate);// curr
-					det.setProdDate(x1);// devdate-1
-					det.setQty(qty);
-					det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
-					float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
-
-					det.setSubTotal(subtot);
-					det.setTax1(0);
-					det.setTax1Amt(0);
-					det.setTax2(0);
-					det.setTax2Amt(0);
-					det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
-
-					advDetailList.add(det);
-
-				}
+			} catch (Exception e) {
+				strQty = null;
+				qty = 0;
 
 			}
-			advHeader.setDetailList(advDetailList);
-			RestTemplate restTemplate = new RestTemplate();
+		
 
-			AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail",
-					advHeader, AdvanceOrderHeader.class);
-			System.err.println("inside saveAdvanceOrder 2");
+			if (qty > 0) {
+				
+			
+				AdvanceOrderDetail det = new AdvanceOrderDetail();
+				det.setCatId(Integer.parseInt(item.getItemGrp1()));
+				det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
+				det.setDelStatus(0);
+				if (dm == 2) {
+					det.setDiscPer(item.getDmDiscPer());
+				} else {
+					det.setDiscPer(item.getDiscPer());
+				}
+
+				det.setEvents("");
+				det.setEventsName("");
+				det.setExFloat1(0);
+				det.setExFloat2(0);
+				det.setExInt1(0);
+				det.setExInt2(0);
+				det.setExVar1("NA");
+				det.setExVar2("NA");
+				det.setFrId(frDetails.getFrId());
+
+				int frGrnTwo = frDetails.getGrnTwo();
+
+				if (frGrnTwo == 1) {
+
+					det.setGrnType(frDetails.getGrnTwo());
+
+				} else {
+
+					det.setGrnType(2);
+				}
+
+				det.setIsBillGenerated(0);
+				det.setItemId(Integer.parseInt(item.getItemId()));
+				det.setMenuId(1);
+				det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
+				det.setOrderDate(todaysDate);// curr
+				det.setProdDate(x1);// devdate-1
+				det.setQty(qty);
+				det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
+				float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+				det.setIsBillGenerated(0);
+				det.setIsSellBillGenerated(0);
+				det.setSubTotal(subtot);
+				det.setTax1(0);
+				det.setTax1Amt(0);
+				det.setTax2(0);
+				det.setTax2Amt(0);
+				det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
+
+				advDetailList.add(det);
+				System.err.println(" det"+det.toString());
+			}
+
+		}
+		advHeader.setDetailList(advDetailList);
+		RestTemplate restTemplate = new RestTemplate();
+
+		AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
+				AdvanceOrderHeader.class);
+		System.err.println("inside saveAdvanceOrder 2");
 		/*
 		 * } catch (Exception e) {
 		 * 
@@ -544,7 +547,7 @@ public class PosPlaceOrderController {
 		 * 
 		 * }
 		 */
-		return "redirect:/showsPlaceOrder/"+globalIndex;
+		return "redirect:/showsPlaceOrder/" + globalIndex;
 
 	}
 
@@ -661,5 +664,7 @@ public class PosPlaceOrderController {
 		return res;
 
 	}
+
+ 
 
 }

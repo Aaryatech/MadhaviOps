@@ -1,6 +1,7 @@
 package com.monginis.ops.controller;
 
 import java.io.BufferedInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,7 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.itextpdf.text.BaseColor;
+ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -47,6 +48,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.monginis.ops.HomeController;
+import com.monginis.ops.advorder.model.AdvanceOrderHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllMenuResponse;
 import com.monginis.ops.model.CategoryList;
@@ -292,7 +294,7 @@ public class HistoryController {
 				//new added
 				// if (catId != 5)  prev
 				flag=2;
-				itemOrderHistory = advanceOrderHistory(catIdStr, parsedDate, frId);
+				List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(1, parsedDate, frId);
 				model.addObject("orderHistory", itemOrderHistory);
 				
 				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
@@ -300,28 +302,32 @@ public class HistoryController {
 				ExportToExcel expoExcel = new ExportToExcel();
 				List<String> rowData = new ArrayList<String>();
 				
-				rowData.add("Item name");
-
-				rowData.add("MRP");
-
-				rowData.add("Qty.");
-				rowData.add("Rate");
+				rowData.add("Order date ");
+				
+				rowData.add("Production Date");
+				
+				rowData.add("Delivery Date");
 
 				rowData.add("Total");
+
+				rowData.add("Remaining Amt");
+				rowData.add("Advance Amt");
+
+				 
 																//orderList.spGrandTotal-orderList.spTotalAddRate					
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 				for (int i = 0; i < itemOrderHistory.size(); i++) {
-					expoExcel = new ExportToExcel();
-					rowData = new ArrayList<String>();
-					double total = itemOrderHistory.get(i).getOrderQty()*itemOrderHistory.get(i).getOrderRate();
-					rowData.add("" + itemOrderHistory.get(i).getItemName());
-					rowData.add("" + itemOrderHistory.get(i).getOrderMrp() );
-					rowData.add("" + itemOrderHistory.get(i).getOrderQty());
-				
-					rowData.add("" + itemOrderHistory.get(i).getOrderRate());
-					rowData.add("" + total);
 					
+					  expoExcel = new ExportToExcel(); rowData = new ArrayList<String>(); 
+					  
+					  rowData.add("" + itemOrderHistory.get(i).getOrderDate());
+					  rowData.add("" + itemOrderHistory.get(i).getDeliveryDate());
+					  rowData.add("" + itemOrderHistory.get(i).getProdDate());
+					  rowData.add("" + itemOrderHistory.get(i).getTotal());
+					  rowData.add("" + itemOrderHistory.get(i).getRemainingAmt());
+					  rowData.add("" + itemOrderHistory.get(i).getAdvanceAmt());
+					 
 					expoExcel.setRowData(rowData);
 					exportToExcelList.add(expoExcel);
 
@@ -360,6 +366,85 @@ public class HistoryController {
 		}
 		return model;
 	}
+	
+	
+
+	@RequestMapping(value = "/showAdvanceOrderList", method = RequestMethod.GET)
+	public ModelAndView showAdvanceOrderDetail(HttpServletRequest request, HttpServletResponse response)
+	{  HttpSession session = request.getSession();
+		ModelAndView model = new ModelAndView("history/advanceOrderList");
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+	    try {
+    		
+	    	List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(0,"01-10-2019", frDetails.getFrId());
+			model.addObject("orderHistory", itemOrderHistory);
+			 
+	    }catch (Exception e) {
+			e.printStackTrace();
+		}
+		    return model;
+
+	}
+	
+	
+	@RequestMapping(value = "/showAdvanceOrderDetail/{headId}/{devDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showAdvanceOrderDetail(HttpServletRequest request, HttpServletResponse response,@PathVariable int headId,@PathVariable String devDate,@PathVariable int frId)
+	{
+		ModelAndView model = new ModelAndView("history/advOrderDeatilhistory");
+	    try {
+    		  HttpSession session = request.getSession();
+    		  
+    		  itemOrderHistory = advanceOrderHistoryDetail(headId, devDate, frId);
+				model.addObject("orderHistory", itemOrderHistory);
+				
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+				
+				rowData.add("Item name");
+
+				rowData.add("MRP");
+
+				rowData.add("Qty.");
+				rowData.add("Rate");
+
+				rowData.add("Total");
+																//orderList.spGrandTotal-orderList.spTotalAddRate					
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				for (int i = 0; i < itemOrderHistory.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+					double total = itemOrderHistory.get(i).getOrderQty()*itemOrderHistory.get(i).getOrderRate();
+					rowData.add("" + itemOrderHistory.get(i).getItemName());
+					rowData.add("" + itemOrderHistory.get(i).getOrderMrp() );
+					rowData.add("" + itemOrderHistory.get(i).getOrderQty());
+				
+					rowData.add("" + itemOrderHistory.get(i).getOrderRate());
+					rowData.add("" + total);
+					
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+				}
+
+				//HttpSession session = request.getSession();
+				session.setAttribute("exportExcelList", exportToExcelList);
+				session.setAttribute("excelName", "ItemHistoryReport");
+	     
+	    }catch (Exception e) {
+			e.printStackTrace();
+		}
+		    return model;
+
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/getSpOrder", method = RequestMethod.GET)
 	public @ResponseBody SpHistoryExBill getSpOrder(HttpServletRequest request, HttpServletResponse response) throws ParseException
 	{
@@ -454,21 +539,45 @@ public class HistoryController {
 	
 	}
 	
-	public List<ItemOrderHis> advanceOrderHistory(String catId,String parsedDate,int frId)
+	public List<ItemOrderHis> advanceOrderHistoryDetail(int headId,String parsedDate,int frId)
 	{
 	
-		
+		System.err.println("fr id is advanceOrderHistory"+frId);
 		RestTemplate rest=new RestTemplate();
 		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-	        map.add("catId",catId);
+	        map.add("headId",headId);
 	        map.add("deliveryDt",parsedDate);
 	        map.add("frId",frId);
 		ItemOrderList itemOrderList=rest.postForObject(
-				Constant.URL+"/advanceOrderHistory",map,
+				Constant.URL+"/advanceOrderHistoryDetail",map,
 				ItemOrderList.class);
 		List<ItemOrderHis> itemHistory=itemOrderList.getItemOrderList();
 		System.out.println("OrderList"+itemHistory.toString());
 		return itemHistory;
+	
+	}
+	
+	
+	
+
+	public List<AdvanceOrderHeader> advanceOrderHistoryHeader(int flag,String parsedDate,int frId)
+	{
+	
+		System.err.println("fr id is advanceOrderHistory"+frId);
+		RestTemplate rest=new RestTemplate();
+		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	      
+	        map.add("deliveryDt",parsedDate);
+	        map.add("frId",frId);
+	        map.add("flag",flag);
+	        AdvanceOrderHeader[] itemOrderList=rest.postForObject(
+				Constant.URL+"/advanceOrderHistoryHeader",map,
+				 AdvanceOrderHeader[].class);
+	        
+	    	List<AdvanceOrderHeader> advHeadList = new ArrayList<AdvanceOrderHeader>(Arrays.asList(itemOrderList));
+ 
+		System.out.println("OrderList"+advHeadList.toString());
+		return advHeadList;
 	
 	}
 	
