@@ -61,11 +61,11 @@
 <%--   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/styles.css" />   --%>
 
 <!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
-<!--new css added by kalpesh -->
+<!--new css added by kalpesh --><%-- 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
-<script
+ --%><script
 	src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
@@ -233,8 +233,8 @@ body {
 						<h2 class="pageTitle">Other Purchase Bill</h2>
 
 					</div>
-					<br>
-					<div class="col-md-12" align="right"  style="width:100%">
+					
+					<div class="order-right" style="margin-top: 5px;">
 					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn btn-info">
 										</a>
 					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn btn-info">
@@ -312,7 +312,7 @@ body {
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="135%" border="0" cellspacing="0"
-																	cellpadding="0" >
+																	cellpadding="0"  style="margin-bottom: 0em;">
 																	<tr class="bgpink">
 																		<td>Item Code</td>
 																		<td>Item Name</td>

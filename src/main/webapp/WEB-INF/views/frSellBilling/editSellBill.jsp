@@ -104,27 +104,27 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Edit Bill Details</h2>
-					</div>
+						<h2 class="pageTitle" style="width: 20%;">Edit Bill Details</h2>
+					<!-- </div>
 				</div>
 
-				<div class="row">
+				<div class="row"> -->
 
 					<div class="col-md-2 from_date">
 						<h4 class="pull-left">
 							Bill No:- <b>${sellBillNo}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
+					<!-- <div class="col-md-2 "></div> -->
 					<div class="col-md-3">
 						<h4 class="pull-left">
 							Bill Date:- <b> ${billDate}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
+					<!-- <div class="col-md-2 "></div> -->
 
 				</div>
-				<br />
+			<!-- 	<br /> -->
 	<form name="editSellBill" id="editSellBill" method="post"
 					action="${pageContext.request.contextPath}/editSellBill">
 			<input type="hidden" name="sellBillNo" id="sellBillNo" value="${sellBillNo}" />
@@ -233,16 +233,18 @@ jQuery(document).ready(function(){
 				<div class="col-md-2">
 					<input type="number" name="paidAmt" class="form-control"  id="paidAmt" value="${sellBillHeader.grandTotal}" min="0" onchange="onPaidAmt(${sellBillHeader.paidAmt},${sellBillHeader.remainingAmt},this.value)"/>
 				</div>
-				<div class="col-md-1"><b>Remaining Amt</b>
+				<div class="col-md-2"><b>Remaining Amt</b>
 				</div>
 				<div class="col-md-1" id="remainingAmt">
 				       0.00
 				</div>
+								<input	name="submit" class="buttonsaveorder" value="Update" type="submit">
+				
 				</div>
-				 <div align="center">
+			<!-- 	 <div align="center">
 				<input	name="submit" class="buttonsaveorder" value="Update" type="submit">
 				</div> 
-</form>
+ --></form>
 				<%-- <div align="center">
 					<a href="${pageContext.request.contextPath}/viewBill"><input
 						name="" class="buttonsaveorder" value="Go Back" align="center"

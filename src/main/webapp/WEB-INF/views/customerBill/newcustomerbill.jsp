@@ -70,6 +70,7 @@
 <c:url var="submitBill" value="/submitBill" />
 <c:url var="submitBillByPaymentOption"
 	value="/submitBillByPaymentOption" />
+<c:url var="editItemQty" value="/editItemQty" />
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -319,7 +320,7 @@ body {
 										<tr>
 											<td>${count.index+1}</td>
 											<td>${itemList.itemName}</td>
-											<td style="text-align: right;"><fmt:formatNumber
+											<td style="text-align: right;" onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}')"><fmt:formatNumber
 													type="number" groupingUsed="false" value="${itemList.qty}"
 													maxFractionDigits="3" minFractionDigits="3" /></td>
 											<td style="text-align: right;"><fmt:formatNumber
@@ -986,7 +987,15 @@ body {
 
 		<!--pending amount popup-->
 		<div id="quantity" class="add_customer calcy" style="display: none;">
-			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
+			<div>
+				<div class="close_l">
+					<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
+				</div>
+				<div class="close_r" style="margin: 10px 10px 0 0;">
+					<button class="quantity_close close_btn">Close</button>
+				</div>
+			</div>
+			<div class="clr"></div>
 			<div class="calcy_bx">
 				<div class="calcy_1">
 					<div class="calculator_bx">
@@ -1095,16 +1104,16 @@ body {
 				<div class="clr"></div>
 			</div>
 
-
+<!-- 
 			<div class="pop_btns">
 				<div class="close_l">
 					<button class="quantity_close close_btn">Close</button>
 				</div>
-				<!-- <div class="close_r">
+				<div class="close_r">
 					<a href="#" onclick="addItemInBillList()">Submit</a>
-				</div> -->
+				</div>
 				<div class="clr"></div>
-			</div>
+			</div> -->
 		</div>
 		<div id="myModal" class="modal">
 
@@ -1759,13 +1768,23 @@ body {
 		});
 	
 		function opnItemPopup(taxper,itemId,mrp,itemName) {
-			  
+					document.getElementById("enterRate").value = 0;
+					document.getElementById("enterQty").value = 0;
+			$.post('${editItemQty}',
+					{
+						itemId: itemId,
+						ajax : 'true'
+					},
+					function(data) {
+						document.getElementById("enterQty").value = data.qty;
+						document.getElementById("enterRate").value = data.total;
+
+					});
 			$('#quantity').popup('show');
 			
 			document
 			.getElementById("itemNmaeHeadeing").innerHTML = itemName;
-			document.getElementById("enterRate").value = 0;
-			document.getElementById("enterQty").value = 0;
+			
 			document.getElementById("rateHidden").value = mrp;
 			document.getElementById("taxperHidden").value = taxper;
 			document.getElementById("itemNameHidden").value = itemName;
@@ -1901,7 +1920,7 @@ body {
 														item.itemName));
 								tr
 								.append($(
-										'<td style="text-align: right;"></td>')
+										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\')"></td>')
 										.html(
 												(item.qty).toFixed(3))); 
 								tr

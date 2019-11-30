@@ -69,9 +69,9 @@
 	});
 </script>
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
+	rel="stylesheet" type="text/css" /><%-- 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
+	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css"> --%>
 <script
 	src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
 <link rel="stylesheet"
@@ -206,7 +206,7 @@ input:checked+.slider:before {
 						<c:choose>
 
 							<c:when test="${count == 0}">
-								<div class="">
+								<div class="" style="margin-top: 30px;">
 									<div>
 										<center>
 											<input name="" class="buttonsaveorder" value="Start Day"

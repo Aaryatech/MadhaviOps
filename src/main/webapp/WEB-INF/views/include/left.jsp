@@ -45,7 +45,7 @@
 								style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
-							POS <span></span>
+							POINT OF SALE(POS)<span></span>
 						</div></a></li>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -565,7 +565,7 @@
 
 
 				<ul>
-					<li class="small-box">
+					<%-- <li class="small-box">
 
 						<div class="ibox">
 							<div class="ibox-head">
@@ -585,11 +585,11 @@
 								class="fa fa-search-plus icon"></i> View GRN </a>
 							<div class="clearfix"></div>
 
-							<%-- <a href="${pageContext.request.contextPath}/getGrnBillDetail"><i class="fa fa-search-plus icon"></i> Manual GRN </a> --%>
+							<a href="${pageContext.request.contextPath}/getGrnBillDetail"><i class="fa fa-search-plus icon"></i> Manual GRN </a>
 
 						</div>
 					</li>
-
+ --%>
 					<li class="small-box">
 
 						<div class="ibox">
@@ -598,8 +598,8 @@
 							</div>
 
 
-							<a href="${pageContext.request.contextPath}/showGvn"><i
-								class="fa fa-plus-circle icon"></i> Request GVN </a> <a
+						<%-- 	<a href="${pageContext.request.contextPath}/showGvn"><i
+								class="fa fa-plus-circle icon"></i> Request GVN </a>  --%><a
 								href="${pageContext.request.contextPath}/displayGvn"><i
 								class="fa fa-search-plus icon"></i> View GVN </a>
 

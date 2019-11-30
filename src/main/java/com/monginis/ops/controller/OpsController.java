@@ -962,7 +962,22 @@ public class OpsController {
 			 * Object>(); map.add("id", itemId); Item item =
 			 * restTemplate.postForObject(Constant.URL + "getItem", map, Item.class);
 			 */
-
+			int flag=0;
+			for(int i=0;i<itemBillList.size();i++)
+			{
+				if(itemBillList.get(i).getItemId()==itemId)
+				{
+					itemBillList.get(i).setQty(qty);
+					float taxableAmt = (total * 100) / (100 +taxperHidden);
+					itemBillList.get(i).setTaxableAmt(taxableAmt);
+					itemBillList.get(i).setTaxAmt(total - taxableAmt);
+					itemBillList.get(i).setTaxPer(taxperHidden);
+					itemBillList.get(i).setTotal(total);
+					flag=1;
+					
+				}
+			}
+			if(flag==0) {
 			ItemListForCustomerBill add = new ItemListForCustomerBill();
 			add.setItemId(itemId);
 			add.setItemName(itemNameHidden);
@@ -973,14 +988,34 @@ public class OpsController {
 			Float taxableAmt = (total * 100) / (100 + add.getTaxPer());
 			add.setTaxableAmt(taxableAmt);
 			add.setTaxAmt(total - taxableAmt);
-			// System.out.println(add);
 			itemBillList.add(add);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return itemBillList;
 	}
+	@RequestMapping(value = "/editItemQty", method = RequestMethod.POST)
+	@ResponseBody
+	public ItemListForCustomerBill editItemQty(HttpServletRequest request, HttpServletResponse responsel) {
+		ItemListForCustomerBill itemListForCustomerBill=new ItemListForCustomerBill();
+		try {
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+		for(int i=0;i<itemBillList.size();i++)
+		{
+			if(itemBillList.get(i).getItemId()==itemId)
+			{
+				itemListForCustomerBill=itemBillList.get(i);
+				break;
+			}
+		}
+			
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return itemListForCustomerBill;
+   }
 
 	@RequestMapping(value = "/getCurrentItemList", method = RequestMethod.POST)
 	@ResponseBody

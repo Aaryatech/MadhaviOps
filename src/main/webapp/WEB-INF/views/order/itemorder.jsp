@@ -115,31 +115,34 @@ a:hover {
 						</c:if>
 					</c:when>
 				</c:choose>
-				<div class="order-left">
-					<h2 class="pageTitle">${menuTitle}</h2>
-					<h3 class="pageTitle2">Order Date :
-						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
-						${deliveryDate}</h3>
+				<div> <!-- class="order-left" -->
+					<h2 class="pageTitle">${menuTitle} &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#630f35;font-size:18px;"> Order Date :
+						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
+						${deliveryDate}&nbsp;&nbsp;&nbsp;&nbsp;Order Closing Time:
+						${toTime}</span>
+					<!-- <h3 class="pageTitle2"></h3> -->
 
 					<input type="hidden" name="menuId" value="${menuId}"> <input
 						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
 					<input type="hidden" value="${isSameDayApplicable}"
-						id="isSameDayApplicable" />
-
+						id="isSameDayApplicable" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Total Amount :&nbsp;&nbsp;&nbsp;&nbsp;INR :
+							<fmt:formatNumber type="number" minFractionDigits="2"
+								maxFractionDigits="2" value="${grandTotal}" />
+						</h2>
 				</div>
 
 
 
 
 				<div class="order-right">
-					<div class="ordermto2px" style="margin-left: 38px;">
+					<%-- <div class="ordermto2px" style="margin-left: 38px;">
 						<div class="orderclose">Order Closing Time :</div>
 						<div class="ordercloser2">
 							<span>${toTime}</span>
 						</div>
-					</div>
-					<div class="ordermto20px">
+					</div> --%>
+					<%-- <div class="ordermto20px">
 						<div class="order-price">Total Amount :</div>
 						<div class="order-amount">
 							INR :
@@ -148,7 +151,7 @@ a:hover {
 						</div>
 
 
-					</div>
+					</div> --%>
 				</div>
 
 				<c:if test="${not empty message}">

@@ -104,27 +104,30 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">View Bill Details</h2>
-					</div>
+						<h2 class="pageTitle" style="width: 20%;">View Bill Details</h2>
+					<!-- </div>
 				</div>
 
-				<div class="row">
+				<div class="row"> -->
 
 					<div class="col-md-2 from_date">
 						<h4 class="pull-left">
 							Bill No:- <b>${sellBillNo}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
+				
 					<div class="col-md-3">
 						<h4 class="pull-left">
 							Bill Date:- <b> ${billDate}</b>
 						</h4>
 					</div>
-					<div class="col-md-2 "></div>
-
+					
+	<button style="float: left; margin-top: 13px;" type="button"
+									class="btn btn-primary" onclick="printExBill()"
+									id="printExBill">Print</button>
 				</div>
-				<br />
+					</div>
+
 
 				<div class="row">
 					<div class="col-md-12">
@@ -132,9 +135,7 @@ jQuery(document).ready(function(){
 						<div class="table-responsive">
 							<div class="shInnerwidth">
 
-								<button style="float: left; margin-top: 13px;" type="button"
-									class="btn btn-primary" onclick="printExBill()"
-									id="printExBill">Print</button>
+							
 
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
 									id="table_grid6" class="table table-bordered">
@@ -197,7 +198,7 @@ jQuery(document).ready(function(){
 
 											</tr>
 										</c:forEach>
-										<tr align="right" style="background: orange;">
+										<tr align="right">
 											<td width="100" colspan='3' align="right"><b>Total</b></td>
 											
 											<td width="100" align="right"><b><fmt:formatNumber
@@ -224,17 +225,19 @@ jQuery(document).ready(function(){
 							</div>
 							<button style="float: left; margin-top: 13px;" type="button"
 								class="btn btn-primary" onclick="printExBill()" id="printExBill">Print</button>
+								<a href="${pageContext.request.contextPath}/viewBill"><input
+						name="" class="buttonsaveorder" value="Go Back" align="center"
+						type="button"></a>
 						</div>
 						<!--table end-->
 
 					</div>
 				</div>
-				<div align="center">
+				<%-- <div align="center">
 					<a href="${pageContext.request.contextPath}/viewBill"><input
 						name="" class="buttonsaveorder" value="Go Back" align="center"
 						type="button"></a>
-					<!-- onclick="goBack()" -->
-				</div>
+				</div> --%>
 			</div>
 			<!--rightSidebar-->
 
