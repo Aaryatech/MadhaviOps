@@ -31,6 +31,7 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddCustemerResponse;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
+import com.monginis.ops.model.CustomerAmounts;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
@@ -298,6 +299,9 @@ public class OpsController {
 		}
 		return inf;
 	}
+	
+	
+
 
 	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
 	@ResponseBody
@@ -1189,5 +1193,102 @@ public class OpsController {
 			info.setError(true);
 		}
 		return info;
+	}
+	
+	//*****************Settle credit bills*************
+	
+	//harsha
+	
+	@RequestMapping(value = "/getCustAmts", method = RequestMethod.GET)
+	@ResponseBody
+	public CustomerAmounts getCustAmts(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		CustomerAmounts itemsList  = new CustomerAmounts();
+
+		try {
+			
+ 			int custId = Integer.parseInt(request.getParameter("cust"));
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("custId", custId);
+			mvm.add("frId", frDetails.getFrId());
+			  itemsList = restTemplate.postForObject(
+					Constant.URL + "/getCustomerAmounts", mvm, CustomerAmounts.class);
+			  
+			 System.err.println("amts*"+itemsList.toString());
+
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+	
+	@RequestMapping(value = "/getCustCreditBills", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SellBillHeader> getCustCreditBills(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		List<SellBillHeader> itemsList  = new ArrayList<SellBillHeader>();
+
+		try {
+			
+ 			int custId = Integer.parseInt(request.getParameter("cust"));
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("custId", custId);
+			mvm.add("frId", frDetails.getFrId());
+			SellBillHeader[] itemsList1 = restTemplate.postForObject(
+					Constant.URL + "/getSellBillByCustId", mvm,SellBillHeader[].class);
+			
+			itemsList = new ArrayList<SellBillHeader>(
+					Arrays.asList(itemsList1));
+			
+			
+			 System.err.println("getCustCreditBills*"+itemsList.toString());
+
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
+	}
+	
+	
+	@RequestMapping(value = "/getCustAdvanceOrder", method = RequestMethod.GET)
+	@ResponseBody
+	public List<AdvanceOrderHeader>  getCustAdvanceOrder(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		List<AdvanceOrderHeader> itemsList  = new ArrayList<AdvanceOrderHeader>();
+
+		try {
+			
+ 			int custId = Integer.parseInt(request.getParameter("cust"));
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("custId", custId);
+			mvm.add("frId", frDetails.getFrId());
+			AdvanceOrderHeader[] itemsList1 = restTemplate.postForObject(
+					Constant.URL + "/advanceOrderHistoryHeaderByCustId", mvm,AdvanceOrderHeader[].class);
+			
+			itemsList = new ArrayList<AdvanceOrderHeader>(
+					Arrays.asList(itemsList1));
+			
+			
+			 System.err.println("getCustCreditBills*"+itemsList.toString());
+
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemsList;
 	}
 }

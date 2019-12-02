@@ -71,6 +71,9 @@
 <c:url var="submitBillByPaymentOption"
 	value="/submitBillByPaymentOption" />
 <c:url var="editItemQty" value="/editItemQty" />
+
+<c:url var="getCustAmts" value="/getCustAmts" />
+
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -192,13 +195,15 @@ body {
 			<section class="main_container">
 				<div class="cat_l">
 					<!--top-buttons row-->
-					<!-- <div class="pending_row">
-						<a href="#" class="pending_btn initialism slide_open">Pending
-							Amt : <span>00.00</span>
-						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span>00.00</span>
+					<div class="pending_row">
+						<a href="#" class="    pending_btn"
+							onclick="openMyModal('myModalForCredit')">Pending Amt : <span
+							id="credAmt">00.00</span>
+						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span
+							id="advCustAmt">00.00</span>
 						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
 
-					</div> -->
+					</div>
 
 					<!--customer drop down here-->
 					<div class="add_customer_bx">
@@ -211,7 +216,7 @@ body {
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
 									class="input_add chosen-select" style="text-align: left;"
-									required>
+									onchange="setCustAmt()" required>
 									<option value="0" style="text-align: left;">Select
 										Customer</option>
 
@@ -285,7 +290,8 @@ body {
 						</div>
 						<input id=frRateCat name="frRateCat" value="${frRateCat}"
 							type="hidden"> <input id=key name="key" value="${key}"
-							type="hidden"><%-- <input id=advKey name="advKey" value="${advKey}"
+							type="hidden">
+						<%-- <input id=advKey name="advKey" value="${advKey}"
 							type="text"> --%>
 						<!--customer row 2-->
 						<%-- <div class="customer_row">
@@ -338,7 +344,8 @@ body {
 										<tr>
 											<td>${count.index+1}</td>
 											<td>${itemList.itemName}</td>
-											<td style="text-align: right;" onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}')"><fmt:formatNumber
+											<td style="text-align: right;"
+												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}')"><fmt:formatNumber
 													type="number" groupingUsed="false" value="${itemList.qty}"
 													maxFractionDigits="3" minFractionDigits="3" /></td>
 											<td style="text-align: right;"><fmt:formatNumber
@@ -387,35 +394,33 @@ body {
 					<div class="total_tab">
 						<%-- <c:choose>
 							<c:when test="${key>0}"> --%>
-								<table width="100%">
-									<tr bgcolor="#ffe5e6">
-										<td>Total Items</td>
-										<td id="totalItemLable">${totalItemCount}</td>
-										<td>Total :</td>
-										<td style="text-align: right;" id="taxableAmtLable"><fmt:formatNumber
-												type="number" groupingUsed="false"
-												value="${totalTaxableAmt}" maxFractionDigits="2"
-												minFractionDigits="2" /></td>
-									</tr>
-									<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-										<td>Discount</td>
-										<td>(0.00) 0.00</td>
-										<td>Order Tax</td>
-										<td style="text-align: right;" id="taxAmtLable"><fmt:formatNumber
-												type="number" groupingUsed="false" value="${totalTaxAmt}"
-												maxFractionDigits="2" minFractionDigits="2" /></td>
-									</tr>
-									<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
-										<td style="font-weight: 600;">Total Payable</td>
-										<td>&nbsp;</td>
-										<td>&nbsp;</td>
-										<td style="font-weight: 600; text-align: right;"
-											id="totalLable"><fmt:formatNumber type="number"
-												groupingUsed="false" value="${totalAmt}"
-												maxFractionDigits="2" minFractionDigits="2" /></td>
-									</tr>
-								</table>
-							<%-- </c:when>
+						<table width="100%">
+							<tr bgcolor="#ffe5e6">
+								<td>Total Items</td>
+								<td id="totalItemLable">${totalItemCount}</td>
+								<td>Total :</td>
+								<td style="text-align: right;" id="taxableAmtLable"><fmt:formatNumber
+										type="number" groupingUsed="false" value="${totalTaxableAmt}"
+										maxFractionDigits="2" minFractionDigits="2" /></td>
+							</tr>
+							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
+								<td>Discount</td>
+								<td>(0.00) 0.00</td>
+								<td>Order Tax</td>
+								<td style="text-align: right;" id="taxAmtLable"><fmt:formatNumber
+										type="number" groupingUsed="false" value="${totalTaxAmt}"
+										maxFractionDigits="2" minFractionDigits="2" /></td>
+							</tr>
+							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+								<td style="font-weight: 600;">Total Payable</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td style="font-weight: 600; text-align: right;" id="totalLable"><fmt:formatNumber
+										type="number" groupingUsed="false" value="${totalAmt}"
+										maxFractionDigits="2" minFractionDigits="2" /></td>
+							</tr>
+						</table>
+						<%-- </c:when>
 							<c:otherwise>
 								<table width="100%">
 									<tr bgcolor="#ffe5e6">
@@ -677,115 +682,8 @@ body {
 		</div>
 
 		<!--pending amount popup-->
-		<div id="slide" class="pending_pop" style="display: none;">
-			<button class="slide_close">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</button>
-			<div style="overflow-x: auto;">
-				<table class="pending_tab">
-					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Points</th>
-						<th>Points</th>
-						<th>Points</th>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Eve</td>
-						<td>Jackson</td>
-						<td>94</td>
-						<td>94</td>
-						<td>94</td>
-					</tr>
-					<tr>
-						<td>Adam</td>
-						<td>Johnson</td>
-						<td>67</td>
-						<td>67</td>
-						<td>67</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Eve</td>
-						<td>Jackson</td>
-						<td>94</td>
-						<td>94</td>
-						<td>94</td>
-					</tr>
-					<tr>
-						<td>Adam</td>
-						<td>Johnson</td>
-						<td>67</td>
-						<td>67</td>
-						<td>67</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
-					<tr>
-						<td>Eve</td>
-						<td>Jackson</td>
-						<td>94</td>
-						<td>94</td>
-						<td>94</td>
-					</tr>
-					<tr>
-						<td>Adam</td>
-						<td>Johnson</td>
-						<td>67</td>
-						<td>67</td>
-						<td>67</td>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
-					</tr>
 
 
-				</table>
-			</div>
-		</div>
 		<div id="payment" class="add_customer" style="display: none;">
 			<button class="payment_close close_popup">
 				<i class="fa fa-times" aria-hidden="true"></i>
@@ -1122,7 +1020,7 @@ body {
 				<div class="clr"></div>
 			</div>
 
-<!-- 
+			<!-- 
 			<div class="pop_btns">
 				<div class="close_l">
 					<button class="quantity_close close_btn">Close</button>
@@ -1161,7 +1059,12 @@ body {
 				</div>
 
 			</div>
+
+
 		</div>
+
+
+
 		<div id="overlay2">
 			<div id="text2">
 				<img
@@ -1172,6 +1075,206 @@ body {
 		<!--wrapper-end-->
 	</form>
 
+
+	<!-- Modal to show cust creadit Bill Start -->
+	<div id="myModalForCredit" class="modal">
+
+		Modal content
+		<div class="modal-content" style="width: 60%">
+			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
+			<p>Customer Credit Bills</p>
+			<div class="clr"></div>
+			<div>
+				<div cla ss="add_frm_one">
+					<div class="add_customer_one"
+						style="width: 20% ! important; float: left!importan!">Customer
+						Name</div>
+					<div class="add_input"
+						style="width: 80% ! important; float: left !important">
+						<input placeholder="Customer Name" name="credCust" readonly
+							id="credCust" type="text" class="input_add" />
+					</div>
+
+
+
+				</div>
+				<div class="calcy_1">
+					<div class="add_frm_one">
+						<div class="add_customer_one">Pending Amount</div>
+						<div class="add_input">
+							<input placeholder="Customer Name" name="penAmt" readonly
+								onchange="trim(this)" id="penAmt" type="text"
+								class="input_add" />
+						</div>
+
+					</div>
+				</div>
+				<div class="calcy_2 ">
+
+					<div class="add_frm_one">
+						<div class="add_customer_one">Received Amount</div>
+						<div class="add_input">
+							<input placeholder="Customer Name" name="receivedAmt"
+								onchange="trim(this)" id="holdCustName" type="text"
+								class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+			<div class="total_table_one" id="printDivid">
+				<div class="scrollbars">
+					<table id="custCreditTable">
+
+						<thead>
+							<tr>
+								<th style="text-align: center;" width="2%"></th>
+								<th style="text-align: center;" width="2%">Sr.No</th>
+								<th style="text-align: center;">Bill No</th>
+								<th style="text-align: center;" width="10%">Bill Amt</th>
+								<th style="text-align: center;" width="13%">Paid Amt</th>
+								<th style="text-align: center;" width="13%">Pending Amt</th>
+								<th style="text-align: center;" width="2%">Paying Amt</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+
+								<td><input type="checkbox" name="sdfdd" value="Bike"></td>
+								<td>Jill</td>
+								<td>Smith</td>
+								<td>50</td>
+								<td>50</td>
+								<td>50</td>
+								<td>50</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="pop_btns">
+
+				<div class="close_r">
+					<a href="#" onclick="submitBillOnHold()">Submit</a>
+				</div>
+
+				<div class="clr"></div>
+			</div>
+		</div>
+
+
+	</div>
+
+<script type="text/javascript">
+		function showDetailsForCp() {
+			var finTot = 0;
+		   
+			var el = document.getElementById('cust');
+			var custtext = el.options[el.selectedIndex].innerHTML;
+		 
+
+			var creditAmt=document.getElementById("credAmt").innerHTML ; 
+			
+			document.getElementById('credCust').value=custtext;
+			document.getElementById('penAmt').value=creditAmt;
+
+			$
+					.getJSON(
+							'${getCustCreditBills}',
+							{
+
+								cust : cust,
+								ajax : 'true',
+							},
+							function(data) {
+								var len = data.length;
+
+								$('#custCreditTable td').remove();
+								//alert(JSON.stringify(data));
+								alert("hii"+len)
+								
+							/* 	
+								
+								$
+										.each(
+												data,
+												function(key, data) {
+ 
+
+													var tr = $('<tr></tr>');
+
+													 
+
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				"<input type=checkbox  class=abc name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+
+												 
+
+													tr.append($('<td></td>')
+															.html(key + 1));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.billNo
+																					+ ""
+																					+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
+
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.billDate
+																					+ ""
+																					+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.billAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.paidAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
+													tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			data.pendingAmt
+																					+ ""
+																					+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
+ 
+
+													 
+
+													$('#custCreditTable tbody')
+															.append(tr);
+
+ 
+												}); */
+						 
+ 
+
+							});
+						 
+		}
+	</script>
+
+
+	<!-- Modal to show cust creadit Bill end -->
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
@@ -1194,7 +1297,49 @@ body {
 				outline : true,
 				vertical : 'top'
 			});
+			/* $('#myModalForCredit').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			}); */
 		});
+	</script>
+
+	<script>
+	function openMyModal(modalId) {
+	 
+	 var modal1 = document.getElementById(modalId);
+	 modal1.style.display = "block"; 
+	 showDetailsForCp();
+	}
+	function closeMyModal(modalId) {
+		 
+		 var modal1 = document.getElementById(modalId);
+		 modal1.style.display = "none";
+		}
+	
+	</script>
+
+
+	<script type="text/javascript">
+	
+	function setCustAmt() {
+		   
+		var cust =  $('#cust').val() ;
+		  $
+		.get(
+				'${getCustAmts}',
+				{
+					cust : cust,  
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					document.getElementById("credAmt").innerHTML = data.creaditAmt; 
+					document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
+						 
+				});   
+	}
 	</script>
 	<script type="text/javascript">
 		/*Dropdown Menu*/
