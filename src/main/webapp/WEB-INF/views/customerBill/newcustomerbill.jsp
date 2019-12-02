@@ -233,6 +233,23 @@ body {
 
 											</c:forEach>
 										</c:when>
+										<c:when test="${tempCust>0}">
+											<c:forEach items="${customerList}" var="customerList">
+												<c:choose>
+													<c:when test="${customerList.custId==tempCust}">
+														<option value="${customerList.custId}"
+															style="text-align: left;" selected>${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${customerList.custId}"
+															style="text-align: left;">${customerList.custName}
+															&nbsp;${customerList.phoneNumber}</option>
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</c:when>
 										<c:otherwise>
 											<c:forEach items="${customerList}" var="customerList">
 												<c:choose>
@@ -268,7 +285,8 @@ body {
 						</div>
 						<input id=frRateCat name="frRateCat" value="${frRateCat}"
 							type="hidden"> <input id=key name="key" value="${key}"
-							type="hidden">
+							type="hidden"><%-- <input id=advKey name="advKey" value="${advKey}"
+							type="text"> --%>
 						<!--customer row 2-->
 						<%-- <div class="customer_row">
 							<div class="customer_one">Item</div>
@@ -367,8 +385,8 @@ body {
 
 					<!--total-table start here-->
 					<div class="total_tab">
-						<c:choose>
-							<c:when test="${key>0}">
+						<%-- <c:choose>
+							<c:when test="${key>0}"> --%>
 								<table width="100%">
 									<tr bgcolor="#ffe5e6">
 										<td>Total Items</td>
@@ -397,7 +415,7 @@ body {
 												maxFractionDigits="2" minFractionDigits="2" /></td>
 									</tr>
 								</table>
-							</c:when>
+							<%-- </c:when>
 							<c:otherwise>
 								<table width="100%">
 									<tr bgcolor="#ffe5e6">
@@ -421,7 +439,7 @@ body {
 									</tr>
 								</table>
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 
 					</div>
 
@@ -2051,8 +2069,9 @@ body {
 	<script type="text/javascript">
 	
 	function submitBill(printbilltype) {
-		   
+		
 		var key =  $('#key').val() ;
+		/* var key =  $('#advKey').val() ; */
 		var custId =  $('#cust').val() ;
 		var selectedText = $("#cust option:selected").text(); 
 		//alert(selectedText);
@@ -2076,7 +2095,7 @@ body {
 					{
 						key : key,  
 						custId : custId,
-						selectedText : selectedText,
+ 						selectedText : selectedText,
 						ajax : 'true'
 					},
 					function(data) {

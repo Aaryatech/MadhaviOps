@@ -214,6 +214,7 @@ public class OpsController {
 				model.addAttribute("holdBill", hashMap.get(key));
 				itemBillList = hashMap.get(key).getItemList();
 				model.addAttribute("key", key);
+				/* model.addAttribute("advKey", 0); */
 			} else {
 				 
 				try {
@@ -222,24 +223,27 @@ public class OpsController {
 							.getAttribute("advItemList");
 					itemBillList = itemBillList1;
 					
-					CustomerBillOnHold addNew = new CustomerBillOnHold();
- 					addNew.setCustId(Integer.parseInt(custId));
-					addNew.setItemList(itemBillList);
-					addNew.setTempCustomerName("NA");
-					hashMap.put(tempBillNo, addNew);
-					model.addAttribute("holdBill", hashMap.get(key));
-					
+					/*
+					 * CustomerBillOnHold addNew = new CustomerBillOnHold();
+					 * addNew.setCustId(Integer.parseInt(custId)); addNew.setItemList(itemBillList);
+					 * addNew.setTempCustomerName("NA"); hashMap.put(tempBillNo, addNew);
+					 * model.addAttribute("holdBill", hashMap.get(key));
+					 */
 					System.out.println("list fro sess" + itemBillList.toString());
-					
+					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
+					customerBillOnHold.setItemList(itemBillList1);
 					model.addAttribute("tempCust", custId);
-					session.removeAttribute("advItemList");
+					model.addAttribute("holdBill", customerBillOnHold);
+					
 			
-					model.addAttribute("key", 1);
-				 
+					model.addAttribute("key", 0);
+					/* model.addAttribute("advKey", 1); */
+					session.removeAttribute("advItemList");
 					
 				} catch (Exception e) {
 					itemBillList = new ArrayList<>();
 					model.addAttribute("key", 0);
+					/* model.addAttribute("advKey", 0); */
 					e.printStackTrace();
 				}
 
@@ -287,6 +291,8 @@ public class OpsController {
 
 			session.setAttribute("advItemList", advHeadList);
 			session.setAttribute("advCustId", custId);
+			session.setAttribute("advHeadId", headId);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -424,6 +430,7 @@ public class OpsController {
 			 */
 			int index = Integer.parseInt(request.getParameter("key"));
 			int custId = Integer.parseInt(request.getParameter("custId"));
+			/* int advKey = Integer.parseInt(request.getParameter("advKey")); */
 			String customerName = request.getParameter("selectedText");
 
 			HttpSession session = request.getSession();
@@ -557,7 +564,25 @@ public class OpsController {
 				map.add("sellBillNo", sellBillNo);
 
 				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
-
+				
+				
+				/*
+				 * if(advKey==1) {
+				 * 
+				 * map = new LinkedMultiValueMap<String, Object>();
+				 * 
+				 * map.add("advHeadId", session.getAttribute("advHeadId"));
+				 * 
+				 * Info infores1 = restTemplate.postForObject(Constant.URL +
+				 * "updateAdvOrderHeadAndDetail", map, Info.class);
+				 * 
+				 * if(infores1.isError()==false) {
+				 * 
+				 * session.removeAttribute("advCustId"); session.removeAttribute("advHeadId"); }
+				 * 
+				 * 
+				 * }
+				 */
 			}
 			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 		} catch (Exception e) {

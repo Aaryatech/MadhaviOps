@@ -191,6 +191,10 @@ jQuery(document).ready(function(){
 	<c:url var="findAllMenus" value="/getAllTypes" />
 	<c:url var="getSpBill" value="/getSpBill" />
 	<c:url var="deleteSpOrder" value="/deleteSpOrder" />
+	<c:url var="getItemOfAdv" value="/getItemOfAdv" />
+	
+	
+	
 
 	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
@@ -432,58 +436,49 @@ jQuery(document).ready(function(){
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-1" style="text-align: center;">Sr No</th>
-												<th class="col-md-2" style="text-align: center;">Item Name</th>
-												<th class="col-md-1" style="text-align: center;">MRP</th>
-												<th class="col-sm-1" style="text-align: center;">Quantity</th>
-											<c:choose>		<c:when test="${catId!=42 && catId!=80}">	<th class="col-md-1" style="text-align: center;">Rate</th>	</c:when></c:choose>
-												<th class="col-md-1"style="text-align: center;" >Total</th>
-												<c:choose>		<c:when test="${catId==42||catId==80}">
-												<th class="col-md-1"style="text-align: center;" >Order Memo</th>
-												</c:when></c:choose>
+												<th class="col-md-2" style="text-align: center;">Order Date</th>
+												<th class="col-md-1" style="text-align: center;">Production Date</th>
+												<th class="col-sm-1" style="text-align: center;">Delivery Date</th>
+												<th class="col-md-2" style="text-align: center;">Total</th>
+												<th class="col-md-1" style="text-align: center;">Advance Amount</th>
+												<th class="col-sm-1" style="text-align: center;">Remaining Amount</th>
+												<th class="col-sm-1" style="text-align: center;">Action</th>
+										 
 											</tr>
 											</thead>
 										<tbody>
-										<c:choose>
-					                     	<c:when test="${catId==42||catId==80}">
+									 
 											<c:forEach items="${orderHistory}" var="orderList" varStatus="count">
 
 												<tr>
  													<td class="col-md-1">${count.index+1}</td>
 													<td class="col-md-2" ><c:out
-															value="${orderList.itemName}" /></td>
+															value="${orderList.orderDate}" /></td>
 													<td class="col-md-1"style="text-align: right;"><c:out
-															value="${orderList.rate}" /></td>
+															value="${orderList.prodDate}" /></td>
 													<td style="text-align: center;" class="col-sm-1"><c:out
-															value="${orderList.qty}" /></td>
-													
-													<td class="col-md-1" style="text-align: right;"><fmt:formatNumber type = "number"   maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${orderList.qty * orderList.rate}" /></td>
-											        <td class="col-md-1" style="text-align: center;"><a href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}" target="_blank"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a></td>
-															
+															value="${orderList.deliveryDate}" /></td>
+														<td class="col-md-2" ><c:out
+															value="${orderList.total}" /></td>
+													<td class="col-md-1"style="text-align: right;"><c:out
+															value="${orderList.advanceAmt}" /></td>
+													<td style="text-align: center;" class="col-sm-1"><c:out
+															value="${orderList.remainingAmt}" /></td>
+													<td><a
+															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
+															<abbr title='Advance Order Detail'><i class='fa fa-edit'></i></abbr>
+														</a>&nbsp;&nbsp;&nbsp;&nbsp;
+														<c:if test="${orderList.isSellBillGenerated==0}"><a
+															href="#" onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
+															<abbr title='Generate Sell Bill'><i class='fa fa-edit'></i></abbr>
+														</a></c:if>
+														
+														</td>
+													 
 												</tr>
 											</c:forEach>
-											</c:when>
-										<c:otherwise>
-										
-											<c:forEach items="${orderHistory}" var="orderList" varStatus="count">
-
-												<tr>
-													 <td class="col-md-1">${count.index+1}</td>
-													<td class="col-md-2"><c:out
-															value="${orderList.itemName}" /></td>
-													<td class="col-md-1" style="text-align: right;"><c:out
-															value="${orderList.orderMrp}" /></td>
-													<td style="text-align: center;" class="col-sm-1"><c:out
-															value="${orderList.orderQty}" /></td>
-													<td class="col-md-1" style="text-align: right;"> 
-								<fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${orderList.orderRate}" />
-													<td class="col-md-1" style="text-align: right;">
-							<fmt:formatNumber type = "number"   maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${orderList.orderQty * orderList.orderRate}" />
-							</td>
-															
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-												</c:choose>
+										 
+											 
 										</tbody>
 
 									</table>
@@ -660,6 +655,30 @@ jQuery(document).ready(function(){
 <!--easyTabs-->
 <!--easyTabs-->
 <!--easyTabs-->
+<script type="text/javascript">
+
+function showCustBillForAdvOrder(headId,custId){
+	//alert("hii"+custId);
+	
+	 $.getJSON('${getItemOfAdv}', {
+		 headId:headId,
+		 custId:custId,
+         ajax : 'true'
+     }, function(data) {
+    	 
+    	
+  	   if(data.error == false)
+  		   {
+  		    window.open("${pageContext.request.contextPath}/newcustomerbill/0","_self");
+
+  		   }
+  	   
+     });
+	
+}
+
+
+</script>
 <script>
 
 
