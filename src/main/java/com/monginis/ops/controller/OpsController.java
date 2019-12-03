@@ -215,6 +215,7 @@ public class OpsController {
 				model.addAttribute("holdBill", hashMap.get(key));
 				itemBillList = hashMap.get(key).getItemList();
 				model.addAttribute("key", key);
+				model.addAttribute("tempCust", 0);
 				/* model.addAttribute("advKey", 0); */
 			} else {
 				 
@@ -230,10 +231,11 @@ public class OpsController {
 					 * addNew.setTempCustomerName("NA"); hashMap.put(tempBillNo, addNew);
 					 * model.addAttribute("holdBill", hashMap.get(key));
 					 */
-					System.out.println("list fro sess" + itemBillList.toString());
+					//System.out.println("list fro sess" + itemBillList.toString());
 					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 					customerBillOnHold.setItemList(itemBillList1);
-					model.addAttribute("tempCust", custId);
+				
+					model.addAttribute("tempCust",0);
 					model.addAttribute("holdBill", customerBillOnHold);
 					
 			
@@ -244,6 +246,7 @@ public class OpsController {
 				} catch (Exception e) {
 					itemBillList = new ArrayList<>();
 					model.addAttribute("key", 0);
+					model.addAttribute("tempCust", 0);
 					/* model.addAttribute("advKey", 0); */
 					e.printStackTrace();
 				}
@@ -1227,35 +1230,33 @@ public class OpsController {
 		return itemsList;
 	}
 	
-	@RequestMapping(value = "/getCustCreditBills", method = RequestMethod.GET)
+	@RequestMapping(value = "/getCustCreditBills", method = RequestMethod.POST)
 	@ResponseBody
 	public List<SellBillHeader> getCustCreditBills(HttpServletRequest request, HttpServletResponse responsel) {
 		System.err.println("showCustBillForAdvOrder");
-		HttpSession session = request.getSession();
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
-		List<SellBillHeader> itemsList  = new ArrayList<SellBillHeader>();
-
-		try {
-			
- 			int custId = Integer.parseInt(request.getParameter("cust"));
-
-			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
-			mvm.add("custId", custId);
-			mvm.add("frId", frDetails.getFrId());
-			SellBillHeader[] itemsList1 = restTemplate.postForObject(
-					Constant.URL + "/getSellBillByCustId", mvm,SellBillHeader[].class);
-			
-			itemsList = new ArrayList<SellBillHeader>(
-					Arrays.asList(itemsList1));
-			
-			
-			 System.err.println("getCustCreditBills*"+itemsList.toString());
-
+ 		
+		  HttpSession session = request.getSession(); Franchisee frDetails =
+		  (Franchisee) session.getAttribute("frDetails");
+		  
+		  List<SellBillHeader> itemsList = new ArrayList<SellBillHeader>();
+		  
+		  try {
+		  
+		  int custId = Integer.parseInt(request.getParameter("cust"));
+		  
+		  MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String,
+		  Object>(); mvm.add("custId", custId); mvm.add("frId", frDetails.getFrId());
+		  SellBillHeader[] itemsList1 = restTemplate.postForObject( Constant.URL +
+		  "/getSellBillByCustId", mvm,SellBillHeader[].class);
+		  
+		  itemsList = new ArrayList<SellBillHeader>( Arrays.asList(itemsList1));
+		  
+		  
+		  System.err.println("getCustCreditBills*"+itemsList.toString());
+		  
+		  
+		  } catch (Exception e) { e.printStackTrace(); }
 		 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return itemsList;
 	}
 	

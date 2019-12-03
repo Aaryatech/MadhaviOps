@@ -73,6 +73,8 @@
 <c:url var="editItemQty" value="/editItemQty" />
 
 <c:url var="getCustAmts" value="/getCustAmts" />
+<c:url var="getCustCreditBills" value="/getCustCreditBills" />
+
 
 <style>
 body {
@@ -1079,13 +1081,13 @@ body {
 	<!-- Modal to show cust creadit Bill Start -->
 	<div id="myModalForCredit" class="modal">
 
-		Modal content
+
 		<div class="modal-content" style="width: 60%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
 			<p>Customer Credit Bills</p>
 			<div class="clr"></div>
 			<div>
-				<div cla ss="add_frm_one">
+				<div class="add_frm_one">
 					<div class="add_customer_one"
 						style="width: 20% ! important; float: left!importan!">Customer
 						Name</div>
@@ -1103,8 +1105,7 @@ body {
 						<div class="add_customer_one">Pending Amount</div>
 						<div class="add_input">
 							<input placeholder="Customer Name" name="penAmt" readonly
-								onchange="trim(this)" id="penAmt" type="text"
-								class="input_add" />
+								onchange="trim(this)" id="penAmt" type="text" class="input_add" />
 						</div>
 
 					</div>
@@ -1115,17 +1116,14 @@ body {
 						<div class="add_customer_one">Received Amount</div>
 						<div class="add_input">
 							<input placeholder="Customer Name" name="receivedAmt"
-								onchange="trim(this)" id="holdCustName" type="text"
-								class="input_add" />
+								onchange="settleCustBill()" id="receivedAmt" type="text"
+								value="0" class="input_add" />
 						</div>
 						<div class="clr"></div>
 					</div>
-
+					<input type="text" name="finTotal" id="total" value="0">
 				</div>
 			</div>
-
-
-
 			<div class="total_table_one" id="printDivid">
 				<div class="scrollbars">
 					<table id="custCreditTable">
@@ -1135,6 +1133,7 @@ body {
 								<th style="text-align: center;" width="2%"></th>
 								<th style="text-align: center;" width="2%">Sr.No</th>
 								<th style="text-align: center;">Bill No</th>
+								<th style="text-align: center;">Bill DAte</th>
 								<th style="text-align: center;" width="10%">Bill Amt</th>
 								<th style="text-align: center;" width="13%">Paid Amt</th>
 								<th style="text-align: center;" width="13%">Pending Amt</th>
@@ -1142,16 +1141,7 @@ body {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
 
-								<td><input type="checkbox" name="sdfdd" value="Bike"></td>
-								<td>Jill</td>
-								<td>Smith</td>
-								<td>50</td>
-								<td>50</td>
-								<td>50</td>
-								<td>50</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -1170,108 +1160,306 @@ body {
 
 	</div>
 
-<script type="text/javascript">
-		function showDetailsForCp() {
+	<script type="text/javascript">
+		 
+		
+		function  settleCustBill() {
+			  document
+			.getElementById("total").value=0;
+             //alert("in recv 1");
 			var finTot = 0;
-		   
-			var el = document.getElementById('cust');
-			var custtext = el.options[el.selectedIndex].innerHTML;
+			   
+			var custId = document.getElementById("cust").value;
+
+			//var custtext = custId.options[custId.selectedIndex].innerHTML;
 		 
 
-			var creditAmt=document.getElementById("credAmt").innerHTML ; 
+			var creditAmt=document.getElementById("credAmt").innerHTML; 
 			
-			document.getElementById('credCust').value=custtext;
+			//document.getElementById('credCust').value=custtext;
 			document.getElementById('penAmt').value=creditAmt;
 
-			$
-					.getJSON(
-							'${getCustCreditBills}',
-							{
+			//alert(custId);
+		 
+			 
+ 				 $.post('${getCustCreditBills}',
+								{
+									cust: custId,
+									ajax: 'true'
+								},
+								function(data) {
 
-								cust : cust,
-								ajax : 'true',
-							},
-							function(data) {
-								var len = data.length;
+									//alert(JSON.stringify(data));
 
-								$('#custCreditTable td').remove();
-								//alert(JSON.stringify(data));
-								alert("hii"+len)
-								
-							/* 	
-								
-								$
-										.each(
-												data,
-												function(key, data) {
- 
+									$('#custCreditTable td').remove();
+									$
+									.each(
+											data,
+											function(key, data) {
 
-													var tr = $('<tr></tr>');
+												var flag = 0;
+												var y = 0;
+												var tot = document
+														.getElementById("total").value;
+												
+												var rcvAmt = document
+												.getElementById("receivedAmt").value;
+												//alert("tot" + tot);
+												//alert("expAmt"+expAmt);
+												if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+													if ((parseFloat(tot) + parseFloat(data.remainingAmt)) > parseFloat(rcvAmt)) {
+														//alert("ist gret");
 
-													 
+														y = (parseFloat(tot) + parseFloat(data.remainingAmt))
+																- parseFloat(rcvAmt);
+														alert("ist gret"+ y);
+														flag = 1;
+													}
+												}
+														var tr = $('<tr></tr>');
+
+														if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+
+															tr
+																	.append($(
+																			'<td></td>')
+																			.html(
+																					"<input type=checkbox   name='chkItem'  checked  value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+
+														}else{
+															tr
+															.append($(
+																	'<td></td>')
+																	.html(
+																			"<input type=checkbox   name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+														}
+
+														tr.append($('<td></td>')
+																.html(key + 1));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.invoiceNo
+																						+ ""
+																						+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
 
 														tr
 																.append($(
 																		'<td></td>')
 																		.html(
-																				"<input type=checkbox  class=abc name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
+																				data.billDate
+																						+ ""
+																						+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.grandTotal
+																						+ ""
+																						+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.paidAmt
+																						+ ""
+																						+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.remainingAmt
+																						+ ""
+																						+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
 
-												 
+														if (flag == 0) {
+															
+															//alert("in if");
 
-													tr.append($('<td></td>')
-															.html(key + 1));
-													tr
-															.append($(
-																	'<td></td>')
-																	.html(
-																			data.billNo
-																					+ ""
-																					+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
+															tr
+																	.append($(
+																			'<td></td>')
+																			.html(
+																					"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																							+ data.sellBillNo
+																							+ "'  id=settleAmt"
+																							+ data.sellBillNo
+																							+ " value="
+																							+ data.remainingAmt
+																							+ "  /> &nbsp;  "));
 
-													tr
-															.append($(
-																	'<td></td>')
-																	.html(
-																			data.billDate
-																					+ ""
-																					+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
-													tr
-															.append($(
-																	'<td></td>')
-																	.html(
-																			data.billAmt
-																					+ ""
-																					+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
-													tr
-															.append($(
-																	'<td></td>')
-																	.html(
-																			data.paidAmt
-																					+ ""
-																					+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
-													tr
-															.append($(
-																	'<td></td>')
-																	.html(
-																			data.pendingAmt
-																					+ ""
-																					+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
- 
+															if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+																finTot = parseFloat(data.remainingAmt)
+																		+ (parseFloat(finTot));
+																document
+																		.getElementById("total").value = finTot
+																		.toFixed(3);
+															}
+															$("#chkItem").prop(
+																	"disabled",
+																	true);
+														}
+
+														else {
+															
+															//alert("in else");
+															var fin = parseFloat(data.remainingAmt)
+															- (parseFloat(y));
+															
+															//alert("fin"+fin);
+												
+															tr
+																	.append($(
+																			'<td></td>')
+																			.html(
+																					"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																							+ data.sellBillNo
+																							+ "'  id=settleAmt"
+																							+ data.sellBillNo
+																							+ " value="
+																							+ fin
+																							+ "  /> &nbsp;  "));
+
+														
+															if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+																finTot = fin
+																		+ (parseFloat(finTot));
+																//alert("finTot"+finTot);
+																document.getElementById("total").value = finTot
+																		.toFixed(3);
+																
+															
+															}
+															$("#chkItem").prop(
+																	"disabled",
+																	true);
+														}
+														
+														
+														$('#custCreditTable tbody')
+																.append(tr); 
+											}); 
+
+								}); 
+
+		 
+		}
+	</script>
+
+
+
+	<script type="text/javascript">
+		  
+		function showDetailsForCp()  {
+			 // alert("in recv 0");
+			  document.getElementById("total").value=0;
+
+			var finTot = 0;
+			   
+			var custId = document.getElementById("cust").value;
+
+			//var custtext = custId.options[custId.selectedIndex].innerHTML;
+		 
+
+			var creditAmt=document.getElementById("credAmt").innerHTML; 
+			
+			//document.getElementById('credCust').value=custtext;
+			document.getElementById('penAmt').value=creditAmt;
+
+			//alert(custId);
+		 
+			 
+ 				 $.post('${getCustCreditBills}',
+								{
+									cust: custId,
+									ajax: 'true'
+								},
+								function(data) {
+
+									//alert(JSON.stringify(data));
+
+									$('#custCreditTable td').remove();
+									$
+									.each(
+											data,
+											function(key, data) {
+
+	 						 
+														var tr = $('<tr></tr>');
+
+														 
+
+															tr
+																	.append($(
+																			'<td></td>')
+																			.html(
+																					"<input type=checkbox   name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
 
 													 
 
-													$('#custCreditTable tbody')
-															.append(tr);
+														tr.append($('<td></td>')
+																.html(key + 1));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.invoiceNo
+																						+ ""
+																						+ "<input type=hidden value='"+data.invoiceNo+"'  id=invoiceNo"+data.sellBillNo+"  name=invoiceNo"+data.sellBillNo+"  >"));
 
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.billDate
+																						+ ""
+																						+ "<input type=hidden value='"+data.billDate+"'  id=billDate"+data.sellBillNo+"  name=billDate"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.grandTotal
+																						+ ""
+																						+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.paidAmt
+																						+ ""
+																						+ "<input type=hidden value='"+data.paidAmt+"'  id=paidAmt"+data.sellBillNo+"  name=paidAmt"+data.sellBillNo+"  >"));
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				data.remainingAmt
+																						+ ""
+																						+ "<input type=hidden value='"+data.remainingAmt+"'  id=remainingAmt"+data.sellBillNo+"  name=remainingAmt"+data.sellBillNo+"  >"));
+	 
+														
+														tr
+														.append($(
+																'<td></td>')
+																.html(
+																		"<input type=text onkeypress='return IsNumeric(event);'   style='width:100px;border-radius:25px; font-weight:bold;text-align:center;'  readonly ondrop='return false;' min='0'  onpaste='return false;' style='text-align: center;' class='form-control' name='settleAmt"
+																				+ data.sellBillNo
+																				+ "'  id=settleAmt"
+																				+ data.sellBillNo
+																				+ " value="
+																				+ data.remainingAmt
+																				+ "  /> &nbsp;  "));
  
-												}); */
-						 
- 
+														$('#custCreditTable tbody')
+																.append(tr); 
+											}); 
 
-							});
-						 
+								}); 
+
+		 
 		}
 	</script>
+
 
 
 	<!-- Modal to show cust creadit Bill end -->
