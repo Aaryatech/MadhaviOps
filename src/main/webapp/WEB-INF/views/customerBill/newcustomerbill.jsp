@@ -1080,92 +1080,195 @@ body {
 
 	<!-- Modal to show cust creadit Bill Start -->
 	<div id="myModalForCredit" class="modal">
-
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
 
 		<div class="modal-content" style="width: 60%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
-			<p>Customer Credit Bills</p>
-			<div class="clr"></div>
-			<div>
-				<div class="add_frm_one">
-					<div class="add_customer_one"
-						style="width: 20% ! important; float: left!importan!">Customer
-						Name</div>
-					<div class="add_input"
-						style="width: 80% ! important; float: left !important">
-						<input placeholder="Customer Name" name="credCust" readonly
-							id="credCust" type="text" class="input_add" />
-					</div>
+			<form name="modalfrm" id="modalfrm" method="post">
+				<p>Customer Credit Bills</p>
+				<div class="clr"></div>
+				<div>
 
 
-
-				</div>
-				<div class="calcy_1">
 					<div class="add_frm_one">
-						<div class="add_customer_one">Pending Amount</div>
-						<div class="add_input">
-							<input placeholder="Customer Name" name="penAmt" readonly
-								onchange="trim(this)" id="penAmt" type="text" class="input_add" />
+						<div class="add_customer_one"
+							style="width: 40% ! important; float: left!importan!">
+							Customer Name:<span style="color: red; width: 80%" id="credCust"></span>
+						</div>
+						<div class="add_customer_one">
+							Pending Amount:<span style="color: red; width: 20%" id="penAmt"></span>
 						</div>
 
 					</div>
+					
 				</div>
-				<div class="calcy_2 ">
+				<div class="total_table_one" id="printDivid">
+					<div class="scrollbars" id="scrollbarsmodaldiv">
+						<table id="custCreditTable">
 
+							<thead>
+								<tr>
+									<th style="text-align: center;" width="2%"></th>
+									<th style="text-align: center;" width="2%">Sr.No</th>
+									<th style="text-align: center;">Bill No</th>
+									<th style="text-align: center;">Bill DAte</th>
+									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="13%">Paid Amt</th>
+									<th style="text-align: center;" width="13%">Pending Amt</th>
+									<th style="text-align: center;" width="2%">Paying Amt</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				 
 					<div class="add_frm_one">
-						<div class="add_customer_one">Received Amount</div>
+
+						<div class="add_frm_one">
+							<div class="add_customer_one">Received Amount</div>
+							<div class="add_input">
+								<input placeholder="Customer Name" name="receivedAmt"
+									onchange="settleCustBill()" id="receivedAmt" type="text"
+									value="0" class="input_add" />
+							</div>
+							<div class="clr"></div>
+						</div>
+						<input type="hidden" name="finTotal" id="total" value="0">
+					</div>
+				 
+				<div id="modeOfPayDiv1">
+					 
+					<div class="add_frm_one">
+						<div class="add_customer_one">Mode of Pay</div>
 						<div class="add_input">
-							<input placeholder="Customer Name" name="receivedAmt"
-								onchange="settleCustBill()" id="receivedAmt" type="text"
-								value="0" class="input_add" />
+							<div class="radio_row popup_radio">
+								<ul>
+									<li><input type="radio" id="single1" name="modePay1"
+										onclick="changeSplitSingle1(1)" checked> <label
+										for="single1">Single</label>
+										<div class="check"></div></li>
+									<li><input type="radio" id="split1" name="modePay1"
+										onclick="changeSplitSingle1(2)"> <label for="split1">Split
+									</label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li>
+								</ul>
+							</div>
 						</div>
 						<div class="clr"></div>
 					</div>
-					<input type="text" name="finTotal" id="total" value="0">
+					</div>
+					<div id="splitDiv1" style="display: none;">
+						 <div class="calcy_1">
+							<div class="add_customer_one">Cash</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cashCheck"
+											name="cashCheck" checked> &nbsp;  --> <input type="text"
+											id="cashAmt1" name="cashAmt1" class=" input_add numberOnly"
+											placeholder="Cash Ammount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							</div>
+							<div class="calcy_2">
+							
+							<div class="add_customer_one">Card</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="cardCheck"
+											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt1"
+											name="cardAmt1" class=" input_add numberOnly"
+											placeholder="Card Ammount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							</div>
+							<div class="calcy_3">
+							<div class="add_customer_one">E-Pay</div>
+							<div class="add_input">
+								<div class="radio_row popup_radio">
+									<ul>
+										<li>
+											<!-- <input type="checkbox" id="epayCheck"
+											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt1"
+											name="epayAmt1" class="input_add numberOnly"
+											placeholder="E-Pay Ammount" value="0">
+										</li>
+									</ul>
+								</div>
+							</div>
+							 
+						</div>
+ 
+					</div>
+					<div id="singleDiv1">
+						 <div class="calcy_1">
+							<div class="add_customer_one">Type</div>
+							<div class="add_input">
+								<select name="modType1" id="modType1" data-placeholder="Type"
+									class="input_add " style="text-align: left;">
+									<option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option>
+								</select>
+								 
+							</div>
+							</div>
+							 <div class="calcy_2">
+							<div class="add_customer_one">Amount</div>
+							<div class="add_input">
+								<input name="payAmt1" id="payAmt1" type="text"
+									class="input_add numberOnly" placeholder="Enter Ammount"
+									value="0" />
+							</div>
+						 
+					</div>
+					 
 				</div>
-			</div>
-			<div class="total_table_one" id="printDivid">
-				<div class="scrollbars">
-					<table id="custCreditTable">
+				 
+				
+					
+				<div class="pop_btns">
 
-						<thead>
-							<tr>
-								<th style="text-align: center;" width="2%"></th>
-								<th style="text-align: center;" width="2%">Sr.No</th>
-								<th style="text-align: center;">Bill No</th>
-								<th style="text-align: center;">Bill DAte</th>
-								<th style="text-align: center;" width="10%">Bill Amt</th>
-								<th style="text-align: center;" width="13%">Paid Amt</th>
-								<th style="text-align: center;" width="13%">Pending Amt</th>
-								<th style="text-align: center;" width="2%">Paying Amt</th>
-							</tr>
-						</thead>
-						<tbody>
+					<div class="close_r">
+					 
+						<button type="button" class="btn btn-primary" id="sbtbtn"
+							disabled="disabled">Submit</button>
+					</div>
 
-						</tbody>
-					</table>
+					<div class="clr"></div>
+
 				</div>
-			</div>
-
-			<div class="pop_btns">
-
-				<div class="close_r">
-					<a href="#" onclick="submitBillOnHold()">Submit</a>
-				</div>
-
-				<div class="clr"></div>
-			</div>
+			</form>
 		</div>
 
 
 	</div>
 
+
+
 	<script type="text/javascript">
-		 
+	
 		
 		function  settleCustBill() {
 			  document
 			.getElementById("total").value=0;
+			  
+			  var tr_count=0; 
              //alert("in recv 1");
 			var finTot = 0;
 			   
@@ -1177,7 +1280,7 @@ body {
 			var creditAmt=document.getElementById("credAmt").innerHTML; 
 			
 			//document.getElementById('credCust').value=custtext;
-			document.getElementById('penAmt').value=creditAmt;
+ 			document.getElementById("penAmt").innerHTML = creditAmt; 
 
 			//alert(custId);
 		 
@@ -1190,12 +1293,15 @@ body {
 								function(data) {
 
 									//alert(JSON.stringify(data));
+									tr_count = data.length;
 
 									$('#custCreditTable td').remove();
 									$
 									.each(
 											data,
 											function(key, data) {
+												
+												document.getElementById("credCust").innerHTML = data.userName; 
 
 												var flag = 0;
 												var y = 0;
@@ -1206,7 +1312,7 @@ body {
 												.getElementById("receivedAmt").value;
 												//alert("tot" + tot);
 												//alert("expAmt"+expAmt);
-												if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+												 
 													if ((parseFloat(tot) + parseFloat(data.remainingAmt)) > parseFloat(rcvAmt)) {
 														//alert("ist gret");
 
@@ -1215,10 +1321,10 @@ body {
 														alert("ist gret"+ y);
 														flag = 1;
 													}
-												}
+											 
 														var tr = $('<tr></tr>');
 
-														if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+														if ((parseFloat(data.remainingAmt) <= parseFloat(rcvAmt) || flag == 1 ) && (parseFloat(rcvAmt) > parseFloat(tot))  ) {
 
 															tr
 																	.append($(
@@ -1289,13 +1395,13 @@ body {
 																							+ data.remainingAmt
 																							+ "  /> &nbsp;  "));
 
-															if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+														 
 																finTot = parseFloat(data.remainingAmt)
 																		+ (parseFloat(finTot));
 																document
 																		.getElementById("total").value = finTot
 																		.toFixed(3);
-															}
+															 
 															$("#chkItem").prop(
 																	"disabled",
 																	true);
@@ -1322,7 +1428,7 @@ body {
 																							+ "  /> &nbsp;  "));
 
 														
-															if (parseFloat(data.remainingAmt) <= parseFloat(rcvAmt)) {
+														 
 																finTot = fin
 																		+ (parseFloat(finTot));
 																//alert("finTot"+finTot);
@@ -1330,7 +1436,7 @@ body {
 																		.toFixed(3);
 																
 															
-															}
+														 
 															$("#chkItem").prop(
 																	"disabled",
 																	true);
@@ -1339,7 +1445,20 @@ body {
 														
 														$('#custCreditTable tbody')
 																.append(tr); 
+														
+														
 											}); 
+									
+									if (parseFloat(	document.getElementById("total").value) <= parseFloat(document
+											.getElementById("receivedAmt").value)) {
+										$("#sbtbtn").prop("disabled", false);
+
+									} 
+									
+									if(tr_count>0){
+										 $("#scrollbarsmodaldiv").css("height", "240");
+										 
+										} 
 
 								}); 
 
@@ -1347,12 +1466,37 @@ body {
 		}
 	</script>
 
+	<script type="text/javascript">
+		$('#sbtbtn').click(function() {
+			$("#overlay").fadeIn(300);
 
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/submitResposeCredit",
+				data : $("#modalfrm").serialize(),
+				dataType : 'json',
+				success : function(data) {
+					if (data == 2) {
+						$('#custCreditTable td').remove();
+						alert("Updated Successfully")
+						$("#overlay").fadeOut(300);
+					 
+					}
+				}
+			}).done(function() {
+				setTimeout(function() {
+					$("#overlay").fadeOut(300);
+				}, 500);
+			});
+		});
+	</script>
 
 	<script type="text/javascript">
-		  
+	 
 		function showDetailsForCp()  {
+			var tr_count=0; 
 			 // alert("in recv 0");
+			 $("#scrollbarsmodaldiv").css("height", "30");
 			  document.getElementById("total").value=0;
 
 			var finTot = 0;
@@ -1365,10 +1509,10 @@ body {
 			var creditAmt=document.getElementById("credAmt").innerHTML; 
 			
 			//document.getElementById('credCust').value=custtext;
-			document.getElementById('penAmt').value=creditAmt;
+  			document.getElementById("penAmt").innerHTML = creditAmt; 
 
 			//alert(custId);
-		 
+		
 			 
  				 $.post('${getCustCreditBills}',
 								{
@@ -1376,16 +1520,18 @@ body {
 									ajax: 'true'
 								},
 								function(data) {
-
 									//alert(JSON.stringify(data));
+									
+									tr_count = data.length;
 
 									$('#custCreditTable td').remove();
+									
 									$
 									.each(
 											data,
 											function(key, data) {
-
-	 						 
+												
+												document.getElementById("credCust").innerHTML = data.userName; 
 														var tr = $('<tr></tr>');
 
 														 
@@ -1452,11 +1598,17 @@ body {
  
 														$('#custCreditTable tbody')
 																.append(tr); 
+														
+															
 											}); 
-
+									//alert(tr_count);
+					 				if(tr_count>0){
+										 $("#scrollbarsmodaldiv").css("height", "240");
+										 
+										} 
 								}); 
-
-		 
+				
+ 			 
 		}
 	</script>
 
@@ -1787,6 +1939,19 @@ body {
 			} else {
 				$("#singleDiv").show();
 				$("#splitDiv").hide();
+			}
+
+		}
+		function changeSplitSingle1(value) {
+
+			if (value == 2) {
+				$("#splitDiv1").show();
+				$("#singleDiv1").hide();
+			} else {
+				$("#singleDiv1").show();
+				
+				document.getElementById("receivedAmt").value =document.getElementById("payAmt1").value ;
+				$("#splitDiv1").hide();
 			}
 
 		}
