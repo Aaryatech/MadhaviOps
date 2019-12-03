@@ -221,9 +221,9 @@ public class OpsController {
 				 
 				try {
 					String custId = String.valueOf(session.getAttribute("advCustId"));
-					List<ItemListForCustomerBill> itemBillList1 = (List<ItemListForCustomerBill>) session
+					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
-					itemBillList = itemBillList1;
+					itemBillList = Arrays.asList(itemBillList1);
 					
 					/*
 					 * CustomerBillOnHold addNew = new CustomerBillOnHold();
@@ -233,7 +233,7 @@ public class OpsController {
 					 */
 					//System.out.println("list fro sess" + itemBillList.toString());
 					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
-					customerBillOnHold.setItemList(itemBillList1);
+					customerBillOnHold.setItemList(itemBillList);
 				
 					model.addAttribute("tempCust",0);
 					model.addAttribute("holdBill", customerBillOnHold);
@@ -248,7 +248,7 @@ public class OpsController {
 					model.addAttribute("key", 0);
 					model.addAttribute("tempCust", 0);
 					/* model.addAttribute("advKey", 0); */
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 
 			}
