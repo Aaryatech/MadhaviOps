@@ -1086,6 +1086,7 @@ body {
 
 		<div class="modal-content" style="width: 60%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
+			 
 			<form name="modalfrm" id="modalfrm" method="post">
 				<p>Customer Credit Bills</p>
 				<div class="clr"></div>
@@ -1149,11 +1150,11 @@ body {
 						<div class="add_input">
 							<div class="radio_row popup_radio">
 								<ul>
-									<li><input type="radio" id="single1" name="modePay1"
-										onclick="changeSplitSingle1(1)" checked> <label
+									<li><input type="radio" id="single1" name="modePay1" value="1"
+										onclick="changeSplitSingle1(1)"  checked="checked"> <label
 										for="single1">Single</label>
 										<div class="check"></div></li>
-									<li><input type="radio" id="split1" name="modePay1"
+									<li><input type="radio" id="split1" name="modePay1" value="2"
 										onclick="changeSplitSingle1(2)"> <label for="split1">Split
 									</label>
 										<div class="check">
@@ -1281,9 +1282,10 @@ body {
 			
 			//document.getElementById('credCust').value=custtext;
  			document.getElementById("penAmt").innerHTML = creditAmt; 
-
+ 			var x = document
+			.getElementById("receivedAmt").value;
 			//alert(custId);
-		 
+		 	document.getElementById("payAmt1").value=x ;
 			 
  				 $.post('${getCustCreditBills}',
 								{
@@ -1318,7 +1320,7 @@ body {
 
 														y = (parseFloat(tot) + parseFloat(data.remainingAmt))
 																- parseFloat(rcvAmt);
-														alert("ist gret"+ y);
+														//alert("ist gret"+ y);
 														flag = 1;
 													}
 											 
@@ -1480,6 +1482,8 @@ body {
 						$('#custCreditTable td').remove();
 						alert("Updated Successfully")
 						$("#overlay").fadeOut(300);
+						setCustAmt();
+						closeMyModal('myModalForCredit');
 					 
 					}
 				}
@@ -1949,8 +1953,9 @@ body {
 				$("#singleDiv1").hide();
 			} else {
 				$("#singleDiv1").show();
+				var x=document.getElementById("receivedAmt").value ;
 				
-				document.getElementById("receivedAmt").value =document.getElementById("payAmt1").value ;
+				document.getElementById("payAmt1").value=x ;
 				$("#splitDiv1").hide();
 			}
 

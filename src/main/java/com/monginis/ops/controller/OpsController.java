@@ -224,8 +224,10 @@ public class OpsController {
 					String custId = String.valueOf(session.getAttribute("advCustId"));
 					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
-					itemBillList = Arrays.asList(itemBillList1);
-
+					itemBillList = new ArrayList<>();
+					for(int i=0; i <itemBillList1.length ; i++) {
+					itemBillList.add(itemBillList1[i]);
+					}
 					/*
 					 * CustomerBillOnHold addNew = new CustomerBillOnHold();
 					 * addNew.setCustId(Integer.parseInt(custId)); addNew.setItemList(itemBillList);
@@ -1300,26 +1302,54 @@ public class OpsController {
 
 			String frId = (request.getParameter("frId"));
 
-			int modePay1 = Integer.parseInt(request.getParameter("modePay1")); 
-			int modType1 = Integer.parseInt(request.getParameter("modType1"));
-			
-		
+			String modePay1 = request.getParameter("modePay1"); //single/split
+			int modType2 =0;
+			int modType1 =0;
+			System.err.println("hii id list "+modePay1);
+ 		
+			String type = "0";
+			if (Integer.parseInt(modePay1)==1) {
+				  modType1 = Integer.parseInt(request.getParameter("modType1"));//cash/card
+				  modType2=1;
+				  
+				  float payAmt1 = Float.parseFloat(request.getParameter("payAmt1"));
 
-			if (modePay1 == 1) {
-
-				modType1=modType1;
+					if (modType1 ==1) {
+						cashAmt1 = payAmt1;
+						type = type + "," + 1;
+					}
+					if (modType1 ==2) {
+						cardAmt1=payAmt1;
+						type = type + "," + 2;
+					}
+					if (modType1 ==3) {
+						epayAmt1=payAmt1;	 
+						type = type + "," + 3;
+					}
+				  
+				 
 			} else {
+				System.err.println("in else");
 				float cashAmt = Float.parseFloat(request.getParameter("cashAmt1"));
 				float cardAmt = Float.parseFloat(request.getParameter("cardAmt1"));
 				float epayAmt = Float.parseFloat(request.getParameter("epayAmt1"));
+				 modType2=2;
+				
+			
 				if (cashAmt > 0) {
 					cashAmt1 = cashAmt;
+					type = type + "," + 1;
+					 System.err.println("in cashAmt"+cashAmt1);
 				}
 				if (cardAmt > 0) {
 					cardAmt1=cardAmt;
+					type = type + "," + 2;
+					 System.err.println("in cardAmt"+cardAmt1);
 				}
 				if (epayAmt > 0) {
 					epayAmt1=epayAmt;	 
+					type = type + "," + 3;
+					 System.err.println("in epayAmt"+epayAmt1);
 				}
 				 
 			}
@@ -1343,14 +1373,14 @@ public class OpsController {
 				expTrans.setCashAmt(cashAmt1);
 				expTrans.setDiscType(0);
 				expTrans.setePayAmt(epayAmt1);
-				expTrans.setePayType(modePay1);
-				expTrans.setPayMode(modType1);
+				expTrans.setePayType(0);
+				expTrans.setPayMode(modType2);
 				expTrans.setTransactionDate(sf.format(date));
 
 				expTrans.setExInt2(0);
 				expTrans.setExInt1(0);
-				expTrans.setExVar1(String.valueOf(pendingAmt - settleAmt));// +prodMixingReqP1.get(i).getMulFactor()
-				expTrans.setExVar2("");
+				expTrans.setExVar1(type);// +prodMixingReqP1.get(i).getMulFactor()
+				expTrans.setExVar2(String.valueOf(pendingAmt - settleAmt));
 				expTrans.setExFloat1(billAmt);
 				expTrans.setExFloat2(0);
 
