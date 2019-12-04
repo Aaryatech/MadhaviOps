@@ -94,6 +94,11 @@
 
 							</tr>
 							<tr>
+								<td align="left">Place of Supply:</td>
+								<td align="left" colspan="3">Gujarat</td>
+
+							</tr>
+							<tr>
 								<td>Name</td>
 								<td colspan="3">${sellBillHeaderAndDetail.custName}</td>
 

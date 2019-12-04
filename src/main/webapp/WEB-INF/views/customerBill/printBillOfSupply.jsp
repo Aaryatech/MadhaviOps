@@ -90,6 +90,11 @@
 
 							</tr>
 							<tr>
+								<td align="left">Place of Supply:</td>
+								<td align="left" colspan="3">Gujarat</td>
+
+							</tr>
+							<tr>
 								<td colspan="4"><table width="100%" border="0"
 										cellspacing="0" cellpadding="4" class="tbl-inner">
 
