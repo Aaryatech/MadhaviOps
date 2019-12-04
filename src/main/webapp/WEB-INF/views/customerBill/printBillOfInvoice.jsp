@@ -199,19 +199,30 @@
 							</tr>
 						</c:forEach>
 
+					
 						<tr>
+							<td align="left"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+								>With You @ Your Great Moments <br>
+								 For wholesale inquiry contact DairyMart Team 82600 60049/50<br>
+								 visit us on  www.madhvi.in<br>
+								 Email feedback/suggestions on madhvidairy<br>
+								 This is a computer generated invoice </span>
+						  </td>
+			           </tr>	
+			           <tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
 								style="font-weight: bold;">Thank You, Visit Again !!! </span></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td style="border-top: 1px solid #E7E7E7; padding: 2px;"
 								colspan="6">-For wholesale inquiry contact DairyMart Team
-								82600 60049/50<br>-visit us on www.madhvi.in<br>-Email
+								<br>-visit us on www.madhvi.in<br>-Email
 								feedback/suggestions on madhvidairy@gmail.com<br>-This is a
 								computer generated invoice
 							</td>
-						</tr>
+						</tr> -->
 					</table></td>
 			</tr>
 			<%-- <tr>

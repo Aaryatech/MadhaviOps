@@ -146,6 +146,36 @@
 				<td colspan="2"><table width="100%" border="0" cellspacing="0"
 						cellpadding="7">
 						<tr>
+							<td align="left"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+								>With You @ Your Great Moments <br>
+								 For wholesale inquiry contact DairyMart Team 82600 60049/50<br>
+								 visit us on  www.madhvi.in<br>
+								 Email feedback/suggestions on madhvidairy<br>
+								 This is a computer generated invoice </span></td>
+						</tr>
+
+					</table></td>
+			</tr>
+			<c:choose>
+							<c:when test="${frDetails.frGstType!=0}">
+			<tr>
+				<td colspan="2"><table width="100%" border="0" cellspacing="0"
+						cellpadding="7">
+						<tr>
+							<td align="center"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+								>Composition Taxable Person,Not eligible to collect Tax on Supplies</span></td>
+						</tr>
+
+					</table></td>
+			</tr>
+			</c:when>
+			</c:choose>
+			<tr>
+				<td colspan="2"><table width="100%" border="0" cellspacing="0"
+						cellpadding="7">
+						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
 								style="font-weight: bold;">Thank You, Visit Again !!! </span></td>

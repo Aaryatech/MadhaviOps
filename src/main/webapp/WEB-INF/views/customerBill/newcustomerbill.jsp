@@ -179,7 +179,7 @@ body {
 					<select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select"
 						style="text-align: left;" onchange="revertHoldBillOnCurrent()">
-						<option value="" style="text-align: left;" selected>Select
+						<option value="" style="text-align: left;" disabled="disabled" selected>Select
 							Bill No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
 						<c:choose>
@@ -668,10 +668,14 @@ body {
 									class="input_add" style="text-align: left;"
 									required>
 					<option value="0" style="text-align: left;">Customer Age-Group</option>
-					<option value="16-18">16-18</option>  
-					<option value="19-25">19-25</option>
-					<option value="26-45">26-45</option>
-					<option value="46-60">46-60</option>
+					<option value="14-21">14-21 Years</option>  
+					<option value="22-28">22-28 Years</option>
+					<option value="29-35">29-35 Years</option>
+					<option value="36-42">36-42 Years </option>
+					<option value="43-49">43-49 Years</option>
+					<option value="50-56">50-56 Years</option>
+					<option value="57 & above">57 & above</option>
+					
 				</select>
 				</div>
 				</div>
@@ -1168,7 +1172,7 @@ body {
 							<thead>
 								<tr>
 									<th style="text-align: center;" width="2%"></th>
-									<th style="text-align: center;" width="2%">Sr.No</th>
+									<th style="text-align: center;" width="2%">Sr</th>
 									<th style="text-align: center;">Bill No</th>
 									<th style="text-align: center;">Bill DAte</th>
 									<th style="text-align: center;" width="10%">Bill Amt</th>
@@ -2508,7 +2512,7 @@ $("#enterQty").focus();
 					$('#itemBillTable tr').remove();
 					
 					var mainTrStr = '<tr>'
-					+'<th style="text-align: center;" width="2%">Sr.No</th>'
+					+'<th style="text-align: center;" width="2%">Sr</th>'
 					+'<th style="text-align: center;">Product</th>'
 					+'<th style="text-align: center;" width="10%">QTY</th>'
 					+'<th style="text-align: center;" width="10%">UOM</th>'
