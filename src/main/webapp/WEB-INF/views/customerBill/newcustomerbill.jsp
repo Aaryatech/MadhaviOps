@@ -1470,7 +1470,9 @@ body {
 
 	<script type="text/javascript">
 		$('#sbtbtn').click(function() {
-			$("#overlay").fadeIn(300);
+		 
+			
+			document.getElementById("overlay2").style.display = "block";
 
 			$.ajax({
 				type : "POST",
@@ -1480,9 +1482,11 @@ body {
 				success : function(data) {
 					if (data == 2) {
 						$('#custCreditTable td').remove();
+						document.getElementById("overlay2").style.display = "";
 						alert("Updated Successfully")
 						$("#overlay").fadeOut(300);
 						setCustAmt();
+					
 						closeMyModal('myModalForCredit');
 					 
 					}
