@@ -56,6 +56,7 @@ import com.monginis.ops.model.Message;
 import com.monginis.ops.model.MessageListResponse;
 import com.monginis.ops.model.SchedulerList;
 import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.posdash.PosDashCounts;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -133,7 +134,8 @@ public class HomeController {
 	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
 		ModelAndView model = new ModelAndView("home");
-		HttpSession session = request.getSession();
+ 		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		RestTemplate restTemplate = new RestTemplate();
 		try {
 			ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
@@ -201,6 +203,24 @@ public class HomeController {
 			model.addObject("isSpDayShow", spDayShow);
 
 			logger.info("/login request mapping.");
+			
+			
+			//*******************************Dashboard counts ws consumption*****************
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			map.add("frRateCat", frDetails.getFrRateCat());
+			map.add("fromDate", sf.format(date));
+			map.add("toDate", sf.format(date));
+			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts",map,
+					PosDashCounts.class);
+			
+			model.addObject("countDetails", countDet);
+
+ 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
