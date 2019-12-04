@@ -157,13 +157,10 @@ public class StockController {
 
 			isMonthCloseApplicable = true;
 			System.out.println("Day Of Month End ......");
-
 		}
-
 		try {
-
-			categoryList = restTemplate.getForObject(Constant.URL + "showAllCategory", CategoryList.class);
-
+             categoryList = restTemplate.getForObject(Constant.URL + "findAllCatForStock",
+					CategoryList.class);
 		} catch (Exception e) {
 			System.out.println("Exception in getAllGategory" + e.getMessage());
 			e.printStackTrace();
@@ -1373,7 +1370,7 @@ public class StockController {
 
 					}
 
-					menuIdList.add(26);
+					menuIdList.add(1);
 
 				} else if (catId.equalsIgnoreCase("2")) {
 					menuIdList =new ArrayList<>();
@@ -1385,7 +1382,7 @@ public class StockController {
 						}
 
 					}
-						menuIdList.add(82);
+						menuIdList.add(5);
 				} else if (catId.equalsIgnoreCase("3")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1395,7 +1392,7 @@ public class StockController {
 						}
 
 					}
-					menuIdList.add(33);
+					menuIdList.add(2);
 				} else if (catId.equalsIgnoreCase("4")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1405,7 +1402,7 @@ public class StockController {
 						}
 
 					}
-					menuIdList.add(34);
+					menuIdList.add(6);
 				} else if (catId.equalsIgnoreCase("6")) {
 					menuIdList =new ArrayList<>();
 					for (PostFrItemStockHeader header : list) {
@@ -1570,8 +1567,8 @@ public class StockController {
 			StringBuilder builder = new StringBuilder();
 			for (FrMenu frMenu : menuList) {
 
-				if (frMenu.getMenuId() == 26 || frMenu.getMenuId() == 31 || frMenu.getMenuId() == 33
-						|| frMenu.getMenuId() == 34 || frMenu.getMenuId()==63|| frMenu.getMenuId()==66|| frMenu.getMenuId()==68|| frMenu.getMenuId()==81|| frMenu.getMenuId()==82||frMenu.getMenuId()==86) {
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 5
+						|| frMenu.getMenuId() == 6 || frMenu.getMenuId()==7|| frMenu.getMenuId()==42) {
 
 					builder.append("," + frMenu.getItemShow());
 
@@ -1669,13 +1666,13 @@ public class StockController {
 
 				sellBillDetail.setCatId(customerBillItemList.get(i).getCatId());
 				sellBillDetail.setSgstPer(tax1);
-				sellBillDetail.setSgstRs(sgstRs);
+				sellBillDetail.setSgstRs(0);//
 				sellBillDetail.setCgstPer(tax2);
-				sellBillDetail.setCgstRs(cgstRs);
+				sellBillDetail.setCgstRs(0);//
 				sellBillDetail.setDelStatus(0);
-				sellBillDetail.setGrandTotal(grandTotal);
+				sellBillDetail.setGrandTotal(0.1f);//
 				sellBillDetail.setIgstPer(tax3);
-				sellBillDetail.setIgstRs(igstRs);
+				sellBillDetail.setIgstRs(0);//
 				sellBillDetail.setItemId(customerBillItemList.get(i).getId());
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
@@ -1686,12 +1683,12 @@ public class StockController {
 				sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());
 
 				sumMrp = sumMrp + (rate * qty);
-				sumTaxableAmt = sumTaxableAmt + taxableAmt;
+				sumTaxableAmt = sumTaxableAmt + 0.1f;
 				sumTotalTax = sumTotalTax + totalTax;
-				sumGrandTotal = sumGrandTotal + grandTotal;
+				sumGrandTotal = sumGrandTotal + 0.1f;
 
-				sellBillDetail.setTaxableAmt(taxableAmt);
-				sellBillDetail.setTotalTax(totalTax);
+				sellBillDetail.setTaxableAmt(0.1f);//
+				sellBillDetail.setTotalTax(0);//
 
 				sellBillDetailList.add(sellBillDetail);
 
@@ -1709,41 +1706,20 @@ public class StockController {
 			sellBillHeader.setSellBillNo(0);
 			sellBillHeader.setUserGstNo("-");
      		sellBillHeader.setUserPhone("-");
-
-			System.out.println("Sell Bill Header: " + sellBillHeader.toString());
-			
-			
 			sellBillHeader.setTaxableAmt(sumTaxableAmt);
 			sellBillHeader.setDiscountPer(0);
 		
-			float payableAmt = sumGrandTotal;
-			sellBillHeader.setPaidAmt(Math.round(payableAmt));
-			payableAmt = roundUp(payableAmt);
+			float payableAmt =sumGrandTotal;
+			sellBillHeader.setPaidAmt(payableAmt);
 
-			sellBillHeader.setDiscountAmt(sumMrp);
-			sellBillHeader.setPayableAmt(Math.round(payableAmt));
+			sellBillHeader.setDiscountAmt(0);//
+			sellBillHeader.setPayableAmt(payableAmt);
 			System.out.println("Payable amt  : " + payableAmt);
-			sellBillHeader.setTotalTax(sumTotalTax);
-			sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
-
-			float calRemainingTotal = (payableAmt - payableAmt);
-
-			if (calRemainingTotal < 0) {
-				sellBillHeader.setRemainingAmt(0);
-
-			} else {
-
-				sellBillHeader.setRemainingAmt(calRemainingTotal);
-			}
-			if (calRemainingTotal <= 0) {
-
-				sellBillHeader.setStatus(1);
-			} else if (calRemainingTotal == payableAmt) {
-				sellBillHeader.setStatus(2);
-
-			} else if (payableAmt > calRemainingTotal) {
-				sellBillHeader.setStatus(3);
-			}
+			sellBillHeader.setTotalTax(0);//
+			sellBillHeader.setGrandTotal(sumGrandTotal);
+            sellBillHeader.setRemainingAmt(0);
+            sellBillHeader.setStatus(1);
+			
 
 			sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 			System.out.println("Sell Bill Detail: " + sellBillHeader.toString());

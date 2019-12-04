@@ -6,6 +6,7 @@ public class ItemListForCustomerBill {
 	private float orignalMrp;
 	private float qty; 
 	private String itemName;
+	private String uom;
 	private float taxPer;
 	private float taxableAmt;
 	private float taxAmt;
@@ -58,13 +59,18 @@ public class ItemListForCustomerBill {
 	public void setTotal(float total) {
 		this.total = total;
 	}
+	
+	public String getUom() {
+		return uom;
+	}
+	public void setUom(String uom) {
+		this.uom = uom;
+	}
 	@Override
 	public String toString() {
 		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", qty=" + qty
-				+ ", itemName=" + itemName + ", taxPer=" + taxPer + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt
-				+ ", total=" + total + "]";
+				+ ", itemName=" + itemName + ", uom=" + uom + ", taxPer=" + taxPer + ", taxableAmt=" + taxableAmt
+				+ ", taxAmt=" + taxAmt + ", total=" + total + "]";
 	}
 	
-	
-
 }

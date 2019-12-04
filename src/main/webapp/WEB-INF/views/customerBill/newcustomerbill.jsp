@@ -182,7 +182,13 @@ body {
 						<option value="" style="text-align: left;" selected>Select
 							Bill No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
-							<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
+						<c:choose>
+						<c:when test="${holdingList.key==key}">
+						<option value="${holdingList.key}" style="text-align: left;" selected>${holdingList.value.tempCustomerName}</option>
+						</c:when><c:otherwise>
+						<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
+						</c:otherwise>
+						</c:choose>
 						</c:forEach>
 					</select>
 					<div class="logout_btn">
@@ -345,11 +351,11 @@ body {
 										<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
 										<tr>
 											<td>${count.index+1}</td>
-											<td>${itemList.itemName}</td>
+											<td> ${itemList.itemName} </td>
 											<td style="text-align: right;"
-												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}')"><fmt:formatNumber
+												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}')" ><fmt:formatNumber
 													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="3" minFractionDigits="3" /></td>
+													maxFractionDigits="3" minFractionDigits="3" /> ${itemList.uom}</td>
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.orignalMrp}" maxFractionDigits="0"
@@ -619,6 +625,53 @@ body {
 							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
 					</div>
 					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Gender</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" type="radio" name="gender"
+									id="moption" checked value="1"> <label
+									for="moption" >M</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="foption" name="gender"
+									value="2" > <label for="foption">F
+								</label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+					<div class="add_frm_one">
+					<div class="add_customer_one">Type</div>
+					<div class="add_input">
+				<select name="custType" id="custType" data-placeholder="Customer Type"
+									class="input_add" style="text-align: left;"
+									required>
+					<option value="0" style="text-align: left;">Select Customer Type</option>
+					<option value="1">Owner</option>
+					<option value="2">Employee</option>
+					<option value="3">Customer</option>
+				</select>
+				</div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Age-Group</div>
+					<div class="add_input">
+				<select name="ageRange" id="ageRange" data-placeholder="Customer Age-Group"
+									class="input_add" style="text-align: left;"
+									required>
+					<option value="0" style="text-align: left;">Customer Age-Group</option>
+					<option value="16-18">16-18</option>  
+					<option value="19-25">19-25</option>
+					<option value="26-45">26-45</option>
+					<option value="46-60">46-60</option>
+				</select>
+				</div>
 				</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Business</div>
@@ -921,6 +974,7 @@ body {
 							name="itemIdHidden" id="itemIdHidden" type="hidden" /><input
 							name="taxperHidden" id="taxperHidden" type="hidden" /><input
 							name="itemNameHidden" id="itemNameHidden" type="hidden" />
+							<input	name="uomHidden" id="uomHidden" type="hidden" />
 						<div class="cal_quan">
 							<div class="qty_l">QTY</div>
 							<div class="qty_m">
@@ -1754,7 +1808,16 @@ body {
 									document.getElementById("mobileNo").value = data.phoneNumber;
 									document.getElementById("custId").value = data.custId;
 									document.getElementById("dateOfBirth").value = data.custDob;
-
+									if (data.gender == 1) {
+										document.getElementById("moption").checked = true;
+										}else{
+										document.getElementById("foption").checked = true;
+										}
+										document.getElementById("custType").value =data.exInt1;
+										$("#custType").trigger("chosen:updated");
+										document.getElementById("ageRange").value =data.ageGroup;
+										$("#ageRange").trigger("chosen:updated");
+										$('.chosen-select').trigger('chosen:updated');
 									if (data.isBuissHead == 1) {
 
 										$("#isbuissnessdiv").show();
@@ -1782,6 +1845,12 @@ body {
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
 			var dateOfBirth = document.getElementById("dateOfBirth").value;
+			var custType = document.getElementById("custType").value;
+			var ageRange = document.getElementById("ageRange").value;
+			var gender = 2;
+			if (document.getElementById('moption').checked) {
+				gender = 1;
+			}
 			//var isBuissness = document.getElementById("isBuissness").value;
 			var buisness = 0;
 			if (document.getElementById('y-option').checked) {
@@ -1801,6 +1870,13 @@ body {
 				flag = 1;
 			} else if (dateOfBirth == "") {
 				alert("Enter Date of Birth");
+				flag = 1;
+			}else if (custType == 0) {
+				alert("Please Select Customer Type");
+				flag = 1;
+			}
+			else if (ageRange == 0) {
+				alert("Please Select Age Group");
 				flag = 1;
 			} else if (buisness == 1) {
 
@@ -1829,6 +1905,9 @@ body {
 									gstNo : gstNo,
 									custAdd : custAdd,
 									custId : custId,
+									custType:custType,
+									ageRange:ageRange,
+									gender:gender,
 									ajax : 'true'
 								},
 								function(data) {
@@ -1874,6 +1953,12 @@ body {
 										document.getElementById("gstNo").value = "";
 										document.getElementById("custAdd").value = "";
 										document.getElementById("custId").value = 0;
+										document.getElementById("moption").checked = true;
+										document.getElementById("custType").value ="0";
+										$("#custType").trigger("chosen:updated");
+										document.getElementById("ageRange").value ="0";
+										$("#ageRange").trigger("chosen:updated");
+										$('.chosen-select').trigger('chosen:updated');
 										document
 												.getElementById("add_cust_head_name").innerHTML = "Add Customer";
 										$("#isbuissnessdiv").hide();
@@ -1974,9 +2059,16 @@ body {
 			document.getElementById("gstNo").value = "";
 			document.getElementById("custAdd").value = "";
 			document.getElementById("custId").value = 0;
+			document.getElementById("moption").checked = true;
+			document.getElementById("custType").value ="0";
+			$("#custType").trigger("chosen:updated");	
+			document.getElementById("ageRange").value ="0";
+		    $("#ageRange").trigger("chosen:updated");
+			$('.chosen-select').trigger('chosen:updated');
 			document.getElementById("add_cust_head_name").innerHTML = "Add Customer";
 			$("#isbuissnessdiv").hide();
 		}
+
 
 		function getItemList(catId) {
 			//alert(catId)
@@ -2012,7 +2104,7 @@ body {
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')"><p>'
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')"><p>'
 									+ mrp
 									+ ' </p> '
 									+ data[i].itemName
@@ -2026,7 +2118,7 @@ body {
 									$("#itemDiv")
 									.append(
 											$(
-											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
+											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')">'+timeDiv+'</li>'));
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
 								 $(".scrollbar-content").css("top", "0");
@@ -2162,7 +2254,7 @@ body {
 									$("#itemDiv")
 											.append(
 													$(
-													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\')">'+timeDiv+'</li>'));
+													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')">'+timeDiv+'</li>'));
 															 
 								}
 							//	$('#scrollDiv').removeClass('carlist_scrollbars');
@@ -2292,34 +2384,35 @@ body {
 		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 		});
 	
-		function opnItemPopup(taxper,itemId,mrp,itemName) {
-					document.getElementById("enterRate").value = 0;
-					document.getElementById("enterQty").value = 0;
-			$.post('${editItemQty}',
-					{
-						itemId: itemId,
-						ajax : 'true'
-					},
-					function(data) {
-						document.getElementById("enterQty").value = data.qty;
-						document.getElementById("enterRate").value = data.total;
+function opnItemPopup(taxper,itemId,mrp,itemName,uom) {
+		document.getElementById("enterRate").value = 0;
+		document.getElementById("enterQty").value = 0;
+$.post('${editItemQty}',
+		{
+			itemId: itemId,
+			ajax : 'true'
+		},
+		function(data) {
+			document.getElementById("enterQty").value = data.qty;
+			document.getElementById("enterRate").value = data.total;
 
-					});
-			$('#quantity').popup('show');
-			
-			document
-			.getElementById("itemNmaeHeadeing").innerHTML = itemName;
-			
-			document.getElementById("rateHidden").value = mrp;
-			document.getElementById("taxperHidden").value = taxper;
-			document.getElementById("itemNameHidden").value = itemName;
-			document.getElementById("itemIdHidden").value = itemId;
-			document
-			.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
-			$("#enterQty").focus(); 
-			
-			
-		}
+		});
+$('#quantity').popup('show');
+
+document
+.getElementById("itemNmaeHeadeing").innerHTML = itemName;
+
+document.getElementById("rateHidden").value = mrp
+document.getElementById("taxperHidden").value = taxper;
+document.getElementById("itemNameHidden").value = itemName;
+document.getElementById("itemIdHidden").value = itemId;
+document.getElementById("uomHidden").value = uom;
+document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
+document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
+$("#enterQty").focus(); 
+
+
+}
 		function itemRateCalculation(flag) {
 			
 			var rateHidden = parseFloat($('#rateHidden').val());
@@ -2345,6 +2438,7 @@ body {
 			var qty = parseFloat($('#enterQty').val());
 			var itemIdHidden =  $('#itemIdHidden').val() ;
 			var itemNameHidden =  $('#itemNameHidden').val() ;
+			var uomHidden =  $('#uomHidden').val() ;
 			var taxperHidden =  $('#taxperHidden').val() ;
 			var flag=0;
 			if(isNaN(rate) || rate==0){
@@ -2368,6 +2462,7 @@ body {
 							itemIdHidden : itemIdHidden, 
 							itemNameHidden : itemNameHidden,
 							taxperHidden : taxperHidden,
+							uom:uomHidden,
 							ajax : 'true'
 						},
 						function(data) {
@@ -2445,9 +2540,9 @@ body {
 														item.itemName));
 								tr
 								.append($(
-										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\')"></td>')
+										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\',\''+item.extVar3+'\')"></td>')
 										.html(
-												(item.qty).toFixed(3))); 
+												((item.qty).toFixed(3))+" "+item.uom)); 
 								tr
 										.append($(
 												'<td style="text-align: right;"></td>')

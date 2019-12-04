@@ -217,17 +217,17 @@ a:hover {
                                                  <td class="col-md-1">${stockDetailList.currentRegStock}</td>
                                                  <td class="col-md-1"><c:choose>
                                                  <c:when test="${flag==0}">
-                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.itemId}" id="physicalQty${stockDetailList.itemId}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.itemId},${stockDetailList.currentRegStock})"/>
+                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.id}" id="physicalQty${stockDetailList.id}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.id},${stockDetailList.currentRegStock})"/>
                                                  </c:when>
                                                  <c:otherwise>
-                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.itemId}" id="physicalQty${stockDetailList.itemId}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.itemId},${stockDetailList.currentRegStock})" readonly/>
+                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.id}" id="physicalQty${stockDetailList.id}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.id},${stockDetailList.currentRegStock})" readonly/>
                                                  </c:otherwise>
                                                  </c:choose>
                                                 </td>
-                                                <input type="hidden" name="qty${stockDetailList.itemId}" id="qty${stockDetailList.itemId}"  />
-                                                 <td class="col-md-1" id="billQty${stockDetailList.itemId}">0 </td>
+                                                <input type="hidden" name="qty${stockDetailList.id}" id="qty${stockDetailList.id}"  />
+                                                 <td class="col-md-1" id="billQty${stockDetailList.id}">0 </td>
                                                  <td class="col-md-1">${stockDetailList.spTotalPurchase}</td>
-                                                 <td class="col-md-1" id="total${stockDetailList.itemId}">0</td>
+                                                 <td class="col-md-1" id="total${stockDetailList.id}">0</td>
 												</tr>
  										 	</c:if>  
  										 </c:forEach>
@@ -348,29 +348,21 @@ a:hover {
             }    
            
         </script>
-
 <script type="text/javascript">
 		function onChange(rate,id,stkQty) {
-
-			//calculate total value  
 			var qty = $('#physicalQty'+id).val();
-			
-			if(qty<stkQty){
+			if(qty<=stkQty){
 				var insertQty=stkQty-qty;
-				
 			    var total = rate * insertQty;
 			   $('#billQty'+id).html(insertQty);
 			   $('#qty'+id).val(insertQty);
 			   $('#total'+id).html(total.toFixed(2));
 			}else
 			{   alert("Please Enter Valid Qty!!");
-				
 				$('#total'+id).html(0);$('#physicalQty'+id).val(0);
 			}
 		}
-	</script>
-
-
+</script>
 <script type="text/javascript">
 		function onKeyDown(id) {
 			alert("alert");

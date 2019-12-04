@@ -990,6 +990,7 @@ public class OpsController {
 			int itemId = Integer.parseInt(request.getParameter("itemIdHidden"));
 			float taxperHidden = Float.parseFloat(request.getParameter("taxperHidden"));
 			String itemNameHidden = request.getParameter("itemNameHidden");
+			String uom = request.getParameter("uom");
 
 			/*
 			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
@@ -1014,6 +1015,7 @@ public class OpsController {
 				add.setItemId(itemId);
 				add.setItemName(itemNameHidden);
 				add.setOrignalMrp(orignalrate);
+				add.setUom(uom);
 				add.setTotal(total);
 				add.setQty(qty);
 				add.setTaxPer(taxperHidden);
@@ -1092,6 +1094,9 @@ public class OpsController {
 			String gstNo = request.getParameter("gstNo");
 			String custAdd = request.getParameter("custAdd");
 			int custId = Integer.parseInt(request.getParameter("custId"));
+			int custType = Integer.parseInt(request.getParameter("custType"));
+			String ageRange = request.getParameter("ageRange");
+			int gender = Integer.parseInt(request.getParameter("gender"));
 
 			Customer save = new Customer();
 			save.setCustName(customerName);
@@ -1103,6 +1108,8 @@ public class OpsController {
 			save.setGstNo(gstNo);
 			save.setDelStatus(1);
 			save.setCustId(custId);
+			
+			save.setAgeGroup(ageRange);save.setExInt1(custType);save.setGender(gender);
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
