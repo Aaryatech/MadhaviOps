@@ -413,7 +413,7 @@ label:before {
 	margin-right:10px;
 	position: absolute;
 	left:0; top:0px;
-	background-color:#fff; border:0px solid #ccc;
+	/* background-color:#fff;  */border:0px solid #ccc;
 	border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;-o-border-radius:4px;
 }
 
@@ -448,7 +448,7 @@ input[type=checkbox]:checked + label:before {
 
 table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto; margin: 1.5em 0; background-color: transparent;}
 .responsive-table th{padding: 8px 3px; vertical-align: top; background: #ed3f3c !important; color: #fff !important; font-size: 16px;}
-.responsive-table tr:nth-child(2n+1) {background: #fffda6;}
+.responsive-table tr:nth-child(2n+1) {background: #fffed9;}
 .responsive-table td{text-align: right; padding: 10px; font-size: 18px;}
 #insertItemButton,#printExBill {margin: 0 0 15px 0; }
 

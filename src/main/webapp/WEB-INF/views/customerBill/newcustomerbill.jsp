@@ -337,12 +337,14 @@ body {
 
 								<thead>
 									<tr>
-										<th style="text-align: center;" width="2%">Sr.No</th>
+										<th style="text-align: center;" width="2%">Sr</th>
 										<th style="text-align: center;">Product</th>
 										<th style="text-align: center;" width="10%">QTY</th>
+										<th style="text-align: center;" width="10%">UOM</th>
+										
 										<th style="text-align: center;" width="13%">Price</th>
 										<th style="text-align: center;" width="13%">Total</th>
-										<th style="text-align: center;" width="2%">Delete</th>
+										<th style="text-align: center;" width="2%">Del</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -351,11 +353,11 @@ body {
 										<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
 										<tr>
 											<td>${count.index+1}</td>
-											<td> ${itemList.itemName} </td>
+											<td style=""> ${itemList.itemName} </td>
 											<td style="text-align: right;"
 												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}')" ><fmt:formatNumber
 													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="3" minFractionDigits="3" /> ${itemList.uom}</td>
+													maxFractionDigits="3" minFractionDigits="3" /></td><td> ${itemList.uom}</td>
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.orignalMrp}" maxFractionDigits="0"
@@ -2509,9 +2511,10 @@ $("#enterQty").focus();
 					+'<th style="text-align: center;" width="2%">Sr.No</th>'
 					+'<th style="text-align: center;">Product</th>'
 					+'<th style="text-align: center;" width="10%">QTY</th>'
+					+'<th style="text-align: center;" width="10%">UOM</th>'
 					+'<th style="text-align: center;" width="13%">Price</th>' 
 					+'<th style="text-align: center;" width="13%">Total</th>'
-					+'<th style="text-align: center;" width="2%">Delete</th>'
+					+'<th style="text-align: center;" width="2%">Del</th>'
 					+'</tr>';
 				var mainTr = $(mainTrStr);
 				$('#itemBillTable tbody').append(
@@ -2542,7 +2545,11 @@ $("#enterQty").focus();
 								.append($(
 										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\',\''+item.extVar3+'\')"></td>')
 										.html(
-												((item.qty).toFixed(3))+" "+item.uom)); 
+												((item.qty).toFixed(3)))); 
+								tr
+								.append($(
+										'<td style="text-align: right;"></td>')
+										.html(item.uom)); 
 								tr
 										.append($(
 												'<td style="text-align: right;"></td>')
