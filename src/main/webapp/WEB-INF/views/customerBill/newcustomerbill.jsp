@@ -1189,8 +1189,24 @@ body {
 				</div>
 				
 				 
-					<div class="add_frm_one">
-
+				 
+				 
+					
+					<div id="singleDiv1">
+						 <div class="calcy_1">
+							<div class="add_customer_one">Type</div>
+							<div class="add_input">
+								<select name="modType1" id="modType1" data-placeholder="Type"
+									class="input_add " style="text-align: left;">
+									<option value="1" style="text-align: left;" selected>Cash</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option>
+								</select>
+								 
+							</div>
+							</div>
+							 <div class="calcy_2">
+							
 						<div class="add_frm_one">
 							<div class="add_customer_one">Received Amount</div>
 							<div class="add_input">
@@ -1201,9 +1217,13 @@ body {
 							<div class="clr"></div>
 						</div>
 						<input type="hidden" name="finTotal" id="total" value="0">
+						 
 					</div>
+					 
+				</div>
 				 
-				<div id="modeOfPayDiv1">
+				 
+				<!-- <div id="modeOfPayDiv1">
 					 
 					<div class="add_frm_one">
 						<div class="add_customer_one">Mode of Pay</div>
@@ -1225,16 +1245,16 @@ body {
 						</div>
 						<div class="clr"></div>
 					</div>
-					</div>
-					<div id="splitDiv1" style="display: none;">
+					</div> -->
+					<!-- <div id="splitDiv1" style="display: none;">
 						 <div class="calcy_1">
 							<div class="add_customer_one">Cash</div>
 							<div class="add_input">
 								<div class="radio_row popup_radio">
 									<ul>
 										<li>
-											<!-- <input type="checkbox" id="cashCheck"
-											name="cashCheck" checked> &nbsp;  --> <input type="text"
+											<input type="checkbox" id="cashCheck"
+											name="cashCheck" checked> &nbsp;  <input type="text"
 											id="cashAmt1" name="cashAmt1" class=" input_add numberOnly"
 											placeholder="Cash Ammount" value="0">
 										</li>
@@ -1249,8 +1269,8 @@ body {
 								<div class="radio_row popup_radio">
 									<ul>
 										<li>
-											<!-- <input type="checkbox" id="cardCheck"
-											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt1"
+											<input type="checkbox" id="cardCheck"
+											name="cardCheck"> &nbsp;  <input type="text" id="cardAmt1"
 											name="cardAmt1" class=" input_add numberOnly"
 											placeholder="Card Ammount" value="0">
 										</li>
@@ -1264,8 +1284,8 @@ body {
 								<div class="radio_row popup_radio">
 									<ul>
 										<li>
-											<!-- <input type="checkbox" id="epayCheck"
-											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt1"
+											<input type="checkbox" id="epayCheck"
+											name="epayCheck"> &nbsp;  <input type="text" id="epayAmt1"
 											name="epayAmt1" class="input_add numberOnly"
 											placeholder="E-Pay Ammount" value="0">
 										</li>
@@ -1275,32 +1295,8 @@ body {
 							 
 						</div>
  
-					</div>
-					<div id="singleDiv1">
-						 <div class="calcy_1">
-							<div class="add_customer_one">Type</div>
-							<div class="add_input">
-								<select name="modType1" id="modType1" data-placeholder="Type"
-									class="input_add " style="text-align: left;">
-									<option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Card</option>
-									<option value="3" style="text-align: left;">E-Pay</option>
-								</select>
-								 
-							</div>
-							</div>
-							 <div class="calcy_2">
-							<div class="add_customer_one">Amount</div>
-							<div class="add_input">
-								<input name="payAmt1" id="payAmt1" type="text"
-									class="input_add numberOnly" placeholder="Enter Ammount"
-									value="0" />
-							</div>
-						 
-					</div>
-					 
-				</div>
-				 
+					</div> -->
+					
 				
 					
 				<div class="pop_btns">
@@ -1345,7 +1341,7 @@ body {
  			var x = document
 			.getElementById("receivedAmt").value;
 			//alert(custId);
-		 	document.getElementById("payAmt1").value=x ;
+		  
 			 
  				 $.post('${getCustCreditBills}',
 								{
@@ -2050,7 +2046,7 @@ body {
 				$("#singleDiv1").show();
 				var x=document.getElementById("receivedAmt").value ;
 				
-				document.getElementById("payAmt1").value=x ;
+			 
 				$("#splitDiv1").hide();
 			}
 

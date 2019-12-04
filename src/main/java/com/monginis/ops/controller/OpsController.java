@@ -1317,52 +1317,9 @@ public class OpsController {
 			int modType2 = 0;
 			int modType1 = 0;
 			System.err.println("hii id list " + modePay1);
-
+			modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
 			String type = "0";
-			if (Integer.parseInt(modePay1) == 1) {
-				modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
-				modType2 = 1;
-
-				float payAmt1 = Float.parseFloat(request.getParameter("payAmt1"));
-
-				if (modType1 == 1) {
-					cashAmt1 = payAmt1;
-					type = type + "," + 1;
-				}
-				if (modType1 == 2) {
-					cardAmt1 = payAmt1;
-					type = type + "," + 2;
-				}
-				if (modType1 == 3) {
-					epayAmt1 = payAmt1;
-					type = type + "," + 3;
-				}
-
-			} else {
-				System.err.println("in else");
-				float cashAmt = Float.parseFloat(request.getParameter("cashAmt1"));
-				float cardAmt = Float.parseFloat(request.getParameter("cardAmt1"));
-				float epayAmt = Float.parseFloat(request.getParameter("epayAmt1"));
-				modType2 = 2;
-
-				if (cashAmt > 0) {
-					cashAmt1 = cashAmt;
-					type = type + "," + 1;
-					System.err.println("in cashAmt" + cashAmt1);
-				}
-				if (cardAmt > 0) {
-					cardAmt1 = cardAmt;
-					type = type + "," + 2;
-					System.err.println("in cardAmt" + cardAmt1);
-				}
-				if (epayAmt > 0) {
-					epayAmt1 = epayAmt;
-					type = type + "," + 3;
-					System.err.println("in epayAmt" + epayAmt1);
-				}
-
-			}
-
+			 
 			System.err.println("head id list " + checkedList.toString());
 			for (int i = 0; i < checkedList.length; i++) {
 
@@ -1375,7 +1332,15 @@ public class OpsController {
 				String billDate = request.getParameter("billDate" + headId);
 				float settleAmt = Float.parseFloat(request.getParameter("settleAmt" + headId));
 				TransactionDetail expTrans = new TransactionDetail();
-
+				
+				if(modType1==1) {
+					cashAmt1=settleAmt;
+				}else if(modType1==2) {
+					cardAmt1=settleAmt;
+				}else {
+					epayAmt1=settleAmt;
+				}
+				
 				expTrans.setSellBillNo(headId);
 				expTrans.setCardAmt(cardAmt1);
 				expTrans.setCashAmt(cashAmt1);
@@ -1387,7 +1352,7 @@ public class OpsController {
 
 				expTrans.setExInt2(0);
 				expTrans.setExInt1(0);
-				expTrans.setExVar1(type);// +prodMixingReqP1.get(i).getMulFactor()
+				expTrans.setExVar1(String.valueOf(modType1));// +prodMixingReqP1.get(i).getMulFactor()
 				expTrans.setExVar2(String.valueOf(pendingAmt - settleAmt));
 				expTrans.setExFloat1(billAmt);
 				expTrans.setExFloat2(0);
