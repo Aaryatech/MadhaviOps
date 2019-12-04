@@ -225,8 +225,8 @@ public class OpsController {
 					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
 					itemBillList = new ArrayList<>();
-					for(int i=0; i <itemBillList1.length ; i++) {
-					itemBillList.add(itemBillList1[i]);
+					for (int i = 0; i < itemBillList1.length; i++) {
+						itemBillList.add(itemBillList1[i]);
 					}
 					/*
 					 * CustomerBillOnHold addNew = new CustomerBillOnHold();
@@ -237,8 +237,12 @@ public class OpsController {
 					// System.out.println("list fro sess" + itemBillList.toString());
 					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 					customerBillOnHold.setItemList(itemBillList);
+					if (custId != null || custId != "") {
+						model.addAttribute("tempCust",Integer.parseInt(custId) );
+					}else {
+						model.addAttribute("tempCust",0 );
+					}
 
-					model.addAttribute("tempCust", 0);
 					model.addAttribute("holdBill", customerBillOnHold);
 
 					model.addAttribute("key", 0);
@@ -750,7 +754,7 @@ public class OpsController {
 						}
 					} else {
 
-						String type = "1";
+						String type = "0";
 						if (cashAmt > 0) {
 							transactionDetail.setCashAmt(cashAmt);
 						}
@@ -1302,62 +1306,59 @@ public class OpsController {
 
 			String frId = (request.getParameter("frId"));
 
-			String modePay1 = request.getParameter("modePay1"); //single/split
-			int modType2 =0;
-			int modType1 =0;
-			System.err.println("hii id list "+modePay1);
- 		
-			String type = "0";
-			if (Integer.parseInt(modePay1)==1) {
-				  modType1 = Integer.parseInt(request.getParameter("modType1"));//cash/card
-				  modType2=1;
-				  
-				  float payAmt1 = Float.parseFloat(request.getParameter("payAmt1"));
+			String modePay1 = request.getParameter("modePay1"); // single/split
+			int modType2 = 0;
+			int modType1 = 0;
+			System.err.println("hii id list " + modePay1);
 
-					if (modType1 ==1) {
-						cashAmt1 = payAmt1;
-						type = type + "," + 1;
-					}
-					if (modType1 ==2) {
-						cardAmt1=payAmt1;
-						type = type + "," + 2;
-					}
-					if (modType1 ==3) {
-						epayAmt1=payAmt1;	 
-						type = type + "," + 3;
-					}
-				  
-				 
+			String type = "0";
+			if (Integer.parseInt(modePay1) == 1) {
+				modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
+				modType2 = 1;
+
+				float payAmt1 = Float.parseFloat(request.getParameter("payAmt1"));
+
+				if (modType1 == 1) {
+					cashAmt1 = payAmt1;
+					type = type + "," + 1;
+				}
+				if (modType1 == 2) {
+					cardAmt1 = payAmt1;
+					type = type + "," + 2;
+				}
+				if (modType1 == 3) {
+					epayAmt1 = payAmt1;
+					type = type + "," + 3;
+				}
+
 			} else {
 				System.err.println("in else");
 				float cashAmt = Float.parseFloat(request.getParameter("cashAmt1"));
 				float cardAmt = Float.parseFloat(request.getParameter("cardAmt1"));
 				float epayAmt = Float.parseFloat(request.getParameter("epayAmt1"));
-				 modType2=2;
-				
-			
+				modType2 = 2;
+
 				if (cashAmt > 0) {
 					cashAmt1 = cashAmt;
 					type = type + "," + 1;
-					 System.err.println("in cashAmt"+cashAmt1);
+					System.err.println("in cashAmt" + cashAmt1);
 				}
 				if (cardAmt > 0) {
-					cardAmt1=cardAmt;
+					cardAmt1 = cardAmt;
 					type = type + "," + 2;
-					 System.err.println("in cardAmt"+cardAmt1);
+					System.err.println("in cardAmt" + cardAmt1);
 				}
 				if (epayAmt > 0) {
-					epayAmt1=epayAmt;	 
+					epayAmt1 = epayAmt;
 					type = type + "," + 3;
-					 System.err.println("in epayAmt"+epayAmt1);
+					System.err.println("in epayAmt" + epayAmt1);
 				}
-				 
+
 			}
 
 			System.err.println("head id list " + checkedList.toString());
 			for (int i = 0; i < checkedList.length; i++) {
 
-			 
 				System.err.println("head id " + checkedList[i]);
 				int headId = Integer.parseInt(checkedList[i]);
 				String invoiceNo = (request.getParameter("invoiceNo" + headId));
