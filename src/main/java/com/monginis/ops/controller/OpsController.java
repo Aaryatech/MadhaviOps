@@ -618,6 +618,9 @@ public class OpsController {
 			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
 			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));
 			float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
+			float discPer = Float.parseFloat(request.getParameter("discPer"));
+			float discAmt = Float.parseFloat(request.getParameter("discAmt"));
+			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));//without Disc BillAmt
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
 			HttpSession session = request.getSession();
@@ -650,38 +653,61 @@ public class OpsController {
 
 						sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
 						sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
-						sellBillDetail.setSgstRs(itemBillList.get(i).getTaxAmt() / 2);
+					
 						sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
-						sellBillDetail.setCgstRs(itemBillList.get(i).getTaxAmt() / 2);
+						
 						sellBillDetail.setDelStatus(0);
 						sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
-						sellBillDetail.setIgstRs(itemBillList.get(i).getTaxAmt());
+					
 						sellBillDetail.setItemId(itemBillList.get(i).getItemId());
 						sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
 
-						Float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 + itemBillList.get(i).getTaxPer());
+						float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 + itemBillList.get(i).getTaxPer());
 						sellBillDetail.setMrpBaseRate(mrpBaseRate);
+						
+						// -----------------------------------------
 
+						float detailDiscAmt=(itemBillList.get(i).getTotal()/(billAmtWtDisc/100)*(discAmt/100));
+						float detailGrandTotal=CustomerBillController.roundUp(itemBillList.get(i).getTotal()-detailDiscAmt);
+
+						float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+						float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
+						float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+
+						detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
+						detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
+						detailIgstRs = CustomerBillController.roundUp(detailIgstRs);
+
+						float detailTotalTax = detailSgstRs + detailCgstRs;
+						detailTotalTax = CustomerBillController.roundUp(detailTotalTax);
+
+						float detailTaxableAmt = detailGrandTotal-detailTotalTax;
+						detailTaxableAmt = CustomerBillController.roundUp(detailTaxableAmt);
+
+						sellBillDetail.setSgstRs(detailSgstRs);
+						sellBillDetail.setCgstRs(detailCgstRs);
+						sellBillDetail.setIgstRs(detailIgstRs);
+						
 						sellBillDetail.setQty(itemBillList.get(i).getQty());
 						// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
 						sellBillDetail.setBillStockType(0);
-						sellBillDetail.setTaxableAmt(itemBillList.get(i).getTaxableAmt());
-						sellBillDetail.setTotalTax(itemBillList.get(i).getTaxAmt());
-						sellBillDetail.setGrandTotal(itemBillList.get(i).getTotal());
+						sellBillDetail.setTaxableAmt(detailTaxableAmt);//itemBillList.get(i).getTaxableAmt());
+						sellBillDetail.setTotalTax(detailTotalTax);//itemBillList.get(i).getTaxAmt());
+						sellBillDetail.setGrandTotal(detailGrandTotal);//'itemBillList.get(i).getTotal());
 						sellBillDetail.setItemName(itemBillList.get(i).getItemName());
+						sellBillDetail.setDiscAmt(detailDiscAmt);
 						sellbilldetaillist.add(sellBillDetail);
-						total = total + sellBillDetail.getGrandTotal();
-						taxableAmt = taxableAmt + sellBillDetail.getTaxableAmt();
-						taxAmt = taxAmt + sellBillDetail.getTotalTax();
+						total = total +  detailGrandTotal;//sellBillDetail.getGrandTotal();
+						taxableAmt = taxableAmt + detailTaxableAmt;
+						taxAmt = taxAmt + detailTotalTax;
 
 						break;
 					}
 				}
 
 			}
-
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 
@@ -694,26 +720,33 @@ public class OpsController {
 			sellBillHeader.setBillDate(sf.format(date));
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
-			sellBillHeader.setPaidAmt(Math.round(total));
 			sellBillHeader.setSellBillNo(0);
 			sellBillHeader.setUserGstNo("NA");
 			sellBillHeader.setUserPhone("NA");
 			sellBillHeader.setBillType('R');
 			sellBillHeader.setTaxableAmt(taxableAmt);
-			sellBillHeader.setDiscountPer(0);
-			sellBillHeader.setDiscountAmt(0);
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(total));
-
+			if(discPer!=0) {
+            sellBillHeader.setDiscountPer(discPer);//
+			}else {
+	            sellBillHeader.setDiscountPer(discAmt/(billAmtWtDisc/100));//
+			}
+				
+            sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
 				sellBillHeader.setRemainingAmt(total);
+				sellBillHeader.setPaidAmt(0);
+
 				sellBillHeader.setPaymentMode(1);
 			} else {
 				sellBillHeader.setStatus(2);
 				sellBillHeader.setRemainingAmt(0);
 				sellBillHeader.setPaymentMode(paymentMode);
+				sellBillHeader.setPaidAmt(Math.round(total));
+
 			}
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
@@ -991,7 +1024,7 @@ public class OpsController {
 			float taxperHidden = Float.parseFloat(request.getParameter("taxperHidden"));
 			String itemNameHidden = request.getParameter("itemNameHidden");
 			String uom = request.getParameter("uom");
-
+			int isDecimal = Integer.parseInt(request.getParameter("isDecimal"));
 			/*
 			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 			 * Object>(); map.add("id", itemId); Item item =
@@ -1016,6 +1049,7 @@ public class OpsController {
 				add.setItemName(itemNameHidden);
 				add.setOrignalMrp(orignalrate);
 				add.setUom(uom);
+				add.setIsDecimal(isDecimal);
 				add.setTotal(total);
 				add.setQty(qty);
 				add.setTaxPer(taxperHidden);

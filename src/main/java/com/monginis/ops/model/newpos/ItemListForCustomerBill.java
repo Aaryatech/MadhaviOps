@@ -7,10 +7,19 @@ public class ItemListForCustomerBill {
 	private float qty; 
 	private String itemName;
 	private String uom;
+	private int isDecimal;
 	private float taxPer;
 	private float taxableAmt;
 	private float taxAmt;
 	private float total;
+	
+	
+	public int getIsDecimal() {
+		return isDecimal;
+	}
+	public void setIsDecimal(int isDecimal) {
+		this.isDecimal = isDecimal;
+	}
 	public int getItemId() {
 		return itemId;
 	}
@@ -69,8 +78,8 @@ public class ItemListForCustomerBill {
 	@Override
 	public String toString() {
 		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", qty=" + qty
-				+ ", itemName=" + itemName + ", uom=" + uom + ", taxPer=" + taxPer + ", taxableAmt=" + taxableAmt
-				+ ", taxAmt=" + taxAmt + ", total=" + total + "]";
+				+ ", itemName=" + itemName + ", uom=" + uom + ", isDecimal=" + isDecimal + ", taxPer=" + taxPer
+				+ ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", total=" + total + "]";
 	}
 	
 }

@@ -39,6 +39,15 @@ public class SellBillDetailForPos {
 	private String itemUom; 
 	private String itemHsncd; 
 	private String catName;
+	private int isDecimal;
+
+	
+	public int getIsDecimal() {
+		return isDecimal;
+	}
+	public void setIsDecimal(int isDecimal) {
+		this.isDecimal = isDecimal;
+	}
 	public int getSellBillDetailNo() {
 		return sellBillDetailNo;
 	}
@@ -273,9 +282,7 @@ public class SellBillDetailForPos {
 				+ extFloat1 + ", extFloat2=" + extFloat2 + ", extFloat3=" + extFloat3 + ", extFloat4=" + extFloat4
 				+ ", extVar1=" + extVar1 + ", extVar2=" + extVar2 + ", extVar3=" + extVar3 + ", extVar4=" + extVar4
 				+ ", itemName=" + itemName + ", itemUom=" + itemUom + ", itemHsncd=" + itemHsncd + ", catName="
-				+ catName + "]";
+				+ catName + ", isDecimal=" + isDecimal + "]";
 	}
 	
-	
-
 }

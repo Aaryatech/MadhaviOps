@@ -75,6 +75,7 @@
 				</span>
 				</td>
 			</tr>
+			<c:set var="calTotalAmt" value="0"></c:set>
 			<c:set var="totalAmt" value="0"></c:set>
 			<c:set var="taxAmount" value="${0}" />
 			<c:set var="totaltax" value="${0 }" />
@@ -116,6 +117,7 @@
 													style="font-size: 8"> (HSN Code)</span></th>
 												<th width="8%" bgcolor="#ECECEC">GST</th>
 												<th width="8%" bgcolor="#ECECEC">Qty</th>
+												<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
 												<th width="13%" bgcolor="#ECECEC">Rate</th>
 												<th width="29%" align="center" bgcolor="#ECECEC">Amt</th>
 											</tr>
@@ -126,18 +128,33 @@
 															<span style="font-size: 8px">HSN-
 																${itemBillList.itemHsncd}</span></span></td>
 													<td align="right">${itemBillList.igstPer}%</td>
-													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
+													<td align="right"><span style="font-size: 11px"><c:choose><c:when test="${itemBillList.isDecimal==1}">
+													<fmt:formatNumber
 																type="number" groupingUsed="false"
 																value="${itemBillList.qty}" maxFractionDigits="3"
-																minFractionDigits="3" /> </span></td>
+																minFractionDigits="3" /> 
+													</c:when>
+													<c:otherwise>
+													<fmt:formatNumber
+																type="number" groupingUsed="false"
+																value="${itemBillList.qty}" maxFractionDigits="0"
+																minFractionDigits="0" /> 
+													</c:otherwise>
+													</c:choose> </span></td>
+													<td align="right">
+													<span style="font-size: 11px">
+													${itemBillList.itemUom}
+													</span></td>
 													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
 																type="number" groupingUsed="false"
 																value="${itemBillList.mrp}" maxFractionDigits="0"
 																minFractionDigits="0" /> </span></td>
 													<td align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.grandTotal}" maxFractionDigits="2"
-																minFractionDigits="2" />
+																value="${itemBillList.qty*itemBillList.mrp}" maxFractionDigits="2"
+																minFractionDigits="2" var="total" />
+																${total}
+													<c:set var="calTotalAmt" value="${total+calTotalAmt}"></c:set>	
 													</span></td>
 													<c:set var="totalAmt"
 														value="${totalAmt+itemBillList.grandTotal}"></c:set>
@@ -148,14 +165,26 @@
 													<c:set var="totaltax" value="${cgst+sgst}" />
 												</tr>
 											</c:forEach>
-
-
+											<c:if test="${sellBillHeaderAndDetail.discountAmt>0}">
+                                             <tr>
+												<td colspan="4" align="right"><span class="style7">SubTotal:</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${calTotalAmt}" groupingUsed="false" /></span></td>
+											</tr>
+                                           <tr>
+												<td colspan="4" align="right"><span class="style7">Disc Amt:</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
+											</tr>
+                                            </c:if>
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Bill
 														Total:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${totalAmt}" groupingUsed="false" /></span></td>
+															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
 											</tr>
 										</tbody>
 									</table></td>

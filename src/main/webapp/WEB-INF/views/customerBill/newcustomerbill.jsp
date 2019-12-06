@@ -355,9 +355,21 @@ body {
 											<td>${count.index+1}</td>
 											<td style=""> ${itemList.itemName} </td>
 											<td style="text-align: right;"
-												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}')" ><fmt:formatNumber
+												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}','${itemList.isDecimal}')" >
+												<c:choose>
+												<c:when test="${itemList.isDecimal==1}">
+												<fmt:formatNumber
 													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="3" minFractionDigits="3" /></td><td> ${itemList.uom}</td>
+													maxFractionDigits="3" minFractionDigits="3" />
+													
+												</c:when>
+												<c:otherwise>
+												<fmt:formatNumber
+													type="number" groupingUsed="false" value="${itemList.qty}"
+													maxFractionDigits="0" minFractionDigits="0" />
+												</c:otherwise>
+												</c:choose>
+													</td><td> ${itemList.uom}</td>
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.orignalMrp}" maxFractionDigits="0"
@@ -414,8 +426,8 @@ body {
 										maxFractionDigits="2" minFractionDigits="2" /></td>
 							</tr>
 							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-								<td>Discount</td>
-								<td>(0.00) 0.00</td>
+								<td><!-- Discount --></td>
+								<td><!-- (0.00) 0.00 --></td>
 								<td>Order Tax</td>
 								<td style="text-align: right;" id="taxAmtLable"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxAmt}"
@@ -469,10 +481,10 @@ body {
 						<div class="button_one">
 							<a href="#" class="hold print_btn" onclick="openPaymentPopup()">Payment
 								Option</a> <a href="#" class="hold bill_btn "
-								onclick="submitBill(2)">Print Bill</a>
+								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_two">
-							<a href="#" class="hold pay_btn " onclick="submitBill(1)">Bill</a>
+							<a href="#" class="hold pay_btn " onclick="submitBill(1)">KOT Bill</a>
 						</div>
 					</div>
 
@@ -620,14 +632,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">DOB</div>
-					<div class="add_input">
-						<input autocomplete="off" placeholder="Date Of Birth"
-							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
-					</div>
-					<div class="clr"></div>
-				</div>
+			
 				<div class="add_frm_one">
 					<div class="add_customer_one">Gender</div>
 					<div class="add_input">
@@ -678,6 +683,14 @@ body {
 					
 				</select>
 				</div>
+				</div>
+					<div class="add_frm_one">
+					<div class="add_customer_one">DOB</div>
+					<div class="add_input">
+						<input autocomplete="off" placeholder="Date Of Birth"
+							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
+					</div>
+					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Business</div>
@@ -761,7 +774,23 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-
+					<div class="add_frm_one">
+					<div class="add_customer_one">Discount %</div>
+					<div class="add_input" id="discountPopup">
+					     <input type="number" name="discPer" id="discPer" onkeyup="itemDiscPerCalculation(1)" class="form-control" value="0" placeholder="Disc %" style="text-align:center ;width:90px;border-radius: 20px;"/> 
+					<label for="discAmtLabel" style="font-weight:700;padding-left:5px;">&nbsp;Disc Amt&nbsp;</label>
+					     <input type="number" name="discAmt" id="discAmt" onkeyup="itemDiscPerCalculation(2)" class="form-control" value="0" placeholder="Disc Amt"  style="text-align:center ;width:90px;border-radius: 20px;" /> 
+					</div>
+					<div class="clr"></div>
+				</div>
+<div class="add_frm_one">
+					<div class="add_customer_one">Total Payable</div>
+					<div class="add_input" id="totalPayableAmt">
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
+					</div>
+					<div class="clr"></div>
+				</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Credit Bill</div>
 					<div class="add_input">
@@ -863,8 +892,9 @@ body {
 								<select name="billType" id="billType" data-placeholder="Type"
 									class="input_add " style="text-align: left;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Card</option>
-									<option value="3" style="text-align: left;">E-Pay</option>
+									<option value="2" style="text-align: left;">Credit Card</option>
+									<option value="3" style="text-align: left;">Debit Card</option>
+									<option value="4" style="text-align: left;">E-Pay</option>
 								</select>
 								<!-- <div class="dropdown popup_drop">
 									<div class="select">
@@ -885,8 +915,8 @@ body {
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
 								<input name="payAmt" id="payAmt" type="text"
-									class="input_add numberOnly" placeholder="Enter Ammount"
-									value="0" />
+									class="input_add numberOnly" placeholder="Enter Amount"
+									value="${totalAmt}" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -981,6 +1011,7 @@ body {
 							name="taxperHidden" id="taxperHidden" type="hidden" /><input
 							name="itemNameHidden" id="itemNameHidden" type="hidden" />
 							<input	name="uomHidden" id="uomHidden" type="hidden" />
+							<input	name="isDecimalHidden" id="isDecimalHidden" type="hidden" />
 						<div class="cal_quan">
 							<div class="qty_l">QTY</div>
 							<div class="qty_m">
@@ -1030,7 +1061,7 @@ body {
 							<div class="qty_l">AMT</div>
 							<div class="qty_m">
 								<input name="enterRate" id="enterRate" type="text"
-									class="qty_one numberOnly" placeholder="Enter Rate"
+									class="qty_one numberOnly" placeholder="Enter Rate" 
 									onkeyup="itemRateCalculation(2)" />
 							</div>
 							<div class="qty_r">
@@ -1730,6 +1761,8 @@ body {
 	function setCustAmt() {
 		   
 		var cust =  $('#cust').val() ;
+		document.getElementById("credAmt").innerHTML = 0; 
+		document.getElementById("advCustAmt").innerHTML = 0;
 		  $
 		.get(
 				'${getCustAmts}',
@@ -1739,8 +1772,8 @@ body {
 				},
 				function(data) {
 					  
-					document.getElementById("credAmt").innerHTML = data.creaditAmt; 
-					document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
+					document.getElementById("credAmt").innerHTML = data.creaditAmt.toFixed(2); 
+					document.getElementById("advCustAmt").innerHTML = data.advanceAmt.toFixed(2); 
 						 
 				});   
 	}
@@ -2106,7 +2139,7 @@ body {
 										mrp=data[i].itemMrp3;
 									}
 									var taxper=data[i].itemTax1+data[i].itemTax2;
-									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')"><p>'
+									var timeDiv = '<div class="sweet_one"><a href="#" title="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')"><p>'
 									+ mrp
 									+ ' </p> '
 									+ data[i].itemName
@@ -2120,7 +2153,7 @@ body {
 									$("#itemDiv")
 									.append(
 											$(
-											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')">'+timeDiv+'</li>'));
+											'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
 								}
 								//$('.carlist_scrollbars').ClassyScroll();
 								 $(".scrollbar-content").css("top", "0");
@@ -2256,7 +2289,7 @@ body {
 									$("#itemDiv")
 											.append(
 													$(
-													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\')">'+timeDiv+'</li>'));
+													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
 															 
 								}
 							//	$('#scrollDiv').removeClass('carlist_scrollbars');
@@ -2384,11 +2417,13 @@ body {
 	
 	$('.numberOnly').on('input', function() {
 		 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		 
 		});
 	
-function opnItemPopup(taxper,itemId,mrp,itemName,uom) {
+function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
 		document.getElementById("enterRate").value = 0;
 		document.getElementById("enterQty").value = 0;
+		
 $.post('${editItemQty}',
 		{
 			itemId: itemId,
@@ -2409,6 +2444,7 @@ document.getElementById("taxperHidden").value = taxper;
 document.getElementById("itemNameHidden").value = itemName;
 document.getElementById("itemIdHidden").value = itemId;
 document.getElementById("uomHidden").value = uom;
+document.getElementById("isDecimalHidden").value = isDecimal;
 document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
 document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
 $("#enterQty").focus(); 
@@ -2420,8 +2456,8 @@ $("#enterQty").focus();
 			var rateHidden = parseFloat($('#rateHidden').val());
 			var rate = parseFloat($('#enterRate').val());
 			var qty = parseFloat($('#enterQty').val());
-			 
-			 
+			
+			
 				if(flag==1){
 					var newrate = parseFloat(rateHidden*qty);
 					document.getElementById("enterRate").value = newrate;
@@ -2432,7 +2468,28 @@ $("#enterQty").focus();
 				}
 			 
 		}
-		
+		function itemDiscPerCalculation(flag) {
+
+			var discPer = parseFloat($('#discPer').val());
+			var discAmt = parseFloat($('#discAmt').val());
+			var totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+			if(flag==1){
+				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
+				var totalAmt=totalAmtPopup-calDiscAmt;
+				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				 
+			}else{
+				var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
+
+				var totalAmt=totalAmtPopup-discAmt;
+				document.getElementById("discPer").value = 00;
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+
+			}
+		}
 	function addItemInBillList() {
 			 
 			var rateHidden = parseFloat($('#rateHidden').val());
@@ -2442,6 +2499,7 @@ $("#enterQty").focus();
 			var itemNameHidden =  $('#itemNameHidden').val() ;
 			var uomHidden =  $('#uomHidden').val() ;
 			var taxperHidden =  $('#taxperHidden').val() ;
+			var isDecimalHidden =  $('#isDecimalHidden').val() ;
 			var flag=0;
 			if(isNaN(rate) || rate==0){
 				alert("Enter Valid Rate ");
@@ -2449,7 +2507,13 @@ $("#enterQty").focus();
 			}else if(isNaN(qty) || qty==0){
 				alert("Enter Valid QTY ");
 				flag=1;
-			}
+			}else if(isDecimalHidden==0 && qty != Math.floor(qty))
+				{
+				alert("Please Enter Valid Number of Qty")
+				 document.getElementById("enterQty").value = "0";
+				 document.getElementById("enterRate").value = "0";
+				 flag=1;
+				}
 			
 			 
 			if(flag==0){
@@ -2465,6 +2529,7 @@ $("#enterQty").focus();
 							itemNameHidden : itemNameHidden,
 							taxperHidden : taxperHidden,
 							uom:uomHidden,
+							isDecimal:isDecimalHidden,
 							ajax : 'true'
 						},
 						function(data) {
@@ -2541,11 +2606,20 @@ $("#enterQty").focus();
 												'<td ></td>')
 												.html(
 														item.itemName));
+								if(item.isDecimal==1){
 								tr
 								.append($(
-										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\',\''+item.extVar3+'\')"></td>')
+										'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\',\''+item.uom+'\','+item.isDecimal+')"></td>')
 										.html(
 												((item.qty).toFixed(3)))); 
+								}else
+									{
+									tr
+									.append($(
+											'<td style="text-align: right;"onclick="opnItemPopup('+item.taxPer+','+item.itemId+','+item.orignalMrp+',\''+item.itemName+'\',\''+item.uom+'\','+item.isDecimal+')"></td>')
+											.html(
+													((item.qty).toFixed(0)))); 	
+									}
 								tr
 								.append($(
 										'<td style="text-align: right;"></td>')
@@ -2579,6 +2653,11 @@ $("#enterQty").focus();
 							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
 							document.getElementById("totalItemLable").innerHTML = data.length; 
 							document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+							document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+							document.getElementById("payAmt").value = total.toFixed(2);
+
+							document.getElementById("discPer").value =0;
+							document.getElementById("discAmt").value =0;
 				});
 		
 	}
@@ -2718,7 +2797,7 @@ $("#enterQty").focus();
 									 
 								}else if(printbilltype==2){
 									 
-									if(frtype<=10000000){
+									if(frtype<10000000){
 										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
 									}else{
 										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
@@ -2739,7 +2818,7 @@ $("#enterQty").focus();
 									 
 								}else if(printbilltype==2){
 									 
-									if(frtype<=10000000){
+									if(frtype<10000000){
 										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
 									}else{
 										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
@@ -2759,7 +2838,13 @@ $("#enterQty").focus();
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
-		 
+		document.getElementById("discPer").value =0;
+		document.getElementById("discAmt").value =0;
+		document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
+		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+
+		$("#modeOfPayDiv").hide();
+		document.getElementById("creditBillyes").checked = true;
 		//alert(selectedText);
 		
 		var rowcount = $('#itemBillTable tr').length;
@@ -2789,6 +2874,9 @@ $("#enterQty").focus();
 		var billType =  $('#billType').val() ;
 		var payAmt =  $('#payAmt').val() ;
 		var frtype =  $('#frtype').val() ;
+		var discPer =  $('#discPer').val() ;
+		var discAmt =  $('#discAmt').val() ;
+		var billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
 		
 		var creditBill = 1;
 		var single = 1;
@@ -2811,9 +2899,15 @@ $("#enterQty").focus();
 		if (epayAmt=="") {
 			epayAmt=0;
 		}
+		if (discPer=="") {
+			discPer=0;
+		}
+		if (discAmt=="") {
+			discAmt=0;
+		}
 		
 		if(creditBill==2 && single==1 && payAmt==""){
-			alert("Enter Ammount");
+			alert("Please Enter Ammount");
 		}else{
 			 $('#payment').popup('hide');
 			  document.getElementById("overlay2").style.display = "block";
@@ -2831,6 +2925,9 @@ $("#enterQty").focus();
 							epayAmt : epayAmt,
 							selectedText : selectedText,
 							payAmt : payAmt,
+							discPer:discPer,
+							discAmt:discAmt,
+							billAmtWtDisc:billAmtWtDisc,
 							ajax : 'true'
 						},
 						function(data) {
