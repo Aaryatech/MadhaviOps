@@ -17,7 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.Franchisee;
- import com.monginis.ops.model.posdash.PosDashCounts;
+import com.monginis.ops.model.posdash.CategorywiseSell;
+import com.monginis.ops.model.posdash.PosDashCounts;
 
 public class DashController {
 	
@@ -48,6 +49,8 @@ public class DashController {
 			 
 			model.addObject("countDetails", countDet);
 			
+			
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,4 +60,6 @@ public class DashController {
 		
 		return model;
 	}
+	
+	
 }

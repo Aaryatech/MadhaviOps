@@ -1,6 +1,7 @@
 package com.monginis.ops;
 
 import java.io.FileOutputStream;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,7 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,11 +38,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.monginis.ops.common.Common;
+ import com.monginis.ops.common.Common;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ConfiguredSpDayCkResponse;
 import com.monginis.ops.model.DummyItems;
@@ -56,10 +62,14 @@ import com.monginis.ops.model.Message;
 import com.monginis.ops.model.MessageListResponse;
 import com.monginis.ops.model.SchedulerList;
 import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.newpos.ItemListForCustomerBill;
+import com.monginis.ops.model.posdash.CategorywiseItemSell;
+import com.monginis.ops.model.posdash.CategorywiseSell;
 import com.monginis.ops.model.posdash.PosDashCounts;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -112,7 +122,7 @@ public class HomeController {
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("login");
-		//ModelAndView model = new ModelAndView("customerBill/newcustomerbill");
+		// ModelAndView model = new ModelAndView("customerBill/newcustomerbill");
 
 		logger.info("/login request mapping.");
 
@@ -131,10 +141,13 @@ public class HomeController {
 	// }
 	//
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+	public ModelAndView displayHome(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws ParseException {
 
 		ModelAndView model = new ModelAndView("home");
- 		HttpSession session = request.getSession();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -203,29 +216,189 @@ public class HomeController {
 			model.addObject("isSpDayShow", spDayShow);
 
 			logger.info("/login request mapping.");
+
+			// *******************************Dashboard counts ws
+			// consumption*****************
+
+			int type = 0;
+			String fromDate = null;
+			String toDate = null;
 			
-			
-			//*******************************Dashboard counts ws consumption*****************
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
+			try {
+				type = Integer.parseInt(request.getParameter("type"));
+			} catch (Exception e) {
+				type = 1;
+			}
+			System.err.println("type" + type);
+			model.addObject("type", type);
+			if (type == 4) {
+				fromDate = DateConvertor.convertToYMD(request.getParameter("fromDate"));
+				toDate = DateConvertor.convertToYMD(request.getParameter("toDate"));
+				model.addObject("fromDate", fromDate);
+				model.addObject("toDate", toDate);
+				
+			} else if (type == 1) {
+				fromDate = sf.format(date);
+				toDate = sf.format(date);
+			} else if (type == 2) {
+				/*
+				 * final DayOfWeek firstDayOfWeek = WeekFields.of(locale).getFirstDayOfWeek();
+				 * final DayOfWeek lastDayOfWeek = DayOfWeek.of(((firstDayOfWeek.getValue() + 5)
+				 * % DayOfWeek.values().length) + 1);
+				 */
+
+				Calendar calendar = Calendar.getInstance();
+				while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+					calendar.add(Calendar.DATE, -1);
+				}
+				Date d = calendar.getTime();
+				fromDate = sf.format(d);
+
+				System.err.println("d**" + fromDate);
+				Calendar calendar2 = Calendar.getInstance();
+				while (calendar2.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					calendar2.add(Calendar.DATE, 1);
+				}
+				Date d2 = calendar2.getTime();
+				toDate = sf.format(d2);
+				/*
+				 * Calendar calendar1 = Calendar.getInstance(); calendar1.add(Calendar.DATE, 0);
+				 * Date d1 =calendar1.getTime();
+				 */
+
+				// toDate=sf.format(d1);
+				System.err.println("d1**" + toDate);
+			} else {
+
+				Date begining, end;
+
+				Calendar calendar = getCalendarForNow();
+				calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+				setTimeToBeginningOfDay(calendar);
+				begining = calendar.getTime();
+				fromDate = sf.format(begining);
+				System.err.println("begining" + fromDate);
+
+				Calendar calendar1 = getCalendarForNow();
+				calendar1.set(Calendar.DAY_OF_MONTH, calendar1.getActualMaximum(Calendar.DAY_OF_MONTH));
+				setTimeToEndofDay(calendar1);
+				end = calendar1.getTime();
+				toDate = sf.format(end);
+				System.err.println("end" + toDate);
+			}
 
 			map = new LinkedMultiValueMap<String, Object>();
-
+		
 			map.add("frId", frId);
 			map.add("frRateCat", frDetails.getFrRateCat());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts", map,
+					PosDashCounts.class);
+
+			model.addObject("countDetails", countDet);
+			System.err.println("DashBoardReporApi /getCredNoteReport" + countDet.toString());
+			map = new LinkedMultiValueMap<String, Object>();
+			model.addObject("frmd", fromDate);
+			model.addObject("tod", toDate);
+			map.add("frId", frDetails.getFrId());
 			map.add("fromDate", sf.format(date));
 			map.add("toDate", sf.format(date));
-			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts",map,
-					PosDashCounts.class);
-			
-			model.addObject("countDetails", countDet);
+			CategorywiseSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseSell", map,
+					CategorywiseSell[].class);
+			List<CategorywiseSell> sectionList = new ArrayList<CategorywiseSell>(Arrays.asList(catSell));
 
- 
+			//model.addObject("catSellList", sectionList);
+			System.err.println("************" + catSell);
+			//model.addAttribute("data", ((Collection<Setting>) new JSONArray()).add(catSell));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 
+	}
+	
+	
+	@RequestMapping(value = "/getCatSellList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CategorywiseSell> getCatSellList(HttpServletRequest request, HttpServletResponse responsel) {
+		
+		System.err.println("************");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate=request.getParameter("frmd");
+		String toDate=request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<CategorywiseSell> sectionList =new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			CategorywiseSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseSell", map,
+					CategorywiseSell[].class);
+			  sectionList = new ArrayList<CategorywiseSell>(Arrays.asList(catSell));
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sectionList;
+	}
+	
+	
+
+	@RequestMapping(value = "/getItemSellBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<CategorywiseItemSell> getItemSellBill(HttpServletRequest request, HttpServletResponse responsel) {
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate=request.getParameter("frmd");
+		int catId=Integer.parseInt(request.getParameter("id"));
+		int flag=Integer.parseInt(request.getParameter("flag"));
+		String toDate=request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<CategorywiseItemSell> sectionList =new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("frId", frDetails.getFrId());
+			map.add("catId", catId);
+			map.add("flag", flag);
+		 
+			CategorywiseItemSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseItemSell", map,
+					CategorywiseItemSell[].class);
+			  sectionList = new ArrayList<CategorywiseItemSell>(Arrays.asList(catSell));
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sectionList;
+	}
+
+
+	private static Calendar getCalendarForNow() {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(new Date());
+		return calendar;
+	}
+
+	private static void setTimeToBeginningOfDay(Calendar calendar) {
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+	}
+
+	private static void setTimeToEndofDay(Calendar calendar) {
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
 	}
 
 	private boolean checkBetween(Date dateToCheck, Date startDate, Date endDate) {
@@ -521,5 +694,5 @@ public class HomeController {
 		return model;
 
 	}
-	 
+
 }

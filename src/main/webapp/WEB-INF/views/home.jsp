@@ -15,7 +15,11 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <!--Here Previous Block of Code, Commented at End -->
 </head>
-<body>
+<c:url var="getCatSellList" value="/getCatSellList" />
+<c:url var="getItemSellBill" value="/getItemSellBill" />
+
+
+<body onload="drawDonutChart()">
 	<form action="" method="get">
 		<!--wrapper-start-->
 		<div class="wrapper">
@@ -31,50 +35,6 @@
 					<div class="page_title">Dashboard</div>
 
 
-<form action="${pageContext.request.contextPath}/getCounts"  method="post">
-					<div class="col-md-1">
-						<input type="radio" name="gender" id="type" value="1"
-							  style="width: 10px;" checked
-							onclick="showDiv(this.value)"> Toady
-					</div>
-					<div class="col-md-1">
-						<input type="radio" name="type" id="gender" value="2"
-							style="width: 10px;" onclick="showDiv(this.value)"> Week
-
-					</div>
-					<div class="col-md-1">
-						<input type="radio" name="type" id="gender" value="3"
-							style="width: 10px;" onclick="showDiv(this.value)"> Month
-					</div>
-					<div class="col-md-1">
-						<input type="radio" name="type" id="gender" value="4"
-							onclick="showDiv(this.value)" style="width: 10px;">
-						Custom
-					</div>
-					<div id="ihide" style="display: none;">
-						<div class="col-md-1">
-							<div class="col1title">From Date</div>
-						</div>
-						<div class="col-md-2">
-							<input id="fromdatepicker" class="texboxitemcode texboxcal"
-								required="required" placeholder="From Date" name="devDate"
-								autocomplete="off" type="text">
-
-						</div>
-						<div class="col-md-1">
-							<div class="col1title">To Date</div>
-						</div>
-						<div class="col-md-2">
-							<input id="todatepicker" class="texboxitemcode texboxcal"
-								required="required" placeholder="From Date" name="devDate"
-								autocomplete="off" type="text">
-
-						</div>
-
-					</div>
-					
-								<div ><button type="submit" >&nbsp;Submit</button></div>
-					</form>
 
 					<div class="page_bread">
 						<ul>
@@ -84,7 +44,127 @@
 						</ul>
 					</div>
 					<div class="clr"></div>
+
+					<form action="${pageContext.request.contextPath}/home" method="get">
+
+						<input type="hidden" name="tod" id="tod" value="${tod}"> <input
+							type="hidden" name="frmd" id="frmd" value="${frmd}"> <input
+							type="hidden" name="catId" id="catId" value="${tod}">
+						<div class="colOuter">
+
+
+							<c:choose>
+								<c:when test="${type==1}">
+									<div class="col-md-1">
+										<input type="radio" name="type" value="1" style="width: 10px;"
+											checked onclick="showDiv(this.value)"> Toady
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="2" style="width: 10px;"
+											onclick="showDiv(this.value)"> Week
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="3" style="width: 10px;"
+											onclick="showDiv(this.value)"> Month
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="4"
+											onclick="showDiv(this.value)" style="width: 10px;">
+										Custom
+									</div>
+								</c:when>
+								<c:when test="${type==2}">
+									<div class="col-md-1">
+										<input type="radio" name="type" value="1" style="width: 10px;"
+											onclick="showDiv(this.value)"> Toady
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="2" style="width: 10px;"
+											checked onclick="showDiv(this.value)"> Week
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="3" style="width: 10px;"
+											onclick="showDiv(this.value)"> Month
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="4"
+											onclick="showDiv(this.value)" style="width: 10px;">
+										Custom
+									</div>
+								</c:when>
+
+								<c:when test="${type==3}">
+									<div class="col-md-1">
+										<input type="radio" name="type" value="1" style="width: 10px;"
+											onclick="showDiv(this.value)"> Toady
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="2" style="width: 10px;"
+											onclick="showDiv(this.value)"> Week
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="3" style="width: 10px;"
+											checked onclick="showDiv(this.value)"> Month
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="4"
+											onclick="showDiv(this.value)" style="width: 10px;">
+										Custom
+									</div>
+								</c:when>
+
+								<c:when test="${type==4}">
+									<div class="col-md-1">
+										<input type="radio" name="type" value="1" style="width: 10px;"
+											onclick="showDiv(this.value)"> Toady
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="2" style="width: 10px;"
+											onclick="showDiv(this.value)"> Week
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="3" style="width: 10px;"
+											onclick="showDiv(this.value)"> Month
+									</div>
+									<div class="col-md-1">
+										<input type="radio" name="type" value="4" checked
+											onclick="showDiv(this.value)" style="width: 10px;">
+										Custom
+									</div>
+								</c:when>
+							</c:choose>
+							<div id="ihide" style="display: none;">
+								<div class="col-md-1">
+									<div class="col1title">From Date</div>
+								</div>
+								<div class="col-md-2">
+									<input id="fromdatepicker" class="texboxitemcode texboxcal"
+										required="required" placeholder="From Date" name="fromDate"
+										value="${fromDate}" autocomplete="off" type="text">
+
+								</div>
+								<div class="col-md-1">
+									<div class="col1title">To Date</div>
+								</div>
+								<div class="col-md-2">
+									<input id="todatepicker" class="texboxitemcode texboxcal"
+										required="required" placeholder="To Date" name="toDate"
+										value="${toDate}" autocomplete="off" type="text">
+
+								</div>
+
+							</div>
+
+							<div align="center">
+								<input name="submit" class="buttonsaveorder" value="Submit"
+									type="submit" id="submtbtn">
+							</div>
+						</div>
+					</form>
+					<div class="clr"></div>
 				</div>
+
+
 				<div class="quick_links">
 					<h3 class="bx_title">Quick Links</h3>
 					<ul>
@@ -95,32 +175,69 @@
 						<li><a href="#"><i class="fa fa-file-pdf-o"
 								aria-hidden="true"></i> Purchase:${countDetails.purchaseAmt}</a></li>
 						<li><a href="#"><i class="fa fa-file-pdf-o"
-								aria-hidden="true"></i> No. of Bill:${countDetails.noOfBillGenerated}</a></li>
+								aria-hidden="true"></i> No. of
+								Bill:${countDetails.noOfBillGenerated}</a></li>
 						<li><a href="#"><i class="fa fa-line-chart"
 								aria-hidden="true"></i> Profit:${countDetails.profitAmt} </a></li>
 						<li><a href="#"><i class="fa fa-file-pdf-o"
 								aria-hidden="true"></i> Advance Amt:${countDetails.advanceAmt}</a></li>
 						<li><a href="#"><i class="fa fa-refresh"
-								aria-hidden="true"></i> Credit Bill Amt:${countDetails.creditAmt}</a></li>
+								aria-hidden="true"></i> Credit Bill
+								Amt:${countDetails.creditAmt}</a></li>
 						<li><a href="#"><i class="fa fa-file-word-o"
 								aria-hidden="true"></i> Cash Amt:${countDetails.cashAmt}</a></li>
 						<li><a href="#"><i class="fa fa-money" aria-hidden="true"></i>
 								Card Amount:${countDetails.cardAmt}</a></li>
 						<li><a href="#"><i class="fa fa-file-o"
 								aria-hidden="true"></i> e-pay Amt:${countDetails.epayAmt}</a></li>
-								<li><a href="#"><i class="fa fa-file-o"
+						<li><a href="#"><i class="fa fa-file-o"
 								aria-hidden="true"></i> Expense:${countDetails.expenseAmt}</a></li>
 					</ul>
 				</div>
+
 				<div class="charts_bx">
 					<div class="chart_l">
-						<h3 class="bx_title">Sales Charts</h3>
-						<div class="a">Map Put Here</div>
+						<h3 class="bx_title">Categorywise Sell harts</h3>
+						<!-- <div class="a">Map Put Here</div>
+ -->
+						<div id="donutchart" style="width: 900px; height: 500px;"></div>
+						<div class="calcy_1">
+							<div class="add_customer_one">Type</div>
+							<div class="add_input">
+								<select name="typeSort" id="typeSort" data-placeholder="Type" onchange="itemSellBillCal2()"
+									class="input_add " style="text-align: left;">
+									<option value="1" style="text-align: left;" selected>Top</option>
+									<option value="2" style="text-align: left;">Bottom</option>
+									<option value="3" style="text-align: left;">All</option>
+								</select>
+
+							</div>
+						</div>
+
+						<div class="scrollbars" id="scrollbarsmodaldiv">
+							<table id="custCreditTable">
+
+								<thead>
+									<tr>
+										<th style="text-align: center;">Sr</th>
+										<th style="text-align: center;">Item Name</th>
+										<th style="text-align: center;">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+
 					</div>
 					<div class="chart_r">
 						<h3 class="bx_title">Top Products</h3>
 
 						<div class="a">Map Put Here</div>
+
+						<div class="total_table_one" id="printDivid"></div>
+
 
 					</div>
 					<div class="clr"></div>
@@ -129,14 +246,183 @@
 		</div>
 		<!--wrapper-end-->
 	</form>
+
+
+
+
+
+	<!--  trial -->
+	<script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script type="text/javascript">
+		google.charts.load("current", {
+			packages : [ "corechart" ]
+		});
+		google.charts.setOnLoadCallback(drawDonutChart);
+		function drawDonutChart() {
+			var chart;
+			var datag = '';
+			var frmd = document.getElementById("frmd").value;
+			var tod = document.getElementById("tod").value;
+			var a = "";
+			var dataSale = [];
+			var Header = [ 'Category', 'Amount', 'ID' ];
+			dataSale.push(Header);
+			$.post('${getCatSellList}', {
+				frmd : frmd,
+				tod : tod,
+				ajax : 'true'
+			}, function(chartsdata) {
+				//alert(JSON.stringify(data));
+				console.log('data ' + JSON.stringify(chartsdata));
+				var len = chartsdata.length;
+				datag = datag + '[';
+				$.each(chartsdata, function(key, chartsdata) {
+					var temp = [];
+					temp.push(chartsdata.catName,
+							parseInt(chartsdata.catTotal),
+							parseInt(chartsdata.catId));
+					dataSale.push(temp);
+
+				});
+
+				//console.log(dataSale);
+				var data1 = google.visualization.arrayToDataTable(dataSale);
+
+				var options = {
+					title : 'My Daily Activities',
+					pieHole : 0.4,
+				};
+				//  alert(222);
+				chart = new google.visualization.PieChart(document
+						.getElementById('donutchart'));
+
+				function selectQtyHandler() {
+					// alert("hii");
+					var selectedItem = chart.getSelection()[0];
+					if (selectedItem) {
+						// alert("hii selectedItem");
+						i = selectedItem.row, 0;
+
+						//alert("hii selectedItem" + chartsdata[i].catId);
+						itemSellBillCal(chartsdata[i].catId);
+
+					}
+				}
+
+				google.visualization.events.addListener(chart, 'select',
+						selectQtyHandler);
+				chart.draw(data1, options);
+
+			});
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function itemSellBillCal(id) {
+
+			var frmd = document.getElementById("frmd").value;
+			var tod = document.getElementById("tod").value;
+			var flag = 1;
+			$.post('${getItemSellBill}', {
+				id : id,
+				frmd : frmd,
+				tod : tod,
+				flag : flag,
+				ajax : 'true'
+			}, function(data) {
+
+				//alert(JSON.stringify(data));
+				$('#custCreditTable td').remove();
+
+				$.each(data, function(key, data) {
+
+					var tr = $('<tr></tr>');
+
+					tr.append($('<td ></td>').html(key + 1));
+					tr.append($('<td ></td>').html(data.itemName));
+					tr.append($('<td ></td>').html(data.itemTotal));
+
+					$('#custCreditTable tbody').append(tr);
+				});
+
+			});
+			document.getElementById("catId").value = id;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function itemSellBillCal2() {
+
+			var flag = document.getElementById("typeSort").value;
+			var tod = document.getElementById("tod").value;
+			var frmd = document.getElementById("frmd").value;
+			var id = document.getElementById("catId").value;
+			$.post('${getItemSellBill}', {
+				id : id,
+				frmd : frmd,
+				tod : tod,
+				flag : flag,
+				ajax : 'true'
+			}, function(data) {
+
+			//	alert(JSON.stringify(data));
+				$('#custCreditTable td').remove();
+
+				$.each(data, function(key, data) {
+
+					var tr = $('<tr></tr>');
+
+					tr.append($('<td ></td>').html(key + 1));
+					tr.append($('<td ></td>').html(data.itemName));
+					tr.append($('<td ></td>').html(data.itemTotal));
+
+					$('#custCreditTable tbody').append(tr);
+				});
+
+			});
+
+		}
+	</script>
+
+	<!-- <script type="text/javascript">
+		google.charts.load("current", {
+			packages : [ "corechart" ]
+		});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawDonutChart1()  {
+		 
+			var data = google.visualization.arrayToDataTable([
+					[ 'Task', 'Hours per Day' ], [ 'Work', 11 ], [ 'Eat', 2 ],
+					[ 'Commute', 2 ], [ 'Watch TV', 2 ], [ 'Sleep', 7 ] ]);
+
+			var options = {
+				title : 'My Daily Activities',
+				pieHole : 0.4,
+			};
+
+			var chart = new google.visualization.PieChart(document
+					.getElementById('donutchart'));
+			chart.draw(data, options);
+		}
+	</script> -->
+
+
 	<script type="text/javascript">
 		function showDiv(typdId) {
 			//alert("Id="+typdId);
 			if (typdId == 4) {
 				document.getElementById("ihide").style = "visible"
+				document.getElementById("fromdatepicker").required = true;
+				document.getElementById("todatepicker").required = true;
 			} else {
 				document.getElementById("ihide").style = "display:none"
+				document.getElementById("fromdatepicker").required = false;
+				document.getElementById("todatepicker").required = false;
 			}
+
 		}
 	</script>
 	<script>
