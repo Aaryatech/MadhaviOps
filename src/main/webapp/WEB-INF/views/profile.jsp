@@ -60,6 +60,12 @@
 <c:url var="checkUserAuthority" value="/checkUserAuthority"/>
 <c:url var="updateUserPasswords" value="/updateUserPasswords"/>
 <c:url var="updateAdminPassword" value="/updateAdminPassword"/>
+<c:url var="getAllFrEmp" value="/getAllFrEmp"/>
+<c:url var="getFrEmpById" value="/getFrEmpById"/>
+<c:url var="delFrEmpById" value="/delFrEmpById"/>
+<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo"/>
+
+
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -124,10 +130,22 @@
 
 					
 					
-					<div class="topSlide">
+				<div class="topSlide">
+					
+						
+					
 			<div class="topSlide2 textcen">
 				
+					<div class="order-right" style="padding-top:10px; padding-bottom: 5px; float: right;">
+						<a href="#" class="pending_btn initialism addcust_open">Add Employee</a>
+						<a href="#" class="pending_btn initialism slide_open" onclick="getData()">Employee List</a>
+					</div> 
+					
+					
+				
 				<div class="profileinsite">
+				
+				
 		<form name="updateprofile" id="updateprofile" method="post" action="${pageContext.request.contextPath}/updateprofile"enctype="multipart/form-data" >
 					<div class="profileinsiteLeft">
 
@@ -424,8 +442,324 @@
 
 	</div>
 	<!--wrapper-end-->
+	<!--pending amount popup-->
+			<div id="addcust" class="add_customer" style="width: 60%;">
+				<button class="addcust_close close_popup" onclick="clearForm()"><i class="fa fa-times" aria-hidden="true"></i></button>
+					<h3 class="pop_head">Add Employee</h3>
+					<div class="col-lg-12">
+				<div class="row">
+				<form action="saveFranchiseeEmp" id="fr_emp_form" method="post">
+					<div class="col-lg-6">
+					<input type="hidden" value="${emp.frEmpId}" name="fr_emp_id" id="fr_emp_id">
+					
+						<div class="add_frm">
+							<div class="add_frm_one">
+								<div class="add_customer_one">Employee Name</div>
+								<div class="add_input"><input name="emp_name" type="text" class="input_add" id="emp_name" value="${emp.frEmpName}" required/></div>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">Joining Date</div>
+								<div class="add_input"><input name="join_date" type="date" class="input_add" id="join_date" value="${emp.frEmpJoiningDate}" required/></div>
+								<div class="clr"></div>
+							</div>
+							
+							<div class="add_frm_one">
+								<div class="add_customer_one">Total Limit</div>
+								<div class="add_input"><input name="ttl_limit" type="text" class="input_add" id="ttl_limit" value="${emp.totalLimit}" required/></div>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">From Date</div>
+								<div class="add_input"><input name="from_date" type="date" class="input_add" id="from_date" value="${emp.fromDate}" required/></div>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">Password</div>
+								<div class="add_input"><input name="pass" type="text" class="input_add" id="pass" value="${emp.password}" required/></div>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">Designation</div>
+								<select name="designation" id="designation" data-placeholder="Designation" class="add_input"
+										class="input_add " style="text-align: left;">
+										<option value="1" style="text-align: left;" selected>Admin</option>
+										<option value="2" style="text-align: left;">Manager</option>
+										<option value="3" style="text-align: left;">Cashier</option>
+									</select>
+								<div class="clr"></div>
+							</div>
+						</div>
+						</div>
+						
+						<div class="col-lg-6">				
+						
+							<div class="add_frm">
+							<div class="add_frm_one">
+								<div class="add_customer_one">Mobile Number </div>
+								<div class="add_input"><input name="emp_contact" type="text" class="input_add" id="emp_contact" value="${emp.frEmpContact}" maxlength="10" required/></div>
+								<div class="clr"></div>
+							</div>
+							
+							<div class="add_frm_one">
+								<div class="add_customer_one">Address</div>
+								<div class="add_input"><input name="emp_address" type="text" class="input_add" id="emp_address" value="${emp.frEmpAddress}" required/></div>
+								<div class="clr"></div>
+							</div>
+							
+							
+							<div class="add_frm_one">
+								<div class="add_customer_one">Current Bill Amt</div>
+								<div class="add_input"><input name="curr_bill_amt" type="text" class="input_add" id="curr_bill_amt" value="${emp.currentBillAmt}" required/></div>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">To Date</div>
+								<div class="add_input"><input name="to_date" type="date" class="input_add" id="to_date" value="${emp.toDate}" required/></div>
+								<div class="clr"></div>
+							</div>
+							
+							<div class="add_frm_one">
+								<div class="add_customer_one">Employee Code</div>
+								<div class="add_input"><input name="emp_code" type="text" class="input_add" id="emp_code" value="${emp.empCode}" required/></div>
+								<div class="clr"></div>
+							</div>
+						</div>
+						
+						</div>
+					</form>
+					</div>
+					</div>
+
+					<div class="pop_btns">
+						<div class="close_l"><button class="addcust_close close_btn" onclick="clearForm()">Close</button></div>
+						<div class="close_r"><input type="submit" class="pending_btn" id="sbtbtn4" value="Save"></div>
+						<div class="clr"></div>
+					</div>
+
+				<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
+			</div>
+			<script type="text/javascript">
+			$(document).ready(function () {
+			    $('#addcust').popup({
+			        focusdelay: 400,
+			        outline: true,
+			        vertical: 'top'
+			    });
+			});
+			</script>
 
 
+<!--pending amount popup-->
+			<div id="slide" class="pending_pop">
+				<h3 class="pop_head">Employee List</h3>
+				<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>
+					<div style="overflow-x:auto;">
+					  <table class="pending_tab1" id="table_grid">
+					  <thead>
+					    <tr>
+					      <th>Sr.No.</th>
+					      <th>Employee Name</th>
+					      <th>Contact No</th>
+					      <th>Address</th>
+					      <th>Joining Date</th>
+					      <th>Code</th>
+					      <th>Action</th>
+					    </tr>		
+					    </thead>			    
+							<tbody>
+									
+							</tbody>
+					  </table>
+					</div>
+			</div>
+			<script type="text/javascript">
+			$(document).ready(function () {
+			    $('#slide').popup({
+			        focusdelay: 400,
+			        outline: true,
+			        vertical: 'top'
+			    });
+			});
+			</script>
+<script type="text/javascript">
+function clearForm(){
+	$("#fr_emp_form").trigger("reset");
+} 
+   
+   
+	$('#sbtbtn4').click(function() {
+
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
+			data : $("#fr_emp_form").serialize(),
+			dataType : 'json',
+			success : function(data) {
+				if(data.frEmpName!=null){
+					$("#fr_emp_form").trigger("reset");
+					$('#addcust').popup('hide');  
+					alert("Employee Saved Successfylly")
+				}
+			}
+		}).done(function() {
+			setTimeout(function() {
+			}, 500);
+		});
+	});
+	
+	function getData(){		 
+		$
+		.getJSON(
+				'${getAllFrEmp}',
+
+				{
+					ajax : 'true'
+				},
+				function(data) {
+					$('#table_grid td').remove(); 
+					$.each(
+							data,
+							function(key, emp) {								
+								//alert(JSON.stringify(cashHndOvr));
+								$('#loader').hide();
+
+								/* document.getElementById("expExcel").disabled = false;
+								document.getElementById("PDFButton").disabled = false;
+
+								if (data == "") {
+									alert("No records found !!");
+									document.getElementById("expExcel").disabled = true;
+									document.getElementById("PDFButton").disabled = true;
+								
+								} */
+
+								var tr = $('<tr></tr>');
+								tr.append($('<td></td>').html(key+1));
+								tr.append($('<td></td>').html(emp.frEmpName));
+							  	tr.append($('<td></td>').html(emp.frEmpContact));
+							  	tr.append($('<td></td>').html(emp.frEmpAddress));
+							  	tr.append($('<td></td>').html(emp.frEmpJoiningDate));							  	
+							  	tr.append($('<td ></td>').html(emp.empCode));							  	
+							  	tr.append($('<td></td>').html("<a href='#' onclick=editFrEmp("+emp.frEmpId+") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("+emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>"));
+							  	$('#table_grid tbody').append(tr);
+
+							})
+					
+				});
+			}
+		
+
+	function deletFrEmp(empId) {
+		//alert("Id----------"+empId)
+		
+	if (empId!=null) {
+			
+	$
+	.getJSON(
+			'${delFrEmpById}',
+
+			{				 
+				empId : empId,
+				ajax : 'true'
+			},
+			function(data) {
+				$('#table_grid td').remove(); 
+				$.each(
+						data,
+						function(key, emp) {								
+							//alert(JSON.stringify(cashHndOvr));
+							$('#loader').hide();
+
+
+							var tr = $('<tr  ></tr>');
+							tr.append($('<td></td>').html(key+1));
+							tr.append($('<td></td>').html(emp.frEmpName));
+						  	tr.append($('<td></td>').html(emp.frEmpContact));
+						  	tr.append($('<td></td>').html(emp.frEmpAddress));
+						  	tr.append($('<td></td>').html(emp.frEmpJoiningDate));							  	
+						  	tr.append($('<td  ></td>').html(emp.empCode));							  	
+						  	tr.append($('<td></td>').html("<a href='#' onclick=editFrEmp("+emp.frEmpId+") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("+emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>"));
+						  	$('#table_grid tbody').append(tr);
+
+						})
+			});
+		}
+	}
+	
+	function editFrEmp(empId) {
+		
+		//$("#slide").hide()
+		
+		if (empId!=null) {
+			
+			$
+			.getJSON(
+					'${getFrEmpById}',
+
+					{				 
+						empId : empId,
+						ajax : 'true'
+					},
+					function(data) {
+						
+					//	alert(JSON.stringify(data)); 
+					
+						//$('#addcust').show();
+						$('#fr_emp_id').val(data.frEmpId);
+						$('#emp_name').val(data.frEmpName);
+						$('#curr_bill_amt').val(data.currentBillAmt);
+						$('#emp_code').val(data.empCode);
+						$('#emp_address').val(data.frEmpAddress);
+						$('#emp_contact').val(data.frEmpContact);
+						$('#join_date').val(data.exVar1);
+						$('#from_date').val(data.exVar2);
+						$('#to_date').val(data.exVar3);
+						$('#pass').val(data.password);
+						$('#ttl_limit').val(data.totalLimit);
+						//designation
+						$('#slide').popup('hide');  
+					});
+				}
+	}
+	
+	
+	 $('#sbtbtn4').click(function() {
+		 var mobNo = $('#emp_contact').val(); 
+		 
+		    //Blank field validation of fullname, mobile no and address. The function will generate an alert message if "fullname" or "mobile no" or "address" field is blank  
+		   /*  if(!$("#emp_name").val())
+		    {
+			  alert('Please enter your Full Name');
+			  $('#emp_name').focus(); //The focus function will move the cursor to "fullname" field
+		    } */
+
+			 if (mobNo!=null) {
+				
+				$
+				.getJSON(
+						'${verifyUniqueContactNo}',
+						{				 
+							mobNo : mobNo,
+							ajax : 'true'
+						},
+						function(data) {
+							
+						//alert("Info : "+JSON.stringify(data)); 
+						if(data.error==false){			
+							document.getElementById("emp_contact").value = "";
+							alert("Contact No. Already Exist.");
+							$('#emp_contact').focus();
+							return true;
+							
+						}else{
+							return false;
+						}
+						
+						});
+					}
+	 });
+</script>
 </body>
 
 

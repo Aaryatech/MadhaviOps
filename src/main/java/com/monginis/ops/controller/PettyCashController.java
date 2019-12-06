@@ -54,9 +54,11 @@ import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.Info;
 import com.monginis.ops.model.PettyCashEmp;
 import com.monginis.ops.model.PettyCashHandover;
 import com.monginis.ops.model.othitemstock.OtherItemCurStock;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.pettycash.PettyCashDao;
 import com.monginis.ops.model.pettycash.PettyCashData;
 import com.monginis.ops.model.pettycash.PettyCashManagmt;
@@ -796,6 +798,162 @@ public class PettyCashController {
 		}
 		
 		return cashList;
+		
+	}
+	
+	/***********************************Franchisee Employee****************************************/
+	
+	@RequestMapping(value="/saveFranchiseeEmp", method = RequestMethod.POST)
+	public @ResponseBody FrEmpMaster saveFranchiseeEmp(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		FrEmpMaster saveEmp=new FrEmpMaster();
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+		
+			session = req.getSession();			
+			int frid = (int) session.getAttribute("frId");
+			
+			FrEmpMaster emp = new FrEmpMaster();
+			emp.setFrEmpId(Integer.parseInt(req.getParameter("fr_emp_id")));
+			emp.setCurrentBillAmt(Float.parseFloat(req.getParameter("curr_bill_amt")));
+			emp.setDelStatus(0);
+			emp.setDesignation(Integer.parseInt(req.getParameter("designation")));
+			emp.setEmpCode(req.getParameter("emp_code"));
+			emp.setExInt1(0);
+			emp.setExInt2(0);
+			emp.setExInt3(0);
+			emp.setExVar1("NA");
+			emp.setExVar2("NA");
+			emp.setExVar3("NA");
+			emp.setFrEmpAddress(req.getParameter("emp_address"));
+			emp.setFrEmpContact(req.getParameter("emp_contact"));			
+			emp.setFrEmpJoiningDate(req.getParameter("join_date"));
+			emp.setFrEmpName(req.getParameter("emp_name"));
+			emp.setFrId(frid);
+			emp.setFromDate(req.getParameter("from_date"));
+			emp.setToDate(req.getParameter("to_date"));
+			emp.setIsActive(0);
+			emp.setPassword(req.getParameter("pass"));			
+			emp.setTotalLimit(Float.parseFloat(req.getParameter("ttl_limit")));
+			emp.setUpdateDatetime(dateFormat.format(date));
+			
+			
+			 saveEmp = rest.postForObject(Constant.URL + "/saveFrEmpDetails",emp,
+					FrEmpMaster.class);
+			System.out.println("Result-----------"+saveEmp);
+			
+			if(saveEmp!=null) {
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		return saveEmp;
+		
+	}
+	
+	@RequestMapping(value="/getAllFrEmp", method = RequestMethod.GET)
+	public @ResponseBody List<FrEmpMaster> getAllFrEmp(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		List<FrEmpMaster> empList = null;
+		try {
+			session = req.getSession();			
+			int frid = (int) session.getAttribute("frId");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("frId", frid);
+			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid",map,
+					FrEmpMaster[].class);
+			empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+			
+			System.out.println("Emp List----------"+empList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return empList;
+		
+	}
+	
+	@RequestMapping(value="/getFrEmpById", method = RequestMethod.GET)
+	public @ResponseBody FrEmpMaster getFrEmpById(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		FrEmpMaster emp = new FrEmpMaster(); 
+		try {
+			
+			int empId = Integer.parseInt(req.getParameter("empId"));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("empId", empId);
+			
+			 emp = rest.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+					FrEmpMaster.class);
+			 emp.setExVar1(DateConvertor.convertToYMD(emp.getFrEmpJoiningDate()));
+			 emp.setExVar2(DateConvertor.convertToYMD(emp.getFromDate()));
+			 emp.setExVar3(DateConvertor.convertToYMD(emp.getToDate()));
+			 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emp;
+	}
+	
+	@RequestMapping(value="/delFrEmpById", method = RequestMethod.GET)
+	public @ResponseBody List<FrEmpMaster> delFrEmpById(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
+		List<FrEmpMaster> empList = null;
+		MultiValueMap<String, Object> map = null;
+		try {
+			session = req.getSession();			
+			int frid = (int) session.getAttribute("frId");
+			
+			int empId = Integer.parseInt(req.getParameter("empId"));
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("empId", empId);
+			
+			Info info = rest.postForObject(Constant.URL + "/delFrEmp",map,
+					Info.class);
+			if(info.isError()) {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frid);
+				FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid",map,
+						FrEmpMaster[].class);
+				empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+				
+				System.out.println("Emp ListResFail----------"+empList);
+				
+			}else {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frid);
+				FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid",map,
+						FrEmpMaster[].class);
+				empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+				
+				System.out.println("Emp ListRes Sucess----------"+empList);
+			}
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return empList;
+	}
+	
+	@RequestMapping(value = "/verifyUniqueContactNo", method = RequestMethod.GET)
+	public @ResponseBody Info verifyUniqueContactNo(HttpServletRequest request,HttpServletResponse response) {
+		Info info = new Info();
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			String mobNo=request.getParameter("mobNo");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("mobNo", mobNo);
+			
+			info = restTemplate.postForObject(Constant.URL + "/checkUniqueContactNo", map,
+					 Info.class);
+			System.out.println("Info Res----------------"+info);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
 		
 	}
 }

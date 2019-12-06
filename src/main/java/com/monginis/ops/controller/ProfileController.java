@@ -32,6 +32,7 @@ import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
  
 
 @Controller
@@ -62,6 +63,9 @@ public class ProfileController {
 	model.addObject("frSup", frSup);
 	model.addObject("URL", Constant.FR_IMAGE_URL);
 	model.addObject("frImageName", frImageName);
+	
+	FrEmpMaster emp = new FrEmpMaster();
+	model.addObject("emp", emp);
 	}
 	catch (Exception e) {
 		e.printStackTrace();
