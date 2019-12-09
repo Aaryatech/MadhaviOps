@@ -814,7 +814,10 @@ public class PettyCashController {
 			int frid = (int) session.getAttribute("frId");
 			
 			FrEmpMaster emp = new FrEmpMaster();
-			emp.setFrEmpId(Integer.parseInt(req.getParameter("fr_emp_id")));
+			int frEmpId = Integer.parseInt(req.getParameter("fr_emp_id"));
+			System.out.println("EmpId="+frEmpId);
+			
+			emp.setFrEmpId(frEmpId);
 			emp.setCurrentBillAmt(Float.parseFloat(req.getParameter("curr_bill_amt")));
 			emp.setDelStatus(0);
 			emp.setDesignation(Integer.parseInt(req.getParameter("designation")));
@@ -827,6 +830,7 @@ public class PettyCashController {
 			emp.setExVar3("NA");
 			emp.setFrEmpAddress(req.getParameter("emp_address"));
 			emp.setFrEmpContact(req.getParameter("emp_contact"));			
+			System.out.println(req.getParameter("join_date"));
 			emp.setFrEmpJoiningDate(req.getParameter("join_date"));
 			emp.setFrEmpName(req.getParameter("emp_name"));
 			emp.setFrId(frid);
@@ -841,6 +845,7 @@ public class PettyCashController {
 			 saveEmp = rest.postForObject(Constant.URL + "/saveFrEmpDetails",emp,
 					FrEmpMaster.class);
 			System.out.println("Result-----------"+saveEmp);
+			
 			
 			if(saveEmp!=null) {
 				
@@ -940,11 +945,14 @@ public class PettyCashController {
 	public @ResponseBody Info verifyUniqueContactNo(HttpServletRequest request,HttpServletResponse response) {
 		Info info = new Info();
 		try {
+			HttpSession	session = request.getSession();			
+			int frid = (int) session.getAttribute("frId");
 			RestTemplate restTemplate = new RestTemplate();
 			String mobNo=request.getParameter("mobNo");
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("mobNo", mobNo);
+			map.add("frId", frid);
 			
 			info = restTemplate.postForObject(Constant.URL + "/checkUniqueContactNo", map,
 					 Info.class);

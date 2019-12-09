@@ -497,7 +497,8 @@
 							<div class="add_frm">
 							<div class="add_frm_one">
 								<div class="add_customer_one">Mobile Number </div>
-								<div class="add_input"><input name="emp_contact" type="text" class="input_add" id="emp_contact" value="${emp.frEmpContact}" maxlength="10" required/></div>
+								<div class="add_input"><input name="emp_contact" type="text" class="input_add" id="emp_contact" 
+								onchange="checkContactNo()" value="${emp.frEmpContact}" maxlength="10" required/></div>
 								<div class="clr"></div>
 							</div>
 							
@@ -521,7 +522,7 @@
 							
 							<div class="add_frm_one">
 								<div class="add_customer_one">Employee Code</div>
-								<div class="add_input"><input name="emp_code" type="text" class="input_add" id="emp_code" value="${emp.empCode}" required/></div>
+								<div class="add_input"><input name="emp_code" type="text" class="input_add" id="emp_code" value="${emp.empCode}" required="required"/></div>
 								<div class="clr"></div>
 							</div>
 						</div>
@@ -582,6 +583,37 @@
 			    });
 			});
 			</script>
+			
+<script type="text/javascript">
+function checkContactNo(){
+	
+	var mobNo = $('#emp_contact').val(); 
+	 if (mobNo!="" || mobNo!=null) {
+			
+			$
+			.getJSON(
+					'${verifyUniqueContactNo}',
+					{				 
+						mobNo : mobNo,
+						ajax : 'true'
+					},
+					function(data) {
+						
+					//alert("Info : "+JSON.stringify(data)); 
+					if(data.error==false){	
+						document.getElementById("emp_contact").value = "";
+						alert("Contact No. Already Exist.");
+						$('#emp_contact').focus();
+							return true;
+					}
+						
+			});
+					
+	 }
+}
+
+</script>
+			
 <script type="text/javascript">
 function clearForm(){
 	$("#fr_emp_form").trigger("reset");
@@ -589,7 +621,62 @@ function clearForm(){
    
    
 	$('#sbtbtn4').click(function() {
+		 var mobNo = $('#emp_contact').val(); 
+		 var empId = $('#fr_emp_id').val(); 
 
+		 
+		 var valid=0;
+		 if($('#emp_name').val()==""){
+			 valid = 1;
+			 alert("Enter Employee Name");
+		 }
+		 else if($('#emp_contact').val()==""){
+			 valid = 1;
+			 alert("Enter Contact No.");
+		 }
+		 else if($('#join_date').val()==""){
+			 valid = 1;
+			 alert("Enter Joining Date");
+		 }
+		 else if($('#emp_address').val()==""){
+			 valid = 1;
+			 alert("Enter Employee Address");
+		 }
+		 else if($('#ttl_limit').val()==0){
+			 valid = 1;
+			 alert("Enter Total Limit");
+		 }
+		 else if($('#curr_bill_amt').val()==0){
+			 valid = 1;
+			 alert("Enter Current Bill Amount");
+		 }
+		 else if($('#from_date').val()==""){
+			 valid = 1;
+			 alert("Enter From Date");
+		 }
+		 else if($('#to_date').val()==""){
+			 valid = 1;
+			 alert("Enter To Date");
+		 }
+		 else if($('#pass').val()==""){
+			 valid = 1;
+			 alert("Enter Password");
+		 }
+		 else if($('#emp_code').val()==""){
+			 valid = 1;
+			 alert("Enter Employee Code");
+		 }
+		 
+		 
+		 
+		 if(valid==0){
+			 save();
+		 	}
+		 
+		 
+	});
+	function save()
+	{
 		$.ajax({
 			type : "POST",
 			url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
@@ -606,8 +693,7 @@ function clearForm(){
 			setTimeout(function() {
 			}, 500);
 		});
-	});
-	
+	}
 	function getData(){		 
 		$
 		.getJSON(
@@ -703,7 +789,7 @@ function clearForm(){
 					},
 					function(data) {
 						
-					//	alert(JSON.stringify(data)); 
+						//alert(JSON.stringify(data)); 
 					
 						//$('#addcust').show();
 						$('#fr_emp_id').val(data.frEmpId);
@@ -717,23 +803,22 @@ function clearForm(){
 						$('#to_date').val(data.exVar3);
 						$('#pass').val(data.password);
 						$('#ttl_limit').val(data.totalLimit);
-						//designation
+						if(data.designation==1){
+						document.getElementById("designation").value = data.designation;
+						}else if(data.designation==2){
+							document.getElementById("designation").value = data.designation;
+						}else if(data.designation==3){
+							document.getElementById("designation").value = data.designation;
+						}
 						$('#slide').popup('hide');  
 					});
 				}
 	}
 	
-	
+	/* 
 	 $('#sbtbtn4').click(function() {
 		 var mobNo = $('#emp_contact').val(); 
 		 
-		    //Blank field validation of fullname, mobile no and address. The function will generate an alert message if "fullname" or "mobile no" or "address" field is blank  
-		   /*  if(!$("#emp_name").val())
-		    {
-			  alert('Please enter your Full Name');
-			  $('#emp_name').focus(); //The focus function will move the cursor to "fullname" field
-		    } */
-
 			 if (mobNo!=null) {
 				
 				$
@@ -750,15 +835,15 @@ function clearForm(){
 							document.getElementById("emp_contact").value = "";
 							alert("Contact No. Already Exist.");
 							$('#emp_contact').focus();
-							return true;
+							return false;
 							
 						}else{
-							return false;
+							return true;
 						}
 						
 						});
 					}
-	 });
+	 }); */
 </script>
 </body>
 

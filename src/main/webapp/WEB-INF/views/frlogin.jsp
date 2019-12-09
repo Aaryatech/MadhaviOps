@@ -34,7 +34,7 @@
 		<div class="lgn_container">
 			<!-- <p class="lgn_account">Please login to your account.</p> -->
 			<p class="fr_head">${frName}</p>
-			<div class="lgn_row"><input name="username" type="text" class="lgn_input" placeholder="Username"  />
+			<div class="lgn_row"><input name="username" type="text" class="lgn_input" placeholder="Username" maxlength="10" />
 				<img src="${pageContext.request.contextPath}/resources/newpos/images/user_icn1.png" alt="user_icn">
 			</div>
 			<div class="lgn_row"><input name="password"  type="password" class="lgn_input" placeholder="Password" />
