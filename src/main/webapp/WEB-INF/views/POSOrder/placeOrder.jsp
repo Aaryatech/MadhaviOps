@@ -349,7 +349,7 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
-									placeholder="From Date" name="devDate" autocomplete="off"
+									placeholder="Delivery Date" name="devDate" autocomplete="off"
 									type="text"">
 
 							</div>

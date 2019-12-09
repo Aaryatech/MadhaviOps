@@ -456,17 +456,20 @@ public class PosPlaceOrderController {
 		System.err.println("fr itm"+frItemList.toString());
 
 		for (int i = 0; i < frItemList.size(); i++) {
+			
 			GetFrItem item = frItemList.get(i);
 
 			// int qty = Integer.parseInt(request.getParameter("" +
 			// frItemList.get(i).getItemId()));
 			// int qty =
 			// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
+			System.err.println("id"+String.valueOf(item.getId()));
+			System.err.println(" itm id "+String.valueOf(item.getItemId()));
 			String strQty = null;
 			int qty = 0;
 			try {
 
-				strQty = request.getParameter(item.getItemId());
+				strQty = request.getParameter(String.valueOf(item.getId()));
 				System.err.println("inside det"+qty);
 				qty = Integer.parseInt(strQty);
 
@@ -512,7 +515,7 @@ public class PosPlaceOrderController {
 				}
 
 				det.setIsBillGenerated(0);
-				det.setItemId(Integer.parseInt(item.getItemId()));
+				det.setItemId((item.getId()));
 				det.setMenuId(1);
 				det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
 				det.setOrderDate(todaysDate);// curr

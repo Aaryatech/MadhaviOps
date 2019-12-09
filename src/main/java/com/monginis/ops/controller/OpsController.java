@@ -175,7 +175,10 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
-
+			
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+			model.addAttribute("date1", sf.format(date));
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
@@ -1410,4 +1413,88 @@ public class OpsController {
 		return flag;
 
 	}
+	
+	
+	//**********************pos popups data*************************************************
+	
+	
+	@RequestMapping(value = "/getCustBills", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SellBillHeader> getCustBills(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		List<SellBillHeader> itemsList = new ArrayList<SellBillHeader>();
+
+		try {
+
+			int custId = Integer.parseInt(request.getParameter("cust"));
+			int tempType = Integer.parseInt(request.getParameter("tempType"));
+			int tabType = Integer.parseInt(request.getParameter("tabType"));//cust/todays
+			System.err.println("tabType*" + tabType);
+			 
+				MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("custId", custId);
+				mvm.add("frId", frDetails.getFrId());
+				mvm.add("flag", tempType);
+				mvm.add("tabType", tabType);
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBill", mvm,
+						SellBillHeader[].class);
+
+				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
+
+			 
+			System.err.println("getCustCreditBills*" + itemsList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return itemsList;
+	}
+	
+	
+	
+	@RequestMapping(value = "/getCustBillsTransaction", method = RequestMethod.POST)
+	@ResponseBody
+	public List<TransactionDetail> getCustBillsTransaction(HttpServletRequest request, HttpServletResponse responsel) {
+		
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		List<TransactionDetail> itemsList = new ArrayList<TransactionDetail>();
+
+		try {
+
+			int custId = Integer.parseInt(request.getParameter("cust"));
+			int tempType = Integer.parseInt(request.getParameter("tempType"));
+			int tabType = Integer.parseInt(request.getParameter("tabType"));//cust/todays
+           
+		 
+				
+ 				MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("custId", custId);
+				mvm.add("frId", frDetails.getFrId());
+				mvm.add("flag", tempType);
+				mvm.add("tabType", tabType);
+				TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransaction", mvm,
+						TransactionDetail[].class);
+
+				itemsList = new ArrayList<TransactionDetail>(Arrays.asList(itemsList1));
+
+		 
+			System.err.println("getCustCreditBills*" + itemsList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return itemsList;
+	}
+	
+	
+	
 }

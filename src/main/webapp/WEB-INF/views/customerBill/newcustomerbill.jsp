@@ -74,6 +74,9 @@
 
 <c:url var="getCustAmts" value="/getCustAmts" />
 <c:url var="getCustCreditBills" value="/getCustCreditBills" />
+<c:url var="getCustBills" value="/getCustBills" />
+<c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
+
 
 
 <style>
@@ -179,16 +182,18 @@ body {
 					<select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select"
 						style="text-align: left;" onchange="revertHoldBillOnCurrent()">
-						<option value="" style="text-align: left;" disabled="disabled" selected>Select
-							Bill No</option>
+						<option value="" style="text-align: left;" disabled="disabled"
+							selected>Select Bill No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
-						<c:choose>
-						<c:when test="${holdingList.key==key}">
-						<option value="${holdingList.key}" style="text-align: left;" selected>${holdingList.value.tempCustomerName}</option>
-						</c:when><c:otherwise>
-						<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
-						</c:otherwise>
-						</c:choose>
+							<c:choose>
+								<c:when test="${holdingList.key==key}">
+									<option value="${holdingList.key}" style="text-align: left;"
+										selected>${holdingList.value.tempCustomerName}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</select>
 					<div class="logout_btn">
@@ -205,11 +210,19 @@ body {
 					<!--top-buttons row-->
 					<div class="pending_row">
 						<a href="#" class="    pending_btn"
-							onclick="openMyModal('myModalForCredit')">Pending Amt : <span
+							onclick="openMyModal('myModalForCredit',0)">Pending Amt : <span
 							id="credAmt">00.00</span>
 						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span
 							id="advCustAmt">00.00</span>
 						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
+
+						<a href="#" class="pending_btn"
+							onclick="openMyModal('custBills',2)">Today's Bills <span
+							id="credAmt1"></span>
+						</a> <a href="#" class="pending_btn"
+							onclick="openMyModal('custBills',1)">Customer Bills <span
+							id="credAmt1"></span>
+						</a>
 
 					</div>
 
@@ -298,7 +311,8 @@ body {
 						</div>
 						<input id=frRateCat name="frRateCat" value="${frRateCat}"
 							type="hidden"> <input id=key name="key" value="${key}"
-							type="hidden">
+							type="hidden"> <input name="popupType" id="popupType"
+							type="hidden" value="0" />
 						<%-- <input id=advKey name="advKey" value="${advKey}"
 							type="text"> --%>
 						<!--customer row 2-->
@@ -341,7 +355,7 @@ body {
 										<th style="text-align: center;">Product</th>
 										<th style="text-align: center;" width="10%">QTY</th>
 										<th style="text-align: center;" width="10%">UOM</th>
-										
+
 										<th style="text-align: center;" width="13%">Price</th>
 										<th style="text-align: center;" width="13%">Total</th>
 										<th style="text-align: center;" width="2%">Del</th>
@@ -353,23 +367,24 @@ body {
 										<c:set var="totalItemCount" value="${totalItemCount+1}"></c:set>
 										<tr>
 											<td>${count.index+1}</td>
-											<td style=""> ${itemList.itemName} </td>
+											<td style="">${itemList.itemName}</td>
 											<td style="text-align: right;"
-												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}','${itemList.isDecimal}')" >
+												onclick="opnItemPopup('${itemList.taxPer}','${itemList.itemId}','${itemList.orignalMrp}','${itemList.itemName}','${itemList.uom}','${itemList.isDecimal}')">
 												<c:choose>
-												<c:when test="${itemList.isDecimal==1}">
-												<fmt:formatNumber
-													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="3" minFractionDigits="3" />
-													
-												</c:when>
-												<c:otherwise>
-												<fmt:formatNumber
-													type="number" groupingUsed="false" value="${itemList.qty}"
-													maxFractionDigits="0" minFractionDigits="0" />
-												</c:otherwise>
+													<c:when test="${itemList.isDecimal==1}">
+														<fmt:formatNumber type="number" groupingUsed="false"
+															value="${itemList.qty}" maxFractionDigits="3"
+															minFractionDigits="3" />
+
+													</c:when>
+													<c:otherwise>
+														<fmt:formatNumber type="number" groupingUsed="false"
+															value="${itemList.qty}" maxFractionDigits="0"
+															minFractionDigits="0" />
+													</c:otherwise>
 												</c:choose>
-													</td><td> ${itemList.uom}</td>
+											</td>
+											<td>${itemList.uom}</td>
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" groupingUsed="false"
 													value="${itemList.orignalMrp}" maxFractionDigits="0"
@@ -426,8 +441,12 @@ body {
 										maxFractionDigits="2" minFractionDigits="2" /></td>
 							</tr>
 							<tr bgcolor="#ffe5e6" style="border-top: 1px solid #f4f4f4;">
-								<td><!-- Discount --></td>
-								<td><!-- (0.00) 0.00 --></td>
+								<td>
+									<!-- Discount -->
+								</td>
+								<td>
+									<!-- (0.00) 0.00 -->
+								</td>
 								<td>Order Tax</td>
 								<td style="text-align: right;" id="taxAmtLable"><fmt:formatNumber
 										type="number" groupingUsed="false" value="${totalTaxAmt}"
@@ -484,7 +503,8 @@ body {
 								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_two">
-							<a href="#" class="hold pay_btn " onclick="submitBill(1)">KOT Bill</a>
+							<a href="#" class="hold pay_btn " onclick="submitBill(1)">KOT
+								Bill</a>
 						</div>
 					</div>
 
@@ -632,19 +652,17 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-			
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Gender</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
 								<li><input type="radio" type="radio" name="gender"
-									id="moption" checked value="1"> <label
-									for="moption" >M</label>
+									id="moption" checked value="1"> <label for="moption">M</label>
 									<div class="check"></div></li>
 								<li><input type="radio" id="foption" name="gender"
-									value="2" > <label for="foption">F
-								</label>
+									value="2"> <label for="foption">F </label>
 									<div class="check">
 										<div class="inside"></div>
 									</div></li>
@@ -653,38 +671,40 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-					<div class="add_frm_one">
+				<div class="add_frm_one">
 					<div class="add_customer_one">Type</div>
 					<div class="add_input">
-				<select name="custType" id="custType" data-placeholder="Customer Type"
-									class="input_add" style="text-align: left;"
-									required>
-					<option value="0" style="text-align: left;">Select Customer Type</option>
-					<option value="1">Owner</option>
-					<option value="2">Employee</option>
-					<option value="3">Customer</option>
-				</select>
-				</div>
+						<select name="custType" id="custType"
+							data-placeholder="Customer Type" class="input_add"
+							style="text-align: left;" required>
+							<option value="0" style="text-align: left;">Select
+								Customer Type</option>
+							<option value="1">Owner</option>
+							<option value="2">Employee</option>
+							<option value="3">Customer</option>
+						</select>
+					</div>
 				</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Age-Group</div>
 					<div class="add_input">
-				<select name="ageRange" id="ageRange" data-placeholder="Customer Age-Group"
-									class="input_add" style="text-align: left;"
-									required>
-					<option value="0" style="text-align: left;">Customer Age-Group</option>
-					<option value="14-21">14-21 Years</option>  
-					<option value="22-28">22-28 Years</option>
-					<option value="29-35">29-35 Years</option>
-					<option value="36-42">36-42 Years </option>
-					<option value="43-49">43-49 Years</option>
-					<option value="50-56">50-56 Years</option>
-					<option value="57 & above">57 & above</option>
-					
-				</select>
+						<select name="ageRange" id="ageRange"
+							data-placeholder="Customer Age-Group" class="input_add"
+							style="text-align: left;" required>
+							<option value="0" style="text-align: left;">Customer
+								Age-Group</option>
+							<option value="14-21">14-21 Years</option>
+							<option value="22-28">22-28 Years</option>
+							<option value="29-35">29-35 Years</option>
+							<option value="36-42">36-42 Years</option>
+							<option value="43-49">43-49 Years</option>
+							<option value="50-56">50-56 Years</option>
+							<option value="57 & above">57 & above</option>
+
+						</select>
+					</div>
 				</div>
-				</div>
-					<div class="add_frm_one">
+				<div class="add_frm_one">
 					<div class="add_customer_one">DOB</div>
 					<div class="add_input">
 						<input autocomplete="off" placeholder="Date Of Birth"
@@ -774,16 +794,23 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-					<div class="add_frm_one">
+				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-					     <input type="number" name="discPer" id="discPer" onkeyup="itemDiscPerCalculation(1)" class="form-control" value="0" placeholder="Disc %" style="text-align:center ;width:90px;border-radius: 20px;"/> 
-					<label for="discAmtLabel" style="font-weight:700;padding-left:5px;">&nbsp;Disc Amt&nbsp;</label>
-					     <input type="number" name="discAmt" id="discAmt" onkeyup="itemDiscPerCalculation(2)" class="form-control" value="0" placeholder="Disc Amt"  style="text-align:center ;width:90px;border-radius: 20px;" /> 
+						<input type="number" name="discPer" id="discPer"
+							onkeyup="itemDiscPerCalculation(1)" class="form-control"
+							value="0" placeholder="Disc %"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+						<label for="discAmtLabel"
+							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
+							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							onkeyup="itemDiscPerCalculation(2)" class="form-control"
+							value="0" placeholder="Disc Amt"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
 					</div>
 					<div class="clr"></div>
 				</div>
-<div class="add_frm_one">
+				<div class="add_frm_one">
 					<div class="add_customer_one">Total Payable</div>
 					<div class="add_input" id="totalPayableAmt">
 						<fmt:formatNumber type="number" groupingUsed="false"
@@ -892,7 +919,8 @@ body {
 								<select name="billType" id="billType" data-placeholder="Type"
 									class="input_add " style="text-align: left;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Credit Card</option>
+									<option value="2" style="text-align: left;">Credit
+										Card</option>
 									<option value="3" style="text-align: left;">Debit Card</option>
 									<option value="4" style="text-align: left;">E-Pay</option>
 								</select>
@@ -1009,9 +1037,9 @@ body {
 						<input name="rateHidden" id="rateHidden" type="hidden" /><input
 							name="itemIdHidden" id="itemIdHidden" type="hidden" /><input
 							name="taxperHidden" id="taxperHidden" type="hidden" /><input
-							name="itemNameHidden" id="itemNameHidden" type="hidden" />
-							<input	name="uomHidden" id="uomHidden" type="hidden" />
-							<input	name="isDecimalHidden" id="isDecimalHidden" type="hidden" />
+							name="itemNameHidden" id="itemNameHidden" type="hidden" /> <input
+							name="uomHidden" id="uomHidden" type="hidden" /> <input
+							name="isDecimalHidden" id="isDecimalHidden" type="hidden" />
 						<div class="cal_quan">
 							<div class="qty_l">QTY</div>
 							<div class="qty_m">
@@ -1061,7 +1089,7 @@ body {
 							<div class="qty_l">AMT</div>
 							<div class="qty_m">
 								<input name="enterRate" id="enterRate" type="text"
-									class="qty_one numberOnly" placeholder="Enter Rate" 
+									class="qty_one numberOnly" placeholder="Enter Rate"
 									onkeyup="itemRateCalculation(2)" />
 							</div>
 							<div class="qty_r">
@@ -1177,7 +1205,7 @@ body {
 
 		<div class="modal-content" style="width: 60%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
-			 
+
 			<form name="modalfrm" id="modalfrm" method="post">
 				<p>Customer Credit Bills</p>
 				<div class="clr"></div>
@@ -1194,7 +1222,7 @@ body {
 						</div>
 
 					</div>
-					
+
 				</div>
 				<div class="total_table_one" id="printDivid">
 					<div class="scrollbars" id="scrollbarsmodaldiv">
@@ -1205,7 +1233,7 @@ body {
 									<th style="text-align: center;" width="2%"></th>
 									<th style="text-align: center;" width="2%">Sr</th>
 									<th style="text-align: center;">Bill No</th>
-									<th style="text-align: center;">Bill DAte</th>
+									<th style="text-align: center;">Bill Date</th>
 									<th style="text-align: center;" width="10%">Bill Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
@@ -1218,26 +1246,23 @@ body {
 						</table>
 					</div>
 				</div>
-				
-				 
-				 
-				 
-					
-					<div id="singleDiv1">
-						 <div class="calcy_1">
-							<div class="add_customer_one">Type</div>
-							<div class="add_input">
-								<select name="modType1" id="modType1" data-placeholder="Type"
-									class="input_add " style="text-align: left;">
-									<option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Card</option>
-									<option value="3" style="text-align: left;">E-Pay</option>
-								</select>
-								 
-							</div>
-							</div>
-							 <div class="calcy_2">
-							
+
+
+				<div id="singleDiv1">
+					<div class="calcy_1">
+						<div class="add_customer_one">Type</div>
+						<div class="add_input">
+							<select name="modType1" id="modType1" data-placeholder="Type"
+								class="input_add " style="text-align: left;">
+								<option value="1" style="text-align: left;" selected>Cash</option>
+								<option value="2" style="text-align: left;">Card</option>
+								<option value="3" style="text-align: left;">E-Pay</option>
+							</select>
+
+						</div>
+					</div>
+					<div class="calcy_2">
+
 						<div class="add_frm_one">
 							<div class="add_customer_one">Received Amount</div>
 							<div class="add_input">
@@ -1248,12 +1273,12 @@ body {
 							<div class="clr"></div>
 						</div>
 						<input type="hidden" name="finTotal" id="total" value="0">
-						 
+
 					</div>
-					 
+
 				</div>
-				 
-				 
+
+
 				<!-- <div id="modeOfPayDiv1">
 					 
 					<div class="add_frm_one">
@@ -1277,7 +1302,7 @@ body {
 						<div class="clr"></div>
 					</div>
 					</div> -->
-					<!-- <div id="splitDiv1" style="display: none;">
+				<!-- <div id="splitDiv1" style="display: none;">
 						 <div class="calcy_1">
 							<div class="add_customer_one">Cash</div>
 							<div class="add_input">
@@ -1327,13 +1352,13 @@ body {
 						</div>
  
 					</div> -->
-					
-				
-					
+
+
+
 				<div class="pop_btns">
 
 					<div class="close_r">
-					 
+
 						<button type="button" class="btn btn-primary" id="sbtbtn"
 							disabled="disabled">Submit</button>
 					</div>
@@ -1346,8 +1371,253 @@ body {
 
 
 	</div>
+	<!-- Modal to show cust   Bill ends -->
+
+	<!-- Modal to show cust creadit Bill Start -->
+	<div id="custBills" class="modal">
+		<div id="overlay">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 60%">
+			<span class="close" onclick="closeMyModal('custBills')">&times;</span>
+
+			<form name="modalfrm" id="modalfrm" method="post">
+				<p>Bill List</p>
+				<div class="clr"></div>
+				<div>
 
 
+					<div id="dateCust" style="display: none;">
+						<div class="add_frm_one">
+							<div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!">
+								Customer Name:<span style="color: red; width: 80%"
+									id="custName1"></span>
+							</div>
+						</div>
+
+					</div>
+					<div id="dateDiv" style="display: none;">
+						<div class="add_frm_one">
+							<div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!">
+								Date:<span style="color: red; width: 80%" id="date1">${date1}</span>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<div id="modeOfPayDiv1">
+
+					<div class="add_frm_one">
+						 
+						<div class="add_input">
+							<div class="radio_row popup_radio">
+								<ul>
+									<li><input type="radio" id="single12" name="modePay1"
+										value="1" onclick="getCustBills(1)" checked="checked">
+										<label for="single12">Bills</label>
+										<div class="check"></div></li>
+									<li><input type="radio" id="split12" name="modePay1"
+										value="3" onclick="getCustBills(3)"> <label
+										for="split12">Transaction </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li>
+
+									<li><input type="radio" id="single22" name="modePay1"
+										value="2" onclick="getCustBills(2)"> <label
+										for="single22">Pending</label>
+										<div class="check"></div></li>
+								</ul>
+							</div>
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+
+				<div class="total_table_one" id="printDivid">
+					<div class="scrollbars" id="scrollbarsmodaldiv">
+						<table id="custTable">
+
+							<thead>
+								<tr>
+
+									<th style="text-align: center;" width="2%">Sr</th>
+									<th style="text-align: center;">Bill No</th>
+									<th style="text-align: center;">Bill Date</th>
+									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="13%">Paid Amt</th>
+									<th style="text-align: center;" width="13%">Pending Amt</th>
+									<th style="text-align: center;" width="2%">Mode of Payment</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+	</div>
+	<!-- Modal to show cust   Bill ends -->
+
+
+	<script type="text/javascript">
+	
+		
+		function  getCustBills(tempType) {
+		   
+			var custId = document.getElementById("cust").value;
+			var tabType = document.getElementById("popupType").value;
+ 			  var tr_count=0; 
+ 			
+			var ell = document.getElementById('cust');
+			var text = ell.options[ell.selectedIndex].innerHTML;
+			//alert(text);
+						document.getElementById("custName1").innerHTML  = text;
+
+			if(tabType!=2){
+				document.getElementById("custName1").innerHTML  = text;
+				
+				$("#dateCust").show();
+				$("#dateDiv").hide();
+
+			}else{
+				document.getElementById("custName1").innerHTML  = text;
+				$("#dateDiv").show();
+				$("#dateCust").hide();
+			}
+		if(tempType!=3)  {
+			//alert("tempType"+tempType);
+ 				 $.post('${getCustBills}',
+								{
+									cust: custId,
+									tempType: tempType,
+									tabType: tabType,
+									ajax: 'true'
+								},
+								function(data) {
+									tr_count = data.length;
+
+									//alert(JSON.stringify(data));
+ 
+									$('#custTable td').remove();
+									$
+									.each(
+											data,
+											function(key, data) {
+												
+											/* 	var payType="";
+												
+												if(data.paymentMode==1){
+													payType="Cash";
+												}else if(data.paymentMode==2){
+													payType="Card";
+												}else{
+													payType="Other";
+												} */
+												
+											//	document.getElementById("credCust").innerHTML = data.userName; 
+  
+															var tr = $('<tr></tr>');
+															tr.append($('<td ></td>').html(key + 1));
+															tr.append($('<td ></td>').html(data.invoiceNo));
+															tr.append($('<td ></td>').html(data.billDate));
+															tr.append($('<td ></td>').html(data.grandTotal));
+															tr.append($('<td ></td>').html(data.paidAmt));
+															tr.append($('<td ></td>').html(data.remainingAmt));
+															tr.append($('<td ></td>').html("-"));
+															$('#custTable tbody').append(tr);
+														 
+											}); 
+									
+									 
+									
+									if(tr_count>0){
+										 $("#scrollbarsmodaldiv").css("height", "240");
+										 
+										} 
+
+								}); 
+		  }else{
+			  
+			 // alert("tempType else"+tempType);
+				 $.post('${getCustBillsTransaction}',
+							{
+								cust: custId,
+								tempType: tempType,
+								tabType: tabType,
+								ajax: 'true'
+							},
+							function(data) {
+								tr_count = data.length;
+
+								//alert(JSON.stringify(data));
+
+								$('#custTable td').remove();
+								$
+								.each(
+										data,
+										function(key, data) {
+											
+ 
+											var payType="";
+											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
+											
+											if(data.exVar1=="0,1,2,3"){
+												payType="Cash,Card,e-Pay";
+ 												
+											}else if(data.exVar1=="0,1,2"){
+												payType="Cash,Card";
+ 											}else if(data.exVar1=="0,1,3"){
+ 												payType="Cash,e-Pay";
+ 											}else if(data.exVar1=="0,2,3"){
+ 												payType="Card,e-Pay";
+ 											}
+ 											else if(data.exVar1=="0,2"){
+ 												payType="Card";
+ 											}
+ 											else if(data.exVar1=="0,3"){
+ 												payType="e-Pay";
+ 											}
+ 											else if(data.exVar1=="0,1"){
+ 												payType="Cash";
+ 											}
+ 								else{
+												payType="-";
+ 											}
+											
+ 
+														var tr = $('<tr></tr>');
+														tr.append($('<td ></td>').html(key + 1));
+														tr.append($('<td ></td>').html(data.exVar2));
+														tr.append($('<td ></td>').html(data.transactionDate));
+														tr.append($('<td ></td>').html(data.exFloat1));
+														tr.append($('<td ></td>').html(paidAmount));
+														tr.append($('<td ></td>').html(data.exFloat2));
+														tr.append($('<td ></td>').html(payType));
+														$('#custTable tbody').append(tr);
+										}); 
+								
+								 
+								
+								if(tr_count>0){
+									 $("#scrollbarsmodaldiv").css("height", "240");
+									 
+									} 
+
+							}); 
+		  }
+ 
+		}
+	</script>
 
 	<script type="text/javascript">
 	
@@ -1741,8 +2011,25 @@ body {
 	</script>
 
 	<script>
-	function openMyModal(modalId) {
-	 
+	function openMyModal(modalId,type) {
+		var radiobtn ;
+	
+		if(type==1){
+			  radiobtn = document.getElementById("single12");
+			radiobtn.checked = true;
+			document.getElementById("popupType").value=1;//cust bills
+			getCustBills(1);
+		}else if(type==2){
+			radiobtn = document.getElementById("single12");
+			radiobtn.checked = true;
+			document.getElementById("popupType").value=2;//todays bills
+			getCustBills(1);
+		}else{
+			document.getElementById("popupType").value=0;//otherwise
+		}
+	
+		//alert(type);
+		 
 	 var modal1 = document.getElementById(modalId);
 	 modal1.style.display = "block"; 
 	 showDetailsForCp();
@@ -1771,9 +2058,11 @@ body {
 					ajax : 'true'
 				},
 				function(data) {
+					//alert(data.creaditAmt);
+					
 					  
-					document.getElementById("credAmt").innerHTML = data.creaditAmt.toFixed(2); 
-					document.getElementById("advCustAmt").innerHTML = data.advanceAmt.toFixed(2); 
+					document.getElementById("credAmt").innerHTML = data.creaditAmt; 
+					document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
 						 
 				});   
 	}
