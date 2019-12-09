@@ -373,7 +373,8 @@ table, th, td {
 							<select name="from_emp" id="from_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
 								<c:forEach items="${empList}" var="empList" >
-								<option value="${empList.pettyEmpId}-${empList.empName}" style="text-align:left;">${empList.empName}</option>
+								<c:if test="${frId == empList.frEmpId}"></c:if>
+								<option selected="selected" value="${empList.frEmpId}-${empList.frEmpName}" style="text-align:left;">${empList.frEmpName}</option>
 								</c:forEach>
 							</select>
 					</div>					
@@ -387,7 +388,7 @@ table, th, td {
 							<select name="to_emp" id="to_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
 								<c:forEach items="${empList}" var="empList" >
-								<option value="${empList.pettyEmpId}-${empList.empName}" style="text-align:left;">${empList.empName}</option>
+								<option value="${empList.frEmpId}-${empList.frEmpName}" style="text-align:left;">${empList.frEmpName}</option>
 								</c:forEach>
 
 							</select>

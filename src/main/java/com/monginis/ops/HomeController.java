@@ -64,6 +64,7 @@ import com.monginis.ops.model.MessageListResponse;
 import com.monginis.ops.model.SchedulerList;
 import com.monginis.ops.model.Setting;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.posdash.CategorywiseItemSell;
 import com.monginis.ops.model.posdash.CategorywiseSell;
 import com.monginis.ops.model.posdash.PosDashCounts;
@@ -697,7 +698,7 @@ public class HomeController {
 			
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			// getting fr menus
-			/*MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
 			menuMap.add("frId", loginResponse.getFranchisee().getFrId());
 
 			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
@@ -876,8 +877,22 @@ public class HomeController {
 			model.addObject("menuList", filteredFrMenuList);
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
-			model.addObject("info", loginResponse.getLoginInfo());*/
-			model = new ModelAndView("frlogin");
+			model.addObject("info", loginResponse.getLoginInfo());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId",  loginResponse.getFranchisee().getFrId());
+			FrEmpMaster[] empArr = restTemplate.postForObject(Constant.URL + "/getAllFrEmpByFrid",map,
+					FrEmpMaster[].class);
+			List<FrEmpMaster> empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+		
+			if(empList.isEmpty()) {
+				logger.info("List is empty");
+				model = new ModelAndView("home");				
+			}else {
+				logger.info("List is not empty");
+				model = new ModelAndView("frlogin");
+			}
+			
 			return "redirect:/frEmpLogin";
 		}
 

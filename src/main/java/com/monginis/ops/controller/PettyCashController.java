@@ -297,11 +297,20 @@ public class PettyCashController {
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
 			
-			PettyCashEmp[] empArr = rest.postForObject(Constant.URL + "/getAllPettyCashEmp", map,
-					PettyCashEmp[].class);
-			List<PettyCashEmp> empList = new ArrayList<PettyCashEmp>(Arrays.asList(empArr));
+			/*
+			 * PettyCashEmp[] empArr = rest.postForObject(Constant.URL +
+			 * "/getAllPettyCashEmp", map, PettyCashEmp[].class); List<PettyCashEmp> empList
+			 * = new ArrayList<PettyCashEmp>(Arrays.asList(empArr));
+			 */
+			
+			
+			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid",map,
+					FrEmpMaster[].class);
+			List<FrEmpMaster> empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
 			logger.info("---------------------------"+empList);
 			model.addObject("empList", empList);
+			
+			model.addObject("frId", frid);
 			
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
