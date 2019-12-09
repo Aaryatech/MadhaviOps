@@ -383,34 +383,41 @@ public class HistoryController {
 	}
 
 	@RequestMapping(value = "/showAdvanceOrderMemo/{headId}/{devDate}/{frId}", method = RequestMethod.GET)
-	public ModelAndView showHtmlViewSpcakeOrder(HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView showAdvanceOrderMemo(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable int headId, @PathVariable String devDate, @PathVariable int frId) {
-
-		// ModelAndView model = new ModelAndView("orders/htmlViewSpCakeOrder");
-		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("orders/htmlViewAdvanceOrderMemo");
+		 System.err.println("itm head id********** "+headId);
+ 		HttpSession session = request.getSession();
+		ModelAndView model = new ModelAndView("POSOrder/htmlViewAdvanceOrderMemo");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		itemOrderHistory = advanceOrderHistoryDetail(headId, devDate, frId);
 		
-		List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(1, DateConvertor.convertToYMD(devDate),
+		 System.err.println("itm list"+itemOrderHistory.toString());
+		 System.err.println("devDate"+devDate);
+		
+		List<AdvanceOrderHeader> itemOrderHistoryNew = advanceOrderHistoryHeader(1, devDate,
 				frId);
-		model.addObject("orderHistory", itemOrderHistory);
-		AdvanceOrderHeader headDet = new AdvanceOrderHeader();
-		for (int i = 0; i < itemOrderHistory.size(); i++) {
-
-			if (itemOrderHistory.get(i).getAdvHeaderId() == headId) {
-				headDet = itemOrderHistory.get(i);
+		
+		 System.err.println(" head"+itemOrderHistoryNew.toString());
+ 		AdvanceOrderHeader headDet = new AdvanceOrderHeader();
+		for (int i = 0; i < itemOrderHistoryNew.size(); i++) {
+		
+			if (itemOrderHistoryNew.get(i).getAdvHeaderId() == headId) {
+				headDet = itemOrderHistoryNew.get(i);
+				System.err.println("matched");
+				 System.err.println("itm head id in for "+itemOrderHistoryNew.get(i).getAdvHeaderId());
 			}
 
 		}
 		
+		
+		System.err.println("headDet list"+headDet.toString());
 		Customer cust=new Customer();
 		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		map.add("custId", headDet.getCustId());
 		cust = rest.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
 		
-		
+		System.err.println("cust list"+cust.toString());
 		model.addObject("itemList", itemOrderHistory);
 		model.addObject("frDetails", frDetails);
  		model.addObject("headDetails", headDet);

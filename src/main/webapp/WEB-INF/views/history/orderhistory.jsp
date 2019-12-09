@@ -471,8 +471,11 @@ jQuery(document).ready(function(){
 														<c:if test="${orderList.isSellBillGenerated==0}"><a
 															href="#" onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
 															<abbr title='Generate Sell Bill'><i class='fa fa-edit'></i></abbr>
-														</a></c:if>
-														
+														</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+														<a
+															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
+															<abbr title='Advance Order Memo'><i class='fa fa-edit'></i></abbr>
+														</a>
 														</td>
 													 
 												</tr>

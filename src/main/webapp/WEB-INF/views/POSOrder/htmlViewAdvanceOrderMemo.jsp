@@ -1,166 +1,195 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.monginis.ops.constant.Constant"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Dashboard - Madhvi POS</title>
-
+<title>Customer Bill</title>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>
-    </title>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" />
-  </head>
-  <body>
-    <!-- code goes here -->
-
-    <!-- scripts -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
-    </script>
-    <script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js">
-    </script>
-    <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js">
-    </script>
-    
-<script type="text/javascript" src="<c:url value='/resources/js/app.js'/>"></script>
-
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-
-<script type="text/javascript">
-
-
-document.body.onload = function()
-{
-	
-	  createPDF2();
-}
-</script> 
-
+<head>
+<meta charset="UTF-8" />
+<title></title>
 
 </head>
-<body >
-	<div class="ui page grid">
-		<div class="wide column">
-			<div class="ui segment">
-				<div class="ui button aligned center teal" id="create_pdf">Download PDF</div>
-				<div class="ui divider"></div>
-				<form class="ui form">
-				  <table width="200" border="0" cellspacing="0" cellpadding="0" style="padding:5px; font-family:verdana; font-size:12px; border:1px solid #E7E7E7;">
-  <tbody>
-  <tr>
-      <td colspan="2" align="center" style="padding:10px;"><p></p></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center" style="padding:5px; border-bottom:1px solid #E7E7E7;"><img src="${pageContext.request.contextPath}/resources/img/monginislogo.png" alt="logo" width="100px" height="60px"></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center" style="padding:10px; border-bottom:1px solid #E7E7E7; font-size:12px; font-weight:bold; "><p>ORDER MEMO</p></td>
-    </tr>
-    <tr>
-      <td colspan="2">
-      <table width="100%" border="0" cellspacing="0" cellpadding="7">
-  <tbody>
-    <tr>
-      <td width="20%" align="left"><strong>Franchise:</strong></td>
-      <td width="80%" align="left">${frDetails.frName} </td>
-      <td width="0%" ><strong></td>
-    </tr>
-    <tr>
-      <td><strong>Tel:</strong></td>
-      <td>${frDetails.frMob}</td>
-      <td><strong></td>
-      </tr>
-      <tr>
-      <td><strong>Email</strong></td>
-      <td>${frDetails.frEmail} </td>
-      <td><strong></td>
-    </tr>
-    <%-- <tr>
-      <td ><strong>Time:</strong></td>
-      <td >${currTime} </td>
-      <td ><strong></td>
-    </tr> --%>
-    <tr>
-      <td colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="5" class="tbl-inner">
-        <tbody>
-          <tr>
-            <th align="left" bgcolor="#ECECEC">Item Name</th>
-            <th bgcolor="#ECECEC">Qty</th>
-            <th bgcolor="#ECECEC">Rate</th>
-            <th align="center" bgcolor="#ECECEC">Amt</th>
-          </tr>
-          
-          	<c:forEach items="${itemList}" var="itemList">
-          <tr>
-            <td><p style="font-size:12px">${itemList.itemName}</p></td>
-             <td align="center"><p style="font-size:12px">${itemList.orderQty}</p></td>
-            <td align="right"><p style="font-size:12px">${itemList.orderMrp}</p></td>
-            <td align="right"><p style="font-size:12px">${itemList.orderRate}</p></td>
-          </tr>
-          </c:forEach>
-          <tr>
-            <td rowspan="3">&nbsp;</td>
-            <td colspan="2" align="right"><strong>Total :</strong></td>
-            <td align="right"><strong>${headDetails.total}</strong></td>
-          </tr>
-          <tr>
-            <td colspan="2" align="right"><strong>Advance :</strong></td>
-            <td align="right"><strong>${headDetails.advanceAmt}</strong></td>
-          </tr>
-          <tr>
-            <td colspan="2" align="right"><strong>Balance :</strong></td>
-            <td align="right"><strong>${headDetails.remainingAmt}</strong></td>
-          </tr>
-        </tbody>
-      </table></td>
-      </tr>
-  </tbody>
-</table>
+<style type="text/css">
+.style2 {
+	font-size: 14px
+}
 
+.style5 {
+	font-size: 10px
+}
 
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <table width="100%" border="0" cellspacing="0" cellpadding="7" >
-  
-    <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Delivery Date : </strong> ${headDetails.deliveryDate}</td>
-      
-    </tr>
- 
-</table>
+.style6 {
+	font-size: 9px
+}
 
-      </td>
-    </tr>
-    <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Name : </strong> ${cust.custName}</td>
-      
-    </tr>
-    <tr>
-      <td width="200" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><strong>Customer Phno : </strong> ${cust.phoneNumber}</td>
-    </tr>
-    <tr>
-      <td colspan="2" style="border-top:1px solid #E7E7E7; padding:5px 7px;"><p style="font-size:13px; text-align: justify;">While we shall take every care to execute your order as per your instruction, We shall not be liable for delay/non delivery or for variations in the order and decoration due to circumstances beyond our control.</p>
-      			<p style="font-size:13px; text-align: justify;">Fresh cream items should be stored under refrigeration.Please present this receipt at the time of delivery. Order once given will not be cancelled/reversed at any cost.</p></td>
-    </tr> 
-  </tbody>
-</table>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- scripts -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
-	<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>
-	<script type="text/javascript" src="app.js"></script>
+.style7 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.style8 {
+	font-size: 11px;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+
+</head>
+<body>
+
+	<table width="250" border="0" cellspacing="0" cellpadding="0"
+		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
+		<tbody>
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><b>
+						Advance Order</b></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
+					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
+					alt="madhvi_logo"></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}</b><br />
+					<span style="font-size: 10px; font-family: Arial;"><c:choose>
+							<c:when test="${frDetails.frGstType==0}">PAN NO. : ${frSup.frPanNo}</c:when>
+							<c:otherwise>GSTIN:${frDetails.frGstNo}</c:otherwise>
+						</c:choose> </span></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 8px;">${frDetails.frAddress}
+					<br /> Phone:<strong>${frDetails.frMob}</strong>
+				</td>
+			</tr>
+			<tr>
+				<c:set var="totalAmt" value="0"></c:set>
+				<c:set var="calTotalAmt" value="0"></c:set>
+				<td colspan="2">
+					<table width="100%" border="0" cellspacing="0" cellpadding="2">
+						<tbody>
+
+							<tr>
+								<td align="left">Date:</td>
+								<td align="left" colspan="3">${headDetails.orderDate}</td>
+
+							</tr>
+							<tr>
+								<td align="left">Place of Supply:</td>
+								<td align="left" colspan="3">Gujarat</td>
+
+							</tr>
+							<tr>
+								<td colspan="4"><table width="100%" border="0"
+										cellspacing="0" cellpadding="4" class="tbl-inner">
+
+										<tbody>
+
+											<tr>
+												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
+												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
+												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
+												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
+											</tr>
+
+											<c:forEach items="${itemList}" var="itemBillList"
+												varStatus="count">
+												<tr>
+													<td>${itemBillList.itemName}<br />
+													</td>
+													<td align="right"><span style="font-size: 11px">
+
+															${itemBillList.orderQty} </span></td>
+
+													<td align="right"><span style="font-size: 11px">${itemBillList.orderMrp}
+													</span></td>
+													<td align="right"><span style="font-size: 11px">
+															${itemBillList.orderRate} </span></td>
+
+												</tr>
+											</c:forEach>
+
+											<tr>
+												<td colspan="4" align="right"><span class="style7">Total:</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${headDetails.total}" groupingUsed="false" /></span></td>
+											</tr>
+
+											<tr>
+												<td colspan="4" align="right"><span class="style7">Advance
+														Amt :</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${headDetails.advanceAmt}" groupingUsed="false" /></span></td>
+											</tr>
+
+											<tr>
+												<td colspan="4" align="right"><span class="style7">Remaining
+														Amt :</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${headDetails.remainingAmt}" groupingUsed="false" /></span></td>
+											</tr>
+										</tbody>
+									</table></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><table width="100%" border="0" cellspacing="0"
+						cellpadding="7">
+						<tr>
+							<td align="left"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>With
+									You @ Your Great Moments <br> For wholesale inquiry
+									contact DairyMart Team 82600 60049/50<br> visit us on
+									www.madhvi.in<br> Email feedback/suggestions on
+									madhvidairy<br> This is a computer generated invoice
+							</span></td>
+						</tr>
+
+					</table></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><table width="100%" border="0" cellspacing="0"
+						cellpadding="7">
+						<tr>
+							<td align="center"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+								style="font-weight: bold;">Thank You, Visit Again !!! </span></td>
+						</tr>
+
+					</table></td>
+			</tr>
+
+		</tbody>
+	</table>
 </body>
+<body onload="directPrint()">
+	<!-- <script>
+		function directPrint() {
+			//alert("JJ");
+			window.print();
+			//window.close();
+		}
+	</script> -->
+</body>
+
 </html>
