@@ -1,13 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
 <title>Madhvi</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
+<meta name="viewport"
+	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
 <meta name="keywords" content="Madhvi" />
 <meta name="description" content="Madhvi" />
 <meta name="author" content="Madhvi">
@@ -16,9 +19,10 @@
 </head>
 <c:url var="getCatSellList" value="/getCatSellList" />
 <c:url var="getItemSellBill" value="/getItemSellBill" />
+<c:url var="getDatewiseSellList" value="/getDatewiseSellList" />
 
 
-<body onload="drawDonutChart()">
+<body onload="drawAllCharts() ">
 	<form action="" method="get">
 		<!--wrapper-start-->
 		<div class="wrapper">
@@ -42,130 +46,127 @@
 							<li class="active">Dashboard</li>
 						</ul>
 					</div> -->
-					
+
 					<div class="custom_right">
-					<form action="${pageContext.request.contextPath}/home" method="get">
+						<form action="${pageContext.request.contextPath}/home"
+							method="get">
 
-						<input type="hidden" name="tod" id="tod" value="${tod}"> <input
-							type="hidden" name="frmd" id="frmd" value="${frmd}"> <input
-							type="hidden" name="catId" id="catId" value="${tod}">
-						<div class="colOuter">
+							<input type="hidden" name="tod" id="tod" value="${tod}">
+							<input type="hidden" name="frmd" id="frmd" value="${frmd}">
+							<input type="hidden" name="catId" id="catId" value="${tod}">
+							<div class="colOuter">
 
 
-							<c:choose>
-								<c:when test="${type==1}">
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="1" class="radio-align"
-											checked onclick="showDiv(this.value)"> Toady
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="2" class="radio-align"
-											onclick="showDiv(this.value)"> Week
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="3" class="radio-align"
-											onclick="showDiv(this.value)"> Month
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="4" class="radio-align"
-											onclick="showDiv(this.value)">
-										Custom
-									</div>
-								</c:when>
-								<c:when test="${type==2}">
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="1"  class="radio-align"
-											onclick="showDiv(this.value)"> Toady
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="2" class="radio-align"
-											checked onclick="showDiv(this.value)"> Week
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="3" class="radio-align"
-											onclick="showDiv(this.value)"> Month
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="4" class="radio-align"
-											onclick="showDiv(this.value)" >
-										Custom
-									</div>
-								</c:when>
+								<c:choose>
+									<c:when test="${type==1}">
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="1" class="radio-align"
+												checked onclick="showDiv(this.value)"> Toady
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="2" class="radio-align"
+												onclick="showDiv(this.value)"> Week
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="3" class="radio-align"
+												onclick="showDiv(this.value)"> Month
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="4" class="radio-align"
+												onclick="showDiv(this.value)"> Custom
+										</div>
+									</c:when>
+									<c:when test="${type==2}">
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="1" class="radio-align"
+												onclick="showDiv(this.value)"> Toady
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="2" class="radio-align"
+												checked onclick="showDiv(this.value)"> Week
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="3" class="radio-align"
+												onclick="showDiv(this.value)"> Month
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="4" class="radio-align"
+												onclick="showDiv(this.value)"> Custom
+										</div>
+									</c:when>
 
-								<c:when test="${type==3}">
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="1"  class="radio-align"
-											onclick="showDiv(this.value)"> Toady
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="2" class="radio-align" 
-											onclick="showDiv(this.value)"> Week
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="3" class="radio-align"
-											checked onclick="showDiv(this.value)"> Month
-									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="4" class="radio-align"
-											onclick="showDiv(this.value)" >
-										Custom
-									</div>
-								</c:when>
+									<c:when test="${type==3}">
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="1" class="radio-align"
+												onclick="showDiv(this.value)"> Toady
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="2" class="radio-align"
+												onclick="showDiv(this.value)"> Week
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="3" class="radio-align"
+												checked onclick="showDiv(this.value)"> Month
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="4" class="radio-align"
+												onclick="showDiv(this.value)"> Custom
+										</div>
+									</c:when>
 
-								<c:when test="${type==4}">
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="1"  class="radio-align"
-											onclick="showDiv(this.value)"> Toady
+									<c:when test="${type==4}">
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="1" class="radio-align"
+												onclick="showDiv(this.value)"> Toady
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="2" class="radio-align"
+												onclick="showDiv(this.value)"> Week
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="3" class="radio-align"
+												onclick="showDiv(this.value)"> Month
+										</div>
+										<div class="col-md-1 radio_align_1">
+											<input type="radio" name="type" value="4" class="radio-align"
+												checked onclick="showDiv(this.value)"> Custom
+										</div>
+									</c:when>
+								</c:choose>
+								<div id="ihide" style="display: none;">
+									<div class="col-md-1">
+										<div class="col1title">From Date</div>
 									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="2" class="radio-align" 
-											onclick="showDiv(this.value)"> Week
+									<div class="col-md-2">
+										<input id="fromdatepicker" class="texboxitemcode texboxcal"
+											required="required" placeholder="From Date" name="fromDate"
+											value="${fromDate}" autocomplete="off" type="text">
+
 									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="3" class="radio-align" 
-											onclick="showDiv(this.value)"> Month
+									<div class="col-md-1">
+										<div class="col1title">To Date</div>
 									</div>
-									<div class="col-md-1 radio_align_1">
-										<input type="radio" name="type" value="4" class="radio-align" checked
-											onclick="showDiv(this.value)">
-										Custom
+									<div class="col-md-2">
+										<input id="todatepicker" class="texboxitemcode texboxcal"
+											required="required" placeholder="To Date" name="toDate"
+											value="${toDate}" autocomplete="off" type="text">
+
 									</div>
-								</c:when>
-							</c:choose>
-							<div id="ihide" style="display: none;">
-								<div class="col-md-1">
-									<div class="col1title">From Date</div>
+
 								</div>
-								<div class="col-md-2">
-									<input id="fromdatepicker" class="texboxitemcode texboxcal"
-										required="required" placeholder="From Date" name="fromDate"
-										value="${fromDate}" autocomplete="off" type="text">
 
+								<div class="sub_right">
+									<input name="submit" class="buttonsaveorder" value="Submit"
+										type="submit" id="submtbtn">
 								</div>
-								<div class="col-md-1">
-									<div class="col1title">To Date</div>
-								</div>
-								<div class="col-md-2">
-									<input id="todatepicker" class="texboxitemcode texboxcal"
-										required="required" placeholder="To Date" name="toDate"
-										value="${toDate}" autocomplete="off" type="text">
-
-								</div>
-
 							</div>
-
-							<div class="sub_right">
-								<input name="submit" class="buttonsaveorder" value="Submit"
-									type="submit" id="submtbtn">
-							</div>
-						</div>
-					</form>
+						</form>
 					</div>
 					<div class="clr"></div>
 				</div>
 
-
-				<%-- <div class="quick_links">
+				<%-- 
+				<div class="quick_links">
 					<h3 class="bx_title">Quick Links</h3>
 					<ul>
 						<li><a href="#"><i class="fa fa-list-ul"
@@ -194,115 +195,187 @@
 								aria-hidden="true"></i> Expense:${countDetails.expenseAmt}</a></li>
 					</ul>
 				</div> --%>
-				
+
 				<div class="sales_list">
 					<ul>
 						<!-- first li box -->
 						<li>
 							<div class="sale_one bg_one">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Today Sales</h3>
-									<div class="range"><span class="percen_one"></span></div>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}Sales</h3>
+									<div class="range">
+										<span class="percen_one"></span>
+									</div>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.saleAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- second li box -->
 						<li>
 							<div class="sale_one bg_two">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">This Week Sales</h3>
-									<div class="range"><span class="percen_two"></span></div>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}Discount</h3>
+									<div class="range">
+										<span class="percen_two"></span>
+									</div>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.discountAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- third li box -->
 						<li>
 							<div class="sale_one bg_three">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">This Month Sales</h3>
-									<div class="range"><span class="percen_three"></span></div>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}Purchase</h3>
+									<div class="range">
+										<span class="percen_three"></span>
+									</div>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.purchaseAmt}" />
+									</h5>
+
+
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- fourth li box -->
 						<li>
 							<div class="sale_one bg_fourth">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Today's Expenses</h3>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}No.ofBill</h3>
+									<h5 class="price_sale">${countDetails.noOfBillGenerated}</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- fifth li box -->
 						<li>
 							<div class="sale_one bg_fifth">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-line-chart" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Today's Discount</h3>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}Profit</h3>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.profitAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- six li box -->
 						<li>
 							<div class="sale_one bg_sixth">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Today's Customer Visited</h3>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}AdvanceAmt</h3>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.advanceAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- seventh li box -->
 						<li>
 							<div class="sale_one bg_two">
-								<div class="sale_l"><i class="fa fa-address-book" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Total Profile</h3>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">${typeTitle}CreditBillAmt</h3>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.creditAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<!-- eighth li box -->
 						<li>
 							<div class="sale_one bg_three">
 								<div class="sale-list">
-									<div class="sale_epay">EPAY <span>Rs.0.00</span></div>
-									<div class="sale_epay">Cash <span>Rs.0.00</span></div>
-									<div class="sale_epay">Card <span>Rs.0.00</span></div>
+									<div class="sale_epay">
+										EPAY <span>Rs.<fmt:formatNumber type="number"
+												maxFractionDigits="3" value="${countDetails.epayAmt}" />
+										</span>
+									</div>
+									<div class="sale_epay">
+										Cash <span>Rs.<fmt:formatNumber type="number"
+												maxFractionDigits="3" value="${countDetails.cashAmt}" />
+										</span>
+									</div>
+									<div class="sale_epay">
+										Card <span>Rs.<fmt:formatNumber type="number"
+												maxFractionDigits="3" value="${countDetails.cardAmt}" />
+										</span>
+									</div>
 									<div class="clr"></div>
 								</div>
 							</div>
 						</li>
-						
+
 						<!-- nine li box -->
 						<li>
 							<div class="sale_one bg_one">
-								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Advance Amount</h3>
-									<h5 class="price_sale">Rs. 0.00</h5>
+									<h3 class="sale_head">Expenses</h3>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.expenseAmt}" />
+									</h5>
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -313,25 +386,33 @@
 
 				<div class="charts_bx">
 					<div class="chart_l">
-						<h3 class="bx_title">Categorywise Sell harts</h3>
+
 						<!-- <div class="a">Map Put Here</div>
  -->
-						<div id="donutchart"></div><!-- style="width: 900px; height: 500px;" -->
-						
+						<div id="donutchart"></div>
+						<!-- style="width: 900px; height: 500px;" -->
+
 
 					</div>
 					<div class="chart_r">
 						<h3 class="bx_title">Top Products</h3>
 						<div class="right_btns">
-							<input name="submit" class="sub_btn" value="All" type="submit" id="submtbtn">
-							<button type="reset" class="sub_btn" value="Reset"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-							<button type="reset" class="sub_btn" value="Reset"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
-							
-							
-							
+							<input name="submit" class="sub_btn" value="All" type="submit"
+								onclick="itemSellBillCal2(0)" id="submtbtn">
+							<button type="reset" class="sub_btn" value="Reset"
+								onclick="itemSellBillCal2(2)">
+								<i class="fa fa-arrow-down" aria-hidden="true"></i>
+							</button>
+							<button type="reset" class="sub_btn" value="Reset"
+								onclick="itemSellBillCal2(1)">
+								<i class="fa fa-arrow-up" aria-hidden="true"></i>
+							</button>
+
+
+
 						</div>
 
-					
+
 
 						<div class="scrollbars" id="scrollbarsmodaldiv">
 							<table id="custCreditTable">
@@ -352,6 +433,24 @@
 
 					</div>
 					<div class="clr"></div>
+
+
+				</div>
+
+				<div class="charts_bx">
+					<div class="chart_l">
+
+						<!-- <div class="a">Map Put Here</div>
+ -->
+						<div id="chart_div"></div>
+						<!-- style="width: 900px; height: 500px;" -->
+
+
+					</div>
+
+					<div class="clr"></div>
+
+
 				</div>
 			</section>
 		</div>
@@ -367,11 +466,10 @@
 		src="https://www.gstatic.com/charts/loader.js"></script>
 
 	<script type="text/javascript">
-		google.charts.load("current", {
-			packages : [ "corechart" ]
-		});
-		google.charts.setOnLoadCallback(drawDonutChart);
+	
 		function drawDonutChart() {
+alert("hii donut ch");
+			//to draw donut chart
 			var chart;
 			var datag = '';
 			var frmd = document.getElementById("frmd").value;
@@ -386,7 +484,7 @@
 				ajax : 'true'
 			}, function(chartsdata) {
 				//alert(JSON.stringify(data));
-				console.log('data ' + JSON.stringify(chartsdata));
+				//	console.log('data ' + JSON.stringify(chartsdata));
 				var len = chartsdata.length;
 				datag = datag + '[';
 				$.each(chartsdata, function(key, chartsdata) {
@@ -402,7 +500,7 @@
 				var data1 = google.visualization.arrayToDataTable(dataSale);
 
 				var options = {
-					title : 'My Daily Activities',
+					title : 'Categorywise Sell(%)',
 					pieHole : 0.4,
 				};
 				//  alert(222);
@@ -425,6 +523,95 @@
 				google.visualization.events.addListener(chart, 'select',
 						selectQtyHandler);
 				chart.draw(data1, options);
+
+			});
+
+		}
+	</script>
+	<script type="text/javascript">
+	function drawAllCharts() {
+		
+		google.charts.load("current", {
+			packages : [ "corechart" ]
+		});
+		google.charts.setOnLoadCallback(drawDonutChart);
+		
+		google.charts.load('current', {
+			'packages' : [ 'corechart', 'bar' ]
+		});
+		google.charts.setOnLoadCallback(drawStuff);
+	}
+	
+	</script>
+			<script type="text/javascript">
+		function drawStuff() {
+			//alert("hii bar ch");
+			var frmd = document.getElementById("frmd").value;
+			var tod = document.getElementById("tod").value;
+			var chartDiv = document.getElementById('chart_div');
+			document.getElementById("chart_div").style.border = "thin dotted red";
+			var dataTable = new google.visualization.DataTable();
+
+			dataTable.addColumn('string', 'Date'); // Implicit domain column.
+			dataTable.addColumn('number', 'Amount'); // Implicit data column.
+
+			$.post('${getDatewiseSellList}', {
+				frmd : frmd,
+				tod : tod,
+				ajax : 'true'
+			}, function(chartsBardata) {
+				
+				//alert(JSON.stringify(chartsBardata));
+				$.each(chartsBardata, function(key, chartsBardata) {
+
+					dataTable.addRows([ [ chartsBardata.sellDate, parseInt(chartsBardata.sellAmount) ] ]);
+
+				});
+				
+				//alert(11);
+				
+				var materialOptions = {
+					width : 600,
+					height : 450,
+					chart : {
+						title : 'Sell Amount per Day',
+						subtitle : ' '
+					},
+					series : {
+						0 : {
+							axis : 'distance'
+						}, // Bind series 0 to an axis named 'distance'.
+						1 : {
+							axis : 'brightness'
+						}
+					// Bind series 1 to an axis named 'brightness'.
+					},
+					axes : {
+						y : {
+							distance : {
+								label : 'Sell Amount'
+							}, // Left y-axis.
+							brightness : {
+								side : 'right',
+								label : 'Total Tax'
+							}
+						// Right y-axis.
+						}
+					}
+				};
+
+				var materialChart = new google.charts.Bar(chartDiv);
+
+				function drawMaterialChart() {
+					// var materialChart = new google.charts.Bar(chartDiv);
+					// google.visualization.events.addListener(materialChart, 'select', selectHandler);    
+					materialChart.draw(dataTable, google.charts.Bar
+							.convertOptions(materialOptions));
+					// button.innerText = 'Change to Classic';
+					// button.onclick = drawClassicChart;
+				}
+
+				drawMaterialChart();
 
 			});
 
@@ -454,7 +641,8 @@
 
 					tr.append($('<td ></td>').html(key + 1));
 					tr.append($('<td ></td>').html(data.itemName));
-					tr.append($('<td ></td>').html(data.itemTotal));
+					tr.append($('<td ></td>').html(
+							parseFloat(data.itemTotal).toFixed(2)));
 
 					$('#custCreditTable tbody').append(tr);
 				});
@@ -465,9 +653,9 @@
 	</script>
 
 	<script type="text/javascript">
-		function itemSellBillCal2() {
+		function itemSellBillCal2(flag) {
 
-			var flag = document.getElementById("typeSort").value;
+			//var flag = document.getElementById("typeSort").value;
 			var tod = document.getElementById("tod").value;
 			var frmd = document.getElementById("frmd").value;
 			var id = document.getElementById("catId").value;
@@ -479,7 +667,7 @@
 				ajax : 'true'
 			}, function(data) {
 
-			//	alert(JSON.stringify(data));
+				//	alert(JSON.stringify(data));
 				$('#custCreditTable td').remove();
 
 				$.each(data, function(key, data) {
@@ -488,7 +676,8 @@
 
 					tr.append($('<td ></td>').html(key + 1));
 					tr.append($('<td ></td>').html(data.itemName));
-					tr.append($('<td ></td>').html(data.itemTotal));
+					tr.append($('<td ></td>').html(
+							parseFloat(data.itemTotal).toFixed(2)));
 
 					$('#custCreditTable tbody').append(tr);
 				});

@@ -67,6 +67,7 @@ import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.posdash.CategorywiseItemSell;
 import com.monginis.ops.model.posdash.CategorywiseSell;
+import com.monginis.ops.model.posdash.DatewiseSellGraph;
 import com.monginis.ops.model.posdash.PosDashCounts;
 
 import java.io.BufferedOutputStream;
@@ -225,7 +226,7 @@ public class HomeController {
 			int type = 0;
 			String fromDate = null;
 			String toDate = null;
-			
+			String typeTitle=null;
 			try {
 				type = Integer.parseInt(request.getParameter("type"));
 			} catch (Exception e) {
@@ -238,10 +239,12 @@ public class HomeController {
 				toDate = DateConvertor.convertToYMD(request.getParameter("toDate"));
 				model.addObject("fromDate", fromDate);
 				model.addObject("toDate", toDate);
+				model.addObject("typeTitle", "");
 				
 			} else if (type == 1) {
 				fromDate = sf.format(date);
 				toDate = sf.format(date);
+				model.addObject("typeTitle", "Today's");
 			} else if (type == 2) {
 				/*
 				 * final DayOfWeek firstDayOfWeek = WeekFields.of(locale).getFirstDayOfWeek();
@@ -270,6 +273,7 @@ public class HomeController {
 
 				// toDate=sf.format(d1);
 				System.err.println("d1**" + toDate);
+				model.addObject("typeTitle", "This Week");
 			} else {
 
 				Date begining, end;
@@ -287,6 +291,7 @@ public class HomeController {
 				end = calendar1.getTime();
 				toDate = sf.format(end);
 				System.err.println("end" + toDate);
+				model.addObject("typeTitle", "This Month");
 			}
 
 			map = new LinkedMultiValueMap<String, Object>();
@@ -297,6 +302,14 @@ public class HomeController {
 			map.add("toDate", toDate);
 			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts", map,
 					PosDashCounts.class);
+			
+			if(countDet.getExpenseAmt()==null || countDet.getExpenseAmt()=="") {
+				countDet.setExpenseAmt("0.0");
+			}
+			
+			if(countDet.getPurchaseAmt()==null ||countDet.getPurchaseAmt()=="") {
+				 countDet.setPurchaseAmt("0.0");
+			}
 
 			model.addObject("countDetails", countDet);
 			System.err.println("DashBoardReporApi /getCredNoteReport" + countDet.toString());
@@ -341,6 +354,35 @@ public class HomeController {
 			CategorywiseSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseSell", map,
 					CategorywiseSell[].class);
 			  sectionList = new ArrayList<CategorywiseSell>(Arrays.asList(catSell));
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sectionList;
+	}
+	
+	
+
+	@RequestMapping(value = "/getDatewiseSellList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<DatewiseSellGraph> getDatewiseSellList(HttpServletRequest request, HttpServletResponse responsel) {
+		
+		System.err.println("************");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		String fromDate=request.getParameter("frmd");
+		String toDate=request.getParameter("tod");
+		RestTemplate restTemplate = new RestTemplate();
+		List<DatewiseSellGraph> sectionList =new ArrayList<>();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			DatewiseSellGraph[] catSell = restTemplate.postForObject(Constant.URL + "/getDatewiseSell", map,
+					DatewiseSellGraph[].class);
+			  sectionList = new ArrayList<DatewiseSellGraph>(Arrays.asList(catSell));
 
 
 		} catch (Exception e) {
@@ -887,13 +929,13 @@ public class HomeController {
 		
 			if(empList.isEmpty()) {
 				logger.info("List is empty");
-				return "redirect:/home";			
+				model = new ModelAndView("home");				
 			}else {
 				logger.info("List is not empty");
-				return "redirect:/frEmpLogin";
+				model = new ModelAndView("frlogin");
 			}
 			
-			
+			return "redirect:/frEmpLogin";
 		}
 
 	}
