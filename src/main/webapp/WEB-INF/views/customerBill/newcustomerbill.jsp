@@ -3260,7 +3260,7 @@ $("#enterQty").focus();
 		var cardAmt =  $('#cardAmt').val() ;
 		var epayAmt =  $('#epayAmt').val() ;
 		var billType =  $('#billType').val() ;
-		var payType=0;var payTypeFlag=0; var payTypeSplit="";
+		var payType=0;var payTypeFlag=0; var payTypeSplit="";var msg="";
 		if(billType==1){
 			payTypeFlag=0;
 		}else
@@ -3270,6 +3270,7 @@ $("#enterQty").focus();
 			if(cardType=="")
 				{
 				payTypeFlag=1;
+				msg="Please Select Pay Type( Card Type Or E-Pay type)";
 				}
 			payType=cardType;
 			}else if(billType==3)
@@ -3278,6 +3279,7 @@ $("#enterQty").focus();
 				if(ePayType=="")
 				{
 				payTypeFlag=1;
+				msg="Please Select Pay Type( Card Type Or E-Pay type)";
 				}
 				payType=ePayType;
 				} 
@@ -3303,7 +3305,7 @@ $("#enterQty").focus();
 			var cardTypeSplit = $('#cardTypeSplit option:selected').val();
 			if(cardTypeSplit=="" && cardAmt>0)
 				{
-				alert("Please Select Card Type");
+				msg="Please Select Card Type";payTypeFlag=1;
 				}else if(cardAmt>0)
 					{
 					payTypeSplit=payTypeSplit+","+cardTypeSplit;
@@ -3311,7 +3313,7 @@ $("#enterQty").focus();
 			var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
 			if(ePayTypeSplit=="" && epayAmt>0)
 			{
-				alert("Please Select E-pay Type");
+				msg="Please Select Card & E-pay Type";payTypeFlag=1;
 			}else if(epayAmt>0)
 			{
 				payTypeSplit=payTypeSplit+","+ePayTypeSplit;
@@ -3338,7 +3340,7 @@ $("#enterQty").focus();
 			alert("Please Enter Ammount");
 		}else
 			if(payTypeFlag==1){
-				alert("Please Select Pay Type( Card Type Or E-Pay type)");
+				alert(msg);
 			}else{
 			 $('#payment').popup('hide');
 			  document.getElementById("overlay2").style.display = "block";
