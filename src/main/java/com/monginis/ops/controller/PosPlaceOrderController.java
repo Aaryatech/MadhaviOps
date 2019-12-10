@@ -100,7 +100,7 @@ public class PosPlaceOrderController {
 
 		mAllCategoryList = categoryList.getmCategoryList();
 
-		System.out.println(" All Category " + mAllCategoryList.toString());
+		//System.out.println(" All Category " + mAllCategoryList.toString());
 
 		model.addObject("category", mAllCategoryList);
 		model.addObject("custList", custList);
@@ -187,9 +187,9 @@ public class PosPlaceOrderController {
 
 		}
 
-		System.out.println("Order date: " + orderDate);
-		System.out.println("Production date: " + productionDate);
-		System.out.println("Delivery date: " + deliveryDate);
+		//System.out.println("Order date: " + orderDate);
+		//System.out.println("Production date: " + productionDate);
+		//System.out.println("Delivery date: " + deliveryDate);
 
 		frItemList = new ArrayList<GetFrItem>();
 		prevFrItemList = new ArrayList<GetFrItem>();
@@ -214,7 +214,7 @@ public class PosPlaceOrderController {
 					map.add("date", currentDateFc);
 					map.add("menuId", settingValue.getSettingValue2());// new on 10 july
 					orderList = rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
-					System.err.println("orderList:" + orderList.toString());
+					//System.err.println("orderList:" + orderList.toString());
 					model.addObject("orderList", orderList);
 
 					flagRes = 1;
@@ -243,7 +243,7 @@ public class PosPlaceOrderController {
 
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
-			System.out.println("Fr Item List " + frItemList.toString());
+			//System.out.println("Fr Item List " + frItemList.toString());
 		} catch (Exception e) {
 
 			System.out.println("Exception Item List " + e.getMessage());
@@ -331,7 +331,7 @@ public class PosPlaceOrderController {
 
 		}
 
-		System.out.println(catList);
+		///System.out.println(catList);
 
 		// toTime
 
@@ -378,7 +378,7 @@ public class PosPlaceOrderController {
 		model.addObject("menuTitle", menuTitle);
 		model.addObject("menuIdFc", menuList.get(index).getMenuId());
 		model.addObject("menuIdShow", settingValue.getSettingValue1());
-		System.out.println("isSameDayApplicable" + isSameDayApplicable);
+		//System.out.println("isSameDayApplicable" + isSameDayApplicable);
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
@@ -404,7 +404,7 @@ public class PosPlaceOrderController {
 		@ResponseBody
 		public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
 
-		System.err.println("inside saveAdvanceOrder");
+		//System.err.println("inside saveAdvanceOrder");
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
@@ -417,8 +417,9 @@ public class PosPlaceOrderController {
 		String currentDate = df.format(date);
 		String currentDateFc = dfdmy.format(date);
 		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dfReg1 = new SimpleDateFormat("dd-MM-yyyy");
 
-		String todaysDate = dfReg.format(date);
+		String todaysDate = dfReg1.format(date);
 
 		// ModelAndView mav = new ModelAndView("showsPlaceOrder");
 
@@ -435,9 +436,9 @@ public class PosPlaceOrderController {
 
 		//System.err.println("dm");
 
-		//System.err.println("Order date: " + todaysDate);
-		//System.err.println("Production date: " + yyestDate);
-		//System.err.println("Delivery date: " + devDate);
+		System.err.println("Order date: " + todaysDate);
+		System.err.println("Production date: " + x1);
+		System.err.println("Delivery date: " + devDate);
 
 		String advanceAmt = request.getParameter("advanceAmt");
 		String remainAmt = request.getParameter("remainAmt");
@@ -457,12 +458,12 @@ public class PosPlaceOrderController {
 		advHeader.setTotal(Float.parseFloat(total));
 		advHeader.setFrId(frDetails.getFrId());
 		advHeader.setOrderDate(todaysDate);
-		advHeader.setProdDate(x1);
-		advHeader.setDeliveryDate(DateConvertor.convertToYMD(devDate));
+		advHeader.setProdDate(DateConvertor.convertToDMY(x1));
+		advHeader.setDeliveryDate(devDate);
 		advHeader.setDiscAmt(0);
 		advHeader.setIsBillGenerated(0);
 		advHeader.setIsSellBillGenerated(0);
-		System.err.println("fr itm"+frItemList.toString());
+		//System.err.println("fr itm"+frItemList.toString());
 
 		for (int i = 0; i < frItemList.size(); i++) {
 			
@@ -472,8 +473,8 @@ public class PosPlaceOrderController {
 			// frItemList.get(i).getItemId()));
 			// int qty =
 			// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
-			System.err.println("id"+String.valueOf(item.getId()));
-			System.err.println(" itm id "+String.valueOf(item.getItemId()));
+			//System.err.println("id"+String.valueOf(item.getId()));
+			//System.err.println(" itm id "+String.valueOf(item.getItemId()));
 			String strQty = null;
 			int qty = 0;
 			try {
@@ -494,7 +495,7 @@ public class PosPlaceOrderController {
 			
 				AdvanceOrderDetail det = new AdvanceOrderDetail();
 				det.setCatId(Integer.parseInt(item.getItemGrp1()));
-				det.setDeliveryDate(DateConvertor.convertToYMD(devDate));
+				det.setDeliveryDate(devDate);
 				det.setDelStatus(0);
 				if (dm == 2) {
 					det.setDiscPer(item.getDmDiscPer());
@@ -528,7 +529,9 @@ public class PosPlaceOrderController {
 				det.setMenuId(1);
 				det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
 				det.setOrderDate(todaysDate);// curr
-				det.setProdDate(x1);// devdate-1
+				det.setProdDate(DateConvertor.convertToDMY(x1));// devdate-1
+				
+			 
 				det.setQty(qty);
 				det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
 				float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
@@ -542,7 +545,7 @@ public class PosPlaceOrderController {
 				det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
 
 				advDetailList.add(det);
-				System.err.println(" det"+det.toString());
+				//System.err.println(" det"+det.toString());
 			}
 
 		}
@@ -551,7 +554,7 @@ public class PosPlaceOrderController {
 
 		AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
 				AdvanceOrderHeader.class);
-		System.err.println("inside saveAdvanceOrder 2");
+		System.err.println("inside saveAdvanceOrder 2"+info.toString());
 		/*
 		 * } catch (Exception e) {
 		 * 
