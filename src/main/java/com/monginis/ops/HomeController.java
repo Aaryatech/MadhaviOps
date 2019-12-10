@@ -887,13 +887,13 @@ public class HomeController {
 		
 			if(empList.isEmpty()) {
 				logger.info("List is empty");
-				model = new ModelAndView("home");				
+				return "redirect:/home";			
 			}else {
 				logger.info("List is not empty");
-				model = new ModelAndView("frlogin");
+				return "redirect:/frEmpLogin";
 			}
 			
-			return "redirect:/frEmpLogin";
+			
 		}
 
 	}

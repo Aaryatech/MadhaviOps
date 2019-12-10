@@ -620,6 +620,7 @@ public class OpsController {
 			int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
 			int billType = Integer.parseInt(request.getParameter("billType"));
 			int payType = Integer.parseInt(request.getParameter("payType"));
+			String payTypeSplit = request.getParameter("payTypeSplit");
 			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
 			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));
 			float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
@@ -772,7 +773,8 @@ public class OpsController {
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf.format(date));
-				transactionDetail.setePayAmt(payType);//card types||epay type
+			
+				transactionDetail.setePayType(payType);
 				if (creditBill == 1) {
 					transactionDetail.setCashAmt(0);
 					transactionDetail.setPayMode(1);
@@ -792,23 +794,23 @@ public class OpsController {
 						}
 					} else {
 
-						String type = "0";
+						String type = payTypeSplit;
 						if (cashAmt > 0) {
 							transactionDetail.setCashAmt(cashAmt);
 						}
 						if (cardAmt > 0) {
 							transactionDetail.setCardAmt(cardAmt);
-							type = type + "," + 2;
+							//type = type + "," + 2;
 						}
 						if (epayAmt > 0) {
 							transactionDetail.setePayAmt(epayAmt);
-							type = type + "," + 3;
+							//type = type + "," + 3;
 						}
 						transactionDetail.setExVar1(type);
 					}
 
 				}
-
+				
 				dList.add(transactionDetail);
 
 				TransactionDetail[] transactionDetailRes = restTemplate
