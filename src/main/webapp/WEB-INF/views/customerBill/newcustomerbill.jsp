@@ -214,15 +214,12 @@ body {
 							id="credAmt">00.00</span>
 						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span
 							id="advCustAmt">00.00</span>
-						</a> <a href="#" class="pending_btn">Total Amt : <span>00.00</span></a>
+						</a> <a href="#" class="pending_btn" 	onclick="openMyModal('custBills',1)">Total Amt : <span>00.00</span></a>
 
 						<a href="#" class="pending_btn"
 							onclick="openMyModal('custBills',2)">Today's Bills <span
 							id="credAmt1"></span>
-						</a> <a href="#" class="pending_btn"
-							onclick="openMyModal('custBills',1)">Customer Bills <span
-							id="credAmt1"></span>
-						</a>
+						</a> 
 
 					</div>
 
@@ -2734,7 +2731,8 @@ function matchSplitAmt(flag){
 	function calPad(side,value) {
 		var qty =  $('#enterQty').val() ;
 		var rate =  $('#enterRate').val() ;
-		//alert(value);
+	
+
 		 if(side==1){
 			 
 			 if(qty=="NaN"){
@@ -2800,7 +2798,7 @@ function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
 		document.getElementById("enterRate").value = 0;
 		document.getElementById("enterQty").value = 0;
 		
-$.post('${editItemQty}',
+/* $.post('${editItemQty}',
 		{
 			itemId: itemId,
 			ajax : 'true'
@@ -2809,7 +2807,7 @@ $.post('${editItemQty}',
 			document.getElementById("enterQty").value = data.qty;
 			document.getElementById("enterRate").value = data.total;
 
-		});
+		}); */
 $('#quantity').popup('show');
 
 document
@@ -3231,8 +3229,8 @@ $("#enterQty").focus();
 		document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
 		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 
-		$("#modeOfPayDiv").hide();
-		document.getElementById("creditBillyes").checked = true;
+		$("#modeOfPayDiv").show();
+		document.getElementById("creditBillno").checked = true;
 		//alert(selectedText);
 		
 		var rowcount = $('#itemBillTable tr').length;
@@ -3374,7 +3372,7 @@ $("#enterQty").focus();
 									 
 								}else if(printbilltype==2){
 									 
-									if(frtype<=10000000){
+									if(frtype<10000000){
 										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
 									}else{
 										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
@@ -3403,7 +3401,7 @@ $("#enterQty").focus();
 									 
 								}else if(printbilltype==2){
 									 
-									if(frtype<=10000000){
+									if(frtype<10000000){
 										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
 									}else{
 										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');

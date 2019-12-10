@@ -62,13 +62,13 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}</b>
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName} (MADHVI DAIRY)</b>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 8px;">${frDetails.frAddress}
-					<br /> Phone:<strong>${frDetails.frMob}</strong><br /> <span
+					<br />Shop Ph:<strong>${frDetails.frMob}</strong><br /> <span
 					style="font-size: 8px; font-family: Arial;">GSTIN:<b>
 							${frDetails.frGstNo}</b> State: ${frSup.frState} <br>FSSAI :
 						11515031000866
@@ -103,10 +103,16 @@
 								<td>Name</td>
 								<td colspan="3">${sellBillHeaderAndDetail.custName}</td>
 
-							</tr>
+							</tr><c:if test="${sellBillHeaderAndDetail.gstNo!=''}">
 							<tr>
 								<td>GST No:</td>
 								<td colspan="3">${sellBillHeaderAndDetail.gstNo}</td>
+							</tr>
+							</c:if>
+							
+							<tr>
+								<td align="left">Sales Person:</td>
+								<td align="left" colspan="3">${frEmpMaster.frEmpName}</td>
 							</tr>
 							<tr>
 								<td colspan="4"><table width="100%" border="0"
@@ -237,17 +243,18 @@
 						<tr>
 							<td align="left"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								>With You @ Your Great Moments <br>
-								 For wholesale inquiry contact DairyMart Team 82600 60049/50<br>
+								>
+								 For wholesale inquiry contact DairyMart Team Ph.No: 82600 60048/49<br>
 								 visit us on  www.madhvi.in<br>
 								 Email feedback/suggestions on madhvidairy<br>
-								 This is a computer generated invoice </span>
+								 This is a computer generated invoice <br>
+								 Subject to ${frDetails.frCity} Jurisdiction</span>
 						  </td>
 			           </tr>	
 			           <tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								style="font-weight: bold;">Thank You, Visit Again !!! </span></td>
+								style="font-weight: bold;">With You @ Your Great Moments ! </span></td>
 						</tr>
 						<!-- <tr>
 							<td style="border-top: 1px solid #E7E7E7; padding: 2px;"

@@ -45,6 +45,7 @@ import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.newpos.SellBillHeaderAndDetail;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.setting.NewSetting;
 import com.steadystate.css.ParseException;
 
@@ -106,7 +107,14 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-
+			try {
+			FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			model.addAttribute("frEmpMaster", frEmpMaster);
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster=new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 0);
@@ -123,7 +131,7 @@ public class OpsController {
 						FranchiseSup.class);
 				model.addAttribute("frSup", frSup);
 			} catch (Exception e) {
-
+                  e.printStackTrace();
 			}
 
 		} catch (Exception e) {
@@ -142,7 +150,14 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-
+			try {
+				FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+				} catch (Exception e) {
+					FrEmpMaster frEmpMaster=new FrEmpMaster();
+					frEmpMaster.setFrEmpName("-");
+					model.addAttribute("frEmpMaster", frEmpMaster);
+				}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 1);
