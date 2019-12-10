@@ -619,6 +619,7 @@ public class OpsController {
 			int creditBill = Integer.parseInt(request.getParameter("creditBill"));
 			int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
 			int billType = Integer.parseInt(request.getParameter("billType"));
+			int payType = Integer.parseInt(request.getParameter("payType"));
 			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
 			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));
 			float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
@@ -771,7 +772,7 @@ public class OpsController {
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf.format(date));
-
+				transactionDetail.setePayAmt(payType);//card types||epay type
 				if (creditBill == 1) {
 					transactionDetail.setCashAmt(0);
 					transactionDetail.setPayMode(1);

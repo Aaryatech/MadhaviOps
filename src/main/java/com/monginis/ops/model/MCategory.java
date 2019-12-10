@@ -9,7 +9,15 @@ public class MCategory {
 	    private int isSameDay;
 	    private int delStatus;
 	    private String itemImage;
-	    private List<SubCategory> subCategoryList;
+		private int seqNo;
+
+	    public int getSeqNo() {
+			return seqNo;
+		}
+		public void setSeqNo(int seqNo) {
+			this.seqNo = seqNo;
+		}
+		private List<SubCategory> subCategoryList;
 		public Integer getCatId() {
 			return catId;
 		}
@@ -49,8 +57,8 @@ public class MCategory {
 		@Override
 		public String toString() {
 			return "MCategory [catId=" + catId + ", catName=" + catName + ", isSameDay=" + isSameDay + ", delStatus="
-					+ delStatus + ", itemImage=" + itemImage + ", subCategoryList=" + subCategoryList + "]";
+					+ delStatus + ", itemImage=" + itemImage + ", seqNo=" + seqNo + ", subCategoryList="
+					+ subCategoryList + "]";
 		}
 		
-	    
 }

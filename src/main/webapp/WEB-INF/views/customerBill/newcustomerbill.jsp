@@ -797,13 +797,13 @@ body {
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer"
+						<input type="number" name="discPer" id="discPer"  onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="0" placeholder="Disc %"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt" onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="0" placeholder="Disc Amt"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
@@ -887,7 +887,7 @@ body {
 											<!-- <input type="checkbox" id="cardCheck"
 											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
 											name="cardAmt" class=" input_add numberOnly"
-											placeholder="Card Ammount" value="0">
+											placeholder="Card Ammount" value="0" oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)">
 										</li>
 									</ul>
 								</div>
@@ -904,7 +904,10 @@ body {
 											<!-- <input type="checkbox" id="epayCheck"
 											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
 											name="epayAmt" class="input_add numberOnly"
-											placeholder="E-Pay Ammount" value="0">
+											placeholder="E-Pay Ammount" value="0" oninput="matchSplitAmt(3)" onchange="matchSplitAmt(3)">
+										</li>
+										<li id="epayLabel">
+										
 										</li>
 									</ul>
 								</div>
@@ -916,13 +919,11 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Type</div>
 							<div class="add_input">
-								<select name="billType" id="billType" data-placeholder="Type"
+								<select name="billType" id="billType" data-placeholder="Type" onchange="onPayTypeChange(this.value)"
 									class="input_add " style="text-align: left;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
-									<option value="2" style="text-align: left;">Credit
-										Card</option>
-									<option value="3" style="text-align: left;">Debit Card</option>
-									<option value="4" style="text-align: left;">E-Pay</option>
+									<option value="2" style="text-align: left;">Card</option>
+									<option value="3" style="text-align: left;">E-Pay</option>
 								</select>
 								<!-- <div class="dropdown popup_drop">
 									<div class="select">
@@ -936,6 +937,34 @@ body {
 									</ul>
 								</div> -->
 
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
+							<div class="add_customer_one">Card Type</div>
+							<div class="add_input">
+								<select name="cardType" id="cardType" data-placeholder="Card Type"
+									class="input_add " style="text-align: left;">
+									<option value="" style="text-align: left;">Select Card</option>
+									
+									<option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit Card</option>
+								</select>
+								
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
+							<div class="add_customer_one">E-Pay Type</div>
+							<div class="add_input">
+								<select name="ePayType" id="ePayType" data-placeholder="E-Pay Type"
+									class="input_add " style="text-align: left;">
+									<option value="" >Select E-Pay Type</option>
+									<option value="6" style="text-align: left;">Phone Pe</option>
+									<option value="7" style="text-align: left;">Paytm</option>
+									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="9" style="text-align: left;">Amazon Pay</option>
+								</select>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1620,7 +1649,41 @@ body {
 	</script>
 
 	<script type="text/javascript">
-	
+function matchSplitAmt(flag){
+		
+		var cashAmt = parseFloat(document.getElementById("cashAmt").value);
+		var cardAmt = parseFloat(document.getElementById("cardAmt").value);
+		var epayAmt = parseFloat(document.getElementById("epayAmt").value);
+	    var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+        var total=cashAmt+cardAmt+epayAmt;
+        if(totalPayableAmt<total){
+			document.getElementById("epayLabel").innerHTML ="&nbsp;&nbsp; Total: &nbsp;&nbsp;"+ total.toFixed(2);
+        	document.getElementById("epayLabel").style.color="red";
+        }else  if(totalPayableAmt==total){ 
+        	document.getElementById("epayLabel").innerHTML ="&nbsp;&nbsp; Total: &nbsp;&nbsp;"+ total.toFixed(2);
+        	document.getElementById("epayLabel").style.color="green";
+        }else { 
+        	document.getElementById("epayLabel").innerHTML ="&nbsp;&nbsp; Total: &nbsp;&nbsp;"+ total.toFixed(2);
+        	document.getElementById("epayLabel").style.color="black";
+        }
+		
+		
+	}
+		function onPayTypeChange(type){
+			if(type==1){
+				$('#cardTypeDiv').hide();
+				$('#epayTypeDiv').hide();
+			}else
+			if(type==2){
+				$('#cardTypeDiv').show();
+				$('#epayTypeDiv').hide();
+
+			}else if(type==3){
+				$('#epayTypeDiv').show();
+				$('#cardTypeDiv').hide();
+
+			}
+		}
 		
 		function  settleCustBill() {
 			  document
@@ -3161,6 +3224,27 @@ $("#enterQty").focus();
 		var cardAmt =  $('#cardAmt').val() ;
 		var epayAmt =  $('#epayAmt').val() ;
 		var billType =  $('#billType').val() ;
+		var payType=0;var payTypeFlag=0;
+		if(billType==1){
+			payTypeFlag=0;
+		}else
+		if(billType==2)
+			{
+			var cardType = $('#cardType option:selected').val();
+			if(cardType=="")
+				{
+				payTypeFlag=1;
+				}
+			payType=cardType;
+			}else if(billType==3)
+				{
+				var ePayType =  $('#ePayType option:selected').val();
+				if(ePayType=="")
+				{
+				payTypeFlag=1;
+				}
+				payType=ePayType;
+				} 
 		var payAmt =  $('#payAmt').val() ;
 		var frtype =  $('#frtype').val() ;
 		var discPer =  $('#discPer').val() ;
@@ -3197,7 +3281,10 @@ $("#enterQty").focus();
 		
 		if(creditBill==2 && single==1 && payAmt==""){
 			alert("Please Enter Ammount");
-		}else{
+		}else
+			if(payTypeFlag==1){
+				alert("Please Select Pay Type( Card Type Or E-Pay type)");
+			}else{
 			 $('#payment').popup('hide');
 			  document.getElementById("overlay2").style.display = "block";
 			   $
@@ -3209,6 +3296,7 @@ $("#enterQty").focus();
 							creditBill : creditBill,
 							paymentMode : single,
 							billType : billType,
+							payType:payType,
 							cashAmt : cashAmt,
 							cardAmt : cardAmt,
 							epayAmt : epayAmt,

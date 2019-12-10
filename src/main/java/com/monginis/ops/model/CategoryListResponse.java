@@ -7,14 +7,10 @@ public class CategoryListResponse {
 
     private List<MCategoryList> mCategoryList;
     private ErrorMessage errorMessage;
-
-    
-
    
 	public List<MCategoryList> getmCategoryList() {
 		return mCategoryList;
 	}
-
 	public void setmCategoryList(List<MCategoryList> mCategoryList) {
 		this.mCategoryList = mCategoryList;
 	}
@@ -26,8 +22,4 @@ public class CategoryListResponse {
     public void setErrorMessage(ErrorMessage errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
-    
-    
-
 }
