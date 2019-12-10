@@ -22,6 +22,8 @@
 	padding-bottom: 1%;
 	color: red;
 }
+.fr_head_lgn{text-align: center; color:#333; background:#fff200; margin: 0 0 15px 0; font-weight: 600; text-transform: uppercase; padding: 10px;
+font-size: 16px;}
 </style>
 </head>
 
@@ -33,7 +35,7 @@
 		<h2 class="lgn_head"><img src="${pageContext.request.contextPath}/resources/newpos/images/lgn_logo.jpg" alt="lgn_logo"></h2>
 		<div class="lgn_container">
 			<!-- <p class="lgn_account">Please login to your account.</p> -->
-			<p class="fr_head">${frName}</p>
+			<p class="fr_head_lgn">${frName}</p>
 			<div class="lgn_row"><input name="username" type="text" class="lgn_input" placeholder="Username" maxlength="10" />
 				<img src="${pageContext.request.contextPath}/resources/newpos/images/user_icn1.png" alt="user_icn">
 			</div>

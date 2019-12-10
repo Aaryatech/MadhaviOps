@@ -7,8 +7,7 @@
 <meta charset="utf-8" />
 <title>Madhvi</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport"
-	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
 <meta name="keywords" content="Madhvi" />
 <meta name="description" content="Madhvi" />
 <meta name="author" content="Madhvi">
@@ -36,15 +35,15 @@
 
 
 
-					<div class="page_bread">
+					<!-- <div class="page_bread">
 						<ul>
 							<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
 									Home</a></li>
 							<li class="active">Dashboard</li>
 						</ul>
-					</div>
-					<div class="clr"></div>
-
+					</div> -->
+					
+					<div class="custom_right">
 					<form action="${pageContext.request.contextPath}/home" method="get">
 
 						<input type="hidden" name="tod" id="tod" value="${tod}"> <input
@@ -55,80 +54,80 @@
 
 							<c:choose>
 								<c:when test="${type==1}">
-									<div class="col-md-1">
-										<input type="radio" name="type" value="1" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="1" class="radio-align"
 											checked onclick="showDiv(this.value)"> Toady
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="2" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="2" class="radio-align"
 											onclick="showDiv(this.value)"> Week
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="3" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="3" class="radio-align"
 											onclick="showDiv(this.value)"> Month
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="4"
-											onclick="showDiv(this.value)" style="width: 10px;">
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="4" class="radio-align"
+											onclick="showDiv(this.value)">
 										Custom
 									</div>
 								</c:when>
 								<c:when test="${type==2}">
-									<div class="col-md-1">
-										<input type="radio" name="type" value="1" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="1"  class="radio-align"
 											onclick="showDiv(this.value)"> Toady
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="2" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="2" class="radio-align"
 											checked onclick="showDiv(this.value)"> Week
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="3" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="3" class="radio-align"
 											onclick="showDiv(this.value)"> Month
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="4"
-											onclick="showDiv(this.value)" style="width: 10px;">
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="4" class="radio-align"
+											onclick="showDiv(this.value)" >
 										Custom
 									</div>
 								</c:when>
 
 								<c:when test="${type==3}">
-									<div class="col-md-1">
-										<input type="radio" name="type" value="1" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="1"  class="radio-align"
 											onclick="showDiv(this.value)"> Toady
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="2" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="2" class="radio-align" 
 											onclick="showDiv(this.value)"> Week
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="3" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="3" class="radio-align"
 											checked onclick="showDiv(this.value)"> Month
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="4"
-											onclick="showDiv(this.value)" style="width: 10px;">
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="4" class="radio-align"
+											onclick="showDiv(this.value)" >
 										Custom
 									</div>
 								</c:when>
 
 								<c:when test="${type==4}">
-									<div class="col-md-1">
-										<input type="radio" name="type" value="1" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="1"  class="radio-align"
 											onclick="showDiv(this.value)"> Toady
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="2" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="2" class="radio-align" 
 											onclick="showDiv(this.value)"> Week
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="3" style="width: 10px;"
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="3" class="radio-align" 
 											onclick="showDiv(this.value)"> Month
 									</div>
-									<div class="col-md-1">
-										<input type="radio" name="type" value="4" checked
-											onclick="showDiv(this.value)" style="width: 10px;">
+									<div class="col-md-1 radio_align_1">
+										<input type="radio" name="type" value="4" class="radio-align" checked
+											onclick="showDiv(this.value)">
 										Custom
 									</div>
 								</c:when>
@@ -155,17 +154,18 @@
 
 							</div>
 
-							<div align="center">
+							<div class="sub_right">
 								<input name="submit" class="buttonsaveorder" value="Submit"
 									type="submit" id="submtbtn">
 							</div>
 						</div>
 					</form>
+					</div>
 					<div class="clr"></div>
 				</div>
 
 
-				<div class="quick_links">
+				<%-- <div class="quick_links">
 					<h3 class="bx_title">Quick Links</h3>
 					<ul>
 						<li><a href="#"><i class="fa fa-list-ul"
@@ -193,6 +193,122 @@
 						<li><a href="#"><i class="fa fa-file-o"
 								aria-hidden="true"></i> Expense:${countDetails.expenseAmt}</a></li>
 					</ul>
+				</div> --%>
+				
+				<div class="sales_list">
+					<ul>
+						<!-- first li box -->
+						<li>
+							<div class="sale_one bg_one">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Today Sales</h3>
+									<div class="range"><span class="percen_one"></span></div>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- second li box -->
+						<li>
+							<div class="sale_one bg_two">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">This Week Sales</h3>
+									<div class="range"><span class="percen_two"></span></div>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- third li box -->
+						<li>
+							<div class="sale_one bg_three">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">This Month Sales</h3>
+									<div class="range"><span class="percen_three"></span></div>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- fourth li box -->
+						<li>
+							<div class="sale_one bg_fourth">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Today's Expenses</h3>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- fifth li box -->
+						<li>
+							<div class="sale_one bg_fifth">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Today's Discount</h3>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- six li box -->
+						<li>
+							<div class="sale_one bg_sixth">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Today's Customer Visited</h3>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- seventh li box -->
+						<li>
+							<div class="sale_one bg_two">
+								<div class="sale_l"><i class="fa fa-address-book" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Total Profile</h3>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+						
+						<!-- eighth li box -->
+						<li>
+							<div class="sale_one bg_three">
+								<div class="sale-list">
+									<div class="sale_epay">EPAY <span>Rs.0.00</span></div>
+									<div class="sale_epay">Cash <span>Rs.0.00</span></div>
+									<div class="sale_epay">Card <span>Rs.0.00</span></div>
+									<div class="clr"></div>
+								</div>
+							</div>
+						</li>
+						
+						<!-- nine li box -->
+						<li>
+							<div class="sale_one bg_one">
+								<div class="sale_l"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+								<div class="sale_r">
+									<h3 class="sale_head">Advance Amount</h3>
+									<h5 class="price_sale">Rs. 0.00</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
+					</ul>
+					<div class="clr"></div>
 				</div>
 
 				<div class="charts_bx">
@@ -200,19 +316,22 @@
 						<h3 class="bx_title">Categorywise Sell harts</h3>
 						<!-- <div class="a">Map Put Here</div>
  -->
-						<div id="donutchart" style="width: 900px; height: 500px;"></div>
-						<div class="calcy_1">
-							<div class="add_customer_one">Type</div>
-							<div class="add_input">
-								<select name="typeSort" id="typeSort" data-placeholder="Type" onchange="itemSellBillCal2()"
-									class="input_add " style="text-align: left;">
-									<option value="1" style="text-align: left;" selected>Top</option>
-									<option value="2" style="text-align: left;">Bottom</option>
-									<option value="3" style="text-align: left;">All</option>
-								</select>
+						<div id="donutchart"></div><!-- style="width: 900px; height: 500px;" -->
+						
 
-							</div>
+					</div>
+					<div class="chart_r">
+						<h3 class="bx_title">Top Products</h3>
+						<div class="right_btns">
+							<input name="submit" class="sub_btn" value="All" type="submit" id="submtbtn">
+							<button type="reset" class="sub_btn" value="Reset"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+							<button type="reset" class="sub_btn" value="Reset"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+							
+							
+							
 						</div>
+
+					
 
 						<div class="scrollbars" id="scrollbarsmodaldiv">
 							<table id="custCreditTable">
@@ -229,14 +348,6 @@
 								</tbody>
 							</table>
 						</div>
-
-					</div>
-					<div class="chart_r">
-						<h3 class="bx_title">Top Products</h3>
-
-						<div class="a">Map Put Here</div>
-
-						<div class="total_table_one" id="printDivid"></div>
 
 
 					</div>

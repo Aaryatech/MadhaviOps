@@ -41,8 +41,7 @@
 <li><a
 					href="${pageContext.request.contextPath}/newcustomerbill/0"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">
 							POINT OF SALE(POS)<span></span>
@@ -62,8 +61,7 @@
 				<li><a
 					href="${pageContext.request.contextPath}/showExpressBill"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">
 							Express Bill <span></span>
@@ -114,8 +112,7 @@
 			</c:if>
 				<li><a href="${pageContext.request.contextPath}/viewBill"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">
 							View Sell Bills <span></span>
@@ -159,8 +156,7 @@
 
 				<li><a href="${pageContext.request.contextPath}/orderHistory"><div
 							class="img">
-							<i class="fa fa-file-text-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-text-o icon"></i>
 						</div>
 						<div class="title">
 							Order <span>History</span>
@@ -184,7 +180,7 @@
 			<c:if test="${flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showBill"><div
 							class="img">
-							<i class="fa fa-money icon" style="font-size: 22px !important;"></i>
+							<i class="fa fa-money icon"></i>
 						</div>
 						<div class="title">
 							Purchase Bills
@@ -208,8 +204,7 @@
 			<c:if test="${ flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Purchase Bill</div></a></li>
 			</c:if>
@@ -228,8 +223,7 @@
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Item Stock</div></a></li>
 			</c:if>
@@ -247,7 +241,7 @@
 			<c:if test="${info.accessRight==1  && flag==1}">
 
 				<li><a href="#" onClick="openNav4()"><div class="img">
-							<i class="fa fa-file-o icon" style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-o icon"></i>
 						</div>
 						<div class="title">
 							<span>Reports</span>
@@ -269,8 +263,7 @@
 				<li><a
 					href="${pageContext.request.contextPath}/showRuleFilePdf"><div
 							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
+							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">
 							Rule And Regulation <span></span>
