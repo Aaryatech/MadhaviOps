@@ -164,7 +164,7 @@ font-size: 16px;
 	padding:8px 10px;
 	vertical-align: top;
 	text-align: left;
-	font-size: 18px;
+	font-size: 16px /*18px*/;
 	
 }
 .faux-table table {
@@ -219,9 +219,10 @@ font-size: 16px;
 }
 
 .sidenav {
-    top: 99px;
+    top:81px /* 99px*/;
     left: 0px;
 }
+
 
 .mngimg{
 	margin-top:10px;

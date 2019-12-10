@@ -41,7 +41,7 @@ ol,ul,li{margin: 0px;padding: 0px;list-style-type: none;}
 header{width: 100%; background: #FFF; padding: 0;}
 
 .logo{float: left; padding: 10px 20px;}
-.drop_menu{float: right; margin: 14px 14px 0 0;}
+.drop_menu{float: right; margin:21px 15px 0 21px /*14px 14px 0 0*/;}
 /*Styling Selectbox*/
 .dropdown {width: 200px; background:url(../images/ddarow.png) no-repeat right top; background-position:93% 16px; display: inline-block; background-color: #ecf0f5; transition: all .5s ease; position: relative; font-size: 14px; color: #000; height: 100%; text-align: left}
 .dropdown.popup_drop{width: 100%; padding: 6px 12px; border: 1px solid #d2d6de; background:url(../images/ddarow.png) no-repeat right top; background-position:97% 12px; display: inline-block; background-color: #FFF; transition: all .5s ease; position: relative; font-size: 12px; color: #333; height: 100%; text-align: left}
@@ -89,7 +89,7 @@ table.pending_tab td {text-align: left; padding: 8px; border: 1px solid #ddd; fo
 table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 
 .total_table_one{/*height: 263px; overflow-y: scroll;*/ display: block;}
-.scrollbars{height: 283px; width: 100%;}
+.scrollbars{height:560px /*283px*/; width: 100%;}
 .total_table_one table {border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd; background: #FFF;}
 .total_table_one th{text-transform: uppercase; font-size: 14px; color: #FFF; text-align: left; padding: 8px; border: 1px solid #ddd;}
 .total_table_one td {text-align: left; padding: 8px; border: 1px solid #ddd; font-size: 13px;}
@@ -138,7 +138,7 @@ table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 
 
 .cat_r{float: right; width: 57%;}
-.radio_row_one{display: inline-block; width: 100%; margin: 0 0 15px 0;}
+.radio_row_one{display: inline-block; /*width: 100%; margin: 0 0 15px 0;*/}
 .item_head{font-size: 16px; font-weight: 600; color: #000; display: inline-block; margin: 0 15px 0 0; vertical-align: top;}
 /*radio button*/
 .radio_row{display: inline-block; position: relative;}
@@ -157,7 +157,7 @@ input[type=radio]:checked ~ label{color: #ed1c24;}
 
 .cat_bx_one{ width: 100%; border: 2px solid #cccccc; white-space: nowrap; }
 .category_list{padding: 10px; width: 100%; display: inline-block;}
-.category_scrollbars{height: 135px; width: 100%;}
+.category_scrollbars{height:145px /*135px*/; width: 100%;}
 
 .category_list ul{margin: 0px; padding: 0px;}
 .category_list ul li{list-style-type: none; float: left; margin: 5px; border: 3px solid #ecf0f5;}
@@ -165,18 +165,19 @@ input[type=radio]:checked ~ label{color: #ed1c24;}
 .category_list ul li span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 10px; font-size: 14px;}
 .category_list ul li:hover{ border: 3px solid #cccccc;}
 
-.cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 111px; background: #FFF; position: relative;}
+.cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 111px; background: #FFF; position: relative; white-space: initial;}
 .cat_one.cat{margin: 4px;}
 .cat_one p{background: #ed1c24; color: #FFF; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute; right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
 .cat_one img{display: block;  height: 80px; margin: 0 auto;} /* width: 80px; */
-.cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 10px; font-size: 14px; text-overflow:ellipsis;vertical-align:middle;white-space:nowrap;overflow:hidden;}
+.cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 6px 10px; font-size: 14px; /*text-overflow:ellipsis; white-space:nowrap; overflow:hidden;*/
+vertical-align:middle; min-height: 50px;}
 .cat_one:hover{border: 3px solid #cccccc;}
 
-.cat_list_bx{ margin: 25px 0 0 0;}
+.cat_list_bx{ margin:0 /*25px 0 0 0;*/}
 .input_cat{background: #FFF url(../images/srach_icn.png) no-repeat right top; padding: 4px 35px 4px 8px; font-size: 14px; border: 0; background-position: 95% 6px;}
 .cat_srach{display: inline-block; text-align: right; width: 100%; margin: 0 0 10px 0;}
-.cat_list{padding: 10px; width: 100%; display: inline-block;  border: 2px solid #cccccc; position: relative;}
-.carlist_scrollbars{height: 320px; width: 100%;}
+.cat_list{padding: 10px; width: 100%; display: inline-block;  border: 2px solid #cccccc; position: relative; min-height: 590px;}
+.carlist_scrollbars{height: 600px /*320px*/; width: 100%;}
 
 .add_row{display: inline-block; width: 100%; margin: 0 0 15px 0;}
 .add_row_l{float: left; width: 48%;}
@@ -277,7 +278,7 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 .listareaBox:hover .listareaBoximg img:last-child{display:inline-block}
 
 
-.logout_btn{float: right; margin: 10px 15px 0 15px;}
+.logout_btn{float: right; margin:21px 21px 0 21px /*10px 15px 0 15px*/;}
 .logout_btn a{color: #333; font-size: 14px; text-transform: uppercase; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .logout_btn a:hover{color: #ed1c24; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
@@ -377,11 +378,19 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 .calc_no_r a:hover{background: #e2d700; color: #333; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
 .calcy_2{float: right; width: 48%;}
+.dual_bx{display: inline-block; width: 100%; margin: 20px 0 0 0;}
+.dual_l{float: left; width: 70%;}
+.dual_r{float: right; width: 30%;}
+.top_radio_area{display: inline-block; margin: 0 0 15px 0; width: 100%;}
+.item_src{display: inline-block; float: right;}
 
 
 
 @media screen and (max-width:1280px){}
-@media screen and (max-width:1100px){}
+@media screen and (max-width:1024px){
+	.pending_btn{margin: 0 5px 5px 0;}
+	.scrollbars{height: 440px;}
+}
 @media screen and (max-width:900px){}
 @media screen and (max-width:700px){}
 @media screen and (max-width:640px){}
