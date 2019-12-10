@@ -10,6 +10,35 @@
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 
 <style>
+.plus-button {
+	border: 2px solid lightgrey;
+	background-color: #fff;
+	font-size: 16px;
+	height: 1.8em;
+	width: 2.5em;
+	border-radius: 999px;
+	position: relative;
+}
+
+.plus-button:after, .plus-button:before {
+	content: "";
+	display: block;
+	background-color: grey;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.plus-button:before {
+	height: 1em;
+	width: 0.2em;
+}
+
+.plus-button:after {
+	height: 0.2em;
+	width: 1em;
+}
 
 <!--
 MODAL CSS   -->.btn {
@@ -166,7 +195,17 @@ a:hover {
 	color: black;
 }
 
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 25px;
+	margin-top: 7px;
+}
 
+.switch input {
+	display: none;
+}
 
 .slider {
 	position: absolute;
@@ -219,6 +258,7 @@ input:checked+.slider:before {
 <body>
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
+	<c:url value="/saveCustomerFromBill" var="saveCustomerFromBill"></c:url>
 
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
@@ -252,62 +292,7 @@ input:checked+.slider:before {
 
 				<!--leftNav-->
 				<!--rightSidebar-->
-				<div class="main_container">
-				
-				
-					<!-- new-header-row -->
-					<div class="page_head">
-						<div class="page_title">Advance Order</div>
-						<div class="custom_right">
-							
-							
-							
-							<!-- customer 1 -->
-							<div class="customer_one_frm">
-								<div class="cust-txt">Select Customer</div>
-								<div class="cust_drop">
-									<select name="custId" class="form-control chosen" tabindex="4"
-									id="custId1" required>
-									<c:forEach items="${custList}" var="custList" varStatus="count">
-										<option value="${custList.custId}">
-											${custList.custName}-${custList.phoneNumber}</option>
-									</c:forEach>
-								</select>
-								</div>
-								<div class="cust_round"><button class="plus-button openmodale"></button></div>
-							</div>
-							
-							<!-- customer 2 -->
-							<div class="customer_one_frm">
-								<div class="cust-txt">Delivery Date</div>
-								<div class="cust_drop fullwidth">
-									<input id="fromdatepicker" class="texboxitemcode texboxcal" required
-									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text">
-								</div>
-							</div>
-							
-							<!-- customer 3 -->
-							<div class="dairy_frm">
-								<div class="cust-txt switchtxt">Dairy mart</div>
-								<div class="cust_drop switch">
-									<label class="switchone"> <input type="checkbox" name="dm"
-								id="dm" onchange="checkAdd() "> <span
-								class="slider round"></span>
-						
-						</label>
-								</div>
-								
-							</div>
-							
-							
-							
-						</div>
-						<div class="clr"></div>
-					</div>
-				
-				
-				
+				<div class="sidebarright">
 
 					<!-- <div class="colOuter">
 						
@@ -355,10 +340,15 @@ input:checked+.slider:before {
 								</select>
 
 							</div>
-							<div class="col-md-1">
+							<!-- <div class="col-md-1">
 								<button class="plus-button openmodale"></button>
 
-							</div>
+							</div> -->
+							<div class="col-md-1">
+							<button class="plus_btn addcust_open" type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+								</div>
 
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
@@ -415,13 +405,14 @@ input:checked+.slider:before {
 										</c:otherwise>
 									</c:choose>
 
-									
-									<div class="tab_search">
-										<label for="search" class="" id="search"> <i class="fa fa-search"></i> 
-										<input class="myInput1" type="text" id="myInput${loop.index}"
-											onkeyup="myFunction1(${loop.index})" placeholder="Search items by name" title="Type item name">
-										</label>
-									</div>
+									<div class="col-md-9"></div>
+									<label for="search" class="col-md-3" id="search"> <i
+										class="fa fa-search" style="font-size: 20px"></i> <input
+										class="myInput1" type="text" id="myInput${loop.index}"
+										onkeyup="myFunction1(${loop.index})"
+										style="border-radius: 25px;"
+										placeholder="Search items by name" title="Type item name">
+									</label>
 
 									<div id="table-scroll"
 										class="table-scroll responsive-table-one">
@@ -432,12 +423,12 @@ input:checked+.slider:before {
 											<table id="table_grid" class="main-table">
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2 bor_right">Item</th>
-														<th class="col-md-1 bor_right">Min Qty</th>
-														<th class="col-md-1 bor_right">Qty</th>
-														<th class="col-md-1 bor_right">MRP</th>
-														<th class="col-md-1 bor_right">Rate</th>
-														<th class="col-md-1 bor_right">Total</th>
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Qty</th>
+														<th class="col-md-1">MRP</th>
+														<th class="col-md-1">Rate</th>
+														<th class="col-md-1">Total</th>
 													</tr>
 												</thead>
 											</table>
@@ -450,12 +441,12 @@ input:checked+.slider:before {
 												<!--   class="main-table" -->
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2 bor_right">Item</th>
-														<th class="col-md-1 bor_right">Min Qty</th>
-														<th class="col-md-1 bor_right">Qty</th>
-														<th class="col-md-1 bor_right">MRP</th>
-														<th class="col-md-1 bor_right">Rate</th>
-														<th class="col-md-1 bor_right">Total</th>
+														<th class="col-md-2">Item</th>
+														<th class="col-md-1">Min Qty</th>
+														<th class="col-md-1">Qty</th>
+														<th class="col-md-1">MRP</th>
+														<th class="col-md-1">Rate</th>
+														<th class="col-md-1">Total</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -492,7 +483,7 @@ input:checked+.slider:before {
 																				value='${items.itemRate1}' /></td>
 																		<c:set var="rate" value="${items.itemRate1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -527,7 +518,7 @@ input:checked+.slider:before {
 																		<c:set var="qty" value="${items.itemQty}" />
 
 
-																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -563,7 +554,7 @@ input:checked+.slider:before {
 																				value='${items.itemRate3}' /></td>
 																		<c:set var="rate" value="${items.itemRate3}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -590,44 +581,40 @@ input:checked+.slider:before {
 
 
 							<div class="row">
-							
-								<div class="advance_row">
-									<!-- 1 -->
-									<div class="advance_one">
-										<div class="advance_txt">Advance</div>
-										<div class="advance_fled">
-											<input type="text" name="advanceAmt" id="advanceAmt1" onchange="setAmt(1)" class="texboxitemcode texboxcal2"
-											autocomplete="off" required class="form-control" size="20" />
-										</div>
-									</div>
-									
-									<!-- 2 -->
-									<div class="advance_one">
-										<div class="advance_txt">Pending Amt:</div>
-										<div class="advance_fled">
-											<input type="text" name="remainAmt" id="remainAmt1"
+
+								<div class="col-md-1">Advance:</div>
+
+								<div class="col-md-1">
+
+									<input type="text" name="advanceAmt" id="advanceAmt1"
+										onchange="setAmt(1)" class="texboxitemcode texboxcal2"
+										autocomplete="off" required class="form-control" size="20" />
+								</div>
+
+								<div class="col-md-2">Pending Amt:</div>
+								<div class="col-md-1">
+
+									<input type="text" name="remainAmt" id="remainAmt1"
 										class="texboxitemcode texboxcal2" autocomplete="off" required
 										class="form-control" size="20" />
-										</div>
-									</div>
-									
-									<div class="advance_total"> Total: <span id="calTotal1">00</span></div>
-									
-									<input type="hidden" id="fintotal1" name="fintotal1" value="0">
-									<div class="order-btn total textcenter">
-										<input name="" id="subm1" class="buttonsaveorder" value="SAVE ORDER" type="submit">
-									</div>
-							
-									<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1" value="1">
-									
 								</div>
-							
+
+
+								<div class="col-md-1">Total:</div>
+								<div class="col-md-1" id="calTotal1" style="color: red;">00
+								</div>
 
 
 							</div>
-							
+							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
+							<div class="order-btn textcenter">
+
+								<input name="" id="subm1" class="buttonsaveorder"
+									value="SAVE ORDER" type="submit">
+							</div>
 						</div>
-						
+						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1"
+							value="1">
 					</form>
 					<!-------------------------------------TABS FOR DAIRY MART----------------------------------------------------------->
 
@@ -658,10 +645,16 @@ input:checked+.slider:before {
 								</select>
 
 							</div>
-							<div class="col-md-1">
+							<!-- <div class="col-md-1">
 								<button class="plus-button openmodale"></button>
 
 							</div>
+							 -->
+							<div class="col-md-1">
+							<button class="plus_btn addcust_open" type="button">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+								</div>
 
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
@@ -1156,73 +1149,438 @@ input:checked+.slider:before {
 	</div>
 
 <!--  To submit Order-->
+<div id="addcust" class="add_customer" style="display: none;">
+			<button class="addcust_close close_popup"
+				onclick="clearAddCustomerpopup()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<h3 class="pop_head" id="add_cust_head_name">Add Customer</h3>
+
+			<div class="add_frm">
+				<div class="add_frm_one">
+					<div class="add_customer_one">Customer Name</div>
+					<div class="add_input">
+						<input type="text" class="input_add"
+							placeholder="Enter Customer Name" name="customerName"
+							onchange="trim(this)" id="customerName" /> <input type="hidden"
+							name="custId" id="custId" value="0" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Mobile Number</div>
+					<div class="add_input">
+						<input type="text" class="input_add"
+							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
+							onchange="trim(this)" maxlength="10" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Gender</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" type="radio" name="gender"
+									id="moption" checked value="1"> <label for="moption">M</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="foption" name="gender"
+									value="2"> <label for="foption">F </label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Type</div>
+					<div class="add_input">
+						<select name="custType" id="custType"
+							data-placeholder="Customer Type" class="input_add"
+							style="text-align: left;" required>
+							<option value="0" style="text-align: left;">Select
+								Customer Type</option>
+							<option value="1">Owner</option>
+							<option value="2">Employee</option>
+							<option value="3">Customer</option>
+						</select>
+					</div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Age-Group</div>
+					<div class="add_input">
+						<select name="ageRange" id="ageRange"
+							data-placeholder="Customer Age-Group" class="input_add"
+							style="text-align: left;" required>
+							<option value="0" style="text-align: left;">Customer
+								Age-Group</option>
+							<option value="14-21">14-21 Years</option>
+							<option value="22-28">22-28 Years</option>
+							<option value="29-35">29-35 Years</option>
+							<option value="36-42">36-42 Years</option>
+							<option value="43-49">43-49 Years</option>
+							<option value="50-56">50-56 Years</option>
+							<option value="57 & above">57 & above</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">DOB</div>
+					<div class="add_input">
+						<input autocomplete="off" placeholder="Date Of Birth"
+							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Business</div>
+					<div class="add_input">
+						<div class="radio_row popup_radio">
+							<ul>
+								<li><input type="radio" type="radio" name="selector"
+									id="y-option" onclick="isBuissness(1)"> <label
+									for="y-option">Yes</label>
+									<div class="check"></div></li>
+								<li><input type="radio" id="n-option" name="selector"
+									onclick="isBuissness(0)" checked> <label for="n-option">No
+								</label>
+									<div class="check">
+										<div class="inside"></div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div style="display: none;" id="isbuissnessdiv">
+					<div class="add_frm_one">
+						<div class="add_customer_one">Company Name</div>
+						<div class="add_input">
+							<input placeholder="Enter Company Name" name="companyName"
+								onchange="trim(this)" id="companyName" type="text"
+								class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="add_frm_one">
+						<div class="add_customer_one">GST Number</div>
+						<div class="add_input">
+							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
+								onchange="trim(this)" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="add_frm_one">
+						<div class="add_customer_one">Address</div>
+						<div class="add_input">
+							<input placeholder="Enter Address" name="custAdd" id="custAdd"
+								onchange="trim(this)" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="addcust_close close_btn"
+						onclick="clearAddCustomerpopup()">Close</button>
+				</div>
+				<div class="close_r">
+					<a href="#" onclick="addCustomer()">Save</a>
+				</div>
+				<div class="clr"></div>
+			</div>
 
 
+		</div>
+
+
+
+<script type="text/javascript">
+
+function isBuissness(value) {
+
+	if (value == 1) {
+		$("#isbuissnessdiv").show();
+	} else {
+		$("#isbuissnessdiv").hide();
+	}
+
+}
+
+function addCustomer() {
+	//$('#addcust').modal('hide');
+	//$('#addcust').popup('hide'); //for close popup;
+	var custId = document.getElementById("custId").value;
+	var customerName = document.getElementById("customerName").value;
+	var mobileNo = document.getElementById("mobileNo").value;
+	var dateOfBirth = document.getElementById("dateOfBirth").value;
+	var custType = document.getElementById("custType").value;
+	var ageRange = document.getElementById("ageRange").value;
+	var gender = 2;
+	if (document.getElementById('moption').checked) {
+		gender = 1;
+	}
+	//var isBuissness = document.getElementById("isBuissness").value;
+	var buisness = 0;
+	if (document.getElementById('y-option').checked) {
+		buisness = 1;
+	}
+	var companyName = document.getElementById("companyName").value;
+	var gstNo = document.getElementById("gstNo").value;
+	var custAdd = document.getElementById("custAdd").value;
+
+	var flag = 0;
+
+	if (customerName == "") {
+		alert("Enter Customer Name");
+		flag = 1;
+	} else if (mobileNo == "" || !validateMobile(mobileNo)) {
+		alert("Enter Valid Mobile No");
+		flag = 1;
+	} else if (dateOfBirth == "") {
+		alert("Enter Date of Birth");
+		flag = 1;
+	}else if (custType == 0) {
+		alert("Please Select Customer Type");
+		flag = 1;
+	}
+	else if (ageRange == 0) {
+		alert("Please Select Age Group");
+		flag = 1;
+	} else if (buisness == 1) {
+
+		if (companyName == "") {
+			alert("Enter Company Name");
+			flag = 1;
+		} else if (gstNo == "") {
+			alert("Enter GST No");
+			flag = 1;
+		} else if (custAdd == "") {
+			alert("Enter Address");
+			flag = 1;
+		}
+	}
+
+	if (flag == 0) {
+		$
+				.post(
+						'${saveCustomerFromBill}',
+						{
+							customerName : customerName,
+							mobileNo : mobileNo,
+							dateOfBirth : dateOfBirth,
+							buisness : buisness,
+							companyName : companyName,
+							gstNo : gstNo,
+							custAdd : custAdd,
+							custId : custId,
+							custType:custType,
+							ageRange:ageRange,
+							gender:gender,
+							ajax : 'true'
+						},
+						function(data) {
+
+							//alert(JSON.stringify(data));
+
+							if (data.error == false) {
+
+								var html = '<option value="0" selected>Select Customer</option>';
+								var len = data.customerList.length;
+								//alert(data.addCustomerId);
+								for (var i = 0; i < len; i++) {
+
+									if (data.customerList[i].custId == data.addCustomerId) {
+										html += '<option value="' + data.customerList[i].custId + '" selected>'
+												+ data.customerList[i].custName
+												+ '&nbsp;'
+												+ data.customerList[i].phoneNumber
+												+ '</option>';
+									} else {
+										html += '<option value="' + data.customerList[i].custId + '">'
+												+ data.customerList[i].custName
+												+ '&nbsp;'
+												+ data.customerList[i].phoneNumber
+												+ '</option>';
+									}
+
+								}
+
+								$('#cust').html(html);
+
+								$("#cust").trigger("chosen:updated");
+								$('.chosen-select').trigger(
+										'chosen:updated');
+
+								document.getElementById("customerName").value = "";
+								document.getElementById("mobileNo").value = "";
+
+								document.getElementById("dateOfBirth").value = "";
+
+								document.getElementById("n-option").checked = true;
+								document.getElementById("companyName").value = "";
+								document.getElementById("gstNo").value = "";
+								document.getElementById("custAdd").value = "";
+								document.getElementById("custId").value = 0;
+								document.getElementById("moption").checked = true;
+								document.getElementById("custType").value ="0";
+								$("#custType").trigger("chosen:updated");
+								document.getElementById("ageRange").value ="0";
+								$("#ageRange").trigger("chosen:updated");
+								$('.chosen-select').trigger('chosen:updated');
+								document
+										.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+								$("#isbuissnessdiv").hide();
+
+								if (custId != 0) {
+									alert("Update Successfully");
+								} else {
+									alert("Customer Add Successfully");
+								}
+								$('.addcust_close').trigger('click');
+							} else {
+								alert("Failed To Add Customer");
+							}
+
+						});
+	}
+
+}
+
+
+
+
+
+
+
+
+</script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#addcust').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			});
+			/* $('#myModalForCredit').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			}); */
+		});
+	</script>
 <script>
  
  
 $(document).ready(function($) {
-			   $('#subm2').click(function(){
+			   $('#sbtbtn4').click(function(){
+				var isError = false;
+				var errMsg = "";
+				if ($("#custName").val() == "") {
+					isError = true;
+					$("#custName_err").show()
+				} else {
+					$("#custName_err").hide()
+				}
+				 if (!$("#phoneNum").val() || !validateMobile($("#phoneNum").val())) {
+					isError = true;
+					$("#error_phoneNum").show()
+				} else {
+					$("#error_phoneNum").hide()
+				}
+				 if (!$("#ageGrp").val() ) {
+						isError = true;
+						$("#error_ageGrp").show()
+					} else {
+						$("#error_ageGrp").hide()
+					}
+					 
 				 
-		 
+				 
+				 if (!$("#popdatepicker").val() ) {
+
+						isError = true;
+
+						$("#error_dob").show()
+
+					} else {
+						$("#error_dob").hide()
+					}
+				
+
+			 
+					var x = $("input[name='isBuiss']:checked").val();  
+				 if(parseInt(x) == 1){
+				 if (!$("#gstNo").val() ) {
+
+						isError = true;
+
+						$("#error_gstNo").show()
+
+					} else {
+						$("#error_gstNo").hide()
+					}
+				 if (!$("#compName").val() ) {
+
+						isError = true;
+
+						$("#error_compName").show()
+
+					} else {
+						$("#error_compName").hide()
+					}
+				
+				
+				if (!$("#address").val() ) {
+
+					isError = true;
+
+					$("#error_address").show()
+
+				} else {
+					$("#error_address").hide()
+				} 
+				}
+			if (isError==true) {
+					//alert("error")
+					var x = true;
+					if (x == true) {
+
+						//document.getElementById("sbtbtn4").disabled = true;
+					 
+						return true;
+					}
+					//end ajax send this to php page
+				}
+				
+				else{
 					$.ajax({
 					   type: "POST",
-					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
-					            data: $("#form2").serialize(),
+					            url: "${pageContext.request.contextPath}/saveQuickCust",
+					            data: $("#modalfrm4").serialize(),
 					            dataType: 'json',
 					success: function(data){
 				 if(data!==null)
 					{
+					  $('.modale').removeClass('opened');
 					 
-					 window.location.reload();
-					 // $('.modale').removeClass('opened');
-					  
-					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
- 
 					}
 					}
 					}).done(function() {
 					setTimeout(function(){
 					},500);
 					});
-				 
+				}
 				return false;
 			});isBuiss
 		});
 		</script>
-		
-		
-		<script>
- 
- 
-$(document).ready(function($) {
-			   $('#subm1').click(function(){
-				 
-		 
-					$.ajax({
-					   type: "POST",
-					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
-					            data: $("#form1").serialize(),
-					            dataType: 'json',
-					success: function(data){
-				 if(data!==null)
-					{
-					 
-					//alert( window.location);
-					window.location.reload(true);
- 					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
- 					}
-					}
-					}).done(function() {
-					setTimeout(function(){
-					},500);
-					});
-				 
-				return false;
-			});isBuiss
-		});
-		</script>
-		
 
 	<script>
 		function checkAdd() {
@@ -1483,6 +1841,73 @@ $(document).ready(function($) {
 					},500);
 					});
 				}
+				return false;
+			});isBuiss
+		});
+		</script>
+		
+		<script>
+ 
+ 
+$(document).ready(function($) {
+			   $('#subm2').click(function(){
+ 				   document.getElementById("subm2").disabled = true; 
+					$.ajax({
+					   type: "POST",
+					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
+					            data: $("#form2").serialize(),
+					            dataType: 'json',
+					success: function(data){
+				 if(data!==null)
+					{
+	 				  
+					 window.location.reload();
+					 // $('.modale').removeClass('opened');
+					   document.getElementById("subm2").disabled = false; 
+					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
+ 
+					}
+					}
+					}).done(function() {
+					setTimeout(function(){
+					},500);
+					});
+				 
+				return false;
+			});isBuiss
+		});
+		</script>
+		
+		
+		<script>
+ 
+ 
+$(document).ready(function($) {
+			   $('#subm1').click(function(){
+				 
+				 
+				   
+				   document.getElementById("subm1").disabled = true; 
+					$.ajax({
+					   type: "POST",
+					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
+					            data: $("#form1").serialize(),
+					            dataType: 'json',
+					success: function(data){
+				 if(data!==null)
+					{
+					 
+					//alert( window.location);
+					window.location.reload(true);
+					  document.getElementById("subm1").disabled = false; 
+ 					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
+ 					}
+					}
+					}).done(function() {
+					setTimeout(function(){
+					},500);
+					});
+				 
 				return false;
 			});isBuiss
 		});

@@ -468,7 +468,7 @@
 	<script type="text/javascript">
 	
 		function drawDonutChart() {
-alert("hii donut ch");
+//alert("hii donut ch");
 			//to draw donut chart
 			var chart;
 			var datag = '';
