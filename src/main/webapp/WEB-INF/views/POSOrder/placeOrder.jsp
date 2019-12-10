@@ -10,35 +10,6 @@
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 
 <style>
-.plus-button {
-	border: 2px solid lightgrey;
-	background-color: #fff;
-	font-size: 16px;
-	height: 1.8em;
-	width: 2.5em;
-	border-radius: 999px;
-	position: relative;
-}
-
-.plus-button:after, .plus-button:before {
-	content: "";
-	display: block;
-	background-color: grey;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.plus-button:before {
-	height: 1em;
-	width: 0.2em;
-}
-
-.plus-button:after {
-	height: 0.2em;
-	width: 1em;
-}
 
 <!--
 MODAL CSS   -->.btn {
@@ -195,17 +166,7 @@ a:hover {
 	color: black;
 }
 
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 25px;
-	margin-top: 7px;
-}
 
-.switch input {
-	display: none;
-}
 
 .slider {
 	position: absolute;
@@ -291,7 +252,62 @@ input:checked+.slider:before {
 
 				<!--leftNav-->
 				<!--rightSidebar-->
-				<div class="sidebarright">
+				<div class="main_container">
+				
+				
+					<!-- new-header-row -->
+					<div class="page_head">
+						<div class="page_title">Advance Order</div>
+						<div class="custom_right">
+							
+							
+							
+							<!-- customer 1 -->
+							<div class="customer_one_frm">
+								<div class="cust-txt">Select Customer</div>
+								<div class="cust_drop">
+									<select name="custId" class="form-control chosen" tabindex="4"
+									id="custId1" required>
+									<c:forEach items="${custList}" var="custList" varStatus="count">
+										<option value="${custList.custId}">
+											${custList.custName}-${custList.phoneNumber}</option>
+									</c:forEach>
+								</select>
+								</div>
+								<div class="cust_round"><button class="plus-button openmodale"></button></div>
+							</div>
+							
+							<!-- customer 2 -->
+							<div class="customer_one_frm">
+								<div class="cust-txt">Delivery Date</div>
+								<div class="cust_drop fullwidth">
+									<input id="fromdatepicker" class="texboxitemcode texboxcal" required
+									placeholder="Delivery Date" name="devDate" autocomplete="off"
+									type="text">
+								</div>
+							</div>
+							
+							<!-- customer 3 -->
+							<div class="dairy_frm">
+								<div class="cust-txt switchtxt">Dairy mart</div>
+								<div class="cust_drop switch">
+									<label class="switchone"> <input type="checkbox" name="dm"
+								id="dm" onchange="checkAdd() "> <span
+								class="slider round"></span>
+						
+						</label>
+								</div>
+								
+							</div>
+							
+							
+							
+						</div>
+						<div class="clr"></div>
+					</div>
+				
+				
+				
 
 					<!-- <div class="colOuter">
 						
@@ -399,14 +415,13 @@ input:checked+.slider:before {
 										</c:otherwise>
 									</c:choose>
 
-									<div class="col-md-9"></div>
-									<label for="search" class="col-md-3" id="search"> <i
-										class="fa fa-search" style="font-size: 20px"></i> <input
-										class="myInput1" type="text" id="myInput${loop.index}"
-										onkeyup="myFunction1(${loop.index})"
-										style="border-radius: 25px;"
-										placeholder="Search items by name" title="Type item name">
-									</label>
+									
+									<div class="tab_search">
+										<label for="search" class="" id="search"> <i class="fa fa-search"></i> 
+										<input class="myInput1" type="text" id="myInput${loop.index}"
+											onkeyup="myFunction1(${loop.index})" placeholder="Search items by name" title="Type item name">
+										</label>
+									</div>
 
 									<div id="table-scroll"
 										class="table-scroll responsive-table-one">
@@ -417,12 +432,12 @@ input:checked+.slider:before {
 											<table id="table_grid" class="main-table">
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2">Item</th>
-														<th class="col-md-1">Min Qty</th>
-														<th class="col-md-1">Qty</th>
-														<th class="col-md-1">MRP</th>
-														<th class="col-md-1">Rate</th>
-														<th class="col-md-1">Total</th>
+														<th class="col-md-2 bor_right">Item</th>
+														<th class="col-md-1 bor_right">Min Qty</th>
+														<th class="col-md-1 bor_right">Qty</th>
+														<th class="col-md-1 bor_right">MRP</th>
+														<th class="col-md-1 bor_right">Rate</th>
+														<th class="col-md-1 bor_right">Total</th>
 													</tr>
 												</thead>
 											</table>
@@ -435,12 +450,12 @@ input:checked+.slider:before {
 												<!--   class="main-table" -->
 												<thead>
 													<tr class="bgpink">
-														<th class="col-md-2">Item</th>
-														<th class="col-md-1">Min Qty</th>
-														<th class="col-md-1">Qty</th>
-														<th class="col-md-1">MRP</th>
-														<th class="col-md-1">Rate</th>
-														<th class="col-md-1">Total</th>
+														<th class="col-md-2 bor_right">Item</th>
+														<th class="col-md-1 bor_right">Min Qty</th>
+														<th class="col-md-1 bor_right">Qty</th>
+														<th class="col-md-1 bor_right">MRP</th>
+														<th class="col-md-1 bor_right">Rate</th>
+														<th class="col-md-1 bor_right">Total</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -477,7 +492,7 @@ input:checked+.slider:before {
 																				value='${items.itemRate1}' /></td>
 																		<c:set var="rate" value="${items.itemRate1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -512,7 +527,7 @@ input:checked+.slider:before {
 																		<c:set var="qty" value="${items.itemQty}" />
 
 
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -548,7 +563,7 @@ input:checked+.slider:before {
 																				value='${items.itemRate3}' /></td>
 																		<c:set var="rate" value="${items.itemRate3}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
 																				maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -575,40 +590,44 @@ input:checked+.slider:before {
 
 
 							<div class="row">
-
-								<div class="col-md-1">Advance:</div>
-
-								<div class="col-md-1">
-
-									<input type="text" name="advanceAmt" id="advanceAmt1"
-										onchange="setAmt(1)" class="texboxitemcode texboxcal2"
-										autocomplete="off" required class="form-control" size="20" />
-								</div>
-
-								<div class="col-md-2">Pending Amt:</div>
-								<div class="col-md-1">
-
-									<input type="text" name="remainAmt" id="remainAmt1"
+							
+								<div class="advance_row">
+									<!-- 1 -->
+									<div class="advance_one">
+										<div class="advance_txt">Advance</div>
+										<div class="advance_fled">
+											<input type="text" name="advanceAmt" id="advanceAmt1" onchange="setAmt(1)" class="texboxitemcode texboxcal2"
+											autocomplete="off" required class="form-control" size="20" />
+										</div>
+									</div>
+									
+									<!-- 2 -->
+									<div class="advance_one">
+										<div class="advance_txt">Pending Amt:</div>
+										<div class="advance_fled">
+											<input type="text" name="remainAmt" id="remainAmt1"
 										class="texboxitemcode texboxcal2" autocomplete="off" required
 										class="form-control" size="20" />
+										</div>
+									</div>
+									
+									<div class="advance_total"> Total: <span id="calTotal1">00</span></div>
+									
+									<input type="hidden" id="fintotal1" name="fintotal1" value="0">
+									<div class="order-btn total textcenter">
+										<input name="" id="subm1" class="buttonsaveorder" value="SAVE ORDER" type="submit">
+									</div>
+							
+									<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1" value="1">
+									
 								</div>
-
-
-								<div class="col-md-1">Total:</div>
-								<div class="col-md-1" id="calTotal1" style="color: red;">00
-								</div>
+							
 
 
 							</div>
-							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
-							<div class="order-btn textcenter">
-
-								<input name="" id="subm1" class="buttonsaveorder"
-									value="SAVE ORDER" type="submit">
-							</div>
+							
 						</div>
-						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1"
-							value="1">
+						
 					</form>
 					<!-------------------------------------TABS FOR DAIRY MART----------------------------------------------------------->
 

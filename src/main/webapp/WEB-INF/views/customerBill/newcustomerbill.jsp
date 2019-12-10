@@ -162,28 +162,16 @@ body {
 						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 						alt="madhvi_logo"></a>
 				</div>
+				
+				<div class="logout_btn">
+						<a href="${pageContext.request.contextPath}/logout"><i
+							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+					</div>
 
 				<div class="drop_menu">
-					<%-- <div class="dropdown">
-						<div class="select">
-							<span>Hold Bill</span>
-						</div>
-
-						<ul class="dropdown-menu">
-							<c:forEach items="${holdingList}" var="holdingList">
-								<a href="#"
-									onclick="revertHoldBillOnCurrent(${holdingList.key})"><li
-									id="${holdingList.key}">${holdingList.key}</li></a>
-							</c:forEach>
-
-						</ul>
-
-					</div> --%>
 					<select name="holdBillNo" id="holdBillNo"
-						data-placeholder="Select Bill No" class="input_add chosen-select"
-						style="text-align: left;" onchange="revertHoldBillOnCurrent()">
-						<option value="" style="text-align: left;" disabled="disabled"
-							selected>Select Bill No</option>
+						data-placeholder="Select Bill No" class="input_add chosen-select" onchange="revertHoldBillOnCurrent()">
+						<option value="" disabled="disabled" selected>Select Bill No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
 							<c:choose>
 								<c:when test="${holdingList.key==key}">
@@ -196,12 +184,10 @@ body {
 							</c:choose>
 						</c:forEach>
 					</select>
-					<div class="logout_btn">
-						<a href="${pageContext.request.contextPath}/logout"><i
-							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
-					</div>
+					
 
 				</div>
+				
 				<div class="clr"></div>
 			</header>
 
@@ -511,29 +497,38 @@ body {
 				<!--right-side-box-->
 				<div class="cat_r">
 					<!--item search row-->
-					<div class="radio_row_one">
-						<h3 class="item_head">Item Search</h3>
-						<div class="radio_row">
-							<ul>
-								<li><input type="radio" id="f-option" name="serachBy"
-									checked onclick="getCatListAndSubCatList(1)"> <label
-									for="f-option">Category</label>
-									<div class="check"></div></li>
-								<!-- <li><label
-									for="s-option">Sub Category </label>
-									<div class="check">
-										<div class="inside"></div>
-									</div></li> -->
-								<input type="hidden" id="s-option" name="serachBy"
-									onclick="getCatListAndSubCatList(2)">
-								<li><input type="radio" id="g-option" name="serachBy"
-									onclick="getCatListAndSubCatList(3)"> <label
-									for="g-option">All Items</label>
-									<div class="check"></div></li>
-
-
-							</ul>
+					
+					
+					<div class="top_radio_area">
+						<div class="radio_row_one">
+							<h3 class="item_head">Item Search</h3>
+							<div class="radio_row">
+								<ul>
+									<li><input type="radio" id="f-option" name="serachBy"
+										checked onclick="getCatListAndSubCatList(1)"> <label
+										for="f-option">Category</label>
+										<div class="check"></div></li>
+									<!-- <li><label
+										for="s-option">Sub Category </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li> -->
+									<input type="hidden" id="s-option" name="serachBy"
+										onclick="getCatListAndSubCatList(2)">
+									<li><input type="radio" id="g-option" name="serachBy"
+										onclick="getCatListAndSubCatList(3)"> <label
+										for="g-option">All Items</label>
+										<div class="check"></div></li>
+	
+	
+								</ul>
+							</div>							
 						</div>
+						
+						<div class="item_src"><input name="myInput1" id="myInput1" type="text"
+									class="input_cat" onkeyup="myFunction1()"
+									placeholder="Search Item" /></div>
+					
 					</div>
 
 					<!--category box start here-->
@@ -558,9 +553,8 @@ body {
 					<!--listing box start here-->
 
 
-					<div class="a"
-						style="display: inline-block; width: 100%; margin: 20px 0 0 0;">
-						<div class="a" style="float: left; width: 70%">
+					<div class="dual_bx" style="">
+						<div class="dual_l">
 							<div class="bx_tabs">
 								<ul id="subcatUl">
 									<!-- <li class="subCatDummyClass"><a href="#"
@@ -582,7 +576,7 @@ body {
 									<ul>
 							</div>
 						</div>
-						<div class="a" style="float: right; width: 30%">
+						<div class="dual_r">
 							<div class="cat_srach">
 								<input name="myInput1" id="myInput1" type="text"
 									class="input_cat" onkeyup="myFunction1()"
