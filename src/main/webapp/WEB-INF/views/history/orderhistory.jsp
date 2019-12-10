@@ -466,15 +466,18 @@ jQuery(document).ready(function(){
 															value="${orderList.remainingAmt}" /></td>
 													<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
-															<abbr title='Advance Order Detail'><i class='fa fa-edit'></i></abbr>
+															<abbr title='Advance Order Detail'><i class="fa fa-table" aria-hidden="true"></i>
+														
+</abbr>
 														</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${orderList.isSellBillGenerated==0}"><a
 															href="#" onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
-															<abbr title='Generate Sell Bill'><i class='fa fa-edit'></i></abbr>
+															<abbr title='Generate Sell Bill'>	<i class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
 														</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
 														<a
 															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
-															<abbr title='Advance Order Memo'><i class='fa fa-edit'></i></abbr>
+															<abbr title='Advance Order Memo'><i class="fa fa-info" aria-hidden="true"></i>
+</abbr>
 														</a>
 														</td>
 													 
@@ -633,7 +636,7 @@ jQuery(document).ready(function(){
 			<!--tab3-->
 
 			<!--tab4-->
-			</ul>
+			 
 		</div>
 		<!--tabNavigation-->
 
@@ -644,10 +647,7 @@ jQuery(document).ready(function(){
 </div>  -->
 
 
-	</div>
-	<!--rightSidebar-->
-
-</div>
+	 
 <!--fullGrid-->
 </div>
 <!--rightContainer-->

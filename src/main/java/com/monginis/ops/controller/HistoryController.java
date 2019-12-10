@@ -416,7 +416,7 @@ public class HistoryController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		map.add("custId", headDet.getCustId());
 		cust = rest.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
-		
+		headDet.setOrderDate(DateConvertor.convertToDMY(headDet.getOrderDate()));
 		System.err.println("cust list"+cust.toString());
 		model.addObject("itemList", itemOrderHistory);
 		model.addObject("frDetails", frDetails);

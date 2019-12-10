@@ -1136,6 +1136,74 @@ input:checked+.slider:before {
 		</div>
 	</div>
 
+<!--  To submit Order-->
+
+
+<script>
+ 
+ 
+$(document).ready(function($) {
+			   $('#subm2').click(function(){
+				 
+		 
+					$.ajax({
+					   type: "POST",
+					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
+					            data: $("#form2").serialize(),
+					            dataType: 'json',
+					success: function(data){
+				 if(data!==null)
+					{
+					 
+					 window.location.reload();
+					 // $('.modale').removeClass('opened');
+					  
+					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
+ 
+					}
+					}
+					}).done(function() {
+					setTimeout(function(){
+					},500);
+					});
+				 
+				return false;
+			});isBuiss
+		});
+		</script>
+		
+		
+		<script>
+ 
+ 
+$(document).ready(function($) {
+			   $('#subm1').click(function(){
+				 
+		 
+					$.ajax({
+					   type: "POST",
+					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
+					            data: $("#form1").serialize(),
+					            dataType: 'json',
+					success: function(data){
+				 if(data!==null)
+					{
+					 
+					//alert( window.location);
+					window.location.reload(true);
+ 					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
+ 					}
+					}
+					}).done(function() {
+					setTimeout(function(){
+					},500);
+					});
+				 
+				return false;
+			});isBuiss
+		});
+		</script>
+		
 
 	<script>
 		function checkAdd() {

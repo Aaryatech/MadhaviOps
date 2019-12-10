@@ -392,8 +392,17 @@ public class PosPlaceOrderController {
 		return cal.getTime();
 	}
 
-	@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
-	public String saveAdvanceOrder(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	/*
+	 * @RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
+	 * public String saveAdvanceOrder(HttpServletRequest request,
+	 * HttpServletResponse res) throws IOException {
+	 */
+		
+		
+		
+		@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
+		@ResponseBody
+		public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
 
 		System.err.println("inside saveAdvanceOrder");
 		HttpSession session = request.getSession();
@@ -550,7 +559,10 @@ public class PosPlaceOrderController {
 		 * 
 		 * }
 		 */
-		return "redirect:/showsPlaceOrder/" + globalIndex;
+		/* return "redirect:/showsPlaceOrder/" + globalIndex; */
+		
+		
+		return info;
 
 	}
 

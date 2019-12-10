@@ -49,11 +49,31 @@
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
 		<tbody>
-			<tr>
-				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><b>
-						Advance Order</b></td>
-			</tr>
+			<c:if test="${headDetails.isDailyMart==1}">
+				<tr>
+
+					<td colspan="2" align="center"
+						style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;">
+
+						<b> Regular Order Memo</b>
+
+					</td>
+
+				</tr>
+
+			</c:if>
+
+			<c:if test="${headDetails.isDailyMart==2}">
+				<tr>
+
+					<td colspan="2" align="center"
+						style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;">
+
+						<b> Advance Order Memo</b>
+
+					</td>
+				</tr>
+			</c:if>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
@@ -101,7 +121,7 @@
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
-												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
+												<th width="15%" bgcolor="#ECECEC" align="right">Rate</th>
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
 
@@ -114,10 +134,12 @@
 
 															${itemBillList.orderQty} </span></td>
 
-													<td align="right"><span style="font-size: 11px">${itemBillList.orderMrp}
+													<td align="right"><span style="font-size: 11px">${itemBillList.orderRate}
 													</span></td>
+
+
 													<td align="right"><span style="font-size: 11px">
-															${itemBillList.orderRate} </span></td>
+															${itemBillList.orderRate*itemBillList.orderQty} </span></td>
 
 												</tr>
 											</c:forEach>
@@ -128,6 +150,15 @@
 															type="number" maxFractionDigits="2" minFractionDigits="2"
 															value="${headDetails.total}" groupingUsed="false" /></span></td>
 											</tr>
+											<c:if test="${headDetails.discAmt>0}"></c:if>
+											<tr>
+												<td colspan="4" align="right"><span class="style7">Discount
+														Amt :</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${headDetails.discAmt}" groupingUsed="false" /></span></td>
+											</tr>
+											
 
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Advance
@@ -173,7 +204,8 @@
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								style="font-weight: bold;">Thank You, Visit Again !!! </span></td>
+								style="font-weight: bold;">With You @ Your Great Moments!
+							</span></td>
 						</tr>
 
 					</table></td>
