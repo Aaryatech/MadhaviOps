@@ -1634,7 +1634,7 @@ body {
  
 											var payType="";
 											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
-											alert(data.exVar1);
+											//alert(data.exVar1);
 											if(data.exVar1=="0,1,2,3"){
 												payType="Cash,Card,e-Pay";
  												
@@ -2147,7 +2147,7 @@ function matchSplitAmt(flag){
 		   
 		var cust =  $('#cust').val() ;
 		document.getElementById("credAmt").innerHTML = 0; 
-		document.getElementById("advCustAmt").innerHTML = 0;
+		//document.getElementById("advCustAmt").innerHTML = 0;
 		  $
 		.get(
 				'${getCustAmts}',
@@ -2159,8 +2159,8 @@ function matchSplitAmt(flag){
 					//alert(data.creaditAmt);
 					
 					  
-					document.getElementById("credAmt").innerHTML = data.creaditAmt; 
-					document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
+					document.getElementById("credAmt").innerHTML = parseFloat(data.creaditAmt).toFixed(2); 
+					//document.getElementById("advCustAmt").innerHTML = data.advanceAmt; 
 						 
 				});   
 	}
@@ -3230,8 +3230,10 @@ $("#enterQty").focus();
 	
 	function openPaymentPopup() {
 		var custId =  $('#cust').val() ;
-		//alert(custId);
-if(parseInt(custId)==5){
+		
+		var dfCust=${defaultCustomer};
+		 
+if(parseInt(custId)==parseInt(dfCust)){
 			
 			alert("Please Select Proper Customer");
 		} else{	   

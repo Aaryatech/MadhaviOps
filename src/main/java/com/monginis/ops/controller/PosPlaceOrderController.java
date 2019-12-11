@@ -533,8 +533,8 @@ public class PosPlaceOrderController {
 				
 			 
 				det.setQty(qty);
-				det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
-				float subtot = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+				det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
+				float subtot = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
 				det.setIsBillGenerated(0);
 				det.setIsSellBillGenerated(0);
 				det.setSubTotal(subtot);

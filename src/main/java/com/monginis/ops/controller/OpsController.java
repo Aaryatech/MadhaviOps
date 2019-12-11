@@ -464,7 +464,8 @@ public class OpsController {
 
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
 				items = items + "," + itemBillList.get(i).getItemId();
@@ -551,7 +552,7 @@ public class OpsController {
 			sellBillHeader.setRemainingAmt(0);
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
-
+			sellBillHeader.setExInt1(frEmpDetails.getFrEmpId());
 			info.setError(false);
 			info.setMessage("Bill Submited");
 
@@ -571,6 +572,7 @@ public class OpsController {
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf.format(date));
 				transactionDetail.setExVar1("1");
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				dList.add(transactionDetail);
 
 				TransactionDetail[] transactionDetailRes = restTemplate
@@ -626,7 +628,9 @@ public class OpsController {
 	public Info submitBillByPaymentOption(HttpServletRequest request, HttpServletResponse responsel) {
 
 		Info info = new Info();
-
+		HttpSession session = request.getSession();
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 
 			int index = Integer.parseInt(request.getParameter("key"));
@@ -644,8 +648,7 @@ public class OpsController {
 			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));//without Disc BillAmt
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
-			HttpSession session = request.getSession();
-			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+ 		
 
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
@@ -769,6 +772,8 @@ public class OpsController {
 				sellBillHeader.setPaidAmt(Math.round(total));
 
 			}
+			
+			sellBillHeader.setExInt1(frEmpDetails.getFrEmpId());
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 
@@ -788,12 +793,13 @@ public class OpsController {
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf.format(date));
-			
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				transactionDetail.setePayType(payType);
 				if (creditBill == 1) {
 					transactionDetail.setCashAmt(0);
 					transactionDetail.setPayMode(1);
 					transactionDetail.setExVar1("1");
+					
 				} else {
 					transactionDetail.setPayMode(paymentMode);
 
@@ -1281,6 +1287,9 @@ public class OpsController {
 			mvm.add("custId", custId);
 			mvm.add("frId", frDetails.getFrId());
 			itemsList = restTemplate.postForObject(Constant.URL + "/getCustomerAmounts", mvm, CustomerAmounts.class);
+			if(itemsList.getCreaditAmt()==null || itemsList.getCreaditAmt()=="") {
+				itemsList.setCreaditAmt("0");
+			}
 
 			System.err.println("amts*" + itemsList.toString());
 
@@ -1355,6 +1364,8 @@ public class OpsController {
 			throws ParseException {
 		int flag = 0;
 		System.err.println("hii id list ");
+		HttpSession session = request.getSession();
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		try {
 			float cashAmt1 = 0;
 			float cardAmt1 = 0;
@@ -1407,7 +1418,7 @@ public class OpsController {
 				expTrans.setTransactionDate(sf.format(date));
 
 				expTrans.setExInt2(0);
-				expTrans.setExInt1(0);
+				expTrans.setExInt1(frEmpDetails.getFrEmpId());
 				expTrans.setExVar1(String.valueOf(modType1));// +prodMixingReqP1.get(i).getMulFactor()
 				expTrans.setExVar2(String.valueOf(pendingAmt - settleAmt));
 				expTrans.setExFloat1(billAmt);

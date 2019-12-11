@@ -62,11 +62,20 @@ public class SellBillHeader implements Serializable{
 	private char billType;
 
 	private int delStatus;
+	private int exInt1;
 	
 	
    
 	public int getCustId() {
 		return custId;
+	}
+
+	public int getExInt1() {
+		return exInt1;
+	}
+
+	public void setExInt1(int exInt1) {
+		this.exInt1 = exInt1;
 	}
 
 	public void setCustId(int custId) {
