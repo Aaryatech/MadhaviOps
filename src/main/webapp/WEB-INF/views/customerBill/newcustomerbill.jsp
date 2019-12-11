@@ -162,19 +162,21 @@ body {
 						src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 						alt="madhvi_logo"></a>
 				</div>
-				
-				
+
+
 
 				<div class="drop_menu">
-				
+
 					<div class="logout_btn pos">
 						<a href="${pageContext.request.contextPath}/logout"><i
 							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
-					</div>	
-					
+					</div>
+
 					<select name="holdBillNo" id="holdBillNo"
-						data-placeholder="Select Bill No" class="input_add chosen-select" onchange="revertHoldBillOnCurrent()">
-						<option value="" disabled="disabled" selected>Select Bill No</option>
+						data-placeholder="Select Bill No" class="input_add chosen-select"
+						onchange="revertHoldBillOnCurrent()">
+						<option value="" disabled="disabled" selected>Select Bill
+							No</option>
 						<c:forEach items="${holdingList}" var="holdingList">
 							<c:choose>
 								<c:when test="${holdingList.key==key}">
@@ -187,20 +189,20 @@ body {
 							</c:choose>
 						</c:forEach>
 					</select>
-					
+
 
 				</div>
-				
+
 				<div class="clr"></div>
 			</header>
 
 			<section class="main_container">
-				
+
 				<!--right-side-box-->
 				<div class="cat_r">
 					<!--item search row-->
-					
-					
+
+
 					<div class="top_radio_area">
 						<div class="radio_row_one">
 							<h3 class="item_head">Item Search</h3>
@@ -221,16 +223,18 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
-	
-	
+
+
 								</ul>
-							</div>							
+							</div>
 						</div>
-						
-						<div class="item_src"><input name="myInput1" id="myInput1" type="text"
-									class="input_cat" onkeyup="myFunction1()"
-									placeholder="Search Item" /></div>
-					
+
+						<div class="item_src">
+							<input name="myInput1" id="myInput1" type="text"
+								class="input_cat" onkeyup="myFunction1()"
+								placeholder="Search Item" />
+						</div>
+
 					</div>
 
 					<!--category box start here-->
@@ -313,21 +317,18 @@ body {
 					</div>
 
 				</div>
-			
+
 				<div class="cat_l">
 					<!--top-buttons row-->
 					<div class="pending_row">
 						<a href="#" class="    pending_btn"
 							onclick="openMyModal('myModalForCredit',0)">Pending Amt : <span
 							id="credAmt">00.00</span>
-						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span
-							id="advCustAmt">00.00</span>
-						</a> <a href="#" class="pending_btn" onclick="openMyModal('custBills',1)">Total Amt : <span>00.00</span></a>
-
-						<a href="#" class="pending_btn"
-							onclick="openMyModal('custBills',2)">Today's Bills <span
-							id="credAmt1"></span>
-						</a> 
+						</a><a href="#" class="pending_btn"
+							onclick="openMyModal('custBills',1)">Customer Bills </a> <a
+							href="#" class="pending_btn" onclick="openMyModal('custBills',2)">Today's
+							Bills <span id="credAmt1"></span>
+						</a>
 
 					</div>
 
@@ -341,8 +342,9 @@ body {
 							<div class="customer_one">Customer</div>
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
-									class="input_add chosen-select" onchange="setCustAmt()" required>
-									<option value="0" >Select Customer</option>
+									class="input_add chosen-select" onchange="setCustAmt()"
+									required>
+									<option value="0">Select Customer</option>
 
 									<c:choose>
 										<c:when test="${key>0}">
@@ -613,8 +615,8 @@ body {
 
 
 				</div>
-				
-			
+
+
 			</section>
 
 		</div>
@@ -792,13 +794,15 @@ body {
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer"  onchange="itemDiscPerCalculation(1)"
+						<input type="number" name="discPer" id="discPer"
+							onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="0" placeholder="Disc %"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt" onchange="itemDiscPerCalculation(2)"
+							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="0" placeholder="Disc Amt"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
@@ -864,7 +868,8 @@ body {
 										<li>
 											<!-- <input type="checkbox" id="cashCheck"
 											name="cashCheck" checked> &nbsp;  --> <input type="text"
-											id="cashAmt" name="cashAmt" class=" input_add numberOnly" oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
+											id="cashAmt" name="cashAmt" class=" input_add numberOnly"
+											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
 											placeholder="Cash Amount" value="0">
 										</li>
 									</ul>
@@ -874,26 +879,29 @@ body {
 						</div>
 
 						<div class="add_frm_one">
-							<div class="add_customer_one">
-								Card
-							</div>
+							<div class="add_customer_one">Card</div>
 							<div class="add_input">
 								<div class="radio_row popup_radio">
-									<ul  style="padding-left:5px;">
+									<ul style="padding-left: 5px;">
 										<li>
 											<!-- <input type="checkbox" id="cardCheck"
 											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
 											name="cardAmt" class=" input_add numberOnly"
-											placeholder="Card Amount" value="0" oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
-										</li><li  style="padding-left:5px;">
-										<select name="cardTypeSplit" id="cardTypeSplit" data-placeholder="Card Type"
-									class="input_add " style="text-align: left;">
-									<option value="" style="text-align: left;">Select Card</option>
-									
-									<option value="4" style="text-align: left;">Debit Card</option>
-									<option value="5" style="text-align: left;">Credit Card</option>
-								</select>
+											placeholder="Card Amount" value="0"
+											oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
 										</li>
+										<li style="padding-left: 5px;"><select
+											name="cardTypeSplit" id="cardTypeSplit"
+											data-placeholder="Card Type" class="input_add "
+											style="text-align: left;">
+												<option value="" style="text-align: left;">Select
+													Card</option>
+
+												<option value="4" style="text-align: left;">Debit
+													Card</option>
+												<option value="5" style="text-align: left;">Credit
+													Card</option>
+										</select></li>
 									</ul>
 								</div>
 							</div>
@@ -904,42 +912,47 @@ body {
 							<div class="add_customer_one">E-Pay</div>
 							<div class="add_input">
 								<div class="radio_row popup_radio">
-									<ul >
+									<ul>
 										<li>
 											<!-- <input type="checkbox" id="epayCheck"
 											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
 											name="epayAmt" class="input_add numberOnly"
-											placeholder="E-Pay Ammount" value="0" oninput="matchSplitAmt(3)" onchange="matchSplitAmt(3)">
+											placeholder="E-Pay Ammount" value="0"
+											oninput="matchSplitAmt(3)" onchange="matchSplitAmt(3)">
 										</li>
-										<li  style="padding-left:5px;">
-										<select name="ePayTypeSplit" id="ePayTypeSplit" data-placeholder="E-Pay Type"
-									class="input_add " style="text-align: left;">
-									<option value="" >E-Pay Type</option>
-									<option value="6" style="text-align: left;">Phone Pe</option>
-									<option value="7" style="text-align: left;">Paytm</option>
-									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="9" style="text-align: left;">Amazon Pay</option>
-								</select>
-										</li>
-									
+										<li style="padding-left: 5px;"><select
+											name="ePayTypeSplit" id="ePayTypeSplit"
+											data-placeholder="E-Pay Type" class="input_add "
+											style="text-align: left;">
+												<option value="">E-Pay Type</option>
+												<option value="6" style="text-align: left;">Phone
+													Pe</option>
+												<option value="7" style="text-align: left;">Paytm</option>
+												<option value="8" style="text-align: left;">Google
+													Pay</option>
+												<option value="9" style="text-align: left;">Amazon
+													Pay</option>
+										</select></li>
+
 									</ul>
 								</div>
 							</div>
-							
+
 						</div>
 						<div class="add_frm_one">
 							<div class="add_customer_one" id="epayLabel"></div>
 						</div>
-							
+
 						<div class="clr"></div>
 					</div>
-					
+
 					<div id="singleDiv">
 						<div class="add_frm_one">
 							<div class="add_customer_one">Type</div>
 							<div class="add_input">
-								<select name="billType" id="billType" data-placeholder="Type" onchange="onPayTypeChange(this.value)"
-									class="input_add " style="text-align: left;">
+								<select name="billType" id="billType" data-placeholder="Type"
+									onchange="onPayTypeChange(this.value)" class="input_add "
+									style="text-align: left;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
 									<option value="3" style="text-align: left;">E-Pay</option>
@@ -962,23 +975,26 @@ body {
 						<div class="add_frm_one" id="cardTypeDiv" style="display: none;">
 							<div class="add_customer_one">Card Type</div>
 							<div class="add_input">
-								<select name="cardType" id="cardType" data-placeholder="Card Type"
-									class="input_add " style="text-align: left;">
+								<select name="cardType" id="cardType"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left;">
 									<option value="" style="text-align: left;">Select Card</option>
-									
+
 									<option value="4" style="text-align: left;">Debit Card</option>
-									<option value="5" style="text-align: left;">Credit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option>
 								</select>
-								
+
 							</div>
 							<div class="clr"></div>
 						</div>
 						<div class="add_frm_one" id="epayTypeDiv" style="display: none;">
 							<div class="add_customer_one">E-Pay Type</div>
 							<div class="add_input">
-								<select name="ePayType" id="ePayType" data-placeholder="E-Pay Type"
-									class="input_add " style="text-align: left;">
-									<option value="" >Select E-Pay Type</option>
+								<select name="ePayType" id="ePayType"
+									data-placeholder="E-Pay Type" class="input_add "
+									style="text-align: left;">
+									<option value="">Select E-Pay Type</option>
 									<option value="6" style="text-align: left;">Phone Pe</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
@@ -1460,7 +1476,7 @@ body {
 				<div id="modeOfPayDiv1">
 
 					<div class="add_frm_one">
-						 
+
 						<div class="add_input">
 							<div class="radio_row popup_radio">
 								<ul>
@@ -1618,7 +1634,7 @@ body {
  
 											var payType="";
 											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
-											
+											alert(data.exVar1);
 											if(data.exVar1=="0,1,2,3"){
 												payType="Cash,Card,e-Pay";
  												
@@ -3213,9 +3229,14 @@ $("#enterQty").focus();
 	}
 	
 	function openPaymentPopup() {
-		   
-		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
+		//alert(custId);
+if(parseInt(custId)==5){
+			
+			alert("Please Select Proper Customer");
+		} else{	   
+		var key =  $('#key').val() ;
+	
 		document.getElementById("discPer").value =0;
 		document.getElementById("discAmt").value =0;
 		document.getElementById("cashAmt").value =0;
@@ -3246,6 +3267,7 @@ $("#enterQty").focus();
 			 $('#payment').popup('show');
 		 }
 		  
+	}
 	}
 	
 	function submitBillByPaymentOption(printbilltype) {
