@@ -121,7 +121,8 @@
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
-												<th width="15%" bgcolor="#ECECEC" align="right">Rate</th>
+												<th width="8%" bgcolor="#ECECEC" align="right">Disc(%)</th>
+												<th width="15%" bgcolor="#ECECEC" align="right">Mrp</th>
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
 
@@ -134,7 +135,10 @@
 
 															${itemBillList.orderQty} </span></td>
 
-													<td align="right"><span style="font-size: 11px">${itemBillList.orderRate}
+													<td align="right"><span style="font-size: 11px">${itemBillList.isPositive}
+													</span></td>
+
+													<td align="right"><span style="font-size: 11px">${itemBillList.orderMrp}
 													</span></td>
 
 
@@ -150,7 +154,7 @@
 															type="number" maxFractionDigits="2" minFractionDigits="2"
 															value="${headDetails.total}" groupingUsed="false" /></span></td>
 											</tr>
-											<c:if test="${headDetails.discAmt>0}"></c:if>
+											<c:if test="${headDetails.discAmt > 0.00}"></c:if>
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Discount
 														Amt :</span></td>
@@ -158,7 +162,7 @@
 															type="number" maxFractionDigits="2" minFractionDigits="2"
 															value="${headDetails.discAmt}" groupingUsed="false" /></span></td>
 											</tr>
-											
+
 
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Advance

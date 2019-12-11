@@ -661,7 +661,7 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
-									placeholder="From Date" name="devDate" autocomplete="off"
+									placeholder="Delivery Date" name="devDate" autocomplete="off"
 									type="text"">
 
 							</div>
@@ -1743,6 +1743,8 @@ $('.closemodale').click(function (e) {
     });
 </script>
 	<!-- MODAL SCRIPT END-->
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 	<script>    
 		$(function() {
 			$("#fromdatepicker").datepicker({
@@ -1755,12 +1757,7 @@ $('.closemodale').click(function (e) {
 			});
 		});
 		
-		
-		$(function() {
-			$("#popdatepicker").datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-		});
+		 
 </script>
 </body>
 </html>

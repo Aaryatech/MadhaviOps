@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:url var="setGetLeftView" value="/setGetLeftView" />
+
 <!--topHeader-->
  <%-- <div class="fullGrid center logoBarbg slideposi">
 	<div class="wrapperIn positionR">
@@ -57,14 +59,42 @@
 	<div class="logo"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="madhvi_logo"></a> </div>
 	<div class="drop_menu">
 	
-		<div class="franchise_nm">Frenchise Name <span>(User Name)</span></div>	
-		<div class="hide_menu"><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <i class="fa fa-eye-slash" aria-hidden="true"></i></a></div>
-		<div class="full_scrn"><a href="#"><i class="fa fa-arrows-alt" aria-hidden="true"></i></a></div>
+		<div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
+		<div class="hide_menu"><a href="#" onclick="SetRating()"><i class="fa fa-eye"  title="Hide/Show Menu Bar" aria-hidden="true"></i> 
+	</a></div>
+		<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></a></div>
 	
-		<img src="${pageContext.request.contextPath}/resources/newpos/images/fullscreen.png"  id="fs-doc-button" alt="F" style="margin-top:8px;">
-		<img src="${pageContext.request.contextPath}/resources/newpos/images/normal.png"  id="fs-exit-doc-button" alt="N" style="margin-top:8px;">
+<%-- 		<img src="${pageContext.request.contextPath}/resources/newpos/images/fullscreen.png"  id="fs-doc-button" alt="F" style="margin-top:8px;">
+ --%>		<%-- <img src="${pageContext.request.contextPath}/resources/newpos/images/normal.png"  id="fs-exit-doc-button" alt="N" style="margin-top:8px;"> --%>
 		<div class="logout_btn"><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></div>
 	</div>
 	<div class="clr"></div>
-	
+<!-- 	<i class="fa fa-eye-slash"  aria-hidden="true"> -->
+
+
+
 </header>
+<script type="text/javascript">
+        function SetRating() 
+        { 
+        	
+        	//alert(${sessionScope.eyeVal});
+      	$.get('${setGetLeftView}', {
+			 
+			ajax : 'true'
+		}, function(data) {
+
+			//	alert(JSON.stringify(data));
+			alert(data);
+			if(data=="2"){
+				$('#demo').hide();
+			}else{
+				$('#demo').show();
+			}
+			 
+		});
+          
+         
+        }
+    
+    </script>

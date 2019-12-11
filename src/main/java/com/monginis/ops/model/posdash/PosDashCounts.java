@@ -1,116 +1,114 @@
 package com.monginis.ops.model.posdash;
- 
+
 public class PosDashCounts {
-	 
-	private String saleAmt;
-	
-	private String purchaseAmt;
-	
-	private String discountAmt;
 
-	private String creditAmt;
-	
-	private String expenseAmt;
-	
-	private String advanceAmt;
-	
-	private String profitAmt;
-	
-	private String cashAmt;
-	
-	private String cardAmt;
-	
-	private String epayAmt;
-	
-	private String noOfBillGenerated;
+	private float saleAmt;
 
- 
+	private float purchaseAmt;
 
-	public String getSaleAmt() {
+	private float discountAmt;
+
+	private float creditAmt;
+
+	private float expenseAmt;
+
+	private float advanceAmt;
+
+	private float profitAmt;
+
+	private float cashAmt;
+
+	private float cardAmt;
+
+	private float epayAmt;
+
+	private float noOfBillGenerated;
+
+	public float getSaleAmt() {
 		return saleAmt;
 	}
 
-	public void setSaleAmt(String saleAmt) {
+	public void setSaleAmt(float saleAmt) {
 		this.saleAmt = saleAmt;
 	}
 
-	public String getPurchaseAmt() {
+	public float getPurchaseAmt() {
 		return purchaseAmt;
 	}
 
-	public void setPurchaseAmt(String purchaseAmt) {
+	public void setPurchaseAmt(float purchaseAmt) {
 		this.purchaseAmt = purchaseAmt;
 	}
 
-	public String getDiscountAmt() {
+	public float getDiscountAmt() {
 		return discountAmt;
 	}
 
-	public void setDiscountAmt(String discountAmt) {
+	public void setDiscountAmt(float discountAmt) {
 		this.discountAmt = discountAmt;
 	}
 
-	public String getCreditAmt() {
+	public float getCreditAmt() {
 		return creditAmt;
 	}
 
-	public void setCreditAmt(String creditAmt) {
+	public void setCreditAmt(float creditAmt) {
 		this.creditAmt = creditAmt;
 	}
 
-	public String getExpenseAmt() {
+	public float getExpenseAmt() {
 		return expenseAmt;
 	}
 
-	public void setExpenseAmt(String expenseAmt) {
+	public void setExpenseAmt(float expenseAmt) {
 		this.expenseAmt = expenseAmt;
 	}
 
-	public String getAdvanceAmt() {
+	public float getAdvanceAmt() {
 		return advanceAmt;
 	}
 
-	public void setAdvanceAmt(String advanceAmt) {
+	public void setAdvanceAmt(float advanceAmt) {
 		this.advanceAmt = advanceAmt;
 	}
 
-	public String getProfitAmt() {
+	public float getProfitAmt() {
 		return profitAmt;
 	}
 
-	public void setProfitAmt(String profitAmt) {
+	public void setProfitAmt(float profitAmt) {
 		this.profitAmt = profitAmt;
 	}
 
-	public String getCashAmt() {
+	public float getCashAmt() {
 		return cashAmt;
 	}
 
-	public void setCashAmt(String cashAmt) {
+	public void setCashAmt(float cashAmt) {
 		this.cashAmt = cashAmt;
 	}
 
-	public String getCardAmt() {
+	public float getCardAmt() {
 		return cardAmt;
 	}
 
-	public void setCardAmt(String cardAmt) {
+	public void setCardAmt(float cardAmt) {
 		this.cardAmt = cardAmt;
 	}
 
-	public String getEpayAmt() {
+	public float getEpayAmt() {
 		return epayAmt;
 	}
 
-	public void setEpayAmt(String epayAmt) {
+	public void setEpayAmt(float epayAmt) {
 		this.epayAmt = epayAmt;
 	}
 
-	public String getNoOfBillGenerated() {
+	public float getNoOfBillGenerated() {
 		return noOfBillGenerated;
 	}
 
-	public void setNoOfBillGenerated(String noOfBillGenerated) {
+	public void setNoOfBillGenerated(float noOfBillGenerated) {
 		this.noOfBillGenerated = noOfBillGenerated;
 	}
 
@@ -121,7 +119,5 @@ public class PosDashCounts {
 				+ ", profitAmt=" + profitAmt + ", cashAmt=" + cashAmt + ", cardAmt=" + cardAmt + ", epayAmt=" + epayAmt
 				+ ", noOfBillGenerated=" + noOfBillGenerated + "]";
 	}
-
-	 
 
 }

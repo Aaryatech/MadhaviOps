@@ -11,7 +11,12 @@
 	padding: 20px 60px 20px 20px;
 }
 </style>
+
+<c:if test="${sessionScope.eyeVal==1}">
 <div id="demo">
+
+
+
 	<section id="examples" class="snap-scrolling-example">
       <a href="#" id="button"></a>
 		<div id="content-1" class="content horizontal-images">
@@ -38,15 +43,18 @@
 							Order <span>Booking</span>
 						</div></a></li>
 			</c:if>
-<li><a
-					href="${pageContext.request.contextPath}/newcustomerbill/0"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"></i>
-						</div>
-						<div class="title">
-							POINT OF SALE(POS)<span></span>
-						</div></a></li>
-			<c:set var="flag" value="${0}"></c:set>
+
+						<c:if test="${sessionScope.isEmpPresent==1}">
+							<li><a
+								href="${pageContext.request.contextPath}/newcustomerbill/0"><div
+										class="img">
+										<i class="fa fa-file-pdf-o icon"></i>
+									</div>
+									<div class="title">
+										POINT OF SALE(POS)<span></span>
+									</div></a></li>
+						</c:if>
+						<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
@@ -201,13 +209,13 @@
 
 				</c:choose>
 			</c:forEach>
-			<c:if test="${ flag==1}">
+		<%-- 	<c:if test="${ flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Purchase Bill</div></a></li>
-			</c:if>
+			</c:if> --%>
           <c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -219,14 +227,14 @@
 
 				</c:choose>
 			</c:forEach>
-			<c:if test="${flag==1}">
+			<%-- <c:if test="${flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Item Stock</div></a></li>
-			</c:if>
+			</c:if> --%>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -772,7 +780,9 @@
 		</div>
 
 	</section>
+	
 </div> 
+</c:if>
 <script type="text/javascript">
 	var btn = $('#button');
 

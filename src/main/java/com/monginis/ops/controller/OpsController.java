@@ -552,13 +552,13 @@ public class OpsController {
 			sellBillHeader.setRemainingAmt(0);
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
-			sellBillHeader.setExInt1(frEmpDetails.getFrEmpId());
+			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
 			info.setError(false);
 			info.setMessage("Bill Submited");
 
 			hashMap.remove(index);
 			itemBillList = new ArrayList<>();
-
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
 			RestTemplate restTemplate = new RestTemplate();
 			SellBillHeader sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData",
 					sellBillHeader, SellBillHeader.class);
@@ -570,7 +570,7 @@ public class OpsController {
 				transactionDetail.setCashAmt(total);
 				transactionDetail.setPayMode(1);
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
-				transactionDetail.setTransactionDate(sf.format(date));
+				transactionDetail.setTransactionDate(sf1.format(date));
 				transactionDetail.setExVar1("1");
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				dList.add(transactionDetail);
@@ -733,6 +733,7 @@ public class OpsController {
 
 			}
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = new Date();
 
 			SellBillHeader sellBillHeader = new SellBillHeader();
@@ -773,7 +774,7 @@ public class OpsController {
 
 			}
 			
-			sellBillHeader.setExInt1(frEmpDetails.getFrEmpId());
+			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 
@@ -792,7 +793,7 @@ public class OpsController {
 				List<TransactionDetail> dList = new ArrayList<>();
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
-				transactionDetail.setTransactionDate(sf.format(date));
+				transactionDetail.setTransactionDate(sf1.format(date));
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				transactionDetail.setePayType(payType);
 				if (creditBill == 1) {
@@ -1371,6 +1372,7 @@ public class OpsController {
 			float cardAmt1 = 0;
 			float epayAmt1 = 0;
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = new Date();
 			List<TransactionDetail> expTransList = new ArrayList<TransactionDetail>();
 
@@ -1415,7 +1417,7 @@ public class OpsController {
 				expTrans.setePayAmt(epayAmt1);
 				expTrans.setePayType(0);
 				expTrans.setPayMode(modType2);
-				expTrans.setTransactionDate(sf.format(date));
+				expTrans.setTransactionDate(sf1.format(date));
 
 				expTrans.setExInt2(0);
 				expTrans.setExInt1(frEmpDetails.getFrEmpId());

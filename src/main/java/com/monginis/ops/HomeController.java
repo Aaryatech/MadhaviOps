@@ -303,13 +303,13 @@ public class HomeController {
 			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts", map,
 					PosDashCounts.class);
 			
-			if(countDet.getExpenseAmt()==null || countDet.getExpenseAmt()=="") {
-				countDet.setExpenseAmt("0.0");
-			}
-			
-			if(countDet.getPurchaseAmt()==null ||countDet.getPurchaseAmt()=="") {
-				 countDet.setPurchaseAmt("0.0");
-			}
+			/*
+			 * if(countDet.getExpenseAmt()==null || countDet.getExpenseAmt()=="") {
+			 * countDet.setExpenseAmt("0.0"); }
+			 * 
+			 * if(countDet.getPurchaseAmt()==null ||countDet.getPurchaseAmt()=="") {
+			 * countDet.setPurchaseAmt("0.0"); }
+			 */
 
 			model.addObject("countDetails", countDet);
 			System.err.println("DashBoardReporApi /getCredNoteReport" + countDet.toString());
@@ -360,6 +360,29 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		return sectionList;
+	}
+	
+	@RequestMapping(value = "/setGetLeftView", method = RequestMethod.GET)
+	@ResponseBody
+	public String setGetLeftView(HttpServletRequest request, HttpServletResponse responsel) {
+		
+	 int leftView=0;
+		HttpSession session = request.getSession();
+		 
+		try {
+			 
+			leftView=(int) session.getAttribute("eyeVal");
+			System.err.println("leftView"+leftView);
+			if(leftView==1) {
+				session.setAttribute("eyeVal", 2);leftView=2;
+			}else {
+				session.setAttribute("eyeVal", 1);leftView=1;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return String.valueOf(leftView);
 	}
 	
 	
@@ -835,6 +858,12 @@ public class HomeController {
 			session.setAttribute("allMenuList", frMenuList);
 
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
+			session.setAttribute("frDetails", loginResponse.getFranchisee());
+			session.setAttribute("frName", loginResponse.getFranchisee().getFrName());
+			
+
+
+
 			session.setAttribute("loginInfo", loginResponse.getLoginInfo());
 			session.setAttribute("msgList", msgList);
 			session.setAttribute("schedulerLists", schedulerLists);
@@ -929,13 +958,18 @@ public class HomeController {
 		
 			if(empList.isEmpty()) {
 				logger.info("List is empty");
-				model = new ModelAndView("home");				
+				
+				session.setAttribute("isEmpPresent", 0);
+			 
+				return "redirect:/home";
 			}else {
 				logger.info("List is not empty");
+				session.setAttribute("isEmpPresent", 1);
 				model = new ModelAndView("frlogin");
+				return "redirect:/frEmpLogin";
 			}
 			
-			return "redirect:/frEmpLogin";
+		 
 		}
 
 	}
@@ -1092,7 +1126,8 @@ public class HomeController {
 			// Managing session
 			session.setAttribute("menuList", filteredFrMenuList);
 			session.setAttribute("allMenuList", frMenuList);
-
+			session.setAttribute("eyeVal", 1);
+			session.setAttribute("frEmpName", loginResponse.getFrEmp().getFrEmpName());
 			session.setAttribute("frEmpDetails", loginResponse.getFrEmp());
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
 			session.setAttribute("loginInfo", loginResponse.getLoginInfo());

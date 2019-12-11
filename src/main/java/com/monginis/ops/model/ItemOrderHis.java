@@ -18,7 +18,7 @@ public class ItemOrderHis {
 	private int isEdit;
 	private int editQty;
 	private int userId;
-	private int isPositive;
+	private int isPositive;//discPer
 	private int menuId;
 	private String menuTitle;
 	private String itemName;

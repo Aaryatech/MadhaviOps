@@ -421,7 +421,7 @@
 									<tr>
 										<th style="text-align: center;">Sr</th>
 										<th style="text-align: center;">Item Name</th>
-										<th style="text-align: center;">Amount</th>
+										<th style="text-align: right;">Amount</th>
 									</tr>
 								</thead>
 								<tbody>
