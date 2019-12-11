@@ -41,7 +41,7 @@ ol,ul,li{margin: 0px;padding: 0px;list-style-type: none;}
 header{width: 100%; background: #FFF; padding: 0;}
 
 .logo{float: left; padding: 10px 20px;}
-.drop_menu{float: right; margin:21px 15px 0 21px /*14px 14px 0 0*/;}
+.drop_menu{float: right; margin:14px 15px 0 21px /*14px 14px 0 0*/;}
 /*Styling Selectbox*/
 .dropdown {width: 200px; background:url(../images/ddarow.png) no-repeat right top; background-position:93% 16px; display: inline-block; background-color: #ecf0f5; transition: all .5s ease; position: relative; font-size: 14px; color: #000; height: 100%; text-align: left}
 .dropdown.popup_drop{width: 100%; padding: 6px 12px; border: 1px solid #d2d6de; background:url(../images/ddarow.png) no-repeat right top; background-position:97% 12px; display: inline-block; background-color: #FFF; transition: all .5s ease; position: relative; font-size: 12px; color: #333; height: 100%; text-align: left}
@@ -176,8 +176,8 @@ vertical-align:middle; min-height: 50px;}
 .cat_list_bx{ margin:0 /*25px 0 0 0;*/}
 .input_cat{background: #FFF url(../images/srach_icn.png) no-repeat right top; padding: 4px 35px 4px 8px; font-size: 14px; border: 0; background-position: 95% 6px;}
 .cat_srach{display: inline-block; text-align: right; width: 100%; margin: 0 0 10px 0;}
-.cat_list{padding: 10px; width: 100%; display: inline-block;  border: 2px solid #cccccc; position: relative; min-height: 590px;}
-.carlist_scrollbars{height: 600px /*320px*/; width: 100%;}
+.cat_list{padding: 10px; width: 100%; display: inline-block;  border: 2px solid #cccccc; position: relative; height: 590px;}
+.carlist_scrollbars{height: 550px /*320px*/; width: 100%;}
 
 .add_row{display: inline-block; width: 100%; margin: 0 0 15px 0;}
 .add_row_l{float: left; width: 48%;}
@@ -278,7 +278,7 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 .listareaBox:hover .listareaBoximg img:last-child{display:inline-block}
 
 
-.logout_btn{float: right; margin:21px 21px 0 21px /*10px 15px 0 15px*/;}
+.logout_btn{float: right; margin:10px 15px 0 15px;}
 .logout_btn a{color: #333; font-size: 14px; text-transform: uppercase; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .logout_btn a:hover{color: #ed1c24; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
@@ -384,18 +384,74 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 .top_radio_area{display: inline-block; margin: 0 0 15px 0; width: 100%;}
 .item_src{display: inline-block; float: right;}
 
+.logout_btn.pos{ margin: 3px 15px 0 15px;}
+
+.franchise_nm{float: left; margin:0 10px 0 0; font-size: 18px; font-weight: 600; color: #F00;}
+ .franchise_nm span{display: block; text-align: center; font-size: 14px; color: #333;}
 
 
-@media screen and (max-width:1280px){}
+@media screen and (max-width:1440px){
+	.cat_list{height: 620px;}
+}
+@media screen and (max-width:1280px){
+.carlist_scrollbars {height: 630px; width: 100%;}
+.cat_list {height: 650px;}
+}
+
 @media screen and (max-width:1024px){
 	.pending_btn{margin: 0 5px 5px 0;}
-	.scrollbars{height: 440px;}
+	.scrollbars {height: 324px;}
+	.carlist_scrollbars{height: 330px;}
+	.dual_l {width: 60%;}
+	.dual_r{width: 38%;}
+	.customer_two{width: 61%;}
+	.drop_menu{width: 48%;}
+	.input_add{width: 65%;}
+	.cat_list{height: 375px;}
+	.bx_tabs ul li{margin: 0 5px 5px 0;}
+	.total_tab table{margin: 0;}
+	.customer_one{margin: 5px 0 0 0;}
 }
-@media screen and (max-width:900px){}
-@media screen and (max-width:700px){}
-@media screen and (max-width:640px){}
-@media screen and (max-width:568px){}
-@media screen and (max-width:460px){}
+
+@media screen and (max-width:900px){
+	.cat_l{float: none; width: 100%; margin: 15px 0 0 0;}
+	.cat_r{float: none; width: 100%;}
+	.input_add {width: 58%;}
+	#cust{width: 100%;}
+	.customer_three{width: 5%;}
+	.customer_two {width: 67%;}
+	
+	
+	
+	
+}
+@media screen and (max-width:700px){
+	.drop_menu {width: 40%;}
+}
+@media screen and (max-width:640px){
+	.drop_menu {width: 50%;}
+
+	
+}
+@media screen and (max-width:568px){
+	.dual_l{float: none; width: 100%;}
+	.dual_r{float: none; width: 100%;}
+	.logo{float: none; width: 100%; text-align: center; margin: 0 0 10px 0;}
+	.drop_menu{float: none; width: 100%; padding: 0 15px; margin: 0 0 15px 0; display: inline-block;}
+	.customer_two {width: 52%;}
+	.customer_three {width: 14%;}
+	.button_one{width: 50%; padding: 0;}
+	.button_two{float: left; width: 100%;}
+	.radio_row_one{float: none; width: 100%; margin: 0 0 10px 0;}
+}
+@media screen and (max-width:460px){
+	
+
+}
+
 @media screen and (max-width:375px){}
 @media screen and (max-width:360px){}
-@media screen and (max-width:320px){}
+@media screen and (max-width:320px){
+	.radio_row ul li label{padding: 0 10px 0 36px;}
+	.item_head {font-size: 14px;}
+}

@@ -163,12 +163,15 @@ body {
 						alt="madhvi_logo"></a>
 				</div>
 				
-				<div class="logout_btn">
-						<a href="${pageContext.request.contextPath}/logout"><i
-							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
-					</div>
+				
 
 				<div class="drop_menu">
+				
+					<div class="logout_btn pos">
+						<a href="${pageContext.request.contextPath}/logout"><i
+							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+					</div>	
+					
 					<select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select" onchange="revertHoldBillOnCurrent()">
 						<option value="" disabled="disabled" selected>Select Bill No</option>
@@ -192,6 +195,125 @@ body {
 			</header>
 
 			<section class="main_container">
+				
+				<!--right-side-box-->
+				<div class="cat_r">
+					<!--item search row-->
+					
+					
+					<div class="top_radio_area">
+						<div class="radio_row_one">
+							<h3 class="item_head">Item Search</h3>
+							<div class="radio_row">
+								<ul>
+									<li><input type="radio" id="f-option" name="serachBy"
+										checked onclick="getCatListAndSubCatList(1)"> <label
+										for="f-option">Category</label>
+										<div class="check"></div></li>
+									<!-- <li><label
+										for="s-option">Sub Category </label>
+										<div class="check">
+											<div class="inside"></div>
+										</div></li> -->
+									<input type="hidden" id="s-option" name="serachBy"
+										onclick="getCatListAndSubCatList(2)">
+									<li><input type="radio" id="g-option" name="serachBy"
+										onclick="getCatListAndSubCatList(3)"> <label
+										for="g-option">All Items</label>
+										<div class="check"></div></li>
+	
+	
+								</ul>
+							</div>							
+						</div>
+						
+						<div class="item_src"><input name="myInput1" id="myInput1" type="text"
+									class="input_cat" onkeyup="myFunction1()"
+									placeholder="Search Item" /></div>
+					
+					</div>
+
+					<!--category box start here-->
+					<div id="catSubCatDivHideShow">
+						<div class="cat_bx_one">
+							<div class="category_list">
+								<div class="category_scrollbars" id="catSubCatDiv">
+									<c:forEach items="${catList}" var="catList">
+										<div class="cat_one catDummyClass">
+											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
+												title="${catList.catName}"
+												src="${pageContext.request.contextPath}/resources/newpos/images/${catList.itemImage}"
+												onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
+										</div>
+									</c:forEach>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!--listing box start here-->
+
+
+					<div class="dual_bx" style="">
+						<div class="dual_l">
+							<div class="bx_tabs">
+								<ul id="subcatUl">
+									<!-- <li class="subCatDummyClass"><a href="#"
+										style="margin-bottom: 5px;">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Kaju &amp;
+											Combo</a></li>
+									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Kaju &amp;
+											Combo</a></li>
+									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
+									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
+
+									<ul>
+							</div>
+						</div>
+						<div class="dual_r">
+							<div class="cat_srach">
+								<input name="myInput1" id="myInput1" type="text"
+									class="input_cat" onkeyup="myFunction1()"
+									placeholder="Search Item" />
+							</div>
+						</div>
+					</div>
+
+
+					<div class="cat_list_bx">
+
+						<div class="cat_list">
+							<div class="carlist_scrollbars" id="scrollDiv">
+								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
+
+
+								<div class="sweet_list" id="aaaaaa">
+									<ul id="itemDiv">
+										<!-- <li class="itemDummyClass">
+											<div class="sweet_one">
+												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
+											</div>
+										</li> -->
+
+									</ul>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			
 				<div class="cat_l">
 					<!--top-buttons row-->
 					<div class="pending_row">
@@ -200,7 +322,7 @@ body {
 							id="credAmt">00.00</span>
 						</a> <a href="#" class="pending_btn initialism  ">Advance Amt : <span
 							id="advCustAmt">00.00</span>
-						</a> <a href="#" class="pending_btn" 	onclick="openMyModal('custBills',1)">Total Amt : <span>00.00</span></a>
+						</a> <a href="#" class="pending_btn" onclick="openMyModal('custBills',1)">Total Amt : <span>00.00</span></a>
 
 						<a href="#" class="pending_btn"
 							onclick="openMyModal('custBills',2)">Today's Bills <span
@@ -219,10 +341,8 @@ body {
 							<div class="customer_one">Customer</div>
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
-									class="input_add chosen-select" style="text-align: left;"
-									onchange="setCustAmt()" required>
-									<option value="0" style="text-align: left;">Select
-										Customer</option>
+									class="input_add chosen-select" onchange="setCustAmt()" required>
+									<option value="0" >Select Customer</option>
 
 									<c:choose>
 										<c:when test="${key>0}">
@@ -493,124 +613,8 @@ body {
 
 
 				</div>
-
-				<!--right-side-box-->
-				<div class="cat_r">
-					<!--item search row-->
-					
-					
-					<div class="top_radio_area">
-						<div class="radio_row_one">
-							<h3 class="item_head">Item Search</h3>
-							<div class="radio_row">
-								<ul>
-									<li><input type="radio" id="f-option" name="serachBy"
-										checked onclick="getCatListAndSubCatList(1)"> <label
-										for="f-option">Category</label>
-										<div class="check"></div></li>
-									<!-- <li><label
-										for="s-option">Sub Category </label>
-										<div class="check">
-											<div class="inside"></div>
-										</div></li> -->
-									<input type="hidden" id="s-option" name="serachBy"
-										onclick="getCatListAndSubCatList(2)">
-									<li><input type="radio" id="g-option" name="serachBy"
-										onclick="getCatListAndSubCatList(3)"> <label
-										for="g-option">All Items</label>
-										<div class="check"></div></li>
-	
-	
-								</ul>
-							</div>							
-						</div>
-						
-						<div class="item_src"><input name="myInput1" id="myInput1" type="text"
-									class="input_cat" onkeyup="myFunction1()"
-									placeholder="Search Item" /></div>
-					
-					</div>
-
-					<!--category box start here-->
-					<div id="catSubCatDivHideShow">
-						<div class="cat_bx_one">
-							<div class="category_list">
-								<div class="category_scrollbars" id="catSubCatDiv">
-									<c:forEach items="${catList}" var="catList">
-										<div class="cat_one catDummyClass">
-											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
-												title="${catList.catName}"
-												src="${pageContext.request.contextPath}/resources/newpos/images/${catList.itemImage}"
-												onerror="imgError(this);" alt="${catList.catName}"> <span>${catList.catName}</span></a>
-										</div>
-									</c:forEach>
-
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<!--listing box start here-->
-
-
-					<div class="dual_bx" style="">
-						<div class="dual_l">
-							<div class="bx_tabs">
-								<ul id="subcatUl">
-									<!-- <li class="subCatDummyClass"><a href="#"
-										style="margin-bottom: 5px;">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
-									<li class="subCatDummyClass"><a href="#">Kaju &amp;
-											Combo</a></li>
-									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
-									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
-									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
-									<li class="subCatDummyClass"><a href="#">Kaju &amp;
-											Combo</a></li>
-									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
-									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
-
-									<ul>
-							</div>
-						</div>
-						<div class="dual_r">
-							<div class="cat_srach">
-								<input name="myInput1" id="myInput1" type="text"
-									class="input_cat" onkeyup="myFunction1()"
-									placeholder="Search Item" />
-							</div>
-						</div>
-					</div>
-
-
-					<div class="cat_list_bx">
-
-						<div class="cat_list">
-							<div class="carlist_scrollbars" id="scrollDiv">
-								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
-
-
-								<div class="sweet_list" id="aaaaaa">
-									<ul id="itemDiv">
-										<!-- <li class="itemDummyClass">
-											<div class="sweet_one">
-												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
-											</div>
-										</li> -->
-
-									</ul>
-								</div>
-
-
-
-							</div>
-						</div>
-					</div>
-
-				</div>
+				
+			
 			</section>
 
 		</div>
