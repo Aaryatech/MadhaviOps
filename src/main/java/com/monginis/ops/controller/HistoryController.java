@@ -246,10 +246,10 @@ public class HistoryController {
 				session.setAttribute("exportExcelList", exportToExcelList);
 				session.setAttribute("excelName", "SpOrderHistory");
 
-			} else if (orderType == 1 && (catList.contains(42) || catList.contains(80))) {
+			/*} else if (orderType == 1 && (catList.contains(42) || catList.contains(80))) {
 
 				regSpHistory = regHistory(catIdStr, parsedDate, frId);
-				model.addObject("orderHistory", regSpHistory);
+				model.addObject("orderHistory", regSpHistory);*/
 			} else if (orderType == 1) {
 				// if (catId != 5) prev
 				flag = 2;

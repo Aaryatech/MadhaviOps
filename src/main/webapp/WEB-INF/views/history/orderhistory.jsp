@@ -220,7 +220,7 @@ jQuery(document).ready(function(){
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
+				<div class="order-left" style="width:100%">
 					<h2 class="pageTitle">Order History</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
@@ -238,23 +238,23 @@ jQuery(document).ready(function(){
 						<c:choose>
 						<c:when test="${orderType==1}">
 						        <option value="1" selected>Regular Order</option>
-								<option value="2">Sp Order</option>
+							<!-- 	<option value="2">Sp Order</option> -->
 									<option value="3" >Advance Order</option>
 						</c:when>
-						<c:when test="${orderType==2}">
+						<%-- <c:when test="${orderType==2}">
 						        <option value="1">Regular Order</option>
 								<option value="2" selected>Sp Order</option>
 									<option value="3" >Advance Order</option>
-						</c:when>
+						</c:when> --%>
 							<c:when test="${orderType==3}">
 						        <option value="1">Regular Order</option>
-								<option value="2"  >Sp Order</option>
-								<option value="3" selected>Advance Order</option>
+<!-- 								<option value="2"  >Sp Order</option>
+ -->								<option value="3" selected>Advance Order</option>
 						</c:when>
 						<c:otherwise>
 						 <option value="1">Regular Order</option>
-								<option value="2" >Sp Order</option>
-								<option value="3" >Advance Order</option>
+<!-- 								<option value="2" >Sp Order</option>
+ -->								<option value="3" >Advance Order</option>
 						</c:otherwise>
 						</c:choose>
 								
@@ -809,11 +809,20 @@ function exportToExcel()
 						 $("#catId").append($("<option align=left;></option>").attr( "value",-1).text("ALL"));
 		                    for ( var i = 0; i < len; i++) {
 		                            
-		                                
-		                        $("#catId").append(
-		                                $("<option align=left;></option>").attr(
-		                                    "value", data[i].menuId).text(data[i].menuTitle)
-		                            );
+		                    	  if(type==3 && data[i].isSameDayApplicable==3){
+			                        	$("#catId").append(
+				                                $("<option align=left; selected></option>").attr(
+				                                    "value", data[i].menuId).text(data[i].menuTitle)
+				                            );
+			                        }   else
+			                        	{
+			                        	
+			                        	$("#catId").append(
+			                                $("<option align=left;></option>").attr(
+			                                    "value", data[i].menuId).text(data[i].menuTitle)
+			                            );
+			                        	}          
+		                        
 		                    }
 
 		                    $('.chosen-select').trigger('chosen:updated');

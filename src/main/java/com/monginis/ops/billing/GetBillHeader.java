@@ -33,9 +33,20 @@ public class GetBillHeader {
 	
 	private String exVarchar2;//new on 2 july
 	
+	private String ewayBillNo;
 	
 	
-    public String getVehNo() {
+	
+	
+    public String getEwayBillNo() {
+		return ewayBillNo;
+	}
+
+	public void setEwayBillNo(String ewayBillNo) {
+		this.ewayBillNo = ewayBillNo;
+	}
+
+	public String getVehNo() {
 		return vehNo;
 	}
 
@@ -222,9 +233,9 @@ public class GetBillHeader {
 				+ status + ", remark=" + remark + ", delStatus=" + delStatus + ", time=" + time + ", billDateTime="
 				+ billDateTime + ", partyName=" + partyName + ", partyAddress=" + partyAddress + ", partyGstin="
 				+ partyGstin + ", vehNo=" + vehNo + ", billTime=" + billTime + ", exVarchar1=" + exVarchar1
-				+ ", exVarchar2=" + exVarchar2 + "]";
+				+ ", exVarchar2=" + exVarchar2 + ", ewayBillNo=" + ewayBillNo + "]";
 	}
 
-    
+	
 
 }

@@ -112,7 +112,7 @@ jQuery(document).ready(function(){
 
 					<div class="col-md-2 from_date">
 						<h4 class="pull-left">
-							Bill No:- <b>${sellBillNo}</b>
+							Bill No:- <b>${printInvoiceNo}</b>
 						</h4>
 					</div>
 				

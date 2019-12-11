@@ -113,6 +113,8 @@ public class CustomerBillController {
 
 		ModelAndView model = new ModelAndView("frSellBilling/showSellBill");
 		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		model.addObject("frtype", frDetails.getFrGstType());
 		String pattern = "dd-MM-yyyy";
 
 		String dateInString = new SimpleDateFormat(pattern).format(new Date());
@@ -225,6 +227,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 		model.addObject("getSellBillDetailList", getSellBillDetailList);
 		model.addObject("sellBillNo", sellBillNo);
 		model.addObject("billDate", billDate);
+		model.addObject("printInvoiceNo", printInvoiceNo);
 
 		return model;
 	}

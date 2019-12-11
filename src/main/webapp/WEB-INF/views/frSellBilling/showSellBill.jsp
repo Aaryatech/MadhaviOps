@@ -121,7 +121,7 @@ jQuery(document).ready(function(){
 		</div>
 		
     </div>
-	
+	<input name="frtype" id="frtype" type="hidden" value="${frtype}" />
 	<div class="row">
 		<div class="col-md-12">
 		<!--table-->
@@ -250,7 +250,7 @@ jQuery(document).ready(function(){
 													 if(sellBillData.billType=='S'){
 														 if((sellBillData.invoiceNo).length>1)
 														{
-														tr.append($(' <td style="text-align:center;"></td>').html('SP &nbsp; <a href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + '\');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
+														tr.append($(' <td style="text-align:center;"></td>').html('SP &nbsp; <a href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + ');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
 														}else
 															{
 															tr.append($('<td style="text-align:center;"></td>').html("SP"));
@@ -277,14 +277,22 @@ jQuery(document).ready(function(){
 	
 	function custBillPdf(sellBillNo,type)
 	{
-		    var loginWindow = window.open('', 'UserLogin');
+		var	frtype= document.getElementById("frtype").value;
+		var loginWindow = window.open('', 'UserLogin');
 			if(type=='S')
 				{
-				loginWindow.location.href = '${pageContext.request.contextPath}/printSpCkBillPrint/'+sellBillNo;
+				loginWindow.location.href = '${pageContext.request.contextPath}/printBillOfSupply/'+sellBillNo;
 				}else{
-		         loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='+ sellBillNo+'&type='+type;
+		            if(frtype==10000000){
+					loginWindow.location.href = '${pageContext.request.contextPath}/printBillOfInvoice/'+sellBillNo;
+		            }else
+		            	{
+		            	loginWindow.location.href = '${pageContext.request.contextPath}/printBillOfSupply/'+sellBillNo;	
+		            	}
+
 				}
 	}
+
 	</script>
 	<script type="text/javascript">
 	function validate() {

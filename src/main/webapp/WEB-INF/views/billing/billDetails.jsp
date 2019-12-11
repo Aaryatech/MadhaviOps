@@ -11,15 +11,18 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>Monginis</title>
-<link
+
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
+<%-- <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
 	type="image/x-icon" />
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
+	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script> 
+--%>
 <!--rightNav-->
 
 <!--datepicker-->
@@ -84,11 +87,11 @@ However, delay the fade out process for 2.5 seconds */
 }
 </style>
 <!--new css added by kalpesh -->
-	<link href="${pageContext.request.contextPath}/resources/css/style.css"
+	<%-- <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
 	
 	<!--new css added by kalpesh -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css"> --%>
 	
 </head>
 <body onload="myFunction(${billStatus})">
