@@ -78,15 +78,16 @@
         function SetRating() 
         { 
         	
-        	//alert(${sessionScope.eyeVal});
+        //	alert("prev**"+${sessionScope.eyeVal});
       	$.get('${setGetLeftView}', {
 			 
 			ajax : 'true'
 		}, function(data) {
 
 			//	alert(JSON.stringify(data));
-			alert(data);
-			if(data=="2"){
+			//alert("from date***"+data);
+			//alert("from session***"+data);
+			if(data=="none"){
 				$('#demo').hide();
 			}else{
 				$('#demo').show();

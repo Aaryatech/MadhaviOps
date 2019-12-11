@@ -12,8 +12,8 @@
 }
 </style>
 
-<c:if test="${sessionScope.eyeVal==1}">
-<div id="demo">
+
+<div id="demo" style="display: ${sessionScope.eyeVal};">
 
 
 
@@ -782,7 +782,7 @@
 	</section>
 	
 </div> 
-</c:if>
+
 <script type="text/javascript">
 	var btn = $('#button');
 

@@ -366,23 +366,23 @@ public class HomeController {
 	@ResponseBody
 	public String setGetLeftView(HttpServletRequest request, HttpServletResponse responsel) {
 		
-	 int leftView=0;
+	 String leftView="block";
 		HttpSession session = request.getSession();
 		 
 		try {
 			 
-			leftView=(int) session.getAttribute("eyeVal");
-			System.err.println("leftView"+leftView);
-			if(leftView==1) {
-				session.setAttribute("eyeVal", 2);leftView=2;
+			leftView=(String) session.getAttribute("eyeVal");
+			//System.err.println("leftView"+leftView);
+			if(leftView=="block") {
+				session.setAttribute("eyeVal", "none");leftView="none";
 			}else {
-				session.setAttribute("eyeVal", 1);leftView=1;
+				session.setAttribute("eyeVal","block");leftView="block";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return String.valueOf(leftView);
+		return leftView;
 	}
 	
 	
@@ -1126,7 +1126,7 @@ public class HomeController {
 			// Managing session
 			session.setAttribute("menuList", filteredFrMenuList);
 			session.setAttribute("allMenuList", frMenuList);
-			session.setAttribute("eyeVal", 1);
+			session.setAttribute("eyeVal", "block");
 			session.setAttribute("frEmpName", loginResponse.getFrEmp().getFrEmpName());
 			session.setAttribute("frEmpDetails", loginResponse.getFrEmp());
 			session.setAttribute("frDetails", loginResponse.getFranchisee());
