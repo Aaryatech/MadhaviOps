@@ -223,7 +223,7 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
-									<!-- <li><div class="cat_srach">
+								<!-- 	<li><div class="cat_srach">
 											<input name="myInput1" id="myInput1" type="text"
 												class="input_cat" onkeyup="myFunction1()"
 												placeholder="Search Item" />
@@ -361,7 +361,7 @@ body {
 						</a>
 
 						<c:if test="${advanceAmt>0}">
-							<label>Advance Order Amt : <span id="advAmtLbl">${advanceAmt}</span>
+							<label>Advance Order Amt : <span id="advAmt">${advanceAmt}</span>
 							</label>
 						</c:if>
 					</div>
@@ -826,7 +826,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				
+				<%-- 
 					<div class="add_frm_one">
 					<div class="add_customer_one1">Advance AMT</div>
 					<div class="add_input1" id="advAmtPopup">
@@ -835,7 +835,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				 
+				  --%>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
@@ -3097,8 +3097,6 @@ $("#enterQty").focus();
 							
 							document.getElementById("taxableAmtLable").innerHTML = taxableAmt.toFixed(2); 
 							document.getElementById("taxAmtLable").innerHTML = taxAmt.toFixed(2); 
-							
-							
 							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
 							document.getElementById("totalItemLable").innerHTML = data.length; 
 							document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
