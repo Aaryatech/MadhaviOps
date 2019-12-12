@@ -223,22 +223,22 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
-										<li><div class="cat_srach">
-								<input name="myInput1" id="myInput1" type="text"
-									class="input_cat" onkeyup="myFunction1()"
-									placeholder="Search Item" />
-							</div></li>
+									<!-- <li><div class="cat_srach">
+											<input name="myInput1" id="myInput1" type="text"
+												class="input_cat" onkeyup="myFunction1()"
+												placeholder="Search Item" />
+										</div></li> -->
 
 
 								</ul>
 							</div>
 						</div>
 
-						<!-- <div class="item_src">
+						<div class="item_src">
 							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
 								placeholder="Search Item" />
-						</div> -->
+						</div>
 
 					</div>
 
@@ -263,7 +263,7 @@ body {
 					</div>
 					<!--listing box start here-->
 
-<!-- 
+					
 					<div class="dual_bx" style="">
 						<div class="dual_l">
 							<div class="bx_tabs">
@@ -290,9 +290,9 @@ body {
 						<div class="dual_r">
 							
 						</div>
-					</div> -->
+					</div>
 
-<div class="dual_bx" style=""></div>
+					<div class="dual_bx" style=""></div>
 					<div class="cat_list_bx" id="catItmDiv">
 
 						<div class="cat_list">
@@ -309,8 +309,8 @@ body {
 										</li> -->
 
 									</ul>
-									
-								 
+
+
 								</div>
 
 
@@ -318,11 +318,12 @@ body {
 							</div>
 						</div>
 					</div>
-					
-					<div class="cat_list_bx"  id="itmDiv" style="display: none;">
 
-						<div class="cat_list"  style="height: 800px; ">
-							<div class="carlist_scrollbars" id="scrollDiv"  style="height: 780px; ">
+					<div class="cat_list_bx" id="itmDiv" style="display: none;">
+
+						<div class="cat_list" style="height: 800px;">
+							<div class="carlist_scrollbars" id="scrollDiv"
+								style="height: 780px;">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
@@ -335,8 +336,8 @@ body {
 										</li> -->
 
 									</ul>
-									
-									 
+
+
 								</div>
 
 
@@ -359,6 +360,10 @@ body {
 							Bills <span id="credAmt1"></span>
 						</a>
 
+						<c:if test="${advanceAmt>0}">
+							<label>Advance Order Amt : <span id="advAmt">${advanceAmt}</span>
+							</label>
+						</c:if>
 					</div>
 
 					<!--customer drop down here-->
@@ -811,7 +816,8 @@ body {
 			<h3 class="pop_head">Payment</h3>
 
 			<div class="add_frm">
-
+ 
+			 
 				<div class="add_frm_one">
 					<div class="add_customer_one">Total AMT</div>
 					<div class="add_input" id="totalAmtPopup">
@@ -820,6 +826,16 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
+				
+					<div class="add_frm_one">
+					<div class="add_customer_one1">Advance AMT</div>
+					<div class="add_input1" id="advAmtPopup">
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${advanceAmt}" maxFractionDigits="2" minFractionDigits="2" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				 
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
@@ -1037,7 +1053,7 @@ body {
 							<div class="add_input">
 								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
-									value="${totalAmt}" />
+									readonly="readonly" value="${totalAmt}" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -3310,6 +3326,33 @@ if(parseInt(custId)==parseInt(dfCust)){
 	}
 	
 	function submitBillByPaymentOption(printbilltype) {
+		
+		 
+		var flagPayable=0;
+		if (document.getElementById('split').checked) {
+			 
+			var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+			//var epayLabel=	document.getElementById("epayLabel").innerHTML;  
+			var cashAmt =  $('#cashAmt').val() ;
+			var cardAmt =  $('#cardAmt').val() ;
+			var epayAmt =  $('#epayAmt').val() ;
+		 
+			
+			var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
+ 			 
+		 if(totalPayableAmt==epayLabel){
+			 
+			 flagPayable=1;
+		 }else{
+			 
+			 flagPayable=2;
+		 }
+		}
+ 
+		if(parseInt(flagPayable)==2){
+			alert("Please Enter the Amounts Properly to match total");
+			
+		}else{
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
@@ -3471,6 +3514,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 							
 						});   
 		} 
+		}
 	}
 	/* function printDiv(divName) {
 	     var printContents = document.getElementById(divName).innerHTML;

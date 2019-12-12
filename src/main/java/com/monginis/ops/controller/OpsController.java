@@ -237,41 +237,59 @@ public class OpsController {
 				model.addAttribute("key", key);
 				model.addAttribute("tempCust", 0);
 				/* model.addAttribute("advKey", 0); */
+				
+				model.addAttribute("advanceAmt",0 );
 			} else {
 
 				try {
 					String custId = String.valueOf(session.getAttribute("advCustId"));
+					String headId = String.valueOf(session.getAttribute("advHeadId"));
+					
+					System.err.println("type 0**"+headId);
+ 					mvm = new LinkedMultiValueMap<String, Object>();
+ 					mvm.add("headId", headId);
+					AdvanceOrderHeader headList = restTemplate.postForObject(
+							Constant.URL + "/advanceOrderHistoryHedaerByHeadId", mvm, AdvanceOrderHeader.class);
+					
+				
 					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
 					itemBillList = new ArrayList<>();
 					for (int i = 0; i < itemBillList1.length; i++) {
 						itemBillList.add(itemBillList1[i]);
 					}
-					/*
-					 * CustomerBillOnHold addNew = new CustomerBillOnHold();
-					 * addNew.setCustId(Integer.parseInt(custId)); addNew.setItemList(itemBillList);
-					 * addNew.setTempCustomerName("NA"); hashMap.put(tempBillNo, addNew);
-					 * model.addAttribute("holdBill", hashMap.get(key));
-					 */
-					// System.out.println("list fro sess" + itemBillList.toString());
+					 
 					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 					customerBillOnHold.setItemList(itemBillList);
 					if (custId != null || custId != "") {
 						model.addAttribute("tempCust",Integer.parseInt(custId) );
+					 
 					}else {
 						model.addAttribute("tempCust",0 );
 					}
 
+					
+					if (headId != null || headId != "") {
+						System.err.println("sdasf**"+headId);
+						model.addAttribute("advanceAmt",headList.getAdvanceAmt() );
+					}else {
+ 						System.err.println("null**"+headId);
+						model.addAttribute("advanceAmt",0 );
+					}
+					
+					model.addAttribute("advAmt", customerBillOnHold);
 					model.addAttribute("holdBill", customerBillOnHold);
-
+					
 					model.addAttribute("key", 0);
 					/* model.addAttribute("advKey", 1); */
 					session.removeAttribute("advItemList");
+					session.removeAttribute("advHeadId");
 
 				} catch (Exception e) {
 					itemBillList = new ArrayList<>();
 					model.addAttribute("key", 0);
 					model.addAttribute("tempCust", 0);
+					model.addAttribute("advanceAmt",0 );
 					/* model.addAttribute("advKey", 0); */
 					// e.printStackTrace();
 				}
@@ -316,7 +334,7 @@ public class OpsController {
 			} else {
 				inf.setMessage("0");
 				inf.setError(true);
-			}
+			} 
 
 			session.setAttribute("advItemList", itemsList);
 			session.setAttribute("advCustId", custId);

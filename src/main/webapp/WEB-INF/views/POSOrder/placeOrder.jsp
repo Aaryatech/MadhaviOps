@@ -481,7 +481,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate1}' /></td>
-																		<c:set var="rate" value="${items.itemRate1}" />
+																		<c:set var="rate" value="${items.itemMrp1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
@@ -514,7 +514,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate2}' /></td>
-																		<c:set var="rate" value="${items.itemRate2}" />
+																		<c:set var="rate" value="${items.itemMrp2}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
 
@@ -552,7 +552,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate3}' /></td>
-																		<c:set var="rate" value="${items.itemRate3}" />
+																		<c:set var="rate" value="${items.itemMrp3}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
 																				type="number" minFractionDigits="2"
@@ -792,7 +792,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate1}' /></td>
-																		<c:set var="rate" value="${items.itemRate1}" />
+																		<c:set var="rate" value="${items.itemMrp1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
 																		<td class="col-md-1"><c:out
@@ -837,7 +837,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate2}' /></td>
-																		<c:set var="rate" value="${items.itemRate2}" />
+																		<c:set var="rate" value="${items.itemMrp2}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
 																		<td class="col-md-1"><c:out
@@ -885,7 +885,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate3}' /></td>
-																		<c:set var="rate" value="${items.itemRate3}" />
+																		<c:set var="rate" value="${items.itemMrp3}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 																		<td class="col-md-1"><c:out
 																				value='${items.dmDiscPer}' /><input type="hidden"
