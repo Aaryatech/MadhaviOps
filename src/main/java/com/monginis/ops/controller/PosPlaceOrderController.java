@@ -420,12 +420,12 @@ public class PosPlaceOrderController {
 		DateFormat dfReg1 = new SimpleDateFormat("dd-MM-yyyy");
 
 		String todaysDate = dfReg1.format(date);
-
-		// ModelAndView mav = new ModelAndView("showsPlaceOrder");
-
+		int menuId= Integer.parseInt(request.getParameter("menuId"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
 		String total = request.getParameter("fintotal1");
 		String devDate = request.getParameter("devDate");
+		System.err.println("devDate"+devDate);
+		int rateCat = frDetails.getFrRateCat();
 
 		String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
 		String yyestDate = dfReg.format(yesterday());
@@ -468,14 +468,7 @@ public class PosPlaceOrderController {
 		for (int i = 0; i < frItemList.size(); i++) {
 			
 			GetFrItem item = frItemList.get(i);
-
-			// int qty = Integer.parseInt(request.getParameter("" +
-			// frItemList.get(i).getItemId()));
-			// int qty =
-			// Integer.parseInt((request.getParameter(String.valueOf(frItemList.get(i).getItemId()))));
-			//System.err.println("id"+String.valueOf(item.getId()));
-			//System.err.println(" itm id "+String.valueOf(item.getItemId()));
-			String strQty = null;
+       		String strQty = null;
 			int qty = 0;
 			try {
 
@@ -488,21 +481,44 @@ public class PosPlaceOrderController {
 				qty = 0;
 
 			}
-		
-
 			if (qty > 0) {
-				
-			
 				AdvanceOrderDetail det = new AdvanceOrderDetail();
 				det.setCatId(Integer.parseInt(item.getItemGrp1()));
 				det.setDeliveryDate(devDate);
 				det.setDelStatus(0);
 				if (dm == 2) {
 					det.setDiscPer(item.getDmDiscPer());
+					if (rateCat == 1) {
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
+						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
+						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
+						float subtot=(calTotal*item.getDmDiscPer())/100;
+
+						det.setSubTotal(CustomerBillController.roundUp(subtot));
+					} else if (rateCat == 3) {
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
+						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp3()))));
+						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp3()))) * qty;
+						float subtot=(calTotal*item.getDmDiscPer())/100;
+						det.setSubTotal(CustomerBillController.roundUp(subtot));
+					}
 				} else {
 					det.setDiscPer(item.getDiscPer());
-				}
+					if (rateCat == 1) {
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate1())));
+						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
+						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+						float subtot=(calTotal*item.getDiscPer())/100;
 
+						det.setSubTotal(CustomerBillController.roundUp(subtot));
+					} else if (rateCat == 3) {
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate3())));
+						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
+						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
+						float subtot=(calTotal*item.getDiscPer())/100;
+						det.setSubTotal(CustomerBillController.roundUp(subtot));
+					}
+				}
 				det.setEvents("");
 				det.setEventsName("");
 				det.setExFloat1(0);
@@ -512,32 +528,22 @@ public class PosPlaceOrderController {
 				det.setExVar1("NA");
 				det.setExVar2("NA");
 				det.setFrId(frDetails.getFrId());
-
 				int frGrnTwo = frDetails.getGrnTwo();
-
 				if (frGrnTwo == 1) {
-
 					det.setGrnType(frDetails.getGrnTwo());
-
 				} else {
 
 					det.setGrnType(2);
 				}
-
 				det.setIsBillGenerated(0);
 				det.setItemId((item.getId()));
-				det.setMenuId(1);
-				det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
+				det.setMenuId(menuId);
 				det.setOrderDate(todaysDate);// curr
 				det.setProdDate(DateConvertor.convertToDMY(x1));// devdate-1
-				
-			 
 				det.setQty(qty);
-				det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
-				float subtot = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
+			
 				det.setIsBillGenerated(0);
 				det.setIsSellBillGenerated(0);
-				det.setSubTotal(subtot);
 				det.setTax1(0);
 				det.setTax1Amt(0);
 				det.setTax2(0);

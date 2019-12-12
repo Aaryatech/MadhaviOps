@@ -332,7 +332,7 @@ input:checked+.slider:before {
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
 
-
+                       <input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
 						<div class="colOuter">
 
 
@@ -600,14 +600,14 @@ input:checked+.slider:before {
 								<div class="col-md-1">
 
 									<input type="text" name="advanceAmt" id="advanceAmt1"
-										onchange="setAmt(1)" class="texboxitemcode texboxcal2"
+										onchange="setAmt(1)" class="texboxitemcode texboxcal2" value="0" 
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
 
 								<div class="col-md-2">Pending Amt:</div>
 								<div class="col-md-1">
 
-									<input type="text" name="remainAmt" id="remainAmt1"
+									<input type="text" name="remainAmt" id="remainAmt1" value="0" 
 										class="texboxitemcode texboxcal2" autocomplete="off" required
 										class="form-control" size="20" />
 								</div>
@@ -622,7 +622,7 @@ input:checked+.slider:before {
 							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
 							<div class="order-btn textcenter">
 
-								<input name="" id="subm1" class="buttonsaveorder"
+								<input name="subm1" id="subm1" class="buttonsaveorder"
 									value="SAVE ORDER" type="submit">
 							</div>
 						</div>
@@ -635,6 +635,7 @@ input:checked+.slider:before {
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						id="form2" name="form2" method="post" style="display: none;">
 
+                       <input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
 
 
 
@@ -675,7 +676,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
 									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text"">
+									type="text">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -795,7 +796,7 @@ input:checked+.slider:before {
 																			id='qty2${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
 																			onkeydown="myFunction()"
-																			onchange="onChangeDm('${items.itemRate1}',${items.id})">
+																			onchange="onChangeDm('${items.itemMrp1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty2${items.id}" /></td>
@@ -840,7 +841,7 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onchange="onChangeDm('${items.itemRate2}',${items.id})">
+																			onchange="onChangeDm('${items.itemMrp2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty2${items.id}" /></td>
@@ -887,7 +888,7 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onchange="onChangeDm('${items.itemRate3}',${items.id})">
+																			onchange="onChangeDm('${items.itemMrp3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty2${items.id}" /></td>
@@ -937,14 +938,14 @@ input:checked+.slider:before {
 
 									<input type="text" name="advanceAmt" id="advanceAmt2"
 										onchange="setAmt(2)" class="texboxitemcode texboxcal2"
-										autocomplete="off" required class="form-control" size="20" />
+										autocomplete="off" required class="form-control" size="20" value="0" />
 								</div>
 
 								<div class="col-md-2">Pending Amt:</div>
 								<div class="col-md-1">
 
 									<input type="text" name="remainAmt" id="remainAmt2"
-										class="texboxitemcode texboxcal2" autocomplete="off" required
+										class="texboxitemcode texboxcal2" autocomplete="off" required value="0" 
 										class="form-control" size="20" />
 								</div>
 
@@ -961,7 +962,7 @@ input:checked+.slider:before {
 								value="2">
 							<div class="order-btn textcenter">
 
-								<input name="" id="subm2" class="buttonsaveorder"
+								<input name="subm2" id="subm2" class="buttonsaveorder"
 									value="SAVE ORDER" type="submit" >
 							</div>
 						</div>
@@ -1376,10 +1377,10 @@ function addCustomer() {
 	</script>
 	<script type="text/javascript">
 		function onChangeDm(rate,id) {
-			var qty = $('#qty2'+id).val();
-			var minqty = $('#minqty2'+id).val();
-			var limit = $('#limit2'+id).val();
-				if(qty % minqty==0  ||  qty >= limit){
+			var qty = parseFloat($('#qty2'+id).val());
+			var minqty = parseFloat($('#minqty2'+id).val());
+			var limit = parseFloat($('#limit2'+id).val());
+				if(qty % minqty==0  &&  qty >= limit){
 					var discPer = $('#dmDisc2'+id).val();
 				    var total = rate * qty;
 				    var finAmt=(total*discPer)/100;
@@ -1388,7 +1389,7 @@ function addCustomer() {
 				}else
 				{
 					 var total =0;
-					alert("Please Enter Qty Multiple of Minimum Qty & Less than or Equal to Limit");
+					alert("Please Enter Qty Multiple of Minimum Qty & gretor than or Equal to Limit");
 					$('#qty2'+id).val('0');
 					$('#total2'+id).html(total);
 					$('#qty2'+id).focus();
@@ -1531,7 +1532,7 @@ $(document).ready(function($) {
 					});
 				 
 				return false;
-			});isBuiss
+			});
 		});
 		</script>
 		
@@ -1566,7 +1567,7 @@ $(document).ready(function($) {
 					});
 				 
 				return false;
-			});isBuiss
+			});
 		});
 		</script>
 
