@@ -41,7 +41,7 @@ ol,ul,li{margin: 0px;padding: 0px;list-style-type: none;}
 header{width: 100%; background: #FFF; padding: 0;}
 
 .logo{float: left; padding: 10px 20px;}
-.drop_menu{float: right; margin:14px 15px 0 21px /*14px 14px 0 0*/;}
+.drop_menu{float: right; margin:14px 15px 0 21px /*14px 14px 0 0*/; text-align: right;}
 /*Styling Selectbox*/
 .dropdown {width: 200px; background:url(../images/ddarow.png) no-repeat right top; background-position:93% 16px; display: inline-block; background-color: #ecf0f5; transition: all .5s ease; position: relative; font-size: 14px; color: #000; height: 100%; text-align: left}
 .dropdown.popup_drop{width: 100%; padding: 6px 12px; border: 1px solid #d2d6de; background:url(../images/ddarow.png) no-repeat right top; background-position:97% 12px; display: inline-block; background-color: #FFF; transition: all .5s ease; position: relative; font-size: 12px; color: #333; height: 100%; text-align: left}
@@ -145,7 +145,8 @@ table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 .radio_row ul{list-style: none; margin: 0; padding: 0; overflow: auto;}
 .radio_row ul li{color: #777; display: block; position: relative; float: left;}
 .radio_row ul li input[type=radio]{position: absolute; visibility: hidden;}
-.radio_row ul li label{display: block; position: relative; font-size: 14px; padding: 0 10px 0 39px; margin: 0 auto; height: auto; z-index: 9; cursor: pointer; -webkit-transition: all 0.25s linear;}
+.radio_row ul li label{display: block; position: relative; font-size: 14px; padding: 0 10px 0 39px; margin: 0 auto; height: auto; z-index: 9; cursor: pointer; 
+-webkit-transition: all 0.25s linear; overflow: hidden;}
 .radio_row ul li:hover label{color: #ed1c24;}
 .radio_row ul li .check{display: block; position: absolute; border: 1px solid #777; border-radius: 100%; height: 14px; width: 14px; top: 3px; left: 15px; z-index: 5; transition: border .25s linear; -webkit-transition: border .25s linear;}
 .radio_row ul li:hover .check {border: 1px solid #ed1c24;}
@@ -278,11 +279,11 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 .listareaBox:hover .listareaBoximg img:last-child{display:inline-block}
 
 
-.logout_btn{float: right; margin:10px 15px 0 15px;}
+.logout_btn{display: inline-block; vertical-align: top; margin: 10px 0 0 0;;}
 .logout_btn a{color: #333; font-size: 14px; text-transform: uppercase; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .logout_btn a:hover{color: #ed1c24; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
-.page_head{display: block; margin: 0 0 15px 0;}
+.page_head{display: inline-block; width:100%; margin: 0 0 15px 0;}
 .page_title{float: left; font-size: 24px; color: #333; font-weight: 500;}
 .page_bread{float: right; margin: 5px 0 0 0;}
 .page_bread ul{margin: 0px; padding: 0px;}
@@ -386,8 +387,56 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 
 .logout_btn.pos{ margin: 3px 15px 0 15px;}
 
-.franchise_nm{float: left; margin:0 10px 0 0; font-size: 18px; font-weight: 600; color: #F00;}
+.franchise_nm{display:inline-block; margin:0 15px; font-size: 18px; font-weight: 600; color: #F00;}
  .franchise_nm span{display: block; text-align: center; font-size: 14px; color: #333;}
+ 
+ 
+ .page_prc{display: inline-block; margin: 0 15px; font-size:18px; color:#333; font-weight:600;}
+ .total_amt_right{display: inline-block; margin: 0; padding: 0px; color: #ed3f3c; font-size:20px; font-weight: 800;}
+.main_search{position: relative; text-align:right; float: right;}
+.main_search i{position: absolute; font-size: 16px; color: #333; top: 22px; right: 15px;}
+.main_search input{margin-top: 10px; margin-bottom: 0px; margin-left: 0px; padding: 10px 35px 10px 10px; border:1px solid #ccc; width: 100%;
+background-position: 10px 10px; background-repeat: no-repeat; font-size: 16px; font-weight: 600;}
+
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 30%;}
+/* The Close Button */
+.close {color: #aaaaaa; float: right; font-size: 28px; font-weight: bold;}
+.close:hover, .close:focus {color: #000; text-decoration: none; cursor: pointer;}
+#overlay2 {position: fixed; display: none; width: 100%; height: 100%; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(101, 113, 119, 0.5); z-index: 2; cursor: pointer;}
+#text2 {position: absolute; top: 50%; left: 50%; font-size: 25px; color: white; transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);}
+.itemDummyClass {cursor: pointer;}
+
+.modal-content.pop_one{width: 60%; position: relative;}
+.close.pop_one{position: absolute; right:15px; top: 5px;}
+.pop_row{display: inline-block; width: 100%; margin: 15px 0 20px 0; font-size: 16px; font-weight: 600;}
+.pop_row p{margin: 0 40px 0 0; display: inline-block;}
+.pop_row p span{color: #F00; margin: 0 0 0 5px;}
+
+.single_row{display: inline-block; width: 100%; text-align: left; font-size:14px; margin: 0 0 10px 0;}
+.single_row span{margin: 0 15px 0 0; font-weight: 600; color: #333; font-size: 16px;}
+.frm_row_one{display: inline-block; width: 100%;}
+.four_one{width: 23%; padding: 10px; float: left; text-align: left;}
+.four_two{width: 8%; padding: 10px; float: left; text-align: left; margin: 28px 0 0 0;}
+.multi_title {color: #333; padding-top: 0; padding-bottom: 8px; font-size: 16px; font-weight: 600;}
+.two_buttons{text-align: right;}
+
 
 
 @media screen and (max-width:1440px){
@@ -411,6 +460,8 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 	.bx_tabs ul li{margin: 0 5px 5px 0;}
 	.total_tab table{margin: 0;}
 	.customer_one{margin: 5px 0 0 0;}
+	
+	.pageTitle{float: none; width: 100%; text-align: left;}
 }
 
 @media screen and (max-width:900px){
@@ -421,15 +472,26 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 	.customer_three{width: 5%;}
 	.customer_two {width: 67%;}
 	
+	.page_prc,.total_amt_right{font-size: 15px;}
+	.page_prc{margin: 0 10px;}
+	.multi_title{font-size: 14px;}
+	.four_two{width: 12%; margin: 23px 0 0 0;}
+	.four_one{width: 22%; padding: 5px;}
+	
 	
 	
 	
 }
 @media screen and (max-width:700px){
 	.drop_menu {width: 40%;}
+	.custom_right{text-align: left;}
+	.page_prc{width: 48%; margin: 10px 0;}
+	.total_amt_right{display: inline-block; margin: 10px 0;}
+	
+	.four_one{width: 33%;}
 }
 @media screen and (max-width:640px){
-	.drop_menu {width: 50%;}
+	.drop_menu {width:60%;}
 
 	
 }
@@ -437,15 +499,17 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 	.dual_l{float: none; width: 100%;}
 	.dual_r{float: none; width: 100%;}
 	.logo{float: none; width: 100%; text-align: center; margin: 0 0 10px 0;}
-	.drop_menu{float: none; width: 100%; padding: 0 15px; margin: 0 0 15px 0; display: inline-block;}
+	.drop_menu{float: none; width: 100%; padding: 0 15px; margin: 0 0 15px 0; display: inline-block; text-align: center;}
 	.customer_two {width: 52%;}
 	.customer_three {width: 14%;}
 	.button_one{width: 50%; padding: 0;}
 	.button_two{float: left; width: 100%;}
 	.radio_row_one{float: none; width: 100%; margin: 0 0 10px 0;}
 }
-@media screen and (max-width:460px){
-	
+@media screen and (max-width:480px){
+	.page_prc, .total_amt_right{margin: 10px 0; width: 100%; text-align: left; font-size: 16px;}
+	.four_one{width: 100%;}
+	.four_two{width: 100%; margin: 0;}
 
 }
 
@@ -454,4 +518,8 @@ input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transfo
 @media screen and (max-width:320px){
 	.radio_row ul li label{padding: 0 10px 0 36px;}
 	.item_head {font-size: 14px;}
+	.franchise_nm{margin: 0 10px;}
+	.hide_menu,.full_scrn{margin: 10px 10px 0 10px;}
+	.logout_btn{margin: 7px 0 0 0;}
+	.logo{margin: 0;}
 }

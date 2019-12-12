@@ -113,8 +113,10 @@ border-radius:50%;}
 .sidebarhome .img img{ max-width:100%;}
 .sidebarhome .title{ width:100%; float:left;}
 .sidebarright{width:100%;float:left;padding-left:33px;padding-top:30px;position:relative;padding-right:30px; z-index:1;}
-.pageTitle{ width:100%; float:left; text-align:left; font-size:24px; color:#25230c; padding-bottom:25px;}
-.pageTitle span{ color:#ada330;}
+
+.page_title{float: left; font-size: 24px; color: #333; font-weight: 500; margin: 0; padding: 0;}
+.pageTitle{ float: left; font-size: 24px; color: #333; font-weight: 500; margin: 0; padding: 0;}
+/*.pageTitle span{ color:#ada330;}*/
 .pageTitle2{ width:100%; float:left; text-align:left; font-size:18px; color:#333; padding-bottom:20px;}
 .ordertop{float:right;}
 
@@ -507,15 +509,15 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 th{font-weight: 600 !important;}
 .radio_align_1{margin: 8px 0 0 0;}
 .radio-align{display: inlilne-block; vertical-align: top; }
-.custom_right{float: right; width: 90%; margin: 4px 0 0 0;}
+.custom_right{float: right; width: 80% /*90%*/; margin: 4px 0 0 0; text-align: right;}
 
 .top_menu ul li i{font-size: 18px !important;}
-.full_scrn{display: inline-block; margin: 10px 5px 0 0;}
+.full_scrn{display: inline-block; margin: 10px 15px 0 15px; vertical-align: top;}
 .full_scrn a{color: #333; font-size: 14px; text-decoration: none; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;
 -ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .full_scrn a:hover{color: #e1001b; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;
 -ms-transition: all ease 0.5s;transition: all ease 0.5s;}
-.hide_menu{display: inline-block; margin: 0 15px;}
+.hide_menu{display: inline-block; margin: 10px 15px 0 15px; vertical-align: top;}
 .hide_menu a{color: #333; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;
 -ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .hide_menu a:hover{color: #e1001b; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;
@@ -566,7 +568,7 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
 .order-btn.total{display: inline-block; float: none; width: auto; padding: 0; vertical-align: top;}
 
 .cd-tabs-content .bgpink th{border: 1px solid #CCC !important; padding:10px !important;}
-#table_grid0 td{border: 1px solid #CCC; padding:10px !important;}
+#table_grid0 td,table td[class*=col-], table th[class*=col-]{border: 1px solid #CCC; padding:10px !important;}
 
 
 
@@ -594,7 +596,7 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .dairy_frm{width: 20%;}
   .cust-txt.switchtxt{width: 50%;}
   .cust_drop.switch{width: 45%;}
-  .cd-tabs-navigation a.selected{font-size: 16px;}
+  .cd-tabs-navigation a.selected,.cd-tabs-navigation a{font-size: 16px;}
   .advance_one{width: 28%;}
   .advance_fled{width: 65%;}
   .advance_txt{width: 32%;}
@@ -626,6 +628,8 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .cust-txt,.cust-txt.switchtxt{width: 20%; text-align:left;}
   .cust_drop.switch{text-align: left;}
   .advance_one{width: 32%; vertical-align: top;}
+  
+  .listarea li{width: 50% !important;}
 }
 
 @media screen and (max-width:700px){
@@ -655,13 +659,15 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .advance_fled{float: none; margin:0; width: 100%; }
   .advance_total{margin: 30px 15px 0 0;}
   .order-btn.total{margin: 30px 0 0 0;}
+  .cd-tabs-navigation li {float: left; margin: 5px 0;}
+  .listarea li{width: 100% !important;}
 }
 
 @media screen and (max-width:480px){
   /*new mobile css start*/
   .logo{float: none; width: 100%; text-align: center;}
   .drop_menu{float: none !important; width: 100%; text-align:center; margin: 10px 0 !important; display: inline-block; padding:0;} 
-  .logout_btn {float: none !important; margin: 0 0 0 10px !important; display: inline-block;}
+  
   .custom_right{width: 100%;}
   .radio_align_1{float: left; width:50%;}
   
@@ -682,7 +688,7 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .cust_drop {width: 88%;}
   .cust_round {width: 12%;}
   .cust_drop.fullwidth {width: 100%;}
-   .cd-tabs-navigation a.selected{margin: 15px 0 0 0;} 
+   .cd-tabs-navigation a.selected{margin: 10px 0;} 
    .advance_row{padding: 0 15px;}
    .advance_fled { width: 100%; float:none; margin: 0;}
    .advance_total{width: 50%; margin: 0;}
