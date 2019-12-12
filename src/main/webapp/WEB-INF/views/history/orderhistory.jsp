@@ -177,7 +177,7 @@ jQuery(document).ready(function(){
 	});
 </script>
 </head>
-<body>
+<body onload="hideShowCat()">
 	<!--datepicker-->
 	<c:url var="getMenus" value="/getMenus" />
 
@@ -264,18 +264,18 @@ jQuery(document).ready(function(){
 
 								</select>
 							</div>
+							<div id="abc">
+								<div class="col-md-1">
+									<div class="col1title">Menu</div>
+								</div>
+								<div class="col-md-3">
+									<!-- class="chosen-select"  -->
+									<select name="catId" id="catId"
+										data-placeholder="Choose Menus..." class="chosen-select"
+										style="text-align: left;" tabindex="6" required>
+										<option value="-1" style="text-align: left;">ALL</option>
 
-							<div class="col-md-1">
-								<div class="col1title">Menu</div>
-							</div>
-							<div class="col-md-3">
-								<!-- class="chosen-select"  -->
-								<select name="catId" id="catId"
-									data-placeholder="Choose Menus..." class="chosen-select"
-									style="text-align: left;" tabindex="6" required>
-									<option value="-1" style="text-align: left;">ALL</option>
-
-									<%-- 	<c:forEach items="${catList}" var="catList">
+										<%-- 	<c:forEach items="${catList}" var="catList">
 									<c:choose>
 										<c:when test="${catId==catList.catId}">
 
@@ -287,29 +287,30 @@ jQuery(document).ready(function(){
 										</c:when>
 									</c:choose>
 								</c:forEach> --%>
-									<c:choose>
-										<c:when test="${orderType!=0}">
-											<c:forEach items="${menuListSelected}" var="menuListSelected">
-												<option value="${menuListSelected.menuId}"
-													style="text-align: left;" selected>${menuListSelected.menuTitle}</option>
-											</c:forEach>
-											<c:forEach items="${menuListNotSelected}"
-												var="menuListNotSelected">
-												<option value="${menuListNotSelected.menuId}"
-													style="text-align: left;">${menuListNotSelected.menuTitle}</option>
-											</c:forEach>
-										</c:when>
+										<c:choose>
+											<c:when test="${orderType!=0}">
+												<c:forEach items="${menuListSelected}"
+													var="menuListSelected">
+													<option value="${menuListSelected.menuId}"
+														style="text-align: left;" selected>${menuListSelected.menuTitle}</option>
+												</c:forEach>
+												<c:forEach items="${menuListNotSelected}"
+													var="menuListNotSelected">
+													<option value="${menuListNotSelected.menuId}"
+														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+												</c:forEach>
+											</c:when>
 
-										<c:otherwise>
-											<c:forEach items="${menuListNotSelected}"
-												var="menuListNotSelected">
-												<option value="${menuListNotSelected.menuId}"
-													style="text-align: left;">${menuListNotSelected.menuTitle}</option>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
+											<c:otherwise>
+												<c:forEach items="${menuListNotSelected}"
+													var="menuListNotSelected">
+													<option value="${menuListNotSelected.menuId}"
+														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 
-									<%-- <c:choose>
+										<%-- <c:choose>
 										<c:when test="${catId==42}">
 								<option value="42" selected style="text-align:left;">Regular Cake as Special Order</option>
 								<option value="80" style="text-align:left;">Special Savories Order</option>
@@ -323,7 +324,9 @@ jQuery(document).ready(function(){
 								<option value="80" style="text-align:left;">Special Savories Order</option>
 								</c:otherwise>
 								</c:choose> --%>
-								</select>
+									</select>
+								</div>
+
 							</div>
 							<!-- 	</div> -->
 
@@ -497,22 +500,22 @@ jQuery(document).ready(function(){
 																value="${orderList.prodDate}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.deliveryDate}" /></td>
-																<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.deliveryDate}" /></td>
+														<td style="text-align: center;" class="col-sm-1"><c:out
+																value="${orderList.exVar1}" /></td>
 														<td class="col-md-2" style="text-align: right;"><c:out
 																value="${orderList.total}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.advanceAmt}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.remainingAmt}" /></td>
-														 
-															<c:if test="${orderList.isDailyMart==1}">
-																<td style="text-align: center;" class="col-sm-1">No</td>
-																</c:if>
-																<c:if test="${orderList.isDailyMart==2}">
-																<td style="text-align: center;" class="col-sm-1">Yes</td>
-																</c:if>
-														
+
+														<c:if test="${orderList.isDailyMart==1}">
+															<td style="text-align: center;" class="col-sm-1">No</td>
+														</c:if>
+														<c:if test="${orderList.isDailyMart==2}">
+															<td style="text-align: center;" class="col-sm-1">Yes</td>
+														</c:if>
+
 														<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
@@ -612,7 +615,7 @@ jQuery(document).ready(function(){
 												<c:forEach items="${orderHistory}" var="orderList"
 													varStatus="count">
 													<tr>
-														<td class="col-md-1">${count.index+1} <c:choose>
+														<td class="col-md-1">${count.index+1}<c:choose>
 																<c:when test="${fn:length(orderList.spBookForMobNo)==1}">
 																	<button class="btn btn-info" value="Generate"
 																		id="genBill${orderList.spOrderNo}"
@@ -861,8 +864,31 @@ function exportToExcel()
 		}
 	</script>
 	<script>
+	
+	
+	function hideShowCat(){
+		
+		var type=${orderType};
+		
+		//alert(type);
+		if(parseInt(type)==3){
+			 
+				$('#abc').hide(); 
+		 
+	}else{
+		$('#abc').show(); 
+	}
+	}
 	function getMenus(type)
 	{
+		
+		if(parseInt(type)==3){
+			 
+ 				$('#abc').hide(); 
+			 
+		}else{
+			$('#abc').show(); 
+		}
 	
 		                $.getJSON('${getMenus}', {
 		                	type : type,

@@ -1,6 +1,7 @@
 
 package com.monginis.ops.controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.ArrayList;
@@ -299,7 +300,11 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
-			
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+	        Calendar cal = Calendar.getInstance();
+			 
+			  String curDateTime = dateFormat.format(cal.getTime());
+			  System.err.println("curDateTime"+curDateTime);
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = new Date();
 			model.addAttribute("date1", sf.format(date));
