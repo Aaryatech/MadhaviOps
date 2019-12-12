@@ -223,17 +223,22 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
+										<li><div class="cat_srach">
+								<input name="myInput1" id="myInput1" type="text"
+									class="input_cat" onkeyup="myFunction1()"
+									placeholder="Search Item" />
+							</div></li>
 
 
 								</ul>
 							</div>
 						</div>
 
-						<div class="item_src">
+						<!-- <div class="item_src">
 							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
 								placeholder="Search Item" />
-						</div>
+						</div> -->
 
 					</div>
 
@@ -258,12 +263,12 @@ body {
 					</div>
 					<!--listing box start here-->
 
-
+<!-- 
 					<div class="dual_bx" style="">
 						<div class="dual_l">
 							<div class="bx_tabs">
 								<ul id="subcatUl">
-									<!-- <li class="subCatDummyClass"><a href="#"
+									<li class="subCatDummyClass"><a href="#"
 										style="margin-bottom: 5px;">Sweet</a></li>
 									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
 									<li class="subCatDummyClass"><a href="#">Kaju &amp;
@@ -277,22 +282,18 @@ body {
 											Combo</a></li>
 									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
 									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
 
 									<ul>
 							</div>
 						</div>
 						<div class="dual_r">
-							<div class="cat_srach">
-								<input name="myInput1" id="myInput1" type="text"
-									class="input_cat" onkeyup="myFunction1()"
-									placeholder="Search Item" />
-							</div>
+							
 						</div>
-					</div>
+					</div> -->
 
-
-					<div class="cat_list_bx">
+<div class="dual_bx" style=""></div>
+					<div class="cat_list_bx" id="catItmDiv">
 
 						<div class="cat_list">
 							<div class="carlist_scrollbars" id="scrollDiv">
@@ -308,6 +309,34 @@ body {
 										</li> -->
 
 									</ul>
+									
+								 
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+					
+					<div class="cat_list_bx"  id="itmDiv" style="display: none;">
+
+						<div class="cat_list"  style="height: 800px; ">
+							<div class="carlist_scrollbars" id="scrollDiv"  style="height: 780px; ">
+								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
+
+
+								<div class="sweet_list" id="aaaaaa">
+									<ul id="itemDivForItem">
+										<!-- <li class="itemDummyClass">
+											<div class="sweet_one">
+												<a href="#"><p>210</p> Maramari <span>Qty : 6</span></a>
+											</div>
+										</li> -->
+
+									</ul>
+									
+									 
 								</div>
 
 
@@ -2549,6 +2578,14 @@ function matchSplitAmt(flag){
 		}
 
 		function getCatListAndSubCatList(value) {
+			
+			if(value==1){
+				$("#catItmDiv").show();
+				$("#itmDiv").hide();
+			}else{
+				$("#catItmDiv").hide();
+				$("#itmDiv").show();
+			}
 
 			
 			document.getElementById("catSubCatDivHideShow").style.display = "block";
@@ -2673,7 +2710,7 @@ function matchSplitAmt(flag){
 									+ data[i].itemName
 									+ '<span></span></div>';
 
-									$("#itemDiv")
+									$("#itemDivForItem")
 											.append(
 													$(
 													'<li class="itemDummyClass" alt="' + data[i].itemName + '"   onclick="opnItemPopup('+taxper+','+data[i].id+','+mrp+',\''+data[i].itemName+'\',\''+data[i].extVar3+'\','+data[i].extInt2+')">'+timeDiv+'</li>'));
