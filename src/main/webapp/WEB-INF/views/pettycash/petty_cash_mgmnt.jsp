@@ -140,11 +140,27 @@ table, th, td {
 			</div>
 
 			<!--rightSidebar-->
-			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Petty Cash Management</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+			<div class="main_container">
+			
+				<div class="page_head">
+					<div class="page_title">Petty Cash Management</div>
+					<div class="custom_right">
+						<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
+						type="button" value="Petty Cash Details" class="buttonsaveorder">
+					</a>
+					</div>
 				</div>
+				
+				
+				<div class="frm_row_one">
+					<div class="four_one">dvdsvds</div>
+					<div class="four_one">dvdsvds</div>
+					<div class="four_one">dvdsvds</div>
+					<div class="four_one">dvdsvds</div>
+					<div class="four_one">dvdsvds</div>
+				</div>
+			
+				
 				
 				
 				
@@ -153,9 +169,7 @@ table, th, td {
 					<a href="#" class="buttonsaveorder initialism slide_open" id="popbtn" style="display: none;">
 					Cash Hand Over Data</a>
 
-					<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
-						type="button" value="Petty Cash Details" class="buttonsaveorder">
-					</a>
+					
 				</div> 
 		<form action="addPettyCash" method="post">
 			<input type="hidden" value="${pettycash.pettycashId}" name="petty_id">

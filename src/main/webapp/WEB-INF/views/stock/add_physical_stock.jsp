@@ -60,10 +60,12 @@
 
 
 			<!--rightSidebar-->
-			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Stock Details</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+			<div class="main_container">
+				<div class="page_head">
+					<div class="page_title">Stock Details</div>
+					<div class="custom_right">
+						&nbsp;
+					</div>
 				</div>
 
 
