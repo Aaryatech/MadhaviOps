@@ -12,8 +12,8 @@
 }
 </style>
 
-
-<div id="demo" style="display: ${sessionScope.eyeVal};">
+<%-- <c:if test="${sessionScope.eyeVal==1}"> --%>
+<div id="demo">
 
 
 
@@ -209,13 +209,13 @@
 
 				</c:choose>
 			</c:forEach>
-		<%-- 	<c:if test="${ flag==1}">
+			<c:if test="${ flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Purchase Bill</div></a></li>
-			</c:if> --%>
+			</c:if> 
           <c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -227,14 +227,14 @@
 
 				</c:choose>
 			</c:forEach>
-			<%-- <c:if test="${flag==1}">
+		<c:if test="${flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Item Stock</div></a></li>
-			</c:if> --%>
+			</c:if>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -303,7 +303,9 @@
 							Stock <span>Details</span>
 						</div></a></li>
 						
-				<li><a
+				
+			</c:if>
+		<li><a
 					href="${pageContext.request.contextPath}/showPattyCashMgmnt"><div
 							class="img">
 							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
@@ -311,8 +313,14 @@
 						<div class="title">
 							Petty <span>Cash</span>
 						</div></a></li>
-			</c:if>
-		
+						<li><a
+					href="${pageContext.request.contextPath}/showExpenseList"><div
+							class="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+						</div>
+						<div class="title">
+							Expense <span>List</span>
+						</div></a></li>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -592,20 +600,21 @@
 					</li>
  --%>
 					<li class="small-box">
-
-						<div class="ibox">
+<div class="ibox">
 							<div class="ibox-head">
-								<div class="ibox-title">GVN</div>
+								<div class="ibox-title">GRN & GVN</div>
 							</div>
 
+                  <a href="${pageContext.request.contextPath}/displayGrn"><i
+								class="fa fa-search-plus icon"></i> View GRN </a>
+							<div class="clearfix"></div>
 
-						<%-- 	<a href="${pageContext.request.contextPath}/showGvn"><i
-								class="fa fa-plus-circle icon"></i> Request GVN </a>  --%><a
+							<a href="${pageContext.request.contextPath}/showGvn"><i
+								class="fa fa-plus-circle icon"></i> Request GVN </a> <a
 								href="${pageContext.request.contextPath}/displayGvn"><i
 								class="fa fa-search-plus icon"></i> View GVN </a>
 
 						</div>
-
 					</li>
 
 
@@ -782,7 +791,7 @@
 	</section>
 	
 </div> 
-
+<%-- </c:if> --%>
 <script type="text/javascript">
 	var btn = $('#button');
 

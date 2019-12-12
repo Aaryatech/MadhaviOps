@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -182,7 +183,114 @@ public class OpsController {
 		}
 		return mav;
 	}
+	String selectedId="0";
+	@RequestMapping(value = "/printPosBillDetail", method = RequestMethod.POST)
+	public  @ResponseBody String printPosBillDetail(@RequestBody String[] data, HttpServletRequest request, HttpServletResponse response) throws ParseException {
+		String resp="";
+        try {
+        	HttpSession session = request.getSession();
+    		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+    		for(int i=0;i<data.length;i++)
+    		{
+    			selectedId=selectedId+","+data[i];
+    		}
+            resp=frDetails.getFrGstType()+"";
+            System.err.println(selectedId);
+    		
+        }
+        catch (Exception e) {
+			e.printStackTrace();
+		}
+        return resp;
+	}
+		
+	@RequestMapping(value = "/printDetailBillOfSupply/{billNo}", method = RequestMethod.GET)
+	public String printDetailBillOfSupply(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
+		String mav = "customerBill/printBillOfSupply";
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
+			try {
+			FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			model.addAttribute("frEmpMaster", frEmpMaster);
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster=new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billId", billNo);
+			map.add("billDetailNoList", selectedId);
+			map.add("flag", 0);
+			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
+					Constant.URL + "/getSellBillHeaderAndDetailForPosDetail", map, SellBillHeaderAndDetail.class);
+			sellBillHeaderAndDetail.setDiscountPer(0);
+			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+			model.addAttribute("frDetails", frDetails);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
+			try {
+				FranchiseSup frSup = restTemplate.postForObject(Constant.URL + "/getFrSupByFrId", map,
+						FranchiseSup.class);
+				model.addAttribute("frSup", frSup);
+			} catch (Exception e) {
+                  e.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	@RequestMapping(value = "/printDetailBillOfInvoice/{billNo}", method = RequestMethod.GET)
+	public String printDetailBillOfInvoice(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		String mav = "customerBill/printBillOfInvoice";
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
+			try {
+				FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+				} catch (Exception e) {
+					FrEmpMaster frEmpMaster=new FrEmpMaster();
+					frEmpMaster.setFrEmpName("-");
+					model.addAttribute("frEmpMaster", frEmpMaster);
+				}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("billId", billNo);
+			map.add("billDetailNoList", selectedId);
+			map.add("flag", 1);
+			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
+					Constant.URL + "/getSellBillHeaderAndDetailForPosDetail", map, SellBillHeaderAndDetail.class);
+			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+			model.addAttribute("frDetails", frDetails);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+
+			try {
+				FranchiseSup frSup = restTemplate.postForObject(Constant.URL + "/getFrSupByFrId", map,
+						FranchiseSup.class);
+				model.addAttribute("frSup", frSup);
+			} catch (Exception e) {
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	@RequestMapping(value = "/newcustomerbill/{type}", method = RequestMethod.GET)
 	public String newcustomerbill(@PathVariable int type, HttpServletRequest request, HttpServletResponse response,
 			Model model) {

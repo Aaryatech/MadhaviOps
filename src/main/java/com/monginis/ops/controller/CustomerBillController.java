@@ -166,7 +166,7 @@ public class CustomerBillController {
 		return getSellBillHeaderList;
 
 	}
-String printInvoiceNo;
+String printInvoiceNo;String billNo;
 String selBillDate;
 	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
 	public ModelAndView viewBillDetails(HttpServletRequest request, HttpServletResponse response) {
@@ -176,7 +176,7 @@ String selBillDate;
 		System.out.println("in method");
 
 		String sellBill_no = request.getParameter("sellBillNo");
-
+		billNo=sellBill_no;
 		String billDate = request.getParameter("billDate");
 		
 		selBillDate=billDate;
@@ -226,6 +226,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 		model.addObject("getSellBillDetailList", getSellBillDetailList);
 		model.addObject("sellBillNo", sellBillNo);
+		model.addObject("billNo", billNo);
 		model.addObject("billDate", billDate);
 		model.addObject("printInvoiceNo", printInvoiceNo);
 

@@ -128,7 +128,7 @@ jQuery(document).ready(function(){
 				</div>
 					</div>
 
-
+<input type="hidden" name="billNo" id="billNo" value="${billNo}"/>
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
@@ -224,7 +224,7 @@ jQuery(document).ready(function(){
 
 							</div>
 							<button style="float: left; margin-top: 13px;" type="button"
-								class="btn btn-primary" onclick="printExBill()" id="printExBill">Print</button>
+								class="btn btn-primary" onclick="printExBill(${billNo})" id="printExBill">Print</button>
 								<a href="${pageContext.request.contextPath}/viewBill"><input
 						name="" class="buttonsaveorder" value="Go Back" align="center"
 						type="button"></a>
@@ -252,9 +252,10 @@ jQuery(document).ready(function(){
 <!--easyTabs-->
 
 <script type="text/javascript">
-	function printExBill() {
-		//alert("in print");
-
+	function printExBill(billNo) {
+	alert("in print");
+        //var billNo=document.getElementsById("billNo").value;
+      
 		var checkedId = [];
 		var checkboxes = document.getElementsByName("select_to_print");
 
@@ -265,16 +266,27 @@ jQuery(document).ready(function(){
 
 			}
 		}
-		//alert(checkboxes);
-		$.getJSON('${getSelectedIdForPrint}', {
+		
+		$.ajax({
+	             type: "POST",
+	             contentType: "application/json",
+	             url: "${pageContext.request.contextPath}/printPosBillDetail",
+	             data: JSON.stringify(checkedId),
+	             dataType: 'json',
+	             timeout: 600000,
+	             success: function (data) {
+	         
+	            	 window
+	 				.open('${pageContext.request.contextPath}/printDetailBillOfSupply/'+billNo);	
 
-			id : JSON.stringify(checkedId),
-			ajax : 'true',
 
+	             },
+	             error: function (e) {
+	             }
 		});
-
+/* 
 		window
-				.open("${pageContext.request.contextPath}/printSelectedBillDetail");
+				.open("${pageContext.request.contextPath}/printSelectedBillDetail"); */
 	}
 
 	function selectToPrint() {
