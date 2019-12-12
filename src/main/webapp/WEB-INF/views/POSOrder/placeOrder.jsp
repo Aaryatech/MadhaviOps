@@ -253,8 +253,21 @@ input:checked+.slider:before {
 	border-radius: 50%;
 }
 </style>
-
-
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<script>    
+		$(function() {
+			$("#fromdatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+		$(function() {
+			$("#todatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+		});
+ 
+</script>
 <body>
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
@@ -356,7 +369,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
 									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text"">
+									type="text">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -1122,6 +1135,33 @@ input:checked+.slider:before {
 
 		</div>
 
+<!--easyTabs-->
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<!--easyTabs-->
+
+	<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "100%";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+		function openNav1() {
+			document.getElementById("mySidenav1").style.width = "100%";
+		}
+
+		function closeNav1() {
+			document.getElementById("mySidenav1").style.width = "0";
+		}
+		function openNav3() {
+			document.getElementById("mySidenav3").style.width = "100%";
+		}
+
+		function closeNav3() {
+			document.getElementById("mySidenav3").style.width = "0";
+		}
+	</script>
 
 
 <script type="text/javascript">
@@ -1595,34 +1635,7 @@ function showDiv(typdId){
 	</script>
 
 
-	<!--easyTabs-->
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<!--easyTabs-->
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "100%";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-		function openNav1() {
-			document.getElementById("mySidenav1").style.width = "100%";
-		}
-
-		function closeNav1() {
-			document.getElementById("mySidenav1").style.width = "0";
-		}
-		function openNav3() {
-			document.getElementById("mySidenav3").style.width = "100%";
-		}
-
-		function closeNav3() {
-			document.getElementById("mySidenav3").style.width = "0";
-		}
-	</script>
-
+	
 
 	<script type="text/javascript">
 		function onKeyDown(id) {
@@ -1667,10 +1680,7 @@ $(document).ready(function() {
     });
 });
 </script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-
-	<script>
+<script>
 function sortTable() {
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("table_grid1");
@@ -1743,21 +1753,6 @@ $('.closemodale').click(function (e) {
     });
 </script>
 	<!-- MODAL SCRIPT END-->
-	<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<script>    
-		$(function() {
-			$("#fromdatepicker").datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-		});
-		$(function() {
-			$("#todatepicker").datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-		});
-		
-		 
-</script>
+
 </body>
 </html>
