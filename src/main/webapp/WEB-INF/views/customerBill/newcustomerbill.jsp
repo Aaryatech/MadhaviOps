@@ -268,7 +268,7 @@ body {
 						<div class="dual_l">
 							<div class="bx_tabs">
 								<ul id="subcatUl">
-									<li class="subCatDummyClass"><a href="#"
+									<!-- <li class="subCatDummyClass"><a href="#"
 										style="margin-bottom: 5px;">Sweet</a></li>
 									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
 									<li class="subCatDummyClass"><a href="#">Kaju &amp;
@@ -282,7 +282,7 @@ body {
 											Combo</a></li>
 									<li class="subCatDummyClass"><a href="#">Bengal Namkin</a></li>
 									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
-									<li class="subCatDummyClass"><a href="#">Lassi</a></li>
+									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
 
 									<ul>
 							</div>
@@ -361,7 +361,7 @@ body {
 						</a>
 
 						<c:if test="${advanceAmt>0}">
-							<label>Advance Order Amt : <span id="advAmt">${advanceAmt}</span>
+							<label>Advance Order Amt : <span id="advAmtLbl">${advanceAmt}</span>
 							</label>
 						</c:if>
 					</div>
@@ -3097,6 +3097,8 @@ $("#enterQty").focus();
 							
 							document.getElementById("taxableAmtLable").innerHTML = taxableAmt.toFixed(2); 
 							document.getElementById("taxAmtLable").innerHTML = taxAmt.toFixed(2); 
+							
+							
 							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
 							document.getElementById("totalItemLable").innerHTML = data.length; 
 							document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
