@@ -51,6 +51,8 @@
 	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
 
 <script>
   $( function() {
@@ -198,12 +200,12 @@ input:checked+.slider:before {
 				<!--leftNav-->
 				<!--rightSidebar-->
 				<!------------ Place Actual content of page inside this div ----------->
-				<div class="sidebarright">
-					<div class="col-md-2">
-						<h2 class="pageTitle" >Express Bill</h2>
-					</div>
-					<div class="col-md-8 text-left bill-date">
-						<c:choose>
+				<div class="main_container">
+				
+					<div class="page_head">
+						<div class="page_title">Express Bill</div>
+						<div class="custom_right">
+							<c:choose>
 
 							<c:when test="${count == 0}">
 								<div class="" style="margin-top: 30px;">
@@ -217,23 +219,20 @@ input:checked+.slider:before {
 							</c:when>
 
 							<c:when test="${count ==2}">
-
-
-								<div>
-
-									<h4>
-										 Bill No :${sellBillHeader.sellBillNo} &nbsp; &nbsp;
-											&nbsp; Bill Date :${sellBillHeader.billDate}
-									</h4>
-								</div>
+							<span class="page_prc">Bill No :${sellBillHeader.sellBillNo}</span>
+							<span class="page_prc">Bill Date :${sellBillHeader.billDate}</span>
+							<span class="page_prc">Single
+							Print</span><label class="switch top_1"> <input type="checkbox"
+							id="id"><span class="slider round"></span> </label></span>
+							
+						</a>
+						</div>
 					</div>
-					<div class="col-md-2">
-						<span
-							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px;width:100px;">Single
-							Print</span><label class="switch"> <input type="checkbox"
-							id="id"> <span class="slider round"></span>
-					</div>
-					</label>
+				
+					
+					
+					
+					
 				<%-- 	<div class="row">
 						<div class="col-md-2">
 							<span

@@ -426,8 +426,13 @@ input:checked+.slider:before {
 										style="border-radius: 25px;"
 										placeholder="Search items by name" title="Type item name">
 									</label>
-
-									<div id="table-scroll"
+									
+									
+									
+									
+									<!-- new table-html-code  -->
+									<!--steaky table-->
+	<div id="table-scroll"
 										class="table-scroll responsive-table-one">
 										<!-- class="table-scroll" -->
 
@@ -584,7 +589,17 @@ input:checked+.slider:before {
 
 
 										</div>
-									</div>
+									</div>					
+									
+									
+									
+									
+									
+									
+									
+									
+
+									
 
 
 								</c:forEach>

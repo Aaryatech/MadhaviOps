@@ -146,260 +146,102 @@ table, th, td {
 					<div class="page_title">Petty Cash Management</div>
 					<div class="custom_right">
 						<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
-						type="button" value="Petty Cash Details" class="buttonsaveorder">
+						type="button" value="Petty Cash Details" class="buttonsaveorder singlebtn">
 					</a>
 					</div>
 				</div>
 				
 				
-				<div class="frm_row_one">
-					<div class="four_one">dvdsvds</div>
-					<div class="four_one">dvdsvds</div>
-					<div class="four_one">dvdsvds</div>
-					<div class="four_one">dvdsvds</div>
-					<div class="four_one">dvdsvds</div>
-				</div>
-			
-				
-				
-				
-				
-				 <div class="order-right" align="right" style="padding-top:2%; padding-bottom: 2%;">
-
-					<a href="#" class="buttonsaveorder initialism slide_open" id="popbtn" style="display: none;">
-					Cash Hand Over Data</a>
-
-					
-				</div> 
-		<form action="addPettyCash" method="post">
+				<form action="addPettyCash" method="post">
 			<input type="hidden" value="${pettycash.pettycashId}" name="petty_id">
 			<input type="hidden" value="${pettycash.cashAmt}" name="cash_edit_amt">
-				
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Date</div>
-					</div>
-					<div class="col-md-3">
-							<input id="fromdate" class="form-control" readonly="readonly"
+				<div class="frm_row_one">
+					<div class="four_one three">
+						<div class="multi_title">Date</div>
+						<input id="fromdate" class="form-control" readonly="readonly"
 							autocomplete="off" placeholder="Date" name="cash_date"
 							type="text" value="${pettycash.date}" onchange="compareDate()">
 					</div>
-					
-					<div class="col-md-1"></div>
-					
-					<div class="col-sm-2">
-						<div class="col1title" align="left">Opening Amt</div>
-					</div>
-					<div class="col-md-3">
+					<div class="four_one three">
+						<div class="multi_title">Opening Amt</div>
 							<input id="opening_amt"  class="form-control" readonly="readonly" value="${pettycash.openingAmt}"
 							autocomplete="off" placeholder="Opening Amt" name="opening_amt"  
 							type="text">
 					</div>
-					
-					
-				</div>
-				
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Cash Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
+					<div class="four_one three">
+						<div class="multi_title">Cash Amt</div>
+						<input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
 							autocomplete="off" placeholder="Cash Amt" name="cash_amt" onchange="calClosingAmt()"
 							type="text">
-					</div>					
-					
-					<div class="col-md-1"></div>
-					
-					<div class="col-md-2">
-						<div class="col1title" align="left">Withdrawal Amt</div>
 					</div>
-					<div class="col-md-3">
+					<div class="four_one three">
+						<div class="multi_title">Withdrawal Amt</div>
 							<input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
 							autocomplete="off" placeholder="Withdrawal Amt" name="withdrawal_amt"
 							type="text" onblur="calClosingAmt()">
 					</div>
-					
-					
-				</div>
-
-				<!-- <div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">Card Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="card_Amt"  class="form-control"
-							autocomplete="off" placeholder="Card Amt" name="card_Amt"
-							type="text">
-					</div>	
-					
-					<div class="col-md-1"></div>			
-					
-					<div class="col-md-2">
-						<div class="col1title" align="left">Other Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="other_amt"  class="form-control"
-							autocomplete="off" placeholder="Other Amt" name="other_amt"
-							type="text">
-					</div>
-				</div> -->
-				
-				<div class="colOuter">				
-				<div class="col-md-2">
-						<div class="col1title" align="left">Closing Amt</div>
-					</div>
-					
-					<div class="col-md-3">
-							<input id="closing_amt"  class="form-control" readonly="readonly"
+					<div class="four_one three">
+						<div class="multi_title">Closing Amt</div>
+						<input id="closing_amt"  class="form-control" readonly="readonly"
 							autocomplete="off" placeholder="Closing Amt" name="closing_amt"
 							type="text">
 					</div>
-						
-						
-						<%-- <c:if test="${isEdit==1}">
-					<div class="col-md-3">
-							<input id="closing_amt2"  class="form-control" disabled value="${pettycash.closingAmt}"
-							autocomplete="off" placeholder="Other Amt" name="closing_amt"
-							type="text">
-					</div>
-						</c:if> --%>							
 					
-					<div class="col-md-1"></div>
-					
-					<!-- <div class="col-md-2">
-						<div class="col1title" align="left">Total Amt</div>
-					</div>
-					<div class="col-md-3">
-							<input id="total_amt"  class="form-control" disabled value="00"
-							autocomplete="off" placeholder="Total Amt" name="total_amt"
-							type="text">
-					</div>	 -->				
-					
-				</div>	
-
-				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
-						<input class="buttonsaveorder" value="Day End"
-							type="submit" id="btnsub">
-
-						<!-- <div align="center" id="loader" style="display: none">
-
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div> -->
+					<div class="four_one extra_margin">
+						<input class="buttonsaveorder" value="Day End" type="submit" id="btnsub">
+						<input class="buttonsaveorder redbtn" value="Cash Hand Over" type="button" id="show">
 					</div>
 					
-					<div class="col-md-1">
-						<input class="buttonsaveorder" value="Cash Hand Over"
-							type="button" id="show">					
-					</div>
-					
-
-
-
 				</div>
-				
 				</form>
 				
-				<!-- <div class="col2">
-						<input class="buttonsaveorder" value="Cash Hand Over"
-							type="button" id="btnsub" onclick="showDiv()">
-
-						<div align="center" id="loader" style="display: none">
-
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div>
-					</div> -->
-
-			<!-- Petti Cash Hand Over Div -->
-				<div class="row" id="pc_div" style="display: none;">
-				<h2 class="pageTitle">Petty Cash Hand Over</h2>
-					<div class="col-md-12">
-						<!--table-->
-						<form action="insertPettyCashHandOver" method="POST"
-							id="petty_cash_hand" name="petty_cash_hand">
-							<div class="colOuter">
-								<div class="col-md-2">
-									<div class="col1title" align="left">Opening Amt</div>
-								</div>
-								<div class="col-md-3">
-										<input id="open_amt"  class="form-control" value="${openAmt}"
+				
+				<div class="second_titlerow" id="pc_div" style="display: none;">
+					<div class="page_head">
+					<div class="page_title">Petty Cash Hand Over</div>
+					<div class="custom_right"> <a href="#" class="buttonsaveorder singlebtn initialism slide_open" id="popbtn" style="display: none;">
+					Cash Hand Over Data</a></div>
+				</div>
+				
+				<form action="insertPettyCashHandOver" method="POST" id="petty_cash_hand" name="petty_cash_hand">	
+				
+					<div class="four_one three">
+						<div class="multi_title">Opening Amt</div>
+						<input id="open_amt"  class="form-control" value="${openAmt}"
 										autocomplete="off" placeholder="Opening Amt" name="open_amt"
 										readonly="readonly" type="text">
-								</div>
-								
-								<div class="col-md-1"></div>
-								
-								<div class="col-md-2">
-									<div class="col1title" align="left">Selling Amt</div>
-								</div>
-								<div class="col-md-3">
-										<input id="sell_amt"  class="form-control" value="${sellAmt}"
+					</div>
+					<div class="four_one three">
+						<div class="multi_title">Selling Amt</div>
+						<input id="sell_amt"  class="form-control" value="${sellAmt}"
 										autocomplete="off" placeholder="Selling Amt" name="sell_amt"
 										readonly="readonly"type="text">
-								</div>
-						 </div>
-						 
-						 
-						 
-						  <div class="colOuter">
-								<div class="col-md-2">
-									<div class="col1title" align="left">Total Cash Hand Over Amt</div>
-								</div>
-								<div class="col-md-3">
-										<input id="total_cash_amt"  class="form-control" value="${totalCash}"
+					</div>
+					<div class="four_one three">
+						<div class="multi_title">Total Cash Hand Over Amt</div>
+						<input id="total_cash_amt"  class="form-control" value="${totalCash}"
 										autocomplete="off" placeholder="Total Cash Amt" name="total_cash_amt" 
 										readonly="readonly" type="text">
-								</div>
-								
-								<div class="col-md-1"></div>
-								<div class="col-md-2">
-									<div class="col1title" align="left">Actual Cash Hand Over Amt</div>
-								</div>
-								<div class="col-md-3">
-										<input id="actual_cash_amt"  class="form-control" value="${totalCash}"
+					</div>
+					<div class="four_one three">
+						<div class="multi_title">Actual Cash Hand Over Amt</div>
+						<input id="actual_cash_amt"  class="form-control" value="${totalCash}"
 										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
 										type="text">
-								</div>
-						 </div>
-						 
-						 
-						  <div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">From Employee</div>
 					</div>
-					<div class="col-md-3">
-							<select name="from_emp" id="from_emp" class="form-control" required>
+					<div class="four_one three">
+						<div class="multi_title">From Employee</div>
+						<select name="from_emp" id="from_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
 								<c:forEach items="${empList}" var="empList" >
 								<c:if test="${frId == empList.frEmpId}"></c:if>
 								<option selected="selected" value="${empList.frEmpId}-${empList.frEmpName}" style="text-align:left;">${empList.frEmpName}</option>
 								</c:forEach>
 							</select>
-					</div>					
-					
-					<div class="col-md-1"></div>
-					
-					<div class="col-md-2">
-						<div class="col1title" align="left">To Employee</div>
 					</div>
-					<div class="col-md-3">
-							<select name="to_emp" id="to_emp" class="form-control" required>
+					<div class="four_one three">
+						<div class="multi_title">To Employee</div>
+						<select name="to_emp" id="to_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
 								<c:forEach items="${empList}" var="empList" >
 								<option value="${empList.frEmpId}-${empList.frEmpName}" style="text-align:left;">${empList.frEmpName}</option>
@@ -407,122 +249,24 @@ table, th, td {
 
 							</select>
 					</div>
-					
-					
-				</div>
-						<div class="colOuter">
-							<div class="col1">
-								<div class="col1title"></div>
-							</div>
-							<div class="col2">
-								<input class="buttonsaveorder" value="Submit"
-									type="submit" id="btnsub2">
-		
-								<!-- <div align="center" id="loader" style="display: none">
-		
-									<span>
-										<h4>
-											<font color="#343690">Loading</font>
-										</h4>
-									</span> <span class="l-1"></span> <span class="l-2"></span> <span
-										class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-									<span class="l-6"></span>
-								</div> -->
-							</div>	
-							
-							<div class="col-md-1">
-								<input class="buttonsaveorder" value="Close"
-									type="button" id="hide">
-							</div>	
+					<div class="four_one extra_margin">
+						<input class="buttonsaveorder" value="Submit" type="submit" id="btnsub2">
+						<input class="buttonsaveorder redbtn" value="Close" type="button" id="hide">			
 					</div>
-					
-					
-							
-							</form>
-						</div>
-						<!-- </div> -->
-
-
-<!-- Table Div Close -->
-				<%-- <div class="row">
-					<div class="col-md-12">
-						<!--table-->
-						<form action="" method="POST"
-							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
-							<div class="clearfix"></div>
-							<div class="col-md-9"></div>
-							<label for="search" class="col-md-3" id="search"> <i
-								class="fa fa-search" style="font-size: 20px"></i> <input
-								type="text" id="myInput" onkeyup="myFunction()"
-								style="border-radius: 25px;" placeholder="Search items by name"
-								title="Type item name">
-							</label>
-							
-							<div id="table-scroll"  class="table-scroll responsive-table-one" style="display: none;"><!-- class="table-scroll" -->								
-								<div><!--  class="table-wrap" -->
-									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
-										<thead>
-											<tr class="bgpink">
-												<th class="col-md-1">Sr. No</th>
-												<th class="col-md-1">Transaction Date</th>
-												<th class="col-md-1">Opening Amt</th>
-												<th class="col-md-1">Selling Amt</th>
-												<th class="col-md-1">Total Cash Amt</th>
-												<th class="col-md-1">Actual Cash Hand Over</th>
-												<th class="col-md-1">From Employee</th>
-												<th class="col-md-1">To Employee</th>
-												<!-- <th class="col-md-1">Action</th> -->
-
-											</tr>
-										</thead>
-										<tbody>
-										<c:forEach items="${cashHndOvrList}" var="list"
-														varStatus="count">
-											<tr>
-												<td >${count.index+1}</td>
-												<td>${list.transactionDate}</td>
-												<td>${list.openingAmt}</td>
-												<td>${list.sellingAmt}</td>
-												<td>${list.actualAmtHandover}</td>
-												<td>${list.amtHandover}</td>
-												<td>${list.fromUsername}</td>
-												<td>${list.toUsername}</td>
-												<!-- pettycashId -->
-												<td>
-														<a href="${pageContext.request.contextPath}/editPettyCash?pettyCashIdId=${pettyList.pettycashId}" title="Edit">
-														<i class="fa fa-edit"></i></a>
-		
-													<abbr title="Delete"><i class="fa fa-trash"><a href="${pageContext.request.contextPath}/editPettyCash?pettyCashIdId=${pettyList.pettycashId}"></a></i></abbr>
-												</td>
-											</tr>
-											</c:forEach>
-										</tbody>										
-									</table>
-								</div>
-
-							</div>
-
-
-							<!-- <div class="col-md-2">
-
-								<button type="button" class="btn btn-primary"
-									onclick="exportToExcel();" id="expExcel">
-									Export To Excel</button>
-						 	</div> 
-
-
-							<div class="col-md-3">
- 
-								<button type="button" class="btn btn-primary" onclick="genPdf()"
-									id="PDFButton">
-									PDF</button>
-							</div>-->
-
-						</form>
-					</div>
-				</div> --%>
-				<!-- Table Div Close -->
+					<div class="four_one"></div>
+					<div class="four_one"></div>
+				
+				</form>
 				</div>
+				
+				
+			
+				
+				
+				
+				
+				 
+
 				<!-- Petti Cash Hand Over Div Close -->
 			</div>
 
@@ -543,24 +287,24 @@ table, th, td {
 
 <div class="row">
 	<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>
-	<h3 class="pop_head" id="add_cust_head_name">Petty Cash Hand Over Transaction</h3>
-		<div class="col-md-2 from_date">
-		    <h4 class="pull-left">From Date:-</h4>
+	<h2 class="page_title" id="add_cust_head_name">Petty Cash Hand Over Transaction</h2>
+	<div class="clr"></div>
+	
+	
+		<div class="pop_date">
+			<div class="pop_date_one">
+				<div class="pop_date_txt">From Date :-</div>
+				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="fromDate" id="fromDate" type="date"  class="datepicker_fld" /></div>
+			</div>
+			
+			<div class="pop_date_one">
+				<div class="pop_date_txt">To Date :-</div>
+				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="toDate" id="toDate" type="date" class="datepicker_fld"  /></div>
+			</div>
+			
+			<div class="pop_date_btn"><button class="buttonsaveorder" onclick="getData()">Search </button></div>
 		</div>
-		<div class="col-md-2 ">
-			<input autocomplete="off" placeholder="dd-mm-yyy"
-							name="fromDate" id="fromDate" type="date" class="input_add" />
-		</div>
-		<div class="col-md-2">
-		    <h4 class="pull-left">To Date:-</h4>
-		</div>
-		<div class="col-md-2 ">
-			<input autocomplete="off" placeholder="dd-mm-yyy"
-							name="toDate" id="toDate" type="date" class="input_add" />
-		</div>
-		<div class="col-md-2">
-		    <button class="btn search_btn pull-left" onclick="getData()">Search </button>
-		</div>
+	
 		
     </div>
 <div class="row">
