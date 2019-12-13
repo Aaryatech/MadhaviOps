@@ -592,7 +592,8 @@ public class OpsController {
 			int custId = Integer.parseInt(request.getParameter("custId"));
 			/* int advKey = Integer.parseInt(request.getParameter("advKey")); */
 			String customerName = request.getParameter("selectedText");
-
+			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
+System.err.println("advAmt"+advAmt);
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
@@ -668,7 +669,13 @@ public class OpsController {
 			sellBillHeader.setBillDate(sf.format(date));
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
-			sellBillHeader.setPaidAmt(Math.round(total));
+			
+			if(advAmt>0) {
+				sellBillHeader.setPaidAmt(Math.round(total-advAmt));
+			}else {
+				sellBillHeader.setPaidAmt(Math.round(total));
+			}
+			
 			sellBillHeader.setPaymentMode(1);
 			sellBillHeader.setSellBillNo(0);
 			sellBillHeader.setUserGstNo("NA");
@@ -677,9 +684,23 @@ public class OpsController {
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setDiscountPer(0);
 			sellBillHeader.setDiscountAmt(0);
-			sellBillHeader.setPayableAmt(Math.round(total));
+			
+			if(advAmt>0) {
+ 				sellBillHeader.setPayableAmt(Math.round(total-advAmt));
+
+			}else {
+				sellBillHeader.setPayableAmt(Math.round(total));
+			}
 			sellBillHeader.setTotalTax(taxAmt);
-			sellBillHeader.setGrandTotal(Math.round(total));
+			
+			
+			if(advAmt>0) {
+ 
+ 				sellBillHeader.setGrandTotal(Math.round(total-advAmt));
+			}else {
+				sellBillHeader.setGrandTotal(Math.round(total));
+			}
+		
 			sellBillHeader.setRemainingAmt(0);
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
@@ -698,7 +719,16 @@ public class OpsController {
 
 				List<TransactionDetail> dList = new ArrayList<>();
 				TransactionDetail transactionDetail = new TransactionDetail();
-				transactionDetail.setCashAmt(total);
+				
+				
+
+				if(advAmt>0) {
+					transactionDetail.setCashAmt(total-advAmt);
+
+ 				}else {
+					transactionDetail.setCashAmt(total);
+				}
+				
 				transactionDetail.setPayMode(1);
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf1.format(date));
@@ -762,7 +792,10 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
 		try {
+			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
+			System.err.println("advAmt"+advAmt);
 
 			int index = Integer.parseInt(request.getParameter("key"));
 			int custId = Integer.parseInt(request.getParameter("custId"));
@@ -862,6 +895,12 @@ public class OpsController {
 					}
 				}
 
+			}
+			
+			if(advAmt>0) {
+				total=total-advAmt;
+			}else {
+				total=total;
 			}
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");

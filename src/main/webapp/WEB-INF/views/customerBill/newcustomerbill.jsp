@@ -361,9 +361,10 @@ body {
 						</a>
 
 						<c:if test="${advanceAmt>0}">
-							<label>Advance Order Amt : <span id="advAmt">${advanceAmt}</span>
+							<label>Advance Order Amt : <span id="advAmt1">${advanceAmt}</span>
 							</label>
 						</c:if>
+						<input type="hidden" id="advAmt" name="advAmt" value="${advanceAmt}">
 					</div>
 
 					<!--customer drop down here-->
@@ -822,10 +823,12 @@ body {
 					<div class="add_customer_one">Total AMT</div>
 					<div class="add_input" id="totalAmtPopup">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
+							value="${totalAmt-advanceAmt}" maxFractionDigits="2" minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
+			 
+				 
 				<%-- 
 					<div class="add_frm_one">
 					<div class="add_customer_one1">Advance AMT</div>
@@ -2919,7 +2922,15 @@ $("#enterQty").focus();
 
 			var discPer = parseFloat($('#discPer').val());
 			var discAmt = parseFloat($('#discAmt').val());
-			var totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+			var totalAmtPopup;
+			
+ 			var advAmt = document.getElementById("advAmt").value;
+			if(parseFloat(advAmt)>0){
+				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+			}else{
+				totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+			}
+			
 			if(flag==1){
 				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
 				var totalAmt=totalAmtPopup-calDiscAmt;
@@ -3099,8 +3110,24 @@ $("#enterQty").focus();
 							document.getElementById("taxAmtLable").innerHTML = taxAmt.toFixed(2); 
 							document.getElementById("totalLable").innerHTML = total.toFixed(2); 
 							document.getElementById("totalItemLable").innerHTML = data.length; 
-							document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
-							document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+							
+							
+							 
+							
+							var advAmt = document.getElementById("advAmt").value;
+							//alert("advAmt"+advAmt);
+							if(parseFloat(advAmt)>0){
+								//alert(0);
+								document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2) -parseFloat(advAmt);
+								document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2)-parseFloat(advAmt);
+							}else{
+								//alert(1);
+								document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2); 
+								document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2);
+							}
+							
+							
+							
 							document.getElementById("payAmt").value = total.toFixed(2);
 
 							document.getElementById("discPer").value =0;
@@ -3204,6 +3231,7 @@ $("#enterQty").focus();
 	<script type="text/javascript">
 	
 	function submitBill(printbilltype) {
+		var advAmt = document.getElementById("advAmt").value;
 		
 		var key =  $('#key').val() ;
 		/* var key =  $('#advKey').val() ; */
@@ -3231,6 +3259,7 @@ $("#enterQty").focus();
 						key : key,  
 						custId : custId,
  						selectedText : selectedText,
+ 						advAmt:advAmt,
 						ajax : 'true'
 					},
 					function(data) {
@@ -3282,6 +3311,7 @@ $("#enterQty").focus();
 	}
 	
 	function openPaymentPopup() {
+		var advAmt = document.getElementById("advAmt").value;
 		var custId =  $('#cust').val() ;
 		
 		var dfCust=${defaultCustomer};
@@ -3300,8 +3330,18 @@ if(parseInt(custId)==parseInt(dfCust)){
 		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
     	document.getElementById("epayLabel").style.color="black";
 
+    	
+    	
+    	var advAmt = document.getElementById("advAmt").value;
+		if(parseFloat(advAmt)>0){
+		 
+			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+		}else{
+ 			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+		}
 		document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
-		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+
+		
 
 		$("#modeOfPayDiv").show();
 		document.getElementById("creditBillno").checked = true;
@@ -3327,11 +3367,20 @@ if(parseInt(custId)==parseInt(dfCust)){
 	
 	function submitBillByPaymentOption(printbilltype) {
 		
-		 
+		var advAmt = document.getElementById("advAmt").value;
 		var flagPayable=0;
 		if (document.getElementById('split').checked) {
 			 
-			var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+			var totalPayableAmt;
+			
+		
+			if(parseFloat(advAmt)>0){
+			 
+ 				totalPayableAmt=parseFloat($('#totalPayableAmt').text());//ch
+			}else{
+				totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+			}
+			
 			//var epayLabel=	document.getElementById("epayLabel").innerHTML;  
 			var cashAmt =  $('#cashAmt').val() ;
 			var cardAmt =  $('#cardAmt').val() ;
@@ -3387,7 +3436,16 @@ if(parseInt(custId)==parseInt(dfCust)){
 		var frtype =  $('#frtype').val() ;
 		var discPer =  $('#discPer').val() ;
 		var discAmt =  $('#discAmt').val() ;
-		var billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
+		
+		var billAmtWtDisc;
+		
+		if(parseFloat(advAmt)>0){
+		 
+			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+		}else{
+			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
+		}
+		
 		
 		var creditBill = 1;
 		var single = 1;
@@ -3463,6 +3521,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 							discPer:discPer,
 							discAmt:discAmt,
 							billAmtWtDisc:billAmtWtDisc,
+							advAmt:advAmt,
 							ajax : 'true'
 						},
 						function(data) {
