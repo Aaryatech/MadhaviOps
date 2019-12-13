@@ -253,7 +253,7 @@ jQuery(document).ready(function(){
 
 <script type="text/javascript">
 	function printExBill(billNo) {
-	alert("in print");
+	
         //var billNo=document.getElementsById("billNo").value;
       
 		var checkedId = [];
@@ -275,11 +275,11 @@ jQuery(document).ready(function(){
 	             dataType: 'json',
 	             timeout: 600000,
 	             success: function (data) {
-	         
-	            	 window
-	 				.open('${pageContext.request.contextPath}/printDetailBillOfSupply/'+billNo);	
-
-
+	            		if(data<10000000){
+							window.open('${pageContext.request.contextPath}/printDetailBillOfSupply/'+billNo,'_blank');
+						}else{
+							window.open('${pageContext.request.contextPath}/printDetailBillOfInvoice/'+billNo,'_blank');
+						}
 	             },
 	             error: function (e) {
 	             }

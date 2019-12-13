@@ -134,28 +134,24 @@ table, th, td {
 			</div>
 
 			<!--rightSidebar-->
-			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Stock Details</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
-				<div class="order-right" align="right">
-
-					<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
+			
+			
+			
+			<div class="main_container">
+				<div class="page_head">
+					<div class="page_title">Stock Details</div>
+					<div class="custom_right">
+						<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
 						type="button" value="Add Opening Stock" class="btn btn-info">
 					</a>
-
-				</div>
-
-
-
-				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title">Current Month:</div>
 					</div>
-					<div class="col-md-5">
-
-						<c:forEach items="${category}" var="category" varStatus="count">
+				</div>
+				
+				
+				
+				<div class="single_row">
+					<span>Current Month:</span>
+					<c:forEach items="${category}" var="category" varStatus="count">
 							<c:forEach items="${getMonthList}" var="getMonthList"
 								varStatus="count">
 								<c:choose>
@@ -212,16 +208,11 @@ table, th, td {
 								</c:choose>
 							</c:forEach>
 						</c:forEach>
-
-
-					</div>
-
 				</div>
-				<div class="colOuter">
-					<div class="col-md-1">
-						<div class="col1title">Select Category</div>
-					</div>
-					<div class="col-md-2">
+				
+				<div class="frm_row_one">
+					<div class="four_one">
+						<div class="multi_title">Select Category</div>
 						<select name="select_category" class="form-control chosen"
 							tabindex="4" id="selectCategory" required>
 
@@ -240,13 +231,8 @@ table, th, td {
 
 						</select>
 					</div>
-
-
-
-					<div class="col-md-1">
-						<div class="col1title">Select View Option</div>
-					</div>
-					<div class="col-md-2">
+					<div class="four_one">
+						<div class="multi_title">Select View Option</div>
 						<select name="selectStock" class="form-control chosen"
 							tabindex="6" id="selectStock" onchange="showDiv(this)" required>
 
@@ -257,10 +243,8 @@ table, th, td {
 
 						</select>
 					</div>
-					<div class="col-md-1">
-						<div class="col1title">Type</div>
-					</div>
-					<div class="col-md-2">
+					<div class="four_one">
+						<div class="multi_title">Type</div>
 						<select name="st_type" class="form-control chosen" tabindex="4"
 							id="st_type" required>
 
@@ -271,9 +255,8 @@ table, th, td {
 
 						</select>
 					</div>
-
-
-					<div class="col-md-2">
+					<div class="four_one">
+						<div class="multi_title">&nbsp;</div>
 						<select name="select_rate" class="form-control chosen mob_marg"
 							tabindex="4" id="select_rate" onchange="searchStock()" required>
 							<option value="">Select Rate Type</option>
@@ -285,63 +268,32 @@ table, th, td {
 
 						</select>
 					</div>
-
+					
+					
+					<div class="four_two">
+					<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()"></div>
 				</div>
-
-
-
-				<!-- <div class="colOuter" style="display: none" id=select_month_year>
-					<div class="col-md-2">
-						<div class="col1title">Select Month From :</div>
-					</div>
-					<div class="col-md-2" align="left">
-
-						<input type='text' placeholder="Select From Month" id='txtDate'
-							name="from_stockdate" required />
-					</div>
-
-					<div class="col3"></div>
-
-
-
-					<div class="col-md-2">
-						<div class="col1title">To :</div>
-					</div>
-					<div class="col-md-2" align="left">
-						<input type='text' placeholder="Select To Month" id=txtDateto
-							name="to_stockdate" required />
-					</div>
-
-				</div> -->
-
-
-
-				<div class="colOuter" style="display: none" id=select_date>
-					<div class="col-md-2">
-						<div class="col1title">From Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
-
+				
+				<div class="a" style="display: none" id="select_date">
+					<div class="four_one">
+						<div class="multi_title">From Date:</div>
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="From Date" name="from_datepicker"
 							type="text">
-
 					</div>
-
-					<div class="col3"></div>
-
-
-
-					<div class="col-md-2">
-						<div class="col1title">To Date:</div>
-					</div>
-					<div class="col-md-2" align="left">
+					
+					<div class="four_one">
+						<div class="multi_title">To Date:</div>
 						<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="to_datepicker"
 							type="text">
 					</div>
-
 				</div>
+				
+				
+
+				
 
 
 
@@ -351,8 +303,7 @@ table, th, td {
 						<div class="col1title"></div>
 					</div>
 					<div class="col2">
-						<input name="search_stock" class="buttonsaveorder" value="Search"
-							type="button" onclick="searchStock()">
+						
 
 						<div align="center" id="loader" style="display: none">
 
@@ -498,23 +449,22 @@ table, th, td {
 								</div>
 
 							</div>
+							
+							<div class="two_buttons">
+								<button type="button" class="buttonsaveorder" onclick="exportToExcel();" id="expExcel"> Export To Excel</button>
+								<button type="button" class="buttonsaveorder" onclick="genPdf()" id="PDFButton"> PDF</button>	
+							</div>
 
 
 							<div class="col-md-2">
 
-								<button type="button" class="btn btn-primary"
-									onclick="exportToExcel();" id="expExcel"
-									>
-									Export To Excel</button>
+								
 						 	</div>
 
 
 							<div class="col-md-3">
  
-								<button type="button" class="btn btn-primary" onclick="genPdf()"
-									id="PDFButton"
-									>
-									PDF</button>
+								
 							</div>
 
 

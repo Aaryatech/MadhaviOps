@@ -33,17 +33,17 @@
   
 }
 
-.pageTitle {
+/*.pageTitle {
     padding-bottom: 0px;
-}
+}*/
 
 .sidebarright {
     padding-top: 0px;
 }
 
-.pageTitle {
+/*.pageTitle {
     margin-top: 14px;
-}
+}*/
 
 .calender-title{
 	text-align:left;
@@ -325,7 +325,8 @@ font-size: 18px !important;
  }
  
  .cd-tabs-navigation a {
-    padding: 3px 30px;
+    /*padding: 3px 30px;*/
+    padding: 10px; text-decoration: none;
 }
 
 .table td {

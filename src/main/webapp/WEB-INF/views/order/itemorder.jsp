@@ -103,7 +103,7 @@ a:hover {
 
 			<!--leftNav-->
 			<!--rightSidebar-->
-			<div class="sidebarright">
+			<div class=main_container>
 				<c:choose>
 					<c:when test="${isSameDayApplicable=='2'}">
 						<c:if test="${not empty qtyMessage}">
@@ -115,23 +115,21 @@ a:hover {
 						</c:if>
 					</c:when>
 				</c:choose>
-				<div> <!-- class="order-left" -->
-					<h2 class="pageTitle">${menuTitle} &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#630f35;font-size:18px;"> Order Date :
-						${orderDate}&nbsp;&nbsp;&nbsp;&nbsp;Delivery Date :
-						${deliveryDate}&nbsp;&nbsp;&nbsp;&nbsp;Order Closing Time:
-						${toTime}</span>
-					<!-- <h3 class="pageTitle2"></h3> -->
-
-					<input type="hidden" name="menuId" value="${menuId}"> <input
-						type="hidden" name="rateCat" value="${frDetails.frRateCat}">
-					<input type="hidden" value="${isSameDayApplicable}"
-						id="isSameDayApplicable" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Total Amount :&nbsp;&nbsp;&nbsp;&nbsp;INR :
-							<fmt:formatNumber type="number" minFractionDigits="2"
-								maxFractionDigits="2" value="${grandTotal}" />
-						</h2>
+				
+				<div class="page_head">
+					<div class="page_title">${menuTitle}</div>
+					<div class="custom_right">
+						<span class="page_prc">Order Date : ${orderDate}</span>
+						<span class="page_prc">Delivery Date : ${deliveryDate}</span>
+						<span class="page_prc">Order Closing Time: ${toTime}</span>
+						<span class="total_amt_right">
+							<input type="hidden" name="menuId" value="${menuId}"> <input type="hidden" name="rateCat" value="${frDetails.frRateCat}">
+					<input type="hidden" value="${isSameDayApplicable}" id="isSameDayApplicable" />
+Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${grandTotal}" />
+						</span>
+					</div>
 				</div>
-
+			
 
 
 
@@ -228,12 +226,10 @@ Total Amount :&nbsp;&nbsp;&nbsp;&nbsp;INR :
 
 
 
-								<div class="col-md-9"></div>
-								<label for="search" class="col-md-3" id="search"> <i
-									class="fa fa-search" style="font-size: 20px"></i> <input class="myInput1"
-									type="text" id="myInput${loop.index}" onkeyup="myFunction1(${loop.index})"
-									style="border-radius: 25px;" placeholder="Search items by name"
-									title="Type item name">
+								
+								<label for="search" id="search" class="main_search"> 
+								<i class="fa fa-search"></i> <input type="text" id="myInput${loop.index}" onkeyup="myFunction1(${loop.index})"
+									 placeholder="Search items by name" title="Type item name">
 								</label>
 								<div id="table-scroll" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
 
@@ -476,7 +472,7 @@ Total Amount :&nbsp;&nbsp;&nbsp;&nbsp;INR :
 					<!--tabNavigation-->
 
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-					<div class="order-btn textcenter">
+					<div class="order-btn textright">
 
 						<input name="" id="subm" class="buttonsaveorder" value="SAVE ORDER"
 							type="button" ONCLICK="button1()">
