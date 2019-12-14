@@ -333,6 +333,24 @@
 								<div class="clr"></div>
 							</div>
 						</li>
+						
+						<li>
+							<div class="sale_one bg_one">
+								<div class="sale_l">
+									<i class="fa fa-inr" aria-hidden="true"></i>
+
+								</div>
+								<div class="sale_r">
+									<h3 class="sale_head">${typeTitle}&nbsp;Expenses</h3>
+									<h5 class="price_sale">
+										Rs.
+										<fmt:formatNumber type="number" maxFractionDigits="3"
+											value="${countDetails.expenseAmt}" />
+									</h5>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</li>
 
 						<!-- eighth li box -->
 						<li>
@@ -357,25 +375,47 @@
 								</div>
 							</div>
 						</li>
-
-						<!-- nine li box -->
+						
 						<li>
-							<div class="sale_one bg_one">
-								<div class="sale_l">
-									<i class="fa fa-inr" aria-hidden="true"></i>
-
+							<div class="sale_one bg_two">
+								<div class="sale-list">
+								<div class="sale_epay">
+										 Dairy Mart Order
+									</div>
+								<c:forEach items="${dailyList}" var="dailyList"  varStatus="count">
+									<div class="sale_epay">
+										${dailyList.orderDate} <span>Rs.<fmt:formatNumber type="number"
+												maxFractionDigits="3" value="${dailyList.total}" />
+										</span>
+									</div>
+									 
+									<div class="clr"></div>
+									</c:forEach>
 								</div>
-								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;Expenses</h3>
-									<h5 class="price_sale">
-										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
-											value="${countDetails.expenseAmt}" />
-									</h5>
-								</div>
-								<div class="clr"></div>
 							</div>
 						</li>
+						
+						<li>
+							<div class="sale_one bg_three">
+								<div class="sale-list">
+								<div class="sale_epay">
+										Advance Order
+									</div>
+								<c:forEach items="${advOrderList}" var="advOrderList"  varStatus="count">
+									<div class="sale_epay">
+										${advOrderList.orderDate} <span>Rs.<fmt:formatNumber type="number"
+												maxFractionDigits="3" value="${advOrderList.total}" />
+										</span>
+									</div>
+									 
+									<div class="clr"></div>
+									</c:forEach>
+								</div>
+							</div>
+						</li>
+
+						<!-- nine li box -->
+						
 					</ul>
 					<div class="clr"></div>
 				</div>

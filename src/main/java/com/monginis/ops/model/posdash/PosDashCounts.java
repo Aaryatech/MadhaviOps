@@ -1,5 +1,8 @@
 package com.monginis.ops.model.posdash;
 
+import java.util.List;
+
+ 
 public class PosDashCounts {
 
 	private float saleAmt;
@@ -23,6 +26,29 @@ public class PosDashCounts {
 	private float epayAmt;
 
 	private float noOfBillGenerated;
+	
+	List<DashAdvanceOrderCounts> dailyMartList;
+	
+	
+	List<DashAdvanceOrderCounts> advOrderList;
+	
+	
+
+	public List<DashAdvanceOrderCounts> getDailyMartList() {
+		return dailyMartList;
+	}
+
+	public void setDailyMartList(List<DashAdvanceOrderCounts> dailyMartList) {
+		this.dailyMartList = dailyMartList;
+	}
+
+	public List<DashAdvanceOrderCounts> getAdvOrderList() {
+		return advOrderList;
+	}
+
+	public void setAdvOrderList(List<DashAdvanceOrderCounts> advOrderList) {
+		this.advOrderList = advOrderList;
+	}
 
 	public float getSaleAmt() {
 		return saleAmt;
