@@ -131,7 +131,7 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(101, 113, 119, 0.5);
+	background-color: rgba(255, 153, 153, 0.5);
 	z-index: 2;
 	cursor: pointer;
 }
