@@ -297,6 +297,13 @@ public class HistoryController {
 				// if (catId != 5) prev
 				flag = 2;
 				List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(1, parsedDate, frId);
+				
+				for(int i=0;i<itemOrderHistory.size();i++) {
+					itemOrderHistory.get(i).setDeliveryDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getDeliveryDate()));
+					itemOrderHistory.get(i).setOrderDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getOrderDate()));
+					itemOrderHistory.get(i).setProdDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getProdDate()));
+ 
+				}
 				model.addObject("orderHistory", itemOrderHistory);
 
 				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
