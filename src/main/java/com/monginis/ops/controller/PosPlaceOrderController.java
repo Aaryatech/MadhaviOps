@@ -369,7 +369,7 @@ public class PosPlaceOrderController {
 		model.addObject("itemList", frItemList);
 		model.addObject("grandTotal", grandTotal);
 		model.addObject("frDetails", frDetails);
-
+		model.addObject("delDate", dfdmy.format(date));
 		model.addObject("currentDate", todaysDate);
 		model.addObject("toTime", _12HourSDF.format(toTime12Hrs));
 		model.addObject("orderDate", strOrderDate);
@@ -400,25 +400,25 @@ public class PosPlaceOrderController {
 		
 		
 		
-		@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
-		@ResponseBody
-		public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
-
-		//System.err.println("inside saveAdvanceOrder");
+	@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
+	@ResponseBody
+	public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
+			AdvanceOrderHeader info=null;
+	try {
+			
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-		LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
+		//LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
 
 		List<AdvanceOrderDetail> advDetailList = new ArrayList<AdvanceOrderDetail>();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat dfdmy = new SimpleDateFormat("dd-MM-yyyy");
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//DateFormat dfdmy = new SimpleDateFormat("dd-MM-yyyy");
 
-		String currentDate = df.format(date);
-		String currentDateFc = dfdmy.format(date);
-		DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
+	    //String currentDate = df.format(date);
+	    //String currentDateFc = dfdmy.format(date);
+	    //DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dfReg1 = new SimpleDateFormat("dd-MM-yyyy");
-
 		String todaysDate = dfReg1.format(date);
 		int menuId= Integer.parseInt(request.getParameter("menuId"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
@@ -428,21 +428,15 @@ public class PosPlaceOrderController {
 		int rateCat = frDetails.getFrRateCat();
 
 		String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
-		String yyestDate = dfReg.format(yesterday());
 		int dm = 0;
-		String af = null;
 
 		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
-
-		//System.err.println("dm");
-
 		System.err.println("Order date: " + todaysDate);
 		System.err.println("Production date: " + x1);
 		System.err.println("Delivery date: " + devDate);
 
 		String advanceAmt = request.getParameter("advanceAmt");
 		String remainAmt = request.getParameter("remainAmt");
-		//System.err.println("inside saveAdvanceOrder 1:" + advanceAmt + "remainAmt" + remainAmt);
 		AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
 		advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
 		advHeader.setCustId(custId);
@@ -460,11 +454,10 @@ public class PosPlaceOrderController {
 		advHeader.setOrderDate(todaysDate);
 		advHeader.setProdDate(DateConvertor.convertToDMY(x1));
 		advHeader.setDeliveryDate(devDate);
-		advHeader.setDiscAmt(0);
+		
 		advHeader.setIsBillGenerated(0);
 		advHeader.setIsSellBillGenerated(0);
-		//System.err.println("fr itm"+frItemList.toString());
-
+		float discAmt=0.0f;
 		for (int i = 0; i < frItemList.size(); i++) {
 			
 			GetFrItem item = frItemList.get(i);
@@ -492,15 +485,18 @@ public class PosPlaceOrderController {
 						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
-						float subtot=(calTotal*item.getDmDiscPer())/100;
-
-						det.setSubTotal(CustomerBillController.roundUp(subtot));
+						float discountAmount=(calTotal*item.getDmDiscPer())/100;
+						discAmt=discAmt+discountAmount;
+						float subTotal=calTotal-discountAmount;
+						det.setSubTotal(CustomerBillController.roundUp(subTotal));
 					} else if (rateCat == 3) {
 						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp3()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp3()))) * qty;
-						float subtot=(calTotal*item.getDmDiscPer())/100;
-						det.setSubTotal(CustomerBillController.roundUp(subtot));
+						float discountAmount=(calTotal*item.getDmDiscPer())/100;
+						discAmt=discAmt+discountAmount;
+						float subTotal=calTotal-discountAmount;
+						det.setSubTotal(CustomerBillController.roundUp(subTotal));
 					}
 				} else {
 					det.setDiscPer(item.getDiscPer());
@@ -508,15 +504,18 @@ public class PosPlaceOrderController {
 						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate1())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
-						float subtot=(calTotal*item.getDiscPer())/100;
-
-						det.setSubTotal(CustomerBillController.roundUp(subtot));
+						float discountAmount=(calTotal*item.getDiscPer())/100;
+						float subTotal=calTotal-discountAmount;
+						discAmt=discAmt+discountAmount;
+						det.setSubTotal(CustomerBillController.roundUp(subTotal));
 					} else if (rateCat == 3) {
 						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate3())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
-						float subtot=(calTotal*item.getDiscPer())/100;
-						det.setSubTotal(CustomerBillController.roundUp(subtot));
+						float discountAmount=(calTotal*item.getDiscPer())/100;
+						discAmt=discAmt+discountAmount;
+						float subTotal=calTotal-discountAmount;
+						det.setSubTotal(CustomerBillController.roundUp(subTotal));
 					}
 				}
 				det.setEvents("");
@@ -538,10 +537,9 @@ public class PosPlaceOrderController {
 				det.setIsBillGenerated(0);
 				det.setItemId((item.getId()));
 				det.setMenuId(menuId);
-				det.setOrderDate(todaysDate);// curr
-				det.setProdDate(DateConvertor.convertToDMY(x1));// devdate-1
+				det.setOrderDate(todaysDate);
+				det.setProdDate(DateConvertor.convertToDMY(x1));
 				det.setQty(qty);
-			
 				det.setIsBillGenerated(0);
 				det.setIsSellBillGenerated(0);
 				det.setTax1(0);
@@ -549,28 +547,23 @@ public class PosPlaceOrderController {
 				det.setTax2(0);
 				det.setTax2Amt(0);
 				det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
-
 				advDetailList.add(det);
-				//System.err.println(" det"+det.toString());
 			}
-
 		}
+		if(advDetailList.size()>0) {
+			advHeader.setDiscAmt(discAmt);
 		advHeader.setDetailList(advDetailList);
 		RestTemplate restTemplate = new RestTemplate();
 
-		AdvanceOrderHeader info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
+		 info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
 				AdvanceOrderHeader.class);
-		System.err.println("inside saveAdvanceOrder 2"+info.toString());
-		/*
-		 * } catch (Exception e) {
-		 * 
-		 * System.err.println("Exception In saveAdvanceOrder" + e.getMessage());
-		 * 
-		 * }
-		 */
-		/* return "redirect:/showsPlaceOrder/" + globalIndex; */
+		}
+		System.err.println("inside saveAdvanceOrder"+info.toString());
 		
-		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		return info;
 
 	}
@@ -655,7 +648,7 @@ public class PosPlaceOrderController {
 
 	}
 
-	@RequestMapping(value = "/checkEmailText", method = RequestMethod.POST)
+	@RequestMapping(value = "/checkEmailText", method = RequestMethod.GET)
 	@ResponseBody
 	public int checkEmailText(HttpServletRequest request, HttpServletResponse response) {
 
@@ -665,19 +658,19 @@ public class PosPlaceOrderController {
 		try {
 
 			String phoneNo = request.getParameter("phoneNo");
-
+			System.out.println("Info" + phoneNo);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("phoneNo", phoneNo);
 			RestTemplate restTemplate = new RestTemplate();
 			info = restTemplate.postForObject(Constant.URL + "/checkCustPhone", map, Info.class);
-			System.out.println("Info" + info);
+			System.out.println("Info" + info+"info.isError()"+info.isError());
 			if (info.isError() == false) {
-				res = 1;// exists
-				System.out.println("1" + res);
+				res = 0;// exists
+				System.out.println("0s" + res);
 			} else {
-				res = 0;
-				System.out.println("0" + res);
+				res = 1;
+				System.out.println("1888" + res);
 			}
 
 		} catch (Exception e) {

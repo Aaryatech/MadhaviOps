@@ -198,7 +198,7 @@
 
 			
 
-			<c:set var="flag" value="${0}"></c:set>
+			<%-- <c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
@@ -234,7 +234,7 @@
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Item Stock</div></a></li>
-			</c:if>
+			</c:if> --%>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -360,7 +360,7 @@
 		<div class="topSlide2">
 			<a href="javascript:void(0)" class="closebtn" onClick="closeNav()"><img
 				src="${pageContext.request.contextPath}/resources/images/closebtn.png"
-				alt="monginis"></a>
+				alt="madhvi"></a>
 			<div class="listarea">
 				<ul>
 
@@ -498,9 +498,9 @@
  			}
  %> <img
 								src="${pageContext.request.contextPath}/resources/newpos/images/${menu.menuImage}"
-								alt="monginis"> <img
+								alt="madhvi"> <img
 								src="${pageContext.request.contextPath}/resources/newpos/images/${menu.selectedMenuImage}"
-								alt="monginis">
+								alt="madhvi">
 			</div>
 			<h2>
 				<c:out value='${menu.menuTitle}' />
@@ -526,9 +526,9 @@
 
 					<a class="listareaBoximg"> <img
 						src="${pageContext.request.contextPath}/resources/newpos/images/${menu.menuImage}"
-						alt="monginis"> <img
+						alt="madhvi"> <img
 						src="${pageContext.request.contextPath}/resources/newpos/images/${menu.selectedMenuImage}"
-						alt="monginis">
+						alt="madhvi">
 					</a>
 
 
@@ -569,7 +569,7 @@
 		<div class="topSlide2">
 			<a href="javascript:void(0)" class="closebtn" onClick="closeNav1()"><img
 				src="${pageContext.request.contextPath}/resources//images/closebtn.png"
-				alt="monginis"></a>
+				alt="madhvi"></a>
 			<div class="listarea">
 
 
@@ -632,7 +632,7 @@
 		<div class="topSlide2">
 			<a href="javascript:void(0)" class="closebtn" onClick="closeNav4()"><img
 				src="${pageContext.request.contextPath}/resources//images/closebtn.png"
-				alt="monginis"></a>
+				alt="madhvi"></a>
 			<div class="listarea">
 				<ul><div class="row">
 					

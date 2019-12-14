@@ -1339,7 +1339,7 @@ System.err.println("advAmt"+advAmt);
 			save.setCompanyName(companyName);
 			save.setAddress(custAdd);
 			save.setGstNo(gstNo);
-			save.setDelStatus(1);
+			save.setDelStatus(0);
 			save.setCustId(custId);
 			
 			save.setAgeGroup(ageRange);save.setExInt1(custType);save.setGender(gender);

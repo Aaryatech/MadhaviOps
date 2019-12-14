@@ -337,7 +337,7 @@ input:checked+.slider:before {
 
 
 							<div class="col-md-1">
-								<div class="col1title">Select Customer</div>
+								<div class="col1title">Customer</div>
 							</div>
 							<div class="col-md-2">
 								<select name="custId" class="form-control chosen" tabindex="4"
@@ -368,8 +368,8 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
-									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text">
+									placeholder="Delivery Date" name="devDate"  id="devDate1" autocomplete="off"
+									type="text" value="${delDate}">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -420,7 +420,7 @@ input:checked+.slider:before {
 
 									<div class="col-md-9"></div>
 									<label for="search" class="col-md-3" id="search"> <i
-										class="fa fa-search" style="font-size: 20px"></i> <input
+										class="fa fa-search" style="font-size: 20px;"></i> <input
 										class="myInput1" type="text" id="myInput${loop.index}"
 										onkeyup="myFunction1(${loop.index})"
 										style="border-radius: 25px;"
@@ -615,7 +615,7 @@ input:checked+.slider:before {
 								<div class="col-md-1">
 
 									<input type="text" name="advanceAmt" id="advanceAmt1"
-										onchange="setAmt(1)" class="texboxitemcode texboxcal2" value="0" 
+										onchange="setAmt(1)" oninput="setAmt(1)" class="texboxitemcode texboxcal2" value="0" 
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
 
@@ -624,7 +624,7 @@ input:checked+.slider:before {
 
 									<input type="text" name="remainAmt" id="remainAmt1" value="0" 
 										class="texboxitemcode texboxcal2" autocomplete="off" required
-										class="form-control" size="20" />
+										class="form-control" size="20"  readonly style="background-color: lightgrey;" />
 								</div>
 
 
@@ -638,7 +638,7 @@ input:checked+.slider:before {
 							<div class="order-btn textcenter">
 
 								<input name="subm1" id="subm1" class="buttonsaveorder"
-									value="SAVE ORDER" type="submit">
+									value="SAVE ORDER" type="button">
 							</div>
 						</div>
 						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1"
@@ -690,8 +690,8 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
-									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text">
+									placeholder="Delivery Date" name="devDate" id="devDate2" autocomplete="off"
+									type="text" value="${delDate}">
 
 							</div>
 							<!-- <div class="col-md-1">
@@ -952,7 +952,7 @@ input:checked+.slider:before {
 								<div class="col-md-1">
 
 									<input type="text" name="advanceAmt" id="advanceAmt2"
-										onchange="setAmt(2)" class="texboxitemcode texboxcal2"
+										onchange="setAmt(2)" oninput="setAmt(2)" class="texboxitemcode texboxcal2"
 										autocomplete="off" required class="form-control" size="20" value="0" />
 								</div>
 
@@ -961,7 +961,7 @@ input:checked+.slider:before {
 
 									<input type="text" name="remainAmt" id="remainAmt2"
 										class="texboxitemcode texboxcal2" autocomplete="off" required value="0" 
-										class="form-control" size="20" />
+										class="form-control" size="20" readonly style="background-color: lightgrey;"/>
 								</div>
 
 
@@ -978,7 +978,7 @@ input:checked+.slider:before {
 							<div class="order-btn textcenter">
 
 								<input name="subm2" id="subm2" class="buttonsaveorder"
-									value="SAVE ORDER" type="submit" >
+									value="SAVE ORDER" type="button" >
 							</div>
 						</div>
 
@@ -1201,10 +1201,24 @@ function addCustomer() {
 	var dateOfBirth = document.getElementById("dateOfBirth").value;
 	var custType = document.getElementById("custType").value;
 	var ageRange = document.getElementById("ageRange").value;
+	
+	$.getJSON('${checkEmailText}', {
+		phoneNo : mobileNo,	
+			ajax : 'true',
+	},
+
+	function(saveFlag) {
+		 if(parseInt(saveFlag)==1){		
+			   alert("Duplicate Mobile No Found.");
+				//document.getElementById("sbtbtn4").disabled = true;
+				document.getElementById("mobileNo").value = "";
+				document.getElementById("mobileNo").focus();
+		}else{
 	var gender = 2;
 	if (document.getElementById('moption').checked) {
 		gender = 1;
 	}
+	
 	//var isBuissness = document.getElementById("isBuissness").value;
 	var buisness = 0;
 	if (document.getElementById('y-option').checked) {
@@ -1222,7 +1236,8 @@ function addCustomer() {
 	} else if (mobileNo == "" || !validateMobile(mobileNo)) {
 		alert("Enter Valid Mobile No");
 		flag = 1;
-	} else if (dateOfBirth == "") {
+	}
+	else if (dateOfBirth == "") {
 		alert("Enter Date of Birth");
 		flag = 1;
 	}else if (custType == 0) {
@@ -1266,7 +1281,7 @@ function addCustomer() {
 						},
 						function(data) {
 
-							//alert(JSON.stringify(data));
+							
 
 							if (data.error == false) {
 
@@ -1291,9 +1306,11 @@ function addCustomer() {
 
 								}
 
-								$('#cust').html(html);
+								$('#custId1').html(html);
+								$('#custId2').html(html);
 
-								$("#cust").trigger("chosen:updated");
+								$("#custId1").trigger("chosen:updated");
+								$("#custId2").trigger("chosen:updated");
 								$('.chosen-select').trigger(
 										'chosen:updated');
 
@@ -1319,16 +1336,21 @@ function addCustomer() {
 
 								if (custId != 0) {
 									alert("Update Successfully");
+									//clearAddCustomerpopup()
 								} else {
-									alert("Customer Add Successfully");
+									alert("Customer Added Successfully");
+									$('#addcust').popup('hide'); 
 								}
-								$('.addcust_close').trigger('click');
+								
 							} else {
 								alert("Failed To Add Customer");
 							}
 
 						});
 	}
+		}
+		 
+	});
 
 }
 
@@ -1432,29 +1454,18 @@ function addCustomer() {
 	</script>
 
 	<script type="text/javascript">
-            function button1(flag)
+        /*     function validate(id)
             {
-             //alert("hii");
-                
-                var  adv=$("#advanceAmt"+flag).val();
-        		var tot=$("#fintotal"+flag).val();
-        		var remAmt=$("#remainAmt"+flag).val();
-        		 var x=parseFloat(adv)+parseFloat(remAmt);
-        		 
-        		// alert("sum"+x);
-        		 //alert("tot"+tot);
-                if(  parseFloat(x)== parseFloat(tot)){
-                	
-                	   var isSubmit=confirm("Do you want to save Order?");
-               
-                if(isSubmit==true   ){    
-                	document.getElementById("subm1").disabled = true;
-                    form1.submit();
-                }
+                var  adv=$("#advanceAmt"+id).val();
+        		var  total=$("#fintotal"+id).val();
+        		var  remAmt=$("#remainAmt"+id).val();
+        		var  calAmt=parseFloat(adv)+parseFloat(remAmt);
+        	
+        		if(parseFloat(calAmt)>parseFloat(total)){
+                  alert("Entered Advance is gretor than Total Amount!!");
                 } 
-                
-            }
-            function button2(flag)
+            } */
+           /*  function button2(flag)
             { 
             	
             	var  adv=$("#advanceAmt"+flag).val();
@@ -1473,7 +1484,7 @@ function addCustomer() {
             }    else{
             	alert("Enter Advance & Remaining Amount Properly");
             }
-            }
+            } */
            
         </script>
 	<script>
@@ -1495,7 +1506,7 @@ function addCustomer() {
 		var tot=$("#fintotal"+flag).val();
 		
 		//alert("hii");
-		if(parseFloat(adv) < parseFloat(tot)){
+		if(parseFloat(adv) <= parseFloat(tot)){
 			//alert("if");
 			var rem=parseFloat(tot)-parseFloat(adv);
 			document.getElementById("remainAmt"+flag).value = rem;
@@ -1504,6 +1515,7 @@ function addCustomer() {
 			//alert("else");
 			alert("Enter Advance Amount Less than Total Amount");
 			document.getElementById("advanceAmt"+flag).value = 0.00;
+			document.getElementById("remainAmt"+flag).value = tot;
 			//document.getElementById("remainAmt"+flag).value = 0.00;
 		}
 		
@@ -1560,7 +1572,7 @@ $(document).ready(function($) {
 				 
 				 
 				   
-				   document.getElementById("subm1").disabled = true; 
+				  document.getElementById("subm1").disabled = true; 
 					$.ajax({
 					   type: "POST",
 					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
@@ -1590,31 +1602,27 @@ $(document).ready(function($) {
 
 function uniquePhnNum(){
 	
-	var phoneNo = $("#phoneNum").val();
- 	  var valid = true;
-			if (phoneNo == null || phoneNo == "") {
-				valid = false;
-			} 
-			if(valid == true){
-				$.post('${checkEmailText}', {
+	var phoneNo = $("#mobileNo").val();
+ 	  var valid = false;
+			$.getJSON('${checkEmailText}', {
 					phoneNo : phoneNo,	
  					ajax : 'true',
 				},
 
 				function(data) {
 					 if(parseInt(data)==1){		
-						 alert("This Contact Number already exist.");
-						 
+						
 							document.getElementById("sbtbtn4").disabled = true;
-							document.getElementById("phoneNum").value = "";
-						return false;
+							document.getElementById("mobileNo").value = "";
+							
 					}else{
+						valid=true;
 						document.getElementById("sbtbtn4").disabled = false;
 					}
 					 
 				});
-			} 
-			return true;
+			
+			return valid;
 	 
 }
 </script>

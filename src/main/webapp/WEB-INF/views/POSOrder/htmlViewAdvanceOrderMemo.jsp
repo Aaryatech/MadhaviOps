@@ -62,8 +62,9 @@
 				</tr>
 
 			</c:if>
-
+             <c:set var="cols" value="3" />
 			<c:if test="${headDetails.isDailyMart==2}">
+			<c:set var="cols" value="4" />
 				<tr>
 
 					<td colspan="2" align="center"
@@ -113,7 +114,7 @@
 
 							</tr>
 							<tr>
-								<td colspan="4"><table width="100%" border="0"
+								<td colspan="${cols}"><table width="100%" border="0"
 										cellspacing="0" cellpadding="4" class="tbl-inner">
 
 										<tbody>
@@ -121,8 +122,11 @@
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
-												<th width="8%" bgcolor="#ECECEC" align="right">Disc(%)</th>
 												<th width="15%" bgcolor="#ECECEC" align="right">Mrp</th>
+												<c:if test="${headDetails.isDailyMart==2}">
+												<th width="8%" bgcolor="#ECECEC" align="right">Disc(%)</th>
+												</c:if>
+												
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
 
@@ -134,27 +138,33 @@
 													<td align="right"><span style="font-size: 11px">
 
 															${itemBillList.orderQty} </span></td>
-
+															<td align="right"><span style="font-size: 11px">${itemBillList.orderMrp}
+													</span></td>
+	<c:if test="${headDetails.isDailyMart==2}">
 													<td align="right"><span style="font-size: 11px">${itemBillList.isPositive}
 													</span></td>
 
-													<td align="right"><span style="font-size: 11px">${itemBillList.orderMrp}
-													</span></td>
+	</c:if>												
 
 
 													<td align="right"><span style="font-size: 11px">
-															${itemBillList.orderRate*itemBillList.orderQty} </span></td>
+			<c:if test="${headDetails.isDailyMart==2}">											
+						<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${itemBillList.orderRate*itemBillList.orderQty-((itemBillList.orderRate*itemBillList.orderQty)*itemBillList.isPositive/100)}" groupingUsed="false" />									
+			</c:if>	
+		<c:if test="${headDetails.isDailyMart==1}">	${(itemBillList.orderRate*itemBillList.orderQty)}	</c:if>										
+															</span></td>
 
 												</tr>
 											</c:forEach>
 
 											<tr>
-												<td colspan="4" align="right"><span class="style7">Total:</span></td>
+												<td colspan="${cols}" align="right"><span class="style7">Total:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
 															value="${headDetails.total}" groupingUsed="false" /></span></td>
 											</tr>
-											<c:if test="${headDetails.discAmt > 0.00}"></c:if>
+										<%-- 	<c:if test="${headDetails.discAmt > 0.00}">
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Discount
 														Amt :</span></td>
@@ -163,9 +173,9 @@
 															value="${headDetails.discAmt}" groupingUsed="false" /></span></td>
 											</tr>
 
-
+                                        </c:if> --%>
 											<tr>
-												<td colspan="4" align="right"><span class="style7">Advance
+												<td colspan="${cols}" align="right"><span class="style7">Advance
 														Amt :</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -173,7 +183,7 @@
 											</tr>
 
 											<tr>
-												<td colspan="4" align="right"><span class="style7">Remaining
+												<td colspan="${cols}" align="right"><span class="style7">Remaining
 														Amt :</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
