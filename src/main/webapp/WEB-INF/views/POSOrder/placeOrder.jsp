@@ -343,7 +343,7 @@ input:checked+.slider:before {
 								<select name="custId" class="form-control chosen" tabindex="4"
 									id="custId1" required>
 
-									 
+									 <option value="">Select Customer</option>
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
 										<option value="${custList.custId}">
@@ -419,8 +419,8 @@ input:checked+.slider:before {
 									</c:choose>
 
 									<div class="col-md-9"></div>
-									<label for="search" class="col-md-3" id="search"> <i
-										class="fa fa-search" style="font-size: 20px;"></i> <input
+									<label for="search" class="col-md-3" id="search"><!--  <i
+										class="fa fa-search" style="font-size: 20px;"> --></i> <input
 										class="myInput1" type="text" id="myInput${loop.index}"
 										onkeyup="myFunction1(${loop.index})"
 										style="border-radius: 25px;"
@@ -488,7 +488,7 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onkeydown="myFunction()"
+																			onkeydown="myFunction()" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -521,7 +521,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
+																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -558,7 +558,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
+																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -614,7 +614,7 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt1"
+									<input type="text" name="advanceAmt" id="advanceAmt1" onkeypress="return event.charCode >= 48"
 										onchange="setAmt(1)" oninput="setAmt(1)" class="texboxitemcode texboxcal2" value="0" 
 										autocomplete="off" required class="form-control" size="20" />
 								</div>
@@ -635,7 +635,7 @@ input:checked+.slider:before {
 
 							</div>
 							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
-							<div class="order-btn textcenter">
+							<div class="order-btn textright">
 
 								<input name="subm1" id="subm1" class="buttonsaveorder"
 									value="SAVE ORDER" type="button">
@@ -663,7 +663,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<select name="custId" class="form-control chosen" tabindex="4"
 									id="custId2" required>
-
+                                      <option value="">Select Customer</option>
 									 
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
@@ -738,8 +738,8 @@ input:checked+.slider:before {
 									</c:choose>
 
 									<div class="col-md-9"></div>
-									<label for="search" class="col-md-3" id="search"> <i
-										class="fa fa-search" style="font-size: 20px"></i> <input
+									<label for="search" class="col-md-3" id="search"> <!-- <i
+										class="fa fa-search" style="font-size: 20px"></i> --> <input
 										class="myInput1" type="text" id="myInput${loop.index}"
 										onkeyup="myFunction1(${loop.index})"
 										style="border-radius: 25px;"
@@ -810,7 +810,7 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onkeydown="myFunction()"
+																			onkeydown="myFunction()" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -855,7 +855,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
+																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -902,7 +902,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text"
+																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -951,7 +951,7 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt2"
+									<input type="text" name="advanceAmt" id="advanceAmt2" onkeypress="return event.charCode >= 48"
 										onchange="setAmt(2)" oninput="setAmt(2)" class="texboxitemcode texboxcal2"
 										autocomplete="off" required class="form-control" size="20" value="0" />
 								</div>
@@ -975,7 +975,7 @@ input:checked+.slider:before {
 
 							<input type="hidden" name="dailyFlagMart" id="dailyFlagMart2"
 								value="2">
-							<div class="order-btn textcenter">
+							<div class="order-btn textright">
 
 								<input name="subm2" id="subm2" class="buttonsaveorder"
 									value="SAVE ORDER" type="button" >
@@ -1536,7 +1536,11 @@ function validateMobile(mobile) {
  
 $(document).ready(function($) {
 			   $('#subm2').click(function(){
- 				   document.getElementById("subm2").disabled = true; 
+				  var custId=document.getElementById("custId2").value;
+ 				   //document.getElementById("subm2").disabled = true; 
+ 				   if(custId==""){
+ 					   alert("Please Select Customer")
+ 				   }else{
 					$.ajax({
 					   type: "POST",
 					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
@@ -1557,7 +1561,7 @@ $(document).ready(function($) {
 					setTimeout(function(){
 					},500);
 					});
-				 
+ 				   }
 				return false;
 			});
 		});
@@ -1569,10 +1573,12 @@ $(document).ready(function($) {
  
 $(document).ready(function($) {
 			   $('#subm1').click(function(){
-				 
-				 
+				   var custId=document.getElementById("custId1").value;
+				   if(custId==""){
+ 					   alert("Please Select Customer")
+ 				   }else{
 				   
-				  document.getElementById("subm1").disabled = true; 
+				 // document.getElementById("subm1").disabled = true; 
 					$.ajax({
 					   type: "POST",
 					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
@@ -1592,7 +1598,7 @@ $(document).ready(function($) {
 					setTimeout(function(){
 					},500);
 					});
-				 
+ 				  }
 				return false;
 			});
 		});

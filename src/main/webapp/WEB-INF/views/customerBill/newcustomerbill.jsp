@@ -71,7 +71,7 @@
 <c:url var="submitBillByPaymentOption"
 	value="/submitBillByPaymentOption" />
 <c:url var="editItemQty" value="/editItemQty" />
-
+<c:url var="checkEmailText" value="/checkEmailText" />
 <c:url var="getCustAmts" value="/getCustAmts" />
 <c:url var="getCustCreditBills" value="/getCustCreditBills" />
 <c:url var="getCustBills" value="/getCustBills" />
@@ -2309,14 +2309,32 @@ function matchSplitAmt(flag){
 		}
 
 		function addCustomer() {
+			var phNo="";
 			//$('#addcust').modal('hide');
 			//$('#addcust').popup('hide'); //for close popup;
 			var custId = document.getElementById("custId").value;
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
+			phNo=mobileNo;
 			var dateOfBirth = document.getElementById("dateOfBirth").value;
 			var custType = document.getElementById("custType").value;
 			var ageRange = document.getElementById("ageRange").value;
+			if(custId!=0)
+				{
+				phNo="0000000000";
+				}
+			$.getJSON('${checkEmailText}', {
+				phoneNo : phNo,	
+					ajax : 'true',
+			},
+
+			function(saveFlag) {
+				 if(parseInt(saveFlag)==1){		
+					   alert("Duplicate Mobile No Found.");
+						//document.getElementById("sbtbtn4").disabled = true;
+						document.getElementById("mobileNo").value = "";
+						document.getElementById("mobileNo").focus();
+				}else{
 			var gender = 2;
 			if (document.getElementById('moption').checked) {
 				gender = 1;
@@ -2437,6 +2455,7 @@ function matchSplitAmt(flag){
 											alert("Update Successfully");
 										} else {
 											alert("Customer Add Successfully");
+											$('#addcust').popup('hide'); 
 										}
 										$('.addcust_close').trigger('click');
 									} else {
@@ -2445,7 +2464,8 @@ function matchSplitAmt(flag){
 
 								});
 			}
-
+				}
+				});
 		}
 	</script>
 	<script type="text/javascript">

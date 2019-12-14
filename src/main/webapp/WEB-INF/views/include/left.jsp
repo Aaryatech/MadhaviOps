@@ -42,6 +42,7 @@
 						<div class="title">
 							Order <span>Booking</span>
 						</div></a></li>
+						
 			</c:if>
 
 						<c:if test="${sessionScope.isEmpPresent==1}">
@@ -169,7 +170,14 @@
 						<div class="title">
 							Order <span>History</span>
 						</div></a></li>
-
+<li><a
+					href="${pageContext.request.contextPath}/showAdvanceOrderList"><div
+							class="img">
+							<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+						</div>
+						<div class="title">
+							Advance Order List
+						</div></a></li>
 
 
 			</c:if>
@@ -321,6 +329,8 @@
 						<div class="title">
 							Expense <span>List</span>
 						</div></a></li>
+												
+						
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">

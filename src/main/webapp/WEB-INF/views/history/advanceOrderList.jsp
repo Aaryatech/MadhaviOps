@@ -219,7 +219,7 @@ jQuery(document).ready(function(){
 			<!--rightSidebar-->
 			<div class="sidebarright">
 				<div class="order-left">
-					<h2 class="pageTitle">Franchise Advance Order List</h2>
+					<h2 class="pageTitle">Advance Order List</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
  
@@ -271,11 +271,11 @@ jQuery(document).ready(function(){
 															value="${orderList.remainingAmt}" /></td>
 													<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
-															<abbr title='Advance Order Detail'><i class='fa fa-edit'></i></abbr>
+															<abbr title='Advance Order Detail'><i class='fa fa-list'></i></abbr>
 														</a>&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:if test="${orderList.isSellBillGenerated==0}"><a
 															href="#" onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
-															<abbr title='Generate Sell Bill'><i class='fa fa-edit'></i></abbr>
+															<abbr title='Generate Sell Bill'>BILL</abbr>
 														</a></c:if>
 														
 														</td>
