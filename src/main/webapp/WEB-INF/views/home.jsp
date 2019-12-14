@@ -61,7 +61,7 @@
 									<c:when test="${type==1}">
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="1" class="radio-align"
-												checked onclick="showDiv(this.value)"> Toady
+												checked onclick="showDiv(this.value)"> Today
 										</div>
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="2" class="radio-align"
@@ -79,7 +79,7 @@
 									<c:when test="${type==2}">
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="1" class="radio-align"
-												onclick="showDiv(this.value)"> Toady
+												onclick="showDiv(this.value)"> Today
 										</div>
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="2" class="radio-align"
@@ -98,7 +98,7 @@
 									<c:when test="${type==3}">
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="1" class="radio-align"
-												onclick="showDiv(this.value)"> Toady
+												onclick="showDiv(this.value)"> Today
 										</div>
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="2" class="radio-align"
@@ -117,7 +117,7 @@
 									<c:when test="${type==4}">
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="1" class="radio-align"
-												onclick="showDiv(this.value)"> Toady
+												onclick="showDiv(this.value)">Today
 										</div>
 										<div class="col-md-1 radio_align_1">
 											<input type="radio" name="type" value="2" class="radio-align"
@@ -206,15 +206,13 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}Sales</h3>
-									<div class="range">
-										<span class="percen_one"></span>
-									</div>
-									<h5 class="price_sale">
+									<h3 class="sale_head">${typeTitle}&nbsp;Sales</h3>
+									 
+									<h1 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
 											value="${countDetails.saleAmt}" />
-									</h5>
+									</h1>
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -228,10 +226,8 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}Discount</h3>
-									<div class="range">
-										<span class="percen_two"></span>
-									</div>
+									<h3 class="sale_head">${typeTitle}&nbsp;Discount</h3>
+									 
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -250,10 +246,10 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}Purchase</h3>
-									<div class="range">
+									<h3 class="sale_head">${typeTitle}&nbsp;Purchase</h3>
+									<!-- <div class="range">
 										<span class="percen_three"></span>
-									</div>
+									</div> -->
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -274,7 +270,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}No.ofBill</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;No.of Bill</h3>
 									<h5 class="price_sale">${countDetails.noOfBillGenerated}</h5>
 								</div>
 								<div class="clr"></div>
@@ -289,7 +285,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}Profit</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;Profit</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -308,7 +304,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}AdvanceAmt</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;Advance Amt</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -327,7 +323,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}CreditBillAmt</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;Credit Bill Amt</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -370,7 +366,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">Expenses</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;Expenses</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"

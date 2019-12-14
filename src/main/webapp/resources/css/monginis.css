@@ -507,12 +507,12 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 
 .sale_l{vertical-align:middle; width:25%; font-size:40px; text-align:center; color: #FFF; display: table-cell;}
 .sale_r{vertical-align:middle;  width:71%; display: table-cell; color: #FFF;}
-.sale_head{font-size: 14px; font-weight: 700; margin: 0 0 10px 0; text-transform: uppercase;}
+.sale_head{font-size: 16px; font-weight: 700; margin: 0 0 10px 0; text-transform: uppercase;}
 .range{margin: 0 0 10px 0; width: 100%; border: none; background:rgba(255, 255, 255, 0.5); border-radius: 5px;}
 .percen_one{width:25%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
 .percen_two{width:50%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
 .percen_three{width:75%; padding: 5px; background: #FFF; display: block; border-radius: 5px;}
-.price_sale{margin: 0px; padding: 0px; font-size:16px; font-weight: 500; }
+.price_sale{margin: 0px; padding: 0px; font-size:25px; font-weight: 500; }
 .sale-list{display: table-cell; vertical-align: middle; padding: 0 20px;}
 .sale_epay{color: #FFF; font-size:14px; margin: 5px 0; font-weight: 600; text-transform: uppercase;}
 .sale_epay span{float: right; font-weight: 400; text-transform: capitalize; font-size: 15px;}
