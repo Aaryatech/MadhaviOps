@@ -159,7 +159,7 @@ public class PosPlaceOrderController {
 				deliveryDate = incrementDate(todaysDate, 1);
 				System.out.println("inside 1.1");
 
-			} else if (isSameDayApplicable == 1) {
+			} else if (isSameDayApplicable == 1 || isSameDayApplicable == 3) {
 
 				deliveryDate = todaysDate;
 
@@ -426,8 +426,17 @@ public class PosPlaceOrderController {
 		String devDate = request.getParameter("devDate");
 		System.err.println("devDate"+devDate);
 		int rateCat = frDetails.getFrRateCat();
+        Date date1 = dfReg1.parse(devDate);
+        Date date2 = dfReg1.parse(todaysDate);
+        String x1="";
+		 if (date1.compareTo(date2) == 0) { 
+				 x1 = incrementDate(DateConvertor.convertToYMD(devDate),0);
 
-		String x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
+		 }else {
+				 x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
+
+		 }
+			  
 		int dm = 0;
 
 		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
@@ -452,7 +461,6 @@ public class PosPlaceOrderController {
 		advHeader.setTotal(Float.parseFloat(total));
 		advHeader.setFrId(frDetails.getFrId());
 		advHeader.setOrderDate(todaysDate);
-		advHeader.setProdDate(DateConvertor.convertToDMY(x1));
 		advHeader.setDeliveryDate(devDate);
 		
 		advHeader.setIsBillGenerated(0);
@@ -550,7 +558,7 @@ public class PosPlaceOrderController {
 				advDetailList.add(det);
 			}
 		}
-		if(advDetailList.size()>0) {
+		if(advDetailList.size()>0 || (date1.compareTo(date2) >= 0)  ) {
 			advHeader.setDiscAmt(discAmt);
 		advHeader.setDetailList(advDetailList);
 		RestTemplate restTemplate = new RestTemplate();

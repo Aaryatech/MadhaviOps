@@ -10,6 +10,19 @@
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 
 <style>
+#overlay2 {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(239, 219, 219, 0.5);
+	z-index: 2;
+	cursor: pointer;
+}
 .plus-button {
 	border: 2px solid lightgrey;
 	background-color: #fff;
@@ -272,7 +285,14 @@ input:checked+.slider:before {
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 	<c:url value="/saveCustomerFromBill" var="saveCustomerFromBill"></c:url>
-
+	
+	<div id="overlay2">
+			<div id="text2">
+				<img
+					src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
+					alt="madhvi_logo">
+			</div>
+		</div>
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -421,7 +441,7 @@ input:checked+.slider:before {
 									<div class="col-md-9"></div>
 									<label for="search" class="col-md-3" id="search"><!--  <i
 										class="fa fa-search" style="font-size: 20px;"> --></i> <input
-										class="myInput1" type="text" id="myInput${loop.index}"
+										class="myInput1" type="text" id="myInput1${loop.index}"
 										onkeyup="myFunction1(${loop.index})"
 										style="border-radius: 25px;"
 										placeholder="Search items by name" title="Type item name">
@@ -454,7 +474,7 @@ input:checked+.slider:before {
 										</div>
 										<div class="table-wrap">
 
-											<table id="table_grid${loop.index}" class="responsive-table1"
+											<table id="table_grid1${loop.index}" class="responsive-table1"
 												style="margin: 0px;">
 												<!--   class="main-table" -->
 												<thead>
@@ -740,8 +760,8 @@ input:checked+.slider:before {
 									<div class="col-md-9"></div>
 									<label for="search" class="col-md-3" id="search"> <!-- <i
 										class="fa fa-search" style="font-size: 20px"></i> --> <input
-										class="myInput1" type="text" id="myInput${loop.index}"
-										onkeyup="myFunction1(${loop.index})"
+										class="myInput1" type="text" id="myInput2${loop.index}"
+										onkeyup="myFunction2(${loop.index})"
 										style="border-radius: 25px;"
 										placeholder="Search items by name" title="Type item name">
 									</label>
@@ -770,7 +790,7 @@ input:checked+.slider:before {
 										</div>
 										<div class="table-wrap">
 
-											<table id="table_grid${loop.index}" class="responsive-table2"
+											<table id="table_grid2${loop.index}" class="responsive-table2"
 												style="margin: 0px;">
 												<!--   class="main-table" -->
 												<thead>
@@ -1497,7 +1517,7 @@ function addCustomer() {
 		 $('#calTotal'+flag).text(sum);
  		 document.getElementById("fintotal"+flag).value = sum;
  		 document.getElementById("remainAmt"+flag).value = sum;
- 		 
+ 		document.getElementById("advanceAmt"+flag).value = 0.00;
  		
 	}
 	function setAmt(flag){ 
@@ -1541,6 +1561,8 @@ $(document).ready(function($) {
  				   if(custId==""){
  					   alert("Please Select Customer")
  				   }else{
+						document.getElementById("overlay2").style.display = "block";
+
 					$.ajax({
 					   type: "POST",
 					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
@@ -1554,7 +1576,8 @@ $(document).ready(function($) {
 					 // $('.modale').removeClass('opened');
 					   document.getElementById("subm2").disabled = false; 
 					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
- 
+						document.getElementById("overlay2").style.display = "";
+
 					}
 					}
 					}).done(function() {
@@ -1577,7 +1600,8 @@ $(document).ready(function($) {
 				   if(custId==""){
  					   alert("Please Select Customer")
  				   }else{
-				   
+ 						document.getElementById("overlay2").style.display = "block";
+
 				 // document.getElementById("subm1").disabled = true; 
 					$.ajax({
 					   type: "POST",
@@ -1592,7 +1616,9 @@ $(document).ready(function($) {
 					window.location.reload(true);
 					  document.getElementById("subm1").disabled = false; 
  					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
- 					}
+						document.getElementById("overlay2").style.display = "";
+
+					}
 					}
 					}).done(function() {
 					setTimeout(function(){
@@ -1737,9 +1763,9 @@ function sortTable() {
 	<script>
 	function myFunction1(index) {
 		var input, filter, table, tr, td, i;
-		input = document.getElementById("myInput"+index);
+		input = document.getElementById("myInput1"+index);
 		filter = input.value.toUpperCase();
-		table = document.getElementById("table_grid"+index);
+		table = document.getElementById("table_grid1"+index);
 		tr = table.getElementsByTagName("tr");
 		for (i = 0; i < tr.length; i++) {
 			td = tr[i].getElementsByTagName("td")[0];
@@ -1753,11 +1779,11 @@ function sortTable() {
 		}
 	}
 	
-	function myFunction() {
+	function myFunction2(index) {
 		var input, filter, table, tr, td, i;
-		input = document.getElementById("myInput");
+		input = document.getElementById("myInput2"+index);
 		filter = input.value.toUpperCase();
-		table = document.getElementById("table_grid1");
+		table = document.getElementById("table_grid2"+index);
 		tr = table.getElementsByTagName("tr");
 		for (i = 0; i < tr.length; i++) {
 			td = tr[i].getElementsByTagName("td")[0];
@@ -1770,6 +1796,7 @@ function sortTable() {
 			}
 		}
 	}
+	
 </script>
 	<!-- MODAL SCRIPT -->
 	<script>
