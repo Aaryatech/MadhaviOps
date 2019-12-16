@@ -407,9 +407,9 @@ public class BillingController {
 	@RequestMapping(value = "pdf/showBillPdf/{transportMode}/{vehicleNo}/{selectedBills}", method = RequestMethod.GET)
 	public ModelAndView showBillPdf(@PathVariable String transportMode, @PathVariable String vehicleNo,
 			@PathVariable String[] selectedBills, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("IN Show bill PDF Method :/showBillPdf");
+		//System.out.println("IN Show bill PDF Method :/showBillPdf");
 		ModelAndView model = new ModelAndView("billing/frBillPdf");
-
+	//	System.err.println("Inside new form action "+411);
 		List<FrBillPrint> billPrintList = new ArrayList<>();
 
 		try {
@@ -422,7 +422,7 @@ public class BillingController {
 
 			billList = billList.substring(0, billList.length() - 1);
 
-			System.out.println("selected bills for Printing " + billList);
+			//System.out.println("selected bills for Printing " + billList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -467,26 +467,21 @@ public class BillingController {
 			billHeadersListForPrint = new ArrayList<>();
 			billHeadersListForPrint = responseEntity2.getBody();
 
-			System.out.println("in new BHLFP" + billHeadersListForPrint.toString());
+			//System.out.println("in new BHLFP" + billHeadersListForPrint.toString());
 						CategoryListResponse categoryListResponse = restTemplate.getForObject(Constant.URL + "showAllCategory",
 					CategoryListResponse.class);
 			List<MCategoryList> categoryList;
 			categoryList = categoryListResponse.getmCategoryList();
-			
+			System.err.println("in categoryList" + categoryList.toString());
 			
 			
 			SubCategory[] subCatList = restTemplate.getForObject(Constant.URL + "getAllSubCatList",
 					SubCategory[].class);
 
 			ArrayList<SubCategory> subCatAList = new ArrayList<SubCategory>(Arrays.asList(subCatList));
-			SubCategory subCat=new SubCategory();
-			subCat.setCatId(5);
-			subCat.setSubCatName("Special Cake");
-			subCat.setSubCatId(0);
-			subCat.setDelStatus(0);
-			subCatAList.add(subCat);
+		 
 
-			System.out.println("subCatAList:" + subCatAList.toString());
+			System.err.println("subCatAList:" + subCatAList.toString());
 		
 			List<GetBillDetailPrint> billDetailsListForPrint= new ArrayList<GetBillDetailPrint>();
 			billDetailsListForPrint = billDetailsResponse;
@@ -561,7 +556,7 @@ public class BillingController {
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
 
-			System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+			//System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
 			model.addObject("billDetails", billPrintList);
 			model.addObject("slabwiseBillList", slabwiseBillList);
 			model.addObject("vehicleNo", vehicleNo);
