@@ -559,7 +559,8 @@
 				google.visualization.events.addListener(chart, 'select',
 						selectQtyHandler);
 				chart.draw(data1, options);
-
+				
+				 
 			});
 
 		}
