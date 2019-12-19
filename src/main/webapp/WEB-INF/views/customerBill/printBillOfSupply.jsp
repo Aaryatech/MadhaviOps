@@ -68,12 +68,10 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 8px;">${frDetails.frAddress}
-					<br />Outlet Ph:<strong>${frDetails.frMob}</strong><br />
+					style="padding: 2px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 11px;">${frDetails.frAddress}
+					<br />Outlet Ph:&nbsp;<strong>${frDetails.frMob}</strong><br />
 					<span
-					style="font-size: 8px; font-family: Arial;">GSTIN:<b>
-							${frDetails.frGstNo}</b> State: ${frSup.frState} <br>FSSAI :
-						11515031000866
+					style="font-size:11px; font-family: verdana;">GSTIN:&nbsp;<b>${frDetails.frGstNo}</b> State:&nbsp; ${frSup.frState} <br>FSSAI:&nbsp;&nbsp;${frDetails.fbaLicenseDate}
 				</span>
 				</td>
 			</tr>
@@ -190,8 +188,8 @@
 							<td align="left"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
 								>
-								 For wholesale inquiry contact DairyMart Team Ph.No: 82600 60048/49<br>
-								 visit us on  www.madhvi.in<br>
+								 For wholesale inquiry contact DairyMart Team <br>Ph: 82600 60048/49<br>
+								 Visit us on  www.madhvi.in<br>
 								 Please Email us your feedback/suggestions on<br>
 								 madhvidairy@gmail.com<br>
 								 This is a computer generated invoice <br>

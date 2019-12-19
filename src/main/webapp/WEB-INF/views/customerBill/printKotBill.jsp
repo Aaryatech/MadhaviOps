@@ -55,7 +55,15 @@
 					style="padding: 0px; border-top: 1px solid #E7E7E7;"><span><b>${frName}</b><br />
 				</span></td>
 			</tr>
-
+           	<tr>
+				<td colspan="2" align="center"
+					style="padding: 0px; border-top: 1px solid #E7E7E7;font-size: 11px;"><span><b>Sales Person:&nbsp;${frEmpMaster.frEmpName} </b><br />
+				</span></td>
+			</tr>
+			<tr>	
+				<td  colspan="2" align="center"
+					style="padding: 0px; border-top: 1px solid #E7E7E7;font-size: 11px;"><span><b>Date & Time:&nbsp;</b>${sellBillHeaderAndDetail.timestamp}</span><br /></td>
+			</tr>
 			<tr>
 				<td colspan="2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="2">

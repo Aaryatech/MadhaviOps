@@ -362,7 +362,7 @@ input:checked+.slider:before {
 													style="border-radius: 18px;" type="text"> <datalist
 														id="items">
 														<c:forEach items="${itemsList}" var="itemsList">
-															<option value='${itemsList.itemId}'
+															<option value='${itemsList.id}'
 																data-value='${itemsList.itemName}'
 																data-id='${itemsList.itemName}'>${itemsList.itemName}</option>
 														</c:forEach>
@@ -580,7 +580,7 @@ input:checked+.slider:before {
 														placeholder="Enter Barcode" id='input' list='dlist' /> <datalist
 															id='dlist'>
 															<c:forEach items="${itemsList}" var="itemsList">
-																<option value="${itemsList.itemId}"><c:out
+																<option value="${itemsList.id}"><c:out
 																		value="${itemsList.itemId}" /></option>
 															</c:forEach>
 														</datalist></td>
@@ -592,7 +592,7 @@ input:checked+.slider:before {
 														onchange="onSelectItem()" data-rule-required="true">
 															<option value="">Item Name</option>
 															<c:forEach items="${itemsList}" var="itemsList">
-																<option value="${itemsList.itemId}">${itemsList.itemName}</option>
+																<option value="${itemsList.id}">${itemsList.itemName}</option>
 															</c:forEach>
 													</select></td>
 													<td><input type="number" min="1" max="500"
@@ -742,7 +742,7 @@ function onRateChange(rate)
 			//alert("name="+data.itemName);
 			
 			
-			$('#itemName').selectpicker('val',''+data.itemId);
+			$('#itemName').selectpicker('val',''+data.id);
 
 			document.getElementById("rateTdVal1").value=data.mrp;
 			document.getElementById("itemNameForZeroMrp").innerText=data.itemName;
@@ -780,7 +780,7 @@ function onRateChange(rate)
 		}, function(data) {
 
 		//$('#itemName').val(data.itemId).prop('selected', true);
-			$('#itemName').selectpicker('val',''+data.itemId);
+			$('#itemName').selectpicker('val',''+data.id);
 		document.getElementById("input").value=val;
 			
 		document.getElementById("rateTdVal1").value=data.mrp;

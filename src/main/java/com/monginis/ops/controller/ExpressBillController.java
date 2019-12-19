@@ -40,6 +40,7 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AllMenuResponse;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.CustomerBillItem;
 import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
@@ -58,6 +59,8 @@ import com.monginis.ops.model.SellBillDetailList;
 import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
 //import com.sun.org.apache.regexp.internal.RE;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
 @Scope("session")
@@ -513,7 +516,7 @@ else {
 
 	@RequestMapping(value = "/insertItem", method = RequestMethod.GET)
 	public @ResponseBody List<SellBillDetail> insertItem(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value = "itemId", required = true) String itemId,
+			@RequestParam(value = "itemId", required = true) int itemId,
 			@RequestParam(value = "qty", required = true) int qty) {
 		System.out.println("********ItemId********" + itemId);
 		RestTemplate restTemplate = new RestTemplate();
@@ -530,7 +533,7 @@ if(ses==null) {
 
 		float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0;
 		for (CustomerBillItem item : customerBillItemList) {
-			if (item.getItemId().equalsIgnoreCase(itemId)) {
+			if (item.getId()==itemId) {
 
 				SellBillDetail sellBillDetail = new SellBillDetail();
 
@@ -573,7 +576,7 @@ if(ses==null) {
 				sellBillDetail.setCgstRs(cgstRs);
 				sellBillDetail.setDelStatus(0);
 				sellBillDetail.setGrandTotal(grandTotal);
-				sellBillDetail.setIgstPer(0);
+				sellBillDetail.setIgstPer(tax1+tax2);
 				sellBillDetail.setIgstRs(0);
 				sellBillDetail.setItemId(item.getId());
 				sellBillDetail.setMrp(rate);
@@ -727,17 +730,26 @@ if(ses==null) {
 	public @ResponseBody SellBillHeader insertHeader(HttpServletRequest request, HttpServletResponse response) {
 		CustomerBillItem customerBillItem = new CustomerBillItem();
 		HttpSession session = request.getSession();
+		RestTemplate restTemplate = new RestTemplate();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		
 			 globalFrId=frDetails.getFrId();
-		
+
+		MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+		mvm.add("settingKey", "DEFLTCUST");
+		NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
+				NewSetting.class);
+		MultiValueMap<String, Object> mapc = new LinkedMultiValueMap<>();
+		mapc.add("custId", Integer.parseInt(settingValue.getExVarchar1()));
+		Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", mapc, Customer.class);
+	
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.now();
 		System.out.println(dtf.format(localDate)); // 2016/11/16
 
 		SellBillHeader sellBillHeader = new SellBillHeader();
-		String invNo = getInvoiceNo(request,response);
+		String invNo = OpsController.getInvoiceNo(request,response);
         
 		sellBillHeader.setFrId(frDetails.getFrId());
 		sellBillHeader.setFrCode(frDetails.getFrCode());
@@ -776,10 +788,13 @@ if(ses==null) {
 		sellBillHeader.setDiscAmtItem(0);
 		sellBillHeader.setCustLoyaltyPtRate(0);
 		sellBillHeader.setCustLoyaltyPt(0);
+		sellBillHeader.setCustId(Integer.parseInt(settingValue.getSettingValue1()));
 		sellBillHeader.setCouponNo("-");
 		sellBillHeader.setIsDairyMartBill(0);
+		sellBillHeader.setUserName(customerById.getCustName());
+		sellBillHeader.setUserPhone(customerById.getPhoneNumber());
+		sellBillHeader.setUserGstNo(customerById.getGstNo());
 		
-		RestTemplate restTemplate = new RestTemplate();
 		  System.err.println("sellBillHeader"+sellBillHeader.toString());     
 		sellBillHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", sellBillHeader,
 				SellBillHeader.class);
@@ -821,7 +836,7 @@ if(ses==null) {
 		CustomerBillItem resItem = new CustomerBillItem();
 
 		for (CustomerBillItem item : customerBillItemList) {
-			if (item.getItemId().equalsIgnoreCase(stringItemId)) {
+			if (item.getId()==Integer.parseInt(stringItemId)) {
 
 				resItem = item;
 			} else {
@@ -836,7 +851,8 @@ if(ses==null) {
 	public @ResponseBody int dayClose(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 		RestTemplate restTemplate = new RestTemplate();
 		System.out.println("inside day close ");
-
+		HttpSession session = request.getSession();
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("billNo", sellBillHeaderGlobal.getSellBillNo());
@@ -898,7 +914,8 @@ if(ses==null) {
 			billHeader.setGrandTotal(Math.round(billHeader.getGrandTotal()));
 			billHeader.setPaidAmt(billHeader.getGrandTotal());
 			billHeader.setPayableAmt(billHeader.getGrandTotal());
-
+			billHeader.setExtInt1(frEmpDetails.getFrEmpId());
+		
 			
 			System.err.println("bill Header data for Day close " +billHeader.toString());
 			String start_dt =billHeader.getBillDate();
@@ -930,15 +947,15 @@ if(ses==null) {
             	 transactionDetail.setPayMode(billHeader.getPaymentMode());
             	 transactionDetail.setCashAmt(billHeader.getGrandTotal());
             	 transactionDetail.setCardAmt(0);
-            	 transactionDetail.setePayType(0);
+            	 transactionDetail.setePayType(1);
             	 transactionDetail.setePayAmt(0);
             	 transactionDetail.setDiscType(0);
             	 transactionDetail.setDelStatus(0);
-            	 transactionDetail.setExInt1(0);
+            	 transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
             	 transactionDetail.setExInt2(0);
             	 transactionDetail.setExFloat1(0); 
             	 transactionDetail.setExFloat2(0);  
-            	 transactionDetail.setExVar1("-");
+            	 transactionDetail.setExVar1("0,1");
             	 transactionDetail.setExVar2("-");
             	 dList.add(transactionDetail);
             	 List<TransactionDetail>	transactionDetailRes = restTemplate.postForObject(Constant.URL + "saveTransactionDetail", dList,

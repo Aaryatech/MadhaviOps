@@ -92,6 +92,18 @@ public class OpsController {
 			SellBillHeaderAndDetail sellBillHeaderAndDetail = restTemplate.postForObject(
 					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
+				
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+						FrEmpMaster.class);
+				model.addAttribute("frEmpMaster", frEmpMaster);
+				} catch (Exception e) {
+					FrEmpMaster frEmpMaster=new FrEmpMaster();
+					frEmpMaster.setFrEmpName("-");
+					model.addAttribute("frEmpMaster", frEmpMaster);
+				}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,14 +121,7 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-			try {
-			FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
-			model.addAttribute("frEmpMaster", frEmpMaster);
-			} catch (Exception e) {
-				FrEmpMaster frEmpMaster=new FrEmpMaster();
-				frEmpMaster.setFrEmpName("-");
-				model.addAttribute("frEmpMaster", frEmpMaster);
-			}
+		
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 0);
@@ -124,7 +129,18 @@ public class OpsController {
 					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
 			model.addAttribute("frDetails", frDetails);
-
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
+				
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+						FrEmpMaster.class);
+				model.addAttribute("frEmpMaster", frEmpMaster);
+				} catch (Exception e) {
+					FrEmpMaster frEmpMaster=new FrEmpMaster();
+					frEmpMaster.setFrEmpName("-");
+					model.addAttribute("frEmpMaster", frEmpMaster);
+				}
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -152,14 +168,7 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-			try {
-				FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
-				model.addAttribute("frEmpMaster", frEmpMaster);
-				} catch (Exception e) {
-					FrEmpMaster frEmpMaster=new FrEmpMaster();
-					frEmpMaster.setFrEmpName("-");
-					model.addAttribute("frEmpMaster", frEmpMaster);
-				}
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 1);
@@ -167,7 +176,18 @@ public class OpsController {
 					Constant.URL + "/getSellBillHeaderAndDetailForPos", map, SellBillHeaderAndDetail.class);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
 			model.addAttribute("frDetails", frDetails);
-
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
+				
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+						FrEmpMaster.class);
+				model.addAttribute("frEmpMaster", frEmpMaster);
+				} catch (Exception e) {
+					FrEmpMaster frEmpMaster=new FrEmpMaster();
+					frEmpMaster.setFrEmpName("-");
+					model.addAttribute("frEmpMaster", frEmpMaster);
+				}
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -593,7 +613,7 @@ public class OpsController {
 			/* int advKey = Integer.parseInt(request.getParameter("advKey")); */
 			String customerName = request.getParameter("selectedText");
 			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
-System.err.println("advAmt"+advAmt);
+            System.err.println("advAmt"+advAmt);
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
@@ -602,7 +622,11 @@ System.err.println("advAmt"+advAmt);
 			for (int i = 0; i < itemBillList.size(); i++) {
 				items = items + "," + itemBillList.get(i).getItemId();
 			}
-
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+			
+			
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
@@ -665,7 +689,7 @@ System.err.println("advAmt"+advAmt);
 			sellBillHeader.setFrId(frDetails.getFrId());
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
-			sellBillHeader.setUserName(customerName);
+			sellBillHeader.setUserName(customerById.getCompanyName());
 			sellBillHeader.setBillDate(sf.format(date));
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
@@ -678,8 +702,8 @@ System.err.println("advAmt"+advAmt);
 			
 			sellBillHeader.setPaymentMode(1);
 			sellBillHeader.setSellBillNo(0);
-			sellBillHeader.setUserGstNo("NA");
-			sellBillHeader.setUserPhone("NA");
+			sellBillHeader.setUserGstNo(customerById.getGstNo());
+			sellBillHeader.setUserPhone(customerById.getPhoneNumber());
 			sellBillHeader.setBillType('R');
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setDiscountPer(0);
@@ -739,7 +763,7 @@ System.err.println("advAmt"+advAmt);
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -818,7 +842,10 @@ System.err.println("advAmt"+advAmt);
 			for (int i = 0; i < itemBillList.size(); i++) {
 				items = items + "," + itemBillList.get(i).getItemId();
 			}
-
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+			
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
@@ -911,13 +938,13 @@ System.err.println("advAmt"+advAmt);
 			sellBillHeader.setFrId(frDetails.getFrId());
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
-			sellBillHeader.setUserName(customerName);
+			sellBillHeader.setUserName(customerById.getCustName());
 			sellBillHeader.setBillDate(sf.format(date));
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
 			sellBillHeader.setSellBillNo(0);
-			sellBillHeader.setUserGstNo("NA");
-			sellBillHeader.setUserPhone("NA");
+			sellBillHeader.setUserGstNo(customerById.getGstNo());
+			sellBillHeader.setUserPhone(customerById.getPhoneNumber());
 			sellBillHeader.setBillType('R');
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setPayableAmt(Math.round(total));
@@ -969,7 +996,7 @@ System.err.println("advAmt"+advAmt);
 				if (creditBill == 1) {
 					transactionDetail.setCashAmt(0);
 					transactionDetail.setPayMode(1);
-					transactionDetail.setExVar1("1");
+					transactionDetail.setExVar1("0");
 					
 				} else {
 					transactionDetail.setPayMode(paymentMode);
@@ -1011,7 +1038,7 @@ System.err.println("advAmt"+advAmt);
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -1039,7 +1066,7 @@ System.err.println("advAmt"+advAmt);
 		return info;
 	}
 
-	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
+	public static String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();

@@ -1292,10 +1292,10 @@ function addCustomer() {
 		alert("Enter Valid Mobile No");
 		flag = 1;
 	}
-	else if (dateOfBirth == "") {
+	/* else if (dateOfBirth == "") {
 		alert("Enter Date of Birth");
 		flag = 1;
-	}else if (custType == 0) {
+	} */else if (custType == 0) {
 		alert("Please Select Customer Type");
 		flag = 1;
 	}
@@ -1481,7 +1481,7 @@ function addCustomer() {
 				}else
 				{
 					 var total =0;
-					alert("Please Enter Qty Multiple of Minimum Qty & gretor than or Equal to Limit");
+					alert("Please Enter Qty Multiple of Minimum Qty & greater than or Equal to Limit");
 					$('#qty2'+id).val('0');
 					$('#total2'+id).html(total);
 					$('#qty2'+id).focus();
