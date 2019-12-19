@@ -6,9 +6,12 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/newpos/timeassets/css/bootstrap.min.css">
+ --%><link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
 <style>
 #overlay2 {
 	position: fixed;
@@ -360,7 +363,7 @@ input:checked+.slider:before {
 								<div class="col1title">Customer</div>
 							</div>
 							<div class="col-md-2">
-								<select name="custId" class="form-control chosen" tabindex="4"
+								<select name="custId" class="form-control chosen-select"  tabindex="4"
 									id="custId1" required>
 
 									 <option value="">Select Customer</option>
@@ -387,11 +390,23 @@ input:checked+.slider:before {
 								<div class="col1title">Delivery Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
+								<input id="fromdatepicker"  class="texboxitemcode texboxcal" required
 									placeholder="Delivery Date" name="devDate"  id="devDate1" autocomplete="off"
 									type="text" value="${delDate}">
 
 							</div>
+							<div class="col-md-1">
+								<div class="col1title">Time</div>
+							</div>
+							<div class="col-md-2">
+							<div class="clearfix">
+			<div class="input-group clockpicker-with-callbacks">
+				<input type="text" class="form-control" value="00:00" required  name="delTime"  id="delTime1" >
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-time"></span>
+				</span>
+			</div>
+		</div></div>
 							<!-- <div class="col-md-1">
 								<div class="col1title">Dairy mart</div>
 							</div>
@@ -678,10 +693,10 @@ input:checked+.slider:before {
 
 
 							<div class="col-md-1">
-								<div class="col1title">Select Customer</div>
+								<div class="col1title">Customer</div>
 							</div>
 							<div class="col-md-2">
-								<select name="custId" class="form-control chosen" tabindex="4"
+								<select name="custId" class="form-control chosen-select" tabindex="4"
 									id="custId2" required>
                                       <option value="">Select Customer</option>
 									 
@@ -710,10 +725,23 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
-									placeholder="Delivery Date" name="devDate" id="devDate2" autocomplete="off"
+									placeholder="Delivery Date" name="devDate" autocomplete="off"
 									type="text" value="${delDate}">
 
 							</div>
+							<div class="col-md-1">
+								<div class="col1title">Time</div>
+							</div>
+							<div class="col-md-2">	<div class="clearfix">
+			<div class="input-group clockpicker-with-callbacks">
+				<input type="text" class="form-control" value="00:00" required  name="delTime"  id="delTime2" >
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-time"></span>
+				</span>
+			</div>
+		</div></div>
+		
+							
 							<!-- <div class="col-md-1">
 								<div class="col1title">Dairy mart</div>
 							</div>
@@ -1175,6 +1203,13 @@ input:checked+.slider:before {
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
+	<!-- Modal to show cust creadit Bill end -->
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 	<script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";
@@ -1401,7 +1436,7 @@ function addCustomer() {
 	<script>
 		function checkAdd() {
 			if (document.getElementById("dm").checked == true) {
-				
+				 document.getElementById("custId2_chosen").style.width="178px";
 				//alert("dairyMart");
               		$('#form1').hide();
               		$('#form2').show();		
@@ -1557,9 +1592,12 @@ function validateMobile(mobile) {
 $(document).ready(function($) {
 			   $('#subm2').click(function(){
 				  var custId=document.getElementById("custId2").value;
+				  var delTime=document.getElementById("delTime2").value;
  				   //document.getElementById("subm2").disabled = true; 
  				   if(custId==""){
  					   alert("Please Select Customer")
+ 				   }else if(delTime=="00:00"){
+ 					   alert("Please Select Delivery Time")
  				   }else{
 						document.getElementById("overlay2").style.display = "block";
 
@@ -1568,8 +1606,8 @@ $(document).ready(function($) {
 					            url: "${pageContext.request.contextPath}/saveAdvanceOrder",
 					            data: $("#form2").serialize(),
 					            dataType: 'json',
-					success: function(data){
-				 if(data!==null)
+					success: function(data){ 
+				 if(data.advHeaderId>0)
 					{
 	 				  
 					 window.location.reload();
@@ -1578,7 +1616,11 @@ $(document).ready(function($) {
 					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
 						document.getElementById("overlay2").style.display = "";
 
-					}
+					}else
+						{
+						document.getElementById("overlay2").style.display = "";
+						alert("Please Place Valid Advance Order!")
+						}
 					}
 					}).done(function() {
 					setTimeout(function(){
@@ -1597,8 +1639,11 @@ $(document).ready(function($) {
 $(document).ready(function($) {
 			   $('#subm1').click(function(){
 				   var custId=document.getElementById("custId1").value;
+				   var delTime=document.getElementById("delTime1").value;
 				   if(custId==""){
  					   alert("Please Select Customer")
+ 				   }else if(delTime=="00:00"){
+ 					   alert("Please Select Delivery Time")
  				   }else{
  						document.getElementById("overlay2").style.display = "block";
 
@@ -1609,7 +1654,7 @@ $(document).ready(function($) {
 					            data: $("#form1").serialize(),
 					            dataType: 'json',
 					success: function(data){
-				 if(data!==null)
+				 if(data.advHeaderId>0)
 					{
 					 
 					//alert( window.location);
@@ -1618,7 +1663,11 @@ $(document).ready(function($) {
  					    window.open("${pageContext.request.contextPath}/showAdvanceOrderMemo/"+data.advHeaderId+"/"+data.deliveryDate+"/"+data.frId);
 						document.getElementById("overlay2").style.display = "";
 
-					}
+					}else
+						{
+						document.getElementById("overlay2").style.display = "";
+						alert("Please Place Valid Order!")
+						}
 					}
 					}).done(function() {
 					setTimeout(function(){
@@ -1809,7 +1858,54 @@ $('.closemodale').click(function (e) {
          $('.modale').removeClass('opened');
     });
 </script>
-	<!-- MODAL SCRIPT END-->
+	<!-- MODAL SCRIPT END--><%-- 
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/jquery.min.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.js"></script>
+<script type="text/javascript">
+$('.clockpicker-with-callbacks').clockpicker({
+		donetext: 'Done',
+		init: function() { 
+			console.log("colorpicker initiated");
+		},
+		beforeShow: function() {
+			console.log("before show");
+		},
+		afterShow: function() {
+			console.log("after show");
+		},
+		beforeHide: function() {
+			console.log("before hide");
+		},
+		afterHide: function() {
+			console.log("after hide");
+		},
+		beforeHourSelect: function() {
+			console.log("before hour selected");
+		},
+		afterHourSelect: function() {
+			console.log("after hour selected");
+		},
+		beforeDone: function() {
+			console.log("before done");
+		},
+		afterDone: function() {
+			console.log("after done");
+		}
+	})
+	.find('input').change(function(){
+		console.log(this.value);
+	});
+
+// Manually toggle to the minutes view
+$('#check-minutes').click(function(e){
+	// Have to stop propagation here
+	e.stopPropagation();
+	input.clockpicker('show')
+			.clockpicker('toggleView', 'minutes');
+});
+</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/highlight.min.js"></script>
 </body>
 </html>

@@ -415,7 +415,16 @@ public class HistoryController {
 			}
 
 		}
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    	try{
+    	Date date3 = sdf.parse(headDet.getExVar2());
+    	//new format
+    	SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss aa");
+    	//formatting the given time to new format with AM/PM
+    	model.addObject("delTime",sdf2.format(date3));
+    	}catch(ParseException e){
+    		e.printStackTrace();
+    	}
 		
 		System.err.println("headDet list"+headDet.toString());
 		Customer cust=new Customer();

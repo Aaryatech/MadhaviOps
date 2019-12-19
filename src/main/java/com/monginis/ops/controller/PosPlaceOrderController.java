@@ -412,6 +412,7 @@ public class PosPlaceOrderController {
 
 		List<AdvanceOrderDetail> advDetailList = new ArrayList<AdvanceOrderDetail>();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
+		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
 		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		//DateFormat dfdmy = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -424,11 +425,13 @@ public class PosPlaceOrderController {
 		int custId = Integer.parseInt(request.getParameter("custId"));
 		String total = request.getParameter("fintotal1");
 		String devDate = request.getParameter("devDate");
+		String deliveryTime= request.getParameter("delTime");
 		System.err.println("devDate"+devDate);
 		int rateCat = frDetails.getFrRateCat();
         Date date1 = dfReg1.parse(devDate);
         Date date2 = dfReg1.parse(todaysDate);
         String x1="";
+        System.err.println(date1.compareTo(date2));
 		 if (date1.compareTo(date2) == 0) { 
 				 x1 = incrementDate(DateConvertor.convertToYMD(devDate),0);
 
@@ -454,15 +457,15 @@ public class PosPlaceOrderController {
 		advHeader.setExFloat2(0);
 		advHeader.setExInt1(1);
 		advHeader.setExInt2(1);
-		advHeader.setExVar1("NA");
-		advHeader.setExVar2("NA");
+		advHeader.setExVar1(dateFormat.format(date));//Order Time
+		advHeader.setExVar2(deliveryTime);//Delivery Time
 		advHeader.setIsDailyMart(dm);
 		advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
 		advHeader.setTotal(Float.parseFloat(total));
 		advHeader.setFrId(frDetails.getFrId());
 		advHeader.setOrderDate(todaysDate);
 		advHeader.setDeliveryDate(devDate);
-		
+		advHeader.setProdDate(DateConvertor.convertToDMY(x1));
 		advHeader.setIsBillGenerated(0);
 		advHeader.setIsSellBillGenerated(0);
 		float discAmt=0.0f;
@@ -558,15 +561,19 @@ public class PosPlaceOrderController {
 				advDetailList.add(det);
 			}
 		}
-		if(advDetailList.size()>0 || (date1.compareTo(date2) >= 0)  ) {
+		if(advDetailList.size()>0 && (date1.compareTo(date2) >= 0)  ) {
 			advHeader.setDiscAmt(discAmt);
 		advHeader.setDetailList(advDetailList);
 		RestTemplate restTemplate = new RestTemplate();
 
 		 info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
 				AdvanceOrderHeader.class);
+		}else
+		{System.err.println("inside saveAdvanceOrder");
+			info=new AdvanceOrderHeader();
+			info.setAdvHeaderId(0);
 		}
-		System.err.println("inside saveAdvanceOrder"+info.toString());
+		//System.err.println("inside saveAdvanceOrder"+info.toString());
 		
 		}
 		catch(Exception e) {

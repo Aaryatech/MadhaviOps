@@ -49,30 +49,32 @@
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
 		<tbody>
-			<tr>
-				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><b>BILL
-						OF SUPPLY</b></td>
-			</tr>
+		
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
 					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 					alt="madhvi_logo"></td>
 			</tr>
-
+	        <tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><b>BILL
+						OF SUPPLY</b></td>
+			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName} (MADHVI DAIRY)</b><br />
-					<span style="font-size: 10px; font-family: Arial;"><c:choose>
-							<c:when test="${frDetails.frGstType==0}">PAN NO. : ${frSup.frPanNo}</c:when>
-							<c:otherwise>GSTIN:${frDetails.frGstNo}</c:otherwise>
-						</c:choose> </span></td>
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName} <br> (Madhvi Dairy Retail Outlet)</b><br />
+					</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 8px;">${frDetails.frAddress}
-					<br />Shop Ph:<strong>${frDetails.frMob}</strong>
+					<br />Outlet Ph:<strong>${frDetails.frMob}</strong><br />
+					<span
+					style="font-size: 8px; font-family: Arial;">GSTIN:<b>
+							${frDetails.frGstNo}</b> State: ${frSup.frState} <br>FSSAI :
+						11515031000866
+				</span>
 				</td>
 			</tr>
 			<tr>
@@ -107,7 +109,7 @@
 
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item<span
-													style="font-size: 8"> (HSN Code)</span></th>
+													style="font-size: 8">(HSN)</span></th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
 													<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
 												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
@@ -190,7 +192,8 @@
 								>
 								 For wholesale inquiry contact DairyMart Team Ph.No: 82600 60048/49<br>
 								 visit us on  www.madhvi.in<br>
-								 Email feedback/suggestions on madhvidairy<br>
+								 Please Email us your feedback/suggestions on<br>
+								 madhvidairy@gmail.com<br>
 								 This is a computer generated invoice <br>
 								 Subject to ${frDetails.frCity} Jurisdiction</span></td>
 						</tr>
@@ -218,7 +221,7 @@
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								style="font-weight: bold;"> With You @ Your Great Moments !</span></td>
+								style="font-weight: bold;"> With You @ Your Great Moments!</span></td>
 						</tr>
 
 					</table></td>

@@ -413,7 +413,7 @@ public class OpsController {
 			mvm.add("settingKey", "DEFLTCUST");
 			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
 					NewSetting.class);
-
+           System.err.println(settingValue.toString());
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
 
 			model.addAttribute("frtype", frDetails.getFrGstType());
@@ -732,7 +732,7 @@ System.err.println("advAmt"+advAmt);
 				transactionDetail.setPayMode(1);
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf1.format(date));
-				transactionDetail.setExVar1("1");
+				transactionDetail.setExVar1("0,1");
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				dList.add(transactionDetail);
 
@@ -975,14 +975,17 @@ System.err.println("advAmt"+advAmt);
 					transactionDetail.setPayMode(paymentMode);
 
 					if (paymentMode == 1) {
-						transactionDetail.setExVar1(String.valueOf(billType));
+						
 
 						if (billType == 1) {
 							transactionDetail.setCashAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0,1");
 						} else if (billType == 2) {
 							transactionDetail.setCardAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0,2");
 						} else if (billType == 3) {
 							transactionDetail.setePayAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0,3");
 						}
 					} else {
 
@@ -1574,10 +1577,13 @@ System.err.println("advAmt"+advAmt);
 				
 				if(modType1==1) {
 					cashAmt1=settleAmt;
+					type="0,1";
 				}else if(modType1==2) {
 					cardAmt1=settleAmt;
+					type="0,2";
 				}else {
 					epayAmt1=settleAmt;
+					type="0,3";
 				}
 				
 				expTrans.setSellBillNo(headId);
@@ -1618,7 +1624,38 @@ System.err.println("advAmt"+advAmt);
 	
 	
 	//**********************pos popups data*************************************************
-	
+	List<SellBillHeader> itemsList=null;
+	@RequestMapping(value = "/deleteSellBill", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SellBillHeader> deleteSellBill(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+		
+		SellBillHeader sellBillHeader=new SellBillHeader();
+		try {
+			
+			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			for(int i=0;i<itemsList.size();i++)
+			{
+				if(sellBillNo==itemsList.get(i).getSellBillNo())
+				{
+					sellBillHeader=itemsList.get(i);
+					itemsList.remove(i);
+				}
+			}
+			
+			sellBillHeader.setDelStatus(1);
+			sellBillHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", sellBillHeader,
+					SellBillHeader.class);
+
+			 
+			System.err.println("getCustCreditBills*" + itemsList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return itemsList;
+	}
 	
 	@RequestMapping(value = "/getCustBills", method = RequestMethod.POST)
 	@ResponseBody
@@ -1628,7 +1665,7 @@ System.err.println("advAmt"+advAmt);
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-		List<SellBillHeader> itemsList = new ArrayList<SellBillHeader>();
+	 itemsList = new ArrayList<SellBillHeader>();
 
 		try {
 

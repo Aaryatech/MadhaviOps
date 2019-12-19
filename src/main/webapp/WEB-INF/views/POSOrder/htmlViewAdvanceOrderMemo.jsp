@@ -49,13 +49,20 @@
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
 		<tbody>
-			<c:if test="${headDetails.isDailyMart==1}">
+			
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
+					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
+					alt="madhvi_logo"></td>
+			</tr>
+<c:if test="${headDetails.isDailyMart==1}">
 				<tr>
 
 					<td colspan="2" align="center"
 						style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;">
 
-						<b> Regular Order Memo</b>
+						<b> Regular Order Memo </b>
 
 					</td>
 
@@ -70,30 +77,24 @@
 					<td colspan="2" align="center"
 						style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;">
 
-						<b> Advance Order Memo</b>
+						<b> Advance Order Memo </b>
 
 					</td>
 				</tr>
 			</c:if>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
-					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
-					alt="madhvi_logo"></td>
-			</tr>
-
-			<tr>
-				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}</b><br />
-					<span style="font-size: 10px; font-family: Arial;"><c:choose>
-							<c:when test="${frDetails.frGstType==0}">PAN NO. : ${frSup.frPanNo}</c:when>
-							<c:otherwise>GSTIN:${frDetails.frGstNo}</c:otherwise>
-						</c:choose> </span></td>
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}<br/>(Madhvi Dairy Retail Outlet)</b><br />
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 8px;">${frDetails.frAddress}
-					<br /> Phone:<strong>${frDetails.frMob}</strong>
+					<br /> Outlet Ph:<strong>${frDetails.frMob}</strong><br/>
+						<span style="font-size: 8px;  font-family: Arial;"><c:choose>
+							<c:when test="${frDetails.frGstType==0}">PAN NO. : ${frSup.frPanNo}</c:when>
+							<c:otherwise>GSTIN:<b>${frDetails.frGstNo}</b></c:otherwise>
+						</c:choose> </span> 
 				</td>
 			</tr>
 			<tr>
@@ -104,8 +105,16 @@
 						<tbody>
 
 							<tr>
-								<td align="left">Date:</td>
-								<td align="left" colspan="3">${headDetails.orderDate}</td>
+								<td align="left">Order Date:</td>
+								<td align="left" colspan="3">${headDetails.orderDate} ${headDetails.exVar1}</td>
+
+							</tr>
+							<tr>
+							<fmt:parseDate value="${headDetails.deliveryDate}" pattern="yyyy-MM-dd" var="myDate"/>
+                            <fmt:formatDate value="${myDate}" var="startFormat" pattern="dd-MM-yyyy"/>
+								<td align="left">Delivery Date:</td>
+								<td align="left" colspan="3">${startFormat} ${delTime}
+								</td>
 
 							</tr>
 							<tr>
@@ -201,12 +210,15 @@
 						cellpadding="7">
 						<tr>
 							<td align="left"
-								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>With
-									You @ Your Great Moments <br> For wholesale inquiry
-									contact DairyMart Team 82600 60049/50<br> visit us on
-									www.madhvi.in<br> Email feedback/suggestions on
-									madhvidairy<br> This is a computer generated invoice
-							</span></td>
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+								>
+								 For wholesale inquiry contact DairyMart Team Ph.No: 82600 60048/49<br>
+								 visit us on  www.madhvi.in<br>
+								 Please Email us your feedback/suggestions on<br>
+								 madhvidairy@gmail.com<br>
+								 This is a computer generated invoice <br>
+								 Subject to ${frDetails.frCity} Jurisdiction</span>
+						  </td>
 						</tr>
 
 					</table></td>

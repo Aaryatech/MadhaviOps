@@ -76,7 +76,7 @@
 <c:url var="getCustCreditBills" value="/getCustCreditBills" />
 <c:url var="getCustBills" value="/getCustBills" />
 <c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
-
+<c:url var="deleteSellBill" value="/deleteSellBill" />
 
 
 <style>
@@ -88,7 +88,7 @@ body {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+	z-index: 555; /* Sit on top */
 	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;
@@ -166,12 +166,13 @@ body {
 
 
 				<div class="drop_menu">
-
+<div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
+	
 					<div class="logout_btn pos">
 						<a href="${pageContext.request.contextPath}/logout"><i
 							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
 					</div>
-
+<div class="customer_one" style="width:auto;">
 					<select name="holdBillNo" id="holdBillNo"
 						data-placeholder="Select Bill No" class="input_add chosen-select"
 						onchange="revertHoldBillOnCurrent()">
@@ -184,12 +185,12 @@ body {
 										selected>${holdingList.value.tempCustomerName}</option>
 								</c:when>
 								<c:otherwise>
-									<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
+									<option value="${holdingList.key}" style="text-align: left;  ">${holdingList.value.tempCustomerName}</option>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 					</select>
-
+</div>
 
 				</div>
 
@@ -1054,9 +1055,9 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
-								<input name="payAmt" id="payAmt" type="text"
+								<input name="payAmt" id="payAmt" type="text" 
 									class="input_add numberOnly" placeholder="Enter Amount"
-									readonly="readonly" value="${totalAmt}" />
+									readonly="readonly" value="${totalAmt}"    style="background-color:lightgrey;"/>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1315,7 +1316,7 @@ body {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 60%">
+		<div class="modal-content" style="width: 75%">
 			<span class="close" onclick="closeMyModal('myModalForCredit')">&times;</span>
 
 			<form name="modalfrm" id="modalfrm" method="post">
@@ -1327,10 +1328,10 @@ body {
 					<div class="add_frm_one">
 						<div class="add_customer_one"
 							style="width: 40% ! important; float: left!importan!">
-							Customer Name:<span style="color: red; width: 80%" id="credCust"></span>
+							Customer Name:<span style="color: red; width: 80%;padding-left: 7px;" id="credCust" > NA</span>
 						</div>
 						<div class="add_customer_one">
-							Pending Amount:<span style="color: red; width: 20%" id="penAmt"></span>
+							Pending Amount:<span style="color: red; width: 20%;padding-left: 7px;" id="penAmt"> 0.0</span>
 						</div>
 
 					</div>
@@ -1360,7 +1361,7 @@ body {
 				</div>
 
 
-				<div id="singleDiv1">
+				<div id="singleDiv1" >
 					<div class="calcy_1">
 						<div class="add_customer_one">Type</div>
 						<div class="add_input">
@@ -1376,11 +1377,11 @@ body {
 					<div class="calcy_2">
 
 						<div class="add_frm_one">
-							<div class="add_customer_one">Received Amount</div>
+							<div class="add_customer_one">Received Amt</div>
 							<div class="add_input">
 								<input placeholder="Customer Name" name="receivedAmt"
-									onchange="settleCustBill()" id="receivedAmt" type="text"
-									value="0" class="input_add" />
+									onchange="settleCustBill()" oninput="settleCustBill()" id="receivedAmt" type="text"
+									value="0" class="input_add" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1467,15 +1468,15 @@ body {
 
 
 
-				<div class="pop_btns">
-
+				<div class="pop_btns" >
+	<div class="clr"></div>
 					<div class="close_r">
 
-						<button type="button" class="btn btn-primary" id="sbtbtn"
+						<button type="button" class="buttonsaveorderpos" id="sbtbtn"
 							disabled="disabled">Submit</button>
 					</div>
 
-					<div class="clr"></div>
+				
 
 				</div>
 			</form>
@@ -1514,7 +1515,7 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one"
 								style="width: 40% ! important; float: left!importan!">
-								Date:<span style="color: red; width: 80%" id="date1">${date1}</span>
+								Date:<span style="color: red; width: 80%" id="date1">&nbsp;&nbsp;${date1}</span>
 							</div>
 
 						</div>
@@ -1563,7 +1564,8 @@ body {
 									<th style="text-align: center;" width="10%">Bill Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
-									<th style="text-align: center;" width="2%">Mode of Payment</th>
+									<th style="text-align: center;" width="2%"  id="modeofpay">Mode of Payment</th>
+									<th style="text-align: center;" width="2%"  id="trAction">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -1579,8 +1581,6 @@ body {
 
 	</div>
 	<!-- Modal to show cust   Bill ends -->
-
-
 	<script type="text/javascript">
 	
 		
@@ -1593,21 +1593,22 @@ body {
 			var ell = document.getElementById('cust');
 			var text = ell.options[ell.selectedIndex].innerHTML;
 			//alert(text);
-						document.getElementById("custName1").innerHTML  = text;
+						document.getElementById("custName1").innerHTML  ="&nbsp;&nbsp;"+ text;
 
 			if(tabType!=2){
-				document.getElementById("custName1").innerHTML  = text;
+				document.getElementById("custName1").innerHTML  = "&nbsp;&nbsp;"+ text;
 				
 				$("#dateCust").show();
 				$("#dateDiv").hide();
 
 			}else{
-				document.getElementById("custName1").innerHTML  = text;
+				document.getElementById("custName1").innerHTML  ="&nbsp;nbsp;"+ text;
 				$("#dateDiv").show();
 				$("#dateCust").hide();
-			}
+			}	
 		if(tempType!=3)  {
-			//alert("tempType"+tempType);
+			$("#modeofpay").hide();
+			$("#trAction").show();
  				 $.post('${getCustBills}',
 								{
 									cust: custId,
@@ -1626,6 +1627,10 @@ body {
 											data,
 											function(key, data) {
 												
+												var invNo=data.invoiceNo;
+												if(tabType==2){
+													invNo=invNo+" ("+data.userName+")";
+												}
 											/* 	var payType="";
 												
 												if(data.paymentMode==1){
@@ -1638,14 +1643,15 @@ body {
 												
 											//	document.getElementById("credCust").innerHTML = data.userName; 
   
-															var tr = $('<tr></tr>');
+															var tr = $('<tr id="bill'+data.sellBillNo+'"></tr>');
 															tr.append($('<td ></td>').html(key + 1));
-															tr.append($('<td ></td>').html(data.invoiceNo));
+															tr.append($('<td ></td>').html(invNo));
 															tr.append($('<td ></td>').html(data.billDate));
 															tr.append($('<td ></td>').html(data.grandTotal));
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
-															tr.append($('<td ></td>').html("-"));
+														/* 	tr.append($('<td ></td>').html("NA")); */
+															tr.append($('<td ></td>').html("<a href='#' onclick='deleteSellBill("+data.sellBillNo+")'><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a>"));
 															$('#custTable tbody').append(tr);
 														 
 											}); 
@@ -1660,7 +1666,9 @@ body {
 								}); 
 		  }else{
 			  
-			 // alert("tempType else"+tempType);
+				$("#modeofpay").show();
+				$("#trAction").hide();
+
 				 $.post('${getCustBillsTransaction}',
 							{
 								cust: custId,
@@ -1679,8 +1687,7 @@ body {
 										data,
 										function(key, data) {
 											
- 
-											var payType="";
+										   var payType="";
 											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
 											//alert(data.exVar1);
 											if(data.exVar1=="0,1,2,3"){
@@ -1715,6 +1722,7 @@ body {
 														tr.append($('<td ></td>').html(paidAmount));
 														tr.append($('<td ></td>').html(data.exFloat2));
 														tr.append($('<td ></td>').html(payType));
+														
 														$('#custTable tbody').append(tr);
 										}); 
 								
@@ -1973,10 +1981,10 @@ function matchSplitAmt(flag){
 
 	<script type="text/javascript">
 		$('#sbtbtn').click(function() {
-		 
+			
 			
 			document.getElementById("overlay2").style.display = "block";
-
+			document.getElementById("credAmt").innerHTML="0.0";
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/submitResposeCredit",
@@ -1989,7 +1997,8 @@ function matchSplitAmt(flag){
 						alert("Updated Successfully")
 						$("#overlay").fadeOut(300);
 						setCustAmt();
-					
+						document.getElementById("sbtbtn").disabled="disabled";
+						document.getElementById("receivedAmt").value="0";
 						closeMyModal('myModalForCredit');
 					 
 					}
@@ -2103,9 +2112,7 @@ function matchSplitAmt(flag){
 																				+ data.sellBillNo
 																				+ "'  id=settleAmt"
 																				+ data.sellBillNo
-																				+ " value="
-																				+ data.remainingAmt
-																				+ "  /> &nbsp;  "));
+																				+ " value=0  /> &nbsp;  "));
  
 														$('#custCreditTable tbody')
 																.append(tr); 
@@ -2172,6 +2179,7 @@ function matchSplitAmt(flag){
 			getCustBills(1);
 		}else{
 			document.getElementById("popupType").value=0;//otherwise
+			document.getElementById("receivedAmt").value=0;
 		}
 	
 		//alert(type);
@@ -2192,7 +2200,7 @@ function matchSplitAmt(flag){
 	<script type="text/javascript">
 	
 	function setCustAmt() {
-		   
+		
 		var cust =  $('#cust').val() ;
 		document.getElementById("credAmt").innerHTML = 0; 
 		//document.getElementById("advCustAmt").innerHTML = 0;
@@ -3257,7 +3265,8 @@ $("#enterQty").focus();
 		/* var key =  $('#advKey').val() ; */
 		var custId =  $('#cust').val() ;
 		var selectedText = $("#cust option:selected").text(); 
-		//alert(selectedText);
+		document.getElementById("credAmt").innerHTML="0.0";
+
 		var frtype =  $('#frtype').val() ;
 		var rowcount = $('#itemBillTable tr').length;
 		var flag = 0;
@@ -3338,7 +3347,7 @@ $("#enterQty").focus();
 		 
 if(parseInt(custId)==parseInt(dfCust)){
 			
-			alert("Please Select Proper Customer");
+			alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
 		} else{	   
 		var key =  $('#key').val() ;
 	
@@ -3389,6 +3398,8 @@ if(parseInt(custId)==parseInt(dfCust)){
 		
 		var advAmt = document.getElementById("advAmt").value;
 		var flagPayable=0;
+		document.getElementById("credAmt").innerHTML="0.0";
+
 		if (document.getElementById('split').checked) {
 			 
 			var totalPayableAmt;
@@ -3418,7 +3429,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		 }
 		}
  
-		if(parseInt(flagPayable)==2){
+		if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
 			alert("Please Enter the Amounts Properly to match total");
 			
 		}else{
@@ -3429,9 +3440,9 @@ if(parseInt(custId)==parseInt(dfCust)){
 		var cardAmt =  $('#cardAmt').val() ;
 		var epayAmt =  $('#epayAmt').val() ;
 		var billType =  $('#billType').val() ;
-		var payType=0;var payTypeFlag=0; var payTypeSplit="";var msg="";
+		var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
 		if(billType==1){
-			payTypeFlag=0;
+			payTypeFlag=payTypeSplit+","+0;
 		}else
 		if(billType==2)
 			{
@@ -3483,7 +3494,8 @@ if(parseInt(custId)==parseInt(dfCust)){
 			var cardTypeSplit = $('#cardTypeSplit option:selected').val();
 			if(cardTypeSplit=="" && cardAmt>0)
 				{
-				msg="Please Select Card Type";payTypeFlag=1;
+				msg="Please Select Card Type";
+				payTypeFlag=1;
 				}else if(cardAmt>0)
 					{
 					payTypeSplit=payTypeSplit+","+cardTypeSplit;
@@ -3613,6 +3625,26 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
   modal.style.display = "none";
 } 
+</script>
+<script type="text/javascript">
+function deleteSellBill(sellBillNo)
+{
+	var isYes=confirm('Are you sure want to delete this record');	
+	if(isYes)
+		{
+		  $.post('${deleteSellBill}',
+					{
+						sellBillNo:sellBillNo,
+						ajax : 'true'
+					},
+					function(data) {
+						alert("Bill Deleted SuccessFully");
+						$("#bill"+sellBillNo).remove();
+
+
+					});
+		}
+}
 </script>
 </body>
 
