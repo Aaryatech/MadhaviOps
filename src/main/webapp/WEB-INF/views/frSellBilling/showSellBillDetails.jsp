@@ -122,8 +122,8 @@ jQuery(document).ready(function(){
 						</h4>
 					</div>
 					
-	<button style="float: left; margin-top: 13px;" type="button"
-									class="btn btn-primary" onclick="printExBill()"
+	<button style="float: right; margin-top: 13px;" type="button"
+									class="btn btn-primary" onclick="printExBill(${billNo})"
 									id="printExBill">Print</button>
 				</div>
 					</div>
@@ -266,7 +266,7 @@ jQuery(document).ready(function(){
 
 			}
 		}
-		
+	
 		$.ajax({
 	             type: "POST",
 	             contentType: "application/json",

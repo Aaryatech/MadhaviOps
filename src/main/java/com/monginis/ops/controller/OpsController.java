@@ -230,7 +230,7 @@ public class OpsController {
 			Model model) {
 
 		String mav = "customerBill/printBillOfSupply";
-
+		System.err.println(selectedId); 
 		try {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -252,7 +252,7 @@ public class OpsController {
 			sellBillHeaderAndDetail.setDiscountPer(0);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
 			model.addAttribute("frDetails", frDetails);
-
+			selectedId="0";
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -1006,13 +1006,13 @@ public class OpsController {
 
 						if (billType == 1) {
 							transactionDetail.setCashAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,1");
+							transactionDetail.setExVar1("0,"+payType);
 						} else if (billType == 2) {
 							transactionDetail.setCardAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,2");
+							transactionDetail.setExVar1("0,"+payType);
 						} else if (billType == 3) {
 							transactionDetail.setePayAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,3");
+							transactionDetail.setExVar1("0,"+payType);
 						}
 					} else {
 

@@ -264,7 +264,8 @@ public class StockController {
 				}
 
 			}
-				menuIdList.add(5);
+				menuIdList.add(2);
+				menuIdList.add(42);
 		} else if (catId.equalsIgnoreCase("3")) {
 			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
@@ -285,7 +286,7 @@ public class StockController {
 
 			}
 			menuIdList.add(6);
-		} else if (catId.equalsIgnoreCase("6")) {
+		} else if (catId.equalsIgnoreCase("7")) {
 			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
 
@@ -295,7 +296,27 @@ public class StockController {
 
 			}
 			menuIdList.add(49);
-		}
+		} else if (catId.equalsIgnoreCase("9")) {
+			menuIdList =new ArrayList<>();
+			for (PostFrItemStockHeader header : list) {
+
+				if (header.getCatId() == intCatId) {
+					runningMonth = header.getMonth();
+				}
+
+			}
+			menuIdList.add(5);
+		} else if (catId.equalsIgnoreCase("10")) {
+			menuIdList =new ArrayList<>();
+			for (PostFrItemStockHeader header : list) {
+
+				if (header.getCatId() == intCatId) {
+					runningMonth = header.getMonth();
+				}
+
+			}
+			menuIdList.add(6);
+		} 
 		
 
 		String itemShow = "";

@@ -741,7 +741,7 @@ if(ses==null) {
 		NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
 				NewSetting.class);
 		MultiValueMap<String, Object> mapc = new LinkedMultiValueMap<>();
-		mapc.add("custId", Integer.parseInt(settingValue.getExVarchar1()));
+		mapc.add("custId", Integer.parseInt(settingValue.getSettingValue1()));
 		Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", mapc, Customer.class);
 	
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");

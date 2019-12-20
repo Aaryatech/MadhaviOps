@@ -178,7 +178,7 @@ input:checked+.slider:before {
 	<c:url var="insertHeader" value="/insertHeader" />
 	<div class="sidebarOuter"></div>
 	<c:url var="calcStock" value="/calcStock" />
-	<c:url var="printExBill" value="/printExBill" />
+<%-- 	<c:url var="printExBill" value="/printExBill" /> --%>
 	<c:url var="deleteItem" value="/deleteItem" />
 	<c:url var="getSelectedIdForPrint" value="/getSelectedIdForPrint" />
 	<c:url var="getSpOrders" value="/getSpOrders" />
@@ -219,10 +219,10 @@ input:checked+.slider:before {
 							</c:when>
 
 							<c:when test="${count ==2}">
-							<span class="page_prc">Bill No :${sellBillHeader.sellBillNo}</span>
-							<span class="page_prc">Bill Date :${sellBillHeader.billDate}</span>
-							<span class="page_prc">Single
-							Print</span><label class="switch top_1"> <input type="checkbox"
+							<span class="page_prc">Bill No :&nbsp;${sellBillHeader.invoiceNo}</span>
+							<span class="page_prc">Bill Date :&nbsp;${sellBillHeader.billDate}</span>
+							<span class="page_prc" style="display: none;">Single
+							Print</span><label class="switch top_1" style="display: none;"> <input type="checkbox"
 							id="id"><span class="slider round"></span> </label></span>
 							
 						</a>
@@ -386,7 +386,7 @@ input:checked+.slider:before {
 								<button class="btn btn-primary" onclick="insertItem1()"
 									disabled="disabled" id="insertItemButton">Submit Item</button>
 								<button style="float: right; margin-top: 13px;" type="button"
-									class="btn btn-primary" onclick="printExBill()" disabled
+									class="btn btn-primary" onclick="printExBill(${sellBillHeader.sellBillNo})" disabled
 									id="printExBill">Print</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
 							</center>
@@ -895,11 +895,11 @@ function onRateChange(rate)
 						document.getElementById('dayClose1').disabled=true;
 					}
 
-				 if(document.getElementById("id").checked){
+				/*  if(document.getElementById("id").checked){
 					 
 					// alert("print");
 					 window.open("${pageContext.request.contextPath}/printExBill");
-				 }
+				 } */
 	         });
 		
 	//}
@@ -1054,39 +1054,38 @@ function myFunction1() {
 		}
 	
 	
-	function printExBill()
-	{
-		//alert("in print");
+	function printExBill(billNo) {
 		
-		var checkedId=[];
-		var checkboxes=document.getElementsByName("select_to_print");
+        //var billNo=document.getElementsById("billNo").value;
+      
+		var checkedId = [];
+		var checkboxes = document.getElementsByName("select_to_print");
+
+		for (var i = 0, n = checkboxes.length; i < n; i++) {
+			if (checkboxes[i].checked) {
+
+				checkedId.push(checkboxes[i].value);
+
+			}
+		}
 		
-		 
-			for (var i = 0, n = checkboxes.length; i < n; i++) {
-				if(checkboxes[i].checked) {
-					
-					checkedId.push(checkboxes[i].value );
-					
-				}
-			}
-			if(checkedId.length>0){
-			//alert(checkboxes);
-			 $.getJSON('${getSelectedIdForPrint}',{
-
-					id :  JSON.stringify(checkedId),
-					ajax : 'true',
-				
-
-				 },	function(data) {
-					 
-					 window.open("${pageContext.request.contextPath}/printSelectedOrder");
-					 
-				 });
-			}
-			else
-				{
-				 alert("Please Select atleast one item!!")
-				}
+		$.ajax({
+	             type: "POST",
+	             contentType: "application/json",
+	             url: "${pageContext.request.contextPath}/printPosBillDetail",
+	             data: JSON.stringify(checkedId),
+	             dataType: 'json',
+	             timeout: 600000,
+	             success: function (data) {
+	            		if(data<10000000){
+							window.open('${pageContext.request.contextPath}/printDetailBillOfSupply/'+billNo,'_blank');
+						}else{
+							window.open('${pageContext.request.contextPath}/printDetailBillOfInvoice/'+billNo,'_blank');
+						}
+	             },
+	             error: function (e) {
+	             }
+		});
 	}
 	
 	function selectToPrint()

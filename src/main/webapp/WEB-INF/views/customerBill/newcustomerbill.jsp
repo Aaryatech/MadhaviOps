@@ -95,7 +95,7 @@ body {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 555; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
+	padding-top: 60px; /* Location of the box */
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -109,7 +109,7 @@ body {
 .modal-content {
 	background-color: #fefefe;
 	margin: auto;
-	padding: 20px;
+	padding: 8px 20px 20px 20px;
 	border: 1px solid #888;
 	width: 30%;
 }
@@ -172,11 +172,14 @@ body {
 
 
 				<div class="drop_menu">
+				
 <div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
 	
 					<div class="logout_btn pos">
-						<a href="${pageContext.request.contextPath}/logout"><i
-							class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
+					<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></a>
+					</div><a href="${pageContext.request.contextPath}/logout"> <img
+						src="${pageContext.request.contextPath}/resources/newpos/images/exit.png"
+						alt="Logout" width="18px" height="19px;" style="padding-right: 3px;"></a>
 					</div>
 <div class="customer_one" style="width:auto;">
 					<select name="holdBillNo" id="holdBillNo"
@@ -1385,8 +1388,8 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Received Amt</div>
 							<div class="add_input">
-								<input placeholder="Customer Name" name="receivedAmt"
-									onchange="settleCustBill()" oninput="settleCustBill()" id="receivedAmt" type="text"
+								<input placeholder="Received Amt" name="receivedAmt"
+									onchange="settleCustBill()"  id="receivedAmt" type="text"
 									value="0" class="input_add" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
 							</div>
 							<div class="clr"></div>
@@ -1498,7 +1501,7 @@ body {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 60%">
+		<div class="modal-content" style="width: 80%">
 			<span class="close" onclick="closeMyModal('custBills')">&times;</span>
 
 			<form name="modalfrm" id="modalfrm" method="post">
@@ -1659,7 +1662,7 @@ body {
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														/* 	tr.append($('<td ></td>').html("NA")); */
-															tr.append($('<td ></td>').html("<a href='#' onclick='deleteSellBill("+data.sellBillNo+")'><abbr title='Delete'><i class='fa fa-trash'></i></abbr></a>"));
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill("+data.sellBillNo+")"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 															$('#custTable tbody').append(tr);
 														 
 											}); 
@@ -1699,7 +1702,7 @@ body {
 										   var payType="";
 											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
 											//alert(data.exVar1);
-											if(data.exVar1=="0,1,2,3"){
+											/* if(data.exVar1=="0,1,2,3"){
 												payType="Cash,Card,e-Pay";
  												
 											}else if(data.exVar1=="0,1,2"){
@@ -1717,12 +1720,43 @@ body {
  											}
  											else if(data.exVar1=="0,1"){
  												payType="Cash";
- 											}
- 								else{
+ 											}else{   payType="Credit";} */
+											if(data.exVar1=="0" || data.exVar1=="0," ){
 												payType="Credit";
- 											}
-											
- 
+ 												
+											}else{
+											var str_arr = data.exVar1.split(',');
+											for (i = 0; i < str_arr.length; i++) { 
+											   if(str_arr[i] === "1"){
+													payType="Cash";
+											   }
+											   if(str_arr[i] === "2"){
+												   payType=payType+",Card";
+											   }
+											   if(str_arr[i] === "3"){
+												   payType=payType+",Epay";
+											   }
+											   if(str_arr[i] === "4"){
+												   payType=payType+",Debit Card";
+											   }
+											   if(str_arr[i] === "5"){
+												   payType=payType+",Credit Card"; 
+											   }
+											   if(str_arr[i] === "6"){
+												   payType=payType+",Phone Pay";  
+											   }
+											   if(str_arr[i] === "7"){
+												   payType=payType+",Paytm"; 
+											   }
+											   if(str_arr[i] === "8"){
+												   payType=payType+",Google Pay"; 
+											   }
+											   if(str_arr[i] === "9"){
+												   payType=payType+",Amazon Pay";  
+											   }
+											  
+											}
+											}
 														var tr = $('<tr></tr>');
 														tr.append($('<td ></td>').html(key + 1));
 														tr.append($('<td ></td>').html(data.exVar2));
@@ -1786,27 +1820,32 @@ function matchSplitAmt(flag){
 		}
 		
 		function  settleCustBill() {
-			  document
-			.getElementById("total").value=0;
-			  
-			  var tr_count=0; 
-             //alert("in recv 1");
+			
+			var tr_count=0; 
 			var finTot = 0;
-			   
 			var custId = document.getElementById("cust").value;
-
 			//var custtext = custId.options[custId.selectedIndex].innerHTML;
-		 
-
 			var creditAmt=document.getElementById("credAmt").innerHTML; 
 			
-			//document.getElementById('credCust').value=custtext;
+			//document.getElementById('credCust').value=custtext;				
+
  			document.getElementById("penAmt").innerHTML = creditAmt; 
- 			var x = document
-			.getElementById("receivedAmt").value;
-			//alert(custId);
-		  
-			 
+ 			var x = document.getElementById("receivedAmt").value;
+			var pendingAmtInt=(parseInt(creditAmt));
+			var receivedAmtInt=(parseInt(x));
+		if(x=="" || x==null)
+			{
+			 alert("Please Enter Valid Recieved Amount!!")
+			 var total=document.getElementById("total").value;
+			 document.getElementById("receivedAmt").value=total;
+			}
+		else if(receivedAmtInt>pendingAmtInt){
+			document.getElementById("receivedAmt").value=0;
+			 alert("Entered Amount is greater than Pending Bill Amount!!");
+			 settleCustBill();
+		}else{
+				document.getElementById("total").value=0;
+				
  				 $.post('${getCustCreditBills}',
 								{
 									cust: custId,
@@ -1818,20 +1857,17 @@ function matchSplitAmt(flag){
 									tr_count = data.length;
 
 									$('#custCreditTable td').remove();
-									$
-									.each(
-											data,
+						$.each(data,
 											function(key, data) {
 												
 												document.getElementById("credCust").innerHTML = data.userName; 
 
 												var flag = 0;
 												var y = 0;
-												var tot = document
-														.getElementById("total").value;
+												var tot = document.getElementById("total").value;
+											
 												
-												var rcvAmt = document
-												.getElementById("receivedAmt").value;
+												var rcvAmt = document.getElementById("receivedAmt").value;
 												//alert("tot" + tot);
 												//alert("expAmt"+expAmt);
 												 
@@ -1983,7 +2019,7 @@ function matchSplitAmt(flag){
 										} 
 
 								}); 
-
+			}
 		 
 		}
 	</script>
@@ -1991,9 +2027,8 @@ function matchSplitAmt(flag){
 	<script type="text/javascript">
 		$('#sbtbtn').click(function() {
 			
-			
-			document.getElementById("overlay2").style.display = "block";
-			document.getElementById("credAmt").innerHTML="0.0";
+			if(document.getElementById("receivedAmt").value>0){
+				document.getElementById("overlay2").style.display = "block";
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/submitResposeCredit",
@@ -2009,7 +2044,7 @@ function matchSplitAmt(flag){
 						document.getElementById("sbtbtn").disabled="disabled";
 						document.getElementById("receivedAmt").value="0";
 						closeMyModal('myModalForCredit');
-					 
+						document.getElementById("credAmt").innerHTML="0.0";
 					}
 				}
 			}).done(function() {
@@ -2017,6 +2052,10 @@ function matchSplitAmt(flag){
 					$("#overlay").fadeOut(300);
 				}, 500);
 			});
+			}else
+				{
+				alert("Please Enter Valid Received Amount!!")
+				}
 		});
 	</script>
 
@@ -3439,7 +3478,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		}
  
 		if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
-			alert("Please Enter the Amounts Properly to match total");
+			alert("Please Enter the valid Bill Amount!!");
 			
 		}else{
 		   
@@ -3451,7 +3490,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		var billType =  $('#billType').val() ;
 		var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
 		if(billType==1){
-			payTypeFlag=payTypeSplit+","+0;
+			payTypeFlag=0;
 		}else
 		if(billType==2)
 			{
@@ -3498,7 +3537,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		if (document.getElementById('split').checked) {
 			single = 2;
 			if(cashAmt>0){
-				payTypeSplit="1";
+				payTypeSplit=",1";
 			}
 			var cardTypeSplit = $('#cardTypeSplit option:selected').val();
 			if(cardTypeSplit=="" && cardAmt>0)
@@ -3655,6 +3694,66 @@ function deleteSellBill(sellBillNo)
 		}
 }
 </script>
+<script type="text/javascript">
+
+function custBillPdf(sellBillNo)
+	{
+		var	frtype= document.getElementById("frtype").value;
+		
+		if(frtype<10000000){
+			window.open('${pageContext.request.contextPath}/printBillOfSupply/'+sellBillNo,'_blank');
+		}else{
+			window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+sellBillNo,'_blank');
+		}
+
+	}
+	</script>
+<script type="text/javascript">
+	var requestFullscreen = function (ele) {
+		if (ele.requestFullscreen) {
+			ele.requestFullscreen();
+		} else if (ele.webkitRequestFullscreen) {
+			ele.webkitRequestFullscreen();
+		} else if (ele.mozRequestFullScreen) {
+			ele.mozRequestFullScreen();
+		} else if (ele.msRequestFullscreen) {
+			ele.msRequestFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+	var exitFullscreen = function () {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+
+
+
+	var fsDocButton = document.getElementById('fs-doc-button');
+	var fsExitDocButton = document.getElementById('fs-exit-doc-button');
+
+	fsDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		requestFullscreen(document.documentElement);
+	});
+
+	fsExitDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		exitFullscreen();
+	});
+
+	</script>
 </body>
 
 </html>

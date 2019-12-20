@@ -100,13 +100,13 @@
 
 							</tr>
 							<tr>
-								<td>Name</td>
-								<td colspan="3">${sellBillHeaderAndDetail.custName}</td>
+								<td align="left">Customer :</td>
+								<td align="left" colspan="3">${sellBillHeaderAndDetail.custName}</td>
 
 							</tr><c:if test="${sellBillHeaderAndDetail.gstNo!=''}">
 							<tr>
-								<td>GST No:</td>
-								<td colspan="3">${sellBillHeaderAndDetail.gstNo}</td>
+								<td align="left">GST No:</td>
+								<td align="left" colspan="3">${sellBillHeaderAndDetail.gstNo}</td>
 							</tr>
 							</c:if>
 							
@@ -238,7 +238,11 @@
 										value="${taxlabList.igstRs}" /></td>
 							</tr>
 						</c:forEach>
-
+                          <tr>
+							<td align="center"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
+									Customer Care: 82600 60048 </span></td>
+						</tr>
 					
 						<tr>
 							<td align="left"

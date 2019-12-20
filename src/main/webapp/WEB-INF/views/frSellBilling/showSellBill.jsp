@@ -140,6 +140,7 @@ jQuery(document).ready(function(){
 									<th style="text-align:center;">Payable Amount</th>
 									<th style="text-align:center;">Paid Amount</th>
 									<th style="text-align:center;">Paymode</th>
+									<th style="text-align:center;">Bill Type</th>
 									<th style="text-align:center;">Action</th>
 								  </tr>
 								</thead>
@@ -159,6 +160,8 @@ jQuery(document).ready(function(){
 									<th style="text-align:center;">Payable Amount</th>
 									<th style="text-align:center;">Paid Amount</th>
 									<th style="text-align:center;">Paymode</th>
+									<th style="text-align:center;">Bill Type</th>
+									
 									<th style="text-align:center;">Action</th>
 								  </tr>
 								</thead>
@@ -246,7 +249,7 @@ jQuery(document).ready(function(){
 													payMode="Other";	
 													
 													tr.append($('<td style="text-align:center;"></td>').html(payMode));
-													
+													tr.append($('<td style="text-align:center;"></td>').html(sellBillData.billType));
 													 if(sellBillData.billType=='S'){
 														 if((sellBillData.invoiceNo).length>1)
 														{

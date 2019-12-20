@@ -391,8 +391,8 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="fromdatepicker"  class="texboxitemcode texboxcal" required
-									placeholder="Delivery Date" name="devDate"  id="devDate1" autocomplete="off"
-									type="text" value="${delDate}">
+									placeholder="Delivery Date" name="devDate"  autocomplete="off"
+									type="text" value="">
 
 							</div>
 							<div class="col-md-1">
@@ -725,8 +725,8 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
-									placeholder="Delivery Date" name="devDate" autocomplete="off"
-									type="text" value="${delDate}">
+									placeholder="Delivery Date" name="devDate"  autocomplete="off"
+									type="text" value="">
 
 							</div>
 							<div class="col-md-1">
@@ -1593,9 +1593,12 @@ $(document).ready(function($) {
 			   $('#subm2').click(function(){
 				  var custId=document.getElementById("custId2").value;
 				  var delTime=document.getElementById("delTime2").value;
+				  var devDate=document.getElementById("todatepicker").value;
  				   //document.getElementById("subm2").disabled = true; 
  				   if(custId==""){
  					   alert("Please Select Customer")
+ 				   }else  if(devDate==""){
+ 					   alert("Please Select Delivery Date")
  				   }else if(delTime=="00:00"){
  					   alert("Please Select Delivery Time")
  				   }else{
@@ -1639,9 +1642,12 @@ $(document).ready(function($) {
 $(document).ready(function($) {
 			   $('#subm1').click(function(){
 				   var custId=document.getElementById("custId1").value;
+				   var devDate=document.getElementById("fromdatepicker").value;
 				   var delTime=document.getElementById("delTime1").value;
 				   if(custId==""){
  					   alert("Please Select Customer")
+ 				   }else  if(devDate==""){
+ 					   alert("Please Select Delivery Date")
  				   }else if(delTime=="00:00"){
  					   alert("Please Select Delivery Time")
  				   }else{

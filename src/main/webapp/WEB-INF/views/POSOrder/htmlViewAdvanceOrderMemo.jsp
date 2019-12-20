@@ -208,6 +208,11 @@
 			<tr>
 				<td colspan="2"><table width="100%" border="0" cellspacing="0"
 						cellpadding="7">
+						  <tr>
+							<td align="center"
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
+									Customer Care: 82600 60048 </span></td>
+						</tr>
 						<tr>
 							<td align="left"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
