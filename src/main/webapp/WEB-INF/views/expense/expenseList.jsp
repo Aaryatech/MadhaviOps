@@ -50,17 +50,22 @@
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
+
+				<br>
 				<div class="sidebarright">
 
-				<div class="order-left">
-						<h2 class="pageTitle">Add Expense</h2>
+					<div class="order-left">
+						<h2 class="pageTitle">Expense List</h2>
 
 					</div>
-					<br>
+
 					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/showAddExpense"><button
-								class="btn btn-success">Add Expense</button></a>
+								class="btn btn-info">Add Expense</button></a>
 					</div>
+						<br>
+					<br>
+
 					<form name="frm_search" id="frm_search" method="get"
 						action="${pageContext.request.contextPath}/showExpenseList">
 
@@ -75,33 +80,33 @@
 						</c:choose>
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	 --%>
-							 
+
 						</div>
 
 						<div class="colOuter">
 							<div class="col-md-1">
-								<div class="col1title"> From Date</div>
+								<div class="col1title">From Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="fromdatepicker" class="texboxitemcode texboxcal" required
-								  name="fromDate" autocomplete="off" value="${fromDate}"
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+									required name="fromDate" autocomplete="off" value="${fromDate}"
 									type="text">
 
 							</div>
 
 							<div class="col-md-1"></div>
 							<div class="col-md-1">
-								<div class="col1title"> To Date</div>
+								<div class="col1title">To Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="todatepicker" class="texboxitemcode texboxcal" required
-								  name="toDate" autocomplete="off" value="${toDate}"
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+									required name="toDate" autocomplete="off" value="${toDate}"
 									type="text">
 
 							</div>
 							<div class="col-md-1"></div>
 							<div class="col-md-1">
-								<div class="col1title" >Type *:</div>
+								<div class="col1title">Type</div>
 							</div>
 							<div class="col-md-2">
 								<select name="type" id="isActive" class="form-control"
@@ -111,10 +116,10 @@
 
 								</select>
 							</div>
-							
+
 
 						</div>
- 
+
 						<div class="colOuter">
 							<div align="center">
 								<input name="submit" class="buttonsaveorder" value="Submit"
@@ -122,49 +127,45 @@
 							</div>
 
 						</div>
-						 
-							 
-							<div>
-								<!-- class="table-wrap" -->
-								<table id="table_grid" class="responsive-table">
 
-									<thead>
-										<tr class="bgpink">
-											<th class="col-sm-1">Sr No</th>
-											<th class="col-md-1">Chalan No.</th>
-											<th class="col-md-1">Date</th>
-											<th class="col-md-1">Amount</th>
-											<th class="col-md-1">Status</th>
-											<th class="col-md-1">Action</th>
-											 
-										</tr>
-									</thead>
-									<tbody>
-										
-										<c:forEach items="${expList}" var="expList"
-											varStatus="count">
-											 
-											<tr>
-												<td class="col-sm-1"><c:out value="${count.index+1}" /></td>
- 												<td class="col-md-2"><c:out
-														value="${expList.chalanNo}" /></td>
 
-												<td class="col-md-2"><c:out
-														value="${expList.expDate}" /></td>
-												<td class="col-md-1"><c:out
-														value="${expList.chAmt}" /></td>
-										 												 
-												<td class="col-md-2"><c:choose>
-														<c:when test="${expList.expType==1}">
+						<div>
+							<!-- class="table-wrap" -->
+							<table id="table_grid" class="responsive-table">
+
+								<thead>
+									<tr class="bgpink">
+										<th class="col-sm-1" style="text-align: center;">Sr No</th>
+										<th class="col-md-1" style="text-align: center;">Chalan No.</th>
+										<th class="col-md-1" style="text-align: center;">Date</th>
+										<th class="col-md-1" style="text-align: center;">Amount</th>
+										<th class="col-md-1" style="text-align: center;">Status</th>
+										<th class="col-md-1" style="text-align: center;">Action</th>
+
+									</tr>
+								</thead>
+								<tbody>
+
+									<c:forEach items="${expList}" var="expList" varStatus="count">
+
+										<tr>
+											<td class="col-sm-1" style="text-align: center;"><c:out value="${count.index+1}" /></td>
+											<td class="col-md-2" style="text-align: center;"><c:out value="${expList.chalanNo}" /></td>
+
+											<td class="col-md-2" style="text-align: center;"><c:out value="${expList.expDate}" /></td>
+											<td class="col-md-1"><c:out value="${expList.chAmt}" /></td>
+
+											<td class="col-md-2" style="text-align: center;"><c:choose>
+													<c:when test="${expList.expType==1}">
  														Regular						
  												    </c:when>
-														<c:otherwise>
+													<c:otherwise>
 												         Payment Chalan
 												    </c:otherwise>
-													</c:choose></td>
-												<td class="col-md-2"><div>
-												
-												<c:if test="${expList.expType==1}">
+												</c:choose></td>
+											<td class="col-md-2" style="text-align: center;"><div>
+
+													<c:if test="${expList.expType==1}">
 														<a
 															href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
 															<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
@@ -173,30 +174,30 @@
 															onClick="return confirm('Are you sure want to delete this record');">
 															<abbr title='Delete'><i class='fa fa-trash'></i></abbr>
 														</a>
-														</c:if>
-														
-														<c:if test="${expList.expType==2}">
-																<c:if test="${expList.status==2}">
-														
-														<a
-															href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
-															<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
-														</a> &nbsp;&nbsp; <a
-															href="${pageContext.request.contextPath}/deleteExpense/${expList.expId}"
-															onClick="return confirm('Are you sure want to delete this record');">
-															<abbr title='Delete'><i class='fa fa-trash'></i></abbr>
-														</a>
-														</c:if>
-														</c:if>
+													</c:if>
 
-													</div></td>
-											</tr>
-										</c:forEach>
-										</tbody>
-								</table>
+													<c:if test="${expList.expType==2}">
+														<c:if test="${expList.status==2}">
 
-							</div>
-				 
+															<a
+																href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
+																<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
+															</a> &nbsp;&nbsp; <a
+																href="${pageContext.request.contextPath}/deleteExpense/${expList.expId}"
+																onClick="return confirm('Are you sure want to delete this record');">
+																<abbr title='Delete'><i class='fa fa-trash'></i></abbr>
+															</a>
+														</c:if>
+													</c:if>
+
+												</div></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+
+						</div>
+
 
 					</form>
 
@@ -219,7 +220,7 @@
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
- <script>    
+	<script>
 		$(function() {
 			$("#fromdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
@@ -230,14 +231,13 @@
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-		
-		
+
 		$(function() {
 			$("#popdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-</script>
-	 
+	</script>
+
 </body>
 </html>

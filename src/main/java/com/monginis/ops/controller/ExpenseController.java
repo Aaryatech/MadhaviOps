@@ -86,6 +86,10 @@ public class ExpenseController {
 
 			mav.addObject("expEdit", ep);
 			mav.addObject("isEdit", 0);
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+			String todaysDate=sdf.format(Calendar.getInstance().getTime());
+			mav.addObject("todaysDate", todaysDate);
 
 		} catch (Exception e) {
 			System.out.println("Exception In Add  showAddExpense Process:" + e.getMessage());
