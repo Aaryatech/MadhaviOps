@@ -235,8 +235,8 @@ jQuery(document).ready(function(){
 
 													var tr = $('<tr></tr>');
 													tr.append($('<td></td>').html(key+1));
-													tr.append($('<td></td>').html(sellBillData.invoiceNo));
-													tr.append($('<td></td>').html(sellBillData.billDate));
+													tr.append($('<td style="text-align:left;"></td>').html(sellBillData.invoiceNo));
+													tr.append($('<td style="text-align:left;"></td>').html(sellBillData.billDate));
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.grandTotal).toFixed(2)));
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.payableAmt).toFixed(2)));
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.paidAmt).toFixed(2)));

@@ -226,8 +226,8 @@ jQuery(document).ready(function(){
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 
-					<form name="frm_search" id="frm_search" method="post"
-						action="itemHistory">
+					<form name="frm_search" id="frm_search" method="get"
+						action="${pageContext.request.contextPath}/orderHistory">
 						<input type="hidden" name="mod_ser" id="mod_ser"
 							value="search_result">
 						<div class="colOuter">
@@ -273,7 +273,6 @@ jQuery(document).ready(function(){
 									<select name="catId" id="catId"
 										data-placeholder="Choose Menus..." class="chosen-select"
 										style="text-align: left;" tabindex="6" required>
-										<option value="-1" style="text-align: left;">ALL</option>
 
 										<%-- 	<c:forEach items="${catList}" var="catList">
 									<c:choose>
@@ -288,7 +287,9 @@ jQuery(document).ready(function(){
 									</c:choose>
 								</c:forEach> --%>
 										<c:choose>
-											<c:when test="${orderType!=0}">
+											<c:when test="${orderType==1}">
+																					<option value="-1" style="text-align: left;">ALL</option>
+											
 												<c:forEach items="${menuListSelected}"
 													var="menuListSelected">
 													<option value="${menuListSelected.menuId}"
@@ -296,16 +297,35 @@ jQuery(document).ready(function(){
 												</c:forEach>
 												<c:forEach items="${menuListNotSelected}"
 													var="menuListNotSelected">
+													<c:choose>
+													<c:when test="${menuListNotSelected.isSameDayApplicable!=3}">
 													<option value="${menuListNotSelected.menuId}"
 														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+														</c:when>
+														</c:choose>
 												</c:forEach>
+											</c:when>
+                                              <c:when test="${orderType==3}">
+												<c:forEach items="${menuListSelected}"
+													var="menuListSelected">
+													<option value="${menuListSelected.menuId}"
+														style="text-align: left;" selected>${menuListSelected.menuTitle}</option>
+												</c:forEach>
+											
 											</c:when>
 
 											<c:otherwise>
+																					<option value="-1" style="text-align: left;">ALL</option>
+											
 												<c:forEach items="${menuListNotSelected}"
 													var="menuListNotSelected">
-													<option value="${menuListNotSelected.menuId}"
+													<c:choose>
+													<c:when test="${menuListNotSelected.isSameDayApplicable!=3}">
+														<option value="${menuListNotSelected.menuId}"
 														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+													</c:when>
+													</c:choose>
+												
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
@@ -377,13 +397,13 @@ jQuery(document).ready(function(){
 													<th class="col-md-1" style="text-align: center;">MRP</th>
 													<th class="col-sm-1" style="text-align: center;">Quantity</th>
 													<c:choose>
-														<c:when test="${catId!=42 && catId!=80}">
+														<c:when test="${catId!=42}">
 															<th class="col-md-1" style="text-align: center;">Rate</th>
 														</c:when>
 													</c:choose>
 													<th class="col-md-1" style="text-align: center;">Total</th>
 													<c:choose>
-														<c:when test="${catId==42||catId==80}">
+														<c:when test="${catId==42}">
 															<th class="col-md-1" style="text-align: center;">Order
 																Memo</th>
 														</c:when>
@@ -392,7 +412,7 @@ jQuery(document).ready(function(){
 											</thead>
 											<tbody>
 												<c:choose>
-													<c:when test="${catId==42||catId==80}">
+													<c:when test="${catId==42}">
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
@@ -467,6 +487,7 @@ jQuery(document).ready(function(){
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-1" style="text-align: center;">Sr No</th>
+													<th class="col-md-2" style="text-align: center;">Customer</th>
 													<th class="col-md-2" style="text-align: center;">Order
 														Date</th>
 													<th class="col-md-1" style="text-align: center;">Production
@@ -494,6 +515,14 @@ jQuery(document).ready(function(){
 
 													<tr>
 														<td class="col-md-1">${count.index+1}</td>
+														<td class="col-md-2">
+														<c:forEach items="${customerList}" var="customerList"
+													varStatus="cnt">
+														<c:if test="${customerList.custId==orderList.custId}">
+														${customerList.custName}
+														</c:if>
+														</c:forEach>
+														</td>
 														<td class="col-md-2"><c:out
 																value="${orderList.orderDate}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
@@ -501,7 +530,7 @@ jQuery(document).ready(function(){
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.deliveryDate}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.exVar1}" /></td>
+																value="${orderList.exVar2}" /></td>
 														<td class="col-md-2" style="text-align: right;"><c:out
 																value="${orderList.total}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
@@ -515,9 +544,10 @@ jQuery(document).ready(function(){
 														<c:if test="${orderList.isDailyMart==2}">
 															<td style="text-align: center;" class="col-sm-1">Yes</td>
 														</c:if>
-
+	<fmt:parseDate value="${orderList.deliveryDate}" pattern="dd-MM-yyyy" var="myDate"/>
+                            <fmt:formatDate value="${myDate}" var="startFormat" pattern="yyyy-MM-dd"/>
 														<td><a
-															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
+															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
 																	class="fa fa-table" aria-hidden="true"></i> </abbr>
 														</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:if
@@ -527,7 +557,7 @@ jQuery(document).ready(function(){
 																	<abbr title='Generate Sell Bill'> <i
 																		class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
 																</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if> <a
-															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
+															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${startFormat}/${orderList.frId}"  target="_blank">
 																<abbr title='Advance Order Memo'><i
 																	class="fa fa-info" aria-hidden="true"></i> </abbr>
 														</a></td>
@@ -695,11 +725,11 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-2">
 					<input type="button" id="expExcel" class="btn btn-primary"
 						value="EXPORT TO Excel" onclick="exportToExcel();">
-					<button class="btn btn-primary" value="PDF" id="PDFButton"
-						onclick="genPdf()">PDF</button>
+					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
+						onclick="genPdf()">PDF</button> -->
 				</div>
 				<!--tab1-->
 
@@ -866,7 +896,7 @@ function exportToExcel()
 	<script>
 	
 	
-	function hideShowCat(){
+/* 	function hideShowCat(){
 		
 		var type=${orderType};
 		
@@ -878,17 +908,17 @@ function exportToExcel()
 	}else{
 		$('#abc').show(); 
 	}
-	}
+	} */
 	function getMenus(type)
 	{
 		
-		if(parseInt(type)==3){
+	/* 	if(parseInt(type)==3){
 			 
  				$('#abc').hide(); 
 			 
 		}else{
 			$('#abc').show(); 
-		}
+		} */
 	
 		                $.getJSON('${getMenus}', {
 		                	type : type,
@@ -901,25 +931,30 @@ function exportToExcel()
 						    .find('option')
 						    .remove()
 						    .end()
-						 $("#catId").append($("<option align=left;></option>").attr( "value",-1).text("ALL"));
+							if(type==3){
 		                    for ( var i = 0; i < len; i++) {
 		                            
-		                    	  if(type==3 && data[i].isSameDayApplicable==3){
-			                        	$("#catId").append(
+		                      if(data[i].isSameDayApplicable==3){
+			                    $("#catId").append(
 				                                $("<option align=left; selected></option>").attr(
 				                                    "value", data[i].menuId).text(data[i].menuTitle)
 				                            );
-			                        }   else
-			                        	{
-			                        	
-			                        	$("#catId").append(
-			                                $("<option align=left;></option>").attr(
-			                                    "value", data[i].menuId).text(data[i].menuTitle)
-			                            );
-			                        	}          
-		                        
-		                    }
+			                        }      
+		                      }
+							}
+							else
+								{
+							    $("#catId").append($("<option align=left;></option>").attr( "value",-1).text("ALL"));
 
+								  for ( var i = 0; i < len; i++) {
+									  if(data[i].isSameDayApplicable!=3){
+					                        $("#catId").append(
+					                                $("<option align=left;></option>").attr(
+					                                    "value", data[i].menuId).text(data[i].menuTitle)
+					                        );
+									  }
+				                      }
+								}
 		                    $('.chosen-select').trigger('chosen:updated');
 
 		                });

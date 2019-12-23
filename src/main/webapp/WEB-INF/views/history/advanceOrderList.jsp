@@ -261,14 +261,15 @@ jQuery(document).ready(function(){
 															value="${orderList.orderDate}" /></td>
 													<td class="col-md-1"style="text-align: right;"><c:out
 															value="${orderList.prodDate}" /></td>
-													<td style="text-align: center;" class="col-sm-1"><c:out
+													<td style="text-align: right;" class="col-sm-1"><c:out
 															value="${orderList.deliveryDate}" /></td>
-														<td class="col-md-2" ><c:out
+														<td class="col-md-2" style="text-align: right;" ><c:out
 															value="${orderList.total}" /></td>
 													<td class="col-md-1"style="text-align: right;"><c:out
 															value="${orderList.advanceAmt}" /></td>
-													<td style="text-align: center;" class="col-sm-1"><c:out
+													<td style="text-align: right;" class="col-sm-1"><c:out
 															value="${orderList.remainingAmt}" /></td>
+															
 													<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
 															<abbr title='Advance Order Detail'><i class='fa fa-list'></i></abbr>

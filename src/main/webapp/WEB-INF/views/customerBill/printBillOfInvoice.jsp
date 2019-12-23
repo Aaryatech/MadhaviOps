@@ -235,7 +235,7 @@
 										value="${taxlabList.sgstRs}" /></td>
 								<td align="center" bgcolor="#ECECEC"><fmt:formatNumber
 										type="number" minFractionDigits="2" maxFractionDigits="2"
-										value="${taxlabList.igstRs}" /></td>
+										value="${taxlabList.cgstRs+taxlabList.sgstRs}" /></td>
 							</tr>
 						</c:forEach>
                           <tr>

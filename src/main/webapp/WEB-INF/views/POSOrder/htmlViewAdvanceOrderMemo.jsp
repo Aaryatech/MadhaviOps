@@ -103,7 +103,11 @@
 				<td colspan="2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="2">
 						<tbody>
+                           	<tr>
+								<td align="left">Customer:</td>
+								<td align="left" colspan="3">${cust.custName}</td>
 
+							</tr>
 							<tr>
 								<td align="left">Order Date:</td>
 								<td align="left" colspan="3">${headDetails.orderDate} ${headDetails.exVar1}</td>

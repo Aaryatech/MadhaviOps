@@ -179,15 +179,17 @@ jQuery(document).ready(function(){
 													onchange="selectToPrint()" id="select_to_print"
 													value="${sellBill.sellBillDetailNo}"></td>
 
-												<td align="left"><c:out value="${sellBill.itemName}" /></td>
-												<td align="left"><c:out value="${sellBill.qty}" /></td>
-												<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
-												<td align="left"><c:out value="${sellBill.taxableAmt}" /></td>
-												<td align="left"><c:out
+												<td style="text-align:left"><c:out value="${sellBill.itemName}" /></td>
+												<td style="text-align:right"><c:out value="${sellBill.qty}" /></td>
+												<td style="text-align:right"><c:out value="${sellBill.mrpBaseRate}" /></td>
+												<td style="text-align:right"><c:out value="${sellBill.taxableAmt}" /></td>
+												<td style="text-align:right"><c:out
 														value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
-												<td align="left"><c:out value="${sellBill.totalTax}" /></td>
-												<td align="left"><c:out value="${sellBill.mrp}" /></td>
-												<td align="left"><c:out value="${sellBill.grandTotal}" /></td>
+												<td style="text-align:right"><c:out value="${sellBill.totalTax}" /></td>
+												<td style="text-align:right"><c:out value="${sellBill.mrp}" /></td>
+												<td style="text-align:right"><fmt:formatNumber
+														type="number" maxFractionDigits="0" minFractionDigits="0"
+														value="${sellBill.grandTotal}" /></td>
 
 												<c:set var="taxableSum"
 													value="${sellBill.taxableAmt +taxableSum}"></c:set>
@@ -198,22 +200,22 @@ jQuery(document).ready(function(){
 
 											</tr>
 										</c:forEach>
-										<tr align="right">
-											<td width="100" colspan='3' align="right"><b>Total</b></td>
+										<tr >
+											<td width="100" colspan='3' style="text-align:right"><b>Total</b></td>
 											
-											<td width="100" align="right"><b><fmt:formatNumber
+											<td width="100" style="text-align:right"><b><fmt:formatNumber
 														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${qtySum}" /></b></td>
 														<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
+											<td width="100" style="text-align:right"><b><fmt:formatNumber
 														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${taxableSum}" /></b></td>
 											<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
+											<td width="100" style="text-align:right"><b><fmt:formatNumber
 														type="number" maxFractionDigits="2" minFractionDigits="2"
 														value="${taxSum}" /></b></td>
 											<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
+											<td width="100" style="text-align:right"><b><fmt:formatNumber
 														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${totalSum}" /></b></td>
 										</tr>
