@@ -93,42 +93,185 @@ public class HistoryController {
 	List<ItemOrderHis> itemOrderHistory;
 	ArrayList<FrMenu> regOrderMenuList = null;
 	ArrayList<FrMenu> spOrderMenuList = null;
+	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	RestTemplate rest = new RestTemplate();
 
 	@RequestMapping(value = "/orderHistory", method = RequestMethod.GET)
 	public ModelAndView ordersHistory(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("history/orderhistory");
+		ArrayList<FrMenu> menuListActualNotSelected = new ArrayList<>();
+		menuListSelected = new ArrayList<>();
+		menuListNotSelected = new ArrayList<>();
+
 		try {
+			
 			HttpSession session = request.getSession();
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
 			regOrderMenuList = new ArrayList<FrMenu>();
 			spOrderMenuList = new ArrayList<FrMenu>();
-
-			model.addObject("menuListSelected", menuListSelected);
-
 			for (FrMenu frMenu : menuList) {
-				if (frMenu.getCatId() == 5) {
-					spOrderMenuList.add(frMenu);
-				} else {
 					regOrderMenuList.add(frMenu);
-					menuListNotSelected = regOrderMenuList;
-
-				}
 			}
+			menuListNotSelected = regOrderMenuList;
+
+			String orderTypeStr=request.getParameter("orderType");
+			if(orderTypeStr==null) {
+				
+			model.addObject("menuListSelected", menuListSelected);
 			model.addObject("menuListNotSelected", menuListNotSelected);
+
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String todaysDate = df.format(new Date());
 			model.addObject("spDeliveryDt", todaysDate);
 			model.addObject("orderType", 0);
-			// model.addObject("catId", 0);
-			// model.addObject("regOrderMenuList", regOrderMenuList);
-			/*
-			 * CategoryList
-			 * catList=rest.getForObject(Constant.URL+"showAllCategory",CategoryList.class);
-			 * mCategoryList=catList.getmCategoryList();
-			 * model.addObject("catList",mCategoryList);
-			 */
+			}
+			else
+			{
+				int orderType = Integer.parseInt(orderTypeStr);
+				String spDeliveryDt = request.getParameter("datepicker");
+				String parsedDate = Main.formatDate(spDeliveryDt);
+				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+				int frId = frDetails.getFrId();
+				String catId[] = request.getParameterValues("catId");
 
+				StringBuilder sb = new StringBuilder();
+				List<Integer> catList = new ArrayList<>();
+
+				for (int i = 0; i < catId.length; i++) {
+					sb = sb.append(catId[i] + ",");
+					catList.add(Integer.parseInt(catId[i]));
+				}
+				String catIdStr = sb.toString();
+				catIdStr = catIdStr.substring(0, catIdStr.length() - 1);
+				   if (orderType == 1) {
+						flag = 2;
+						itemOrderHistory = orderHistory(catIdStr, parsedDate, frId);
+						model.addObject("orderHistory", itemOrderHistory);
+
+						List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+						ExportToExcel expoExcel = new ExportToExcel();
+						List<String> rowData = new ArrayList<String>();
+						rowData.add("Sr.No");
+
+						rowData.add("Item name");
+
+						rowData.add("MRP");
+
+						rowData.add("Qty.");
+						rowData.add("Rate");
+
+						rowData.add("Total");
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+						for (int i = 0; i < itemOrderHistory.size(); i++) {
+							expoExcel = new ExportToExcel();
+							rowData = new ArrayList<String>();
+							double total = itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderRate();
+							rowData.add("" + (i+1));
+							rowData.add("" + itemOrderHistory.get(i).getItemName());
+							rowData.add("" + itemOrderHistory.get(i).getOrderMrp());
+							rowData.add("" + itemOrderHistory.get(i).getOrderQty());
+
+							rowData.add("" + itemOrderHistory.get(i).getOrderRate());
+							rowData.add("" + total);
+
+							expoExcel.setRowData(rowData);
+							exportToExcelList.add(expoExcel);
+
+						}
+						session.setAttribute("exportExcelList", exportToExcelList);
+						session.setAttribute("excelName", "RegularOrderHistory");
+
+					} else if (orderType == 3) {
+					
+						flag = 2;
+						List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(1, parsedDate, frId);
+						
+						for(int i=0;i<itemOrderHistory.size();i++) {
+							itemOrderHistory.get(i).setDeliveryDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getDeliveryDate()));
+							itemOrderHistory.get(i).setOrderDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getOrderDate()));
+							itemOrderHistory.get(i).setProdDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getProdDate()));
+		 
+						}
+						model.addObject("orderHistory", itemOrderHistory);
+						Customer[] customer = rest.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+						List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+						model.addObject("customerList", customerList);
+						List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+						ExportToExcel expoExcel = new ExportToExcel();
+						List<String> rowData = new ArrayList<String>();
+						rowData.add("Sr No");
+						rowData.add("Customer");
+						rowData.add("Order date");
+						rowData.add("Production Date");
+						rowData.add("Delivery Date");
+						rowData.add("Delivery Time");
+						rowData.add("Total");
+						rowData.add("Advance Amt");
+						rowData.add("Remaining Amt");
+						rowData.add("Is Dairy Mart?");
+
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+						for (int i = 0; i < itemOrderHistory.size(); i++) {
+
+							expoExcel = new ExportToExcel();
+							rowData = new ArrayList<String>();
+					    	rowData.add("" + (i+1));
+					    	String custName="";
+					    	for(int j=0;j<customerList.size();j++)
+					    	{
+					    		if(customerList.get(j).getCustId()==itemOrderHistory.get(i).getCustId())
+					    		{
+					    			custName=customerList.get(j).getCustName();break;
+					    		}
+					    	}
+					    	rowData.add("" +custName);
+							rowData.add("" + itemOrderHistory.get(i).getOrderDate());
+							rowData.add("" + itemOrderHistory.get(i).getProdDate());
+							rowData.add("" + itemOrderHistory.get(i).getDeliveryDate());
+					    	rowData.add(""+itemOrderHistory.get(i).getExVar2());
+							rowData.add("" + itemOrderHistory.get(i).getTotal());
+							rowData.add("" + itemOrderHistory.get(i).getRemainingAmt());
+							rowData.add("" + itemOrderHistory.get(i).getAdvanceAmt());
+                            if(itemOrderHistory.get(i).getIsDailyMart()==1) {
+    							rowData.add("NO");
+                            }else
+                            {
+    							rowData.add("Yes");
+                            }
+							expoExcel.setRowData(rowData);
+							exportToExcelList.add(expoExcel);
+
+						}
+						session.setAttribute("exportExcelList", exportToExcelList);
+						session.setAttribute("excelName", "AdvanceOrderHistory");
+					}
+					for (int j = 0; j < menuListNotSelected.size(); j++) {
+						int flag = 0;
+						for (int m = 0; m < catList.size(); m++) {
+							if (catList.get(m) == menuListNotSelected.get(j).getMenuId()) {
+								menuListSelected.add(menuListNotSelected.get(j));
+								flag = 1;
+							}
+						}
+						if (flag == 0) {
+							menuListActualNotSelected.add(menuListNotSelected.get(j));
+						}
+
+					}
+					model.addObject("catId", catList.get(0));
+					model.addObject("spDeliveryDt", spDeliveryDt);
+					model.addObject("orderType", orderType);
+					model.addObject("menuListSelected", menuListSelected);
+					model.addObject("menuListNotSelected", menuListActualNotSelected);
+				
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -152,7 +295,7 @@ public class HistoryController {
 		return list;
 	}
 
-	@RequestMapping(value = "/itemHistory", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/itemHistory", method = RequestMethod.POST)
 	public ModelAndView OrderHistory(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 		ModelAndView model = new ModelAndView("history/orderhistory");
 		menuListSelected = new ArrayList<>();
@@ -165,23 +308,13 @@ public class HistoryController {
 
 			regOrderMenuList = new ArrayList<FrMenu>();
 			spOrderMenuList = new ArrayList<FrMenu>();
-			int orderType = Integer.parseInt(request.getParameter("orderType"));// new
+			int orderType = Integer.parseInt(request.getParameter("orderType"));
 
 			for (FrMenu frMenu : menuList) {
-				if (frMenu.getCatId() == 5) {
-					spOrderMenuList.add(frMenu);
-				} else {
 					regOrderMenuList.add(frMenu);
-
-				}
-
 			}
-			if (orderType == 1 || orderType == 3) {
-				menuListNotSelected = regOrderMenuList;
-			} else {
-				menuListNotSelected = spOrderMenuList;
-
-			}
+			menuListNotSelected = regOrderMenuList;
+			
 			String spDeliveryDt = request.getParameter("datepicker");
 			String parsedDate = Main.formatDate(spDeliveryDt);
 
@@ -198,60 +331,7 @@ public class HistoryController {
 			}
 			String catIdStr = sb.toString();
 			catIdStr = catIdStr.substring(0, catIdStr.length() - 1);
-
-			// List<ItemOrderHis> itemOrderHistory;
-			if (orderType == 2 || catList.contains(40) || catList.contains(41) || catList.contains(83)
-					|| catList.contains(85)) {// if catId==5
-				flag = 1;
-				spOrderHistory = spHistory(catIdStr, parsedDate, frDetails.getFrCode());
-				model.addObject("orderHistory", spOrderHistory);
-				/*************************** Excel ************************************/
-				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
-
-				ExportToExcel expoExcel = new ExportToExcel();
-				List<String> rowData = new ArrayList<String>();
-
-				rowData.add("Item name");
-
-				rowData.add("Flavour");
-
-				rowData.add("Delivery Date");
-				rowData.add("Rate");
-
-				rowData.add("Add On Rate");
-
-				rowData.add("Total");
-				rowData.add("Advance");
-				// orderList.spGrandTotal-orderList.spTotalAddRate
-				expoExcel.setRowData(rowData);
-				exportToExcelList.add(expoExcel);
-				for (int i = 0; i < spOrderHistory.size(); i++) {
-					expoExcel = new ExportToExcel();
-					rowData = new ArrayList<String>();
-					float price = spOrderHistory.get(i).getSpGrandTotal() - spOrderHistory.get(i).getSpTotalAddRate();
-
-					rowData.add("" + spOrderHistory.get(i).getSpName());
-					// rowData.add("" + spCkHisList.get(i).getItemId());
-					rowData.add("" + spOrderHistory.get(i).getSpfName());
-					rowData.add("" + spOrderHistory.get(i).getSpDeliveryDate());
-					rowData.add("" + price);
-					rowData.add("" + spOrderHistory.get(i).getSpTotalAddRate());
-					rowData.add("" + spOrderHistory.get(i).getSpGrandTotal());
-					rowData.add("" + spOrderHistory.get(i).getSpAdvance());
-					expoExcel.setRowData(rowData);
-					exportToExcelList.add(expoExcel);
-
-				}
-				// HttpSession session = request.getSession();
-				session.setAttribute("exportExcelList", exportToExcelList);
-				session.setAttribute("excelName", "SpOrderHistory");
-
-			/*} else if (orderType == 1 && (catList.contains(42) || catList.contains(80))) {
-
-				regSpHistory = regHistory(catIdStr, parsedDate, frId);
-				model.addObject("orderHistory", regSpHistory);*/
-			} else if (orderType == 1) {
-				// if (catId != 5) prev
+            if (orderType == 1) {
 				flag = 2;
 				itemOrderHistory = orderHistory(catIdStr, parsedDate, frId);
 				model.addObject("orderHistory", itemOrderHistory);
@@ -293,8 +373,7 @@ public class HistoryController {
 				session.setAttribute("excelName", "ItemHistoryReport");
 
 			} else if (orderType == 3) {
-				// new added
-				// if (catId != 5) prev
+			
 				flag = 2;
 				List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(1, parsedDate, frId);
 				
@@ -322,7 +401,6 @@ public class HistoryController {
 				rowData.add("Remaining Amt");
 				rowData.add("Advance Amt");
 
-				// orderList.spGrandTotal-orderList.spTotalAddRate
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 				for (int i = 0; i < itemOrderHistory.size(); i++) {
@@ -341,11 +419,8 @@ public class HistoryController {
 					exportToExcelList.add(expoExcel);
 
 				}
-
-				// HttpSession session = request.getSession();
 				session.setAttribute("exportExcelList", exportToExcelList);
 				session.setAttribute("excelName", "ItemHistoryReport");
-
 			}
 			for (int j = 0; j < menuListNotSelected.size(); j++) {
 				int flag = 0;
@@ -360,7 +435,6 @@ public class HistoryController {
 				}
 
 			}
-			// model.addObject("catList", mCategoryList);
 			model.addObject("catId", catList.get(0));
 			model.addObject("spDeliveryDt", spDeliveryDt);
 			model.addObject("orderType", orderType);
@@ -370,7 +444,7 @@ public class HistoryController {
 			System.out.println("Exception in order history" + e.getMessage());
 		}
 		return model;
-	}
+	}*/
 
 	@RequestMapping(value = "/showAdvanceOrderList", method = RequestMethod.GET)
 	public ModelAndView showAdvanceOrderDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -415,20 +489,10 @@ public class HistoryController {
 			}
 
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-    	try{
-    	Date date3 = sdf.parse(headDet.getExVar2());
-    	//new format
-    	SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm:ss aa");
-    	//formatting the given time to new format with AM/PM
-    	model.addObject("delTime",sdf2.format(date3));
-    	}catch(ParseException e){
-    		e.printStackTrace();
-    	}
-		
+    	model.addObject("delTime",headDet.getExVar2());
+
 		System.err.println("headDet list"+headDet.toString());
 		Customer cust=new Customer();
-		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		map.add("custId", headDet.getCustId());
 		cust = rest.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);

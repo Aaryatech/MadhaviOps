@@ -207,7 +207,7 @@ public class OpsController {
 	String selectedId="0";
 	@RequestMapping(value = "/printPosBillDetail", method = RequestMethod.POST)
 	public  @ResponseBody String printPosBillDetail(@RequestBody String[] data, HttpServletRequest request, HttpServletResponse response) throws ParseException {
-		String resp="";
+		String resp="";selectedId="0";
         try {
         	HttpSession session = request.getSession();
     		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");

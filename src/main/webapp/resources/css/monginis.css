@@ -601,7 +601,7 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
 /*--css-divices--*/
 @media screen and (max-width:1440px){
 	.advance_one{width: 26%;}
-	.custom_right{width: 87%;}
+	.custom_right{width: 93%;}
 	.dairy_frm{width: 30%;}
 }
 

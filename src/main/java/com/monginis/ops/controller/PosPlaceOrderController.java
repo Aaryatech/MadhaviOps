@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -457,8 +458,10 @@ public class PosPlaceOrderController {
 		advHeader.setExFloat2(0);
 		advHeader.setExInt1(1);
 		advHeader.setExInt2(1);
+		String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
+
 		advHeader.setExVar1(dateFormat.format(date));//Order Time
-		advHeader.setExVar2(deliveryTime);//Delivery Time
+		advHeader.setExVar2(strDelTime);//Delivery Time
 		advHeader.setIsDailyMart(dm);
 		advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
 		advHeader.setTotal(Float.parseFloat(total));

@@ -106,7 +106,7 @@ header{width: 100%; background: #FFF; padding: 0;}
 .pending_pop{background: #FFF; width: 75%; margin: 30px auto 0 auto; padding: 25px; height: 500px; /*overflow-y: scroll;*/ position: relative;}
 .slide_close{position: absolute; right: 10px; top: 10px; background: none; border: 0; color: #F00; font-size: 20px;}
 .pending_tab1 th,.pending_tab1 td{padding: 8px;}
-table{margin-bottom: 0 !important;}
+table{margin-bottom:6px !important;}
 .datepicker_fld{width: 100%;}
 
 .pop_date{display: inline-block; width: 100%; margin: 25px 0 15px 0;}
@@ -121,7 +121,7 @@ table.pending_tab td {text-align: left; padding: 8px; border: 1px solid #ddd; fo
 table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 
 .total_table_one{/*height: 263px; overflow-y: scroll;*/ display: block;}
-.scrollbars{height:560px /*283px*/; width: 100%;}
+.scrollbars{height:300px /*283px*/; width: 100%;}
 .total_table_one table {border-collapse: collapse; border-spacing: 0; width: 100%; border: 1px solid #ddd; background: #FFF;}
 .total_table_one th{text-transform: uppercase; font-size: 14px; color: #FFF; text-align: left; padding: 8px; border: 1px solid #ddd;}
 .total_table_one td {text-align: left; padding: 8px; border: 1px solid #ddd; font-size: 13px;}
@@ -198,11 +198,11 @@ input[type=radio]:checked ~ label{color: #ed1c24;}
 .category_list ul li span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 10px; font-size: 14px;}
 .category_list ul li:hover{ border: 3px solid #cccccc;}
 
-.cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 111px; background: #FFF; position: relative; white-space: initial;}
+.cat_one {margin: 4px; border: 3px solid #ecf0f5; float: left; width: 104px; background: #FFF; position: relative; white-space: initial;}
 .cat_one.cat{margin: 4px;}
 .cat_one p{background: #ed1c24; color: #FFF; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute; right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
-.cat_one img{display: block;  height: 80px; margin: 0 auto;} /* width: 80px; */
-.cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 6px 10px; font-size: 14px; /*text-overflow:ellipsis; white-space:nowrap; overflow:hidden;*/
+.cat_one img{display: block;  height: 60px; margin: 0 auto;} /* width: 80px; */
+.cat_one span{display: block; background: #e5e5e5; color: #333333; text-align: center; padding: 6px 10px; font-size: 13px; /*text-overflow:ellipsis; white-space:nowrap; overflow:hidden;*/
 vertical-align:middle; min-height: 50px;}
 .cat_one:hover{border: 3px solid #cccccc;}
 
@@ -337,7 +337,7 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 
 .sweet_list{display: block;}
 .sweet_list ul {margin: 0px; padding: 0px;}
-.sweet_list ul li{list-style-type: none; margin: 4px; border: 3px solid #ecf0f5; float: left; height: 111px; display: table; width: 111px; background: #FFF; position: relative; border: 3px solid #FFF;}
+.sweet_list ul li{list-style-type: none; margin: 4px; border: 3px solid #ecf0f5; float: left; height: 106px; display: table; width: 106px; background: #FFF; position: relative; border: 3px solid #FFF;}
 .sweet_list ul li:hover{border: 3px solid #CCC;}
 .sweet_one{display: table-cell; vertical-align: middle; text-align: center; font-size: 14px; font-weight: 400; line-height: 18px; padding: 5px; text-transform: uppercase;}
 .sweet_one p{background: #ed1c24; color: #FFF; font-size: 10px; font-weight: 600; border-radius: 50%; position: absolute; right: 6px; top: 6px; width: 20px; height: 20px; line-height: 20px; text-align: center;}
@@ -476,11 +476,11 @@ background-position: 10px 10px; background-repeat: no-repeat; font-size: 16px; f
 
 
 @media screen and (max-width:1440px){
-	.cat_list{height: 620px;}
+	.cat_list{height: /* 620px */300px;}
 }
 @media screen and (max-width:1280px){
-.carlist_scrollbars {height: 630px; width: 100%;}
-.cat_list {height: 650px;}
+.carlist_scrollbars {height:/*  630px */300px; width: 100%;}
+.cat_list {height: /* 650px */300px;}
 }
 
 @media screen and (max-width:1024px){
