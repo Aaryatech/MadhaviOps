@@ -246,7 +246,7 @@
 					
 						<tr>
 							<td align="left"
-								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
+						 		style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
 								>
 								 For wholesale inquiry contact DairyMart Team<br> Ph: 82600 60048/49<br>
 								 Visit us on  www.madhvi.in<br>
