@@ -32,6 +32,7 @@ import com.monginis.ops.model.FranchiseSup;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
+import com.monginis.ops.model.Route;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
  
 
@@ -46,20 +47,27 @@ public class ProfileController {
 
 	try {
 	System.out.println("I am here");
+	RestTemplate rest = new RestTemplate();
 	
 	HttpSession ses = request.getSession();
 	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 	String frImageName = (String)ses.getAttribute("frImage");
 	System.out.println("Franchisee Rsponse"+frDetails);
 	
+	Route frRoute= rest.getForObject(Constant.URL + "/getRoute?routeId={routeId}",
+			Route.class,frDetails.getFrRouteId());
+	model.addObject("route", frRoute);
+	System.err.println("ROUTE ------------- "+frRoute);
+	
 	MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 	map.add("frId",frDetails.getFrId());
-	RestTemplate rest = new RestTemplate();
+	
 
 	FranchiseSup frSup= rest.postForObject(Constant.URL + "/getFrSupByFrId",
 			map, FranchiseSup.class);
 	System.out.println("Franchisee frSup Rsponse"+frSup.toString());
 
+	
 	model.addObject("frSup", frSup);
 	model.addObject("URL", Constant.FR_IMAGE_URL);
 	model.addObject("frImageName", frImageName);
@@ -279,6 +287,29 @@ public class ProfileController {
 
 		 Info info = restTemplate.postForObject(Constant.URL + "/updateAdminPwd", map,
 				 Info.class);
+		 
+		 
+		 if(!info.isError()) {
+			 
+			map = new LinkedMultiValueMap<String, Object>();
+				map.add("frCode", frDetails.getFrCode());
+				map.add("frPasswordKey", adminPwd);
+
+				FrLoginResponse loginResponse = restTemplate.postForObject(Constant.URL + "/loginFr", map,
+						FrLoginResponse.class);
+
+				System.out.println("Login Response " + loginResponse.toString());
+
+				if (!loginResponse.getLoginInfo().isError()) {
+					session.setAttribute("frId", loginResponse.getFranchisee().getFrId());
+					session.setAttribute("frName", loginResponse.getFranchisee().getFrName());
+
+					session.setAttribute("frDetails", loginResponse.getFranchisee());
+				}
+			 
+		 }
+		 
+		 
 
 		 System.out.println(info.toString());
 		return info;

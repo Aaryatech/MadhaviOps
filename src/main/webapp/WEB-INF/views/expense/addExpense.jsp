@@ -50,18 +50,19 @@
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
+				<br>
 				<div class="sidebarright">
 
 					<div class="order-left">
 						<h2 class="pageTitle">Add Expense</h2>
 
 					</div>
-					<br>
+
 					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/showExpenseList"><button
-								class="btn btn-success">Expense List</button></a>
+								class="btn btn-info">Expense List</button></a>
 					</div>
-
+					<br>
 
 					<form name="frm_search" id="frm_search" method="post"
 						enctype="multipart/form-data"
@@ -81,129 +82,151 @@
 
 						</div>
 
-						<div class="colOuter">
-							<div class="col-md-2">
-								<div class="col1title" align="left">Chalan No *:</div>
+
+						<div class="profileinsiteLeft">
+
+							<div class="profile">
+								<div class="profilefildset">Chalan No * :</div>
+								<div class="profileinput">
+									<c:if test="${isEdit==0}">
+										<input id="itemCode" class="form-control"
+											placeholder="Chalan No" name="chalanNo" autocomplete="off"
+											readonly="readonly" value="${chSeq}" type="text" required>
+									</c:if>
+
+
+									<c:if test="${isEdit==1}">
+										<input id="itemCode" class="form-control"
+											placeholder="Chalan No" name="chalanNo" autocomplete="off"
+											readonly="readonly" value="${expEdit.chalanNo}" type="text"
+											required>
+									</c:if>
+								</div>
 							</div>
-							<div class="col-md-3">
 
-
-								<c:if test="${isEdit==0}">
-									<input id="itemCode" class="form-control"
-										placeholder="Chalan No" name="chalanNo" autocomplete="off"
-										readonly="readonly" value="${chSeq}" type="text" required>
-								</c:if>
-
-
-								<c:if test="${isEdit==1}">
-									<input id="itemCode" class="form-control"
-										placeholder="Chalan No" name="chalanNo" autocomplete="off"
-										readonly="readonly" value="${expEdit.chalanNo}" type="text"
+							<div class="profile">
+								<div class="profilefildset">Amount * :</div>
+								<div class="profileinput">
+									<input id="amount" class="form-control" placeholder="Amount"
+										value="${expEdit.chAmt}" autocomplete="off" name="amount"
+										type="text"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 										required>
-								</c:if>
-
-							</div>
-							<div class="col-md-1"></div>
-							<div class="col-md-2">
-								<div class="col1title">Date</div>
-							</div>
-							<div class="col-md-3">
-								<input id="fromdatepicker" class="texboxitemcode texboxcal"
-									required placeholder=" Date" name="fromdatepicker"
-									value="${expEdit.expDate}" autocomplete="off" type="text">
-
+								</div>
 							</div>
 
-						</div>
+							<div class="profile">
+								<div class="profilefildset">Image * :</div>
+								<div class="profileinput">
+									<div class="btn btn-primary btn-file legitRipple"
+										style="width: -webkit-fill-available; width: -moz-available;">
+										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
+											type="file" class="file-input browseimage browseimage1"
+											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
+									</div>
 
 
 
-						<div class="colOuter">
-							<div class="col-md-2">
-								<div class="col1title" align="left">Amount*:</div>
-							</div>
-							<div class="col-md-3">
-								<input id="amount" class="form-control" placeholder="Amount"
-									value="${expEdit.chAmt}" autocomplete="off" name="amount"
-									type="text" required>
+									<input type="hidden" value="${expEdit.imgName}" name="profPic">
+								</div>
 
-							</div>
-							<div class="col-md-1"></div>
-
-							<div class="col-md-2">
-								<div class="col1title">Type *:</div>
-							</div>
-							<div class="col-md-3">
-								<select name="isActive" id="isActive" class="form-control"
-									data-rule-required="true">
-									<option value="1" ${expEdit.expType == 1 ? 'selected' : ''}>Regular</option>
-									<option value="2" ${expEdit.expType == 2 ? 'selected' : ''}>Payment
-										Chalan</option>
-
-								</select>
 							</div>
 
-						</div>
+							<div class="profile">
 
-						<div class="colOuter">
-
-
-
-							<div class="col-md-2">
-								<div class="col1title" align="left">Image*:</div>
-							</div>
-							<div class="col-lg-4">
-								<div class="input-group-btn  ">
+								<div class="profileinput">
 									<c:if test="${not empty expEdit.imgName}">
+
+
 										<img src="${imageUrl}${expEdit.imgName}"
 											style="width: 200px; height: auto;">
+
+
 									</c:if>
 
 									<span class="filename" style="user-select: none1;"><img
 										id="temppreviewimageki1" name="image1"
 										class="temppreviewimageki1" alt="l"
-										style="width: 200px; height: auto; display: none"> </span>
-									<!-- image-preview-clear button -->
-									
-
-									<div class="btn btn-primary btn-file legitRipple">
-										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
-											type="file" class="file-input browseimage browseimage1"  
-											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
-									</div>
-									
-									<div class="col-md-3"></div>
-									
+										style="width: 200px; height: auto; display: none"> </span> <br>
 									<button type="button" title="Clear selected files"
 										class="btn btn-default btn-secondary fileinput-remove fileinput-remove-button legitRipple image-preview-clear image-preview-clear1"
-										id="1" style="display: none;">
-										<i class="icon-cross2 font-size-base mr-2"></i> Clear
+										id="1" style="display: none; margin-top: 20px;">
+										<i class="icon-cross2 font-size-base mr-2"></i> Clear Image
 									</button>
-								</div><input type="hidden" value="${expEdit.imgName}"
-										name="profPic">
- 							</div>
-						</div>
- 
-						<div class="colOuter">
-
-							<div class="col-md-2"  align="left">
-								<div class="col1title">Remark</div>
-							</div>
-							<div class="col-md-3">
-								<textarea id="remark" class="form-control" autocomplete="off"
-									name="remark" onkeyup="changeTax()">${expEdit.remark}</textarea>
-
-							</div>
-							<input type="hidden" name="expId" value="${expEdit.expId}">
-
-						</div>
-						<div class="colOuter">
-							<div align="center">
-								<input name="submit" class="buttonsaveorder" value="Submit"
-									type="submit" align="center" id="submtbtn">
+								</div>
 							</div>
 
+
+
+
 						</div>
+						
+						<div class="profileinsiteRight">
+							<div class="profile">
+								<div class="profilefildset">Date * :</div>
+								<div class="profileinput">
+									<%-- <input id="fromdatepicker" class="texboxitemcode texboxcal"
+										required placeholder=" Date" name="fromdatepicker"
+										value="${expEdit.expDate}" autocomplete="off" type="text"> --%>
+										
+										 <c:choose>
+										<c:when test="${not empty expEdit.expDate}">
+										<input id="fromdatepicker" class="form-control"
+										required placeholder=" Date" name="fromdatepicker" disabled="disabled"
+										value="${expEdit.expDate}" autocomplete="off" type="text" readonly="readonly">
+										</c:when>
+										<c:otherwise>
+										<input id="fromdatepicker" class="form-control"
+										required placeholder=" Date" name="fromdatepicker" disabled="disabled"
+										value="${todaysDate}" autocomplete="off" type="text" readonly="readonly">
+										</c:otherwise>
+										</c:choose> 
+									
+										
+								</div>
+							</div>
+
+							<div class="profile">
+								<div class="profilefildset">Type * :</div>
+								<div class="profileinput">
+									<select name="isActive" id="isActive" class="form-control"
+										data-rule-required="true">
+										<option value="1" ${expEdit.expType == 1 ? 'selected' : ''}>Regular</option>
+										<option value="2" ${expEdit.expType == 2 ? 'selected' : ''}>Payment
+											Chalan</option>
+
+									</select>
+								</div>
+							</div>
+
+
+							<div class="profile">
+								<div class="profilefildset">Remark :</div>
+								<div class="profileinput">
+									<textarea id="remark" class="form-control" autocomplete="off"
+										name="remark" onkeyup="changeTax()">${expEdit.remark}</textarea>
+
+									<input type="hidden" name="expId" value="${expEdit.expId}">
+								</div>
+							</div>
+
+
+
+
+						</div>
+
+
+
+						<div class="frm_row_one" style="margin-top: 20px;">
+
+							<input name="submit" class="buttonsaveorder" value="Submit"
+								type="submit" align="center" id="submtbtn">
+
+						</div>
+
+
+
+
 						<%-- <div id="table-scroll">
 							<!-- class="table-scroll"> -->
 							<div id="faux-table" class="faux-table" aria="hidden"

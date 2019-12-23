@@ -142,6 +142,8 @@ table, th, td {
 			<!--rightSidebar-->
 			<div class="main_container">
 			
+			<h3>${currntDat}</h3>
+			
 				<div class="page_head">
 					<div class="page_title">Petty Cash Management</div>
 					<div class="custom_right">
@@ -169,16 +171,16 @@ table, th, td {
 							type="text">
 					</div>
 					<div class="four_one three">
-						<div class="multi_title">Cash Amt</div>
-						<input id="cash_amt"  class="form-control" value="${pettycash.cashAmt}"
-							autocomplete="off" placeholder="Cash Amt" name="cash_amt" onchange="calClosingAmt()"
-							type="text">
+						<div class="multi_title">Today's Amt</div>
+						<input id="cash_amt"  class="form-control" value="${trCashAmt+advAmt-expAmt}"
+							autocomplete="off" placeholder="Today's Amt" name="cash_amt" onchange="calClosingAmt()"
+							type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 					</div>
 					<div class="four_one three">
 						<div class="multi_title">Withdrawal Amt</div>
 							<input id="withdrawal_amt"  class="form-control" value="${pettycash.withdrawalAmt}"
 							autocomplete="off" placeholder="Withdrawal Amt" name="withdrawal_amt"
-							type="text" onblur="calClosingAmt()">
+							type="text" onblur="calClosingAmt()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 					</div>
 					<div class="four_one three">
 						<div class="multi_title">Closing Amt</div>
@@ -188,7 +190,16 @@ table, th, td {
 					</div>
 					
 					<div class="four_one extra_margin">
-						<input class="buttonsaveorder" value="Day End" type="submit" id="btnsub">
+					
+					<c:if test="${isDayEnd==1}">
+					<input class="buttonsaveorder" value="Day End" type="submit" id="btnsub">
+					</c:if>
+
+					<c:if test="${isDayEnd==0}">
+					<input class="buttonsaveorder" value="Day End" type="submit" id="btnsub" style="display: none;">
+					</c:if>
+					
+						
 						<input class="buttonsaveorder redbtn" value="Cash Hand Over" type="button" id="show">
 					</div>
 					
@@ -213,23 +224,27 @@ table, th, td {
 					</div>
 					<div class="four_one three">
 						<div class="multi_title">Selling Amt</div>
-						<input id="sell_amt"  class="form-control" value="${sellAmt}"
+						<input id="sell_amt"  class="form-control" value="${trCashAmt+advAmt-expAmt}"
 										autocomplete="off" placeholder="Selling Amt" name="sell_amt"
 										readonly="readonly"type="text">
 					</div>
 					<div class="four_one three">
 						<div class="multi_title">Total Cash Hand Over Amt</div>
-						<input id="total_cash_amt"  class="form-control" value="${totalCash}"
+						<input id="total_cash_amt"  class="form-control" value="${openAmt+trCashAmt+advAmt-expAmt}"
 										autocomplete="off" placeholder="Total Cash Amt" name="total_cash_amt" 
 										readonly="readonly" type="text">
 					</div>
 					<div class="four_one three">
 						<div class="multi_title">Actual Cash Hand Over Amt</div>
-						<input id="actual_cash_amt"  class="form-control" value="${totalCash}"
+						<%-- <input id="actual_cash_amt"  class="form-control" value="${totalCash}"
+										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
+										type="text"> --%>
+										<input id="actual_cash_amt"  class="form-control" value="${openAmt+trCashAmt+advAmt-expAmt}"
 										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
 										type="text">
+										
 					</div>
-					<div class="four_one three">
+					<div class="four_one three" style="display: none;">
 						<div class="multi_title">From Employee</div>
 						<select name="from_emp" id="from_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
@@ -239,7 +254,7 @@ table, th, td {
 								</c:forEach>
 							</select>
 					</div>
-					<div class="four_one three">
+					<div class="four_one three" >
 						<div class="multi_title">To Employee</div>
 						<select name="to_emp" id="to_emp" class="form-control" required>
 								<option style="text-align:left;" value="0">Select Employee</option>
@@ -294,12 +309,12 @@ table, th, td {
 		<div class="pop_date">
 			<div class="pop_date_one">
 				<div class="pop_date_txt">From Date :-</div>
-				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="fromDate" id="fromDate" type="date"  class="datepicker_fld" /></div>
+				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="fromDate" id="fromDate" type="date"  class="datepicker_fld" value="${currntDat}" /></div>
 			</div>
 			
 			<div class="pop_date_one">
 				<div class="pop_date_txt">To Date :-</div>
-				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="toDate" id="toDate" type="date" class="datepicker_fld"  /></div>
+				<div class="pop_date_fld"><input autocomplete="off" placeholder="dd-mm-yyy" name="toDate" id="toDate" type="date" class="datepicker_fld" value="${currntDat}"  /></div>
 			</div>
 			
 			<div class="pop_date_btn"><button class="buttonsaveorder" onclick="getData()">Search </button></div>
@@ -360,11 +375,11 @@ $(document).ready(function($){
 		var isError=false;
 		 var errMsg="";
 			
-		 var e1 = $("#from_emp").val();
+		/*  var e1 = $("#from_emp").val();
 		 if(e1 == 0){			 
 			 alert("Select From Employee");
 			 return false;
-		 }
+		 } */
 		 
 		 var e2 = $("#to_emp").val();
 		 if(e2 == 0){
@@ -434,6 +449,18 @@ function calClosingAmt(){
 	var cashAmt = parseFloat($("#cash_amt").val());
 	var openAmt = parseFloat($("#opening_amt").val());
 	var withdrawAmt = parseFloat($("#withdrawal_amt").val());
+	
+	//alert(withdrawAmt);
+	
+	if(Number.isNaN(cashAmt)){
+		cashAmt=0;
+		document.getElementById("cash_amt").value = 0.0;	
+	}
+	
+	if(Number.isNaN(withdrawAmt)){
+		withdrawAmt=0;
+		document.getElementById("withdrawal_amt").value = 0.0;	
+	}
 	
 	var closeAmt = openAmt+cashAmt-withdrawAmt;
 
