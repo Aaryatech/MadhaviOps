@@ -133,20 +133,19 @@ However, delay the fade out process for 2.5 seconds */
 				<div class="sidebarright">
 					
 		<div class="sidebarright">
-		<br>
 	
 		<div class=" col-md-2">
-		    <h2 class=" pull-left">Invoice No:-  <b>${invoiceNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h5 class=" pull-left">Invoice No:-  <b>${invoiceNo}</b></h5>
 		</div>
 	
 		<div class="col-md-2">
-		    <h2 class="pull-left">Bill Date:- <b> ${billDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h5 class="pull-left">Bill Date:- <b> ${billDate}</b></h5>
 		</div>
 			<div class="col-md-3">
-		    <h2 class="pull-left">Grand Total:- <b> ${grandTotal}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></h2>
+		    <h5 class="pull-left">Grand Total:- <b> ${grandTotal}</b></h5>
 		</div>
 		<div class="col-md-4 ">
-			  <h2 class="pull-left">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
+			  <h5 class="pull-left">Bill Status:-<input type="hidden" value="${billStatus}" name="billstatus" id="billstatus"> <c:choose>
 																	<c:when test="${billStatus==1}">
 																		<b><label  id="status1">Pending</label></b>
 																	</c:when>
@@ -170,10 +169,10 @@ However, delay the fade out process for 2.5 seconds */
 							 									<b><label  id="status7">Closed</label></b>
 																	</c:when>
 
-																</c:choose></h2>
+																</c:choose></h5>
 		</div>
 		
-		 <div class="col-md-2 ">
+		 <div class="col-md-1 " style="margin-top: 3px;">
 								<input name="" class="buttonsaveorder" value="Received"
 									type="button" id="updateStatus" onclick="updateStatus(${billNo})">
 							</div>

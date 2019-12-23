@@ -159,14 +159,12 @@
 
 							<thead>
 								<tr class="bgpink">
-								
+								    <th class="col-sm-1">Sr. No</th>
 									<th class="col-sm-1">Invoice No</th>
 									<th class="col-md-1">Date</th>
-
 									<th class="col-md-1">Taxable Amt</th>
 									<th class="col-md-1">Tax Amt</th>
-									<th class="col-md-1"> Total</th>
-
+									<th class="col-md-1">Total</th>
 									<th class="col-md-1">Status</th>
 									<th class="col-md-1">Remark</th>
 									<th class="col-md-1">Action</th>
@@ -176,16 +174,16 @@
 
 								<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
-									<tr>
+									<tr><td class="col-sm-1" style="text-align: left;">${count.index+1}</td>
 									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td class="col-sm-1"><c:out value="${billHeader.invoiceNo}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-sm-1" style="text-align: left;"><c:out value="${billHeader.invoiceNo}" /></td>
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${billHeader.billDate}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${billHeader.taxableAmt}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1"style="text-align: right;"><c:out
 												value="${billHeader.totalTax}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1"style="text-align: right;"><c:out
 												value="${billHeader.grandTotal}" /></td>
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
@@ -212,8 +210,8 @@
 											</c:when>
 
 										</c:choose>
-										<td class="col-md-1"><c:out value="${billHeader.remark}" /></td>
-										<td class="col-md-1"><div >
+										<td class="col-md-1"style="text-align: left;"><c:out value="${billHeader.remark}" /></td>
+										<td class="col-md-1" style="text-align: center;"><div >
 												<a
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"
 													class="fa fa-info"></a>&nbsp;&nbsp;

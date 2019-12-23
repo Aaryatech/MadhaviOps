@@ -160,9 +160,6 @@ public class BillingController {
 		map.add("frId", frId);
 		map.add("typeIdList", -1);
 		
-		
-	
-		
 		ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 		};
 		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeader",
