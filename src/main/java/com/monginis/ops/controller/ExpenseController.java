@@ -25,7 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
- import com.monginis.ops.common.DateConvertor;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.Company;
@@ -86,9 +86,9 @@ public class ExpenseController {
 
 			mav.addObject("expEdit", ep);
 			mav.addObject("isEdit", 0);
-			
-			SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
-			String todaysDate=sdf.format(Calendar.getInstance().getTime());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			String todaysDate = sdf.format(Calendar.getInstance().getTime());
 			mav.addObject("todaysDate", todaysDate);
 
 		} catch (Exception e) {
@@ -218,26 +218,25 @@ public class ExpenseController {
 			String gvnPhoto1 = null;
 
 			for (int i = 0; i < photo.size(); i++) {
-				
+
 				if (photo.get(i).getOriginalFilename() != "") {
-				try {
-					gvnPhoto1 = curTimeStamp + "-" + photo.get(i).getOriginalFilename();
+					try {
+						gvnPhoto1 = curTimeStamp + "-" + photo.get(i).getOriginalFilename().replace(' ', '_');
 
-					upload.saveUploadedFiles(photo, Constant.CH_IMAGE_TYPE,
-							curTimeStamp + "-" + photo.get(i).getOriginalFilename());
+						upload.saveUploadedFiles(photo, Constant.CH_IMAGE_TYPE,
+								curTimeStamp + "-" + photo.get(i).getOriginalFilename());
 
-				} catch (IOException e) {
+					} catch (IOException e) {
 
-					System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
-					e.printStackTrace();
-				}
+						System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
+						e.printStackTrace();
+					}
 				} else {
 
 					gvnPhoto1 = request.getParameter("profPic");
 					System.out.println(gvnPhoto1);
 				}
-				
-			
+
 			}
 
 			exp.setChalanNo(chalanNo);
@@ -266,7 +265,7 @@ public class ExpenseController {
 			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveExpense", exp, Info.class);
 			System.out.println("Response: " + errorMessage.toString());
 
-			if (errorMessage.isError() == false  && expId.equals("0")) {
+			if (errorMessage.isError() == false && expId.equals("0")) {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				System.err.println("incr " + chSeq + 1);
 				map.add("frId", frDetails.getFrId());

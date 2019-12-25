@@ -296,6 +296,8 @@ public class HomeController {
 			}
 
 			map = new LinkedMultiValueMap<String, Object>();
+			
+			System.err.println("PARAM --------------------------------------- FR_ID - "+frId+"         FR_RATE_CAT - "+frDetails.getFrRateCat()+"       FROMDATE - "+fromDate+"          TODATE - "+toDate);
 
 			map.add("frId", frId);
 			map.add("frRateCat", frDetails.getFrRateCat());
@@ -449,6 +451,8 @@ public class HomeController {
 			map.add("frId", frDetails.getFrId());
 			map.add("catId", catId);
 			map.add("flag", flag);
+			
+			System.err.println("ITEM PARAM ------------------- DATE - "+fromDate+" - "+toDate+"   CATID - "+catId+"        FLAG - "+flag);
 
 			CategorywiseItemSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseItemSell", map,
 					CategorywiseItemSell[].class);

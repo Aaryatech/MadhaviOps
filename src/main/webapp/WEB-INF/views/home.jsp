@@ -37,7 +37,7 @@
 				<div class="page_head">
 					<div class="page_title">Dashboard</div>
 
-
+<%-- <h3>${type}</h3> --%>
 
 					<!-- <div class="page_bread">
 						<ul>
@@ -379,7 +379,7 @@
 						<li>
 							<div class="sale_one bg_two">
 								<div class="sale-list">
-								<div class="sale_epay">
+								<div class="sale_epay" style="text-align: center;">
 										 Dairy Mart Order
 									</div>
 								<c:forEach items="${dailyList}" var="dailyList"  varStatus="count">
@@ -398,7 +398,7 @@
 						<li>
 							<div class="sale_one bg_three">
 								<div class="sale-list">
-								<div class="sale_epay">
+								<div class="sale_epay" style="text-align: center;">
 										Advance Order
 									</div>
 								<c:forEach items="${advOrderList}" var="advOrderList"  varStatus="count">
@@ -457,7 +457,7 @@
 									<tr>
 										<th style="text-align: center;">Sr</th>
 										<th style="text-align: center;">Item Name</th>
-										<th style="text-align: right;">Amount</th>
+										<th style="text-align: center;">Amount</th>
 									</tr>
 								</thead>
 								<tbody>
