@@ -1726,40 +1726,42 @@ body {
  												payType="Cash";
  											}else{   payType="Credit";} */
 											if(data.exVar1=="0" || data.exVar1=="0," ){
-												payType="Credit";
+												payType="Credit Bill";
  												
 											}else{
 											var str_arr = data.exVar1.split(',');
 											for (i = 0; i < str_arr.length; i++) { 
 											   if(str_arr[i] === "1"){
-													payType="Cash";
+													payType="Cash("+data.cashAmt+")";
 											   }
 											   if(str_arr[i] === "2"){
-												   payType=payType+",Card";
+												   payType=payType+",Card("+data.cardAmt+")";
 											   }
 											   if(str_arr[i] === "3"){
-												   payType=payType+",Epay";
+												   payType=payType+",Epay("+data.ePayAmt+")";
 											   }
 											   if(str_arr[i] === "4"){
-												   payType=payType+",Debit Card";
+												   payType=payType+",Debit Card("+data.cardAmt+")";
 											   }
 											   if(str_arr[i] === "5"){
-												   payType=payType+",Credit Card"; 
+												   payType=payType+",Credit Card("+data.cardAmt+")"; 
 											   }
 											   if(str_arr[i] === "6"){
-												   payType=payType+",Phone Pay";  
+												   payType=payType+",Phone Pay("+data.ePayAmt+")";  
 											   }
 											   if(str_arr[i] === "7"){
-												   payType=payType+",Paytm"; 
+												   payType=payType+",Paytm("+data.ePayAmt+")"; 
 											   }
 											   if(str_arr[i] === "8"){
-												   payType=payType+",Google Pay"; 
+												   payType=payType+",Google Pay("+data.ePayAmt+")"; 
 											   }
 											   if(str_arr[i] === "9"){
-												   payType=payType+",Amazon Pay";  
+												   payType=payType+",Amazon Pay("+data.ePayAmt+")";  
 											   }
 											  
 											}
+											var resultPayType = (payType[0] == ',') ? payType.substr(1) : payType;
+
 											}
 														var tr = $('<tr></tr>');
 														tr.append($('<td ></td>').html(key + 1));
@@ -1768,7 +1770,7 @@ body {
 														tr.append($('<td ></td>').html(data.exFloat1));
 														tr.append($('<td ></td>').html(paidAmount));
 														tr.append($('<td ></td>').html(data.exFloat2));
-														tr.append($('<td ></td>').html(payType));
+														tr.append($('<td class="gradient-multiline"></td>').html(resultPayType));
 														
 														$('#custTable tbody').append(tr);
 										}); 
@@ -2570,6 +2572,8 @@ function matchSplitAmt(flag){
 			if (value == 2) {
 				$("#modeOfPayDiv").show();
 			} else {
+				 document.getElementById('single').checked = true;
+				 changeSplitSingle(1);
 				$("#modeOfPayDiv").hide();
 			}
 
@@ -3457,23 +3461,14 @@ if(parseInt(custId)==parseInt(dfCust)){
 		var advAmt = document.getElementById("advAmt").value;
 		var advOrderDate = document.getElementById("advOrderDate").value;
 		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
-
 		var flagPayable=0;
+		
 		document.getElementById("credAmt").innerHTML="0.0";
 
 		if (document.getElementById('split').checked) {
-			 
-			var totalPayableAmt;
+					
+			var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
 			
-		
-			if(parseFloat(advAmt)>0){
-			 
- 				totalPayableAmt=parseFloat($('#totalPayableAmt').text());//ch
-			}else{
-				totalPayableAmt=parseFloat($('#totalPayableAmt').text());
-			}
-			
-			//var epayLabel=	document.getElementById("epayLabel").innerHTML;  
 			var cashAmt =  $('#cashAmt').val() ;
 			var cardAmt =  $('#cardAmt').val() ;
 			var epayAmt =  $('#epayAmt').val() ;
@@ -3504,6 +3499,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
 		if(billType==1){
 			payTypeFlag=0;
+			payType=1;
 		}else
 		if(billType==2)
 			{

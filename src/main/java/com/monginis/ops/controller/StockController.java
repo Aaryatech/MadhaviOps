@@ -265,7 +265,7 @@ public class StockController {
 
 			}
 				menuIdList.add(2);
-				menuIdList.add(42);
+				//menuIdList.add(42);
 		} else if (catId.equalsIgnoreCase("3")) {
 			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
@@ -285,7 +285,7 @@ public class StockController {
 				}
 
 			}
-			menuIdList.add(6);
+			menuIdList.add(7);
 		} else if (catId.equalsIgnoreCase("7")) {
 			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
@@ -295,7 +295,7 @@ public class StockController {
 				}
 
 			}
-			menuIdList.add(49);
+			menuIdList.add(42);
 		} else if (catId.equalsIgnoreCase("9")) {
 			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {

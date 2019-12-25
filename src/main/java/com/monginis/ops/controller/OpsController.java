@@ -423,7 +423,7 @@ public class OpsController {
 					model.addAttribute("key", 0);
 					/* model.addAttribute("advKey", 1); */
 					session.removeAttribute("advItemList");
-					session.removeAttribute("advHeadId");
+					//session.removeAttribute("advHeadId");
 
 				} catch (Exception e) {
 					itemBillList = new ArrayList<>();
@@ -679,7 +679,7 @@ public class OpsController {
 						// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
-						sellBillDetail.setBillStockType(0);
+						sellBillDetail.setBillStockType(1);
 						sellBillDetail.setTaxableAmt(itemBillList.get(i).getTaxableAmt());
 						sellBillDetail.setTotalTax(itemBillList.get(i).getTaxAmt());
 						sellBillDetail.setGrandTotal(itemBillList.get(i).getTotal());
@@ -921,7 +921,7 @@ public class OpsController {
 						// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
-						sellBillDetail.setBillStockType(0);
+						sellBillDetail.setBillStockType(1);
 						sellBillDetail.setTaxableAmt(detailTaxableAmt);//itemBillList.get(i).getTaxableAmt());
 						sellBillDetail.setTotalTax(detailTotalTax);//itemBillList.get(i).getTaxAmt());
 						sellBillDetail.setGrandTotal(detailGrandTotal);//'itemBillList.get(i).getTotal());
