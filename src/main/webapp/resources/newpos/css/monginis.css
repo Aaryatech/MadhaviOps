@@ -575,3 +575,43 @@ background-position: 10px 10px; background-repeat: no-repeat; font-size: 16px; f
 	.logout_btn{margin: 7px 0 0 0;}
 	.logo{margin: 0;}
 }
+/* new Css For Action Label Pos Css*/
+
+.gradient-multiline {
+  position: relative;
+  width: 300px;
+  margin: 40px auto;
+  background-color: #ecf0f5;
+  text-align: center;
+  line-height: 1.5em;
+  overflow:hidden;
+}
+  
+.gradient-multiline span {
+  color: #fff;
+  background-color: transparent;
+
+  padding: 0.225rem 0.5rem;
+
+  /* Needs prefixing */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@supports(mix-blend-mode: lighten) {
+  
+  .gradient-multiline::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background: linear-gradient(60deg, #3629a2, #00ceff);
+
+    mix-blend-mode: lighten;
+  }
+  
+}
+/*END*/

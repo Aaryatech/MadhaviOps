@@ -212,6 +212,7 @@ body {
 
 
 					<div class="top_radio_area">
+					 <label id="actionName" class="gradient-multiline" style=" font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,sans-serif;padding-top: 0px;padding-right: 30px;font-weight: bold;">${actionName}</label>
 						<div class="radio_row_one">
 							<h3 class="item_head">Item Search</h3>
 							<div class="radio_row">
@@ -241,7 +242,7 @@ body {
 								</ul>
 							</div>
 						</div>
-
+                       
 						<div class="item_src">
 							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
@@ -369,10 +370,12 @@ body {
 						</a>
 
 						<c:if test="${advanceAmt>0}">
-							<label>Advance Amt : <span id="advAmt1">${advanceAmt}</span>
+							<label id="advBillLable">Advance Amt : <span id="advAmt1">${advanceAmt}</span>
 							</label>
 						</c:if>
 						<input type="hidden" id="advAmt" name="advAmt" value="${advanceAmt}">
+						<input type="hidden" id="advOrderDate" name="advOrderDate" value="${advOrderDate}">
+					<input type="hidden" id="isAdvanceOrder" name="isAdvanceOrder" value="${isAdvanceOrder}">
 					</div>
 
 					<!--customer drop down here-->
@@ -637,11 +640,14 @@ body {
 
 					</div>
 
-
+<c:set var="holdStyle" value=""></c:set>
+<c:if test="${isAdvanceOrder==1}">
+<c:set var="holdStyle" value=" style='pointer-events: none;'"></c:set>
+</c:if>
 					<!--five button here-->
 					<div class="buttons_row">
 						<div class="button_one">
-							<a href="#" class="hold hold_btn" onclick="billOnHold()">Hold</a>
+							<a href="#" class="hold hold_btn" onclick="billOnHold()" ${holdStyle} >Hold</a>
 							<a href="#" class="hold can_btn"
 								onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
@@ -3306,7 +3312,8 @@ $("#enterQty").focus();
 	
 	function submitBill(printbilltype) {
 		var advAmt = document.getElementById("advAmt").value;
-		
+		var advOrderDate = document.getElementById("advOrderDate").value;
+		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
 		var key =  $('#key').val() ;
 		/* var key =  $('#advKey').val() ; */
 		var custId =  $('#cust').val() ;
@@ -3335,11 +3342,16 @@ $("#enterQty").focus();
 						custId : custId,
  						selectedText : selectedText,
  						advAmt:advAmt,
+ 						advOrderDate:advOrderDate,
+ 						isAdvanceOrder:isAdvanceOrder,
 						ajax : 'true'
 					},
 					function(data) {
-						  
-						
+						  if(advAmt>0){
+						 document.getElementById("advAmt").value = 0; 
+						 document.getElementById("advBillLable").style.display = 'none';
+						 document.getElementById("actionName").innerHTML= 'ADD BILL';
+						  }
 							if(key==0){
 								
 								if(printbilltype==1){
@@ -3443,6 +3455,9 @@ if(parseInt(custId)==parseInt(dfCust)){
 	function submitBillByPaymentOption(printbilltype) {
 		
 		var advAmt = document.getElementById("advAmt").value;
+		var advOrderDate = document.getElementById("advOrderDate").value;
+		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
+
 		var flagPayable=0;
 		document.getElementById("credAmt").innerHTML="0.0";
 
@@ -3600,10 +3615,16 @@ if(parseInt(custId)==parseInt(dfCust)){
 							discAmt:discAmt,
 							billAmtWtDisc:billAmtWtDisc,
 							advAmt:advAmt,
+							advOrderDate:advOrderDate,
+							isAdvanceOrder:isAdvanceOrder,
 							ajax : 'true'
 						},
 						function(data) {
-							  
+							 if(advAmt>0){
+							 document.getElementById("advAmt").value = 0; 
+							 document.getElementById("advBillLable").style.display = 'none';
+							 document.getElementById("actionName").innerHTML= 'ADD BILL';
+							 }
 							 if(key==0){
 								 if(printbilltype==1){
 										
