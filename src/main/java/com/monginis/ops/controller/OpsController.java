@@ -312,6 +312,7 @@ public class OpsController {
 		}
 		return mav;
 	}
+	TransactionDetail transactionDetail=null;
 	@RequestMapping(value = "/newcustomerbill/{type}", method = RequestMethod.GET)
 	public String newcustomerbill(@PathVariable int type, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
@@ -383,7 +384,18 @@ public class OpsController {
  					mvm.add("headId", headId);
 					AdvanceOrderHeader headList = restTemplate.postForObject(
 							Constant.URL + "/advanceOrderHistoryHedaerByHeadId", mvm, AdvanceOrderHeader.class);
-					
+					if(headList.getAdvanceAmt()>0)
+					{
+						SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+						FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+						 transactionDetail = new TransactionDetail();
+						transactionDetail.setCashAmt(headList.getAdvanceAmt());
+						transactionDetail.setPayMode(1);
+						transactionDetail.setSellBillNo(0);
+						transactionDetail.setTransactionDate(sf1.format(date));
+						transactionDetail.setExVar1("0,1");
+						transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+					}
 				
 					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
@@ -742,6 +754,12 @@ public class OpsController {
 			if (sellBillHeaderRes != null) {
 
 				List<TransactionDetail> dList = new ArrayList<>();
+				if(transactionDetail!=null)
+				{
+					transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+					dList.add(transactionDetail);
+				}
+				
 				TransactionDetail transactionDetail = new TransactionDetail();
 				
 				
@@ -763,6 +781,10 @@ public class OpsController {
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
 
+				if(transactionDetailRes.length>0)
+				{
+					transactionDetail=null;
+				}
 				 map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
@@ -988,6 +1010,10 @@ public class OpsController {
 			if (sellBillHeaderRes != null) {
 
 				List<TransactionDetail> dList = new ArrayList<>();
+				if(transactionDetail!=null)
+				{
+					dList.add(transactionDetail);
+				}
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf1.format(date));
@@ -1037,7 +1063,11 @@ public class OpsController {
 
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
-
+				
+				if(transactionDetailRes.length>0)
+				{
+					transactionDetail=null;
+				}
 				 map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 

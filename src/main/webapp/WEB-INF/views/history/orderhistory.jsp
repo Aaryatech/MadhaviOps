@@ -478,15 +478,13 @@ jQuery(document).ready(function(){
 							<c:when test="${orderType==3}">
 
 								<div class="clearfix"></div>
-
-
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
 									<div class="table-wrap">
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-1" style="text-align: center;">Sr No</th>
+													<th class="col-md-1" style="text-align: center;">Sr</th>
 													<th class="col-md-2" style="text-align: center;">Customer</th>
 													<th class="col-md-2" style="text-align: center;">Order
 														Date</th>
@@ -498,7 +496,7 @@ jQuery(document).ready(function(){
 														Time</th>
 													<th class="col-md-2" style="text-align: right;">Total</th>
 													<th class="col-md-1" style="text-align: right;">Advance
-														Amount</th>
+														</th>
 													<th class="col-sm-1" style="text-align: right;">Remaining
 														Amount</th>
 													<th class="col-sm-1" style="text-align: right;">Is

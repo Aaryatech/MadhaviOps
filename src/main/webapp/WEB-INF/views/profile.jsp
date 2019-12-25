@@ -307,14 +307,21 @@
 											<div class="profilefildset">Is Own Store?</div>
 											<%-- <div class="profileinput mardis">${frDetails.frKg1}</div> --%>
 											<div class="profileinput">
-
-												<label class="radio-inline"> <input type="radio"
-													name="kg_1" id="optionsR1" value="0"
-													${frDetails.frKg1 == 0 ? 'checked' : ''}> No
-												</label> <label class="radio-inline"> <input type="radio"
-													name="kg_1" id="optionsR1" value="1"
-													${frDetails.frKg1 == 1 ? 'checked' : ''} /> Yes
+                                              <c:choose>
+                                              <c:when test="${frDetails.frKg1 == 0}">
+                                              <label class="radio-inline"> <input type="radio"
+													name="kg_1" id="optionsR1" value="0" 
+												checked	> No
 												</label>
+                                              </c:when>
+                                              <c:when test="${frDetails.frKg1 ==1}">
+                                               <label class="radio-inline"> <input type="radio"
+													name="kg_1" id="optionsR1" value="1" 
+													checked /> Yes
+												</label>
+                                              </c:when>
+                                              </c:choose>
+												
 											</div>
 
 										</div>

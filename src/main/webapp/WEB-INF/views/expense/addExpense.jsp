@@ -121,7 +121,7 @@
 									<div class="btn btn-primary btn-file legitRipple"
 										style="width: -webkit-fill-available; width: -moz-available;">
 										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
-											type="file" class="file-input browseimage browseimage1"
+											type="file" class="file-input browseimage browseimage1" required
 											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
 									</div>
 
@@ -172,12 +172,12 @@
 										 <c:choose>
 										<c:when test="${not empty expEdit.expDate}">
 										<input id="fromdatepicker" class="form-control"
-										required placeholder=" Date" name="fromdatepicker" disabled="disabled"
+										required placeholder=" Date" name="fromdatepicker" 
 										value="${expEdit.expDate}" autocomplete="off" type="text" readonly="readonly">
 										</c:when>
 										<c:otherwise>
 										<input id="fromdatepicker" class="form-control"
-										required placeholder=" Date" name="fromdatepicker" disabled="disabled"
+										required placeholder=" Date" name="fromdatepicker" 
 										value="${todaysDate}" autocomplete="off" type="text" readonly="readonly">
 										</c:otherwise>
 										</c:choose> 

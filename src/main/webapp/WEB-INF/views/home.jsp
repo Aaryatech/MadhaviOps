@@ -525,8 +525,8 @@
 				datag = datag + '[';
 				$.each(chartsdata, function(key, chartsdata) {
 					var temp = [];
-					temp.push(chartsdata.catName,
-							parseInt(chartsdata.catTotal),
+					temp.push(chartsdata.catName+" ("+ (parseFloat(chartsdata.catTotal).toFixed(2))+")",
+							(parseFloat(chartsdata.catTotal)),
 							parseInt(chartsdata.catId));
 					dataSale.push(temp);
 
@@ -537,7 +537,12 @@
 
 				var options = {
 					title : 'Categorywise Sell(%)',
-					pieHole : 0.4,
+					pieHole : 0.4,  
+					backgroundColor: 'transparent',
+				    pieSliceText: 'none',
+				    sliceVisibilityThreshold: 0,             
+				    legend: 'labeled',
+			        is3D: true,
 				};
 				//  alert(222);
 				chart = new google.visualization.PieChart(document

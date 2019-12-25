@@ -453,9 +453,17 @@ public class HistoryController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 
-			List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(0, "01-10-2019", frDetails.getFrId());
-			model.addObject("orderHistory", itemOrderHistory);
+			List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(0, "22-12-2019", frDetails.getFrId());
+			for(int i=0;i<itemOrderHistory.size();i++) {
+				itemOrderHistory.get(i).setDeliveryDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getDeliveryDate()));
+				itemOrderHistory.get(i).setOrderDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getOrderDate()));
+				itemOrderHistory.get(i).setProdDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getProdDate()));
 
+			}
+			model.addObject("orderHistory", itemOrderHistory);
+			Customer[] customer = rest.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

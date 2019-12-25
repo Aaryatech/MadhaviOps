@@ -176,10 +176,8 @@ body {
 <div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
 	
 					<div class="logout_btn pos">
-					<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></a>
-					</div><a href="${pageContext.request.contextPath}/logout"> <img
-						src="${pageContext.request.contextPath}/resources/newpos/images/exit.png"
-						alt="Logout" width="18px" height="19px;" style="padding-right: 3px;"></a>
+					<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><abbr title="Full Screen"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></abbr></a>
+					</div><a href="${pageContext.request.contextPath}/logout"> <abbr title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i></abbr></a>
 					</div>
 <div class="customer_one" style="width:auto;">
 					<select name="holdBillNo" id="holdBillNo"
@@ -371,7 +369,7 @@ body {
 						</a>
 
 						<c:if test="${advanceAmt>0}">
-							<label>Advance Order Amt : <span id="advAmt1">${advanceAmt}</span>
+							<label>Advance Amt : <span id="advAmt1">${advanceAmt}</span>
 							</label>
 						</c:if>
 						<input type="hidden" id="advAmt" name="advAmt" value="${advanceAmt}">
@@ -3710,6 +3708,9 @@ function custBillPdf(sellBillNo)
 	</script>
 <script type="text/javascript">
 	var requestFullscreen = function (ele) {
+		
+       // $(".scrollbars").height(400);
+
 		if (ele.requestFullscreen) {
 			ele.requestFullscreen();
 		} else if (ele.webkitRequestFullscreen) {
@@ -3724,6 +3725,7 @@ function custBillPdf(sellBillNo)
 	};
 
 	var exitFullscreen = function () {
+		
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
 		} else if (document.webkitExitFullscreen) {

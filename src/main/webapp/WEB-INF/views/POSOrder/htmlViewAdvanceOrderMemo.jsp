@@ -215,7 +215,7 @@
 						  <tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
-									Customer Care: 82600 60048 </span></td>
+									Customer Care: 9824051188 </span></td>
 						</tr>
 						<tr>
 							<td align="left"

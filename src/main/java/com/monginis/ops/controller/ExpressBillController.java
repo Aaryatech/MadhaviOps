@@ -373,7 +373,7 @@ public class ExpressBillController {
 	@RequestMapping(value = "/calcStock", method = RequestMethod.GET)
 	public @ResponseBody float getStock(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "itemId", required = true) String itemId,
-			@RequestParam(value = "qty", required = true) int qty) {
+			@RequestParam(value = "qty", required = true) float qty) {
 		HttpSession session = request.getSession();
 
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -517,7 +517,7 @@ else {
 	@RequestMapping(value = "/insertItem", method = RequestMethod.GET)
 	public @ResponseBody List<SellBillDetail> insertItem(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "itemId", required = true) int itemId,
-			@RequestParam(value = "qty", required = true) int qty) {
+			@RequestParam(value = "qty", required = true) float qty) {
 		System.out.println("********ItemId********" + itemId);
 		RestTemplate restTemplate = new RestTemplate();
 HttpSession ses=request.getSession();
@@ -985,7 +985,7 @@ if(ses==null) {
 	@RequestMapping(value = "/deleteItem", method = RequestMethod.GET)
 	public @ResponseBody List<SellBillDetail> deleteItem(
 			@RequestParam(value = "sellBillDetailNo", required = true) int sellBillDetailNo,
-			@RequestParam(value = "qty", required = true) int qty,	@RequestParam(value = "id", required = true) int id) {
+			@RequestParam(value = "qty", required = true) float qty,	@RequestParam(value = "id", required = true) int id) {
 		System.out.println("********ItemId********" + sellBillDetailNo);
 
 		System.out.println("********inside Delete********" + sellBillDetailNo+ "qty "+ qty + "Id " +id);

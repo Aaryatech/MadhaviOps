@@ -861,7 +861,7 @@ function onRateChange(rate)
 				tr.append($('<td ></td>').html(' <input type="checkbox" style="width:25px;height:25px;"  onchange="selectToPrint()" name="select_to_print" id="select_to_print" value="'+item.sellBillDetailNo+'" >'));
 			
 					//tr.append($('<td></td>').html(key));
-					
+				
 					tr.append($('<td></td>').html(len));
 						
 						len=len-1;

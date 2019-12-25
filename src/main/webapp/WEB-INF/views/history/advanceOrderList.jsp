@@ -240,13 +240,16 @@ jQuery(document).ready(function(){
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
-												<th class="col-md-1" style="text-align: center;">Sr No</th>
+												<th class="col-md-1" style="text-align: center;">Sr.</th>
+												<th class="col-md-2" style="text-align: center;">Customer</th>
 												<th class="col-md-2" style="text-align: center;">Order Date</th>
 												<th class="col-md-1" style="text-align: center;">Production Date</th>
 												<th class="col-sm-1" style="text-align: center;">Delivery Date</th>
+												<th class="col-sm-1" style="text-align: center;">Delivery Time</th>
 												<th class="col-md-2" style="text-align: center;">Total</th>
-												<th class="col-md-1" style="text-align: center;">Advance Amount</th>
+												<th class="col-md-1" style="text-align: center;">Advance</th>
 												<th class="col-sm-1" style="text-align: center;">Remaining Amount</th>
+												<th class="col-sm-1" style="text-align: right;">Is Dairy Mart</th>
 												<th class="col-sm-1" style="text-align: center;">Action</th>
 										 
 											</tr>
@@ -257,19 +260,35 @@ jQuery(document).ready(function(){
 
 												<tr>
  													<td class="col-md-1">${count.index+1}</td>
-													<td class="col-md-2" ><c:out
-															value="${orderList.orderDate}" /></td>
-													<td class="col-md-1"style="text-align: right;"><c:out
-															value="${orderList.prodDate}" /></td>
-													<td style="text-align: right;" class="col-sm-1"><c:out
-															value="${orderList.deliveryDate}" /></td>
-														<td class="col-md-2" style="text-align: right;" ><c:out
-															value="${orderList.total}" /></td>
-													<td class="col-md-1"style="text-align: right;"><c:out
-															value="${orderList.advanceAmt}" /></td>
-													<td style="text-align: right;" class="col-sm-1"><c:out
-															value="${orderList.remainingAmt}" /></td>
-															
+ 														<td class="col-md-2" style="text-align:left;">
+														<c:forEach items="${customerList}" var="customerList"
+													varStatus="cnt">
+														<c:if test="${customerList.custId==orderList.custId}">
+														${customerList.custName}
+														</c:if>
+														</c:forEach>
+														</td>
+													<td class="col-md-2"><c:out
+																value="${orderList.orderDate}" /></td>
+														<td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.prodDate}" /></td>
+														<td style="text-align: center;" class="col-sm-1"><c:out
+																value="${orderList.deliveryDate}" /></td>
+														<td style="text-align: center;" class="col-sm-1"><c:out
+																value="${orderList.exVar2}" /></td>
+														<td class="col-md-2" style="text-align: right;"><c:out
+																value="${orderList.total}" /></td>
+														<td class="col-md-1" style="text-align: right;"><c:out
+																value="${orderList.advanceAmt}" /></td>
+														<td style="text-align: center;" class="col-sm-1"><c:out
+																value="${orderList.remainingAmt}" /></td>
+
+														<c:if test="${orderList.isDailyMart==1}">
+															<td style="text-align: center;" class="col-sm-1">No</td>
+														</c:if>
+														<c:if test="${orderList.isDailyMart==2}">
+															<td style="text-align: center;" class="col-sm-1">Yes</td>
+														</c:if>
 													<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
 															<abbr title='Advance Order Detail'><i class='fa fa-list'></i></abbr>

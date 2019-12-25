@@ -21,7 +21,7 @@ public class GetSellBillDetail {
 	private float mrpBaseRate;
 	
 
-	private int qty;
+	private float qty;
 	
 	private float sgstPer;
 	
@@ -77,11 +77,11 @@ public class GetSellBillDetail {
 		this.mrp = mrp;
 	}
 
-	public int getQty() {
+	public float getQty() {
 		return qty;
 	}
 
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 

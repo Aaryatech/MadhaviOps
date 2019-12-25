@@ -110,7 +110,7 @@ jQuery(document).ready(function(){
 
 				<div class="row"> -->
 
-					<div class="col-md-2 from_date">
+					<div class="col-md-3 from_date">
 						<h4 class="pull-left">
 							Bill No:- <b>${printInvoiceNo}</b>
 						</h4>
@@ -204,7 +204,7 @@ jQuery(document).ready(function(){
 											<td width="100" colspan='3' style="text-align:right"><b>Total</b></td>
 											
 											<td width="100" style="text-align:right"><b><fmt:formatNumber
-														type="number" maxFractionDigits="0" minFractionDigits="0"
+														type="number" maxFractionDigits="2" minFractionDigits="2"
 														value="${qtySum}" /></b></td>
 														<td></td>
 											<td width="100" style="text-align:right"><b><fmt:formatNumber
@@ -212,7 +212,7 @@ jQuery(document).ready(function(){
 														value="${taxableSum}" /></b></td>
 											<td></td>
 											<td width="100" style="text-align:right"><b><fmt:formatNumber
-														type="number" maxFractionDigits="2" minFractionDigits="2"
+														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${taxSum}" /></b></td>
 											<td></td>
 											<td width="100" style="text-align:right"><b><fmt:formatNumber

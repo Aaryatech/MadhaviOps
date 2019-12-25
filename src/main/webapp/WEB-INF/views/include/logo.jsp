@@ -62,7 +62,7 @@
 		<div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
 		<div class="hide_menu"><a href="#" onclick="SetRating()"><i class="fa fa-eye"  title="Hide/Show Menu Bar" aria-hidden="true"></i> 
 	</a></div>
-		<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></a></div>
+		<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><abbr title="Full Screen"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></abbr></a></div>
 	
 <%-- 		<img src="${pageContext.request.contextPath}/resources/newpos/images/fullscreen.png"  id="fs-doc-button" alt="F" style="margin-top:8px;">
  --%>		<%-- <img src="${pageContext.request.contextPath}/resources/newpos/images/normal.png"  id="fs-exit-doc-button" alt="N" style="margin-top:8px;"> --%>
