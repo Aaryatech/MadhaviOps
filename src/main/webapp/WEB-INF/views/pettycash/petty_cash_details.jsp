@@ -33,7 +33,7 @@ table, th, td {
 }
 
 .form-control {
-    text-align: left !important;
+	text-align: left !important;
 }
 </style>
 <%-- <!DOCTYPE html>
@@ -67,156 +67,151 @@ table, th, td {
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
 
 </head>--%>
-<body onload="getData()"> 
+<body onload="getData()">
 
-<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/loader.css">
-<!--datepicker-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#fromdatepicker").datepicker({
-			dateFormat : 'dd-mm-yy'
+	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resources/css/loader.css">
+	<!--datepicker-->
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#fromdatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
 		});
-	});
-	$(function() {
-		$("#todatepicker").datepicker({
-			dateFormat : 'dd-mm-yy'
+		$(function() {
+			$("#todatepicker").datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
 		});
-	});
-</script>
-<!--datepicker-->
+	</script>
+	<!--datepicker-->
 
 
-<c:url var="getPettyCashData" value="/getPettyCashData"></c:url>
+	<c:url var="getPettyCashData" value="/getPettyCashData"></c:url>
 
 
-<!--topLeft-nav-->
-<div class="sidebarOuter"></div>
-<!--topLeft-nav-->
+	<!--topLeft-nav-->
+	<div class="sidebarOuter"></div>
+	<!--topLeft-nav-->
 
-<!--wrapper-start-->
-<div class="wrapper">
+	<!--wrapper-start-->
+	<div class="wrapper">
 
-	<!--topHeader-->
-
-
-	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
+		<!--topHeader-->
 
 
-	<!--topHeader-->
+		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
+		<!--topHeader-->
 
 
 
-	<!--rightContainer-->
-	<div class="fullGrid center">
-		<!--fullGrid-->
-		<div class="wrapperIn2 single">
-
-			<!--leftNav-->
-
-			<jsp:include page="/WEB-INF/views/include/left.jsp">
-				<jsp:param name="myMenu" value="${menuList}" />
-			</jsp:include>
 
 
-			<!--leftNav-->
-			<div class="colOuter">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<c:if test="${not empty message}">
-						<div class="alert1">
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							${message}
-						</div>
-					</c:if>
-				</div>
-			</div>
+		<!--rightContainer-->
+		<div class="fullGrid center">
+			<!--fullGrid-->
+			<div class="wrapperIn2 single">
 
-			<!--rightSidebar-->
-			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Petty Cash Management</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
-				<div class="order-right" align="right" style="padding-top:2%;">
+				<!--leftNav-->
 
-					<a href="${pageContext.request.contextPath}/showPattyCashMgmnt"><input
-						type="button" value="Petty Cash" class="buttonsaveorder">
-					</a>
-				</div>
-		<!-- <form action="addPettyCash" method="post"> -->
-				
+				<jsp:include page="/WEB-INF/views/include/left.jsp">
+					<jsp:param name="myMenu" value="${menuList}" />
+				</jsp:include>
+
+
+				<!--leftNav-->
 				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title" align="left">From Date</div>
-					</div>
-					<div class="col-md-3">
-							<input id="datepicker" class="texboxitemcode texboxcal" autocomplete="off"
-								value="${firstDate}" name="from_Date" type="text">
-					</div>
-					
-					<div class="col-md-1"></div>
-					
-					<div class="col-sm-2">
-						<div class="col1title" align="left">To Date</div>
-					</div>
-					<div class="col-md-3">
-							<input id="datepicker2" class="texboxitemcode texboxcal" autocomplete="off"
-								value="${currentDate}" name="to_Date" type="text">
-					</div>
-					
-					
-				</div>
-				
-				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
-						<input class="buttonsaveorder" value="Submit"
-							type="submit" onclick="getData()">
-
-						 <div align="center" id="loader" style="display: none">
-
-							<span>
-								<h4>
-									<font color="#343690">Loading</font>
-								</h4>
-							</span> <span class="l-1"></span> <span class="l-2"></span> <span
-								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-							<span class="l-6"></span>
-						</div>
-					</div>
-
-
-							<div class="col1" style="padding-left: 22%;">
- 
-								<button type="button" class="btn btn-primary" onclick="genPdf()" disabled
-									id="pdf" 
-									>
-									PDF</button>
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<c:if test="${not empty message}">
+							<div class="alert1">
+								<span class="closebtn"
+									onclick="this.parentElement.style.display='none';">&times;</span>
+								${message}
 							</div>
-
+						</c:if>
+					</div>
 				</div>
-				
-				<!-- </form> -->
+
+				<!--rightSidebar-->
+				<div class="sidebarright">
+				<br>
+					<div class="order-left">
+						<h2 class="pageTitle">Petty Cash Management</h2>
+						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+					</div>
+					<div class="order-right" align="right">
+
+						<a href="${pageContext.request.contextPath}/showPattyCashMgmnt"><input
+							type="button" value="Petty Cash" class="buttonsaveorder">
+						</a>
+					</div>
+					<!-- <form action="addPettyCash" method="post"> -->
+					
+					<br>
+
+					<div class="colOuter">
+						<div class="col-md-2">
+							<div class="col1title" align="left">From Date</div>
+						</div>
+						<div class="col-md-3">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								autocomplete="off" value="${firstDate}" name="from_Date"
+								type="text">
+						</div>
+
+						<div class="col-md-1"></div>
+
+						<div class="col-sm-2">
+							<div class="col1title" align="left">To Date</div>
+						</div>
+						<div class="col-md-3">
+							<input id="datepicker2" class="texboxitemcode texboxcal"
+								autocomplete="off" value="${currentDate}" name="to_Date"
+								type="text">
+						</div>
+
+
+					</div>
+
+					<div class="four_one three" style="width: 100%;text-align: center;">
+
+						<input class="buttonsaveorder" value="Submit" type="submit"
+							onclick="getData()">
+
+						<button type="button" class="btn btn-primary" onclick="genPdf()"
+							disabled id="pdf">PDF</button>
+
+					</div>
+
+					<div align="center" id="loader" style="display: none">
+
+						<span>
+							<h4>
+								<font color="#343690">Loading</font>
+							</h4>
+						</span> <span class="l-1"></span> <span class="l-2"></span> <span
+							class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+						<span class="l-6"></span>
+					</div>
+
+					<!-- </form> -->
 
 
 
-				<div class="row">
-					<div class="col-md-12">
-						<!--table-->
-						<form action="monthEndProcess" method="POST"
-							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
-							<div class="clearfix"></div>
-							<div class="col-md-9"></div>
-							<!-- <label for="search" class="col-md-3" id="search"> <i
+					<div class="row">
+						<div class="col-md-12">
+							<!--table-->
+							<form action="monthEndProcess" method="POST"
+								onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
+								<div class="clearfix"></div>
+								<div class="col-md-9"></div>
+								<!-- <label for="search" class="col-md-3" id="search"> <i
 								class="fa fa-search" style="font-size: 20px"></i> <input
 								type="text" id="myInput" onkeyup="myFunction()"
 								style="border-radius: 25px;" placeholder="Search items by name"
@@ -224,26 +219,29 @@ table, th, td {
 							</label>
  -->
 
-							<div id="table-scroll"  class="table-scroll responsive-table-one"><!-- class="table-scroll" -->								
-								<div><!--  class="table-wrap" -->
-									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
-										<thead>											
-											<tr class="bgpink">
-												<th class="col-md-1">Sr. No</th>
-												<th class="col-md-1">Date</th>
-												<th class="col-md-1">Opening Amt</th>
-												<th class="col-md-1">Cash Amt</th>
-												<th class="col-md-1">Withdrawal Amt</th>
-												<th class="col-md-1">Closing Amt</th>
-												<!-- <th class="col-md-1">Action</th> -->
-											</tr>
-										
-										</thead>
-										<tbody>
-										
-										
-										</tbody>
-										<%--  <tbody>
+								<div id="table-scroll" class="table-scroll responsive-table-one">
+									<!-- class="table-scroll" -->
+									<div>
+										<!--  class="table-wrap" -->
+										<table id="table_grid" class="responsive-table">
+											<!-- class="main-table" -->
+											<thead>
+												<tr class="bgpink">
+													<th class="col-md-1">Sr. No</th>
+													<th class="col-md-1">Date</th>
+													<th class="col-md-1">Opening Amt</th>
+													<th class="col-md-1">Cash Amt</th>
+													<th class="col-md-1">Withdrawal Amt</th>
+													<th class="col-md-1">Closing Amt</th>
+													<!-- <th class="col-md-1">Action</th> -->
+												</tr>
+
+											</thead>
+											<tbody>
+
+
+											</tbody>
+											<%--  <tbody>
 										<c:forEach items="${pettyList}" var="pettyList"
 														varStatus="count">
 											<tr>
@@ -262,14 +260,14 @@ table, th, td {
 												</td>
 											</tr>
 											</c:forEach>
-										</tbody>  --%>										
-									</table>
+										</tbody>  --%>
+										</table>
+									</div>
+
 								</div>
 
-							</div>
 
-
-							<!-- <div class="col-md-2">
+								<!-- <div class="col-md-2">
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel();" id="expExcel">
@@ -277,7 +275,7 @@ table, th, td {
 						 	</div> -->
 
 
-							<!-- <div class="col-md-3">
+								<!-- <div class="col-md-3">
  
 								<button type="button" class="btn btn-primary" onclick="genPdf()" disabled
 									id="pdf"
@@ -285,129 +283,125 @@ table, th, td {
 									PDF</button>
 							</div> -->
 
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
+
 			</div>
-
 		</div>
+
+		<!--rightSidebar-->
+
 	</div>
+	<!--fullGrid-->
+	</div>
+	<!--rightContainer-->
 
-	<!--rightSidebar-->
+	</div>
+	<!--wrapper-end-->
 
-</div>
-<!--fullGrid-->
-</div>
-<!--rightContainer-->
+	<!--easyTabs-->
+	<!--easyTabs-->
+	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<!--easyTabs-->
 
-</div>
-<!--wrapper-end-->
+	<script>
+		function calClosingAmt() {
 
-<!--easyTabs-->
-<!--easyTabs-->
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-<!--easyTabs-->
+			var cashAmt = parseFloat($("#cash_amt").val());
+			var openAmt = parseFloat($("#opening_amt").val());
+			var withdrawAmt = parseFloat($("#withdrawal_amt").val());
 
-<script>
-function calClosingAmt(){
-	
-	var cashAmt = parseFloat($("#cash_amt").val());
-	var openAmt = parseFloat($("#opening_amt").val());
-	var withdrawAmt = parseFloat($("#withdrawal_amt").val());
-	
-	var closeAmt = openAmt+cashAmt-withdrawAmt;
+			var closeAmt = openAmt + cashAmt - withdrawAmt;
 
-	document.getElementById("closing_amt").value = parseFloat(closeAmt);	
-}
+			document.getElementById("closing_amt").value = parseFloat(closeAmt);
+		}
 
+		function editPettyCashDetails(pettyCashIdId) {
+			//alert("LogId--"+logId);
+			window
+					.open("${pageContext.request.contextPath}/editPettyCash?pettyCashIdId="
+							+ pettyCashIdId);
+		}
+	</script>
 
-function editPettyCashDetails(pettyCashIdId){
-//alert("LogId--"+logId);
-window.open("${pageContext.request.contextPath}/editPettyCash?pettyCashIdId="+pettyCashIdId);
-}
-</script>
+	<!-- Select Only Month and Year -->
+	<script>
+		function getData() {
+			$('#loader').show();
 
-<!-- Select Only Month and Year -->
-<script>
- function getData(){
-	 $('#loader').show();
+			var from_date = $("#datepicker").val();
+			var to_date = $("#datepicker2").val();
+			$.getJSON('${getPettyCashData}',
 
-		var from_date = $("#datepicker").val();
-		var to_date = $("#datepicker2").val();
-		$
-		.getJSON(
-				'${getPettyCashData}',
+			{
 
-				{
-					 
-					from_date : from_date,
-					to_date : to_date, 
-					ajax : 'true'
+				from_date : from_date,
+				to_date : to_date,
+				ajax : 'true'
 
-				},
-				function(data) {
-					if (data != null) {						
-						document.getElementById("pdf").disabled = false;	
-						 $('#loader').hide();
-					}
-					//alert("Petty Info1----"+JSON.stringify(data));
-				$('#table_grid td').remove(); 
-		  
-	  $.each(
-					data,
-					function(i, v) {
-												
+			}, function(data) {
+				if (data != null) {
+					document.getElementById("pdf").disabled = false;
+					$('#loader').hide();
+				}
+				//alert("Petty Info1----"+JSON.stringify(data));
+				$('#table_grid td').remove();
+
+				$.each(data, function(i, v) {
+
 					//	var acButton = '&nbsp;&nbsp;<a href="#" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>';
-				
-						var tr = $('<tr></tr>');
-						
-						tr.append($('<td></td>').html(i+1));
-						tr.append($('<td></td>').html(v.date));
-						tr.append($('<td></td>').html(v.openingAmt));
-					  	tr.append($('<td></td>').html(v.cashAmt));
-					  	tr.append($('<td></td>').html(v.withdrawalAmt));
-					  	tr.append($('<td></td>').html(v.closingAmt));
-						//tr.append($('<td></td>').html(acButton));
-						$('#table_grid tbody').append(tr);						 
 
-					})  
-				
-				});
-		
-		
-	}
-</script>
+					var tr = $('<tr></tr>');
 
-<script type="text/javascript">
-	function genPdf() {
-		var fromDate = $("#datepicker").val();
-		var toDate = $("#datepicker2").val();
-		window.open('${pageContext.request.contextPath}/getPettyCashDetailPdf/'+ fromDate + '/' + toDate);
-	}
+					tr.append($('<td></td>').html(i + 1));
+					tr.append($('<td></td>').html(v.date));
+					tr.append($('<td></td>').html(v.openingAmt));
+					tr.append($('<td></td>').html(v.cashAmt));
+					tr.append($('<td></td>').html(v.withdrawalAmt));
+					tr.append($('<td></td>').html(v.closingAmt));
+					//tr.append($('<td></td>').html(acButton));
+					$('#table_grid tbody').append(tr);
 
-	/* function exportToExcel() {
+				})
 
-		window.open("${pageContext.request.contextPath}/exportToExcel");
-		document.getElementById("expExcel").disabled = true;
-	} */
-</script>
+			});
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			var fromDate = $("#datepicker").val();
+			var toDate = $("#datepicker2").val();
+			window
+					.open('${pageContext.request.contextPath}/getPettyCashDetailPdf/'
+							+ fromDate + '/' + toDate);
+		}
+
+		/* function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		} */
+	</script>
 
 
 
 
-<script>
-	
-	(function() {
-		var fauxTable = document.getElementById("faux-table");
-		var mainTable = document.getElementById("table_grid");
-		var clonedElement = table_grid.cloneNode(true);
-		var clonedElement2 = table_grid.cloneNode(true);
-		clonedElement.id = "";
-		clonedElement2.id = "";
-		fauxTable.appendChild(clonedElement);
-		fauxTable.appendChild(clonedElement2);
-	})();
-</script>
+	<script>
+		(function() {
+			var fauxTable = document.getElementById("faux-table");
+			var mainTable = document.getElementById("table_grid");
+			var clonedElement = table_grid.cloneNode(true);
+			var clonedElement2 = table_grid.cloneNode(true);
+			clonedElement.id = "";
+			clonedElement2.id = "";
+			fauxTable.appendChild(clonedElement);
+			fauxTable.appendChild(clonedElement2);
+		})();
+	</script>
 
 
 

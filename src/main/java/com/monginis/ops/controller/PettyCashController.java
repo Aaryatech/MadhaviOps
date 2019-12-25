@@ -98,6 +98,11 @@ public class PettyCashController {
 			System.out.println("ToDay Date-----" + currntDat);
 
 			model.addObject("currentDate", currntDat);
+			
+			DateFormat DF1 = new SimpleDateFormat("yyyy-MM-dd");
+			String currntDat2 = DF1.format(new java.util.Date());
+			model.addObject("dateForSearch", currntDat2);
+			
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
@@ -739,18 +744,18 @@ public class PettyCashController {
 			Calendar cal1 = Calendar.getInstance();
 			//String str = req.getParameter("from_emp");
 			
-			FrEmpLoginResp loginResponse= (FrEmpLoginResp) session.getAttribute("frEmpDetails");
-			System.err.println("EMP LOGIN -------------------------------- "+loginResponse.getFrEmp());
+			FrEmpMaster loginResponse=  (FrEmpMaster) session.getAttribute("frEmpDetails");
+			System.err.println("EMP LOGIN -------------------------------- "+loginResponse);
 			
-			String fromEmpId = ""+loginResponse.getFrEmp().getFrEmpId();
-			String FromEmpName = ""+loginResponse.getFrEmp().getFrEmpName();
+			String fromEmpId = ""+loginResponse.getFrEmpId();
+			String FromEmpName = ""+loginResponse.getFrEmpName();
 			
-			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
 			String currentDate = DF.format(new java.util.Date());
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
-			map.add("date", currentDate);
+			map.add("lastdate", currentDate);
 			
 			System.err.println("DATE **************************** "+currentDate);
 			
@@ -761,12 +766,12 @@ public class PettyCashController {
 			
 			float prevAmt=0;
 			if(data!=null) {
-				prevAmt=Float.parseFloat(data.getExVar1());
+				prevAmt=data.getSellingAmt();
 			}
 			
-			float actualCashHandover=Float.parseFloat(req.getParameter("actual_cash_amt"));
+			float sellAmtTot=Float.parseFloat(req.getParameter("sell_amt"));
 			
-			float saleDone=actualCashHandover-prevAmt;
+			float saleDone=sellAmtTot-prevAmt;
 
 			
 			//String[] part = str.split("-");
@@ -779,7 +784,7 @@ public class PettyCashController {
 			String toEmpName = parts[1];
 
 			cashHndOvr.setActualAmtHandover(Float.parseFloat(req.getParameter("total_cash_amt")));
-			cashHndOvr.setAmtHandover(actualCashHandover);
+			cashHndOvr.setAmtHandover(Float.parseFloat(req.getParameter("actual_cash_amt")));
 			cashHndOvr.setClosingDate(ymdSDF1.format(cal1.getTime()));
 			cashHndOvr.setDelStatus(0);
 			cashHndOvr.setExInt1(0);
