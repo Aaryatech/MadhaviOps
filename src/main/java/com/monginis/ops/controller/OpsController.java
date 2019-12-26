@@ -703,7 +703,7 @@ public class OpsController {
 			sellBillHeader.setFrId(frDetails.getFrId());
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
-			sellBillHeader.setUserName(customerById.getCompanyName());
+			sellBillHeader.setUserName(customerById.getCustName());
 			sellBillHeader.setBillDate(sf.format(date));
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));

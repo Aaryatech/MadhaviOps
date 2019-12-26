@@ -139,8 +139,8 @@ jQuery(document).ready(function(){
 										<th style="text-align:center;">Grand Total</th>
 									<th style="text-align:center;">Payable Amount</th>
 									<th style="text-align:center;">Paid Amount</th>
-									<th style="text-align:center;">Paymode</th>
-									<th style="text-align:center;">Bill Type</th>
+<!-- 									<th style="text-align:center;">Paymode</th>
+ -->									<th style="text-align:center;">Bill Type</th>
 									<th style="text-align:center;">Action</th>
 								  </tr>
 								</thead>
@@ -159,8 +159,8 @@ jQuery(document).ready(function(){
 										<th style="text-align:center;">Grand Total</th>
 									<th style="text-align:center;">Payable Amount</th>
 									<th style="text-align:center;">Paid Amount</th>
-									<th style="text-align:center;">Paymode</th>
-									<th style="text-align:center;">Bill Type</th>
+<!-- 									<th style="text-align:center;">Paymode</th>
+ -->									<th style="text-align:center;">Bill Type</th>
 									
 									<th style="text-align:center;">Action</th>
 								  </tr>
@@ -240,7 +240,7 @@ jQuery(document).ready(function(){
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.grandTotal).toFixed(2)));
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.payableAmt).toFixed(2)));
 													tr.append($('<td style="text-align:right;"></td>').html((sellBillData.paidAmt).toFixed(2)));
-													var payMode="";
+													/* var payMode="";
 													if(sellBillData.paymentMode==1)
 													payMode="Cash";
 													else if(sellBillData.paymentMode==2)
@@ -248,7 +248,7 @@ jQuery(document).ready(function(){
 													else if(sellBillData.paymentMode==3)
 													payMode="Other";	
 													
-													tr.append($('<td style="text-align:center;"></td>').html(payMode));
+													tr.append($('<td style="text-align:center;"></td>').html(payMode)); */
 													tr.append($('<td style="text-align:center;"></td>').html(sellBillData.billType));
 													 if(sellBillData.billType=='S'){
 														 if((sellBillData.invoiceNo).length>1)

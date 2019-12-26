@@ -449,7 +449,7 @@ table, th, td {
 								</div>
 
 							</div>
-							
+							<br></br>
 							<div class="two_buttons">
 								<button type="button" class="buttonsaveorder" onclick="exportToExcel();" id="expExcel"> Export To Excel</button>
 								<button type="button" class="buttonsaveorder" onclick="genPdf()" id="PDFButton"> PDF</button>	
