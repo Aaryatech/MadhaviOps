@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -96,15 +98,15 @@ public class OpsController {
 			try {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
-				
-				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId", map,
 						FrEmpMaster.class);
 				model.addAttribute("frEmpMaster", frEmpMaster);
-				} catch (Exception e) {
-					FrEmpMaster frEmpMaster=new FrEmpMaster();
-					frEmpMaster.setFrEmpName("-");
-					model.addAttribute("frEmpMaster", frEmpMaster);
-				}
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +124,7 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-		
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 0);
@@ -133,15 +135,15 @@ public class OpsController {
 			try {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
-				
-				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId", map,
 						FrEmpMaster.class);
 				model.addAttribute("frEmpMaster", frEmpMaster);
-				} catch (Exception e) {
-					FrEmpMaster frEmpMaster=new FrEmpMaster();
-					frEmpMaster.setFrEmpName("-");
-					model.addAttribute("frEmpMaster", frEmpMaster);
-				}
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -150,7 +152,7 @@ public class OpsController {
 						FranchiseSup.class);
 				model.addAttribute("frSup", frSup);
 			} catch (Exception e) {
-                  e.printStackTrace();
+				e.printStackTrace();
 			}
 
 		} catch (Exception e) {
@@ -169,7 +171,7 @@ public class OpsController {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("flag", 1);
@@ -180,15 +182,15 @@ public class OpsController {
 			try {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("empId", sellBillHeaderAndDetail.getExtInt1());
-				
-				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId",map,
+
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId", map,
 						FrEmpMaster.class);
 				model.addAttribute("frEmpMaster", frEmpMaster);
-				} catch (Exception e) {
-					FrEmpMaster frEmpMaster=new FrEmpMaster();
-					frEmpMaster.setFrEmpName("-");
-					model.addAttribute("frEmpMaster", frEmpMaster);
-				}
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -205,42 +207,44 @@ public class OpsController {
 		}
 		return mav;
 	}
-	String selectedId="0";
+
+	String selectedId = "0";
+
 	@RequestMapping(value = "/printPosBillDetail", method = RequestMethod.POST)
-	public  @ResponseBody String printPosBillDetail(@RequestBody String[] data, HttpServletRequest request, HttpServletResponse response) throws ParseException {
-		String resp="";selectedId="0";
-        try {
-        	HttpSession session = request.getSession();
-    		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-    		for(int i=0;i<data.length;i++)
-    		{
-    			selectedId=selectedId+","+data[i];
-    		}
-            resp=frDetails.getFrGstType()+"";
-            System.err.println(selectedId);
-    		
-        }
-        catch (Exception e) {
+	public @ResponseBody String printPosBillDetail(@RequestBody String[] data, HttpServletRequest request,
+			HttpServletResponse response) throws ParseException {
+		String resp = "";
+		selectedId = "0";
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			for (int i = 0; i < data.length; i++) {
+				selectedId = selectedId + "," + data[i];
+			}
+			resp = frDetails.getFrGstType() + "";
+			System.err.println(selectedId);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return resp;
+		return resp;
 	}
-		
+
 	@RequestMapping(value = "/printDetailBillOfSupply/{billNo}", method = RequestMethod.GET)
-	public String printDetailBillOfSupply(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
-			Model model) {
+	public String printDetailBillOfSupply(@PathVariable int billNo, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 
 		String mav = "customerBill/printBillOfSupply";
-		System.err.println(selectedId); 
+		System.err.println(selectedId);
 		try {
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			model.addAttribute("frName", frDetails.getFrName());
 			try {
-			FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
-			model.addAttribute("frEmpMaster", frEmpMaster);
+				FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
+				model.addAttribute("frEmpMaster", frEmpMaster);
 			} catch (Exception e) {
-				FrEmpMaster frEmpMaster=new FrEmpMaster();
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
 				frEmpMaster.setFrEmpName("-");
 				model.addAttribute("frEmpMaster", frEmpMaster);
 			}
@@ -253,7 +257,7 @@ public class OpsController {
 			sellBillHeaderAndDetail.setDiscountPer(0);
 			model.addAttribute("sellBillHeaderAndDetail", sellBillHeaderAndDetail);
 			model.addAttribute("frDetails", frDetails);
-			selectedId="0";
+			selectedId = "0";
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -262,7 +266,7 @@ public class OpsController {
 						FranchiseSup.class);
 				model.addAttribute("frSup", frSup);
 			} catch (Exception e) {
-                  e.printStackTrace();
+				e.printStackTrace();
 			}
 
 		} catch (Exception e) {
@@ -270,9 +274,10 @@ public class OpsController {
 		}
 		return mav;
 	}
+
 	@RequestMapping(value = "/printDetailBillOfInvoice/{billNo}", method = RequestMethod.GET)
-	public String printDetailBillOfInvoice(@PathVariable int billNo, HttpServletRequest request, HttpServletResponse response,
-			Model model) {
+	public String printDetailBillOfInvoice(@PathVariable int billNo, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 
 		String mav = "customerBill/printBillOfInvoice";
 
@@ -283,11 +288,11 @@ public class OpsController {
 			try {
 				FrEmpMaster frEmpMaster = (FrEmpMaster) session.getAttribute("frEmpDetails");
 				model.addAttribute("frEmpMaster", frEmpMaster);
-				} catch (Exception e) {
-					FrEmpMaster frEmpMaster=new FrEmpMaster();
-					frEmpMaster.setFrEmpName("-");
-					model.addAttribute("frEmpMaster", frEmpMaster);
-				}
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billId", billNo);
 			map.add("billDetailNoList", selectedId);
@@ -313,6 +318,7 @@ public class OpsController {
 		}
 		return mav;
 	}
+
 	@RequestMapping(value = "/newcustomerbill/{type}", method = RequestMethod.GET)
 	public String newcustomerbill(@PathVariable int type, HttpServletRequest request, HttpServletResponse response,
 			Model model) {
@@ -454,6 +460,149 @@ public class OpsController {
 		}
 		return mav;
 	}
+	
+
+	@RequestMapping(value = "/editcustomerbill/{type}/{sellBillNo}", method = RequestMethod.GET)
+	public String editCustomerBill(@PathVariable int type, @PathVariable int sellBillNo, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
+
+		String mav = "customerBill/editcustomerbill";
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+
+			String curDateTime = dateFormat.format(cal.getTime());
+			System.err.println("curDateTime" + curDateTime);
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+			model.addAttribute("date1", sf.format(date));
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addAttribute("customerList", customerList);
+
+			ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
+
+			String items;
+			StringBuilder builder = new StringBuilder();
+			for (FrMenu frMenu : menuList) {
+
+				if (frMenu.getMenuId() == 1 || frMenu.getMenuId() == 2 || frMenu.getMenuId() == 3
+						|| frMenu.getMenuId() == 4 || frMenu.getMenuId() == 5 || frMenu.getMenuId() == 6
+						|| frMenu.getMenuId() == 82 || frMenu.getMenuId() == 86) {
+
+					builder.append("," + frMenu.getItemShow());
+
+				}
+
+			}
+			items = builder.toString();
+			items = items.substring(1, items.length());
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("itemList", items);
+			mvm.add("frId", frDetails.getFrId());
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
+					ItemResponse.class);
+			List<Item> newItemsList = itemsList.getItemList();
+
+			model.addAttribute("newItemsList", newItemsList);
+
+			CategoryList categoryList = restTemplate.getForObject(Constant.URL + "findAllOnlyCategory",
+					CategoryList.class);
+			model.addAttribute("catList", categoryList.getmCategoryList());
+			model.addAttribute("frRateCat", frDetails.getFrRateCat());
+			model.addAttribute("holdingList", hashMap);
+
+			model.addAttribute("sellBillNo", sellBillNo);
+			
+			
+			
+
+			try {
+				// String custId = String.valueOf(session.getAttribute("editCustId"));
+
+				System.err.println("type 0**" + sellBillNo);
+
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("sellBillNo", sellBillNo);
+
+				SellBillHeader sellBillHeaderRes = restTemplate.postForObject(
+						Constant.URL + "/getSellBillItemsBySellBillNoForEdit", mvm, SellBillHeader.class);
+
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("sellBillNo", sellBillNo);
+
+				ItemListForCustomerBill[] itemsList1 = restTemplate.postForObject(
+						Constant.URL + "/getBillItemsBySellBillNo", mvm, ItemListForCustomerBill[].class);
+
+				System.err.println("BILL ITEM LIST ---------------------------- " + itemsList1);
+
+				itemBillList = new ArrayList<>();
+				for (int i = 0; i < itemsList1.length; i++) {
+					itemBillList.add(itemsList1[i]);
+				}
+
+				CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
+				customerBillOnHold.setItemList(itemBillList);
+
+				model.addAttribute("tempCust", sellBillHeaderRes.getCustId());
+				model.addAttribute("tempHeader", sellBillHeaderRes);
+
+				model.addAttribute("advAmt", customerBillOnHold);
+				model.addAttribute("holdBill", customerBillOnHold);
+
+				System.err.println("holdBill ------------------------- " + customerBillOnHold);
+
+				model.addAttribute("key", 0);
+
+			} catch (Exception e) {
+				itemBillList = new ArrayList<>();
+				model.addAttribute("key", 0);
+				model.addAttribute("tempCust", 0);
+				model.addAttribute("advanceAmt", 0);
+				model.addAttribute("isAdvanceOrder", 0);
+				model.addAttribute("advOrderDate", "");
+				model.addAttribute("actionName", "ADD BILL");
+
+				/* model.addAttribute("advKey", 0); */
+				// e.printStackTrace();
+			}
+			
+			
+			try {
+				
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("sellBillNo", sellBillNo);
+
+				TransactionDetail transactionDetail = restTemplate.postForObject(
+						Constant.URL + "/getAdvAmtTransaction", mvm, TransactionDetail.class);
+				
+				float trAdvAmt=0;
+				if(transactionDetail!=null) {
+					trAdvAmt=transactionDetail.getCashAmt();
+				}
+				
+				model.addAttribute("advAmtTransaction",trAdvAmt);
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("settingKey", "DEFLTCUST");
+			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
+					NewSetting.class);
+			System.err.println(settingValue.toString());
+			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
+
+			model.addAttribute("frtype", frDetails.getFrGstType());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 	@RequestMapping(value = "/getItemOfAdv", method = RequestMethod.GET)
 	@ResponseBody
@@ -478,11 +627,47 @@ public class OpsController {
 			} else {
 				inf.setMessage("0");
 				inf.setError(true);
-			} 
+			}
 
 			session.setAttribute("advItemList", itemsList);
 			session.setAttribute("advCustId", custId);
 			session.setAttribute("advHeadId", headId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return inf;
+	}
+
+	@RequestMapping(value = "/getItemsOfBill", method = RequestMethod.POST)
+	@ResponseBody
+	public Info showCustBillForEdit(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForEdit------------------");
+		HttpSession session = request.getSession();
+		Info inf = new Info();
+
+		try {
+
+			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+			ItemListForCustomerBill[] itemsList = restTemplate.postForObject(Constant.URL + "/getBillItemsBySellBillNo",
+					mvm, ItemListForCustomerBill[].class);
+
+			if (itemsList != null) {
+				inf.setError(false);
+			} else {
+				inf.setMessage("0");
+				inf.setError(true);
+			}
+
+			System.err.println("ITEM LIST ---------------------------- " + itemsList);
+
+			session.setAttribute("editItemList", itemsList);
+			session.setAttribute("editCustId", custId);
+			session.setAttribute("editSellBillNo", sellBillNo);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -624,23 +809,23 @@ public class OpsController {
 			/* int advKey = Integer.parseInt(request.getParameter("advKey")); */
 			String customerName = request.getParameter("selectedText");
 			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
-			String advOrderDate= request.getParameter("advOrderDate");
+			String advOrderDate = request.getParameter("advOrderDate");
 			int isAdvanceOrder = Integer.parseInt(request.getParameter("isAdvanceOrder"));
 
-            System.err.println("advAmt"+advAmt);
+			System.err.println("advAmt" + advAmt);
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
-			
+
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
 				items = items + "," + itemBillList.get(i).getItemId();
 			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("custId", custId);
-			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
-			
-			
+			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+					Customer.class);
+
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
@@ -708,7 +893,7 @@ public class OpsController {
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
 			sellBillHeader.setPaidAmt(Math.round(total));
-			
+
 			sellBillHeader.setPaymentMode(1);
 			sellBillHeader.setSellBillNo(0);
 			sellBillHeader.setUserGstNo(customerById.getGstNo());
@@ -717,11 +902,11 @@ public class OpsController {
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setDiscountPer(0);
 			sellBillHeader.setDiscountAmt(0);
-			
-				sellBillHeader.setPayableAmt(Math.round(total));
+
+			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(total));
-		
+
 			sellBillHeader.setRemainingAmt(0);
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
@@ -739,26 +924,25 @@ public class OpsController {
 			if (sellBillHeaderRes != null) {
 
 				List<TransactionDetail> dList = new ArrayList<>();
-				
-				
+
 				TransactionDetail transactionDetail = new TransactionDetail();
-				
-				
 
-				if(advAmt>0) {
-					transactionDetail.setCashAmt(total-advAmt);
+				if (advAmt > 0) {
+					transactionDetail.setCashAmt(total - advAmt);
+					transactionDetail.setExInt2(1);
 
- 				}else {
+				} else {
 					transactionDetail.setCashAmt(total);
+					transactionDetail.setExInt2(0);
 				}
-				
+
 				transactionDetail.setPayMode(1);
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf1.format(date));
 				transactionDetail.setExVar1("0,1");
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				dList.add(transactionDetail);
-				if(advAmt>0) {
+				if (advAmt > 0) {
 					transactionDetail = new TransactionDetail();
 					transactionDetail.setCashAmt(advAmt);
 					transactionDetail.setPayMode(1);
@@ -766,16 +950,19 @@ public class OpsController {
 					transactionDetail.setTransactionDate(DateConvertor.convertToDMY(advOrderDate));
 					transactionDetail.setExVar1("0,1");
 					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+					
+					transactionDetail.setExInt2(1);
+					
 					dList.add(transactionDetail);
-					}
+					
+				}
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
 
-				if(transactionDetailRes.length>0)
-				{
-					transactionDetail=null;
+				if (transactionDetailRes.length > 0) {
+					transactionDetail = null;
 				}
-				 map = new LinkedMultiValueMap<String, Object>();
+				map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -793,23 +980,23 @@ public class OpsController {
 
 				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
 
-				
-				  if(isAdvanceOrder==1) {
-				  
-				  map = new LinkedMultiValueMap<String, Object>();
-				  
-				  map.add("advHeadId", session.getAttribute("advHeadId"));
-				  
-				  Info infores1 = restTemplate.postForObject(Constant.URL +
-				  "updateAdvOrderHeadAndDetail", map, Info.class);
-				  
-				  if(infores1.isError()==false) {
-				  
-				 session.removeAttribute("advCustId"); session.removeAttribute("advHeadId"); }
-				  
-				  
-				  }
-				 
+				if (isAdvanceOrder == 1) {
+
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("advHeadId", session.getAttribute("advHeadId"));
+
+					Info infores1 = restTemplate.postForObject(Constant.URL + "updateAdvOrderHeadAndDetail", map,
+							Info.class);
+
+					if (infores1.isError() == false) {
+
+						session.removeAttribute("advCustId");
+						session.removeAttribute("advHeadId");
+					}
+
+				}
+
 			}
 			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 		} catch (Exception e) {
@@ -828,11 +1015,11 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-		
+
 		try {
 			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
-			System.err.println("advAmt"+advAmt);
-			String advOrderDate= request.getParameter("advOrderDate");
+			System.err.println("advAmt" + advAmt);
+			String advOrderDate = request.getParameter("advOrderDate");
 			int isAdvanceOrder = Integer.parseInt(request.getParameter("isAdvanceOrder"));
 
 			int index = Integer.parseInt(request.getParameter("key"));
@@ -847,10 +1034,9 @@ public class OpsController {
 			float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
 			float discPer = Float.parseFloat(request.getParameter("discPer"));
 			float discAmt = Float.parseFloat(request.getParameter("discAmt"));
-			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));//without Disc BillAmt
+			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));// without Disc BillAmt
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
- 		
 
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
@@ -858,8 +1044,9 @@ public class OpsController {
 			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("custId", custId);
-			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
-			
+			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+					Customer.class);
+
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("itemList", items);
 			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
@@ -882,22 +1069,24 @@ public class OpsController {
 
 						sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
 						sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
-					
+
 						sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
-						
+
 						sellBillDetail.setDelStatus(0);
 						sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
-					
+
 						sellBillDetail.setItemId(itemBillList.get(i).getItemId());
 						sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
 
 						float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 + itemBillList.get(i).getTaxPer());
 						sellBillDetail.setMrpBaseRate(mrpBaseRate);
-						
+
 						// -----------------------------------------
 
-						float detailDiscAmt=(itemBillList.get(i).getTotal()/(billAmtWtDisc/100)*(discAmt/100));
-						float detailGrandTotal=CustomerBillController.roundUp(itemBillList.get(i).getTotal()-detailDiscAmt);
+						float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+								* (discAmt / 100));
+						float detailGrandTotal = CustomerBillController
+								.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
 
 						float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 						float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
@@ -910,25 +1099,25 @@ public class OpsController {
 						float detailTotalTax = detailSgstRs + detailCgstRs;
 						detailTotalTax = CustomerBillController.roundUp(detailTotalTax);
 
-						float detailTaxableAmt = detailGrandTotal-detailTotalTax;
+						float detailTaxableAmt = detailGrandTotal - detailTotalTax;
 						detailTaxableAmt = CustomerBillController.roundUp(detailTaxableAmt);
 
 						sellBillDetail.setSgstRs(detailSgstRs);
 						sellBillDetail.setCgstRs(detailCgstRs);
 						sellBillDetail.setIgstRs(detailIgstRs);
-						
+
 						sellBillDetail.setQty(itemBillList.get(i).getQty());
 						// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
 						sellBillDetail.setBillStockType(1);
-						sellBillDetail.setTaxableAmt(detailTaxableAmt);//itemBillList.get(i).getTaxableAmt());
-						sellBillDetail.setTotalTax(detailTotalTax);//itemBillList.get(i).getTaxAmt());
-						sellBillDetail.setGrandTotal(detailGrandTotal);//'itemBillList.get(i).getTotal());
+						sellBillDetail.setTaxableAmt(detailTaxableAmt);// itemBillList.get(i).getTaxableAmt());
+						sellBillDetail.setTotalTax(detailTotalTax);// itemBillList.get(i).getTaxAmt());
+						sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
 						sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 						sellBillDetail.setDiscAmt(detailDiscAmt);
 						sellbilldetaillist.add(sellBillDetail);
-						total = total +  detailGrandTotal;//sellBillDetail.getGrandTotal();
+						total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
 						taxableAmt = taxableAmt + detailTaxableAmt;
 						taxAmt = taxAmt + detailTotalTax;
 
@@ -937,7 +1126,7 @@ public class OpsController {
 				}
 
 			}
-			
+
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = new Date();
@@ -959,13 +1148,13 @@ public class OpsController {
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(total));
-			if(discPer!=0) {
-            sellBillHeader.setDiscountPer(discPer);//
-			}else {
-	            sellBillHeader.setDiscountPer(discAmt/(billAmtWtDisc/100));//
+			if (discPer != 0) {
+				sellBillHeader.setDiscountPer(discPer);//
+			} else {
+				sellBillHeader.setDiscountPer(discAmt / (billAmtWtDisc / 100));//
 			}
-				
-            sellBillHeader.setDiscountAmt(discAmt);//
+
+			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
 				sellBillHeader.setRemainingAmt(total);
@@ -979,7 +1168,7 @@ public class OpsController {
 				sellBillHeader.setPaidAmt(Math.round(total));
 
 			}
-			
+
 			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
@@ -997,7 +1186,7 @@ public class OpsController {
 			if (sellBillHeaderRes != null) {
 
 				List<TransactionDetail> dList = new ArrayList<>();
-				
+
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
 				transactionDetail.setTransactionDate(sf1.format(date));
@@ -1007,22 +1196,21 @@ public class OpsController {
 					transactionDetail.setCashAmt(0);
 					transactionDetail.setPayMode(1);
 					transactionDetail.setExVar1("0");
-					
+
 				} else {
 					transactionDetail.setPayMode(paymentMode);
 
 					if (paymentMode == 1) {
-						
 
 						if (billType == 1) {
 							transactionDetail.setCashAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,"+payType);
+							transactionDetail.setExVar1("0," + payType);
 						} else if (billType == 2) {
 							transactionDetail.setCardAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,"+payType);
+							transactionDetail.setExVar1("0," + payType);
 						} else if (billType == 3) {
 							transactionDetail.setePayAmt(Float.parseFloat(payAmt));
-							transactionDetail.setExVar1("0,"+payType);
+							transactionDetail.setExVar1("0," + payType);
 						}
 					} else {
 
@@ -1032,32 +1220,35 @@ public class OpsController {
 						}
 						if (cardAmt > 0) {
 							transactionDetail.setCardAmt(cardAmt);
-							//type = type + "," + 2;
+							// type = type + "," + 2;
 						}
 						if (epayAmt > 0) {
 							transactionDetail.setePayAmt(epayAmt);
-							//type = type + "," + 3;
+							// type = type + "," + 3;
 						}
 						transactionDetail.setExVar1(type);
 					}
 
 				}
-				
+
 				dList.add(transactionDetail);
-				if(advAmt>0) {
-				transactionDetail = new TransactionDetail();
-				transactionDetail.setCashAmt(advAmt);
-				transactionDetail.setPayMode(1);
-				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
-				transactionDetail.setTransactionDate(DateConvertor.convertToDMY(advOrderDate));
-				transactionDetail.setExVar1("0,1");
-				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
-				dList.add(transactionDetail);
+				if (advAmt > 0) {
+					transactionDetail = new TransactionDetail();
+					transactionDetail.setCashAmt(advAmt);
+					transactionDetail.setPayMode(1);
+					transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+					transactionDetail.setTransactionDate(DateConvertor.convertToDMY(advOrderDate));
+					transactionDetail.setExVar1("0,1");
+					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+					
+					transactionDetail.setExInt2(1);
+					
+					dList.add(transactionDetail);
 				}
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
-				
-				 map = new LinkedMultiValueMap<String, Object>();
+
+				map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("frId", frDetails.getFrId());
@@ -1074,20 +1265,20 @@ public class OpsController {
 				map.add("sellBillNo", sellBillNo);
 
 				Info infores = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
-				if(isAdvanceOrder==1)
-				{
-					  map = new LinkedMultiValueMap<String, Object>();
-					  
-					  map.add("advHeadId", session.getAttribute("advHeadId"));
-					  
-					  Info infores1 = restTemplate.postForObject(Constant.URL +
-					  "updateAdvOrderHeadAndDetail", map, Info.class);
-					  
-					  if(infores1.isError()==false) {
-					  
-					 session.removeAttribute("advCustId"); session.removeAttribute("advHeadId");
-					 }
-					
+				if (isAdvanceOrder == 1) {
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("advHeadId", session.getAttribute("advHeadId"));
+
+					Info infores1 = restTemplate.postForObject(Constant.URL + "updateAdvOrderHeadAndDetail", map,
+							Info.class);
+
+					if (infores1.isError() == false) {
+
+						session.removeAttribute("advCustId");
+						session.removeAttribute("advHeadId");
+					}
+
 				}
 			}
 			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
@@ -1098,6 +1289,373 @@ public class OpsController {
 		}
 		return info;
 	}
+
+	// EDIT SELL
+	// BILL----------------------------------------------------------------------------
+
+	@RequestMapping(value = "/submitEditBillByPaymentOption", method = RequestMethod.POST)
+	@ResponseBody
+	public Info submitEditBillByPaymentOption(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+		HttpSession session = request.getSession();
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+		try {
+
+			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			int index = Integer.parseInt(request.getParameter("key"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			int creditBill = Integer.parseInt(request.getParameter("creditBill"));
+			int paymentMode = Integer.parseInt(request.getParameter("paymentMode"));
+			int billType = Integer.parseInt(request.getParameter("billType"));
+			int payType = Integer.parseInt(request.getParameter("payType"));
+			String payTypeSplit = request.getParameter("payTypeSplit");
+			float cashAmt = Float.parseFloat(request.getParameter("cashAmt"));
+			float cardAmt = Float.parseFloat(request.getParameter("cardAmt"));
+			float epayAmt = Float.parseFloat(request.getParameter("epayAmt"));
+			float discPer = Float.parseFloat(request.getParameter("discPer"));
+			float discAmt = Float.parseFloat(request.getParameter("discAmt"));
+			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));// without Disc BillAmt
+			String customerName = request.getParameter("selectedText");
+			String payAmt = request.getParameter("payAmt");
+
+			String items = "0";
+			for (int i = 0; i < itemBillList.size(); i++) {
+				items = items + "," + itemBillList.get(i).getItemId();
+			}
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("custId", custId);
+			Customer customerById = restTemplate.postForObject(Constant.URL + "/getCustomerByCustId", map,
+					Customer.class);
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("itemList", items);
+			ItemResponse itemResponse = restTemplate.postForObject(Constant.URL + "/getItemsById", mvm,
+					ItemResponse.class);
+			List<Item> itemsListByIds = itemResponse.getItemList();
+
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+
+			SellBillHeader sellBillHeaderRes = restTemplate
+					.postForObject(Constant.URL + "/getSellBillItemsBySellBillNoForEdit", mvm, SellBillHeader.class);
+			System.err.println("OLD BILL HEADER ------------------- " + sellBillHeaderRes);
+
+			SellBillDetail[] detailListRes = restTemplate
+					.postForObject(Constant.URL + "/getSellBillDetailListByHeaderId", mvm, SellBillDetail[].class);
+
+			List<SellBillDetail> sellBillDetailRes = Arrays.asList(detailListRes);
+			System.err.println("OLD BILL DETAIL ------------------- " + sellBillDetailRes);
+
+			TreeSet<Integer> ts1 = new TreeSet<Integer>();
+			if (sellBillDetailRes != null) {
+				for (int i = 0; i < sellBillDetailRes.size(); i++) {
+					ts1.add(sellBillDetailRes.get(i).getItemId());
+				}
+			}
+
+			List<Integer> oldDetailItemIds = new ArrayList<>();
+			oldDetailItemIds.addAll(ts1);
+
+			System.err.println("oldDetailItemIds ----------TREE SET---------- " + oldDetailItemIds);
+
+			System.err.println("itemsListByIds -------------------- " + itemsListByIds);
+			System.err.println("itemBillList -------------------- " + itemBillList);
+
+			List<SellBillDetail> sellbilldetaillist = new ArrayList<>();
+
+			float total = 0;
+			float taxableAmt = 0;
+			float taxAmt = 0;
+
+			for (int i = 0; i < itemBillList.size(); i++) {
+
+				for (int j = 0; j < itemsListByIds.size(); j++) {
+
+					if (itemsListByIds.get(j).getId() == itemBillList.get(i).getItemId()) {
+
+						if (oldDetailItemIds.contains(itemBillList.get(i).getItemId())) {
+							System.err.println("********************** MATCH **************************");
+
+							for (int k = 0; k < sellBillDetailRes.size(); k++) {
+
+								if (sellBillDetailRes.get(k).getItemId() == itemBillList.get(i).getItemId()) {
+
+									SellBillDetail detail = sellBillDetailRes.get(k);
+
+									SellBillDetail sellBillDetail = new SellBillDetail();
+
+									sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
+									sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
+
+									sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
+
+									sellBillDetail.setDelStatus(0);
+									sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
+
+									sellBillDetail.setItemId(itemBillList.get(i).getItemId());
+									sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
+
+									float mrpBaseRate = (sellBillDetail.getMrp() * 100)
+											/ (100 + itemsListByIds.get(j).getItemTax3());
+									sellBillDetail.setMrpBaseRate(mrpBaseRate);
+
+									// -----------------------------------------
+
+									float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+											* (discAmt / 100));
+									float detailGrandTotal = CustomerBillController
+											.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+
+									float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+									float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
+									float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+
+									detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
+									detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
+									detailIgstRs = CustomerBillController.roundUp(detailIgstRs);
+
+									float detailTotalTax = detailSgstRs + detailCgstRs;
+									detailTotalTax = CustomerBillController.roundUp(detailTotalTax);
+
+									float detailTaxableAmt = detailGrandTotal - detailTotalTax;
+									detailTaxableAmt = CustomerBillController.roundUp(detailTaxableAmt);
+
+									sellBillDetail.setSgstRs(detailSgstRs);
+									sellBillDetail.setCgstRs(detailCgstRs);
+									sellBillDetail.setIgstRs(detailIgstRs);
+
+									sellBillDetail.setQty(itemBillList.get(i).getQty());
+									// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
+									sellBillDetail.setSellBillDetailNo(detail.getSellBillDetailNo());
+									sellBillDetail.setSellBillNo(detail.getSellBillNo());
+									sellBillDetail.setBillStockType(1);
+									sellBillDetail.setTaxableAmt(detailTaxableAmt);// itemBillList.get(i).getTaxableAmt());
+									sellBillDetail.setTotalTax(detailTotalTax);// itemBillList.get(i).getTaxAmt());
+									sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
+									sellBillDetail.setItemName(itemBillList.get(i).getItemName());
+									sellBillDetail.setDiscAmt(detailDiscAmt);
+									sellbilldetaillist.add(sellBillDetail);
+									total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
+									taxableAmt = taxableAmt + detailTaxableAmt;
+									taxAmt = taxAmt + detailTotalTax;
+
+									break;
+								}
+
+							}
+
+						} else {
+							System.err.println("********************** NOT MATCH ***********************");
+
+							SellBillDetail sellBillDetail = new SellBillDetail();
+
+							sellBillDetail.setCatId(itemsListByIds.get(j).getItemGrp1());
+							sellBillDetail.setSgstPer(itemsListByIds.get(j).getItemTax1());
+
+							sellBillDetail.setCgstPer(itemsListByIds.get(j).getItemTax2());
+
+							sellBillDetail.setDelStatus(0);
+							sellBillDetail.setIgstPer(itemsListByIds.get(j).getItemTax3());
+
+							sellBillDetail.setItemId(itemBillList.get(i).getItemId());
+							sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
+
+							float mrpBaseRate = (sellBillDetail.getMrp() * 100)
+									/ (100 + itemsListByIds.get(j).getItemTax3());
+							sellBillDetail.setMrpBaseRate(mrpBaseRate);
+
+							// -----------------------------------------
+
+							float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+									* (discAmt / 100));
+							float detailGrandTotal = CustomerBillController
+									.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+
+							float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+							float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
+							float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+
+							detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
+							detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
+							detailIgstRs = CustomerBillController.roundUp(detailIgstRs);
+
+							float detailTotalTax = detailSgstRs + detailCgstRs;
+							detailTotalTax = CustomerBillController.roundUp(detailTotalTax);
+
+							float detailTaxableAmt = detailGrandTotal - detailTotalTax;
+							detailTaxableAmt = CustomerBillController.roundUp(detailTaxableAmt);
+
+							sellBillDetail.setSgstRs(detailSgstRs);
+							sellBillDetail.setCgstRs(detailCgstRs);
+							sellBillDetail.setIgstRs(detailIgstRs);
+
+							sellBillDetail.setQty(itemBillList.get(i).getQty());
+							// sellBillDetail.setRemark(itemsListByIds.get(j).getHsnCode());//new for hsn
+							sellBillDetail.setSellBillDetailNo(0);
+							sellBillDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+							sellBillDetail.setBillStockType(1);
+							sellBillDetail.setTaxableAmt(detailTaxableAmt);// itemBillList.get(i).getTaxableAmt());
+							sellBillDetail.setTotalTax(detailTotalTax);// itemBillList.get(i).getTaxAmt());
+							sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
+							sellBillDetail.setItemName(itemBillList.get(i).getItemName());
+							sellBillDetail.setDiscAmt(detailDiscAmt);
+							sellbilldetaillist.add(sellBillDetail);
+							total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
+							taxableAmt = taxableAmt + detailTaxableAmt;
+							taxAmt = taxAmt + detailTotalTax;
+
+						}
+
+						break;
+					}
+				}
+
+			}
+
+			System.err.println("OLD DETAIL --------------------- " + sellBillDetailRes);
+
+			System.err.println(" ---------------------------------------------------- ");
+
+			System.err.println("NEW DETAIL --------------------- " + sellbilldetaillist);
+
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = new Date();
+
+			SellBillHeader sellBillHeader = new SellBillHeader();
+
+			sellBillHeader.setFrId(frDetails.getFrId());
+			sellBillHeader.setFrCode(frDetails.getFrCode());
+			sellBillHeader.setDelStatus(0);
+			sellBillHeader.setUserName(customerById.getCustName());
+			sellBillHeader.setBillDate(DateConvertor.convertToYMD(sellBillHeaderRes.getBillDate()));
+			sellBillHeader.setCustId(custId);
+			sellBillHeader.setInvoiceNo(sellBillHeaderRes.getInvoiceNo());
+			sellBillHeader.setSellBillNo(sellBillHeaderRes.getSellBillNo());
+			sellBillHeader.setUserGstNo(customerById.getGstNo());
+			sellBillHeader.setUserPhone(customerById.getPhoneNumber());
+			sellBillHeader.setBillType('R');
+			sellBillHeader.setTaxableAmt(taxableAmt);
+			sellBillHeader.setPayableAmt(Math.round(total));
+			sellBillHeader.setTotalTax(taxAmt);
+			sellBillHeader.setGrandTotal(Math.round(total));
+			if (discPer != 0) {
+				sellBillHeader.setDiscountPer(discPer);//
+			} else {
+				sellBillHeader.setDiscountPer(discAmt / (billAmtWtDisc / 100));//
+			}
+
+			sellBillHeader.setDiscountAmt(discAmt);//
+			if (creditBill == 1) {
+				sellBillHeader.setStatus(3);
+				sellBillHeader.setRemainingAmt(total);
+				sellBillHeader.setPaidAmt(0);
+
+				sellBillHeader.setPaymentMode(1);
+			} else {
+				sellBillHeader.setStatus(2);
+				sellBillHeader.setRemainingAmt(0);
+				sellBillHeader.setPaymentMode(paymentMode);
+				sellBillHeader.setPaidAmt(Math.round(total));
+
+			}
+
+			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+
+			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
+
+			
+
+			hashMap.remove(index);
+			itemBillList = new ArrayList<>();
+
+			System.err.println("SAVE ================================================== ");
+			System.err.println("" + sellBillHeader);
+			
+			
+			mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+			mvm.add("advAmtStatus", 0);
+			int res = restTemplate.postForObject(Constant.URL + "/deleteTransactionDetailsByIsAdvAmt", mvm,
+					Integer.class);
+			
+			System.err.println("DELETE TRANSC DETAILS --------------------------- "+res);
+			
+
+			SellBillHeader sellBillHeaderRes1 = restTemplate.postForObject(Constant.URL + "insertSellBillData",
+					sellBillHeader, SellBillHeader.class);
+
+			if (sellBillHeaderRes1 != null) {
+				
+				info.setError(false);
+				info.setMessage(""+sellBillHeaderRes1.getSellBillNo());
+
+				List<TransactionDetail> dList = new ArrayList<>();
+
+				TransactionDetail transactionDetail = new TransactionDetail();
+				transactionDetail.setSellBillNo(sellBillHeaderRes1.getSellBillNo());
+				transactionDetail.setTransactionDate(sf1.format(date));
+				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
+				transactionDetail.setePayType(payType);
+				if (creditBill == 1) {
+					transactionDetail.setCashAmt(0);
+					transactionDetail.setPayMode(1);
+					transactionDetail.setExVar1("0");
+
+				} else {
+					transactionDetail.setPayMode(paymentMode);
+
+					if (paymentMode == 1) {
+
+						if (billType == 1) {
+							transactionDetail.setCashAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0," + payType);
+						} else if (billType == 2) {
+							transactionDetail.setCardAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0," + payType);
+						} else if (billType == 3) {
+							transactionDetail.setePayAmt(Float.parseFloat(payAmt));
+							transactionDetail.setExVar1("0," + payType);
+						}
+					} else {
+
+						String type = payTypeSplit;
+						if (cashAmt > 0) {
+							transactionDetail.setCashAmt(cashAmt);
+						}
+						if (cardAmt > 0) {
+							transactionDetail.setCardAmt(cardAmt); // type = type + "," + 2;
+						}
+						if (epayAmt > 0) {
+							transactionDetail.setePayAmt(epayAmt); // type = type + "," +3;
+						}
+						transactionDetail.setExVar1(type);
+					}
+
+				}
+
+				dList.add(transactionDetail);
+
+				TransactionDetail[] transactionDetailRes = restTemplate
+						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+
+			}
+
+			// info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	// --------------------------------------END----------------------------------------------------
 
 	public static String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1404,8 +1962,10 @@ public class OpsController {
 			save.setGstNo(gstNo);
 			save.setDelStatus(0);
 			save.setCustId(custId);
-			
-			save.setAgeGroup(ageRange);save.setExInt1(custType);save.setGender(gender);
+
+			save.setAgeGroup(ageRange);
+			save.setExInt1(custType);
+			save.setGender(gender);
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
@@ -1521,7 +2081,7 @@ public class OpsController {
 			mvm.add("custId", custId);
 			mvm.add("frId", frDetails.getFrId());
 			itemsList = restTemplate.postForObject(Constant.URL + "/getCustomerAmounts", mvm, CustomerAmounts.class);
-			if(itemsList.getCreaditAmt()==null || itemsList.getCreaditAmt()=="") {
+			if (itemsList.getCreaditAmt() == null || itemsList.getCreaditAmt() == "") {
 				itemsList.setCreaditAmt("0");
 			}
 
@@ -1621,7 +2181,7 @@ public class OpsController {
 			System.err.println("hii id list " + modePay1);
 			modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
 			String type = "0";
-			 
+
 			System.err.println("head id list " + checkedList.toString());
 			for (int i = 0; i < checkedList.length; i++) {
 
@@ -1634,18 +2194,18 @@ public class OpsController {
 				String billDate = request.getParameter("billDate" + headId);
 				float settleAmt = Float.parseFloat(request.getParameter("settleAmt" + headId));
 				TransactionDetail expTrans = new TransactionDetail();
-				
-				if(modType1==1) {
-					cashAmt1=settleAmt;
-					type="0,1";
-				}else if(modType1==2) {
-					cardAmt1=settleAmt;
-					type="0,2";
-				}else {
-					epayAmt1=settleAmt;
-					type="0,3";
+
+				if (modType1 == 1) {
+					cashAmt1 = settleAmt;
+					type = "0,1";
+				} else if (modType1 == 2) {
+					cardAmt1 = settleAmt;
+					type = "0,2";
+				} else {
+					epayAmt1 = settleAmt;
+					type = "0,3";
 				}
-				
+
 				expTrans.setSellBillNo(headId);
 				expTrans.setCardAmt(cardAmt1);
 				expTrans.setCashAmt(cashAmt1);
@@ -1681,34 +2241,37 @@ public class OpsController {
 		return flag;
 
 	}
-	
-	
-	//**********************pos popups data*************************************************
-	List<SellBillHeader> itemsList=null;
+
+	// **********************pos popups
+	// data*************************************************
+	List<SellBillHeader> itemsList = null;
+
 	@RequestMapping(value = "/deleteSellBill", method = RequestMethod.POST)
 	@ResponseBody
 	public List<SellBillHeader> deleteSellBill(HttpServletRequest request, HttpServletResponse responsel) {
 		System.err.println("showCustBillForAdvOrder");
-		
-		SellBillHeader sellBillHeader=new SellBillHeader();
+
+		SellBillHeader sellBillHeader = new SellBillHeader();
 		try {
-			
+
 			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
-			for(int i=0;i<itemsList.size();i++)
-			{
-				if(sellBillNo==itemsList.get(i).getSellBillNo())
-				{
-					sellBillHeader=itemsList.get(i);
-					itemsList.remove(i);
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+			mvm.add("status", 1);
+
+			Info info = restTemplate.postForObject(Constant.URL + "deleteBillById", mvm, Info.class);
+
+			if (!info.isError()) {
+				for (int i = 0; i < itemsList.size(); i++) {
+					if (sellBillNo == itemsList.get(i).getSellBillNo()) {
+						sellBillHeader = itemsList.get(i);
+						itemsList.remove(i);
+					}
 				}
 			}
-			
-			sellBillHeader.setDelStatus(1);
-			sellBillHeader = restTemplate.postForObject(Constant.URL + "saveSellBillHeader", sellBillHeader,
-					SellBillHeader.class);
 
-			 
-			System.err.println("getCustCreditBills*" + itemsList.toString());
+			System.err.println("DELETED*" + info);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1716,7 +2279,7 @@ public class OpsController {
 
 		return itemsList;
 	}
-	
+
 	@RequestMapping(value = "/getCustBills", method = RequestMethod.POST)
 	@ResponseBody
 	public List<SellBillHeader> getCustBills(HttpServletRequest request, HttpServletResponse responsel) {
@@ -1725,26 +2288,47 @@ public class OpsController {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
-	 itemsList = new ArrayList<SellBillHeader>();
+		itemsList = new ArrayList<SellBillHeader>();
 
 		try {
 
 			int custId = Integer.parseInt(request.getParameter("cust"));
 			int tempType = Integer.parseInt(request.getParameter("tempType"));
-			int tabType = Integer.parseInt(request.getParameter("tabType"));//cust/todays
+			int tabType = Integer.parseInt(request.getParameter("tabType"));// cust/todays
 			System.err.println("tabType*" + tabType);
-			 
-				MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+
+			MultiValueMap<String, Object> mvm;
+
+			System.err.println(" tempType = " + tempType);
+			System.err.println(" cust = " + custId);
+			System.err.println(" frId = " + frDetails.getFrId());
+
+			if (tempType == 4) {
+				// Deleted Bills
+
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("custId", custId);
+				mvm.add("frId", frDetails.getFrId());
+
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllDeletedBillByCustId",
+						mvm, SellBillHeader[].class);
+
+				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
+
+			} else {
+
+				mvm = new LinkedMultiValueMap<String, Object>();
 				mvm.add("custId", custId);
 				mvm.add("frId", frDetails.getFrId());
 				mvm.add("flag", tempType);
 				mvm.add("tabType", tabType);
-				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBill", mvm,
-						SellBillHeader[].class);
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBill",
+						mvm, SellBillHeader[].class);
 
 				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
 
-			 
+			}
+
 			System.err.println("getCustCreditBills*" + itemsList.toString());
 
 		} catch (Exception e) {
@@ -1753,13 +2337,10 @@ public class OpsController {
 
 		return itemsList;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/getCustBillsTransaction", method = RequestMethod.POST)
 	@ResponseBody
 	public List<TransactionDetail> getCustBillsTransaction(HttpServletRequest request, HttpServletResponse responsel) {
-		
 
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -1770,21 +2351,18 @@ public class OpsController {
 
 			int custId = Integer.parseInt(request.getParameter("cust"));
 			int tempType = Integer.parseInt(request.getParameter("tempType"));
-			int tabType = Integer.parseInt(request.getParameter("tabType"));//cust/todays
-           
-		 
-				
- 				MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
-				mvm.add("custId", custId);
-				mvm.add("frId", frDetails.getFrId());
-				mvm.add("flag", tempType);
-				mvm.add("tabType", tabType);
-				TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransaction", mvm,
-						TransactionDetail[].class);
+			int tabType = Integer.parseInt(request.getParameter("tabType"));// cust/todays
 
-				itemsList = new ArrayList<TransactionDetail>(Arrays.asList(itemsList1));
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("custId", custId);
+			mvm.add("frId", frDetails.getFrId());
+			mvm.add("flag", tempType);
+			mvm.add("tabType", tabType);
+			TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransaction",
+					mvm, TransactionDetail[].class);
 
-		 
+			itemsList = new ArrayList<TransactionDetail>(Arrays.asList(itemsList1));
+
 			System.err.println("getCustCreditBills*" + itemsList.toString());
 
 		} catch (Exception e) {
@@ -1793,7 +2371,5 @@ public class OpsController {
 
 		return itemsList;
 	}
-	
-	
-	
+
 }

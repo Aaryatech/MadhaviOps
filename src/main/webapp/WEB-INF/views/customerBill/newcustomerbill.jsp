@@ -155,6 +155,9 @@ body {
 .itemDummyClass {
 	cursor: pointer;
 }
+
+
+
 </style>
 <body>
 	<form action="" method="get">
@@ -172,32 +175,39 @@ body {
 
 
 				<div class="drop_menu">
-				
-<div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
-	
-					<div class="logout_btn pos">
-					<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><abbr title="Full Screen"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></abbr></a>
-					</div><a href="${pageContext.request.contextPath}/logout"> <abbr title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i></abbr></a>
+
+					<div class="franchise_nm">${sessionScope.frName}
+						<span>(${sessionScope.frEmpName})</span>
 					</div>
-<div class="customer_one" style="width:auto;">
-					<select name="holdBillNo" id="holdBillNo"
-						data-placeholder="Select Bill No" class="input_add chosen-select"
-						onchange="revertHoldBillOnCurrent()">
-						<option value="" disabled="disabled" selected>Select Bill
-							No</option>
-						<c:forEach items="${holdingList}" var="holdingList">
-							<c:choose>
-								<c:when test="${holdingList.key==key}">
-									<option value="${holdingList.key}" style="text-align: left;"
-										selected>${holdingList.value.tempCustomerName}</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${holdingList.key}" style="text-align: left;  ">${holdingList.value.tempCustomerName}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-</div>
+
+					<div class="logout_btn pos">
+						<div class="full_scrn" id="fs-doc-button" alt="F">
+							<a href="#"><abbr title="Full Screen"><i
+									class="fa fa-arrows-alt" aria-hidden="true"></i></abbr></a>
+						</div>
+						<a href="${pageContext.request.contextPath}/logout"> <abbr
+							title="Logout"><i class="fa fa-sign-out"
+								aria-hidden="true"></i></abbr></a>
+					</div>
+					<div class="customer_one" style="width: auto;">
+						<select name="holdBillNo" id="holdBillNo"
+							data-placeholder="Select Bill No" class="input_add chosen-select"
+							onchange="revertHoldBillOnCurrent()">
+							<option value="" disabled="disabled" selected>Select
+								Bill No</option>
+							<c:forEach items="${holdingList}" var="holdingList">
+								<c:choose>
+									<c:when test="${holdingList.key==key}">
+										<option value="${holdingList.key}" style="text-align: left;"
+											selected>${holdingList.value.tempCustomerName}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${holdingList.key}" style="text-align: left;">${holdingList.value.tempCustomerName}</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+						</select>
+					</div>
 
 				</div>
 
@@ -212,7 +222,8 @@ body {
 
 
 					<div class="top_radio_area">
-					 <label id="actionName" class="gradient-multiline" style=" font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Droid Sans,Helvetica Neue,sans-serif;padding-top: 0px;padding-right: 30px;font-weight: bold;">${actionName}</label>
+						<label id="actionName" class="gradient-multiline"
+							style="font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Droid Sans, Helvetica Neue, sans-serif; padding-top: 0px; padding-right: 30px; font-weight: bold;">${actionName}</label>
 						<div class="radio_row_one">
 							<h3 class="item_head">Item Search</h3>
 							<div class="radio_row">
@@ -232,7 +243,7 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
-								<!-- 	<li><div class="cat_srach">
+									<!-- 	<li><div class="cat_srach">
 											<input name="myInput1" id="myInput1" type="text"
 												class="input_cat" onkeyup="myFunction1()"
 												placeholder="Search Item" />
@@ -242,7 +253,7 @@ body {
 								</ul>
 							</div>
 						</div>
-                       
+
 						<div class="item_src">
 							<input name="myInput1" id="myInput1" type="text"
 								class="input_cat" onkeyup="myFunction1()"
@@ -250,12 +261,12 @@ body {
 						</div>
 
 					</div>
- 
+
 					<!--category box start here-->
 					<div id="catSubCatDivHideShow">
 						<div class="cat_bx_one">
 							<div class="category_list">
-								<div class="category_scrollbars" id="catSubCatDiv" >
+								<div class="category_scrollbars" id="catSubCatDiv">
 									<c:forEach items="${catList}" var="catList">
 										<div class="cat_one catDummyClass">
 											<a href="#" onclick="getsubcatlist(${catList.catId})"><img
@@ -272,7 +283,7 @@ body {
 					</div>
 					<!--listing box start here-->
 
-					
+
 					<div class="dual_bx" style="">
 						<div class="dual_l">
 							<div class="bx_tabs">
@@ -296,9 +307,7 @@ body {
 									<ul>
 							</div>
 						</div>
-						<div class="dual_r">
-							
-						</div>
+						<div class="dual_r"></div>
 					</div>
 
 					<div class="dual_bx" style=""></div>
@@ -373,9 +382,11 @@ body {
 							<label id="advBillLable">Advance Amt : <span id="advAmt1">${advanceAmt}</span>
 							</label>
 						</c:if>
-						<input type="hidden" id="advAmt" name="advAmt" value="${advanceAmt}">
-						<input type="hidden" id="advOrderDate" name="advOrderDate" value="${advOrderDate}">
-					<input type="hidden" id="isAdvanceOrder" name="isAdvanceOrder" value="${isAdvanceOrder}">
+						<input type="hidden" id="advAmt" name="advAmt"
+							value="${advanceAmt}"> <input type="hidden"
+							id="advOrderDate" name="advOrderDate" value="${advOrderDate}">
+						<input type="hidden" id="isAdvanceOrder" name="isAdvanceOrder"
+							value="${isAdvanceOrder}">
 					</div>
 
 					<!--customer drop down here-->
@@ -640,15 +651,15 @@ body {
 
 					</div>
 
-<c:set var="holdStyle" value=""></c:set>
-<c:if test="${isAdvanceOrder==1}">
-<c:set var="holdStyle" value=" style='pointer-events: none;'"></c:set>
-</c:if>
+					<c:set var="holdStyle" value=""></c:set>
+					<c:if test="${isAdvanceOrder==1}">
+						<c:set var="holdStyle" value=" style='pointer-events: none;'"></c:set>
+					</c:if>
 					<!--five button here-->
 					<div class="buttons_row">
 						<div class="button_one">
-							<a href="#" class="hold hold_btn" onclick="billOnHold()" ${holdStyle} >Hold</a>
-							<a href="#" class="hold can_btn"
+							<a href="#" class="hold hold_btn" onclick="billOnHold()"
+								${holdStyle}>Hold</a> <a href="#" class="hold can_btn"
 								onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
@@ -831,18 +842,19 @@ body {
 			<h3 class="pop_head">Payment</h3>
 
 			<div class="add_frm">
- 
-			 
+
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Total AMT</div>
 					<div class="add_input" id="totalAmtPopup">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt-advanceAmt}" maxFractionDigits="2" minFractionDigits="2" />
+							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
+							minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
-			 
-				 
+
+
 				<%-- 
 					<div class="add_frm_one">
 					<div class="add_customer_one1">Advance AMT</div>
@@ -1068,9 +1080,10 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
-								<input name="payAmt" id="payAmt" type="text" 
+								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
-									readonly="readonly" value="${totalAmt}"    style="background-color:lightgrey;"/>
+									readonly="readonly" value="${totalAmt}"
+									style="background-color: lightgrey;" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1341,10 +1354,14 @@ body {
 					<div class="add_frm_one">
 						<div class="add_customer_one"
 							style="width: 40% ! important; float: left!importan!">
-							Customer Name:<span style="color: red; width: 80%;padding-left: 7px;" id="credCust" > NA</span>
+							Customer Name:<span
+								style="color: red; width: 80%; padding-left: 7px;" id="credCust">
+								NA</span>
 						</div>
 						<div class="add_customer_one">
-							Pending Amount:<span style="color: red; width: 20%;padding-left: 7px;" id="penAmt"> 0.0</span>
+							Pending Amount:<span
+								style="color: red; width: 20%; padding-left: 7px;" id="penAmt">
+								0.0</span>
 						</div>
 
 					</div>
@@ -1374,7 +1391,7 @@ body {
 				</div>
 
 
-				<div id="singleDiv1" >
+				<div id="singleDiv1">
 					<div class="calcy_1">
 						<div class="add_customer_one">Type</div>
 						<div class="add_input">
@@ -1393,8 +1410,9 @@ body {
 							<div class="add_customer_one">Received Amt</div>
 							<div class="add_input">
 								<input placeholder="Received Amt" name="receivedAmt"
-									onchange="settleCustBill()"  id="receivedAmt" type="text"
-									value="0" class="input_add" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+									onchange="settleCustBill()" id="receivedAmt" type="text"
+									value="0" class="input_add"
+									onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1481,15 +1499,15 @@ body {
 
 
 
-				<div class="pop_btns" >
-	<div class="clr"></div>
+				<div class="pop_btns">
+					<div class="clr"></div>
 					<div class="close_r">
 
 						<button type="button" class="buttonsaveorderpos" id="sbtbtn"
 							disabled="disabled">Submit</button>
 					</div>
 
-				
+
 
 				</div>
 			</form>
@@ -1500,6 +1518,9 @@ body {
 	<!-- Modal to show cust   Bill ends -->
 
 	<!-- Modal to show cust creadit Bill Start -->
+	
+	
+	
 	<div id="custBills" class="modal">
 		<div id="overlay">
 			<div class="clock"></div>
@@ -1557,6 +1578,13 @@ body {
 										value="2" onclick="getCustBills(2)"> <label
 										for="single22">Pending</label>
 										<div class="check"></div></li>
+
+
+									<li id="deletedBillsRadio" style="display: none;"><input
+										type="radio" id="deleted12" name="modePay1" value="2"
+										onclick="getCustBills(4)"> <label for="deleted12">Deleted
+											Bills</label>
+										<div class="check"></div></li>
 								</ul>
 							</div>
 						</div>
@@ -1577,8 +1605,9 @@ body {
 									<th style="text-align: center;" width="10%">Bill Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
-									<th style="text-align: center;" width="2%"  id="modeofpay">Mode of Payment</th>
-									<th style="text-align: center;" width="2%"  id="trAction">Action</th>
+									<th style="text-align: center;" width="2%" id="modeofpay">Mode
+										of Payment</th>
+									<th style="text-align: center;" width="2%" id="trAction">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -1666,8 +1695,17 @@ body {
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														/* 	tr.append($('<td ></td>').html("NA")); */
-															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill("+data.sellBillNo+")"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															$('#custTable tbody').append(tr);
+															
+														
+															if(tempType==1 && tabType==2){
+																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else if(tempType==4){
+																tr.append($('<td ></td>').html(' '));
+															}else{
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}
+														
+														$('#custTable tbody').append(tr);
 														 
 											}); 
 									
@@ -1787,6 +1825,22 @@ body {
  
 		}
 	</script>
+
+
+	<script type="text/javascript">
+
+function showCustBillForEdit(sellBillNo,custId){
+	
+	//alert("custId = "+custId+"              BILL = "+sellBillNo);
+	
+	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
+	
+}
+
+
+</script>
+
+
 
 	<script type="text/javascript">
 function matchSplitAmt(flag){
@@ -2225,15 +2279,24 @@ function matchSplitAmt(flag){
 			  radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
 			document.getElementById("popupType").value=1;//cust bills
+			
+			document.getElementById("deletedBillsRadio").style.display = "block";
+			
 			getCustBills(1);
 		}else if(type==2){
 			radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
 			document.getElementById("popupType").value=2;//todays bills
 			getCustBills(1);
+			
+			document.getElementById("deletedBillsRadio").style.display = "none";
+			
 		}else{
 			document.getElementById("popupType").value=0;//otherwise
 			document.getElementById("receivedAmt").value=0;
+			
+			document.getElementById("deletedBillsRadio").style.display = "none";
+			
 		}
 	
 		//alert(type);
@@ -3689,7 +3752,7 @@ span.onclick = function() {
   modal.style.display = "none";
 } 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function deleteSellBill(sellBillNo)
 {
 	var isYes=confirm('Are you sure want to delete this record');	
@@ -3709,7 +3772,7 @@ function deleteSellBill(sellBillNo)
 		}
 }
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function custBillPdf(sellBillNo)
 	{
@@ -3723,7 +3786,7 @@ function custBillPdf(sellBillNo)
 
 	}
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	var requestFullscreen = function (ele) {
 		
        // $(".scrollbars").height(400);
