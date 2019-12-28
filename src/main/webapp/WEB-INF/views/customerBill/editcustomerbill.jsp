@@ -236,8 +236,8 @@ body {
 										<div class="check">
 											<div class="inside"></div>
 										</div></li> -->
-									<input type="hidden" id="s-option" name="serachBy"
-										onclick="getCatListAndSubCatList(2)">
+										
+									<input type="hidden" id="s-option" name="serachBy" onclick="getCatListAndSubCatList(2)">
 									<li><input type="radio" id="g-option" name="serachBy"
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
@@ -2968,7 +2968,8 @@ function matchSplitAmt(flag){
 			    });
 			});
 			</script>
-	<script>
+
+	<script type="text/javascript">
 				$(document).ready(function() {
 						$('.category_scrollbars').ClassyScroll();
 				});
@@ -2980,7 +2981,7 @@ function matchSplitAmt(flag){
 			});
 		</script>
 
-	<script>
+	<script type="text/javascript">
 	
 	function calPad(side,value) {
 		var qty =  $('#enterQty').val() ;
@@ -3048,6 +3049,10 @@ function matchSplitAmt(flag){
 		 
 		});
 	
+	</script>
+
+	<script type="text/javascript">
+	
 
 		function itemRateCalculation(flag) {
 			
@@ -3066,6 +3071,11 @@ function matchSplitAmt(flag){
 				}
 			 
 		}
+		
+		</script>
+
+	<script type="text/javascript">
+		
 		function itemDiscPerCalculation(flag) {
 
 			document.getElementById("cashAmt").value =0;
@@ -3102,6 +3112,11 @@ function matchSplitAmt(flag){
 
 			}
 		}
+		
+		</script>
+
+	<script type="text/javascript">
+		
 	function addItemInBillList() {
 			 
 			var rateHidden = parseFloat($('#rateHidden').val());
@@ -3155,9 +3170,158 @@ function matchSplitAmt(flag){
 			  
 		}
 	
+</script>
 
+
+	<script type="text/javascript">
 	
-	function getCurrentItemList() {
+	
+	function billOnHold() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		
+		var rowcount = $('#itemBillTable tr').length;
+		 
+	 if(rowcount>1){
+		 
+		 if(key>0){
+			 submitBillOnHold();
+		 }else{
+			 var modal = document.getElementById("myModal");
+			 modal.style.display = "block"; 
+			 document.getElementById("holdCustName").focus();
+		 }
+		  
+	 }else{
+		 alert("Add Minimum One Product");
+	 }
+		    
+	}
+	
+	</script>
+
+	<script type="text/javascript">
+	
+	function submitBillOnHold() {
+		   
+		var key =  $('#key').val() ;
+		var custId =  $('#cust').val() ;
+		var holdCustName =  $('#holdCustName').val() ;
+		 
+		if(holdCustName!="" || key>0){
+			 
+			var modal = document.getElementById("myModal");
+			 modal.style.display = "none";
+			  $.post(
+					'${billOnHold}',
+					{
+						key : key, 
+						custId : custId,
+						holdCustName : holdCustName,
+						ajax : 'true'
+					},
+					function(data) {
+						
+						window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+								 
+					});  
+		}else{
+			alert("Enter Customer Name");
+			document.getElementById("holdCustName").focus();
+		}
+		  
+		    
+	}
+	
+	</script>
+
+	<script type="text/javascript">
+	
+	function revertHoldBillOnCurrent() {
+		   
+		var index =  $('#holdBillNo').val() ;
+		  $
+		.post(
+				'${revertHoldBillOnCurrent}',
+				{
+					key : index,  
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					window.location = "${pageContext.request.contextPath}/newcustomerbill/1";
+							 
+				});   
+	}
+	
+	
+	</script>
+
+
+
+	<script type="text/javascript">
+		
+	function imgError(image) {
+	    image.onerror = "";
+	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/noimage.jpeg";
+	    return true;
+	}
+	</script>
+
+
+	<script type="text/javascript">
+	
+	function deleteItemInBillList(index) {
+		   
+		  $
+		.post(
+				'${deleteItemInBillList}',
+				{
+					index : index, 
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					getCurrentItemList();
+							 
+				});   
+}
+	
+	</script>
+
+
+
+	<script type="text/javascript">
+	
+	function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
+		document.getElementById("enterRate").value = 0;
+		document.getElementById("enterQty").value = 0;
+		
+
+$('#quantity').popup('show');
+
+document
+.getElementById("itemNmaeHeadeing").innerHTML = itemName;
+
+document.getElementById("rateHidden").value = mrp
+document.getElementById("taxperHidden").value = taxper;
+document.getElementById("itemNameHidden").value = itemName;
+document.getElementById("itemIdHidden").value = itemId;
+document.getElementById("uomHidden").value = uom;
+document.getElementById("isDecimalHidden").value = isDecimal;
+document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
+document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
+$("#enterQty").focus(); 
+
+
+}
+	
+	</script>
+
+	<script type="text/javascript">
+	
+function getCurrentItemList() {
 		
 		$
 		.post(
@@ -3275,132 +3439,6 @@ function matchSplitAmt(flag){
 				});
 		
 	}
-	function billOnHold() {
-		   
-		var key =  $('#key').val() ;
-		var custId =  $('#cust').val() ;
-		
-		var rowcount = $('#itemBillTable tr').length;
-		 
-	 if(rowcount>1){
-		 
-		 if(key>0){
-			 submitBillOnHold();
-		 }else{
-			 var modal = document.getElementById("myModal");
-			 modal.style.display = "block"; 
-			 document.getElementById("holdCustName").focus();
-		 }
-		  
-	 }else{
-		 alert("Add Minimum One Product");
-	 }
-		    
-	}
-	
-	function submitBillOnHold() {
-		   
-		var key =  $('#key').val() ;
-		var custId =  $('#cust').val() ;
-		var holdCustName =  $('#holdCustName').val() ;
-		 
-		if(holdCustName!="" || key>0){
-			 
-			var modal = document.getElementById("myModal");
-			 modal.style.display = "none";
-			  $.post(
-					'${billOnHold}',
-					{
-						key : key, 
-						custId : custId,
-						holdCustName : holdCustName,
-						ajax : 'true'
-					},
-					function(data) {
-						
-						window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-								 
-					});  
-		}else{
-			alert("Enter Customer Name");
-			document.getElementById("holdCustName").focus();
-		}
-		  
-		    
-	}
-	
-	function revertHoldBillOnCurrent() {
-		   
-		var index =  $('#holdBillNo').val() ;
-		  $
-		.post(
-				'${revertHoldBillOnCurrent}',
-				{
-					key : index,  
-					ajax : 'true'
-				},
-				function(data) {
-					  
-					window.location = "${pageContext.request.contextPath}/newcustomerbill/1";
-							 
-				});   
-	}
-	
-		
-	function imgError(image) {
-	    image.onerror = "";
-	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/noimage.jpeg";
-	    return true;
-	}
-	</script>
-
-
-	<script type="text/javascript">
-	
-	function deleteItemInBillList(index) {
-		   
-		  $
-		.post(
-				'${deleteItemInBillList}',
-				{
-					index : index, 
-					ajax : 'true'
-				},
-				function(data) {
-					  
-					getCurrentItemList();
-							 
-				});   
-}
-	
-	</script>
-
-
-
-	<script type="text/javascript">
-	
-	function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
-		document.getElementById("enterRate").value = 0;
-		document.getElementById("enterQty").value = 0;
-		
-
-$('#quantity').popup('show');
-
-document
-.getElementById("itemNmaeHeadeing").innerHTML = itemName;
-
-document.getElementById("rateHidden").value = mrp
-document.getElementById("taxperHidden").value = taxper;
-document.getElementById("itemNameHidden").value = itemName;
-document.getElementById("itemIdHidden").value = itemId;
-document.getElementById("uomHidden").value = uom;
-document.getElementById("isDecimalHidden").value = isDecimal;
-document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
-document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
-$("#enterQty").focus(); 
-
-
-}
 	
 	</script>
 
@@ -3516,7 +3554,9 @@ $("#enterQty").focus();
 		  
 	}
 	
-	
+	</script>
+
+	<script type="text/javascript">
 	
 	function submitBillByPaymentOption(printbilltype) {
 		
@@ -3767,17 +3807,12 @@ $("#enterQty").focus();
 		} 
 		}
 	}
-	/* function printDiv(divName) {
-	     var printContents = document.getElementById(divName).innerHTML;
-	     var originalContents = document.body.innerHTML;
+	
+	</script>
 
-	     document.body.innerHTML = printContents;
 
-	     window.print();
 
-	     document.body.innerHTML = originalContents;
-	} */
-</script>
+
 
 
 
@@ -3899,6 +3934,7 @@ function deleteSellBill(sellBillNo)
 		}
 }
 </script>
+
 	<script type="text/javascript">
 
 function custBillPdf(sellBillNo)
@@ -3913,6 +3949,7 @@ function custBillPdf(sellBillNo)
 
 	}
 	</script>
+
 	<script type="text/javascript">
 	var requestFullscreen = function (ele) {
 		
@@ -3973,21 +4010,7 @@ function showCustBillForEdit(sellBillNo,custId){
 	
 	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
 	
-	/* $.post('${getItemsOfBill}', {
-		 sellBillNo:sellBillNo,
-		 custId:custId,
-         ajax : 'true'
-     }, function(data) {
-    	 
-    	// alert("showCustBillForEdit ---- "+data);
-    	
-  	   if(data.error == false)
-  		   {
-  		    window.open("${pageContext.request.contextPath}/newcustomerbill/0","_self");
-
-  		   }
-  	   
-     }); */
+	
 	
 }
 
