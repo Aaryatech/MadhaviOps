@@ -236,8 +236,9 @@ body {
 										<div class="check">
 											<div class="inside"></div>
 										</div></li> -->
-										
-									<input type="hidden" id="s-option" name="serachBy" onclick="getCatListAndSubCatList(2)">
+
+									<input type="hidden" id="s-option" name="serachBy"
+										onclick="getCatListAndSubCatList(2)">
 									<li><input type="radio" id="g-option" name="serachBy"
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
@@ -3820,17 +3821,19 @@ function getCurrentItemList() {
 	<script type="text/javascript">
 
 function openPaymentPopup() {
+	alert("a")
 	var advAmt = document.getElementById("advAmt").value;
+	alert("b")
 	var custId =  $('#cust').val() ;
-	
+	alert("c")
 	var dfCust=${defaultCustomer};
-	 
+	alert("d")
 //if(parseInt(custId)==parseInt(dfCust)){
 		
 		//alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
 	//} else{	   
 	var key =  $('#key').val() ;
-
+	alert("e")
 	//itemDiscPerCalculation(2);
 	
 	//document.getElementById("discPer").value =0;
@@ -3860,7 +3863,7 @@ function openPaymentPopup() {
 
 		//	document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 	}
-	
+	alert("Hii")
 	var paidAmt=${tempHeader.paidAmt};
 	var advAmtTr=${advAmtTransaction};
 	var discAmt=${tempHeader.discountAmt};
@@ -3874,11 +3877,11 @@ function openPaymentPopup() {
 	
 	itemDiscPerCalculation(2);
 	
-
+	alert("after itemDiscPerCalculation")
 	$("#modeOfPayDiv").show();
 	document.getElementById("creditBillno").checked = true;
 	//alert(selectedText);
-	
+	alert("after creditBillno ch true")
 	var rowcount = $('#itemBillTable tr').length;
 	var flag = 0;
 	  
@@ -3895,6 +3898,7 @@ function openPaymentPopup() {
 	 }
 	  
 //}
+alert("end");
 }
 
 </script>
