@@ -901,23 +901,36 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Advance AMT</div>
-					<div class="add_input" >
-						<fmt:formatNumber type="number" groupingUsed="false"
+					<div class="add_input">
+						<%-- <fmt:formatNumber type="number" groupingUsed="false"
 							value="${advAmtTransaction}" maxFractionDigits="2"
-							minFractionDigits="2" />
+							minFractionDigits="2" /> --%>
+
+
+						<input type="number" class="form-control" disabled="disabled"
+							value="${advAmtTransaction}" placeholder="0"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+
+						<label for="discAmtLabel" 
+							style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
+							Amt&nbsp;</label> <input type="number" class="form-control"
+							value="${tempHeader.paidAmt}" placeholder="0"
+							style="text-align: center; width: 90px; border-radius: 20px;" disabled="disabled"/>
+
+
 					</div>
-					<div class="clr"></div>
+
 				</div>
-				
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Total Payable</div>
 					<div class="add_input" id="totalPayableAmt">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt-tempHeader.discountAmt-advAmtTransaction}" maxFractionDigits="2"
-							minFractionDigits="2" />
+							value="${totalAmt-tempHeader.discountAmt-advAmtTransaction-tempHeader.paidAmt}"
+							maxFractionDigits="2" minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -1112,7 +1125,8 @@ body {
 							<div class="add_input">
 								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
-									readonly="readonly" value="${totalAmt-tempHeader.discountAmt-advAmtTransaction}"
+									readonly="readonly"
+									value="${totalAmt-tempHeader.discountAmt-advAmtTransaction-tempHeader.paidAmt}"
 									style="background-color: lightgrey;" />
 							</div>
 							<div class="clr"></div>
@@ -3097,7 +3111,7 @@ $("#enterQty").focus();
 			if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
-				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${advAmtTransaction};
+				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${advAmtTransaction}-${tempHeader.paidAmt};
 			}
 			
 			if(flag==1){
@@ -3508,21 +3522,19 @@ $("#enterQty").focus();
 		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
     	document.getElementById("epayLabel").style.color="black";
 
-    	
+   			
     	
     	var advAmt = document.getElementById("advAmt").value;
 		if(parseFloat(advAmt)>0){
-			
-			
 		 
 			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 		}else{
 			
 			
-			
+			var paidAmt=${tempHeader.paidAmt};
 			var advAmtTr=${advAmtTransaction};
 			var discAmt=${tempHeader.discountAmt};
-			var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr;
+			var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
 			
 			//document.getElementById("totalPayableAmt").innerHTML = amt;
 			document.getElementById("payAmt").innerHTML = amt;
@@ -3530,13 +3542,18 @@ $("#enterQty").focus();
  		//	document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 		}
 		
+		var paidAmt=${tempHeader.paidAmt};
 		var advAmtTr=${advAmtTransaction};
 		var discAmt=${tempHeader.discountAmt};
-		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr;
+		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
 		
-		document.getElementById("totalPayableAmt").innerHTML = amt;
 		document.getElementById("payAmt").innerHTML = amt;
+		document.getElementById("totalPayableAmt").innerHTML = amt;
+		
+		//alert("---- "+amt);
 
+		
+		itemDiscPerCalculation(2);
 		
 
 		$("#modeOfPayDiv").show();
@@ -3692,93 +3709,121 @@ $("#enterQty").focus();
 			discAmt=0;
 		}
 		
+		
+		
+		
 		if(creditBill==2 && single==1 && payAmt==""){
 			alert("Please Enter Ammount");
 		}else
 			if(payTypeFlag==1){
 				alert(msg);
 			}else{
-			 $('#payment').popup('hide');
-			  document.getElementById("overlay2").style.display = "block";
-			   $
-				.post(
-						'${submitBillByPaymentOption}',
-						{
-							key : key,  
-							custId : custId,
-							creditBill : creditBill,
-							paymentMode : single,
-							billType : billType,
-							payType:payType,
-							payTypeSplit:payTypeSplit,
-							cashAmt : cashAmt,
-							cardAmt : cardAmt,
-							epayAmt : epayAmt,
-							selectedText : selectedText,
-							payAmt : payAmt,
-							discPer:discPer,
-							discAmt:discAmt,
-							billAmtWtDisc:billAmtWtDisc,
-							advAmt:advAmt,
-							advOrderDate:advOrderDate,
-							isAdvanceOrder:isAdvanceOrder,
-							sellBillNo:sellBillNo,
-							ajax : 'true'
-						},
-						function(data) {
-							
-							//alert("DATA = "+JSON.stringify(data));
-							 
-							 if(key==0){
-								 if(printbilltype==1){
-									 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-									window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-								}
-								 var defaultCustomer =  $('#defaultCustomer').val() ;
-									document.getElementById("cust").value = defaultCustomer;
-									getCurrentItemList(); 
-									$('.chosen-select').trigger(
-									'chosen:updated');
-									document.getElementById("overlay2").style.display = "none";	
+				
+				 $('#payment').popup('hide');
+				  document.getElementById("overlay2").style.display = "block";
+				
+				
+				var paidAmt=${tempHeader.paidAmt};
+				var trAdvanceAmt=${advAmtTransaction};
+				
+				
+				if(payAmt>=(trAdvanceAmt+paidAmt)){
+					
+				//	alert("Valid");
+					
+					 $
+						.post(
+								'${submitBillByPaymentOption}',
+								{
+									key : key,  
+									custId : custId,
+									creditBill : creditBill,
+									paymentMode : single,
+									billType : billType,
+									payType:payType,
+									payTypeSplit:payTypeSplit,
+									cashAmt : cashAmt,
+									cardAmt : cardAmt,
+									epayAmt : epayAmt,
+									selectedText : selectedText,
+									payAmt : payAmt,
+									discPer:discPer,
+									discAmt:discAmt,
+									billAmtWtDisc:billAmtWtDisc,
+									advAmt:advAmt,
+									advOrderDate:advOrderDate,
+									isAdvanceOrder:isAdvanceOrder,
+									sellBillNo:sellBillNo,
+									ajax : 'true'
+								},
+								function(data) {
 									
+									//alert("DATA = "+JSON.stringify(data));
 									 
-									 document.getElementById('creditBillno').checked = true;
-									 document.getElementById('single').checked = true;
-									 document.getElementById("cashAmt").value = 0; 
-									 document.getElementById("cardAmt").value = 0; 
-									 document.getElementById("epayAmt").value = 0; 
-									 document.getElementById("payAmt").value = 0; 
-									 $("#splitDiv").hide();
-									 $("#singleDiv").show();
-							 }else{
-								 if(printbilltype==1){
-										
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-								}
-								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-							 }
-							
-						});   
+									 if(key==0){
+										 if(printbilltype==1){
+											 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+											 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+											 
+										}else if(printbilltype==2){
+											 
+											if(frtype<10000000){
+												
+												window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+											}else{
+												
+												window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+											}
+											window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+										}
+										 var defaultCustomer =  $('#defaultCustomer').val() ;
+											document.getElementById("cust").value = defaultCustomer;
+											getCurrentItemList(); 
+											$('.chosen-select').trigger(
+											'chosen:updated');
+											document.getElementById("overlay2").style.display = "none";	
+											
+											 
+											 document.getElementById('creditBillno').checked = true;
+											 document.getElementById('single').checked = true;
+											 document.getElementById("cashAmt").value = 0; 
+											 document.getElementById("cardAmt").value = 0; 
+											 document.getElementById("epayAmt").value = 0; 
+											 document.getElementById("payAmt").value = 0; 
+											 $("#splitDiv").hide();
+											 $("#singleDiv").show();
+									 }else{
+										 if(printbilltype==1){
+												
+											 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+											 
+										}else if(printbilltype==2){
+											 
+											if(frtype<10000000){
+												window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+											}else{
+												
+												window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+											}
+										}
+										 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+									 }
+									
+								});  
+					
+					
+					
+				}else{
+					alert("Minimum Amount of Bill should be "+(trAdvanceAmt+paidAmt)+"/-");
+					document.getElementById("overlay2").style.display = "none";	
+				}
+				
+				
+				
+				
+				
+			
+			   
 		} 
 		}
 	}

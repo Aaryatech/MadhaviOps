@@ -328,10 +328,10 @@ public class OpsController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	        Calendar cal = Calendar.getInstance();
-			 
-			  String curDateTime = dateFormat.format(cal.getTime());
-			  System.err.println("curDateTime"+curDateTime);
+			Calendar cal = Calendar.getInstance();
+
+			String curDateTime = dateFormat.format(cal.getTime());
+			System.err.println("curDateTime" + curDateTime);
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = new Date();
 			model.addAttribute("date1", sf.format(date));
@@ -377,68 +377,66 @@ public class OpsController {
 				model.addAttribute("key", key);
 				model.addAttribute("tempCust", 0);
 				/* model.addAttribute("advKey", 0); */
-				model.addAttribute("isAdvanceOrder",0);
-				model.addAttribute("advOrderDate","");
-				model.addAttribute("advanceAmt",0 );
-				model.addAttribute("actionName","ADD BILL(H)");
+				model.addAttribute("isAdvanceOrder", 0);
+				model.addAttribute("advOrderDate", "");
+				model.addAttribute("advanceAmt", 0);
+				model.addAttribute("actionName", "ADD BILL(H)");
 			} else {
 
 				try {
 					String custId = String.valueOf(session.getAttribute("advCustId"));
 					String headId = String.valueOf(session.getAttribute("advHeadId"));
-					
-					System.err.println("type 0**"+headId);
- 					mvm = new LinkedMultiValueMap<String, Object>();
- 					mvm.add("headId", headId);
+
+					System.err.println("type 0**" + headId);
+					mvm = new LinkedMultiValueMap<String, Object>();
+					mvm.add("headId", headId);
 					AdvanceOrderHeader headList = restTemplate.postForObject(
 							Constant.URL + "/advanceOrderHistoryHedaerByHeadId", mvm, AdvanceOrderHeader.class);
-				
-				
+
 					ItemListForCustomerBill[] itemBillList1 = (ItemListForCustomerBill[]) session
 							.getAttribute("advItemList");
 					itemBillList = new ArrayList<>();
 					for (int i = 0; i < itemBillList1.length; i++) {
 						itemBillList.add(itemBillList1[i]);
 					}
-					 
+
 					CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
 					customerBillOnHold.setItemList(itemBillList);
 					if (custId != null || custId != "") {
-						model.addAttribute("tempCust",Integer.parseInt(custId) );
-					 
-					}else {
-						model.addAttribute("tempCust",0 );
+						model.addAttribute("tempCust", Integer.parseInt(custId));
+
+					} else {
+						model.addAttribute("tempCust", 0);
 					}
 
-					
 					if (headId != null || headId != "") {
-						System.err.println("sdasf**"+headId);
-						model.addAttribute("isAdvanceOrder",1);
-						model.addAttribute("advanceAmt",headList.getAdvanceAmt());
-						model.addAttribute("advOrderDate",headList.getOrderDate());
-						model.addAttribute("actionName","Advance Order BILL");
+						System.err.println("sdasf**" + headId);
+						model.addAttribute("isAdvanceOrder", 1);
+						model.addAttribute("advanceAmt", headList.getAdvanceAmt());
+						model.addAttribute("advOrderDate", headList.getOrderDate());
+						model.addAttribute("actionName", "Advance Order BILL");
 
-					}else {
- 						System.err.println("null**"+headId);
-						model.addAttribute("advanceAmt",0 );
+					} else {
+						System.err.println("null**" + headId);
+						model.addAttribute("advanceAmt", 0);
 					}
-					
+
 					model.addAttribute("advAmt", customerBillOnHold);
 					model.addAttribute("holdBill", customerBillOnHold);
-					
+
 					model.addAttribute("key", 0);
 					/* model.addAttribute("advKey", 1); */
 					session.removeAttribute("advItemList");
-					//session.removeAttribute("advHeadId");
+					// session.removeAttribute("advHeadId");
 
 				} catch (Exception e) {
 					itemBillList = new ArrayList<>();
 					model.addAttribute("key", 0);
 					model.addAttribute("tempCust", 0);
-					model.addAttribute("advanceAmt",0 );
-					model.addAttribute("isAdvanceOrder",0);
-					model.addAttribute("advOrderDate","");
-					model.addAttribute("actionName","ADD BILL");
+					model.addAttribute("advanceAmt", 0);
+					model.addAttribute("isAdvanceOrder", 0);
+					model.addAttribute("advOrderDate", "");
+					model.addAttribute("actionName", "ADD BILL");
 
 					/* model.addAttribute("advKey", 0); */
 					// e.printStackTrace();
@@ -450,7 +448,7 @@ public class OpsController {
 			mvm.add("settingKey", "DEFLTCUST");
 			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
 					NewSetting.class);
-           System.err.println(settingValue.toString());
+			System.err.println(settingValue.toString());
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
 
 			model.addAttribute("frtype", frDetails.getFrGstType());
@@ -460,7 +458,6 @@ public class OpsController {
 		}
 		return mav;
 	}
-	
 
 	@RequestMapping(value = "/editcustomerbill/{type}/{sellBillNo}", method = RequestMethod.GET)
 	public String editCustomerBill(@PathVariable int type, @PathVariable int sellBillNo, HttpServletRequest request,
@@ -515,9 +512,6 @@ public class OpsController {
 			model.addAttribute("holdingList", hashMap);
 
 			model.addAttribute("sellBillNo", sellBillNo);
-			
-			
-			
 
 			try {
 				// String custId = String.valueOf(session.getAttribute("editCustId"));
@@ -568,24 +562,23 @@ public class OpsController {
 				/* model.addAttribute("advKey", 0); */
 				// e.printStackTrace();
 			}
-			
-			
+
 			try {
-				
+
 				mvm = new LinkedMultiValueMap<String, Object>();
 				mvm.add("sellBillNo", sellBillNo);
 
-				TransactionDetail transactionDetail = restTemplate.postForObject(
-						Constant.URL + "/getAdvAmtTransaction", mvm, TransactionDetail.class);
-				
-				float trAdvAmt=0;
-				if(transactionDetail!=null) {
-					trAdvAmt=transactionDetail.getCashAmt();
-				}
-				
-				model.addAttribute("advAmtTransaction",trAdvAmt);
+				TransactionDetail transactionDetail = restTemplate.postForObject(Constant.URL + "/getAdvAmtTransaction",
+						mvm, TransactionDetail.class);
 
-			}catch(Exception e) {
+				float trAdvAmt = 0;
+				if (transactionDetail != null) {
+					trAdvAmt = transactionDetail.getCashAmt();
+				}
+
+				model.addAttribute("advAmtTransaction", trAdvAmt);
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -950,11 +943,11 @@ public class OpsController {
 					transactionDetail.setTransactionDate(DateConvertor.convertToDMY(advOrderDate));
 					transactionDetail.setExVar1("0,1");
 					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
-					
+
 					transactionDetail.setExInt2(1);
-					
+
 					dList.add(transactionDetail);
-					
+
 				}
 				TransactionDetail[] transactionDetailRes = restTemplate
 						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
@@ -1240,9 +1233,9 @@ public class OpsController {
 					transactionDetail.setTransactionDate(DateConvertor.convertToDMY(advOrderDate));
 					transactionDetail.setExVar1("0,1");
 					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
-					
+
 					transactionDetail.setExInt2(1);
-					
+
 					dList.add(transactionDetail);
 				}
 				TransactionDetail[] transactionDetailRes = restTemplate
@@ -1518,6 +1511,33 @@ public class OpsController {
 
 			System.err.println("OLD DETAIL --------------------- " + sellBillDetailRes);
 
+			// ArrayList<Integer> oldSellDetailItemIds = new ArrayList<>();
+			ArrayList<Integer> newSellDetailItemIds = new ArrayList<>();
+
+			if (sellbilldetaillist != null) {
+				for (int i = 0; i < sellbilldetaillist.size(); i++) {
+					newSellDetailItemIds.add(sellbilldetaillist.get(i).getItemId());
+				}
+			}
+
+			if (sellBillDetailRes != null) {
+				for (int i = 0; i < sellBillDetailRes.size(); i++) {
+
+					if (!newSellDetailItemIds.contains(sellBillDetailRes.get(i).getItemId())) {
+
+						mvm = new LinkedMultiValueMap<String, Object>();
+						mvm.add("sellBillNo", sellBillNo);
+						mvm.add("itemId", sellBillDetailRes.get(i).getItemId());
+
+						int res = restTemplate.postForObject(Constant.URL + "/deleteSellBillDetailByItemId", mvm,
+								Integer.class);
+						System.err.println("DELETE BILL DETAIL ------------------- " + res);
+
+					}
+
+				}
+			}
+
 			System.err.println(" ---------------------------------------------------- ");
 
 			System.err.println("NEW DETAIL --------------------- " + sellbilldetaillist);
@@ -1552,8 +1572,8 @@ public class OpsController {
 			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total);
-				sellBillHeader.setPaidAmt(0);
+				sellBillHeader.setRemainingAmt(total-sellBillHeaderRes.getPaidAmt());
+				sellBillHeader.setPaidAmt(sellBillHeaderRes.getPaidAmt());
 
 				sellBillHeader.setPaymentMode(1);
 			} else {
@@ -1568,31 +1588,30 @@ public class OpsController {
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 
-			
-
 			hashMap.remove(index);
 			itemBillList = new ArrayList<>();
 
 			System.err.println("SAVE ================================================== ");
 			System.err.println("" + sellBillHeader);
-			
-			
-			mvm = new LinkedMultiValueMap<String, Object>();
-			mvm.add("sellBillNo", sellBillNo);
-			mvm.add("advAmtStatus", 0);
-			int res = restTemplate.postForObject(Constant.URL + "/deleteTransactionDetailsByIsAdvAmt", mvm,
-					Integer.class);
-			
-			System.err.println("DELETE TRANSC DETAILS --------------------------- "+res);
-			
+
+			if (creditBill != 1) {
+
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("sellBillNo", sellBillNo);
+				mvm.add("advAmtStatus", 0);
+				int res = restTemplate.postForObject(Constant.URL + "/deleteTransactionDetailsByIsAdvAmt", mvm,
+						Integer.class);
+
+				System.err.println("DELETE TRANSC DETAILS --------------------------- " + res);
+			}
 
 			SellBillHeader sellBillHeaderRes1 = restTemplate.postForObject(Constant.URL + "insertSellBillData",
 					sellBillHeader, SellBillHeader.class);
 
 			if (sellBillHeaderRes1 != null) {
-				
+
 				info.setError(false);
-				info.setMessage(""+sellBillHeaderRes1.getSellBillNo());
+				info.setMessage("" + sellBillHeaderRes1.getSellBillNo());
 
 				List<TransactionDetail> dList = new ArrayList<>();
 
@@ -1640,12 +1659,13 @@ public class OpsController {
 
 				dList.add(transactionDetail);
 
-				TransactionDetail[] transactionDetailRes = restTemplate
-						.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+				if (creditBill != 1) {
+
+					TransactionDetail[] transactionDetailRes = restTemplate
+							.postForObject(Constant.URL + "saveTransactionDetail", dList, TransactionDetail[].class);
+				}
 
 			}
-
-			// info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
 
 		} catch (Exception e) {
 			e.printStackTrace();
