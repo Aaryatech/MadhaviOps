@@ -669,7 +669,7 @@ body {
 								class="hold can_btn" onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
-							<a href="JavaScript:Void(0)" class="hold print_btn" onclick="openPaymentPopup1()">Payment
+							<a href="JavaScript:Void(0)" class="hold print_btn" id="payopp">Payment
 								Option</a> <a href="#" class="hold bill_btn "
 								style="pointer-events: none;" onclick="submitBill(2)">Print
 								GST Bill</a>
@@ -3819,8 +3819,10 @@ function getCurrentItemList() {
 
 
 	<script type="text/javascript">
+	$( "#payopp" ).click(function() {
+		  alert( "Handler for .click() called." );
+		
 
-function openPaymentPopup1() {
 	alert("a")
 	var advAmt = document.getElementById("advAmt").value;
 	alert("b")
@@ -3899,7 +3901,7 @@ function openPaymentPopup1() {
 	  
 //}
 alert("end");
-}
+	});
 
 </script>
 
