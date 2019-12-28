@@ -914,11 +914,12 @@ body {
 							value="${advAmtTransaction}" placeholder="0"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 
-						<label for="discAmtLabel" 
+						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
 							Amt&nbsp;</label> <input type="number" class="form-control"
 							value="${tempHeader.paidAmt}" placeholder="0"
-							style="text-align: center; width: 90px; border-radius: 20px;" disabled="disabled"/>
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							disabled="disabled" />
 
 
 					</div>
@@ -3047,37 +3048,7 @@ function matchSplitAmt(flag){
 		 
 		});
 	
-function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
-		document.getElementById("enterRate").value = 0;
-		document.getElementById("enterQty").value = 0;
-		
-/* $.post('${editItemQty}',
-		{
-			itemId: itemId,
-			ajax : 'true'
-		},
-		function(data) {
-			document.getElementById("enterQty").value = data.qty;
-			document.getElementById("enterRate").value = data.total;
 
-		}); */
-$('#quantity').popup('show');
-
-document
-.getElementById("itemNmaeHeadeing").innerHTML = itemName;
-
-document.getElementById("rateHidden").value = mrp
-document.getElementById("taxperHidden").value = taxper;
-document.getElementById("itemNameHidden").value = itemName;
-document.getElementById("itemIdHidden").value = itemId;
-document.getElementById("uomHidden").value = uom;
-document.getElementById("isDecimalHidden").value = isDecimal;
-document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
-document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
-$("#enterQty").focus(); 
-
-
-}
 		function itemRateCalculation(flag) {
 			
 			var rateHidden = parseFloat($('#rateHidden').val());
@@ -3184,21 +3155,7 @@ $("#enterQty").focus();
 			  
 		}
 	
-	function deleteItemInBillList(index) {
-		   
-			  $
-			.post(
-					'${deleteItemInBillList}',
-					{
-						index : index, 
-						ajax : 'true'
-					},
-					function(data) {
-						  
-						getCurrentItemList();
-								 
-					});   
-	}
+
 	
 	function getCurrentItemList() {
 		
@@ -3389,6 +3346,67 @@ $("#enterQty").focus();
 				});   
 	}
 	
+		
+	function imgError(image) {
+	    image.onerror = "";
+	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/noimage.jpeg";
+	    return true;
+	}
+	</script>
+
+
+	<script type="text/javascript">
+	
+	function deleteItemInBillList(index) {
+		   
+		  $
+		.post(
+				'${deleteItemInBillList}',
+				{
+					index : index, 
+					ajax : 'true'
+				},
+				function(data) {
+					  
+					getCurrentItemList();
+							 
+				});   
+}
+	
+	</script>
+
+
+
+	<script type="text/javascript">
+	
+	function opnItemPopup(taxper,itemId,mrp,itemName,uom,isDecimal) {
+		document.getElementById("enterRate").value = 0;
+		document.getElementById("enterQty").value = 0;
+		
+
+$('#quantity').popup('show');
+
+document
+.getElementById("itemNmaeHeadeing").innerHTML = itemName;
+
+document.getElementById("rateHidden").value = mrp
+document.getElementById("taxperHidden").value = taxper;
+document.getElementById("itemNameHidden").value = itemName;
+document.getElementById("itemIdHidden").value = itemId;
+document.getElementById("uomHidden").value = uom;
+document.getElementById("isDecimalHidden").value = isDecimal;
+document.getElementById("rate_lable").innerHTML = "Rate : "+ mrp; 
+document.getElementById("qty_lable").innerHTML = "Qty : 1 "+uom;
+$("#enterQty").focus(); 
+
+
+}
+	
+	</script>
+
+
+	<script type="text/javascript">
+	
 	function cancelFromHoldBill(index) {
 		   
 		 
@@ -3404,13 +3422,11 @@ $("#enterQty").focus();
 					window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
 							 
 				});   
-	}	
-	function imgError(image) {
-	    image.onerror = "";
-	    image.src = "${pageContext.request.contextPath}/resources/newpos/images/noimage.jpeg";
-	    return true;
 	}
+	
 	</script>
+
+
 	<script type="text/javascript">
 	
 	function submitBill(printbilltype) {
@@ -3500,83 +3516,7 @@ $("#enterQty").focus();
 		  
 	}
 	
-	function openPaymentPopup() {
-		var advAmt = document.getElementById("advAmt").value;
-		var custId =  $('#cust').val() ;
-		
-		var dfCust=${defaultCustomer};
-		 
-//if(parseInt(custId)==parseInt(dfCust)){
-			
-			//alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
-		//} else{	   
-		var key =  $('#key').val() ;
 	
-		//itemDiscPerCalculation(2);
-		
-		//document.getElementById("discPer").value =0;
-		//document.getElementById("discAmt").value =0;
-		document.getElementById("cashAmt").value =0;
-		document.getElementById("cardAmt").value =0;
-		document.getElementById("epayAmt").value =0;
-		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
-    	document.getElementById("epayLabel").style.color="black";
-
-   			
-    	
-    	var advAmt = document.getElementById("advAmt").value;
-		if(parseFloat(advAmt)>0){
-		 
-			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
-		}else{
-			
-			
-			var paidAmt=${tempHeader.paidAmt};
-			var advAmtTr=${advAmtTransaction};
-			var discAmt=${tempHeader.discountAmt};
-			var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
-			
-			//document.getElementById("totalPayableAmt").innerHTML = amt;
-			document.getElementById("payAmt").innerHTML = amt;
-
- 		//	document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
-		}
-		
-		var paidAmt=${tempHeader.paidAmt};
-		var advAmtTr=${advAmtTransaction};
-		var discAmt=${tempHeader.discountAmt};
-		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
-		
-		document.getElementById("payAmt").innerHTML = amt;
-		document.getElementById("totalPayableAmt").innerHTML = amt;
-		
-		//alert("---- "+amt);
-
-		
-		itemDiscPerCalculation(2);
-		
-
-		$("#modeOfPayDiv").show();
-		document.getElementById("creditBillno").checked = true;
-		//alert(selectedText);
-		
-		var rowcount = $('#itemBillTable tr').length;
-		var flag = 0;
-		  
-		 if(rowcount<=1){
-			 alert("Select Minimum Product");
-			 flag=1;
-		 }else if(custId==0){
-			 flag=1;
-			 alert("Select Customer");
-		 }
-		 
-		 if(flag==0){
-			 $('#payment').popup('show');
-		 }
-		  
-	//}
-	}
 	
 	function submitBillByPaymentOption(printbilltype) {
 		
@@ -3838,6 +3778,99 @@ $("#enterQty").focus();
 	     document.body.innerHTML = originalContents;
 	} */
 </script>
+
+
+
+
+	<script type="text/javascript">
+
+function openPaymentPopup() {
+	var advAmt = document.getElementById("advAmt").value;
+	var custId =  $('#cust').val() ;
+	
+	var dfCust=${defaultCustomer};
+	 
+//if(parseInt(custId)==parseInt(dfCust)){
+		
+		//alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
+	//} else{	   
+	var key =  $('#key').val() ;
+
+	//itemDiscPerCalculation(2);
+	
+	//document.getElementById("discPer").value =0;
+	//document.getElementById("discAmt").value =0;
+	document.getElementById("cashAmt").value =0;
+	document.getElementById("cardAmt").value =0;
+	document.getElementById("epayAmt").value =0;
+	document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
+	document.getElementById("epayLabel").style.color="black";
+
+			
+	
+	var advAmt = document.getElementById("advAmt").value;
+	if(parseFloat(advAmt)>0){
+	 
+		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+	}else{
+		
+		
+		var paidAmt=${tempHeader.paidAmt};
+		var advAmtTr=${advAmtTransaction};
+		var discAmt=${tempHeader.discountAmt};
+		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
+		
+		//document.getElementById("totalPayableAmt").innerHTML = amt;
+		document.getElementById("payAmt").innerHTML = amt;
+
+		//	document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
+	}
+	
+	var paidAmt=${tempHeader.paidAmt};
+	var advAmtTr=${advAmtTransaction};
+	var discAmt=${tempHeader.discountAmt};
+	var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
+	
+	document.getElementById("payAmt").innerHTML = amt;
+	document.getElementById("totalPayableAmt").innerHTML = amt;
+	
+	//alert("---- "+amt);
+
+	
+	itemDiscPerCalculation(2);
+	
+
+	$("#modeOfPayDiv").show();
+	document.getElementById("creditBillno").checked = true;
+	//alert(selectedText);
+	
+	var rowcount = $('#itemBillTable tr').length;
+	var flag = 0;
+	  
+	 if(rowcount<=1){
+		 alert("Select Minimum Product");
+		 flag=1;
+	 }else if(custId==0){
+		 flag=1;
+		 alert("Select Customer");
+	 }
+	 
+	 if(flag==0){
+		 $('#payment').popup('show');
+	 }
+	  
+//}
+}
+
+</script>
+
+
+
+
+
+
+
+
 	<script>
 // Get the modal
 var modal = document.getElementById("myModal");  

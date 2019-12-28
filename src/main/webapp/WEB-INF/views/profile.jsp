@@ -353,7 +353,7 @@
 
 											<input name="" class="" value="Change Cashier Password"
 												type="button" id="changePwd2" onclick="showDiv1()"
-												style="font-size: 8pt; height: 33px; width: 130px;">
+												style="font-size: 8pt; height: 33px; width: 150px;">
 
 											<input name="" class="" value="Change Manager Password"
 												type="button" id="changePwd3" onclick="showDiv2()"
