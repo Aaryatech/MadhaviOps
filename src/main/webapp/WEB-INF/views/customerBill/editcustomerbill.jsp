@@ -304,7 +304,7 @@ body {
 									<li class="subCatDummyClass"><a href="#">Sweet</a></li>
 									<li class="subCatDummyClass"><a href="#">Lassi</a></li> -->
 
-									<ul>
+								</ul>
 							</div>
 						</div>
 						<div class="dual_r"></div>
@@ -669,7 +669,7 @@ body {
 								class="hold can_btn" onclick="cancelFromHoldBill(${key})">Cancel</a>
 						</div>
 						<div class="button_one">
-							<a href="JavaScript:Void(0)" class="hold print_btn" id="payopp">Payment
+							<a href="#" class="hold print_btn" onclick="openPaymentPopup()">Payment
 								Option</a> <a href="#" class="hold bill_btn "
 								style="pointer-events: none;" onclick="submitBill(2)">Print
 								GST Bill</a>
@@ -1665,11 +1665,11 @@ body {
 
 	</div>
 	<!-- Modal to show cust   Bill ends -->
+
+
 	<script type="text/javascript">
-	
 		
 		function  getCustBills(tempType) {
-			
 			
 			//alert(tempType);
 			
@@ -2343,7 +2343,7 @@ function matchSplitAmt(flag){
 	 modal1.style.display = "block"; 
 	 showDetailsForCp();
 	}
-	function closeMyModal(modalId) {
+							function closeMyModal(modalId) {
 		 
 		 var modal1 = document.getElementById(modalId);
 		 modal1.style.display = "none";
@@ -3812,31 +3812,16 @@ function getCurrentItemList() {
 	</script>
 
 
-
-
-
-
-
-
 	<script type="text/javascript">
-	$( "#payopp" ).click(function() {
-		  alert( "Handler for .click() called." );
+		
+		function openPaymentPopup() {
 		
 
-	alert("a")
 	var advAmt = document.getElementById("advAmt").value;
-	alert("b")
 	var custId =  $('#cust').val() ;
-	alert("c")
 	var dfCust=${defaultCustomer};
-	alert("d")
-//if(parseInt(custId)==parseInt(dfCust)){
-		
-		//alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
-	//} else{	   
+   
 	var key =  $('#key').val() ;
-	alert("e")
-	//itemDiscPerCalculation(2);
 	
 	//document.getElementById("discPer").value =0;
 	//document.getElementById("discAmt").value =0;
@@ -3860,12 +3845,9 @@ function getCurrentItemList() {
 		var discAmt=${tempHeader.discountAmt};
 		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
 		
-		//document.getElementById("totalPayableAmt").innerHTML = amt;
 		document.getElementById("payAmt").innerHTML = amt;
 
-		//	document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 	}
-	alert("Hii")
 	var paidAmt=${tempHeader.paidAmt};
 	var advAmtTr=${advAmtTransaction};
 	var discAmt=${tempHeader.discountAmt};
@@ -3874,16 +3856,10 @@ function getCurrentItemList() {
 	document.getElementById("payAmt").innerHTML = amt;
 	document.getElementById("totalPayableAmt").innerHTML = amt;
 	
-	//alert("---- "+amt);
-
-	
 	itemDiscPerCalculation(2);
 	
-	alert("after itemDiscPerCalculation")
 	$("#modeOfPayDiv").show();
 	document.getElementById("creditBillno").checked = true;
-	//alert(selectedText);
-	alert("after creditBillno ch true")
 	var rowcount = $('#itemBillTable tr').length;
 	var flag = 0;
 	  
@@ -3899,9 +3875,8 @@ function getCurrentItemList() {
 		 $('#payment').popup('show');
 	 }
 	  
-//}
-alert("end");
-	});
+
+	}
 
 </script>
 
@@ -3912,16 +3887,22 @@ alert("end");
 
 
 
-	<script>
-// Get the modal
+	<script type="text/javascript">
 var modal = document.getElementById("myModal");  
 var span = document.getElementsByClassName("close")[0]; 
+
+
 span.onclick = function() {
   modal.style.display = "none";
 } 
 </script>
+
+
+
+
+
 	<script type="text/javascript">
-function deleteSellBill(sellBillNo)
+							function deleteSellBill(sellBillNo)
 {
 	var isYes=confirm('Are you sure want to delete this record');	
 	if(isYes)
