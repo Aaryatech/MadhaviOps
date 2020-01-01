@@ -47,17 +47,7 @@ public class OpeneningStockController {
 
 		for (int i = 0; i < itemsWithCategoriesList.size(); i++) {
 
-			if (itemsWithCategoriesList.get(i).getCatId() == 5) {
-
-				itemsWithCategoriesList.remove(i);
-
-			}
-
-		}
-
-		for (int i = 0; i < itemsWithCategoriesList.size(); i++) {
-
-			if (itemsWithCategoriesList.get(i).getCatId() == 6) {
+			if (itemsWithCategoriesList.get(i).getIsSameDay()>1) {
 
 				itemsWithCategoriesList.remove(i);
 
