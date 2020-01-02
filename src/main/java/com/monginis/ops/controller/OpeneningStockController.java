@@ -22,8 +22,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.monginis.ops.constant.Constant;
+import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.CategoryListResponse;
 import com.monginis.ops.model.Franchisee;
+import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.MCategoryList;
 import com.monginis.ops.model.PostFrItemStockDetail;;
 
@@ -39,8 +41,25 @@ public class OpeneningStockController {
 		ModelAndView model = new ModelAndView("stock/fropeningstock");
 
 		RestTemplate restTemplate = new RestTemplate();
+		
+		CategoryList categoryList=null;
+		try {
+			categoryList = restTemplate.getForObject(Constant.URL + "findAllCatForStock",
+					CategoryList.class);
+		} catch (Exception e) {
+			System.out.println("Exception in getAllGategory" + e.getMessage());
+			e.printStackTrace();
 
-		CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
+		}
+		List<MCategory> mAllCategoryList = new ArrayList<MCategory>();
+		mAllCategoryList = categoryList.getmCategoryList();
+
+		System.out.println(" All Category " + mAllCategoryList.toString());
+
+		model.addObject("catList", mAllCategoryList);
+		
+
+		/*CategoryListResponse itemsWithCategoryResponseList = restTemplate.getForObject(Constant.URL + "showAllCategory",
 				CategoryListResponse.class);
 
 		List<MCategoryList> itemsWithCategoriesList = itemsWithCategoryResponseList.getmCategoryList();
@@ -54,8 +73,9 @@ public class OpeneningStockController {
 			}
 
 		}
-
 		model.addObject("catList", itemsWithCategoriesList);
+*/
+		
 		// ---------------------------------4-jan-2019------------------------------------
 
 		return model;

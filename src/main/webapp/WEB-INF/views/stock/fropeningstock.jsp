@@ -40,6 +40,7 @@
 
 
 			<!--rightSidebar-->
+			<br>
 			<div class="sidebarright">
 				<div class="order-left">
 					<h2 class="pageTitle">Opening Stock Details</h2>
@@ -60,10 +61,10 @@
 							<div class="row">
 
 
-								<div class="form-group col-md-9">
-									 <label class=" col-md-2 control-label menu_label">Select
+								<div class="form-group col-md-12">
+									 <label class=" col-md-4 control-label menu_label" style="text-align: right;">Select
 										Category</label>
-									<div class=" col-md-3 controls menu_select">
+									<div class=" col-md-4 controls menu_select">
 
 										<select data-placeholder="Choose Category"
 											class="form-control chosen" tabindex="6" id="selectMenu"
@@ -75,7 +76,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-1">
+									<div class="col-md-4" style="text-align: left;">
 										<button class="btn btn-primary" onclick="getItems()">Search</button>
 
 									</div>
@@ -115,7 +116,7 @@
 								<div class="row">
 									<div class="col-md-12 table-responsive">
 										<table class="table table-bordered table-striped fill-head "
-											style="width: 50%" id="table_grid" align="left">
+											style="width: 100%" id="table_grid" align="left">
 											<thead>
 												<tr>
 													<th width="10">Sr.No.</th>
@@ -132,12 +133,12 @@
 									</div>
 								</div>
 
-								<div class="row">
-									<div class="col-md-offset-6 col-md-6">
+								<div class="row" style="text-align: center;"><br>
+									<!-- <div class="col-md-offset-6 col-md-6"> -->
 										<button id="submitStock"   style="display: none;"
 											class="btn btn-info pull-center" style="margin-right: 5px;"
-											onclick="submitForm()">Submit</button>
-									</div>
+											onclick="submitForm()">Submit</button><br><br>
+									<!-- </div> -->
 								</div>
 							</div>
 						</form>

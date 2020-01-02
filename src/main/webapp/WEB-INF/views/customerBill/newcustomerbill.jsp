@@ -3067,7 +3067,8 @@ $("#enterQty").focus();
 			 
 		}
 		function itemDiscPerCalculation(flag) {
-
+			
+			
 			document.getElementById("cashAmt").value =0;
 			document.getElementById("cardAmt").value =0;
 			document.getElementById("epayAmt").value =0;
@@ -3079,11 +3080,12 @@ $("#enterQty").focus();
 			var totalAmtPopup;
 			
  			var advAmt = document.getElementById("advAmt").value;
-			if(parseFloat(advAmt)>0){
+ 			totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+			/* if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text());
-			}
+			} */
 			
 			if(flag==1){
 				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
