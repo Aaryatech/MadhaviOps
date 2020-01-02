@@ -977,17 +977,24 @@ public class HomeController {
 		}
 
 	}
-
+	List<FrEmpMaster> empList=null;FrEmpLoginResp loginResponse=null;int empId=0;
 	@RequestMapping(value = "/frEmpLogin", method = RequestMethod.GET)
 	public ModelAndView frEmpLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = null;
 		try {
 			HttpSession session = request.getSession();
-
-			model = new ModelAndView("frlogin");
+			RestTemplate restTemplate = new RestTemplate();
+			model = new ModelAndView("saleslogin");
 			model.addObject("frncihsesID", session.getAttribute("frId"));
 			model.addObject("frName", session.getAttribute("frName"));
-
+			
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			FrEmpMaster[] empArr = restTemplate.postForObject(Constant.URL + "/getAllFrEmpByFrid", map,
+					FrEmpMaster[].class);
+			empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+			model.addObject("empList", empList);
 			logger.info("/FrEmp login request mapping.");
 		} catch (Exception e) {
 			System.out.println("Exception in /frEmpLogin : " + e.getMessage());
@@ -996,20 +1003,48 @@ public class HomeController {
 		return model;
 
 	}
+	@RequestMapping(value = "/checkValidEmployee", method = RequestMethod.POST)
+	public @ResponseBody String checkValidEmployee(HttpServletRequest request, HttpServletResponse response) {
+		String resp="";
 
+		try {
+			 empId =Integer.parseInt(request.getParameter("empId"));
+            if(empList.size()>0)
+            {
+            	for(int i=0;i<empList.size();i++)
+            	{
+            		if(empList.get(i).getFrEmpId()==empId)
+            		{
+            			resp=empList.get(i).getPassword();
+            			break;
+            		}
+            	}
+            }
+        	
+    		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resp;
+	}
 	/*************************************************************************************************/
-	@RequestMapping(value = "/frLoginProcess", method = RequestMethod.POST)
+	@RequestMapping(value = "/frLoginProcess", method = RequestMethod.GET)
 	public String frLoginProcess(HttpSession ses, HttpServletRequest request, HttpServletResponse response)
 			throws ParseException {
 
 		logger.info("/frLoginProcess request mapping.");
 
 		ModelAndView model = new ModelAndView("frlogin");
+		RestTemplate restTemplate = new RestTemplate();
 
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-
-		int frId = frDetails.getFrId();
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("empId",empId);
+		map.add("frId", frDetails.getFrId());
+		 loginResponse = restTemplate.postForObject(Constant.URL + "/frEmpById", map,
+				FrEmpLoginResp.class);
+		/*int frId = frDetails.getFrId();
 
 		String mobNo = request.getParameter("username");
 		String empPass = request.getParameter("password");
@@ -1033,11 +1068,11 @@ public class HomeController {
 			model.addObject("message", loginResponse.getLoginInfo().getMessage());
 			return "redirect:/";
 
-		} else {
+		} else {*/
 
 			// getting fr menus
 			MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
-			menuMap.add("frId", loginResponse.getFrEmp().getFrId());
+			menuMap.add("frId", frDetails.getFrId());
 
 			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
 					GetFrMenus.class);
@@ -1145,7 +1180,7 @@ public class HomeController {
 			// ---------------------------------Special Day Show Button
 			// Logic-------------------------------------------
 
-			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			 map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("frId", loginResponse.getFranchisee().getFrId());
 
@@ -1220,7 +1255,7 @@ public class HomeController {
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("info", loginResponse.getLoginInfo());
 			return "redirect:/home";
-		}
+		/*}*/
 
 	}
 
