@@ -626,7 +626,7 @@
 							<div class="add_frm_one">
 								<div class="add_customer_one">Password</div>
 								<div class="add_input">
-									<input name="pass" type="text" class="input_add" id="pass"
+									<input name="pass" type="number" class="input_add" id="pass" maxlength="4"
 										value="${emp.password}" required />
 								</div>
 								<div class="clr"></div>
