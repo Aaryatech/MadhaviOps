@@ -252,12 +252,20 @@ public class PettyCashController {
 			cal.add(Calendar.DAY_OF_MONTH, 1);
 			String plusDate = ymdSDF.format(cal.getTime());
 			logger.info("Plus Date-----------" + plusDate);
+			
+			PettyCashHandover cashHandOvr=null;
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("frId", frid);
+				map.add("lastdate", plusDate);
+				cashHandOvr = rest.postForObject(Constant.URL + "/getPettyCashHandOvrLastRecrd", map,
+						PettyCashHandover.class);
+			}catch(Exception e) {
+				e.printStackTrace();
+				cashHandOvr=null;
+			}
 
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("frId", frid);
-			map.add("lastdate", plusDate);
-			PettyCashHandover cashHandOvr = rest.postForObject(Constant.URL + "/getPettyCashHandOvrLastRecrd", map,
-					PettyCashHandover.class);
+			
 
 			// From Time
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");

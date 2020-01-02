@@ -28,6 +28,8 @@ public class FrBillHeaderForPrint {
 	
 	Company company;
 	
+	private String ewayBillNo;
+	
 	
 	
 	public String getVehNo() {
@@ -216,6 +218,16 @@ public class FrBillHeaderForPrint {
 	public void setBillDate(String billDate) {
 		this.billDate = billDate;
 	}
+	
+	
+
+	public String getEwayBillNo() {
+		return ewayBillNo;
+	}
+
+	public void setEwayBillNo(String ewayBillNo) {
+		this.ewayBillNo = ewayBillNo;
+	}
 
 	@Override
 	public String toString() {
@@ -225,7 +237,8 @@ public class FrBillHeaderForPrint {
 				+ status + ", remark=" + remark + ", delStatus=" + delStatus + ", isSameState=" + isSameState
 				+ ", frAddress=" + frAddress + ", partyName=" + partyName + ", partyGstin=" + partyGstin
 				+ ", partyAddress=" + partyAddress + ", vehNo=" + vehNo + ", billTime=" + billTime + ", exVarchar1="
-				+ exVarchar1 + ", exVarchar2=" + exVarchar2 + ", company=" + company + "]";
+				+ exVarchar1 + ", exVarchar2=" + exVarchar2 + ", company=" + company + ", ewayBillNo=" + ewayBillNo
+				+ "]";
 	}
 
 	

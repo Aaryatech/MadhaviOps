@@ -7,7 +7,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/newpos/timeassets/css/bootstrap.min.css">
- --%><link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.css">
+ --%>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 <link rel="stylesheet"
@@ -26,6 +28,7 @@
 	z-index: 2;
 	cursor: pointer;
 }
+
 .plus-button {
 	border: 2px solid lightgrey;
 	background-color: #fff;
@@ -269,9 +272,9 @@ input:checked+.slider:before {
 	border-radius: 50%;
 }
 </style>
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<script>    
+<script>    
 		$(function() {
 			$("#fromdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
@@ -288,14 +291,14 @@ input:checked+.slider:before {
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 	<c:url value="/saveCustomerFromBill" var="saveCustomerFromBill"></c:url>
-	
+
 	<div id="overlay2">
-			<div id="text2">
-				<img
-					src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
-					alt="madhvi_logo">
-			</div>
+		<div id="text2">
+			<img
+				src="${pageContext.request.contextPath}/resources/newpos/images/loader.gif"
+				alt="madhvi_logo">
 		</div>
+	</div>
 	<!--topLeft-nav-->
 	<div class="sidebarOuter"></div>
 	<!--topLeft-nav-->
@@ -340,10 +343,9 @@ input:checked+.slider:before {
 
 					</div>
 
-					<div class="row"><div class="col-md-3"></div>
-						<div class="col-md-1">
-							Dairy mart
-						</div>
+					<div class="row">
+						<div class="col-md-3"></div>
+						<div class="col-md-1">Dairy mart</div>
 						<div class="col-md-2">
 							<label class="switch"> <input type="checkbox" name="dm"
 								id="dm" onchange="checkAdd() "> <span
@@ -355,7 +357,7 @@ input:checked+.slider:before {
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
 
-                       <input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
+						<input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
 						<div class="colOuter">
 
 
@@ -363,10 +365,10 @@ input:checked+.slider:before {
 								<div class="col1title">Customer</div>
 							</div>
 							<div class="col-md-2">
-								<select name="custId" class="form-control chosen-select"  tabindex="4"
-									id="custId1" required>
+								<select name="custId" class="form-control chosen-select"
+									tabindex="4" id="custId1" required>
 
-									 <option value="">Select Customer</option>
+									<option value="">Select Customer</option>
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
 										<option value="${custList.custId}">
@@ -381,32 +383,34 @@ input:checked+.slider:before {
 
 							</div> -->
 							<div class="col-md-1">
-							<button class="plus_btn addcust_open" type="button">
+								<button class="plus_btn addcust_open" type="button">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
-								</div>
+							</div>
 
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="fromdatepicker"  class="texboxitemcode texboxcal" required
-									placeholder="Delivery Date" name="devDate"  autocomplete="off"
-									type="text" value="">
+								<input id="fromdatepicker" class="texboxitemcode texboxcal"
+									required placeholder="Delivery Date" name="devDate"
+									autocomplete="off" type="text" value="">
 
 							</div>
 							<div class="col-md-1">
 								<div class="col1title">Time</div>
 							</div>
 							<div class="col-md-2">
-							<div class="clearfix">
-			<div class="input-group clockpicker-with-callbacks">
-				<input type="text" class="form-control" value="00:00" required  name="delTime"  id="delTime1" >
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-			</div>
-		</div></div>
+								<div class="clearfix">
+									<div class="input-group clockpicker-with-callbacks">
+										<input type="time" class="form-control" value="00:00" required
+											name="delTime" id="delTime1"> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-time"></span>
+										</span>
+									</div>
+								</div>
+							</div>
 							<!-- <div class="col-md-1">
 								<div class="col1title">Dairy mart</div>
 							</div>
@@ -454,20 +458,20 @@ input:checked+.slider:before {
 									</c:choose>
 
 									<div class="col-md-9"></div>
-									<label for="search" class="col-md-3" id="search"><!--  <i
-										class="fa fa-search" style="font-size: 20px;"> --></i> <input
+									<label for="search" class="col-md-3" id="search"> <!--  <i
+										class="fa fa-search" style="font-size: 20px;"> --> </i> <input
 										class="myInput1" type="text" id="myInput1${loop.index}"
 										onkeyup="myFunction1(${loop.index})"
 										style="border-radius: 25px;"
 										placeholder="Search items by name" title="Type item name">
 									</label>
-									
-									
-									
-									
+
+
+
+
 									<!-- new table-html-code  -->
 									<!--steaky table-->
-	<div id="table-scroll"
+									<div id="table-scroll"
 										class="table-scroll responsive-table-one">
 										<!-- class="table-scroll" -->
 
@@ -489,8 +493,8 @@ input:checked+.slider:before {
 										</div>
 										<div class="table-wrap">
 
-											<table id="table_grid1${loop.index}" class="responsive-table1"
-												style="margin: 0px;">
+											<table id="table_grid1${loop.index}"
+												class="responsive-table1" style="margin: 0px;">
 												<!--   class="main-table" -->
 												<thead>
 													<tr class="bgpink">
@@ -523,7 +527,8 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onkeydown="myFunction()" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			onkeydown="myFunction()" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -556,7 +561,8 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			class="tableInput" type="text" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -593,7 +599,8 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty1${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			class="tableInput" type="text" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChange('${items.itemRate3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -624,17 +631,17 @@ input:checked+.slider:before {
 
 
 										</div>
-									</div>					
-									
-									
-									
-									
-									
-									
-									
-									
+									</div>
 
-									
+
+
+
+
+
+
+
+
+
 
 
 								</c:forEach>
@@ -649,17 +656,20 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt1" onkeypress="return event.charCode >= 48"
-										onchange="setAmt(1)" oninput="setAmt(1)" class="texboxitemcode texboxcal2" value="0" 
-										autocomplete="off" required class="form-control" size="20" />
+									<input type="text" name="advanceAmt" id="advanceAmt1"
+										onkeypress="return event.charCode >= 48" onchange="setAmt(1)"
+										oninput="setAmt(1)" class="texboxitemcode texboxcal2" value="0"
+										autocomplete="off" class="form-control" size="20"
+										required="required" />
 								</div>
 
 								<div class="col-md-2">Pending Amt:</div>
 								<div class="col-md-1">
 
-									<input type="text" name="remainAmt" id="remainAmt1" value="0" 
+									<input type="text" name="remainAmt" id="remainAmt1" value="0"
 										class="texboxitemcode texboxcal2" autocomplete="off" required
-										class="form-control" size="20"  readonly style="background-color: lightgrey;" />
+										class="form-control" size="20" readonly
+										style="background-color: lightgrey;" />
 								</div>
 
 
@@ -685,7 +695,7 @@ input:checked+.slider:before {
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						id="form2" name="form2" method="post" style="display: none;">
 
-                       <input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
+						<input type="hidden" id="menuId" name="menuId" value="${menuIdFc}" />
 
 
 
@@ -696,10 +706,10 @@ input:checked+.slider:before {
 								<div class="col1title">Customer</div>
 							</div>
 							<div class="col-md-2">
-								<select name="custId" class="form-control chosen-select" tabindex="4"
-									id="custId2" required>
-                                      <option value="">Select Customer</option>
-									 
+								<select name="custId" class="form-control chosen-select"
+									tabindex="4" id="custId2" required>
+									<option value="">Select Customer</option>
+
 									<c:forEach items="${custList}" var="custList" varStatus="count">
 
 										<option value="${custList.custId}">
@@ -715,33 +725,36 @@ input:checked+.slider:before {
 							</div>
 							 -->
 							<div class="col-md-1">
-							<button class="plus_btn addcust_open" type="button">
+								<button class="plus_btn addcust_open" type="button">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
-								</div>
+							</div>
 
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
 							</div>
 							<div class="col-md-2">
-								<input id="todatepicker" class="texboxitemcode texboxcal" required="required"
-									placeholder="Delivery Date" name="devDate"  autocomplete="off"
-									type="text" value="">
+								<input id="todatepicker" class="texboxitemcode texboxcal"
+									required="required" placeholder="Delivery Date" name="devDate"
+									autocomplete="off" type="text" value="">
 
 							</div>
 							<div class="col-md-1">
 								<div class="col1title">Time</div>
 							</div>
-							<div class="col-md-2">	<div class="clearfix">
-			<div class="input-group clockpicker-with-callbacks">
-				<input type="text" class="form-control" value="00:00" required  name="delTime"  id="delTime2" >
-				<span class="input-group-addon">
-					<span class="glyphicon glyphicon-time"></span>
-				</span>
-			</div>
-		</div></div>
-		
-							
+							<div class="col-md-2">
+								<div class="clearfix">
+									<div class="input-group clockpicker-with-callbacks">
+										<input type="text" class="form-control" value="00:00" required
+											name="delTime" id="delTime2"> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-time"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+
+
 							<!-- <div class="col-md-1">
 								<div class="col1title">Dairy mart</div>
 							</div>
@@ -818,8 +831,8 @@ input:checked+.slider:before {
 										</div>
 										<div class="table-wrap">
 
-											<table id="table_grid2${loop.index}" class="responsive-table2"
-												style="margin: 0px;">
+											<table id="table_grid2${loop.index}"
+												class="responsive-table2" style="margin: 0px;">
 												<!--   class="main-table" -->
 												<thead>
 													<tr class="bgpink">
@@ -858,7 +871,8 @@ input:checked+.slider:before {
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text"
-																			onkeydown="myFunction()" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			onkeydown="myFunction()" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp1}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -903,7 +917,8 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			class="tableInput" type="text" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp2}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -950,7 +965,8 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><input name='${items.id}'
 																			id='qty2${items.id}' value='${items.itemQty}'
-																			class="tableInput" type="text" min="0" step="1" onkeypress="return event.charCode >= 48"
+																			class="tableInput" type="text" min="0" step="1"
+																			onkeypress="return event.charCode >= 48"
 																			onchange="onChangeDm('${items.itemMrp3}',${items.id})">
 
 																			<input type="hidden" value="${items.minQty}"
@@ -999,17 +1015,20 @@ input:checked+.slider:before {
 
 								<div class="col-md-1">
 
-									<input type="text" name="advanceAmt" id="advanceAmt2" onkeypress="return event.charCode >= 48"
-										onchange="setAmt(2)" oninput="setAmt(2)" class="texboxitemcode texboxcal2"
-										autocomplete="off" required class="form-control" size="20" value="0" />
+									<input type="text" name="advanceAmt" id="advanceAmt2"
+										onkeypress="return event.charCode >= 48" onchange="setAmt(2)"
+										oninput="setAmt(2)" class="texboxitemcode texboxcal2"
+										autocomplete="off" required class="form-control" size="20"
+										value="0" />
 								</div>
 
 								<div class="col-md-2">Pending Amt:</div>
 								<div class="col-md-1">
 
 									<input type="text" name="remainAmt" id="remainAmt2"
-										class="texboxitemcode texboxcal2" autocomplete="off" required value="0" 
-										class="form-control" size="20" readonly style="background-color: lightgrey;"/>
+										class="texboxitemcode texboxcal2" autocomplete="off" required
+										value="0" class="form-control" size="20" readonly
+										style="background-color: lightgrey;" />
 								</div>
 
 
@@ -1026,7 +1045,7 @@ input:checked+.slider:before {
 							<div class="order-btn textright">
 
 								<input name="subm2" id="subm2" class="buttonsaveorder"
-									value="SAVE ORDER" type="button" >
+									value="SAVE ORDER" type="button">
 							</div>
 						</div>
 
@@ -1046,160 +1065,160 @@ input:checked+.slider:before {
 	<!--rightContainer-->
 
 	<!--  MODAL DIV  -->
-	 
 
-<!--  To submit Order-->
-<div id="addcust" class="add_customer" style="display: none;">
-			<button class="addcust_close close_popup"
-				onclick="clearAddCustomerpopup()">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</button>
-			<h3 class="pop_head" id="add_cust_head_name">Add Customer</h3>
 
-			<div class="add_frm">
-				<div class="add_frm_one">
-					<div class="add_customer_one">Customer Name</div>
-					<div class="add_input">
-						<input type="text" class="input_add"
-							placeholder="Enter Customer Name" name="customerName"
-							onchange="trim(this)" id="customerName" /> <input type="hidden"
-							name="custId" id="custId" value="0" />
-					</div>
-					<div class="clr"></div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Mobile Number</div>
-					<div class="add_input">
-						<input type="text" class="input_add"
-							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
-							onchange="trim(this)" maxlength="10" />
-					</div>
-					<div class="clr"></div>
-				</div>
+	<!--  To submit Order-->
+	<div id="addcust" class="add_customer" style="display: none;">
+		<button class="addcust_close close_popup"
+			onclick="clearAddCustomerpopup()">
+			<i class="fa fa-times" aria-hidden="true"></i>
+		</button>
+		<h3 class="pop_head" id="add_cust_head_name">Add Customer</h3>
 
-				<div class="add_frm_one">
-					<div class="add_customer_one">Gender</div>
-					<div class="add_input">
-						<div class="radio_row popup_radio">
-							<ul>
-								<li><input type="radio" type="radio" name="gender"
-									id="moption" checked value="1"> <label for="moption">M</label>
-									<div class="check"></div></li>
-								<li><input type="radio" id="foption" name="gender"
-									value="2"> <label for="foption">F </label>
-									<div class="check">
-										<div class="inside"></div>
-									</div></li>
-							</ul>
-						</div>
-					</div>
-					<div class="clr"></div>
+		<div class="add_frm">
+			<div class="add_frm_one">
+				<div class="add_customer_one">Customer Name</div>
+				<div class="add_input">
+					<input type="text" class="input_add"
+						placeholder="Enter Customer Name" name="customerName"
+						onchange="trim(this)" id="customerName" /> <input type="hidden"
+						name="custId" id="custId" value="0" />
 				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Type</div>
-					<div class="add_input">
-						<select name="custType" id="custType"
-							data-placeholder="Customer Type" class="input_add"
-							style="text-align: left;" required>
-							<option value="0" style="text-align: left;">Select
-								Customer Type</option>
-							<option value="1">Owner</option>
-							<option value="2">Employee</option>
-							<option value="3">Customer</option>
-						</select>
-					</div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Age-Group</div>
-					<div class="add_input">
-						<select name="ageRange" id="ageRange"
-							data-placeholder="Customer Age-Group" class="input_add"
-							style="text-align: left;" required>
-							<option value="0" style="text-align: left;">Customer
-								Age-Group</option>
-							<option value="14-21">14-21 Years</option>
-							<option value="22-28">22-28 Years</option>
-							<option value="29-35">29-35 Years</option>
-							<option value="36-42">36-42 Years</option>
-							<option value="43-49">43-49 Years</option>
-							<option value="50-56">50-56 Years</option>
-							<option value="57 & above">57 & above</option>
-
-						</select>
-					</div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">DOB</div>
-					<div class="add_input">
-						<input autocomplete="off" placeholder="Date Of Birth"
-							name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
-					</div>
-					<div class="clr"></div>
-				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Business</div>
-					<div class="add_input">
-						<div class="radio_row popup_radio">
-							<ul>
-								<li><input type="radio" type="radio" name="selector"
-									id="y-option" onclick="isBuissness(1)"> <label
-									for="y-option">Yes</label>
-									<div class="check"></div></li>
-								<li><input type="radio" id="n-option" name="selector"
-									onclick="isBuissness(0)" checked> <label for="n-option">No
-								</label>
-									<div class="check">
-										<div class="inside"></div>
-									</div></li>
-							</ul>
-						</div>
-					</div>
-					<div class="clr"></div>
-				</div>
-				<div style="display: none;" id="isbuissnessdiv">
-					<div class="add_frm_one">
-						<div class="add_customer_one">Company Name</div>
-						<div class="add_input">
-							<input placeholder="Enter Company Name" name="companyName"
-								onchange="trim(this)" id="companyName" type="text"
-								class="input_add" />
-						</div>
-						<div class="clr"></div>
-					</div>
-					<div class="add_frm_one">
-						<div class="add_customer_one">GST Number</div>
-						<div class="add_input">
-							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
-								onchange="trim(this)" type="text" class="input_add" />
-						</div>
-						<div class="clr"></div>
-					</div>
-					<div class="add_frm_one">
-						<div class="add_customer_one">Address</div>
-						<div class="add_input">
-							<input placeholder="Enter Address" name="custAdd" id="custAdd"
-								onchange="trim(this)" type="text" class="input_add" />
-						</div>
-						<div class="clr"></div>
-					</div>
-				</div>
+				<div class="clr"></div>
 			</div>
-
-			<div class="pop_btns">
-				<div class="close_l">
-					<button class="addcust_close close_btn"
-						onclick="clearAddCustomerpopup()">Close</button>
-				</div>
-				<div class="close_r">
-					<a href="#" onclick="addCustomer()">Save</a>
+			<div class="add_frm_one">
+				<div class="add_customer_one">Mobile Number</div>
+				<div class="add_input">
+					<input type="text" class="input_add"
+						placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
+						onchange="trim(this)" maxlength="10" />
 				</div>
 				<div class="clr"></div>
 			</div>
 
+			<div class="add_frm_one">
+				<div class="add_customer_one">Gender</div>
+				<div class="add_input">
+					<div class="radio_row popup_radio">
+						<ul>
+							<li><input type="radio" type="radio" name="gender"
+								id="moption" checked value="1"> <label for="moption">M</label>
+								<div class="check"></div></li>
+							<li><input type="radio" id="foption" name="gender" value="2">
+								<label for="foption">F </label>
+								<div class="check">
+									<div class="inside"></div>
+								</div></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div class="add_frm_one">
+				<div class="add_customer_one">Type</div>
+				<div class="add_input">
+					<select name="custType" id="custType"
+						data-placeholder="Customer Type" class="input_add"
+						style="text-align: left;" required>
+						<option value="0" style="text-align: left;">Select
+							Customer Type</option>
+						<option value="1">Owner</option>
+						<option value="2">Employee</option>
+						<option value="3">Customer</option>
+					</select>
+				</div>
+			</div>
+			<div class="add_frm_one">
+				<div class="add_customer_one">Age-Group</div>
+				<div class="add_input">
+					<select name="ageRange" id="ageRange"
+						data-placeholder="Customer Age-Group" class="input_add"
+						style="text-align: left;" required>
+						<option value="0" style="text-align: left;">Customer
+							Age-Group</option>
+						<option value="14-21">14-21 Years</option>
+						<option value="22-28">22-28 Years</option>
+						<option value="29-35">29-35 Years</option>
+						<option value="36-42">36-42 Years</option>
+						<option value="43-49">43-49 Years</option>
+						<option value="50-56">50-56 Years</option>
+						<option value="57 & above">57 & above</option>
 
+					</select>
+				</div>
+			</div>
+			<div class="add_frm_one">
+				<div class="add_customer_one">DOB</div>
+				<div class="add_input">
+					<input autocomplete="off" placeholder="Date Of Birth"
+						name="dateOfBirth" id="dateOfBirth" type="date" class="input_add" />
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div class="add_frm_one">
+				<div class="add_customer_one">Business</div>
+				<div class="add_input">
+					<div class="radio_row popup_radio">
+						<ul>
+							<li><input type="radio" type="radio" name="selector"
+								id="y-option" onclick="isBuissness(1)"> <label
+								for="y-option">Yes</label>
+								<div class="check"></div></li>
+							<li><input type="radio" id="n-option" name="selector"
+								onclick="isBuissness(0)" checked> <label for="n-option">No
+							</label>
+								<div class="check">
+									<div class="inside"></div>
+								</div></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clr"></div>
+			</div>
+			<div style="display: none;" id="isbuissnessdiv">
+				<div class="add_frm_one">
+					<div class="add_customer_one">Company Name</div>
+					<div class="add_input">
+						<input placeholder="Enter Company Name" name="companyName"
+							onchange="trim(this)" id="companyName" type="text"
+							class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">GST Number</div>
+					<div class="add_input">
+						<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Address</div>
+					<div class="add_input">
+						<input placeholder="Enter Address" name="custAdd" id="custAdd"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+			</div>
 		</div>
 
-<!--easyTabs-->
+		<div class="pop_btns">
+			<div class="close_l">
+				<button class="addcust_close close_btn"
+					onclick="clearAddCustomerpopup()">Close</button>
+			</div>
+			<div class="close_r">
+				<a href="#" onclick="addCustomer()" id="saveCust">Save</a>
+			</div>
+			<div class="clr"></div>
+		</div>
+
+
+	</div>
+
+	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
@@ -1235,7 +1254,7 @@ input:checked+.slider:before {
 	</script>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function isBuissness(value) {
 
@@ -1248,6 +1267,9 @@ function isBuissness(value) {
 }
 
 function addCustomer() {
+	
+	document.getElementById("saveCust").style.display="none";
+	
 	//$('#addcust').modal('hide');
 	//$('#addcust').popup('hide'); //for close popup;
 	var custId = document.getElementById("custId").value;
@@ -1264,6 +1286,9 @@ function addCustomer() {
 
 	function(saveFlag) {
 		 if(parseInt(saveFlag)==1){		
+			 
+			 document.getElementById("saveCust").style.display="block";
+			 
 			   alert("Duplicate Mobile No Found.");
 				//document.getElementById("sbtbtn4").disabled = true;
 				document.getElementById("mobileNo").value = "";
@@ -1336,7 +1361,7 @@ function addCustomer() {
 						},
 						function(data) {
 
-							
+							document.getElementById("saveCust").style.display="block";
 
 							if (data.error == false) {
 
@@ -1417,7 +1442,7 @@ function addCustomer() {
 
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#addcust').popup({
 				focusdelay : 400,
@@ -1431,7 +1456,7 @@ function addCustomer() {
 			}); */
 		});
 	</script>
-   
+
 
 	<script>
 		function checkAdd() {
@@ -1560,11 +1585,17 @@ function addCustomer() {
 		var  adv=$("#advanceAmt"+flag).val();
 		var tot=$("#fintotal"+flag).val();
 		
+		//alert("isNAN - "+isNaN(parseFloat(adv)));
+		
 		//alert("hii");
-		if(parseFloat(adv) <= parseFloat(tot)){
+		if((parseFloat(adv) <= parseFloat(tot)) || isNaN(parseFloat(adv))){
+			
+			
 			//alert("if");
 			var rem=parseFloat(tot)-parseFloat(adv);
-			document.getElementById("remainAmt"+flag).value = rem;
+			//alert("rem - "+rem)
+			
+				document.getElementById("remainAmt"+flag).value = rem;
 		}
 		else{
 			//alert("else");
@@ -1585,8 +1616,8 @@ function validateMobile(mobile) {
 } 
  
 		</script>
-		
-		<script>
+
+	<script>
  
  
 $(document).ready(function($) {
@@ -1634,9 +1665,9 @@ $(document).ready(function($) {
 			});
 		});
 		</script>
-		
-		
-		<script>
+
+
+	<script>
  
  
 $(document).ready(function($) {
@@ -1644,12 +1675,17 @@ $(document).ready(function($) {
 				   var custId=document.getElementById("custId1").value;
 				   var devDate=document.getElementById("fromdatepicker").value;
 				   var delTime=document.getElementById("delTime1").value;
+				   var adv=document.getElementById("advanceAmt1").value;
+				   //alert("adv "+adv);
+				   
 				   if(custId==""){
  					   alert("Please Select Customer")
  				   }else  if(devDate==""){
  					   alert("Please Select Delivery Date")
  				   }else if(delTime=="00:00"){
  					   alert("Please Select Delivery Time")
+ 				   }else if(adv==""){
+ 					   alert("Please Enter Advance Amount")
  				   }else{
  						document.getElementById("overlay2").style.display = "block";
 
@@ -1746,7 +1782,7 @@ function showDiv(typdId){
 	</script>
 
 
-	
+
 
 	<script type="text/javascript">
 		function onKeyDown(id) {
@@ -1791,7 +1827,7 @@ $(document).ready(function() {
     });
 });
 </script>
-<script>
+	<script>
 function sortTable() {
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("table_grid1");
@@ -1864,12 +1900,15 @@ $('.closemodale').click(function (e) {
          $('.modale').removeClass('opened');
     });
 </script>
-	<!-- MODAL SCRIPT END--><%-- 
+	<!-- MODAL SCRIPT END-->
+	<%-- 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/jquery.min.js"></script> --%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/newpos/dist/bootstrap-clockpicker.min.js"></script>
+	<script type="text/javascript">
 $('.clockpicker-with-callbacks').clockpicker({
 		donetext: 'Done',
 		init: function() { 
@@ -1912,6 +1951,14 @@ $('#check-minutes').click(function(e){
 			.clockpicker('toggleView', 'minutes');
 });
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/highlight.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/highlight.min.js"></script>
+
+
+
+
+	
+
+
 </body>
 </html>

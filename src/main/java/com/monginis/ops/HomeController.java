@@ -57,6 +57,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
+import com.monginis.ops.model.GetTotalAmt;
 import com.monginis.ops.model.LatestNewsResponse;
 import com.monginis.ops.model.Menu;
 import com.monginis.ops.model.Message;
@@ -347,6 +348,17 @@ public class HomeController {
 			System.err.println("************" + catSell);
 			// model.addAttribute("data", ((Collection<Setting>) new
 			// JSONArray()).add(catSell));
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+
+			GetTotalAmt creditAdvAmt = restTemplate.postForObject(Constant.URL + "/getTotalCreditAdvAmt", map,
+					GetTotalAmt.class);
+			
+			model.addObject("creditAdvAmt", creditAdvAmt.getTotalAmt());
+			System.err.println("CREDIT ADV AMT --------------------------------- "+creditAdvAmt);
 
 		} catch (Exception e) {
 			e.printStackTrace();

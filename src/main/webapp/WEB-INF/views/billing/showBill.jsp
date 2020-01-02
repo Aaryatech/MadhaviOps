@@ -212,11 +212,15 @@
 										</c:choose>
 										<td class="col-md-1"style="text-align: left;"><c:out value="${billHeader.remark}" /></td>
 										<td class="col-md-1" style="text-align: center;"><div >
-												<a
+												<a target="_blank"
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"
 													class="fa fa-info"></a>&nbsp;&nbsp;
-													 <a
-													href="${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a>
+													 <%-- <a
+													href="${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a> --%>
+													
+													<a
+													href="${pageContext.request.contextPath}/pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a>
+													
 							 			<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
 											</div></td>
 										<c:set var="billNo" value="${billHeader.billNo}" />

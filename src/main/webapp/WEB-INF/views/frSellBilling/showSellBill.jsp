@@ -253,14 +253,14 @@ jQuery(document).ready(function(){
 													 if(sellBillData.billType=='S'){
 														 if((sellBillData.invoiceNo).length>1)
 														{
-														tr.append($(' <td style="text-align:center;"></td>').html('SP &nbsp; <a href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + ');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
+														tr.append($(' <td style="text-align:center;"></td>').html('SP &nbsp; <a  href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + ');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
 														}else
 															{
 															tr.append($('<td style="text-align:center;"></td>').html("SP"));
 															}
 													}else{ 
 														if(sellBillData.grandTotal>0)
-													tr.append($('<td style="text-align:center;"></td>').html("<a href=${pageContext.request.contextPath}/viewBillDetails?sellBillNo="+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+' class="action_btn" name='+'><abbr title="Details"><i class="fa fa-list"></i></abbr></a> &nbsp;&nbsp;<a href=${pageContext.request.contextPath}/editBillDetails?sellBillNo='+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+' class="action_btn" name='+'><abbr title="edit"><i class="fa fa-edit"></i></abbr></a>&nbsp;&nbsp; <a href=""onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + '\');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
+													tr.append($('<td style="text-align:center;"></td>').html("<a href=${pageContext.request.contextPath}/viewBillDetails?sellBillNo="+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+' class="action_btn" name='+'><abbr title="Details"><i class="fa fa-list"></i></abbr></a> &nbsp;&nbsp;<a href=${pageContext.request.contextPath}/editBillDetails?sellBillNo='+ sellBillData.sellBillNo+'&billDate='+sellBillData.billDate+' class="action_btn" name='+'><abbr title="edit"><i class="fa fa-edit"></i></abbr></a>&nbsp;&nbsp; <a  href=""onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + '\');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a> '));
 														else
 													tr.append($('<td style="text-align:center;"></td>').html(""));		
 

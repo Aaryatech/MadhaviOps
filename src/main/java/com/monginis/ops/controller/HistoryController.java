@@ -236,13 +236,13 @@ public class HistoryController {
 							rowData.add("" + itemOrderHistory.get(i).getDeliveryDate());
 					    	rowData.add(""+itemOrderHistory.get(i).getExVar2());
 							rowData.add("" + itemOrderHistory.get(i).getTotal());
-							rowData.add("" + itemOrderHistory.get(i).getRemainingAmt());
 							rowData.add("" + itemOrderHistory.get(i).getAdvanceAmt());
-                            if(itemOrderHistory.get(i).getIsDailyMart()==1) {
-    							rowData.add("NO");
+							rowData.add("" + itemOrderHistory.get(i).getRemainingAmt());
+                            if(itemOrderHistory.get(i).getIsDailyMart()==2) {
+    							rowData.add("YES");
                             }else
                             {
-    							rowData.add("Yes");
+    							rowData.add("NO");
                             }
 							expoExcel.setRowData(rowData);
 							exportToExcelList.add(expoExcel);
@@ -519,9 +519,20 @@ public class HistoryController {
 		ModelAndView model = new ModelAndView("history/advOrderDeatilhistory");
 		try {
 			HttpSession session = request.getSession();
+			
+			String date=DateConvertor.convertToYMD(devDate);
 
-			itemOrderHistory = advanceOrderHistoryDetail(headId, devDate, frId);
+			itemOrderHistory = advanceOrderHistoryDetail(headId, date, frId);
 			model.addObject("orderHistory", itemOrderHistory);
+			
+			try {
+				CategoryList categoryList = rest.getForObject(Constant.URL + "findAllOnlyCategory",
+						CategoryList.class);
+				model.addObject("catList", categoryList);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 

@@ -580,6 +580,7 @@ public class OpsController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				model.addAttribute("advAmtTransaction", 0);
 			}
 
 			mvm = new LinkedMultiValueMap<String, Object>();

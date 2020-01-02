@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%-- <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script> --%>
@@ -11,7 +11,7 @@
 <head>
 <style>
 table, th, td {
-    border: 1px solid #9da88d;
+	border: 1px solid #9da88d;
 }
 </style>
 
@@ -135,9 +135,10 @@ jQuery(document).ready(function(){
 
 <!-- -----------------------------------------CODE FOR MULTIPLE DROPDOWN (CSS)------------------------------------------------------------ -->
 
-    <!-- chosen CSS ============================================ -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
-    
+<!-- chosen CSS ============================================ -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
+
 <!-- ----------------------------------------------------END------------------------------------------------------------ -->
 
 <!-- </head>
@@ -175,183 +176,191 @@ jQuery(document).ready(function(){
 </script>
 </head>
 <body>
-<!--datepicker-->
-<c:url var="getMenus" value="/getMenus"/>
+	<!--datepicker-->
+	<c:url var="getMenus" value="/getMenus" />
 
-<!--topLeft-nav-->
-<div class="sidebarOuter"></div>
-<!--topLeft-nav-->
+	<!--topLeft-nav-->
+	<div class="sidebarOuter"></div>
+	<!--topLeft-nav-->
 
-<!--wrapper-start-->
-<div class="wrapper">
+	<!--wrapper-start-->
+	<div class="wrapper">
 
-	<!--topHeader-->
-	<c:url var="findAddOnRate" value="/getAddOnRate" />
-	<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
-	<c:url var="findAllMenus" value="/getAllTypes" />
-	<c:url var="getSpBill" value="/getSpBill" />
-	<c:url var="deleteSpOrder" value="/deleteSpOrder" />
-	<c:url var="getItemOfAdv" value="/getItemOfAdv" />
-	
-	
-	
-
-	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
+		<!--topHeader-->
+		<c:url var="findAddOnRate" value="/getAddOnRate" />
+		<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
+		<c:url var="findAllMenus" value="/getAllTypes" />
+		<c:url var="getSpBill" value="/getSpBill" />
+		<c:url var="deleteSpOrder" value="/deleteSpOrder" />
+		<c:url var="getItemOfAdv" value="/getItemOfAdv" />
 
 
-	<!--topHeader-->
-
-	<!--rightContainer-->
-	<div class="fullGrid center">
-		<!--fullGrid-->
-		<div class="wrapperIn2">
-
-			<!--leftNav-->
-
-			<jsp:include page="/WEB-INF/views/include/left.jsp">
-				<jsp:param name="myMenu" value="${menuList}" />
-
-			</jsp:include>
 
 
-			<!--leftNav-->
+		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
-			<!--rightSidebar-->
-			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">Advance Order List</h2>
-					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
-				</div>
- 
-				<!--tabNavigation-->
-				<div class="cd-tabs">
-					<!--tabMenu-->
 
-					<!--tabMenu-->
-  
-							<div class="clearfix"></div>
- 
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden">
-								
-								
-								</div>
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
-										<thead>
-											<tr class="bgpink">
-												<th class="col-md-1" style="text-align: center;">Sr.</th>
-												<th class="col-md-2" style="text-align: center;">Customer</th>
-												<th class="col-md-2" style="text-align: center;">Order Date</th>
-												<th class="col-md-1" style="text-align: center;">Production Date</th>
-												<th class="col-sm-1" style="text-align: center;">Delivery Date</th>
-												<th class="col-sm-1" style="text-align: center;">Delivery Time</th>
-												<th class="col-md-2" style="text-align: center;">Total</th>
-												<th class="col-md-1" style="text-align: center;">Advance</th>
-												<th class="col-sm-1" style="text-align: center;">Remaining Amount</th>
-												<th class="col-sm-1" style="text-align: right;">Is Dairy Mart</th>
-												<th class="col-sm-1" style="text-align: center;">Action</th>
-										 
-											</tr>
-											</thead>
-										<tbody>
-									 
-											<c:forEach items="${orderHistory}" var="orderList" varStatus="count">
+		<!--topHeader-->
 
-												<tr>
- 													<td class="col-md-1">${count.index+1}</td>
- 														<td class="col-md-2" style="text-align:left;">
-														<c:forEach items="${customerList}" var="customerList"
-													varStatus="cnt">
+		<!--rightContainer-->
+		<div class="fullGrid center">
+			<!--fullGrid-->
+			<div class="wrapperIn2">
+
+				<!--leftNav-->
+
+				<jsp:include page="/WEB-INF/views/include/left.jsp">
+					<jsp:param name="myMenu" value="${menuList}" />
+
+				</jsp:include>
+
+
+				<!--leftNav-->
+
+				<!--rightSidebar-->
+				<div class="sidebarright">
+					<div class="order-left">
+						<h2 class="pageTitle">Advance Order List</h2>
+						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
+					</div>
+
+					<!--tabNavigation-->
+					<div class="cd-tabs">
+						<!--tabMenu-->
+
+						<!--tabMenu-->
+
+						<div class="clearfix"></div>
+
+						<div id="table-scroll" class="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div class="table-wrap">
+								<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
+											<th class="col-md-1" style="text-align: center;">Sr.</th>
+											<th class="col-md-2" style="text-align: center;">Customer</th>
+											<th class="col-md-2" style="text-align: center;">Order
+												Date</th>
+											<th class="col-md-1" style="text-align: center;">Production
+												Date</th>
+											<th class="col-sm-1" style="text-align: center;">Delivery
+												Date</th>
+											<th class="col-sm-1" style="text-align: center;">Delivery
+												Time</th>
+											<th class="col-md-2" style="text-align: center;">Total</th>
+											<th class="col-md-1" style="text-align: center;">Advance</th>
+											<th class="col-sm-1" style="text-align: center;">Remaining
+												Amount</th>
+											<th class="col-sm-1" style="text-align: right;">Is Dairy
+												Mart</th>
+											<th class="col-sm-1" style="text-align: center;">Action</th>
+
+										</tr>
+									</thead>
+									<tbody>
+
+										<c:forEach items="${orderHistory}" var="orderList"
+											varStatus="count">
+
+											<tr>
+												<td class="col-md-1">${count.index+1}</td>
+												<td class="col-md-2" style="text-align: left;"><c:forEach
+														items="${customerList}" var="customerList" varStatus="cnt">
 														<c:if test="${customerList.custId==orderList.custId}">
 														${customerList.custName}
 														</c:if>
-														</c:forEach>
-														</td>
-													<td class="col-md-2"><c:out
-																value="${orderList.orderDate}" /></td>
-														<td class="col-md-1" style="text-align: right;"><c:out
-																value="${orderList.prodDate}" /></td>
-														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.deliveryDate}" /></td>
-														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.exVar2}" /></td>
-														<td class="col-md-2" style="text-align: right;"><c:out
-																value="${orderList.total}" /></td>
-														<td class="col-md-1" style="text-align: right;"><c:out
-																value="${orderList.advanceAmt}" /></td>
-														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.remainingAmt}" /></td>
+													</c:forEach></td>
+												<td class="col-md-2"><c:out
+														value="${orderList.orderDate}" /></td>
+												<td class="col-md-1" style="text-align: right;"><c:out
+														value="${orderList.prodDate}" /></td>
+												<td style="text-align: center;" class="col-sm-1"><c:out
+														value="${orderList.deliveryDate}" /></td>
+												<td style="text-align: center;" class="col-sm-1"><c:out
+														value="${orderList.exVar2}" /></td>
+												<td class="col-md-2" style="text-align: right;"><c:out
+														value="${orderList.total}" /></td>
+												<td class="col-md-1" style="text-align: right;"><c:out
+														value="${orderList.advanceAmt}" /></td>
+												<td style="text-align: center;" class="col-sm-1"><c:out
+														value="${orderList.remainingAmt}" /></td>
 
-														<c:if test="${orderList.isDailyMart==1}">
-															<td style="text-align: center;" class="col-sm-1">No</td>
-														</c:if>
-														<c:if test="${orderList.isDailyMart==2}">
-															<td style="text-align: center;" class="col-sm-1">Yes</td>
-														</c:if>
-													<td><a
-															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
-															<abbr title='Advance Order Detail'><i class='fa fa-list'></i></abbr>
-														</a>&nbsp;&nbsp;&nbsp;&nbsp;
-														<c:if test="${orderList.isSellBillGenerated==0}"><a
-															href="#" onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
+												<c:choose>
+													<c:when test="${orderList.isDailyMart==2}">
+														<td style="text-align: center;" class="col-sm-1">Yes</td>
+													</c:when>
+
+													<c:otherwise>
+														<td style="text-align: center;" class="col-sm-1">No</td>
+													</c:otherwise>
+												</c:choose>
+
+
+												<td><a
+													href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
+														<abbr title='Advance Order Detail'><i
+															class='fa fa-list'></i></abbr>
+												</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:if
+														test="${orderList.isSellBillGenerated==0}">
+														<a href="#"
+															onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
 															<abbr title='Generate Sell Bill'>BILL</abbr>
-														</a></c:if>
-														
-														</td>
-													 
-												</tr>
-											</c:forEach>
-										 
-											 
-										</tbody>
+														</a>
+													</c:if></td>
 
-									</table>
-								</div>
+											</tr>
+										</c:forEach>
+
+
+									</tbody>
+
+								</table>
 							</div>
+						</div>
 
 
 
-							<br />
-					 
-				 
-							<div class="clearfix"></div>
-							 
-							<br />
-					 
-  
+						<br />
+
+
+						<div class="clearfix"></div>
+
+						<br />
+
+
+
+					</div>
 
 				</div>
-				
-			</div>
-		 
-			 
-		 
-		</div>
-		<!--tabNavigation-->
 
-		<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
-		<!-- <div class="order-btn textcenter">
+
+
+			</div>
+			<!--tabNavigation-->
+
+			<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
+			<!-- <div class="order-btn textcenter">
 <a href="http://monginisaurangabad.com/index.php/dashboard/order_export?sel_group=1&sel_date=2017-09-05" class="buttonsaveorder">EXPORT TO EXCEL</a>
 <input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">
 </div>  -->
 
 
+		</div>
+		<!--rightSidebar-->
+
 	</div>
-	<!--rightSidebar-->
+	<!--fullGrid-->
+	</div>
+	<!--rightContainer-->
 
-</div>
-<!--fullGrid-->
-</div>
-<!--rightContainer-->
+	</div>
+	<!--wrapper-end-->
 
-</div>
-<!--wrapper-end-->
-
-<!--easyTabs-->
-<!--easyTabs-->
-<!--easyTabs-->
-<script type="text/javascript">
+	<!--easyTabs-->
+	<!--easyTabs-->
+	<!--easyTabs-->
+	<script type="text/javascript">
 
 function showCustBillForAdvOrder(headId,custId){
 	//alert("hii"+custId);
@@ -375,7 +384,7 @@ function showCustBillForAdvOrder(headId,custId){
 
 
 </script>
-<script>
+	<script>
 
 
 	function openNav() {
@@ -401,17 +410,19 @@ function showCustBillForAdvOrder(headId,custId){
 	}
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 function genPdf()
 {		
 	window.open('${pageContext.request.contextPath}/pdf/showOrderHistoryPdf');
 }
 
-</script>		
- 
- 
-    <script src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+</script>
+
+
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
 
 </body>
 </html>

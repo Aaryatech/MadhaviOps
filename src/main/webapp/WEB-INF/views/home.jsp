@@ -316,6 +316,8 @@
 						</li>
 
 						<!-- seventh li box -->
+						
+						
 						<li>
 							<div class="sale_one bg_two">
 								<div class="sale_l">
@@ -327,7 +329,7 @@
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
-											value="${countDetails.creditAmt}" />
+											value="${countDetails.creditAmt-creditAdvAmt}" />
 									</h5>
 								</div>
 								<div class="clr"></div>

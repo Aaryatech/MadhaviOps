@@ -78,6 +78,8 @@
 <c:url var="getCustBillsTransaction" value="/getCustBillsTransaction" />
 <c:url var="deleteSellBill" value="/deleteSellBill" />
 
+<c:url var="getItemsOfBill" value="/getItemsOfBill" />
+
 
 <style>
 body {
@@ -155,9 +157,6 @@ body {
 .itemDummyClass {
 	cursor: pointer;
 }
-
-
-
 </style>
 <body>
 	<form action="" method="get">
@@ -824,7 +823,7 @@ body {
 						onclick="clearAddCustomerpopup()">Close</button>
 				</div>
 				<div class="close_r">
-					<a href="#" onclick="addCustomer()">Save</a>
+					<a href="#" onclick="addCustomer()" id="saveCust">Save</a>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -868,14 +867,14 @@ body {
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer"
+						<input type="number" name="discPer" id="discPer" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="0" placeholder="Disc %"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="0" placeholder="Disc Amt"
@@ -1518,9 +1517,6 @@ body {
 	<!-- Modal to show cust   Bill ends -->
 
 	<!-- Modal to show cust creadit Bill Start -->
-	
-	
-	
 	<div id="custBills" class="modal">
 		<div id="overlay">
 			<div class="clock"></div>
@@ -1579,7 +1575,6 @@ body {
 										for="single22">Pending</label>
 										<div class="check"></div></li>
 
-
 									<li id="deletedBillsRadio" style="display: none;"><input
 										type="radio" id="deleted12" name="modePay1" value="2"
 										onclick="getCustBills(4)"> <label for="deleted12">Deleted
@@ -1627,11 +1622,17 @@ body {
 	
 		
 		function  getCustBills(tempType) {
+			
+			
+			//alert(tempType);
+			
 			document.getElementById("overlay2").style.display = "block";
 
 			var custId = document.getElementById("cust").value;
 			var tabType = document.getElementById("popupType").value;
  			  var tr_count=0; 
+ 			  
+ 			 //alert("tabType= "+tabType);
  			
 			var ell = document.getElementById('cust');
 			var text = ell.options[ell.selectedIndex].innerHTML;
@@ -1695,17 +1696,16 @@ body {
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														/* 	tr.append($('<td ></td>').html("NA")); */
+														
+														if(tempType==1 && tabType==2){
+															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else if(tempType==4){
+															tr.append($('<td ></td>').html(' '));
+														}else{
+															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}
 															
-														
-															if(tempType==1 && tabType==2){
-																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															}else if(tempType==4){
-																tr.append($('<td ></td>').html(' '));
-															}else{
-																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															}
-														
-														$('#custTable tbody').append(tr);
+															$('#custTable tbody').append(tr);
 														 
 											}); 
 									
@@ -1825,22 +1825,6 @@ body {
  
 		}
 	</script>
-
-
-	<script type="text/javascript">
-
-function showCustBillForEdit(sellBillNo,custId){
-	
-	//alert("custId = "+custId+"              BILL = "+sellBillNo);
-	
-	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
-	
-}
-
-
-</script>
-
-
 
 	<script type="text/javascript">
 function matchSplitAmt(flag){
@@ -2274,6 +2258,11 @@ function matchSplitAmt(flag){
 	<script>
 	function openMyModal(modalId,type) {
 		var radiobtn ;
+		
+		document.getElementById( 
+        "modType1").selectedIndex = "0"; 
+		
+		//alert(modalId+" ----- "+type);
 	
 		if(type==1){
 			  radiobtn = document.getElementById("single12");
@@ -2282,8 +2271,13 @@ function matchSplitAmt(flag){
 			
 			document.getElementById("deletedBillsRadio").style.display = "block";
 			
+			//alert("hi");
 			getCustBills(1);
+			//alert("Bye");
+
+			
 		}else if(type==2){
+			
 			radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
 			document.getElementById("popupType").value=2;//todays bills
@@ -2292,11 +2286,11 @@ function matchSplitAmt(flag){
 			document.getElementById("deletedBillsRadio").style.display = "none";
 			
 		}else{
+			
 			document.getElementById("popupType").value=0;//otherwise
 			document.getElementById("receivedAmt").value=0;
 			
 			document.getElementById("deletedBillsRadio").style.display = "none";
-			
 		}
 	
 		//alert(type);
@@ -2434,6 +2428,10 @@ function matchSplitAmt(flag){
 		}
 
 		function addCustomer() {
+			
+			//document.getElementById("saveCust").disabled = true; 
+			document.getElementById("saveCust").style.display="none"; 
+			
 			var phNo="";
 			//$('#addcust').modal('hide');
 			//$('#addcust').popup('hide'); //for close popup;
@@ -2455,7 +2453,8 @@ function matchSplitAmt(flag){
 
 			function(saveFlag) {
 				 if(parseInt(saveFlag)==1){		
-					   alert("Duplicate Mobile No Found.");
+					 document.getElementById("saveCust").style.display="block"; 
+					   alert("Duplicate Mobile Number Found.");
 						//document.getElementById("sbtbtn4").disabled = true;
 						document.getElementById("mobileNo").value = "";
 						document.getElementById("mobileNo").focus();
@@ -2524,6 +2523,8 @@ function matchSplitAmt(flag){
 									ajax : 'true'
 								},
 								function(data) {
+									
+									document.getElementById("saveCust").style.display="block"; 
 
 									//alert(JSON.stringify(data));
 
@@ -2638,6 +2639,10 @@ function matchSplitAmt(flag){
 				 document.getElementById('single').checked = true;
 				 changeSplitSingle(1);
 				$("#modeOfPayDiv").hide();
+				
+				 let element = document.getElementById('billType');
+				    element.value = 1;
+				    
 			}
 
 		}
@@ -2667,6 +2672,8 @@ function matchSplitAmt(flag){
 
 		}
 		function clearAddCustomerpopup() {
+			
+			document.getElementById("myBtn").disabled = false; 
 
 			document.getElementById("customerName").value = "";
 			document.getElementById("mobileNo").value = "";
@@ -3836,6 +3843,50 @@ function custBillPdf(sellBillNo)
 	});
 
 	</script>
+
+
+	<script type="text/javascript">
+
+function showCustBillForEdit(sellBillNo,custId){
+	
+	//alert("custId = "+custId+"              BILL = "+sellBillNo);
+	
+	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
+	
+	/* $.post('${getItemsOfBill}', {
+		 sellBillNo:sellBillNo,
+		 custId:custId,
+         ajax : 'true'
+     }, function(data) {
+    	 
+    	// alert("showCustBillForEdit ---- "+data);
+    	
+  	   if(data.error == false)
+  		   {
+  		    window.open("${pageContext.request.contextPath}/newcustomerbill/0","_self");
+
+  		   }
+  	   
+     }); */
+	
+}
+
+
+</script>
+
+<script type="text/javascript">
+
+function handleClick(myRadio) {
+    alert('Old value: ' + currentValue);
+    alert('New value: ' + myRadio.value);
+    currentValue = myRadio.value;
+}
+
+</script>
+
+
+
+
 </body>
 
 </html>

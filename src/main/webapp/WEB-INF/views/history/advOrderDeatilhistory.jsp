@@ -113,8 +113,25 @@
 													<td class="col-md-1">${count.index+1}</td>
 													<td class="col-md-2"><c:out
 															value="${orderList.itemName}" /></td>
-													<td class="col-md-2"><c:out
-															value="${orderList.menuTitle}" /></td>
+
+													<c:forEach items="${catList.mCategoryList}" var="catList"
+														varStatus="count">
+
+														<c:if test="${catList.catId==orderList.orderType}">
+															<td class="col-md-2"><c:out
+																	value="${catList.catName}" /></td>
+														</c:if>
+														<%-- <c:otherwise>
+
+															<td class="col-md-2"><c:out
+																	value="${orderList.menuTitle}" /></td>
+														</c:otherwise> --%>
+
+													</c:forEach>
+
+
+
+
 													<td class="col-md-1" style="text-align: right;"><c:out
 															value="${orderList.orderQty}" /></td>
 													<td style="text-align: center;" class="col-sm-1"><c:out

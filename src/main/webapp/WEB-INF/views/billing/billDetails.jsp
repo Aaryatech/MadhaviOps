@@ -276,7 +276,7 @@ However, delay the fade out process for 2.5 seconds */
 				</div>
 
 					</div><br>
-					<div align="center">
+					<div align="center" style="display: none;">
 								<a href="${pageContext.request.contextPath}/showBill"><input name="" class="buttonsaveorder" value="Go Back"
 									  align="center" type="button"></a><!-- onclick="goBack()" -->
 							</div>

@@ -220,16 +220,19 @@ jQuery(document).ready(function(){
 				<!--leftNav-->
 
 				<!--rightSidebar-->
+				<br>
 				<div class="sidebarright">
 					<div class="order-left" style="width: 100%">
 						<h2 class="pageTitle">Order History</h2>
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 
+					<br>
+
 					<form name="frm_search" id="frm_search" method="get"
 						action="${pageContext.request.contextPath}/orderHistory">
 						<input type="hidden" name="mod_ser" id="mod_ser"
-							value="search_result">
+							value="search_result"> <br>
 						<div class="colOuter">
 							<div class="col-md-1">
 								<div class="col1title">Order</div>
@@ -288,8 +291,8 @@ jQuery(document).ready(function(){
 								</c:forEach> --%>
 										<c:choose>
 											<c:when test="${orderType==1}">
-																					<option value="-1" style="text-align: left;">ALL</option>
-											
+												<option value="-1" style="text-align: left;">ALL</option>
+
 												<c:forEach items="${menuListSelected}"
 													var="menuListSelected">
 													<option value="${menuListSelected.menuId}"
@@ -298,34 +301,36 @@ jQuery(document).ready(function(){
 												<c:forEach items="${menuListNotSelected}"
 													var="menuListNotSelected">
 													<c:choose>
-													<c:when test="${menuListNotSelected.isSameDayApplicable!=3}">
-													<option value="${menuListNotSelected.menuId}"
-														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+														<c:when
+															test="${menuListNotSelected.isSameDayApplicable!=3}">
+															<option value="${menuListNotSelected.menuId}"
+																style="text-align: left;">${menuListNotSelected.menuTitle}</option>
 														</c:when>
-														</c:choose>
+													</c:choose>
 												</c:forEach>
 											</c:when>
-                                              <c:when test="${orderType==3}">
+											<c:when test="${orderType==3}">
 												<c:forEach items="${menuListSelected}"
 													var="menuListSelected">
 													<option value="${menuListSelected.menuId}"
 														style="text-align: left;" selected>${menuListSelected.menuTitle}</option>
 												</c:forEach>
-											
+
 											</c:when>
 
 											<c:otherwise>
-																					<option value="-1" style="text-align: left;">ALL</option>
-											
+												<option value="-1" style="text-align: left;">ALL</option>
+
 												<c:forEach items="${menuListNotSelected}"
 													var="menuListNotSelected">
 													<c:choose>
-													<c:when test="${menuListNotSelected.isSameDayApplicable!=3}">
-														<option value="${menuListNotSelected.menuId}"
-														style="text-align: left;">${menuListNotSelected.menuTitle}</option>
-													</c:when>
+														<c:when
+															test="${menuListNotSelected.isSameDayApplicable!=3}">
+															<option value="${menuListNotSelected.menuId}"
+																style="text-align: left;">${menuListNotSelected.menuTitle}</option>
+														</c:when>
 													</c:choose>
-												
+
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
@@ -387,7 +392,8 @@ jQuery(document).ready(function(){
 
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
+									<div class="table-wrap"
+										style="max-height: none; min-height: none;">
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
@@ -480,7 +486,8 @@ jQuery(document).ready(function(){
 								<div class="clearfix"></div>
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
-									<div class="table-wrap">
+									<div class="table-wrap"
+										style="max-height: none; min-height: none;">
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
@@ -496,7 +503,7 @@ jQuery(document).ready(function(){
 														Time</th>
 													<th class="col-md-2" style="text-align: right;">Total</th>
 													<th class="col-md-1" style="text-align: right;">Advance
-														</th>
+													</th>
 													<th class="col-sm-1" style="text-align: right;">Remaining
 														Amount</th>
 													<th class="col-sm-1" style="text-align: right;">Is
@@ -513,14 +520,13 @@ jQuery(document).ready(function(){
 
 													<tr>
 														<td class="col-md-1">${count.index+1}</td>
-														<td class="col-md-2">
-														<c:forEach items="${customerList}" var="customerList"
-													varStatus="cnt">
-														<c:if test="${customerList.custId==orderList.custId}">
+														<td class="col-md-2"><c:forEach
+																items="${customerList}" var="customerList"
+																varStatus="cnt">
+																<c:if test="${customerList.custId==orderList.custId}">
 														${customerList.custName}
 														</c:if>
-														</c:forEach>
-														</td>
+															</c:forEach></td>
 														<td class="col-md-2"><c:out
 																value="${orderList.orderDate}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
@@ -536,14 +542,27 @@ jQuery(document).ready(function(){
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.remainingAmt}" /></td>
 
-														<c:if test="${orderList.isDailyMart==1}">
+														<c:choose>
+
+															<c:when test="${orderList.isDailyMart==2}">
+																<td style="text-align: center;" class="col-sm-1">Yes</td>
+															</c:when>
+															<c:otherwise>
+																<td style="text-align: center;" class="col-sm-1">No</td>
+															</c:otherwise>
+
+														</c:choose>
+
+														<%-- <c:if test="${orderList.isDailyMart==1}">
 															<td style="text-align: center;" class="col-sm-1">No</td>
 														</c:if>
 														<c:if test="${orderList.isDailyMart==2}">
 															<td style="text-align: center;" class="col-sm-1">Yes</td>
-														</c:if>
-	<fmt:parseDate value="${orderList.deliveryDate}" pattern="dd-MM-yyyy" var="myDate"/>
-                            <fmt:formatDate value="${myDate}" var="startFormat" pattern="yyyy-MM-dd"/>
+														</c:if> --%>
+														<fmt:parseDate value="${orderList.deliveryDate}"
+															pattern="dd-MM-yyyy" var="myDate" />
+														<fmt:formatDate value="${myDate}" var="startFormat"
+															pattern="yyyy-MM-dd" />
 														<td><a
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
@@ -555,8 +574,8 @@ jQuery(document).ready(function(){
 																	<abbr title='Generate Sell Bill'> <i
 																		class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
 																</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if> <a
-															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${startFormat}/${orderList.frId}"  target="_blank">
-																<abbr title='Advance Order Memo'><i
+															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${startFormat}/${orderList.frId}"
+															target="_blank"> <abbr title='Advance Order Memo'><i
 																	class="fa fa-info" aria-hidden="true"></i> </abbr>
 														</a></td>
 
@@ -607,7 +626,8 @@ jQuery(document).ready(function(){
     </c:when>     --%>
 							<c:otherwise>
 								<div class="clearfix"></div>
-								<div class="table-wrap">
+								<div class="table-wrap"
+									style="max-height: none; min-height: none;">
 
 									<div id="table-scroll">
 										<!-- class="table-scroll"> -->
@@ -729,6 +749,9 @@ jQuery(document).ready(function(){
 					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button> -->
 				</div>
+				<br>
+				<br>
+
 				<!--tab1-->
 
 				<!--tab2-->

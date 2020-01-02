@@ -670,9 +670,14 @@ body {
 						</div>
 						<div class="button_one">
 							<a href="#" class="hold print_btn" onclick="openPaymentPopup()">Payment
-								Option</a> <a href="#" class="hold bill_btn "
-								style="pointer-events: none;" onclick="submitBill(2)">Print
-								GST Bill</a>
+								Option</a>
+
+
+
+							<!-- <button onclick="openPaymentPopup()" value="pay"></button> -->
+
+							<a href="#" class="hold bill_btn " style="pointer-events: none;"
+								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_two">
 							<a href="#" class="hold pay_btn " onclick="submitBill(1)"
@@ -1158,52 +1163,7 @@ body {
 			<!--<button class="slide_close"><i class="fa fa-times" aria-hidden="true"></i></button>-->
 		</div>
 
-		<!-- <div id="quantity" class="category_popup" style="display: none;">
-			<h3 class="pop_head" id="itemNmaeHeadeing">Quantity</h3>
 
-			<div class="add_frm">
-
-				<div class="add_row">
-					<div class="add_row_l">
-						<span class="add_txt">Enter QTY</span> <input name="enterQty"
-							id="enterQty" type="text" value="1" class="input_add numberOnly"
-							placeholder="QTY" onkeyup="itemRateCalculation(1)" />
-					</div>
-					<input name="rateHidden" id="rateHidden" type="hidden" /><input
-						name="itemIdHidden" id="itemIdHidden" type="hidden" /><input
-						name="taxperHidden" id="taxperHidden" type="hidden" /><input
-						name="itemNameHidden" id="itemNameHidden" type="hidden" />
-					<div class="add_row_r">
-						<span class="add_txt">Rate </span> <input name="enterRate"
-							id="enterRate" type="text" class="input_add numberOnly"
-							placeholder="Enter Rate" onkeyup="itemRateCalculation(2)" />
-					</div>
-					<div class="clr"></div>
-				</div>
-
-				<div class="add_row add_row_marg">
-					<div class="add_row_l">
-						<span class="add_txt" id="qty_lable">QTY : 1</span>
-					</div>
-					<div class="add_row_r">
-						<span class="add_txt" id="rate_lable">Rate: 100.00</span>
-					</div>
-					<div class="clr"></div>
-				</div>
-			</div>
-
-			<div class="pop_btns">
-				<div class="close_l">
-					<button class="quantity_close close_btn">Close</button>
-				</div>
-				<div class="close_r">
-					<a href="#" onclick="addItemInBillList()">Add</a>
-				</div>
-				<div class="clr"></div>
-			</div>
-
-
-		</div> -->
 
 		<!--pending amount popup-->
 		<div id="quantity" class="add_customer calcy" style="display: none;">
@@ -1337,6 +1297,9 @@ body {
 				<div class="clr"></div>
 			</div> -->
 		</div>
+
+
+
 		<div id="myModal" class="modal">
 
 			<!-- Modal content -->
@@ -1468,83 +1431,6 @@ body {
 
 				</div>
 
-
-				<!-- <div id="modeOfPayDiv1">
-					 
-					<div class="add_frm_one">
-						<div class="add_customer_one">Mode of Pay</div>
-						<div class="add_input">
-							<div class="radio_row popup_radio">
-								<ul>
-									<li><input type="radio" id="single1" name="modePay1" value="1"
-										onclick="changeSplitSingle1(1)"  checked="checked"> <label
-										for="single1">Single</label>
-										<div class="check"></div></li>
-									<li><input type="radio" id="split1" name="modePay1" value="2"
-										onclick="changeSplitSingle1(2)"> <label for="split1">Split
-									</label>
-										<div class="check">
-											<div class="inside"></div>
-										</div></li>
-								</ul>
-							</div>
-						</div>
-						<div class="clr"></div>
-					</div>
-					</div> -->
-				<!-- <div id="splitDiv1" style="display: none;">
-						 <div class="calcy_1">
-							<div class="add_customer_one">Cash</div>
-							<div class="add_input">
-								<div class="radio_row popup_radio">
-									<ul>
-										<li>
-											<input type="checkbox" id="cashCheck"
-											name="cashCheck" checked> &nbsp;  <input type="text"
-											id="cashAmt1" name="cashAmt1" class=" input_add numberOnly"
-											placeholder="Cash Ammount" value="0">
-										</li>
-									</ul>
-								</div>
-							</div>
-							</div>
-							<div class="calcy_2">
-							
-							<div class="add_customer_one">Card</div>
-							<div class="add_input">
-								<div class="radio_row popup_radio">
-									<ul>
-										<li>
-											<input type="checkbox" id="cardCheck"
-											name="cardCheck"> &nbsp;  <input type="text" id="cardAmt1"
-											name="cardAmt1" class=" input_add numberOnly"
-											placeholder="Card Ammount" value="0">
-										</li>
-									</ul>
-								</div>
-							</div>
-							</div>
-							<div class="calcy_3">
-							<div class="add_customer_one">E-Pay</div>
-							<div class="add_input">
-								<div class="radio_row popup_radio">
-									<ul>
-										<li>
-											<input type="checkbox" id="epayCheck"
-											name="epayCheck"> &nbsp;  <input type="text" id="epayAmt1"
-											name="epayAmt1" class="input_add numberOnly"
-											placeholder="E-Pay Ammount" value="0">
-										</li>
-									</ul>
-								</div>
-							</div>
-							 
-						</div>
- 
-					</div> -->
-
-
-
 				<div class="pop_btns">
 					<div class="clr"></div>
 					<div class="close_r">
@@ -1671,7 +1557,6 @@ body {
 		
 		function  getCustBills(tempType) {
 			
-			//alert(tempType);
 			
 			document.getElementById("overlay2").style.display = "block";
 
@@ -1679,12 +1564,11 @@ body {
 			var tabType = document.getElementById("popupType").value;
  			  var tr_count=0; 
  			  
- 			 //alert("tabType= "+tabType);
  			
 			var ell = document.getElementById('cust');
 			var text = ell.options[ell.selectedIndex].innerHTML;
-			//alert(text);
-						document.getElementById("custName1").innerHTML  ="&nbsp;&nbsp;"+ text;
+
+			document.getElementById("custName1").innerHTML  ="&nbsp;&nbsp;"+ text;
 
 			if(tabType!=2){
 				document.getElementById("custName1").innerHTML  = "&nbsp;&nbsp;"+ text;
@@ -1697,10 +1581,12 @@ body {
 				$("#dateDiv").show();
 				$("#dateCust").hide();
 			}	
+			
+			
 		if(tempType!=3)  {
 			$("#modeofpay").hide();
 			$("#trAction").show();
- 				 $.post('${getCustBills}',
+ 			$.post('${getCustBills}',
 								{
 									cust: custId,
 									tempType: tempType,
@@ -1710,8 +1596,7 @@ body {
 								function(data) {
 									tr_count = data.length;
 
-									//alert(JSON.stringify(data));
- 			document.getElementById("overlay2").style.display = "";
+ 									document.getElementById("overlay2").style.display = "";
 
 									$('#custTable td').remove();
 									$
@@ -1723,17 +1608,8 @@ body {
 												if(tabType==2){
 													invNo=invNo+" ("+data.userName+")";
 												}
-											/* 	var payType="";
+											
 												
-												if(data.paymentMode==1){
-													payType="Cash";
-												}else if(data.paymentMode==2){
-													payType="Card";
-												}else{
-													payType="Other";
-												} */
-												
-											//	document.getElementById("credCust").innerHTML = data.userName; 
   
 															var tr = $('<tr id="bill'+data.sellBillNo+'"></tr>');
 															tr.append($('<td ></td>').html(key + 1));
@@ -1742,7 +1618,7 @@ body {
 															tr.append($('<td ></td>').html(data.grandTotal));
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
-														/* 	tr.append($('<td ></td>').html("NA")); */
+														
 														
 														if(tempType==1 && tabType==2){
 															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
@@ -1780,7 +1656,6 @@ body {
 								tr_count = data.length;
 								document.getElementById("overlay2").style.display = "";
 
-								//alert(JSON.stringify(data));
 
 								$('#custTable td').remove();
 								$
@@ -1790,26 +1665,7 @@ body {
 											
 										   var payType="";
 											var paidAmount=parseFloat(data.cashAmt)+parseFloat(data.cardAmt)+parseFloat(data.ePayAmt);
-											//alert(data.exVar1);
-											/* if(data.exVar1=="0,1,2,3"){
-												payType="Cash,Card,e-Pay";
- 												
-											}else if(data.exVar1=="0,1,2"){
-												payType="Cash,Card";
- 											}else if(data.exVar1=="0,1,3"){
- 												payType="Cash,e-Pay";
- 											}else if(data.exVar1=="0,2,3"){
- 												payType="Card,e-Pay";
- 											}
- 											else if(data.exVar1=="0,2"){
- 												payType="Card";
- 											}
- 											else if(data.exVar1=="0,3"){
- 												payType="e-Pay";
- 											}
- 											else if(data.exVar1=="0,1"){
- 												payType="Cash";
- 											}else{   payType="Credit";} */
+											
 											if(data.exVar1=="0" || data.exVar1=="0," ){
 												payType="Credit Bill";
  												
@@ -1894,6 +1750,12 @@ function matchSplitAmt(flag){
 		
 		
 	}
+	
+	</script>
+
+	<script type="text/javascript">
+	
+	
 		function onPayTypeChange(type){
 			if(type==1){
 				$('#cardTypeDiv').hide();
@@ -1910,7 +1772,11 @@ function matchSplitAmt(flag){
 			}
 		}
 		
-		function  settleCustBill() {
+		</script>
+
+	<script type="text/javascript">
+		
+							function  settleCustBill() {
 			
 			var tr_count=0; 
 			var finTot = 0;
@@ -2275,9 +2141,15 @@ function matchSplitAmt(flag){
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
+
+
 	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
 		type="text/javascript" charset="utf-8"></script>
+
+
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#slide').popup({
@@ -2287,6 +2159,10 @@ function matchSplitAmt(flag){
 			});
 		});
 	</script>
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#addcust').popup({
@@ -2302,14 +2178,14 @@ function matchSplitAmt(flag){
 		});
 	</script>
 
-	<script>
+	<!-- ------------------------------------------------------------------------------------- -->
+
+	<script type="text/javascript">
 	function openMyModal(modalId,type) {
-		var radiobtn ;
+		var radiobtn;
 		
-		//alert(modalId+" ----- "+type);
-	
 		if(type==1){
-			  radiobtn = document.getElementById("single12");
+			radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
 			document.getElementById("popupType").value=1;//cust bills
 			
@@ -2343,7 +2219,12 @@ function matchSplitAmt(flag){
 	 modal1.style.display = "block"; 
 	 showDetailsForCp();
 	}
-							function closeMyModal(modalId) {
+		
+	</script>
+
+	<script type="text/javascript">
+	
+	function closeMyModal(modalId) {
 		 
 		 var modal1 = document.getElementById(modalId);
 		 modal1.style.display = "none";
@@ -2351,6 +2232,8 @@ function matchSplitAmt(flag){
 	
 	</script>
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript">
 	
@@ -2376,6 +2259,12 @@ function matchSplitAmt(flag){
 				});   
 	}
 	</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
+
 	<script type="text/javascript">
 		/*Dropdown Menu*/
 		$('.dropdown').click(function() {
@@ -2396,6 +2285,12 @@ function matchSplitAmt(flag){
 				});
 		/*End Dropdown Menu*/
 	</script>
+
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 
 	<script type="text/javascript">
 		function trim(el) {
@@ -2631,6 +2526,12 @@ function matchSplitAmt(flag){
 				});
 		}
 	</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
+
 	<script type="text/javascript">
 		function trim(el) {
 			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
@@ -2934,6 +2835,9 @@ function matchSplitAmt(flag){
 		}
 	</script>
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 	<script>
 		function myFunction1() {
 			
@@ -2949,6 +2853,10 @@ function matchSplitAmt(flag){
 		     
 		}
 	</script>
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 			$(document).ready(function () {
 		 
@@ -2960,6 +2868,9 @@ function matchSplitAmt(flag){
 			    });
 			});
 			</script>
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 	<script type="text/javascript">
 			$(document).ready(function () {
 			    $('#quantity').popup({
@@ -2969,6 +2880,9 @@ function matchSplitAmt(flag){
 			    });
 			});
 			</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript">
 				$(document).ready(function() {
@@ -2981,6 +2895,11 @@ function matchSplitAmt(flag){
 					$('.scrollbars').ClassyScroll();
 			});
 		</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 
 	<script type="text/javascript">
 	
@@ -3052,10 +2971,13 @@ function matchSplitAmt(flag){
 	
 	</script>
 
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 	
 
-		function itemRateCalculation(flag) {
+								function itemRateCalculation(flag) {
 			
 			var rateHidden = parseFloat($('#rateHidden').val());
 			var rate = parseFloat($('#enterRate').val());
@@ -3074,6 +2996,10 @@ function matchSplitAmt(flag){
 		}
 		
 		</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 
 	<script type="text/javascript">
 		
@@ -3115,6 +3041,10 @@ function matchSplitAmt(flag){
 		}
 		
 		</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 
 	<script type="text/javascript">
 		
@@ -3174,6 +3104,10 @@ function matchSplitAmt(flag){
 </script>
 
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 	
 	
@@ -3201,6 +3135,9 @@ function matchSplitAmt(flag){
 	}
 	
 	</script>
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 
 	<script type="text/javascript">
 	
@@ -3237,6 +3174,10 @@ function matchSplitAmt(flag){
 	
 	</script>
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 	
 	function revertHoldBillOnCurrent() {
@@ -3260,6 +3201,7 @@ function matchSplitAmt(flag){
 	</script>
 
 
+	<!-- ------------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript">
 		
@@ -3269,6 +3211,9 @@ function matchSplitAmt(flag){
 	    return true;
 	}
 	</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
 
 
 	<script type="text/javascript">
@@ -3291,7 +3236,7 @@ function matchSplitAmt(flag){
 	
 	</script>
 
-
+	<!-- ------------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript">
 	
@@ -3319,6 +3264,14 @@ $("#enterQty").focus();
 }
 	
 	</script>
+
+
+
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 
 	<script type="text/javascript">
 	
@@ -3444,6 +3397,9 @@ function getCurrentItemList() {
 	</script>
 
 
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 	
 	function cancelFromHoldBill(index) {
@@ -3466,6 +3422,12 @@ function getCurrentItemList() {
 	</script>
 
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
+
+
 	<script type="text/javascript">
 	
 	function submitBill(printbilltype) {
@@ -3473,7 +3435,7 @@ function getCurrentItemList() {
 		var advOrderDate = document.getElementById("advOrderDate").value;
 		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
 		var key =  $('#key').val() ;
-		/* var key =  $('#advKey').val() ; */
+		
 		var custId =  $('#cust').val() ;
 		var selectedText = $("#cust option:selected").text(); 
 		document.getElementById("credAmt").innerHTML="0.0";
@@ -3526,7 +3488,7 @@ function getCurrentItemList() {
 								}
 								
 								 	var defaultCustomer =  $('#defaultCustomer').val() ;
-								 	//alert(defaultCustomer)
+								 	
 								 	document.getElementById("cust").value = defaultCustomer;
 									getCurrentItemList(); 
 									$('.chosen-select').trigger(
@@ -3556,6 +3518,10 @@ function getCurrentItemList() {
 	}
 	
 	</script>
+
+
+	<!-- ------------------------------------------------------------------------------------- -->
+
 
 	<script type="text/javascript">
 	
@@ -3707,10 +3673,10 @@ function getCurrentItemList() {
 				var paidAmt=${tempHeader.paidAmt};
 				var trAdvanceAmt=${advAmtTransaction};
 				
+				//alert("BILL - "+billAmtWtDisc);
+				//if(payAmt>=(trAdvanceAmt+paidAmt)){
+					if((trAdvanceAmt+paidAmt)<=billAmtWtDisc){
 				
-				if(payAmt>=(trAdvanceAmt+paidAmt)){
-					
-				//	alert("Valid");
 					
 					 $
 						.post(
@@ -3739,7 +3705,7 @@ function getCurrentItemList() {
 								},
 								function(data) {
 									
-									//alert("DATA = "+JSON.stringify(data));
+									
 									 
 									 if(key==0){
 										 if(printbilltype==1){
@@ -3799,10 +3765,6 @@ function getCurrentItemList() {
 					document.getElementById("overlay2").style.display = "none";	
 				}
 				
-				
-				
-				
-				
 			
 			   
 		} 
@@ -3812,9 +3774,14 @@ function getCurrentItemList() {
 	</script>
 
 
+	<!-- ------------------------------------------------------------------------------------- -->
+
+
 	<script type="text/javascript">
 		
-		function openPaymentPopup() {
+	function openPaymentPopup() {
+									
+	//alert("hi");
 		
 
 	var advAmt = document.getElementById("advAmt").value;
@@ -3830,8 +3797,6 @@ function getCurrentItemList() {
 	document.getElementById("epayAmt").value =0;
 	document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
 	document.getElementById("epayLabel").style.color="black";
-
-			
 	
 	var advAmt = document.getElementById("advAmt").value;
 	if(parseFloat(advAmt)>0){
@@ -3839,23 +3804,21 @@ function getCurrentItemList() {
 		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 	}else{
 		
-		
-		var paidAmt=${tempHeader.paidAmt};
+		  var paidAmt=${tempHeader.paidAmt};
 		var advAmtTr=${advAmtTransaction};
 		var discAmt=${tempHeader.discountAmt};
-		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
+		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt; 
 		
-		document.getElementById("payAmt").innerHTML = amt;
-
+		//document.getElementById("payAmt").innerHTML = amt; 
 	}
-	var paidAmt=${tempHeader.paidAmt};
+ 	 var paidAmt=${tempHeader.paidAmt};
 	var advAmtTr=${advAmtTransaction};
 	var discAmt=${tempHeader.discountAmt};
 	var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
 	
 	document.getElementById("payAmt").innerHTML = amt;
-	document.getElementById("totalPayableAmt").innerHTML = amt;
-	
+	document.getElementById("totalPayableAmt").innerHTML = amt; 
+ 	
 	itemDiscPerCalculation(2);
 	
 	$("#modeOfPayDiv").show();
@@ -3881,8 +3844,19 @@ function getCurrentItemList() {
 </script>
 
 
+	<script type="text/javascript">
+		
+	function openPaymentPopup1() {
+									
+	alert("hi");
+	$("#modeOfPayDiv").show();
+	}
+
+	</script>
 
 
+
+	<!-- ------------------------------------------------------------------------------------- -->
 
 
 
@@ -3898,14 +3872,14 @@ span.onclick = function() {
 </script>
 
 
-
+	<!-- ------------------------------------------------------------------------------------- -->
 
 
 	<script type="text/javascript">
-							function deleteSellBill(sellBillNo)
-{
-	var isYes=confirm('Are you sure want to delete this record');	
-	if(isYes)
+	function deleteSellBill(sellBillNo)
+	{
+		var isYes=confirm('Are you sure want to delete this record');	
+		if(isYes)
 		{
 		  $.post('${deleteSellBill}',
 					{
@@ -3919,8 +3893,10 @@ span.onclick = function() {
 
 					});
 		}
-}
-</script>
+	}
+	</script>
+
+	<!-- ------------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript">
 
@@ -3937,10 +3913,12 @@ function custBillPdf(sellBillNo)
 	}
 	</script>
 
+	<!-- ----------------------------------------------------------------------------------------- -->
+
 	<script type="text/javascript">
 	var requestFullscreen = function (ele) {
 		
-       // $(".scrollbars").height(400);
+      
 
 		if (ele.requestFullscreen) {
 			ele.requestFullscreen();
@@ -3988,21 +3966,23 @@ function custBillPdf(sellBillNo)
 
 	</script>
 
+	<!-- --------------------------------------------------------------------------------- -->
+
 
 	<script type="text/javascript">
 
-function showCustBillForEdit(sellBillNo,custId){
+	function showCustBillForEdit(sellBillNo,custId){
 	
 	alert("custId = "+custId+"              BILL = "+sellBillNo);
 	
 	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
 	
-	
-	
-}
+	}
 
 
-</script>
+	</script>
+
+
 
 
 </body>

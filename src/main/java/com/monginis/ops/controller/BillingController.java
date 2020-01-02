@@ -96,7 +96,7 @@ public class BillingController {
 				map.add("toDate", dateFormat.format(date));
 				
 				map.add("frId", frId);
-				
+				map.add("typeIdList", "-1");
 			
 				
 				ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
@@ -109,6 +109,7 @@ public class BillingController {
 				billHeader = billHeadeResponse.getGetBillHeaders();
 				modelAndView.addObject("fromDate", dateFormat.format(date));
 				modelAndView.addObject("toDate", dateFormat.format(date));
+				
 				
 				modelAndView.addObject("billHeader",billHeader);
 		}
