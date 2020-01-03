@@ -121,7 +121,7 @@
 									<div class="btn btn-primary btn-file legitRipple"
 										style="width: -webkit-fill-available; width: -moz-available;">
 										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
-											type="file" class="file-input browseimage browseimage1" 
+											type="file" class="file-input browseimage browseimage1" required
 											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
 									</div>
 
