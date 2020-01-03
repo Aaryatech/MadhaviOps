@@ -877,7 +877,7 @@ body {
 							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
-							value="0" placeholder="Disc Amt"
+							value="${discAmt}" placeholder="Disc Amt"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 					</div>
 					<div class="clr"></div>
@@ -1598,6 +1598,8 @@ body {
 									<th style="text-align: center;">Bill No</th>
 									<th style="text-align: center;">Bill Date</th>
 									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="10%" id="discTh">Disc Amt</th>
+									<th style="text-align: center;" width="10%" id="payableTh">Payable Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
 									<th style="text-align: center;" width="2%" id="modeofpay">Mode
@@ -1653,6 +1655,8 @@ body {
 		if(tempType!=3)  {
 			$("#modeofpay").hide();
 			$("#trAction").show();
+			$("#discTh").show();
+			$("#payableTh").show();
  				 $.post('${getCustBills}',
 								{
 									cust: custId,
@@ -1693,6 +1697,8 @@ body {
 															tr.append($('<td ></td>').html(invNo));
 															tr.append($('<td ></td>').html(data.billDate));
 															tr.append($('<td ></td>').html(data.grandTotal));
+															tr.append($('<td ></td>').html(data.discountAmt));
+															tr.append($('<td ></td>').html(data.grandTotal-data.discountAmt));
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														/* 	tr.append($('<td ></td>').html("NA")); */
@@ -1721,6 +1727,8 @@ body {
 			  
 				$("#modeofpay").show();
 				$("#trAction").hide();
+				$("#discTh").hide();
+				$("#payableTh").hide();
 
 				 $.post('${getCustBillsTransaction}',
 							{
@@ -3069,6 +3077,8 @@ $("#enterQty").focus();
 		function itemDiscPerCalculation(flag) {
 			
 			
+			
+			
 			document.getElementById("cashAmt").value =0;
 			document.getElementById("cardAmt").value =0;
 			document.getElementById("epayAmt").value =0;
@@ -3079,13 +3089,18 @@ $("#enterQty").focus();
 			var discAmt = parseFloat($('#discAmt').val());
 			var totalAmtPopup;
 			
+			
+			
  			var advAmt = document.getElementById("advAmt").value;
  			totalAmtPopup= parseFloat($('#totalAmtPopup').text());
-			/* if(parseFloat(advAmt)>0){
+ 			
+ 			//alert(discAmt+"------- "+totalAmtPopup);
+ 			
+			 /* if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text());
-			} */
+			}  */
 			
 			if(flag==1){
 				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
@@ -3095,12 +3110,17 @@ $("#enterQty").focus();
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
 				 
 			}else{
-				var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
+				//var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
 
+				//alert("2      "+totalAmtPopup+"              "+discAmt);
+				
 				var totalAmt=totalAmtPopup-discAmt;
+				
+				//alert("TOT - "+totalAmt);
+				
 				document.getElementById("discPer").value = 00;
-				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt;
+				document.getElementById("payAmt").value = totalAmt;
 
 			}
 		}
@@ -3286,8 +3306,8 @@ $("#enterQty").focus();
 							
 							document.getElementById("payAmt").value = total.toFixed(2);
 
-							document.getElementById("discPer").value =0;
-							document.getElementById("discAmt").value =0;
+							//document.getElementById("discPer").value =0;
+							//document.getElementById("discAmt").value =0;
 				});
 		
 	}
@@ -3485,14 +3505,16 @@ if(parseInt(custId)==parseInt(dfCust)){
 		} else{	   
 		var key =  $('#key').val() ;
 	
-		document.getElementById("discPer").value =0;
-		document.getElementById("discAmt").value =0;
+		//document.getElementById("discPer").value =0;
+		//document.getElementById("discAmt").value =0;
 		document.getElementById("cashAmt").value =0;
 		document.getElementById("cardAmt").value =0;
 		document.getElementById("epayAmt").value =0;
 		document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
     	document.getElementById("epayLabel").style.color="black";
 
+    	
+    	
     	
     	
     	var advAmt = document.getElementById("advAmt").value;
@@ -3504,7 +3526,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		}
 		document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
 
-		
+		itemDiscPerCalculation(2);
 
 		$("#modeOfPayDiv").show();
 		document.getElementById("creditBillno").checked = true;

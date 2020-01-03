@@ -63,6 +63,8 @@ public class SellBillDetail implements Serializable{
 	 
 	
 	private int delStatus;
+	
+	private float extFloat1;
 
 	
 	
@@ -241,7 +243,18 @@ public class SellBillDetail implements Serializable{
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+	
+	
 
+	public float getExtFloat1() {
+		return extFloat1;
+	}
+
+	public void setExtFloat1(float exFloat1) {
+		this.extFloat1 = exFloat1;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId="
@@ -250,7 +263,7 @@ public class SellBillDetail implements Serializable{
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt
 				+ ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus="
-				+ delStatus + "]";
+				+ delStatus + ", extFloat1=" + extFloat1 + "]";
 	}
 
 	

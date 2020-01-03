@@ -381,6 +381,7 @@ public class OpsController {
 				model.addAttribute("advOrderDate", "");
 				model.addAttribute("advanceAmt", 0);
 				model.addAttribute("actionName", "ADD BILL(H)");
+				model.addAttribute("discAmt", 0);
 			} else {
 
 				try {
@@ -415,10 +416,11 @@ public class OpsController {
 						model.addAttribute("advanceAmt", headList.getAdvanceAmt());
 						model.addAttribute("advOrderDate", headList.getOrderDate());
 						model.addAttribute("actionName", "Advance Order BILL");
-
+						model.addAttribute("discAmt", headList.getDiscAmt());
 					} else {
 						System.err.println("null**" + headId);
 						model.addAttribute("advanceAmt", 0);
+						model.addAttribute("discAmt", 0);
 					}
 
 					model.addAttribute("advAmt", customerBillOnHold);
@@ -437,7 +439,7 @@ public class OpsController {
 					model.addAttribute("isAdvanceOrder", 0);
 					model.addAttribute("advOrderDate", "");
 					model.addAttribute("actionName", "ADD BILL");
-
+					model.addAttribute("discAmt", 0);
 					/* model.addAttribute("advKey", 0); */
 					// e.printStackTrace();
 				}
@@ -1049,9 +1051,20 @@ public class OpsController {
 
 			List<SellBillDetail> sellbilldetaillist = new ArrayList<>();
 
-			float total = 0;
+			float total = 0, grandTot = 0;
 			float taxableAmt = 0;
 			float taxAmt = 0;
+
+			for (int i = 0; i < itemBillList.size(); i++) {
+
+				for (int j = 0; j < itemsListByIds.size(); j++) {
+
+					if (itemsListByIds.get(j).getId() == itemBillList.get(i).getItemId()) {
+						grandTot = grandTot + itemBillList.get(i).getTotal();
+					}
+				}
+
+			}
 
 			for (int i = 0; i < itemBillList.size(); i++) {
 
@@ -1077,14 +1090,31 @@ public class OpsController {
 
 						// -----------------------------------------
 
-						float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-								* (discAmt / 100));
+						/*float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+								* (discAmt / 100));*/
+						
+						
+						float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+						float detailDiscAmt = ((detailDiscPer*discAmt)/100);
+
 						float detailGrandTotal = CustomerBillController
 								.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
 
 						float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 						float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
 						float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+
+						System.err.println("rate - " + i + " = " + itemBillList.get(i).getOrignalMrp());
+						System.err.println("qty - " + i + " = " + itemBillList.get(i).getQty());
+
+						System.err.println("getTotal - " + i + " = " + itemBillList.get(i).getTotal());
+						System.err.println("billAmtWtDisc - " + billAmtWtDisc);
+						System.err.println("discAmt - " + discAmt);
+
+						System.err.println("detailDiscAmt - " + detailDiscAmt);
+						System.err.println("detailGrandTotal - " + detailGrandTotal);
+
+						System.err.println("-------------------------------------------------------- - ");
 
 						detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
 						detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
@@ -1110,10 +1140,14 @@ public class OpsController {
 						sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
 						sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 						sellBillDetail.setDiscAmt(detailDiscAmt);
+						sellBillDetail.setDiscPer(detailDiscPer);
+						sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
 						sellbilldetaillist.add(sellBillDetail);
 						total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
-						taxableAmt = taxableAmt + detailTaxableAmt;
+						taxableAmt = taxableAmt + detailTaxableAmt; 
 						taxAmt = taxAmt + detailTotalTax;
+
+						// grandTot=grandTot+itemBillList.get(i).getTotal();
 
 						break;
 					}
@@ -1141,7 +1175,7 @@ public class OpsController {
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
-			sellBillHeader.setGrandTotal(Math.round(total));
+			sellBillHeader.setGrandTotal(Math.round(grandTot));
 			if (discPer != 0) {
 				sellBillHeader.setDiscountPer(discPer);//
 			} else {
@@ -1151,15 +1185,15 @@ public class OpsController {
 			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total);
-				sellBillHeader.setPaidAmt(0);
+				sellBillHeader.setRemainingAmt(total-advAmt);
+				sellBillHeader.setPaidAmt(advAmt);
 
 				sellBillHeader.setPaymentMode(1);
 			} else {
 				sellBillHeader.setStatus(2);
 				sellBillHeader.setRemainingAmt(0);
 				sellBillHeader.setPaymentMode(paymentMode);
-				sellBillHeader.setPaidAmt(Math.round(total));
+				sellBillHeader.setPaidAmt(Math.round(total+advAmt));
 
 			}
 
@@ -1276,6 +1310,7 @@ public class OpsController {
 				}
 			}
 			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);
@@ -1573,7 +1608,7 @@ public class OpsController {
 			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total-sellBillHeaderRes.getPaidAmt());
+				sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
 				sellBillHeader.setPaidAmt(sellBillHeaderRes.getPaidAmt());
 
 				sellBillHeader.setPaymentMode(1);

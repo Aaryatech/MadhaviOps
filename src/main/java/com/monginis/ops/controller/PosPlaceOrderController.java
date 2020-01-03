@@ -515,7 +515,7 @@ public class PosPlaceOrderController {
 				} else {
 					det.setDiscPer(item.getDiscPer());
 					if (rateCat == 1) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate1())));
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
 						float discountAmount=(calTotal*item.getDiscPer())/100;
@@ -523,7 +523,7 @@ public class PosPlaceOrderController {
 						discAmt=discAmt+discountAmount;
 						det.setSubTotal(CustomerBillController.roundUp(subTotal));
 					} else if (rateCat == 3) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemRate3())));
+						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
 						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
 						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
 						float discountAmount=(calTotal*item.getDiscPer())/100;

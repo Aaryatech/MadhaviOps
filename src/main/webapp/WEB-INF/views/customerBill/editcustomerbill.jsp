@@ -512,6 +512,8 @@ body {
 					<c:set var="totalTaxableAmt" value="0"></c:set>
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
+					
+					
 					<!--product table-->
 					<div class="total_table_one" id="printDivid">
 						<div class="scrollbars">
@@ -923,7 +925,7 @@ body {
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
 							Amt&nbsp;</label> <input type="number" class="form-control"
-							value="${tempHeader.paidAmt}" placeholder="0"
+							value="${tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
 							style="text-align: center; width: 90px; border-radius: 20px;"
 							disabled="disabled" />
 
@@ -936,7 +938,7 @@ body {
 					<div class="add_customer_one">Total Payable</div>
 					<div class="add_input" id="totalPayableAmt">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt-tempHeader.discountAmt-advAmtTransaction-tempHeader.paidAmt}"
+							value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
 							maxFractionDigits="2" minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
@@ -1133,7 +1135,7 @@ body {
 								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
 									readonly="readonly"
-									value="${totalAmt-tempHeader.discountAmt-advAmtTransaction-tempHeader.paidAmt}"
+									value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
 									style="background-color: lightgrey;" />
 							</div>
 							<div class="clr"></div>
@@ -3004,6 +3006,7 @@ function matchSplitAmt(flag){
 	<script type="text/javascript">
 		
 		function itemDiscPerCalculation(flag) {
+			
 
 			document.getElementById("cashAmt").value =0;
 			document.getElementById("cardAmt").value =0;
@@ -3014,30 +3017,65 @@ function matchSplitAmt(flag){
 			var discPer = parseFloat($('#discPer').val());
 			var discAmt = parseFloat($('#discAmt').val());
 			var totalAmtPopup;
+			var tot=parseFloat($('#totalAmtPopup').text());
+			//alert(tot);
+		
+			
+			var payableAmount=parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};
 			
  			var advAmt = document.getElementById("advAmt").value;
 			if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
-				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${advAmtTransaction}-${tempHeader.paidAmt};
+				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};
 			}
 			
-			if(flag==1){
-				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
-				var totalAmt=totalAmtPopup-calDiscAmt;
+			  if(flag==1){
+				var calDiscAmt = parseFloat(tot*discPer/100);
+						
+				if(discPer>100){
+					alert("Discount percent is invalid");
+					document.getElementById("discAmt").value =0;
+					document.getElementById("discPer").value =0;
+					//document.getElementById("payAmt").value =totalAmtPopup;
+					
+					var totalAmt=totalAmtPopup-0;
+					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					
+				}else{
+				
+				var totalAmt=payableAmount-calDiscAmt;
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				}
 				 
 			}else{
+				
+				
+				
+				 if(discAmt>payableAmount){
+					alert("Discount amount should be smaller than payable amount");
+					document.getElementById("discPer").value =0;
+					document.getElementById("discAmt").value =0;
+					//document.getElementById("payAmt").value=payableAmount;
+					
+					var totalAmt=payableAmount-0;
+					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					
+				}else{
+				
 				var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
 
 				var totalAmt=totalAmtPopup-discAmt;
 				document.getElementById("discPer").value = 00;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				} 
 
-			}
+			}  
 		}
 		
 		</script>
@@ -3388,8 +3426,8 @@ function getCurrentItemList() {
 							
 							document.getElementById("payAmt").value = total.toFixed(2);
 
-							document.getElementById("discPer").value =0;
-							document.getElementById("discAmt").value =0;
+							//document.getElementById("discPer").value =0;
+							//document.getElementById("discAmt").value =0;
 				});
 		
 	}
@@ -3675,7 +3713,7 @@ function getCurrentItemList() {
 				
 				//alert("BILL - "+billAmtWtDisc);
 				//if(payAmt>=(trAdvanceAmt+paidAmt)){
-					if((trAdvanceAmt+paidAmt)<=billAmtWtDisc){
+					if((paidAmt)<=billAmtWtDisc){
 				
 					
 					 $
