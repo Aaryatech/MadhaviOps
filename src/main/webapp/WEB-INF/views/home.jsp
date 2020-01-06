@@ -555,7 +555,14 @@
 					backgroundColor : 'transparent',
 					pieSliceText : 'none',
 					sliceVisibilityThreshold : 0,
-					legend : 'labeled',
+					 legend: {
+					        position: 'labeled',
+					        labeledValueText: 'both',
+					        textStyle: {
+					            color: 'red', 
+					            fontSize: 10
+					        }
+					    },
 					is3D : true,
 				};
 				//  alert(222);
