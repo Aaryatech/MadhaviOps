@@ -1095,7 +1095,7 @@ input:checked+.slider:before {
 				<div class="add_input">
 					<input type="text" class="input_add"
 						placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
-						onchange="trim(this)" maxlength="10" />
+						onchange="trim(this)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -1281,6 +1281,7 @@ function addCustomer() {
 	var mobileNo = document.getElementById("mobileNo").value;
 	var dateOfBirth = document.getElementById("dateOfBirth").value;
 	var custType = document.getElementById("custType").value;
+	custType=3;
 	var ageRange = document.getElementById("ageRange").value;
 	
 	$.getJSON('${checkEmailText}', {
@@ -1325,10 +1326,11 @@ function addCustomer() {
 	/* else if (dateOfBirth == "") {
 		alert("Enter Date of Birth");
 		flag = 1;
-	} */else if (custType == 0) {
+	} */
+	/* else if (custType == 0) {
 		alert("Please Select Customer Type");
 		flag = 1;
-	}
+	} */
 	else if (ageRange == 0) {
 		alert("Please Select Age Group");
 		flag = 1;
