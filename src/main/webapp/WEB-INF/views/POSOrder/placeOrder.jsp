@@ -408,7 +408,7 @@ input:checked+.slider:before {
 								<div class="clearfix">
 									<div class="input-group clockpicker-with-callbacks">
 										<input type="time" class="form-control" value="00:00" required
-											name="delTime" id="delTime1"> <span
+											name="delTime" id="delTime1" style="line-height: 15px;"> <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-time"></span>
 										</span>
@@ -750,7 +750,7 @@ input:checked+.slider:before {
 								<div class="clearfix">
 									<div class="input-group clockpicker-with-callbacks">
 										<input type="time" class="form-control" value="00:00" required
-											name="delTime" id="delTime2"> <span
+											name="delTime" id="delTime2" style="line-height: 15px;"> <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-time"></span>
 										</span>
