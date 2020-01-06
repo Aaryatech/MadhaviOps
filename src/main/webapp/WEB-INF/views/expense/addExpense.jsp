@@ -121,8 +121,8 @@
 									<div class="btn btn-primary btn-file legitRipple"
 										style="width: -webkit-fill-available; width: -moz-available;">
 										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
-											type="file" class="file-input browseimage browseimage1" 
-											data-fouc="" id="1" name="photo" >
+											type="file" class="file-input browseimage browseimage1"
+											data-fouc="" id="1" name="photo">
 									</div>
 
 
@@ -132,14 +132,24 @@
 
 							</div>
 
+
+
+
+
 							<div class="profile">
 
 								<div class="profileinput">
 									<c:if test="${not empty expEdit.imgName}">
 
 
-										<img src="${imageUrl}${expEdit.imgName}"
-											style="width: 200px; height: auto;" onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
+										<%-- <img src="${imageUrl}${expEdit.imgName}"
+											style="width: 200px; height: auto;"
+											onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';">
+ --%>
+										<a href="${imageUrl}${expEdit.imgName}" target="_blank"> <img
+											style="width: 100px; height: auto;"
+											src="${pageContext.request.contextPath}/resources/images/attach_file.png">
+										</a>
 
 
 									</c:if>
@@ -147,28 +157,28 @@
 									<span class="filename" style="user-select: none1;"><img
 										id="temppreviewimageki1" name="image1"
 										class="temppreviewimageki1" alt="l"
-										style="width: 200px; height: auto; display: none"> </span> <br>
+										style="width: 100px; height: auto; display: none" onerror="this.src='${pageContext.request.contextPath}/resources/images/attach_file.png';"> </span> <br>
 									<button type="button" title="Clear selected files"
 										class="btn btn-default btn-secondary fileinput-remove fileinput-remove-button legitRipple image-preview-clear image-preview-clear1"
 										id="1" style="display: none; margin-top: 20px;">
 										<i class="icon-cross2 font-size-base mr-2"></i> Clear Image
 									</button>
 								</div>
-								
+
 								<%-- <c:if test="${isEdit==1}">
 								<button type="button" title="Clear selected files"
 										class="btn btn-default btn-secondary"
 										id="1" style="margin-top: 20px;">
 										<i class="icon-cross2 font-size-base mr-2"></i> Preview
 									</button></c:if> --%>
-								
+
 							</div>
 
 
 
 
 						</div>
-						
+
 						<div class="profileinsiteRight">
 							<div class="profile">
 								<div class="profilefildset">Date * :</div>
@@ -176,21 +186,23 @@
 									<%-- <input id="fromdatepicker" class="texboxitemcode texboxcal"
 										required placeholder=" Date" name="fromdatepicker"
 										value="${expEdit.expDate}" autocomplete="off" type="text"> --%>
-										
-										 <c:choose>
+
+									<c:choose>
 										<c:when test="${not empty expEdit.expDate}">
-										<input id="fromdatepicker" class="form-control"
-										required placeholder=" Date" name="fromdatepicker" 
-										value="${expEdit.expDate}" autocomplete="off" type="text" readonly="readonly">
+											<input id="fromdatepicker" class="form-control" required
+												placeholder=" Date" name="fromdatepicker"
+												value="${expEdit.expDate}" autocomplete="off" type="text"
+												readonly="readonly">
 										</c:when>
 										<c:otherwise>
-										<input id="fromdatepicker" class="form-control"
-										required placeholder=" Date" name="fromdatepicker" 
-										value="${todaysDate}" autocomplete="off" type="text" readonly="readonly">
+											<input id="fromdatepicker" class="form-control" required
+												placeholder=" Date" name="fromdatepicker"
+												value="${todaysDate}" autocomplete="off" type="text"
+												readonly="readonly">
 										</c:otherwise>
-										</c:choose> 
-									
-										
+									</c:choose>
+
+
 								</div>
 							</div>
 
@@ -403,11 +415,11 @@
 	</script>
 
 	<script>
-	/* 	$(function() {
-			$("#fromdatepicker").datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-		}); */
+		/* 	$(function() {
+				$("#fromdatepicker").datepicker({
+					dateFormat : 'dd-mm-yy'
+				});
+			}); */
 		$(function() {
 			$("#todatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'

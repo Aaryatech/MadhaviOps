@@ -223,7 +223,7 @@ public class ExpenseController {
 					try {
 						gvnPhoto1 = curTimeStamp + "-" + photo.get(i).getOriginalFilename().replace(' ', '_');
 
-						upload.saveUploadedFiles(photo, Constant.CH_IMAGE_TYPE,
+						upload.saveUploadedFiles(photo, Constant.GVN_IMAGE_TYPE,
 								curTimeStamp + "-" + photo.get(i).getOriginalFilename());
 
 					} catch (IOException e) {
