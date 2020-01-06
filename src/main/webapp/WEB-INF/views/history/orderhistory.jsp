@@ -477,7 +477,13 @@ jQuery(document).ready(function(){
 								</div>
 
 
-
+<div class="col-md-2">
+					<input type="button" id="expExcel" class="btn btn-primary"
+						value="EXPORT TO Excel" onclick="exportToExcel();">
+					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
+						onclick="genPdf()">PDF</button> -->
+				</div>
+				
 								<br />
 							</c:when>
 
@@ -590,7 +596,13 @@ jQuery(document).ready(function(){
 								</div>
 
 
-
+<div class="col-md-2">
+					<input type="button" id="expExcel" class="btn btn-primary"
+						value="EXPORT TO Excel" onclick="exportToExcel();">
+					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
+						onclick="genPdf()">PDF</button> -->
+				</div>
+				
 								<br />
 							</c:when>
 							<%--  <c:when test="${selectedMenu.mainCatId !='5'}">
@@ -624,7 +636,7 @@ jQuery(document).ready(function(){
 </table>
         <br />
     </c:when>     --%>
-							<c:otherwise>
+							<%-- <c:otherwise>
 								<div class="clearfix"></div>
 								<div class="table-wrap"
 									style="max-height: none; min-height: none;">
@@ -700,9 +712,9 @@ jQuery(document).ready(function(){
 
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.spSelectedWeight}" /></td>
-														<%-- 	<td class="col-md-1" style="text-align: right;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${price}" /></td> --%>
-														<%-- <td class="col-md-1"style="text-align: right;"><c:out
-														value="${orderList.spTotalAddRate}" /></td> --%>
+															<td class="col-md-1" style="text-align: right;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${price}" /></td>
+														<td class="col-md-1"style="text-align: right;"><c:out
+														value="${orderList.spTotalAddRate}" /></td>
 														<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
@@ -735,7 +747,7 @@ jQuery(document).ready(function(){
 
 								</div>
 								<br />
-							</c:otherwise>
+							</c:otherwise> --%>
 						</c:choose>
 
 
@@ -743,12 +755,7 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-				<div class="col-md-2">
-					<input type="button" id="expExcel" class="btn btn-primary"
-						value="EXPORT TO Excel" onclick="exportToExcel();">
-					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
-						onclick="genPdf()">PDF</button> -->
-				</div>
+				
 				<br>
 				<br>
 

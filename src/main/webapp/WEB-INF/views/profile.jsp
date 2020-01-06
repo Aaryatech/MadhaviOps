@@ -90,6 +90,7 @@
 	<c:url var="getFrEmpById" value="/getFrEmpById" />
 	<c:url var="delFrEmpById" value="/delFrEmpById" />
 	<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo" />
+	<c:url var="getCurrentEmpCodeValue" value="/getCurrentEmpCodeValue" />
 
 
 
@@ -307,21 +308,19 @@
 											<div class="profilefildset">Is Own Store?</div>
 											<%-- <div class="profileinput mardis">${frDetails.frKg1}</div> --%>
 											<div class="profileinput">
-                                              <c:choose>
-                                              <c:when test="${frDetails.frKg1 == 0}">
-                                              <label class="radio-inline"> <input type="radio"
-													name="kg_1" id="optionsR1" value="0" 
-												checked	> No
-												</label>
-                                              </c:when>
-                                              <c:when test="${frDetails.frKg1 ==1}">
-                                               <label class="radio-inline"> <input type="radio"
-													name="kg_1" id="optionsR1" value="1" 
-													checked /> Yes
-												</label>
-                                              </c:when>
-                                              </c:choose>
-												
+												<c:choose>
+													<c:when test="${frDetails.frKg1 == 0}">
+														<label class="radio-inline"> <input type="radio"
+															name="kg_1" id="optionsR1" value="0" checked> No
+														</label>
+													</c:when>
+													<c:when test="${frDetails.frKg1 ==1}">
+														<label class="radio-inline"> <input type="radio"
+															name="kg_1" id="optionsR1" value="1" checked /> Yes
+														</label>
+													</c:when>
+												</c:choose>
+
 											</div>
 
 										</div>
@@ -419,14 +418,13 @@
 										<div class="four_one three" style="width: 35%;">
 
 											<lable> <b>Edit Admin Password</b></lable>
-											&nbsp;&nbsp; 
-											<input class="texboxitemcode"
+											&nbsp;&nbsp; <input class="texboxitemcode"
 												placeholder="Enter new Password" name="fr_password"
 												type="password" onChange="checkPasswordMatch();"
 												value="${frDetails.frPassword}" id="txtNewPassword"
 												style="font-size: 16px; height: 33px; width: 130px;">
-												
-												
+
+
 
 										</div>
 										<div class="four_one three" style="width: 35%;">
@@ -614,20 +612,23 @@
 								</div>
 								<div class="clr"></div>
 							</div>
-							<div class="add_frm_one" style="z-index: 9999;">
+							<div class="add_frm_one" style="z-index: 9999; display: none;">
 								<div class="add_customer_one">From Date</div>
 								<div class="add_input">
-									 <input name="from_date" type="date" class="input_add"
-										id="from_date" value="${emp.fromDate}" required autocomplete="off" /> 
-										
+									<input name="from_date" type="date" class="input_add"
+										id="from_date" value="${emp.fromDate}" required
+										autocomplete="off" />
+
 								</div>
 								<div class="clr"></div>
 							</div>
 							<div class="add_frm_one">
 								<div class="add_customer_one">Password</div>
 								<div class="add_input">
-									<input name="pass" type="number" class="input_add" id="pass" maxlength="4"
-										value="${emp.password}" required />
+									<input name="pass" type="text" class="input_add" id="pass"
+										minlength="4" maxlength="4"
+										oninput="this.value = this.value.replace(/[^0-9]{4}/g, '').replace(/(\..*)\./g, '$1');"
+										value="${emp.password}" size="4" required />
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -680,11 +681,11 @@
 								</div>
 								<div class="clr"></div>
 							</div>
-							<div class="add_frm_one">
+							<div class="add_frm_one" style="display: none;">
 								<div class="add_customer_one">To Date</div>
 								<div class="add_input">
 									<input name="to_date" type="date" class="input_add"
-										id="to_date" value="${emp.toDate}" required />
+										id="to_date" value="${emp.toDate}" />
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -692,8 +693,21 @@
 							<div class="add_frm_one">
 								<div class="add_customer_one">Employee Code</div>
 								<div class="add_input">
-									<input name="emp_code" type="text" class="input_add"
-										id="emp_code" value="${emp.empCode}" required="required" />
+
+									<c:choose>
+										<c:when test="${emp.empCode>0}">
+											<input name="emp_code" type="text" class="input_add"
+												readonly="readonly" id="emp_code" value="${emp.empCode}"
+												required="required" />
+										</c:when>
+										<c:otherwise>
+											<input name="emp_code" type="text" class="input_add"
+												readonly="readonly" id="emp_code" value="${empCode}"
+												required="required" />
+										</c:otherwise>
+									</c:choose>
+
+
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -815,15 +829,26 @@
 			} else if ($('#curr_bill_amt').val() == 0) {
 				valid = 1;
 				alert("Enter Current Bill Amount");
-			} else if ($('#from_date').val() == "") {
-				valid = 1;
-				alert("Enter From Date");
-			} else if ($('#to_date').val() == "") {
-				valid = 1;
-				alert("Enter To Date");
-			} else if ($('#pass').val() == "") {
+			}
+			/*  else if ($('#from_date').val() == "") {
+				 valid = 1;
+				alert("Enter From Date"); 
+				
+				
+				 
+				
+			}  */
+			/*  else if ($('#to_date').val() == "") {
+				 valid = 1;
+				alert("Enter To Date"); 
+
+			 }  */
+			else if ($('#pass').val() == "") {
 				valid = 1;
 				alert("Enter Password");
+			} else if ($('#pass').val().length != 4) {
+				valid = 1;
+				alert("Enter 4 digit Password");
 			} else if ($('#emp_code').val() == "") {
 				valid = 1;
 				alert("Enter Employee Code");
@@ -835,11 +860,9 @@
 
 		});
 		function save() {
-			
+
 			document.getElementById('sbtbtn4').disabled = true;
-			
-			
-			
+
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/saveFranchiseeEmp",
@@ -847,12 +870,14 @@
 				dataType : 'json',
 				success : function(data) {
 					if (data.frEmpName != null) {
-						
+
 						document.getElementById('sbtbtn4').disabled = false;
-						
+
 						$("#fr_emp_form").trigger("reset");
 						$('#addcust').popup('hide');
-						alert("Employee Saved Successfylly")
+						alert("Employee Saved Successfylly");
+						
+						getCurrentEmpCode();
 					}
 				}
 			}).done(function() {
@@ -860,6 +885,7 @@
 				}, 500);
 			});
 		}
+
 		function getData() {
 			$
 					.getJSON(
@@ -1072,7 +1098,25 @@
 						}
 		 }); */
 	</script>
+
+	<script type="text/javascript">
+		function getCurrentEmpCode() {
+
+			$.getJSON('${getCurrentEmpCodeValue}', {
+				ajax : 'true'
+			}, function(data) {
+
+				//alert(JSON.stringify(data)); 
+				document.getElementById("emp_code").value = data;
+
+			});
+
+		}
+	</script>
+
 </body>
+
+
 
 
 <script type="text/javascript">
@@ -1152,14 +1196,25 @@
 
 		//alert(${frDetails.frPassword});
 		//document.getElementById('txtNewPassword').value = "";
-		
-		var pass=${frDetails.frPassword};
-		var csp_pass=${frSup.pass3};
-		var captain_pass=${frSup.pass2};
 
-		 
-		 document.getElementById('txtNewPassword').value = pass;
-		
+		var pass = $
+		{
+			frDetails.frPassword
+		}
+		;
+		var csp_pass = $
+		{
+			frSup.pass3
+		}
+		;
+		var captain_pass = $
+		{
+			frSup.pass2
+		}
+		;
+
+		document.getElementById('txtNewPassword').value = pass;
+
 		document.getElementById('txtConfirmPassword').value = pass;
 
 		document.getElementById('csp_password').value = csp_pass;
@@ -1179,13 +1234,24 @@
 		document.getElementById('cspNewPassDiv').style.display = "none";
 		document.getElementById('captainNewPassDiv').style.display = "none";
 
-		var pass=${frDetails.frPassword};
-		var csp_pass=${frSup.pass3};
-		var captain_pass=${frSup.pass2};
+		var pass = $
+		{
+			frDetails.frPassword
+		}
+		;
+		var csp_pass = $
+		{
+			frSup.pass3
+		}
+		;
+		var captain_pass = $
+		{
+			frSup.pass2
+		}
+		;
 
-		 
-		 document.getElementById('txtNewPassword').value = pass;
-		
+		document.getElementById('txtNewPassword').value = pass;
+
 		document.getElementById('txtConfirmPassword').value = pass;
 
 		document.getElementById('csp_password').value = csp_pass;
@@ -1207,13 +1273,24 @@
 		document.getElementById('cspNewPassDiv').style.display = "none";
 		document.getElementById('captainNewPassDiv').style.display = "none";
 
-		var pass=${frDetails.frPassword};
-		var csp_pass=${frSup.pass3};
-		var captain_pass=${frSup.pass2};
+		var pass = $
+		{
+			frDetails.frPassword
+		}
+		;
+		var csp_pass = $
+		{
+			frSup.pass3
+		}
+		;
+		var captain_pass = $
+		{
+			frSup.pass2
+		}
+		;
 
-		 
-		 document.getElementById('txtNewPassword').value = pass;
-		
+		document.getElementById('txtNewPassword').value = pass;
+
 		document.getElementById('txtConfirmPassword').value = pass;
 
 		document.getElementById('csp_password').value = csp_pass;

@@ -98,11 +98,10 @@ public class PettyCashController {
 			System.out.println("ToDay Date-----" + currntDat);
 
 			model.addObject("currentDate", currntDat);
-			
+
 			DateFormat DF1 = new SimpleDateFormat("yyyy-MM-dd");
 			String currntDat2 = DF1.format(new java.util.Date());
 			model.addObject("dateForSearch", currntDat2);
-			
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
@@ -139,9 +138,9 @@ public class PettyCashController {
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
 			map.add("date", newDate);
-			
-			System.err.println("DATE **************************** "+newDate);
-			
+
+			System.err.println("DATE **************************** " + newDate);
+
 			GetCashAdvAndExpAmt amtData = rest.postForObject(Constant.URL + "/getTrCashAmtAndAdvAmtAndExpAmt", map,
 					GetCashAdvAndExpAmt.class);
 
@@ -252,20 +251,18 @@ public class PettyCashController {
 			cal.add(Calendar.DAY_OF_MONTH, 1);
 			String plusDate = ymdSDF.format(cal.getTime());
 			logger.info("Plus Date-----------" + plusDate);
-			
-			PettyCashHandover cashHandOvr=null;
+
+			PettyCashHandover cashHandOvr = null;
 			try {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("frId", frid);
 				map.add("lastdate", plusDate);
 				cashHandOvr = rest.postForObject(Constant.URL + "/getPettyCashHandOvrLastRecrd", map,
 						PettyCashHandover.class);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
-				cashHandOvr=null;
+				cashHandOvr = null;
 			}
-
-			
 
 			// From Time
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -750,41 +747,40 @@ public class PettyCashController {
 
 			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal1 = Calendar.getInstance();
-			//String str = req.getParameter("from_emp");
-			
-			FrEmpMaster loginResponse=  (FrEmpMaster) session.getAttribute("frEmpDetails");
-			System.err.println("EMP LOGIN -------------------------------- "+loginResponse);
-			
-			String fromEmpId = ""+loginResponse.getFrEmpId();
-			String FromEmpName = ""+loginResponse.getFrEmpName();
-			
+			// String str = req.getParameter("from_emp");
+
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			System.err.println("EMP LOGIN -------------------------------- " + loginResponse);
+
+			String fromEmpId = "" + loginResponse.getFrEmpId();
+			String FromEmpName = "" + loginResponse.getFrEmpName();
+
 			DateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
 			String currentDate = DF.format(new java.util.Date());
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frid);
 			map.add("lastdate", currentDate);
-			
-			System.err.println("DATE **************************** "+currentDate);
-			
+
+			System.err.println("DATE **************************** " + currentDate);
+
 			PettyCashHandover data = rest.postForObject(Constant.URL + "/getLastCashHandover", map,
 					PettyCashHandover.class);
-			
-			System.err.println("PREV HANDOVER **************************** "+data);
-			
-			float prevAmt=0;
-			if(data!=null) {
-				prevAmt=data.getSellingAmt();
-			}
-			
-			float sellAmtTot=Float.parseFloat(req.getParameter("sell_amt"));
-			
-			float saleDone=sellAmtTot-prevAmt;
 
-			
-			//String[] part = str.split("-");
-			//String fromEmpId = part[0];
-			//String FromEmpName = part[1];
+			System.err.println("PREV HANDOVER **************************** " + data);
+
+			float prevAmt = 0;
+			if (data != null) {
+				prevAmt = data.getSellingAmt();
+			}
+
+			float sellAmtTot = Float.parseFloat(req.getParameter("sell_amt"));
+
+			float saleDone = sellAmtTot - prevAmt;
+
+			// String[] part = str.split("-");
+			// String fromEmpId = part[0];
+			// String FromEmpName = part[1];
 
 			String str2 = req.getParameter("to_emp");
 			String[] parts = str2.split("-");
@@ -798,7 +794,7 @@ public class PettyCashController {
 			cashHndOvr.setExInt1(0);
 			cashHndOvr.setExInt2(0);
 			cashHndOvr.setExInt3(0);
-			cashHndOvr.setExVar1(""+saleDone);
+			cashHndOvr.setExVar1("" + saleDone);
 			cashHndOvr.setExVar2("NA");
 			cashHndOvr.setExVar3("NA");
 			cashHndOvr.setFrId(frid);
@@ -895,8 +891,28 @@ public class PettyCashController {
 			emp.setFrEmpJoiningDate(req.getParameter("join_date"));
 			emp.setFrEmpName(req.getParameter("emp_name"));
 			emp.setFrId(frid);
-			emp.setFromDate(req.getParameter("from_date"));
-			emp.setToDate(req.getParameter("to_date"));
+
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			
+			String frDate = req.getParameter("from_date");
+			String tDate = req.getParameter("to_date");
+			
+			System.err.println("FDATE ------------------------------ "+frDate);
+			System.err.println("TDATE ------------------------------ "+tDate);
+			
+			if (frDate == null || frDate.isEmpty()) {
+					frDate=sdf.format(Calendar.getInstance().getTimeInMillis());
+			}
+
+			if (tDate == null || tDate.isEmpty()) {
+				tDate=sdf.format(Calendar.getInstance().getTimeInMillis());
+			}
+			
+			System.err.println("FDATE ------------------------------ "+frDate);
+			System.err.println("TDATE ------------------------------ "+tDate);
+
+			emp.setFromDate(frDate);
+			emp.setToDate(tDate);
 			emp.setIsActive(0);
 			emp.setPassword(req.getParameter("pass"));
 			emp.setTotalLimit(Float.parseFloat(req.getParameter("ttl_limit")));

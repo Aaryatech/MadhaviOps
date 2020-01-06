@@ -184,7 +184,7 @@ body {
 							<a href="#"><abbr title="Full Screen"><i
 									class="fa fa-arrows-alt" aria-hidden="true"></i></abbr></a>
 						</div>
-						<a href="${pageContext.request.contextPath}/logout"> <abbr
+						<a href="${pageContext.request.contextPath}/frEmpLogin"> <abbr
 							title="Logout"><i class="fa fa-sign-out"
 								aria-hidden="true"></i></abbr></a>
 					</div>
@@ -727,7 +727,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div class="add_frm_one">
+				<div class="add_frm_one" style="display: none;">
 					<div class="add_customer_one">Type</div>
 					<div class="add_input">
 						<select name="custType" id="custType"
@@ -737,7 +737,7 @@ body {
 								Customer Type</option>
 							<option value="1">Owner</option>
 							<option value="2">Employee</option>
-							<option value="3">Customer</option>
+							<option value="3" selected="selected">Customer</option>
 						</select>
 					</div>
 				</div>
@@ -1580,6 +1580,12 @@ body {
 										onclick="getCustBills(4)"> <label for="deleted12">Deleted
 											Bills</label>
 										<div class="check"></div></li>
+										
+										<li id="allDeletedBillsRadio" style="display: none;"><input
+										type="radio" id="deleted13" name="modePay1" value="2"
+										onclick="getCustBills(5)"> <label for="deleted13">Deleted
+											Bills</label>
+										<div class="check"></div></li>
 								</ul>
 							</div>
 						</div>
@@ -1705,7 +1711,7 @@ body {
 														
 														if(tempType==1 && tabType==2){
 															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-														}else if(tempType==4){
+														}else if(tempType==4 || tempType==5){
 															tr.append($('<td ></td>').html(' '));
 														}else{
 															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
@@ -2278,6 +2284,7 @@ function matchSplitAmt(flag){
 			document.getElementById("popupType").value=1;//cust bills
 			
 			document.getElementById("deletedBillsRadio").style.display = "block";
+			document.getElementById("allDeletedBillsRadio").style.display = "none";
 			
 			//alert("hi");
 			getCustBills(1);
@@ -2285,6 +2292,8 @@ function matchSplitAmt(flag){
 
 			
 		}else if(type==2){
+			
+			document.getElementById("allDeletedBillsRadio").style.display = "block";
 			
 			radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
@@ -2299,6 +2308,8 @@ function matchSplitAmt(flag){
 			document.getElementById("receivedAmt").value=0;
 			
 			document.getElementById("deletedBillsRadio").style.display = "none";
+			document.getElementById("allDeletedBillsRadio").style.display = "none";
+			
 		}
 	
 		//alert(type);
@@ -2460,6 +2471,7 @@ function matchSplitAmt(flag){
 			},
 
 			function(saveFlag) {
+				document.getElementById("saveCust").style.display="block"; 
 				 if(parseInt(saveFlag)==1){		
 					 document.getElementById("saveCust").style.display="block"; 
 					   alert("Duplicate Mobile Number Found.");

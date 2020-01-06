@@ -17,7 +17,7 @@
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<script>
+	<!-- <script>
 		$(function() {
 			$("#fromdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
@@ -28,7 +28,7 @@
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-	</script>
+	</script> -->
 	<!--datepicker-->
 
 	<!--topLeft-nav-->
@@ -121,8 +121,8 @@
 									<div class="btn btn-primary btn-file legitRipple"
 										style="width: -webkit-fill-available; width: -moz-available;">
 										<i class="icon-file-plus"></i> <span class="hidden-xs">Browse</span><input
-											type="file" class="file-input browseimage browseimage1" required
-											data-fouc="" id="1" name="photo" accept=".jpg,.png,.gif">
+											type="file" class="file-input browseimage browseimage1" 
+											data-fouc="" id="1" name="photo" >
 									</div>
 
 
@@ -154,6 +154,14 @@
 										<i class="icon-cross2 font-size-base mr-2"></i> Clear Image
 									</button>
 								</div>
+								
+								<%-- <c:if test="${isEdit==1}">
+								<button type="button" title="Clear selected files"
+										class="btn btn-default btn-secondary"
+										id="1" style="margin-top: 20px;">
+										<i class="icon-cross2 font-size-base mr-2"></i> Preview
+									</button></c:if> --%>
+								
 							</div>
 
 
@@ -395,11 +403,11 @@
 	</script>
 
 	<script>
-		$(function() {
+	/* 	$(function() {
 			$("#fromdatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-		});
+		}); */
 		$(function() {
 			$("#todatepicker").datepicker({
 				dateFormat : 'dd-mm-yy'

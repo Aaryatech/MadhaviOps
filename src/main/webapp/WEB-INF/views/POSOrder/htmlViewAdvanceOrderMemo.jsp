@@ -89,9 +89,9 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 10px;">${frDetails.frAddress}
+					style="padding: 2px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 11px;">${frDetails.frAddress}
 					<br /> Outlet Ph:<strong>&nbsp;${frDetails.frMob}</strong><br/>
-						<span style="font-size: 10px;  font-family: Arial;"><c:choose>
+						<span style="font-size: 11px;  font-family: verdana;"><c:choose>
 							<c:when test="${frDetails.frGstType==0}">PAN NO:&nbsp;${frSup.frPanNo}</c:when>
 							<c:otherwise>GSTIN:<b>&nbsp;${frDetails.frGstNo}</b></c:otherwise>
 						</c:choose><br/>FSSAI:&nbsp;&nbsp;${frDetails.fbaLicenseDate}</span> 

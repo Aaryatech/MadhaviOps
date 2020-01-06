@@ -101,7 +101,7 @@ public class PosPlaceOrderController {
 
 		mAllCategoryList = categoryList.getmCategoryList();
 
-		//System.out.println(" All Category " + mAllCategoryList.toString());
+		// System.out.println(" All Category " + mAllCategoryList.toString());
 
 		model.addObject("category", mAllCategoryList);
 		model.addObject("custList", custList);
@@ -188,9 +188,9 @@ public class PosPlaceOrderController {
 
 		}
 
-		//System.out.println("Order date: " + orderDate);
-		//System.out.println("Production date: " + productionDate);
-		//System.out.println("Delivery date: " + deliveryDate);
+		// System.out.println("Order date: " + orderDate);
+		// System.out.println("Production date: " + productionDate);
+		// System.out.println("Delivery date: " + deliveryDate);
 
 		frItemList = new ArrayList<GetFrItem>();
 		prevFrItemList = new ArrayList<GetFrItem>();
@@ -215,7 +215,7 @@ public class PosPlaceOrderController {
 					map.add("date", currentDateFc);
 					map.add("menuId", settingValue.getSettingValue2());// new on 10 july
 					orderList = rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
-					//System.err.println("orderList:" + orderList.toString());
+					// System.err.println("orderList:" + orderList.toString());
 					model.addObject("orderList", orderList);
 
 					flagRes = 1;
@@ -244,7 +244,7 @@ public class PosPlaceOrderController {
 
 			frItemList = responseEntity.getBody();
 			prevFrItemList = responseEntity.getBody();
-			//System.out.println("Fr Item List " + frItemList.toString());
+			// System.out.println("Fr Item List " + frItemList.toString());
 		} catch (Exception e) {
 
 			System.out.println("Exception Item List " + e.getMessage());
@@ -332,7 +332,7 @@ public class PosPlaceOrderController {
 
 		}
 
-		///System.out.println(catList);
+		/// System.out.println(catList);
 
 		// toTime
 
@@ -379,7 +379,7 @@ public class PosPlaceOrderController {
 		model.addObject("menuTitle", menuTitle);
 		model.addObject("menuIdFc", menuList.get(index).getMenuId());
 		model.addObject("menuIdShow", settingValue.getSettingValue1());
-		//System.out.println("isSameDayApplicable" + isSameDayApplicable);
+		// System.out.println("isSameDayApplicable" + isSameDayApplicable);
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
@@ -398,188 +398,185 @@ public class PosPlaceOrderController {
 	 * public String saveAdvanceOrder(HttpServletRequest request,
 	 * HttpServletResponse res) throws IOException {
 	 */
-		
-		
-		
+
 	@RequestMapping(value = "/saveAdvanceOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
-			AdvanceOrderHeader info=null;
-	try {
-			
-		HttpSession session = request.getSession();
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
-		//LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
+		AdvanceOrderHeader info = null;
+		try {
 
-		List<AdvanceOrderDetail> advDetailList = new ArrayList<AdvanceOrderDetail>();
-		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
-		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		//DateFormat dfdmy = new SimpleDateFormat("dd-MM-yyyy");
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			// LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
 
-	    //String currentDate = df.format(date);
-	    //String currentDateFc = dfdmy.format(date);
-	    //DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat dfReg1 = new SimpleDateFormat("dd-MM-yyyy");
-		String todaysDate = dfReg1.format(date);
-		int menuId= Integer.parseInt(request.getParameter("menuId"));
-		int custId = Integer.parseInt(request.getParameter("custId"));
-		String total = request.getParameter("fintotal1");
-		String devDate = request.getParameter("devDate");
-		String deliveryTime= request.getParameter("delTime");
-		System.err.println("devDate"+devDate);
-		int rateCat = frDetails.getFrRateCat();
-        Date date1 = dfReg1.parse(devDate);
-        Date date2 = dfReg1.parse(todaysDate);
-        String x1="";
-        System.err.println(date1.compareTo(date2));
-		 if (date1.compareTo(date2) == 0) { 
-				 x1 = incrementDate(DateConvertor.convertToYMD(devDate),0);
+			List<AdvanceOrderDetail> advDetailList = new ArrayList<AdvanceOrderDetail>();
+			Date date = new Date(Calendar.getInstance().getTime().getTime());
+			DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
+			// DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			// DateFormat dfdmy = new SimpleDateFormat("dd-MM-yyyy");
 
-		 }else {
-				 x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
+			// String currentDate = df.format(date);
+			// String currentDateFc = dfdmy.format(date);
+			// DateFormat dfReg = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat dfReg1 = new SimpleDateFormat("dd-MM-yyyy");
+			String todaysDate = dfReg1.format(date);
+			int menuId = Integer.parseInt(request.getParameter("menuId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			String total = request.getParameter("fintotal1");
+			String devDate = request.getParameter("devDate");
+			String deliveryTime = request.getParameter("delTime");
+			System.err.println("devDate" + devDate);
+			int rateCat = frDetails.getFrRateCat();
+			Date date1 = dfReg1.parse(devDate);
+			Date date2 = dfReg1.parse(todaysDate);
+			String x1 = "";
+			System.err.println(date1.compareTo(date2));
+			if (date1.compareTo(date2) == 0) {
+				x1 = incrementDate(DateConvertor.convertToYMD(devDate), 0);
 
-		 }
-			  
-		int dm = 0;
-
-		dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
-		System.err.println("Order date: " + todaysDate);
-		System.err.println("Production date: " + x1);
-		System.err.println("Delivery date: " + devDate);
-
-		String advanceAmt = request.getParameter("advanceAmt");
-		String remainAmt = request.getParameter("remainAmt");
-		AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
-		advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
-		advHeader.setCustId(custId);
-		advHeader.setDelStatus(0);
-		advHeader.setExFloat1(0);
-		advHeader.setExFloat2(0);
-		advHeader.setExInt1(1);
-		advHeader.setExInt2(1);
-		String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
-
-		advHeader.setExVar1(dateFormat.format(date));//Order Time
-		advHeader.setExVar2(strDelTime);//Delivery Time
-		advHeader.setIsDailyMart(dm);
-		advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
-		advHeader.setTotal(Float.parseFloat(total));
-		advHeader.setFrId(frDetails.getFrId());
-		advHeader.setOrderDate(todaysDate);
-		advHeader.setDeliveryDate(devDate);
-		advHeader.setProdDate(DateConvertor.convertToDMY(x1));
-		advHeader.setIsBillGenerated(0);
-		advHeader.setIsSellBillGenerated(0);
-		float discAmt=0.0f;
-		for (int i = 0; i < frItemList.size(); i++) {
-			
-			GetFrItem item = frItemList.get(i);
-       		String strQty = null;
-			int qty = 0;
-			try {
-
-				strQty = request.getParameter(String.valueOf(item.getId()));
-				System.err.println("inside det"+qty);
-				qty = Integer.parseInt(strQty);
-
-			} catch (Exception e) {
-				strQty = null;
-				qty = 0;
+			} else {
+				x1 = incrementDate(DateConvertor.convertToYMD(devDate), -1);
 
 			}
-			if (qty > 0) {
-				AdvanceOrderDetail det = new AdvanceOrderDetail();
-				det.setCatId(Integer.parseInt(item.getItemGrp1()));
-				det.setDeliveryDate(devDate);
-				det.setDelStatus(0);
-				if (dm == 2) {
-					det.setDiscPer(item.getDmDiscPer());
-					if (rateCat == 1) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
-						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
-						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
-						float discountAmount=(calTotal*item.getDmDiscPer())/100;
-						discAmt=discAmt+discountAmount;
-						float subTotal=calTotal-discountAmount;
-						det.setSubTotal(CustomerBillController.roundUp(subTotal));
-					} else if (rateCat == 3) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
-						det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp3()))));
-						float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp3()))) * qty;
-						float discountAmount=(calTotal*item.getDmDiscPer())/100;
-						discAmt=discAmt+discountAmount;
-						float subTotal=calTotal-discountAmount;
-						det.setSubTotal(CustomerBillController.roundUp(subTotal));
-					}
-				} else {
-					det.setDiscPer(item.getDiscPer());
-					if (rateCat == 1) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
-						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
-						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
-						float discountAmount=(calTotal*item.getDiscPer())/100;
-						float subTotal=calTotal-discountAmount;
-						discAmt=discAmt+discountAmount;
-						det.setSubTotal(CustomerBillController.roundUp(subTotal));
-					} else if (rateCat == 3) {
-						det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
-						det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
-						float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
-						float discountAmount=(calTotal*item.getDiscPer())/100;
-						discAmt=discAmt+discountAmount;
-						float subTotal=calTotal-discountAmount;
-						det.setSubTotal(CustomerBillController.roundUp(subTotal));
-					}
-				}
-				det.setEvents("");
-				det.setEventsName("");
-				det.setExFloat1(0);
-				det.setExFloat2(0);
-				det.setExInt1(0);
-				det.setExInt2(0);
-				det.setExVar1("NA");
-				det.setExVar2("NA");
-				det.setFrId(frDetails.getFrId());
-				int frGrnTwo = frDetails.getGrnTwo();
-				if (frGrnTwo == 1) {
-					det.setGrnType(frDetails.getGrnTwo());
-				} else {
 
-					det.setGrnType(2);
+			int dm = 0;
+
+			dm = Integer.parseInt(request.getParameter("dailyFlagMart"));
+			System.err.println("Order date: " + todaysDate);
+			System.err.println("Production date: " + x1);
+			System.err.println("Delivery date: " + devDate);
+
+			String advanceAmt = request.getParameter("advanceAmt");
+			String remainAmt = request.getParameter("remainAmt");
+			AdvanceOrderHeader advHeader = new AdvanceOrderHeader();
+			advHeader.setAdvanceAmt(Float.parseFloat(advanceAmt));
+			advHeader.setCustId(custId);
+			advHeader.setDelStatus(0);
+			advHeader.setExFloat1(0);
+			advHeader.setExFloat2(0);
+			advHeader.setExInt1(1);
+			advHeader.setExInt2(1);
+			String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
+
+			advHeader.setExVar1(dateFormat.format(date));// Order Time
+			advHeader.setExVar2(strDelTime);// Delivery Time
+			advHeader.setIsDailyMart(dm);
+			advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
+			advHeader.setTotal(Float.parseFloat(total));
+			advHeader.setFrId(frDetails.getFrId());
+			advHeader.setOrderDate(todaysDate);
+			advHeader.setDeliveryDate(devDate);
+			advHeader.setProdDate(DateConvertor.convertToDMY(x1));
+			advHeader.setIsBillGenerated(0);
+			advHeader.setIsSellBillGenerated(0);
+			float discAmt = 0.0f;
+			for (int i = 0; i < frItemList.size(); i++) {
+
+				GetFrItem item = frItemList.get(i);
+				String strQty = null;
+				int qty = 0;
+				try {
+
+					strQty = request.getParameter(String.valueOf(item.getId()));
+					System.err.println("inside det" + qty);
+					qty = Integer.parseInt(strQty);
+
+				} catch (Exception e) {
+					strQty = null;
+					qty = 0;
+
 				}
-				det.setIsBillGenerated(0);
-				det.setItemId((item.getId()));
-				det.setMenuId(menuId);
-				det.setOrderDate(todaysDate);
-				det.setProdDate(DateConvertor.convertToDMY(x1));
-				det.setQty(qty);
-				det.setIsBillGenerated(0);
-				det.setIsSellBillGenerated(0);
-				det.setTax1(0);
-				det.setTax1Amt(0);
-				det.setTax2(0);
-				det.setTax2Amt(0);
-				det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
-				advDetailList.add(det);
+				if (qty > 0) {
+					AdvanceOrderDetail det = new AdvanceOrderDetail();
+					det.setCatId(Integer.parseInt(item.getItemGrp1()));
+					det.setDeliveryDate(devDate);
+					det.setDelStatus(0);
+					if (dm == 2) {
+						det.setDiscPer(item.getDmDiscPer());
+						if (rateCat == 1) {
+							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
+							det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
+							float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
+							float discountAmount = (calTotal * item.getDmDiscPer()) / 100;
+							discAmt = discAmt + discountAmount;
+							float subTotal = calTotal - discountAmount;
+							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+						} else if (rateCat == 3) {
+							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
+							det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp3()))));
+							float calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp3()))) * qty;
+							float discountAmount = (calTotal * item.getDmDiscPer()) / 100;
+							discAmt = discAmt + discountAmount;
+							float subTotal = calTotal - discountAmount;
+							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+						}
+					} else {
+						det.setDiscPer(item.getDiscPer());
+						if (rateCat == 1) {
+							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
+							det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
+							float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+							float discountAmount = (calTotal * item.getDiscPer()) / 100;
+							float subTotal = calTotal - discountAmount;
+							discAmt = discAmt + discountAmount;
+							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+						} else if (rateCat == 3) {
+							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
+							det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
+							float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
+							float discountAmount = (calTotal * item.getDiscPer()) / 100;
+							discAmt = discAmt + discountAmount;
+							float subTotal = calTotal - discountAmount;
+							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+						}
+					}
+					det.setEvents("");
+					det.setEventsName("");
+					det.setExFloat1(0);
+					det.setExFloat2(0);
+					det.setExInt1(0);
+					det.setExInt2(0);
+					det.setExVar1("NA");
+					det.setExVar2("NA");
+					det.setFrId(frDetails.getFrId());
+					int frGrnTwo = frDetails.getGrnTwo();
+					if (frGrnTwo == 1) {
+						det.setGrnType(frDetails.getGrnTwo());
+					} else {
+
+						det.setGrnType(2);
+					}
+					det.setIsBillGenerated(0);
+					det.setItemId((item.getId()));
+					det.setMenuId(menuId);
+					det.setOrderDate(todaysDate);
+					det.setProdDate(DateConvertor.convertToDMY(x1));
+					det.setQty(qty);
+					det.setIsBillGenerated(0);
+					det.setIsSellBillGenerated(0);
+					det.setTax1(0);
+					det.setTax1Amt(0);
+					det.setTax2(0);
+					det.setTax2Amt(0);
+					det.setSubCatId(Integer.parseInt(item.getItemGrp2()));
+					advDetailList.add(det);
+				}
 			}
-		}
-		if(advDetailList.size()>0 && (date1.compareTo(date2) >= 0)  ) {
-			advHeader.setDiscAmt(discAmt);
-		advHeader.setDetailList(advDetailList);
-		RestTemplate restTemplate = new RestTemplate();
+			if (advDetailList.size() > 0 && (date1.compareTo(date2) > 0)) {
+				advHeader.setDiscAmt(discAmt);
+				advHeader.setDetailList(advDetailList);
+				RestTemplate restTemplate = new RestTemplate();
 
-		 info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
-				AdvanceOrderHeader.class);
-		}else
-		{System.err.println("inside saveAdvanceOrder");
-			info=new AdvanceOrderHeader();
-			info.setAdvHeaderId(0);
-		}
-		//System.err.println("inside saveAdvanceOrder"+info.toString());
-		
-		}
-		catch(Exception e) {
+				info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
+						AdvanceOrderHeader.class);
+			} else {
+				System.err.println("inside saveAdvanceOrder");
+				info = new AdvanceOrderHeader();
+				info.setAdvHeaderId(0);
+			}
+			// System.err.println("inside saveAdvanceOrder"+info.toString());
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return info;
@@ -682,7 +679,7 @@ public class PosPlaceOrderController {
 			map.add("phoneNo", phoneNo);
 			RestTemplate restTemplate = new RestTemplate();
 			info = restTemplate.postForObject(Constant.URL + "/checkCustPhone", map, Info.class);
-			System.out.println("Info" + info+"info.isError()"+info.isError());
+			System.out.println("Info" + info + "info.isError()" + info.isError());
 			if (info.isError() == false) {
 				res = 0;// exists
 				System.out.println("0s" + res);
@@ -699,7 +696,5 @@ public class PosPlaceOrderController {
 		return res;
 
 	}
-
- 
 
 }

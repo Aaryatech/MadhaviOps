@@ -2371,6 +2371,22 @@ public class OpsController {
 
 				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
 
+			}else if (tempType == 5) {
+				// Deleted Bills All Cust
+				
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+				mvm = new LinkedMultiValueMap<String, Object>();
+				mvm.add("frId", frDetails.getFrId());
+				String date=sdf.format(Calendar.getInstance().getTimeInMillis());
+				System.err.println("DATE -------------------------------- "+date);
+				mvm.add("date", date);
+
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getDeletedBillAllCust",
+						mvm, SellBillHeader[].class);
+
+				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
+
 			} else {
 
 				mvm = new LinkedMultiValueMap<String, Object>();

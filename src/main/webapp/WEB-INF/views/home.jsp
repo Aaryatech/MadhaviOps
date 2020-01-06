@@ -37,7 +37,7 @@
 				<div class="page_head">
 					<div class="page_title">Dashboard</div>
 
-<%-- <h3>${type}</h3> --%>
+					<%-- <h3>${type}</h3> --%>
 
 					<!-- <div class="page_bread">
 						<ul>
@@ -133,32 +133,42 @@
 										</div>
 									</c:when>
 								</c:choose>
-								<div id="ihide" style="display: none;">
-									<div class="col-md-1">
-										<div class="col1title">From Date</div>
-									</div>
-									<div class="col-md-2">
-										<input id="fromdatepicker" class="texboxitemcode texboxcal"
-											required="required" placeholder="From Date" name="fromDate"
-											value="${fromDate}" autocomplete="off" type="text">
+
+
+								
+									<div id="ihide" style="display: none;">
+										<div class="col-md-1">
+											<div class="col1title">From Date</div>
+										</div>
+										<div class="col-md-2">
+											<input id="fromdatepicker" class="texboxitemcode texboxcal"
+												required="required" placeholder="From Date" name="fromDate"
+												value="${fromDate}" autocomplete="off" type="text">
+
+										</div>
+										<div class="col-md-1">
+											<div class="col1title">To Date</div>
+										</div>
+										<div class="col-md-2">
+											<input id="todatepicker" class="texboxitemcode texboxcal"
+												required="required" placeholder="To Date" name="toDate"
+												value="${toDate}" autocomplete="off" type="text">
+
+										</div>
 
 									</div>
-									<div class="col-md-1">
-										<div class="col1title">To Date</div>
-									</div>
-									<div class="col-md-2">
-										<input id="todatepicker" class="texboxitemcode texboxcal"
-											required="required" placeholder="To Date" name="toDate"
-											value="${toDate}" autocomplete="off" type="text">
 
-									</div>
 
-								</div>
+
+
 
 								<div class="sub_right">
 									<input name="submit" class="buttonsaveorder" value="Submit"
 										type="submit" id="submtbtn">
 								</div>
+								
+								
+								
 							</div>
 						</form>
 					</div>
@@ -207,7 +217,7 @@
 								</div>
 								<div class="sale_r">
 									<h3 class="sale_head">${typeTitle}&nbsp;Sales</h3>
-									 
+
 									<h1 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -227,7 +237,7 @@
 								</div>
 								<div class="sale_r">
 									<h3 class="sale_head">${typeTitle}&nbsp;Discount</h3>
-									 
+
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" maxFractionDigits="3"
@@ -270,7 +280,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;No.of Bill</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;No.ofBill</h3>
 									<h5 class="price_sale">${countDetails.noOfBillGenerated}</h5>
 								</div>
 								<div class="clr"></div>
@@ -278,7 +288,7 @@
 						</li>
 
 						<!-- fifth li box -->
-						<li>
+						<%-- <li>
 							<div class="sale_one bg_fifth">
 								<div class="sale_l">
 									<i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -294,7 +304,7 @@
 								</div>
 								<div class="clr"></div>
 							</div>
-						</li>
+						</li> --%>
 
 						<!-- six li box -->
 						<li>
@@ -316,8 +326,8 @@
 						</li>
 
 						<!-- seventh li box -->
-						
-						
+
+
 						<li>
 							<div class="sale_one bg_two">
 								<div class="sale_l">
@@ -335,7 +345,7 @@
 								<div class="clr"></div>
 							</div>
 						</li>
-						
+
 						<li>
 							<div class="sale_one bg_one">
 								<div class="sale_l">
@@ -377,47 +387,49 @@
 								</div>
 							</div>
 						</li>
-						
+
 						<li>
 							<div class="sale_one bg_two">
 								<div class="sale-list">
-								<div class="sale_epay" style="text-align: center;">
-										 Dairy Mart Order
-									</div>
-								<c:forEach items="${dailyList}" var="dailyList"  varStatus="count">
-									<div class="sale_epay">
-										${dailyList.orderDate} <span>Rs.<fmt:formatNumber type="number"
-												maxFractionDigits="3" value="${dailyList.total}" />
-										</span>
-									</div>
-									 
-									<div class="clr"></div>
+									<div class="sale_epay" style="text-align: center;">Dairy
+										Mart Order</div>
+									<c:forEach items="${dailyList}" var="dailyList"
+										varStatus="count">
+										<div class="sale_epay">
+											${dailyList.orderDate} <span>Rs.<fmt:formatNumber
+													type="number" maxFractionDigits="3"
+													value="${dailyList.total}" />
+											</span>
+										</div>
+
+										<div class="clr"></div>
 									</c:forEach>
 								</div>
 							</div>
 						</li>
-						
+
 						<li>
 							<div class="sale_one bg_three">
 								<div class="sale-list">
-								<div class="sale_epay" style="text-align: center;">
-										Advance Order
-									</div>
-								<c:forEach items="${advOrderList}" var="advOrderList"  varStatus="count">
-									<div class="sale_epay">
-										${advOrderList.orderDate} <span>Rs.<fmt:formatNumber type="number"
-												maxFractionDigits="3" value="${advOrderList.total}" />
-										</span>
-									</div>
-									 
-									<div class="clr"></div>
+									<div class="sale_epay" style="text-align: center;">
+										Advance Order</div>
+									<c:forEach items="${advOrderList}" var="advOrderList"
+										varStatus="count">
+										<div class="sale_epay">
+											${advOrderList.orderDate} <span>Rs.<fmt:formatNumber
+													type="number" maxFractionDigits="3"
+													value="${advOrderList.total}" />
+											</span>
+										</div>
+
+										<div class="clr"></div>
 									</c:forEach>
 								</div>
 							</div>
 						</li>
 
 						<!-- nine li box -->
-						
+
 					</ul>
 					<div class="clr"></div>
 				</div>
@@ -504,9 +516,8 @@
 		src="https://www.gstatic.com/charts/loader.js"></script>
 
 	<script type="text/javascript">
-	
 		function drawDonutChart() {
-//alert("hii donut ch");
+			//alert("hii donut ch");
 			//to draw donut chart
 			var chart;
 			var datag = '';
@@ -527,8 +538,9 @@
 				datag = datag + '[';
 				$.each(chartsdata, function(key, chartsdata) {
 					var temp = [];
-					temp.push(chartsdata.catName+" ("+ (parseFloat(chartsdata.catTotal).toFixed(2))+")",
-							(parseFloat(chartsdata.catTotal)),
+					temp.push(chartsdata.catName + " ("
+							+ (parseFloat(chartsdata.catTotal).toFixed(2))
+							+ ")", (parseFloat(chartsdata.catTotal)),
 							parseInt(chartsdata.catId));
 					dataSale.push(temp);
 
@@ -539,12 +551,12 @@
 
 				var options = {
 					title : 'Categorywise Sell(%)',
-					pieHole : 0.4,  
-					backgroundColor: 'transparent',
-				    pieSliceText: 'none',
-				    sliceVisibilityThreshold: 0,             
-				    legend: 'labeled',
-			        is3D: true,
+					pieHole : 0.4,
+					backgroundColor : 'transparent',
+					pieSliceText : 'none',
+					sliceVisibilityThreshold : 0,
+					legend : 'labeled',
+					is3D : true,
 				};
 				//  alert(222);
 				chart = new google.visualization.PieChart(document
@@ -566,28 +578,42 @@
 				google.visualization.events.addListener(chart, 'select',
 						selectQtyHandler);
 				chart.draw(data1, options);
-				
-				 
+
 			});
 
 		}
 	</script>
 	<script type="text/javascript">
-	function drawAllCharts() {
-		
-		google.charts.load("current", {
-			packages : [ "corechart" ]
-		});
-		google.charts.setOnLoadCallback(drawDonutChart);
-		
-		google.charts.load('current', {
-			'packages' : [ 'corechart', 'bar' ]
-		});
-		google.charts.setOnLoadCallback(drawStuff);
-	}
+		function drawAllCharts() {
+			
 	
+
+			google.charts.load("current", {
+				packages : [ "corechart" ]
+			});
+			google.charts.setOnLoadCallback(drawDonutChart);
+
+			google.charts.load('current', {
+				'packages' : [ 'corechart', 'bar' ]
+			});
+			google.charts.setOnLoadCallback(drawStuff);
+			
+			
+			var type=${type};
+			
+			if (type == 4) {
+				document.getElementById("ihide").style = "visible"
+				document.getElementById("fromdatepicker").required = true;
+				document.getElementById("todatepicker").required = true;
+			} else {
+				document.getElementById("ihide").style = "display:none"
+				document.getElementById("fromdatepicker").required = false;
+				document.getElementById("todatepicker").required = false;
+			}
+			
+		}
 	</script>
-			<script type="text/javascript">
+	<script type="text/javascript">
 		function drawStuff() {
 			//alert("hii bar ch");
 			var frmd = document.getElementById("frmd").value;
@@ -604,16 +630,17 @@
 				tod : tod,
 				ajax : 'true'
 			}, function(chartsBardata) {
-				
+
 				//alert(JSON.stringify(chartsBardata));
 				$.each(chartsBardata, function(key, chartsBardata) {
 
-					dataTable.addRows([ [ chartsBardata.sellDate, parseInt(chartsBardata.sellAmount) ] ]);
+					dataTable.addRows([ [ chartsBardata.sellDate,
+							parseInt(chartsBardata.sellAmount) ] ]);
 
 				});
-				
+
 				//alert(11);
-				
+
 				var materialOptions = {
 					width : 600,
 					height : 450,

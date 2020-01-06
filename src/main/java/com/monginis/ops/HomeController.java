@@ -239,8 +239,13 @@ public class HomeController {
 			if (type == 4) {
 				fromDate = DateConvertor.convertToYMD(request.getParameter("fromDate"));
 				toDate = DateConvertor.convertToYMD(request.getParameter("toDate"));
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
+				
+				String fDate = request.getParameter("fromDate");
+				String tDate = request.getParameter("toDate");
+				
+				
+				model.addObject("fromDate", fDate);
+				model.addObject("toDate", tDate);
 				model.addObject("typeTitle", "");
 
 			} else if (type == 1) {

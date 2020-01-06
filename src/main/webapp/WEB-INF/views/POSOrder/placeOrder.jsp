@@ -282,6 +282,7 @@ input:checked+.slider:before {
 		});
 		$(function() {
 			$("#todatepicker").datepicker({
+	            
 				dateFormat : 'dd-mm-yy'
 			});
 		});
@@ -353,6 +354,9 @@ input:checked+.slider:before {
 						</div>
 						</label>
 					</div>
+					
+					
+					
 
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
@@ -736,7 +740,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<input id="todatepicker" class="texboxitemcode texboxcal"
 									required="required" placeholder="Delivery Date" name="devDate"
-									autocomplete="off" type="text" value="">
+									autocomplete="off" type="text" value="">`
 
 							</div>
 							<div class="col-md-1">
@@ -745,7 +749,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<div class="clearfix">
 									<div class="input-group clockpicker-with-callbacks">
-										<input type="text" class="form-control" value="00:00" required
+										<input type="time" class="form-control" value="00:00" required
 											name="delTime" id="delTime2"> <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-time"></span>
@@ -1114,7 +1118,7 @@ input:checked+.slider:before {
 				</div>
 				<div class="clr"></div>
 			</div>
-			<div class="add_frm_one">
+			<div class="add_frm_one" style="display: none;">
 				<div class="add_customer_one">Type</div>
 				<div class="add_input">
 					<select name="custType" id="custType"
@@ -1124,7 +1128,7 @@ input:checked+.slider:before {
 							Customer Type</option>
 						<option value="1">Owner</option>
 						<option value="2">Employee</option>
-						<option value="3">Customer</option>
+						<option value="3" selected="selected">Customer</option>
 					</select>
 				</div>
 			</div>
@@ -1285,6 +1289,7 @@ function addCustomer() {
 	},
 
 	function(saveFlag) {
+		document.getElementById("saveCust").style.display="block";
 		 if(parseInt(saveFlag)==1){		
 			 
 			 document.getElementById("saveCust").style.display="block";
@@ -1624,15 +1629,20 @@ $(document).ready(function($) {
 			   $('#subm2').click(function(){
 				  var custId=document.getElementById("custId2").value;
 				  var delTime=document.getElementById("delTime2").value;
+				  
+				 // alert(delTime);
+				  
 				  var devDate=document.getElementById("todatepicker").value;
  				   //document.getElementById("subm2").disabled = true; 
  				   if(custId==""){
  					   alert("Please Select Customer")
  				   }else  if(devDate==""){
  					   alert("Please Select Delivery Date")
- 				   }else if(delTime=="00:00"){
+ 				   }
+ 				   /* else if(delTime=="00:00"){
  					   alert("Please Select Delivery Time")
- 				   }else{
+ 				   } */
+ 				   else{
 						document.getElementById("overlay2").style.display = "block";
 
 					$.ajax({
@@ -1653,7 +1663,7 @@ $(document).ready(function($) {
 					}else
 						{
 						document.getElementById("overlay2").style.display = "";
-						alert("Please Place Valid Advance Order!")
+						alert("Please Place Valid Order!\n(please check delivery date, time and items)")
 						}
 					}
 					}).done(function() {
@@ -1682,9 +1692,11 @@ $(document).ready(function($) {
  					   alert("Please Select Customer")
  				   }else  if(devDate==""){
  					   alert("Please Select Delivery Date")
- 				   }else if(delTime=="00:00"){
+ 				   }
+ 				   /* else if(delTime=="00:00"){
  					   alert("Please Select Delivery Time")
- 				   }else if(adv==""){
+ 				   } */
+ 				   else if(adv==""){
  					   alert("Please Enter Advance Amount")
  				   }else{
  						document.getElementById("overlay2").style.display = "block";
@@ -1708,7 +1720,7 @@ $(document).ready(function($) {
 					}else
 						{
 						document.getElementById("overlay2").style.display = "";
-						alert("Please Place Valid Order!")
+						alert("Please Place Valid Order!\n(please check delivery date, time and items)")
 						}
 					}
 					}).done(function() {
@@ -1957,7 +1969,6 @@ $('#check-minutes').click(function(e){
 
 
 
-	
 
 
 </body>

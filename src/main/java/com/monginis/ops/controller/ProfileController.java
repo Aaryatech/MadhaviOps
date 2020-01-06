@@ -33,6 +33,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.Route;
+import com.monginis.ops.model.Setting;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
  
 
@@ -49,10 +50,22 @@ public class ProfileController {
 	System.out.println("I am here");
 	RestTemplate rest = new RestTemplate();
 	
+	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+	String date=sdf.format(Calendar.getInstance().getTimeInMillis());
+	model.addObject("date", date);
+	
+	
 	HttpSession ses = request.getSession();
 	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 	String frImageName = (String)ses.getAttribute("frImage");
 	System.out.println("Franchisee Rsponse"+frDetails);
+	
+	try {
+		Setting setting= rest.getForObject(Constant.URL + "/getSettingDataById?settingId={settingId}",
+				Setting.class,57);
+		model.addObject("empCode", setting.getSettingValue());
+		
+	}catch(Exception e) {e.printStackTrace();}
 	
 	Route frRoute= rest.getForObject(Constant.URL + "/getRoute?routeId={routeId}",
 			Route.class,frDetails.getFrRouteId());
@@ -82,6 +95,26 @@ public class ProfileController {
 	
 	
 }
+	
+	
+	@RequestMapping(value = "/getCurrentEmpCodeValue", method = RequestMethod.GET)
+	public @ResponseBody int getCurrentEmpCodeValue(HttpServletRequest request,HttpServletResponse response) {
+		
+		int value=0;
+		
+		RestTemplate rest = new RestTemplate();
+			
+		try {
+			Setting setting= rest.getForObject(Constant.URL + "/getSettingDataById?settingId={settingId}",
+					Setting.class,57);
+			value=setting.getSettingValue();
+			
+		}catch(Exception e) {e.printStackTrace();}
+
+		return value;
+	}
+	
+	
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
 	public String editProfile(HttpServletRequest request,
 		HttpServletResponse response,@RequestParam("fr_image") List<MultipartFile> file) {
