@@ -533,7 +533,7 @@ input:checked+.slider:before {
 																			class="tableInput" type="text"
 																			onkeydown="myFunction()" min="0" step="1"
 																			onkeypress="return event.charCode >= 48"
-																			onchange="onChange('${items.itemRate1}',${items.id})">
+																			onchange="onChange('${items.itemRate1}','${items.itemMrp1}',${items.id},${frDetails.frKg1})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty1${items.id}" /></td>
@@ -543,11 +543,23 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate1}' /></td>
-																		<c:set var="rate" value="${items.itemMrp1}" />
+																		<c:set var="rate" value="${items.itemRate1}" />
+																		<c:set var="mrp" value="${items.itemMrp1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}">
+																			<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																		<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																	<fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>	
+																	</c:choose>		
+																				</td>
 
 																	</tr>
 																</c:when>
@@ -567,7 +579,7 @@ input:checked+.slider:before {
 																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text" min="0" step="1"
 																			onkeypress="return event.charCode >= 48"
-																			onchange="onChange('${items.itemRate2}',${items.id})">
+																			onchange="onChange('${items.itemRate2}','${items.itemMrp2}',${items.id},${frDetails.frKg1})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty1${items.id}" /></td>
@@ -577,13 +589,23 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate2}' /></td>
-																		<c:set var="rate" value="${items.itemMrp2}" />
+																		<c:set var="rate" value="${items.itemRate2}" />
+																		<c:set var="mrp" value="${items.itemMrp2}" />
 																		<c:set var="qty" value="${items.itemQty}" />
 
 
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}">	<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																		<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																	<fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>	
+																	</c:choose>	</td>
 
 
 
@@ -605,7 +627,7 @@ input:checked+.slider:before {
 																			id='qty1${items.id}' value='${items.itemQty}'
 																			class="tableInput" type="text" min="0" step="1"
 																			onkeypress="return event.charCode >= 48"
-																			onchange="onChange('${items.itemRate3}',${items.id})">
+																			onchange="onChange('${items.itemRate3}','${items.itemMrp3}',${items.id},${frDetails.frKg1})">
 
 																			<input type="hidden" value="${items.minQty}"
 																			id="minqty1${items.id}" /></td>
@@ -616,11 +638,22 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1"><c:out
 																				value='${items.itemRate3}' /></td>
-																		<c:set var="rate" value="${items.itemMrp3}" />
+																		<c:set var="rate" value="${items.itemRate3}" />
+																		<c:set var="mrp" value="${items.itemMrp3}" />
+																		
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}"><fmt:formatNumber
+																		<td class="col-md-1-1" id="total1${items.id}">	<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																		<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" /></td>
+																				maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																	<fmt:formatNumber
+																				type="number" minFractionDigits="2"
+																				maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>	
+																	</c:choose>	</td>
 
 																	</tr>
 																</c:when>
@@ -1522,12 +1555,18 @@ function addCustomer() {
 		}
 	</script>
 	<script type="text/javascript">
-		function onChange(rate,id) {
+		function onChange(rate,mrp,id,isOwnStore) {
 			var qty = $('#qty1'+id).val();
 			var minqty = $('#minqty1'+id).val();
 				if(qty % minqty==0 ){
+					if(isOwnStore==1)
+						{
+						  var total = mrp * qty;
+						   $('#total1'+id).html(total.toFixed(2));
+						}else{
 				    var total = rate * qty;
 				   $('#total1'+id).html(total.toFixed(2));
+						}
 				}else
 				{
 					 var total =0;

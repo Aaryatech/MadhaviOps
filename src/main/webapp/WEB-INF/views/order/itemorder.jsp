@@ -64,7 +64,6 @@ a:link {
 a:hover {
 	color: black;
 }
-
 </style>
 
 
@@ -115,21 +114,24 @@ a:hover {
 						</c:if>
 					</c:when>
 				</c:choose>
-				
+
 				<div class="page_head">
 					<div class="page_title">${menuTitle}</div>
 					<div class="custom_right">
-						<span class="page_prc">Order Date : ${orderDate}</span>
-						<span class="page_prc">Delivery Date : ${deliveryDate}</span>
-						<span class="page_prc">Order Closing Time: ${toTime}</span>
-						<span class="total_amt_right">
-							<input type="hidden" name="menuId" value="${menuId}"> <input type="hidden" name="rateCat" value="${frDetails.frRateCat}">
-					<input type="hidden" value="${isSameDayApplicable}" id="isSameDayApplicable" />
-Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${grandTotal}" />
+						<span class="page_prc">Order Date : ${orderDate}</span> <span
+							class="page_prc">Delivery Date : ${deliveryDate}</span> <span
+							class="page_prc">Order Closing Time: ${toTime}</span> <span
+							class="total_amt_right"> <input type="hidden"
+							name="menuId" value="${menuId}"> <input type="hidden"
+							name="rateCat" value="${frDetails.frRateCat}"> <input
+							type="hidden" value="${isSameDayApplicable}"
+							id="isSameDayApplicable" /> Total Amount : INR : <fmt:formatNumber
+								type="number" minFractionDigits="2" maxFractionDigits="2"
+								value="${grandTotal}" />
 						</span>
 					</div>
 				</div>
-			
+
 
 
 
@@ -168,7 +170,7 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
-					name="form1" method="post"  >
+					name="form1" method="post">
 					<!-- <div class="col-md-9"></div>
 					<label for="search" class="col-md-3" id="search"> <i
 						class="fa fa-search" style="font-size: 20px"></i> <input
@@ -226,14 +228,17 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 
 
 
-								
-								<label for="search" id="search" class="main_search"> 
-								<i class="fa fa-search"></i> <input type="text" id="myInput${loop.index}" onkeyup="myFunction1(${loop.index})"
-									 placeholder="Search items by name" title="Type item name">
-								</label>
-								<div id="table-scroll" class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
 
-									<div id="faux-table" class="faux-table" aria="hidden"><!-- style="display:none" -->
+								<label for="search" id="search" class="main_search"> <i
+									class="fa fa-search"></i> <input type="text"
+									id="myInput${loop.index}" onkeyup="myFunction1(${loop.index})"
+									placeholder="Search items by name" title="Type item name">
+								</label>
+								<div id="table-scroll" class="table-scroll responsive-table-one">
+									<!-- class="table-scroll" -->
+
+									<div id="faux-table" class="faux-table" aria="hidden">
+										<!-- style="display:none" -->
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
@@ -255,7 +260,9 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 									</div>
 									<div class="table-wrap">
 
-										<table id="table_grid${loop.index}" class="responsive-table" style="margin:0px;"><!--   class="main-table" -->
+										<table id="table_grid${loop.index}" class="responsive-table"
+											style="margin: 0px;">
+											<!--   class="main-table" -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
@@ -293,7 +300,7 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
 																		onkeydown="myFunction()"
-																		onchange="onChange('${items.itemRate1}',${items.id})">
+																		onchange="onChange('${items.itemRate1}','${items.itemMrp1}',${items.id},${frDetails.frKg1})">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -304,10 +311,22 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																	<td class="col-md-1"><c:out
 																			value='${items.itemRate1}' /></td>
 																	<c:set var="rate" value="${items.itemRate1}" />
+																	<c:set var="mrp" value="${items.itemMrp1}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}">
+																	<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																	<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
+																			maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																		<fmt:formatNumber
+																			type="number" minFractionDigits="2"
+																			maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>
+																	</c:choose>
+																	</td>
 
 
 																	<c:choose>
@@ -352,7 +371,7 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																	<td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
-																		onchange="onChange('${items.itemRate2}',${items.id})">
+																		onchange="onChange('${items.itemRate2}','${items.itemMrp2}',${items.id},${frDetails.frKg1})">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -362,10 +381,22 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																	<td class="col-md-1"><c:out
 																			value='${items.itemRate2}' /></td>
 																	<c:set var="rate" value="${items.itemRate2}" />
+																	<c:set var="mrp" value="${items.itemMrp2}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td id="total${items.id}"><fmt:formatNumber
+																	<td id="total${items.id}">
+																	<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																	<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
+																			maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																	<fmt:formatNumber
+																			type="number" minFractionDigits="2"
+																			maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>
+																	</c:choose>		
+																	</td>
 																	<c:choose>
 																		<c:when test="${menuIdFc eq menuIdShow}">
 																			<c:choose>
@@ -407,7 +438,7 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																	<td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
-																		onchange="onChange('${items.itemRate3}',${items.id})">
+																		onchange="onChange('${items.itemRate3}','${items.itemMrp3}',${items.id},${frDetails.frKg1})">
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
@@ -417,10 +448,22 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 																	<td class="col-md-1"><c:out
 																			value='${items.itemRate3}' /></td>
 																	<c:set var="rate" value="${items.itemRate3}" />
+																	<c:set var="mrp" value="${items.itemMrp3}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}">
+																	<c:choose>
+																	<c:when test="${frDetails.frKg1==1}">
+																	<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" /></td>
+																			maxFractionDigits="2" value="${mrp * qty}" />
+																	</c:when>
+																	<c:otherwise>
+																	<fmt:formatNumber
+																			type="number" minFractionDigits="2"
+																			maxFractionDigits="2" value="${rate * qty}" />
+																	</c:otherwise>
+																	</c:choose>		
+																	</td>
 
 																	<c:choose>
 																		<c:when test="${menuIdFc eq menuIdShow}">
@@ -474,8 +517,8 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textright">
 
-						<input name="" id="subm" class="buttonsaveorder" value="SAVE ORDER"
-							type="button" ONCLICK="button1()">
+						<input name="" id="subm" class="buttonsaveorder"
+							value="SAVE ORDER" type="button" ONCLICK="button1()">
 					</div>
 
 
@@ -584,27 +627,29 @@ Total Amount : INR : <fmt:formatNumber type="number" minFractionDigits="2" maxFr
         </script>
 
 <script type="text/javascript">
-		function onChange(rate,id) {
+		function onChange(rate,mrp,id,isOwnFr) {
 
 			//calculate total value  
 			var qty = $('#'+id).val();
-			
-			
 			var minqty = $('#minqty'+id).val();
 			
 			if(qty % minqty==0){
-			    var total = rate * qty;
-			
-			   $('#total'+id).html(total.toFixed(2));
+				if(isOwnFr==1)
+					{
+					 var total = mrp * qty;
+					 $('#total'+id).html(total.toFixed(2));
+					}else{
+			         var total = rate * qty;
+			         $('#total'+id).html(total.toFixed(2));
+					}
 			}else
 			{
 				 var total =0;
-				 
-				alert("Please Enter Qty Multiple of Minimum Qty");
-				$('#'+id).val('0');
+				 alert("Please Enter Qty Multiple of Minimum Qty");
+				 $('#'+id).val('0');
 				
-				$('#total'+id).html(total);
-				$('#'+id).focus();
+				 $('#total'+id).html(total);
+				 $('#'+id).focus();
 			}
 		}
 	</script>

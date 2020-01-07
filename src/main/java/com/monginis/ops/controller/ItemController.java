@@ -336,12 +336,33 @@ public class ItemController {
 		for (int i = 0; i < frItemList.size(); i++) {
 
 			if (frDetails.getFrRateCat() == 1) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate1());
+				double rate=0;
+				if(frDetails.getFrKg1()==1) {
+					rate=frItemList.get(i).getItemMrp1();
+				}else
+				{
+					rate=frItemList.get(i).getItemRate1();
+				}
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 			} else if (frDetails.getFrRateCat() == 2) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate2());
+				double rate=0;
+				if(frDetails.getFrKg1()==1) {
+					rate=frItemList.get(i).getItemMrp2();
+				}else
+				{
+					rate=frItemList.get(i).getItemRate2();
+				}
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 
 			} else if (frDetails.getFrRateCat() == 3) {
-				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * frItemList.get(i).getItemRate3());
+				double rate=0;
+				if(frDetails.getFrKg1()==1) {
+					rate=frItemList.get(i).getItemMrp3();
+				}else
+				{
+					rate=frItemList.get(i).getItemRate3();
+				}
+				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 
 			}
 			setName.add(frItemList.get(i).getSubCatName());
@@ -365,16 +386,34 @@ public class ItemController {
 					qty = qty + frItemList.get(j).getItemQty();
 
 					if (frDetails.getFrRateCat() == 1) {
-
-						total = total + (frItemList.get(j).getItemRate1() * frItemList.get(j).getItemQty());
+						double rate=0;
+						if(frDetails.getFrKg1()==1) {
+							rate=frItemList.get(i).getItemMrp1();
+						}else
+						{
+							rate=frItemList.get(i).getItemRate1();
+						}
+						total = total + (rate * frItemList.get(j).getItemQty());
 
 					} else if (frDetails.getFrRateCat() == 2) {
-
-						total = total + (frItemList.get(j).getItemRate2() * frItemList.get(j).getItemQty());
+						double rate=0;
+						if(frDetails.getFrKg1()==1) {
+							rate=frItemList.get(i).getItemMrp2();
+						}else
+						{
+							rate=frItemList.get(j).getItemRate2();
+						}
+						total = total + (rate * frItemList.get(j).getItemQty());
 
 					} else if (frDetails.getFrRateCat() == 3) {
-
-						total = total + (frItemList.get(j).getItemRate3() * frItemList.get(j).getItemQty());
+						double rate=0;
+						if(frDetails.getFrKg1()==1) {
+							rate=frItemList.get(j).getItemMrp3();
+						}else
+						{
+							rate=frItemList.get(j).getItemRate3();
+						}
+						total = total + (rate * frItemList.get(j).getItemQty());
 
 					}
 

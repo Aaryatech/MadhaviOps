@@ -107,6 +107,7 @@ public class HistoryController {
 			
 			HttpSession session = request.getSession();
 			menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			regOrderMenuList = new ArrayList<FrMenu>();
 			spOrderMenuList = new ArrayList<FrMenu>();
@@ -114,6 +115,7 @@ public class HistoryController {
 					regOrderMenuList.add(frMenu);
 			}
 			menuListNotSelected = regOrderMenuList;
+			model.addObject("frDetails", frDetails);
 
 			String orderTypeStr=request.getParameter("orderType");
 			if(orderTypeStr==null) {
@@ -131,7 +133,6 @@ public class HistoryController {
 				int orderType = Integer.parseInt(orderTypeStr);
 				String spDeliveryDt = request.getParameter("datepicker");
 				String parsedDate = Main.formatDate(spDeliveryDt);
-				Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 				int frId = frDetails.getFrId();
 				String catId[] = request.getParameterValues("catId");
 
@@ -168,7 +169,13 @@ public class HistoryController {
 						for (int i = 0; i < itemOrderHistory.size(); i++) {
 							expoExcel = new ExportToExcel();
 							rowData = new ArrayList<String>();
-							double total = itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderRate();
+							double total = 0;
+							if(frDetails.getFrKg1()==1) {
+							total=itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderMrp();
+							}else
+							{
+								total=itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderRate();
+							}
 							rowData.add("" + (i+1));
 							rowData.add("" + itemOrderHistory.get(i).getItemName());
 							rowData.add("" + itemOrderHistory.get(i).getOrderMrp());

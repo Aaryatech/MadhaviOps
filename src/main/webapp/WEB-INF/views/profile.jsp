@@ -601,8 +601,11 @@
 								</div>
 								<div class="clr"></div>
 							</div>
-
-							<div class="add_frm_one">
+	<input name="ttl_limit" type="hidden" class="input_add"
+										id="ttl_limit" value="1"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+										required />
+						<%-- 	<div class="add_frm_one">
 								<div class="add_customer_one">Total Limit</div>
 								<div class="add_input">
 									<input name="ttl_limit" type="text" class="input_add"
@@ -611,7 +614,7 @@
 										required />
 								</div>
 								<div class="clr"></div>
-							</div>
+							</div> --%>
 							<div class="add_frm_one" style="z-index: 9999; display: none;">
 								<div class="add_customer_one">From Date</div>
 								<div class="add_input">
@@ -670,8 +673,11 @@
 								<div class="clr"></div>
 							</div>
 
-
-							<div class="add_frm_one">
+<input name="curr_bill_amt" type="hidden" class="input_add"
+										id="curr_bill_amt" value="1"
+										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+										required />
+							<%-- <div class="add_frm_one">
 								<div class="add_customer_one">Current Bill Amt</div>
 								<div class="add_input">
 									<input name="curr_bill_amt" type="text" class="input_add"
@@ -680,7 +686,7 @@
 										required />
 								</div>
 								<div class="clr"></div>
-							</div>
+							</div> --%>
 							<div class="add_frm_one" style="display: none;">
 								<div class="add_customer_one">To Date</div>
 								<div class="add_input">

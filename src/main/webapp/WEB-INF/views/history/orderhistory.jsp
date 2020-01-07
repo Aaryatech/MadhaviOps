@@ -460,10 +460,22 @@ jQuery(document).ready(function(){
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderRate}" />
-																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																<td class="col-md-1" style="text-align: right;">
+																<c:choose>
+																<c:when test="${frDetails.frKg1==1}">
+																<fmt:formatNumber
+																		type="number" maxFractionDigits="2"
+																		minFractionDigits="2" groupingUsed="false"
+																		value="${orderList.orderQty * orderList.orderMrp}" />
+																</c:when>
+																<c:otherwise>
+																<fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderQty * orderList.orderRate}" />
+																</c:otherwise>
+																</c:choose>
+																
 																</td>
 
 															</tr>
