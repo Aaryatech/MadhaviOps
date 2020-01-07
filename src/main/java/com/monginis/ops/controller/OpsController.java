@@ -461,14 +461,18 @@ public class OpsController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/editcustomerbill/{type}/{sellBillNo}", method = RequestMethod.GET)
-	public String editCustomerBill(@PathVariable int type, @PathVariable int sellBillNo, HttpServletRequest request,
-			HttpServletResponse response, Model model) {
+	// mode------- 0=edit, 1=pay
+	@RequestMapping(value = "/editcustomerbill/{type}/{sellBillNo}/{mode}", method = RequestMethod.GET)
+	public String editCustomerBill(@PathVariable int type, @PathVariable int sellBillNo, @PathVariable int mode,
+			HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		String mav = "customerBill/editcustomerbill";
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		try {
+
+			model.addAttribute("mode", mode);
+
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
 
@@ -1090,12 +1094,13 @@ public class OpsController {
 
 						// -----------------------------------------
 
-						/*float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-								* (discAmt / 100));*/
-						
-						
+						/*
+						 * float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+						 * (discAmt / 100));
+						 */
+
 						float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
-						float detailDiscAmt = ((detailDiscPer*discAmt)/100);
+						float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
 						float detailGrandTotal = CustomerBillController
 								.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
@@ -1144,7 +1149,7 @@ public class OpsController {
 						sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
 						sellbilldetaillist.add(sellBillDetail);
 						total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
-						taxableAmt = taxableAmt + detailTaxableAmt; 
+						taxableAmt = taxableAmt + detailTaxableAmt;
 						taxAmt = taxAmt + detailTotalTax;
 
 						// grandTot=grandTot+itemBillList.get(i).getTotal();
@@ -1185,7 +1190,7 @@ public class OpsController {
 			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total-advAmt);
+				sellBillHeader.setRemainingAmt(total - advAmt);
 				sellBillHeader.setPaidAmt(advAmt);
 
 				sellBillHeader.setPaymentMode(1);
@@ -1193,7 +1198,7 @@ public class OpsController {
 				sellBillHeader.setStatus(2);
 				sellBillHeader.setRemainingAmt(0);
 				sellBillHeader.setPaymentMode(paymentMode);
-				sellBillHeader.setPaidAmt(Math.round(total+advAmt));
+				sellBillHeader.setPaidAmt(Math.round(total));
 
 			}
 
@@ -1331,6 +1336,13 @@ public class OpsController {
 		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
+		int mode = 0;
+		try {
+			mode = Integer.parseInt(request.getParameter("mode"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		try {
 
 			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
@@ -1349,6 +1361,7 @@ public class OpsController {
 			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));// without Disc BillAmt
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
+			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
 
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
@@ -1396,9 +1409,20 @@ public class OpsController {
 
 			List<SellBillDetail> sellbilldetaillist = new ArrayList<>();
 
-			float total = 0;
+			float total = 0, grandTot = 0;
 			float taxableAmt = 0;
 			float taxAmt = 0;
+
+			for (int i = 0; i < itemBillList.size(); i++) {
+
+				for (int j = 0; j < itemsListByIds.size(); j++) {
+
+					if (itemsListByIds.get(j).getId() == itemBillList.get(i).getItemId()) {
+						grandTot = grandTot + itemBillList.get(i).getTotal();
+					}
+				}
+
+			}
 
 			for (int i = 0; i < itemBillList.size(); i++) {
 
@@ -1429,15 +1453,26 @@ public class OpsController {
 									sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
 
 									float mrpBaseRate = (sellBillDetail.getMrp() * 100)
-											/ (100 + itemsListByIds.get(j).getItemTax3());
+											/ (100 + itemBillList.get(i).getTaxPer());
 									sellBillDetail.setMrpBaseRate(mrpBaseRate);
 
-									// -----------------------------------------
+									float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+									float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
-									float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-											* (discAmt / 100));
 									float detailGrandTotal = CustomerBillController
 											.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+
+									/*
+									 * float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 +
+									 * itemsListByIds.get(j).getItemTax3());
+									 * sellBillDetail.setMrpBaseRate(mrpBaseRate);
+									 * 
+									 * // -----------------------------------------
+									 * 
+									 * float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+									 * (discAmt / 100)); float detailGrandTotal = CustomerBillController
+									 * .roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+									 */
 
 									float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 									float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
@@ -1467,6 +1502,7 @@ public class OpsController {
 									sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
 									sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 									sellBillDetail.setDiscAmt(detailDiscAmt);
+									sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
 									sellbilldetaillist.add(sellBillDetail);
 									total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
 									taxableAmt = taxableAmt + detailTaxableAmt;
@@ -1494,15 +1530,26 @@ public class OpsController {
 							sellBillDetail.setMrp(itemBillList.get(i).getOrignalMrp());
 
 							float mrpBaseRate = (sellBillDetail.getMrp() * 100)
-									/ (100 + itemsListByIds.get(j).getItemTax3());
+									/ (100 + itemBillList.get(i).getTaxPer());
 							sellBillDetail.setMrpBaseRate(mrpBaseRate);
 
-							// -----------------------------------------
+							float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+							float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
-							float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-									* (discAmt / 100));
 							float detailGrandTotal = CustomerBillController
 									.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+
+							/*
+							 * float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 +
+							 * itemsListByIds.get(j).getItemTax3());
+							 * sellBillDetail.setMrpBaseRate(mrpBaseRate);
+							 * 
+							 * 
+							 * 
+							 * float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
+							 * (discAmt / 100)); float detailGrandTotal = CustomerBillController
+							 * .roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+							 */
 
 							float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 							float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
@@ -1532,6 +1579,7 @@ public class OpsController {
 							sellBillDetail.setGrandTotal(detailGrandTotal);// 'itemBillList.get(i).getTotal());
 							sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 							sellBillDetail.setDiscAmt(detailDiscAmt);
+							sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
 							sellbilldetaillist.add(sellBillDetail);
 							total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
 							taxableAmt = taxableAmt + detailTaxableAmt;
@@ -1598,7 +1646,7 @@ public class OpsController {
 			sellBillHeader.setTaxableAmt(taxableAmt);
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
-			sellBillHeader.setGrandTotal(Math.round(total));
+			sellBillHeader.setGrandTotal(Math.round(grandTot));
 			if (discPer != 0) {
 				sellBillHeader.setDiscountPer(discPer);//
 			} else {
@@ -1606,10 +1654,31 @@ public class OpsController {
 			}
 
 			sellBillHeader.setDiscountAmt(discAmt);//
+			/*
+			 * if (creditBill == 1) { sellBillHeader.setStatus(3);
+			 * sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
+			 * sellBillHeader.setPaidAmt(sellBillHeaderRes.getPaidAmt());
+			 * 
+			 * sellBillHeader.setPaymentMode(1); } else { sellBillHeader.setStatus(2);
+			 * sellBillHeader.setRemainingAmt(0);
+			 * sellBillHeader.setPaymentMode(paymentMode);
+			 * sellBillHeader.setPaidAmt(Math.round(total));
+			 * 
+			 * }
+			 */
+
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
-				sellBillHeader.setPaidAmt(sellBillHeaderRes.getPaidAmt());
+				if (mode == 0) {
+					if (advAmt > 0) {
+						sellBillHeader.setRemainingAmt(total - advAmt);
+					} else {
+						sellBillHeader.setRemainingAmt(total);
+					}
+				} else {
+					sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
+				}
+				sellBillHeader.setPaidAmt(advAmt);
 
 				sellBillHeader.setPaymentMode(1);
 			} else {
@@ -1630,8 +1699,19 @@ public class OpsController {
 			System.err.println("SAVE ================================================== ");
 			System.err.println("" + sellBillHeader);
 
-			if (creditBill != 1) {
+			/*
+			 * if (creditBill != 1) {
+			 * 
+			 * mvm = new LinkedMultiValueMap<String, Object>(); mvm.add("sellBillNo",
+			 * sellBillNo); mvm.add("advAmtStatus", 0); int res =
+			 * restTemplate.postForObject(Constant.URL +
+			 * "/deleteTransactionDetailsByIsAdvAmt", mvm, Integer.class);
+			 * 
+			 * System.err.println("DELETE TRANSC DETAILS --------------------------- " +
+			 * res); }
+			 */
 
+			if (mode == 0) {
 				mvm = new LinkedMultiValueMap<String, Object>();
 				mvm.add("sellBillNo", sellBillNo);
 				mvm.add("advAmtStatus", 0);
@@ -2216,6 +2296,9 @@ public class OpsController {
 		System.err.println("hii id list ");
 		HttpSession session = request.getSession();
 		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+
+		
+
 		try {
 			float cashAmt1 = 0;
 			float cardAmt1 = 0;
@@ -2249,6 +2332,7 @@ public class OpsController {
 				float pendingAmt = Float.parseFloat(request.getParameter("remainingAmt" + headId));
 				String billDate = request.getParameter("billDate" + headId);
 				float settleAmt = Float.parseFloat(request.getParameter("settleAmt" + headId));
+				float discAmt = Float.parseFloat(request.getParameter("discAmt" + headId));
 				TransactionDetail expTrans = new TransactionDetail();
 
 				if (modType1 == 1) {
@@ -2275,7 +2359,7 @@ public class OpsController {
 				expTrans.setExInt1(frEmpDetails.getFrEmpId());
 				expTrans.setExVar1(String.valueOf(modType1));// +prodMixingReqP1.get(i).getMulFactor()
 				expTrans.setExVar2(String.valueOf(pendingAmt - settleAmt));
-				expTrans.setExFloat1(billAmt);
+				expTrans.setExFloat1(billAmt-discAmt);
 				expTrans.setExFloat2(0);
 
 				// field
@@ -2371,19 +2455,19 @@ public class OpsController {
 
 				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
 
-			}else if (tempType == 5) {
+			} else if (tempType == 5) {
 				// Deleted Bills All Cust
-				
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 				mvm = new LinkedMultiValueMap<String, Object>();
 				mvm.add("frId", frDetails.getFrId());
-				String date=sdf.format(Calendar.getInstance().getTimeInMillis());
-				System.err.println("DATE -------------------------------- "+date);
+				String date = sdf.format(Calendar.getInstance().getTimeInMillis());
+				System.err.println("DATE -------------------------------- " + date);
 				mvm.add("date", date);
 
-				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getDeletedBillAllCust",
-						mvm, SellBillHeader[].class);
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getDeletedBillAllCust", mvm,
+						SellBillHeader[].class);
 
 				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
 

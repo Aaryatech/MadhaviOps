@@ -389,7 +389,7 @@ body {
 							</label>
 						</c:if>
 						<input type="hidden" id="advAmt" name="advAmt"
-							value="${advanceAmt}"> <input type="hidden"
+							value="${advAmtTransaction}"> <input type="hidden"
 							id="advOrderDate" name="advOrderDate" value="${advOrderDate}">
 						<input type="hidden" id="isAdvanceOrder" name="isAdvanceOrder"
 							value="${isAdvanceOrder}">
@@ -512,8 +512,19 @@ body {
 					<c:set var="totalTaxableAmt" value="0"></c:set>
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
-					
-					
+
+
+					<%-- <h2>${mode}</h2>
+					<h2>
+						<label>ADV = </label>${advAmtTransaction}</h2>
+					<h2>
+						<label>TOT AMT = </label>${totalAmt}</h2>
+					<h2>
+						<label>DISC = </label>${tempHeader.discountAmt}</h2>
+					<h2>
+						<label>PAID AMT = </label>${tempHeader.paidAmt}</h2> --%>
+
+
 					<!--product table-->
 					<div class="total_table_one" id="printDivid">
 						<div class="scrollbars">
@@ -890,22 +901,57 @@ body {
 				</div>
 				  --%>
 
-
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer"
+					
+					<c:choose>
+					<c:when test="${defaultCustomer==tempCust}">
+					<input type="number" name="discPer" id="discPer" readonly="readonly"
 							onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="${tempHeader.discountPer}" placeholder="Disc %"
-							style="text-align: center; width: 90px; border-radius: 20px;" />
-						<label for="discAmtLabel"
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+					</c:when>
+					
+					<c:otherwise>
+					<input type="number" name="discPer" id="discPer" 
+							onchange="itemDiscPerCalculation(1)"
+							onkeyup="itemDiscPerCalculation(1)" class="form-control"
+							value="${tempHeader.discountPer}" placeholder="Disc %"
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+					</c:otherwise>
+					</c:choose>
+					
+					
+					<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							Amt&nbsp;</label>
+					
+					<c:choose>
+					<c:when test="${defaultCustomer==tempCust}">
+					 <input type="number" name="discAmt" id="discAmt" readonly="readonly"
 							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="${tempHeader.discountAmt}" placeholder="Disc Amt"
-							style="text-align: center; width: 90px; border-radius: 20px;" />
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+					</c:when>
+					
+					<c:otherwise>
+					 <input type="number" name="discAmt" id="discAmt"
+							onchange="itemDiscPerCalculation(2)"
+							onkeyup="itemDiscPerCalculation(2)" class="form-control"
+							value="${tempHeader.discountAmt}" placeholder="Disc Amt"
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+					</c:otherwise>
+					</c:choose>
+						
+					
+					
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -922,12 +968,28 @@ body {
 							value="${advAmtTransaction}" placeholder="0"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 
-						<label for="discAmtLabel"
-							style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
-							Amt&nbsp;</label> <input type="number" class="form-control"
-							value="${tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
-							style="text-align: center; width: 90px; border-radius: 20px;"
-							disabled="disabled" />
+						<c:choose>
+							<c:when test="${mode==0}">
+								<label for="discAmtLabel"
+									style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
+									Amt&nbsp;</label>
+								<input type="number" class="form-control" value="0"
+									placeholder="0"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									disabled="disabled" />
+							</c:when>
+
+							<c:otherwise>
+								<label for="discAmtLabel"
+									style="font-weight: 700; padding-left: 5px;">&nbsp;Paid
+									Amt&nbsp;</label>
+								<input type="number" class="form-control"
+									value="${tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									disabled="disabled" />
+							</c:otherwise>
+						</c:choose>
+
 
 
 					</div>
@@ -938,8 +1000,23 @@ body {
 					<div class="add_customer_one">Total Payable</div>
 					<div class="add_input" id="totalPayableAmt">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
-							maxFractionDigits="2" minFractionDigits="2" />
+							value="${tempHeader.paidAmt}" maxFractionDigits="2"
+							minFractionDigits="2" />
+						<%-- <c:choose>
+							<c:when test="${mode==0}">
+								<fmt:formatNumber type="number" groupingUsed="false"
+									value="${tempHeader.paidAmt}"
+									maxFractionDigits="2" minFractionDigits="2" />
+							</c:when>
+
+							<c:otherwise>
+								<fmt:formatNumber type="number" groupingUsed="false"
+									value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
+									maxFractionDigits="2" minFractionDigits="2" />
+							</c:otherwise>
+						</c:choose> --%>
+
+
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -1132,11 +1209,26 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
-								<input name="payAmt" id="payAmt" type="text"
-									class="input_add numberOnly" placeholder="Enter Amount"
-									readonly="readonly"
-									value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
-									style="background-color: lightgrey;" />
+
+								<c:choose>
+									<c:when test="${mode==0}">
+										<input name="payAmt" id="payAmt" type="text"
+											class="input_add numberOnly" placeholder="Enter Amount"
+											readonly="readonly"
+											value="${totalAmt-tempHeader.discountAmt}"
+											style="background-color: lightgrey;" />
+									</c:when>
+
+									<c:otherwise>
+										<input name="payAmt" id="payAmt" type="text"
+											class="input_add numberOnly" placeholder="Enter Amount"
+											readonly="readonly"
+											value="${totalAmt-tempHeader.discountAmt-tempHeader.paidAmt}"
+											style="background-color: lightgrey;" />
+									</c:otherwise>
+								</c:choose>
+
+
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1621,9 +1713,13 @@ body {
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														
+															
+															
 														
 														if(tempType==1 && tabType==2){
-															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															var mode=0;
+															
+															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+','+mode+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 														}else if(tempType==4){
 															tr.append($('<td ></td>').html(' '));
 														}else{
@@ -3018,17 +3114,31 @@ function matchSplitAmt(flag){
 			var discAmt = parseFloat($('#discAmt').val());
 			var totalAmtPopup;
 			var tot=parseFloat($('#totalAmtPopup').text());
-			//alert(tot);
+			//alert(discAmt);
+			var mode=${mode};
 		
+			var payableAmount=0;
+			//if(mode==0){
+				payableAmount=parseFloat($('#totalAmtPopup').text());	
+			//}else{
+				//payableAmount=parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};
+			//}
 			
-			var payableAmount=parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};
 			
  			var advAmt = document.getElementById("advAmt").value;
+ 			//alert("ADv - "+advAmt);
+ 			
 			if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
-				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};
+				if(mode==0){
+					totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+				}else{
+					totalAmtPopup= parseFloat($('#totalAmtPopup').text())-${tempHeader.paidAmt};	
+				}
 			}
+			
+			//alert(totalAmtPopup);
 			
 			  if(flag==1){
 				var calDiscAmt = parseFloat(tot*discPer/100);
@@ -3045,7 +3155,7 @@ function matchSplitAmt(flag){
 					
 				}else{
 				
-				var totalAmt=payableAmount-calDiscAmt;
+				var totalAmt=totalAmtPopup-calDiscAmt;
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
@@ -3053,10 +3163,10 @@ function matchSplitAmt(flag){
 				 
 			}else{
 				
-				
-				
 				 if(discAmt>payableAmount){
-					alert("Discount amount should be smaller than payable amount");
+					 if(discAmt!=0){
+						alert("Discount amount should be smaller than total amount");
+					 }
 					document.getElementById("discPer").value =0;
 					document.getElementById("discAmt").value =0;
 					//document.getElementById("payAmt").value=payableAmount;
@@ -3067,10 +3177,10 @@ function matchSplitAmt(flag){
 					
 				}else{
 				
-				var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
+				var calDiscPer = parseFloat((discAmt/(payableAmount/100)));
 
 				var totalAmt=totalAmtPopup-discAmt;
-				document.getElementById("discPer").value = 00;
+				document.getElementById("discPer").value = calDiscPer.toFixed(2);;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
 				} 
@@ -3414,7 +3524,8 @@ function getCurrentItemList() {
 							//alert("advAmt"+advAmt);
 							if(parseFloat(advAmt)>0){
 								//alert(0);
-								document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2) -parseFloat(advAmt);
+								//document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2) -parseFloat(advAmt);
+								document.getElementById("totalAmtPopup").innerHTML = total.toFixed(2);
 								document.getElementById("totalPayableAmt").innerHTML = total.toFixed(2)-parseFloat(advAmt);
 							}else{
 								//alert(1);
@@ -3565,14 +3676,24 @@ function getCurrentItemList() {
 	
 	function submitBillByPaymentOption(printbilltype) {
 		
+		//alert("hi");
 		var sellBillNo =  $('#sellBillNo').val() ;
 		
 		var advAmt = document.getElementById("advAmt").value;
 		var advOrderDate = document.getElementById("advOrderDate").value;
 		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
 		var flagPayable=0;
+		var mode=${mode};
 		
-		document.getElementById("credAmt").innerHTML="0.0";
+		var finalAmt=parseFloat($('#totalPayableAmt').text());
+		
+		 if(finalAmt<0){
+			alert("Invalid bill amount");
+		}else{ 
+		
+		
+		
+		 document.getElementById("credAmt").innerHTML="0.0";
 
 		if (document.getElementById('split').checked) {
 					
@@ -3585,21 +3706,17 @@ function getCurrentItemList() {
 			
 			var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
  			 
-		 if(totalPayableAmt==epayLabel){
-			 
-			 flagPayable=1;
-		 }else{
-			 
-			 flagPayable=2;
-		 }
+		 	if(totalPayableAmt==epayLabel){
+			 	flagPayable=1;
+		 	}else{
+			 	flagPayable=2;
+		 	}
 		}
  
 		if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
 			alert("Please Enter the valid Bill Amount!!");
 			
 		}else{
-			
-			
 		   
 		var key =  $('#key').val() ;
 		var custId =  $('#cust').val() ;
@@ -3608,29 +3725,26 @@ function getCurrentItemList() {
 		var epayAmt =  $('#epayAmt').val() ;
 		var billType =  $('#billType').val() ;
 		var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+		
 		if(billType==1){
 			payTypeFlag=0;
 			payType=1;
-		}else
-		if(billType==2)
-			{
+		}else if(billType==2){
 			var cardType = $('#cardType option:selected').val();
-			if(cardType=="")
-				{
+			if(cardType==""){
 				payTypeFlag=1;
 				msg="Please Select Pay Type( Card Type Or E-Pay type)";
-				}
+			}
 			payType=cardType;
-			}else if(billType==3)
-				{
-				var ePayType =  $('#ePayType option:selected').val();
-				if(ePayType=="")
-				{
+		}else if(billType==3){
+			var ePayType =  $('#ePayType option:selected').val();
+			if(ePayType==""){
 				payTypeFlag=1;
 				msg="Please Select Pay Type( Card Type Or E-Pay type)";
-				}
-				payType=ePayType;
-				} 
+			}
+			payType=ePayType;
+		} 
+		
 		var payAmt =  $('#payAmt').val() ;
 		var frtype =  $('#frtype').val() ;
 		var discPer =  $('#discPer').val() ;
@@ -3639,12 +3753,10 @@ function getCurrentItemList() {
 		var billAmtWtDisc;
 		
 		if(parseFloat(advAmt)>0){
-		 
 			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 		}else{
 			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
 		}
-		
 		
 		var creditBill = 1;
 		var single = 1;
@@ -3654,26 +3766,27 @@ function getCurrentItemList() {
 		if (document.getElementById('creditBillno').checked) {
 			creditBill = 2;
 		}
+		
 		if (document.getElementById('split').checked) {
 			single = 2;
 			if(cashAmt>0){
 				payTypeSplit=",1";
 			}
+			
 			var cardTypeSplit = $('#cardTypeSplit option:selected').val();
-			if(cardTypeSplit=="" && cardAmt>0)
-				{
+			
+			if(cardTypeSplit=="" && cardAmt>0){
 				msg="Please Select Card Type";
 				payTypeFlag=1;
-				}else if(cardAmt>0)
-					{
-					payTypeSplit=payTypeSplit+","+cardTypeSplit;
-					}
+			}else if(cardAmt>0){
+				payTypeSplit=payTypeSplit+","+cardTypeSplit;
+			}
+			
 			var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
-			if(ePayTypeSplit=="" && epayAmt>0)
-			{
+			
+			if(ePayTypeSplit=="" && epayAmt>0){
 				msg="Please Select Card & E-pay Type";payTypeFlag=1;
-			}else if(epayAmt>0)
-			{
+			}else if(epayAmt>0){
 				payTypeSplit=payTypeSplit+","+ePayTypeSplit;
 			}
 		}
@@ -3694,28 +3807,21 @@ function getCurrentItemList() {
 			discAmt=0;
 		}
 		
-		
-		
-		
 		if(creditBill==2 && single==1 && payAmt==""){
 			alert("Please Enter Ammount");
-		}else
-			if(payTypeFlag==1){
-				alert(msg);
-			}else{
-				
-				 $('#payment').popup('hide');
-				  document.getElementById("overlay2").style.display = "block";
-				
+		}else if(payTypeFlag==1){
+			alert(msg);
+		}else{
+			
+		
+			$('#payment').popup('hide');
+			document.getElementById("overlay2").style.display = "block";
 				
 				var paidAmt=${tempHeader.paidAmt};
 				var trAdvanceAmt=${advAmtTransaction};
 				
-				//alert("BILL - "+billAmtWtDisc);
-				//if(payAmt>=(trAdvanceAmt+paidAmt)){
-					if((paidAmt)<=billAmtWtDisc){
-				
-					
+				alert(billAmtWtDisc);
+					/* if((paidAmt)<=billAmtWtDisc){ */
 					 $
 						.post(
 								'${submitBillByPaymentOption}',
@@ -3739,6 +3845,8 @@ function getCurrentItemList() {
 									advOrderDate:advOrderDate,
 									isAdvanceOrder:isAdvanceOrder,
 									sellBillNo:sellBillNo,
+									mode:mode,
+									advAmt:trAdvanceAmt,
 									ajax : 'true'
 								},
 								function(data) {
@@ -3798,14 +3906,17 @@ function getCurrentItemList() {
 					
 					
 					
-				}else{
+				/* }
+				else{
 					alert("Minimum Amount of Bill should be "+(trAdvanceAmt+paidAmt)+"/-");
 					document.getElementById("overlay2").style.display = "none";	
-				}
+				} */
 				
 			
 			   
 		} 
+		}  
+		
 		}
 	}
 	
@@ -3838,24 +3949,35 @@ function getCurrentItemList() {
 	
 	var advAmt = document.getElementById("advAmt").value;
 	if(parseFloat(advAmt)>0){
-	 
 		document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 	}else{
 		
-		  var paidAmt=${tempHeader.paidAmt};
+		var paidAmt=${tempHeader.paidAmt};
 		var advAmtTr=${advAmtTransaction};
 		var discAmt=${tempHeader.discountAmt};
-		var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt; 
+		//var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt; 
 		
 		//document.getElementById("payAmt").innerHTML = amt; 
 	}
- 	 var paidAmt=${tempHeader.paidAmt};
+	
+	var mode=${mode};
+	//alert(mode);
+	
+	var paidAmt=${tempHeader.paidAmt};
 	var advAmtTr=${advAmtTransaction};
 	var discAmt=${tempHeader.discountAmt};
-	var amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
+
+	var amt=0;
+	
+	if(mode==0){
+		amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr;
+	}else{
+		amt=parseFloat($('#totalAmtPopup').text())-discAmt-advAmtTr-paidAmt;
+	}
 	
 	document.getElementById("payAmt").innerHTML = amt;
 	document.getElementById("totalPayableAmt").innerHTML = amt; 
+	document.getElementById("payAmt").value=amt;
  	
 	itemDiscPerCalculation(2);
 	
@@ -4009,11 +4131,11 @@ function custBillPdf(sellBillNo)
 
 	<script type="text/javascript">
 
-	function showCustBillForEdit(sellBillNo,custId){
+	function showCustBillForEdit(sellBillNo,custId,mode){
 	
 	alert("custId = "+custId+"              BILL = "+sellBillNo);
 	
-	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
+	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo+"/"+mode,"_self");
 	
 	}
 

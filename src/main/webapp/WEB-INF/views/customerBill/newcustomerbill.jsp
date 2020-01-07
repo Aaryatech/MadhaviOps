@@ -506,6 +506,8 @@ body {
 					<c:set var="totalTaxAmt" value="0"></c:set>
 					<c:set var="totalAmt" value="0"></c:set>
 					<!--product table-->
+
+
 					<div class="total_table_one" id="printDivid">
 						<div class="scrollbars">
 							<table id="itemBillTable">
@@ -704,7 +706,8 @@ body {
 					<div class="add_input">
 						<input type="text" class="input_add"
 							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
-							onchange="trim(this)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+							onchange="trim(this)" maxlength="10"
+							oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -846,35 +849,39 @@ body {
 				<div class="add_frm_one">
 					<div class="add_customer_one">Total AMT</div>
 					<div class="add_input" id="totalAmtPopup">
-						<fmt:formatNumber type="number" groupingUsed="false"
+						<%-- <fmt:formatNumber type="number" groupingUsed="false"
 							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
-							minFractionDigits="2" />
+							minFractionDigits="2" /> --%>
+						<fmt:formatNumber type="number" groupingUsed="false"
+							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
+
 					</div>
 					<div class="clr"></div>
 				</div>
 
 
-				<%-- 
-					<div class="add_frm_one">
-					<div class="add_customer_one1">Advance AMT</div>
-					<div class="add_input1" id="advAmtPopup">
+				<div class="add_frm_one">
+					<div class="add_customer_one">Advance AMT</div>
+					<div class="add_input" id="advAmtPopup">
 						<fmt:formatNumber type="number" groupingUsed="false"
 							value="${advanceAmt}" maxFractionDigits="2" minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
-				  --%>
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+						<input type="number" name="discPer" id="discPer"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
 							value="0" placeholder="Disc %"
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
 							value="${discAmt}" placeholder="Disc Amt"
@@ -886,7 +893,8 @@ body {
 					<div class="add_customer_one">Total Payable</div>
 					<div class="add_input" id="totalPayableAmt">
 						<fmt:formatNumber type="number" groupingUsed="false"
-							value="${totalAmt}" maxFractionDigits="2" minFractionDigits="2" />
+							value="${totalAmt-advanceAmt}" maxFractionDigits="2"
+							minFractionDigits="2" />
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -1081,7 +1089,7 @@ body {
 							<div class="add_input">
 								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
-									readonly="readonly" value="${totalAmt}"
+									readonly="readonly" value="${totalAmt-advanceAmt}"
 									style="background-color: lightgrey;" />
 							</div>
 							<div class="clr"></div>
@@ -1377,6 +1385,7 @@ body {
 									<th style="text-align: center;">Bill No</th>
 									<th style="text-align: center;">Bill Date</th>
 									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" width="10%">Disc Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
 									<th style="text-align: center;" width="2%">Paying Amt</th>
@@ -1580,8 +1589,8 @@ body {
 										onclick="getCustBills(4)"> <label for="deleted12">Deleted
 											Bills</label>
 										<div class="check"></div></li>
-										
-										<li id="allDeletedBillsRadio" style="display: none;"><input
+
+									<li id="allDeletedBillsRadio" style="display: none;"><input
 										type="radio" id="deleted13" name="modePay1" value="2"
 										onclick="getCustBills(5)"> <label for="deleted13">Deleted
 											Bills</label>
@@ -1604,8 +1613,10 @@ body {
 									<th style="text-align: center;">Bill No</th>
 									<th style="text-align: center;">Bill Date</th>
 									<th style="text-align: center;" width="10%">Bill Amt</th>
-									<th style="text-align: center;" width="10%" id="discTh">Disc Amt</th>
-									<th style="text-align: center;" width="10%" id="payableTh">Payable Amt</th>
+									<th style="text-align: center;" width="10%" id="discTh">Disc
+										Amt</th>
+									<th style="text-align: center;" width="10%" id="payableTh">Payable
+										Amt</th>
 									<th style="text-align: center;" width="13%">Paid Amt</th>
 									<th style="text-align: center;" width="13%">Pending Amt</th>
 									<th style="text-align: center;" width="2%" id="modeofpay">Mode
@@ -1710,11 +1721,52 @@ body {
 														/* 	tr.append($('<td ></td>').html("NA")); */
 														
 														if(tempType==1 && tabType==2){
-															tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+')"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															
+															var adminDesg=${sessionScope.frEmpDetails.designation};
+															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+															
+															if(adminDesg==1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else if(sessionEmpId==data.extInt1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else{
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+															}
+															
+															
+															//tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+														}else if(tempType==1 && tabType==1){
+															
+															var adminDesg=${sessionScope.frEmpDetails.designation};
+															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+															
+															if(adminDesg==1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else if(sessionEmpId==data.extInt1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else{
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+															}
+															
+															
+															//tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp; <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 														}else if(tempType==4 || tempType==5){
 															tr.append($('<td ></td>').html(' '));
 														}else{
-															tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															
+															var adminDesg=${sessionScope.frEmpDetails.designation};
+															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
+															
+															if(adminDesg==1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else if(sessionEmpId==data.extInt1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															}else{
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
+															}
+															
+															
+															//tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 														}
 															
 															$('#custTable tbody').append(tr);
@@ -1782,9 +1834,20 @@ body {
  												
 											}else{
 											var str_arr = data.exVar1.split(',');
+											//alert(str_arr);
+
 											for (i = 0; i < str_arr.length; i++) { 
+												
+												/*  if(str_arr[i] === "0"){
+													   //payType=payType+",Credit";  
+													   payType="Credit";
+													   alert("0");
+													} */
+												 
+												
 											   if(str_arr[i] === "1"){
 													payType="Cash("+data.cashAmt+")";
+													//payType=payType+",Cash("+data.cashAmt+")";  
 											   }
 											   if(str_arr[i] === "2"){
 												   payType=payType+",Card("+data.cardAmt+")";
@@ -1810,6 +1873,8 @@ body {
 											   if(str_arr[i] === "9"){
 												   payType=payType+",Amazon Pay("+data.ePayAmt+")";  
 											   }
+											  
+											   
 											  
 											}
 											var resultPayType = (payType[0] == ',') ? payType.substr(1) : payType;
@@ -1904,6 +1969,8 @@ function matchSplitAmt(flag){
 		}else{
 				document.getElementById("total").value=0;
 				
+				//alert("hi");
+				
  				 $.post('${getCustCreditBills}',
 								{
 									cust: custId,
@@ -1917,6 +1984,8 @@ function matchSplitAmt(flag){
 									$('#custCreditTable td').remove();
 						$.each(data,
 											function(key, data) {
+							
+							//alert(data);
 												
 												document.getElementById("credCust").innerHTML = data.userName; 
 
@@ -1956,6 +2025,8 @@ function matchSplitAmt(flag){
 																			"<input type=checkbox   name='chkItem'   value="+data.sellBillNo+"   id="+ data.sellBillNo+" >  <label for="+ data.sellBillNo+" ></label>"));
 														}
 
+														
+														
 														tr.append($('<td></td>')
 																.html(key + 1));
 														tr
@@ -1980,6 +2051,19 @@ function matchSplitAmt(flag){
 																				data.grandTotal
 																						+ ""
 																						+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+														
+														
+														tr
+														.append($(
+																'<td></td>')
+																.html(
+																		data.discountAmt
+																				+ ""
+																				+ "<input type=hidden value='"+data.discountAmt+"'  id=discAmt"+data.sellBillNo+"  name=discAmt"+data.sellBillNo+"  >"));
+												
+												
+														
+													
 														tr
 																.append($(
 																		'<td></td>')
@@ -2194,6 +2278,17 @@ function matchSplitAmt(flag){
 																				data.grandTotal
 																						+ ""
 																						+ "<input type=hidden value='"+data.grandTotal+"'  id=grandTotal"+data.sellBillNo+"  name=grandTotal"+data.sellBillNo+"  >"));
+														
+														
+														tr
+														.append($(
+																'<td></td>')
+																.html(
+																		data.discountAmt
+																				+ ""
+																				+ "<input type=hidden value='"+data.discountAmt+"'  id=discAmt"+data.sellBillNo+"  name=discAmt"+data.sellBillNo+"  >"));
+												
+														
 														tr
 																.append($(
 																		'<td></td>')
@@ -3088,10 +3183,9 @@ $("#enterQty").focus();
 				}
 			 
 		}
+		
+		
 		function itemDiscPerCalculation(flag) {
-			
-			
-			
 			
 			document.getElementById("cashAmt").value =0;
 			document.getElementById("cardAmt").value =0;
@@ -3103,36 +3197,45 @@ $("#enterQty").focus();
 			var discAmt = parseFloat($('#discAmt').val());
 			var totalAmtPopup;
 			
-			
+			var grandTot=parseFloat($('#totalAmtPopup').text());
 			
  			var advAmt = document.getElementById("advAmt").value;
- 			totalAmtPopup= parseFloat($('#totalAmtPopup').text());
+ 			totalAmtPopup= parseFloat($('#totalAmtPopup').text())-advAmt;
+ 			
+ 			//alert("TOT - "+totalAmtPopup);
  			
  			//alert(discAmt+"------- "+totalAmtPopup);
  			
-			 /* if(parseFloat(advAmt)>0){
+			 /*  if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
 			}else{
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text());
-			}  */
+			}   */
 			
 			if(flag==1){
-				var calDiscAmt = parseFloat(totalAmtPopup*discPer/100);
+				
+				var calDiscAmt = parseFloat(grandTot*discPer/100);
 				var totalAmt=totalAmtPopup-calDiscAmt;
+				
+				if(isNaN(calDiscAmt)){
+					calDiscAmt=0;
+					totalAmt=totalAmtPopup;
+				}
+				
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
 				 
 			}else{
-				//var calDiscPer = parseFloat((discAmt/(totalAmtPopup/100)));
-
-				//alert("2      "+totalAmtPopup+"              "+discAmt);
-				
+				var calDiscPer = parseFloat((discAmt/(grandTot/100)));
 				var totalAmt=totalAmtPopup-discAmt;
 				
-				//alert("TOT - "+totalAmt);
+				if(isNaN(calDiscPer)){
+					calDiscPer=0;
+					totalAmt=totalAmtPopup;
+				}
 				
-				document.getElementById("discPer").value = 00;
+				document.getElementById("discPer").value = calDiscPer;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt;
 				document.getElementById("payAmt").value = totalAmt;
 
@@ -3528,17 +3631,22 @@ if(parseInt(custId)==parseInt(dfCust)){
     	document.getElementById("epayLabel").style.color="black";
 
     	
-    	
-    	
-    	
     	var advAmt = document.getElementById("advAmt").value;
-		if(parseFloat(advAmt)>0){
+    	//alert(advAmt);
+    	
+		/* if(parseFloat(advAmt)>0){
 		 
 			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
 		}else{
  			document.getElementById("payAmt").value = parseFloat($('#totalAmtPopup').text());
-		}
-		document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
+		} */
+		
+		var amt=parseFloat($('#totalAmtPopup').text())-advAmt;
+		
+		
+		//document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
+		document.getElementById("totalPayableAmt").innerHTML = amt;
+		document.getElementById("payAmt").innerHTML = amt;
 
 		itemDiscPerCalculation(2);
 
@@ -3692,7 +3800,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		}
 		
 		if(creditBill==2 && single==1 && payAmt==""){
-			alert("Please Enter Ammount");
+			alert("Please Enter Amount");
 		}else
 			if(payTypeFlag==1){
 				alert(msg);
@@ -3809,7 +3917,7 @@ function deleteSellBill(sellBillNo)
 						ajax : 'true'
 					},
 					function(data) {
-						alert("Bill Deleted SuccessFully");
+						alert("Bill Deleted Successfully");
 						$("#bill"+sellBillNo).remove();
 
 
@@ -3885,38 +3993,23 @@ function custBillPdf(sellBillNo)
 
 	<script type="text/javascript">
 
-function showCustBillForEdit(sellBillNo,custId){
+function showCustBillForEdit(sellBillNo,custId,mode){
 	
 	//alert("custId = "+custId+"              BILL = "+sellBillNo);
 	
-	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo,"_self");
-	
-	/* $.post('${getItemsOfBill}', {
-		 sellBillNo:sellBillNo,
-		 custId:custId,
-         ajax : 'true'
-     }, function(data) {
-    	 
-    	// alert("showCustBillForEdit ---- "+data);
-    	
-  	   if(data.error == false)
-  		   {
-  		    window.open("${pageContext.request.contextPath}/newcustomerbill/0","_self");
+	 window.open("${pageContext.request.contextPath}/editcustomerbill/0/"+sellBillNo+"/"+mode,"_self");
 
-  		   }
-  	   
-     }); */
 	
 }
 
 
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function handleClick(myRadio) {
-    alert('Old value: ' + currentValue);
-    alert('New value: ' + myRadio.value);
+   // alert('Old value: ' + currentValue);
+   // alert('New value: ' + myRadio.value);
     currentValue = myRadio.value;
 }
 
