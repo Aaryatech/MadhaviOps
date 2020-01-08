@@ -1648,8 +1648,8 @@ body {
 
 									<th style="text-align: center;" width="2%">Sr</th>
 									<th style="text-align: center;">Bill No</th>
-									<th style="text-align: center;">Bill Date</th>
-									<th style="text-align: center;" width="10%">Bill Amt</th>
+									<th style="text-align: center;" id="billDateLabel">Bill Date</th>
+									<th style="text-align: center;" width="10%" >Bill Amt</th>
 									<th style="text-align: center;" width="10%" id="discTh">Disc
 										Amt</th>
 									<th style="text-align: center;" width="10%" id="payableTh">Payable
@@ -1711,6 +1711,9 @@ body {
 			$("#trAction").show();
 			$("#discTh").show();
 			$("#payableTh").show();
+			$("#payableTh")
+			document.getElementById("billDateLabel").innerHTML = "Bill DATE";
+			
  				 $.post('${getCustBills}',
 								{
 									cust: custId,
@@ -1824,6 +1827,7 @@ body {
 				$("#trAction").hide();
 				$("#discTh").show();
 				$("#payableTh").hide();
+				document.getElementById("billDateLabel").innerHTML = "TRANSACTION DATE";
 
 				 $.post('${getCustBillsTransaction}',
 							{

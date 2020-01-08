@@ -22,6 +22,11 @@ public class ItemOrderHis {
 	private int menuId;
 	private String menuTitle;
 	private String itemName;
+	
+	private int showBillFlag;
+	
+	
+	
 	public int getOrderId() {
 		return orderId;
 	}
@@ -148,6 +153,18 @@ public class ItemOrderHis {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+	
+	
+	
+	public int getShowBillFlag() {
+		return showBillFlag;
+	}
+	public void setShowBillFlag(int showBillFlag) {
+		this.showBillFlag = showBillFlag;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ItemOrderHis [orderId=" + orderId + ", orderDate=" + orderDate + ", frId=" + frId + ", orderType="
@@ -156,7 +173,7 @@ public class ItemOrderHis {
 				+ orderStatus + ", orderDatetime=" + orderDatetime + ", productionDate=" + productionDate
 				+ ", deliveryDate=" + deliveryDate + ", isEdit=" + isEdit + ", editQty=" + editQty + ", userId="
 				+ userId + ", isPositive=" + isPositive + ", menuId=" + menuId + ", menuTitle=" + menuTitle
-				+ ", itemName=" + itemName + "]";
+				+ ", itemName=" + itemName + ", showBillFlag=" + showBillFlag + "]";
 	}
 	
 }
