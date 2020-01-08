@@ -272,6 +272,10 @@ input:checked+.slider:before {
 	border-radius: 50%;
 }
 </style>
+
+<link href="${pageContext.request.contextPath}/resources/css/mdtimepicker.css" rel="stylesheet" type="text/css">
+
+<script src="${pageContext.request.contextPath}/resources/js/mdtimepicker.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>    
@@ -343,6 +347,9 @@ input:checked+.slider:before {
 						<h2 class="pageTitle">Advance Order</h2>
 
 					</div>
+					
+				
+					
 
 					<div class="row">
 						<div class="col-md-3"></div>
@@ -399,6 +406,8 @@ input:checked+.slider:before {
 								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 									required placeholder="Delivery Date" name="devDate"
 									autocomplete="off" type="text" value="">
+									
+										
 
 							</div>
 							<div class="col-md-1">
@@ -406,13 +415,16 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<div class="clearfix">
-									<div class="input-group clockpicker-with-callbacks">
-										<input type="time" class="form-control" value="00:00" required
-											name="delTime" id="delTime1" style="line-height: 15px;"> <span
+								<input type="text" id="delTime1" name="delTime" value="00:00" style="text-align: center;"/>
+								
+<!-- 									<div class="input-group clockpicker-with-callbacks">
+										 <input type="time" class="form-control" value="00:00" required
+											name="delTime" id="delTime1" style="line-height: 15px;">
+											 <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-time"></span>
 										</span>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<!-- <div class="col-md-1">
@@ -781,13 +793,17 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<div class="clearfix">
-									<div class="input-group clockpicker-with-callbacks">
+								
+								<input type="text" id="delTime2" name="delTime" value="00:00" style="text-align: center;"/>
+								
+<!-- 									<div class="input-group clockpicker-with-callbacks">
 										<input type="time" class="form-control" value="00:00" required
-											name="delTime" id="delTime2" style="line-height: 15px;"> <span
+											name="delTime" id="delTime2" style="line-height: 15px;">
+											 <span
 											class="input-group-addon"> <span
 											class="glyphicon glyphicon-time"></span>
 										</span>
-									</div>
+									</div> -->
 								</div>
 							</div>
 
@@ -1671,7 +1687,7 @@ $(document).ready(function($) {
 				  var custId=document.getElementById("custId2").value;
 				  var delTime=document.getElementById("delTime2").value;
 				  
-				 // alert(delTime);
+				//  alert(delTime);
 				  
 				  var devDate=document.getElementById("todatepicker").value;
  				   //document.getElementById("subm2").disabled = true; 
@@ -2008,8 +2024,16 @@ $('#check-minutes').click(function(e){
 		src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/highlight.min.js"></script>
 
 
-
-
+<script>
+  $(document).ready(function(){
+	  
+    $('#delTime1').mdtimepicker(); //Initializes the time picker
+    $('#delTime2').mdtimepicker(); //Initializes the time picker
+    
+  
+    
+  });
+</script>
 
 
 </body>

@@ -3820,7 +3820,7 @@ function getCurrentItemList() {
 				var paidAmt=${tempHeader.paidAmt};
 				var trAdvanceAmt=${advAmtTransaction};
 				
-				alert(billAmtWtDisc);
+				//alert(billAmtWtDisc);
 					/* if((paidAmt)<=billAmtWtDisc){ */
 					 $
 						.post(

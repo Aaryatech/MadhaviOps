@@ -216,7 +216,7 @@ jQuery(document).ready(function(){
 
 
 				<!--leftNav-->
-<br>
+				<br>
 				<!--rightSidebar-->
 				<div class="sidebarright">
 					<div class="order-left">
@@ -229,7 +229,7 @@ jQuery(document).ready(function(){
 						<!--tabMenu-->
 
 						<!--tabMenu-->
-
+						
 						<div class="clearfix"></div>
 
 						<div id="table-scroll" class="table-scroll">
@@ -297,17 +297,37 @@ jQuery(document).ready(function(){
 												</c:choose>
 
 
-												<td><a
+												<td>
+												
+												<a
 													href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${orderList.deliveryDate}/${orderList.frId}">
 														<abbr title='Advance Order Detail'><i
 															class='fa fa-list'></i></abbr>
-												</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:if
-														test="${orderList.isSellBillGenerated==0}">
-														<a href="#"
-															onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
-															<abbr title='Generate Sell Bill'>BILL</abbr>
-														</a>
-													</c:if></td>
+												</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:choose>
+														<c:when test="${orderList.delStatus==1}">
+
+															<c:if test="${orderList.isSellBillGenerated==0}">
+																<a href="#"
+																	onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
+																	<abbr title='Generate Sell Bill'>BILL</abbr>
+																</a>
+															</c:if>
+
+														</c:when>
+
+														
+													</c:choose> 
+													<%-- <c:if test="${orderList.delStatus==1}">
+
+														<c:if test="${orderList.isSellBillGenerated==0}">
+															<a href="#"
+																onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
+																<abbr title='Generate Sell Bill'>BILL</abbr>
+															</a>
+														</c:if>
+													</c:if> --%>
+													
+													</td>
 
 											</tr>
 										</c:forEach>

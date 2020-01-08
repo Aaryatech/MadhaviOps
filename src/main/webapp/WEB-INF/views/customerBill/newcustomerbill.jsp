@@ -2250,7 +2250,7 @@ function matchSplitAmt(flag){
 			
 			
 			if(document.getElementById("receivedAmt").value>0){
-				alert("hi");
+				//alert("hi");
 				document.getElementById("overlay2").style.display = "block";
 			$.ajax({
 				type : "POST",

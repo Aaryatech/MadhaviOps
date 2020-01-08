@@ -280,7 +280,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;No.ofBill</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;No. of Bill</h3>
 									<h5 class="price_sale">${countDetails.noOfBillGenerated}</h5>
 								</div>
 								<div class="clr"></div>

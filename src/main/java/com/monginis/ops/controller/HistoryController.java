@@ -458,19 +458,43 @@ public class HistoryController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("history/advanceOrderList");
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+		Date currDate=Calendar.getInstance().getTime();
+		
 		try {
 
+			System.err.println("------------------showAdvanceOrderList------------------------");
+			
 			List<AdvanceOrderHeader> itemOrderHistory = advanceOrderHistoryHeader(0, "22-12-2019", frDetails.getFrId());
+			
 			for(int i=0;i<itemOrderHistory.size();i++) {
 				itemOrderHistory.get(i).setDeliveryDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getDeliveryDate()));
 				itemOrderHistory.get(i).setOrderDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getOrderDate()));
 				itemOrderHistory.get(i).setProdDate(DateConvertor.convertToDMY(itemOrderHistory.get(i).getProdDate()));
+				
+				Date thisDate=sdf.parse(itemOrderHistory.get(i).getDeliveryDate());
+				System.err.println("DATE - "+itemOrderHistory.get(i).getDeliveryDate());
+				System.err.println("DEL DATE - "+thisDate);
+				
+				if(currDate.compareTo(thisDate)>0 || currDate.compareTo(thisDate)==0) {
+					itemOrderHistory.get(i).setDelStatus(1);
+					System.err.println("BILL");
+				}else {
+					itemOrderHistory.get(i).setDelStatus(0);
+					System.err.println("NO BILL");
+				}
+				
+				
 
 			}
 			model.addObject("orderHistory", itemOrderHistory);
 			Customer[] customer = rest.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addObject("customerList", customerList);
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -761,6 +785,10 @@ public class HistoryController {
 
 	public List<AdvanceOrderHeader> advanceOrderHistoryHeader(int flag, String parsedDate, int frId) {
 
+		
+		System.err.println("------------------showAdvanceOrderList------------------------ "+parsedDate);
+		
+		
 		System.err.println("fr id is advanceOrderHistory" + frId);
 		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();

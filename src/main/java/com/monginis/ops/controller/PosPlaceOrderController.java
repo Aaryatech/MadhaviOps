@@ -456,7 +456,8 @@ public class PosPlaceOrderController {
 			advHeader.setExFloat2(0);
 			advHeader.setExInt1(1);
 			advHeader.setExInt2(1);
-			String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
+			//String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
+			String strDelTime = deliveryTime;
 
 			advHeader.setExVar1(dateFormat.format(date));// Order Time
 			advHeader.setExVar2(strDelTime);// Delivery Time

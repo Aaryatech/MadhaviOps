@@ -311,6 +311,8 @@ public class HomeController {
 			map.add("toDate", toDate);
 			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts", map,
 					PosDashCounts.class);
+			
+			System.err.println("DASH ------------------------ "+countDet);
 
 			List<DashAdvanceOrderCounts> dailyList = new ArrayList<DashAdvanceOrderCounts>();
 			List<DashAdvanceOrderCounts> advOrderList = new ArrayList<DashAdvanceOrderCounts>();
