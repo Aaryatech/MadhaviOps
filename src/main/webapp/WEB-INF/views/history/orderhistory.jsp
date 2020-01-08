@@ -582,7 +582,7 @@ jQuery(document).ready(function(){
 														<fmt:formatDate value="${myDate}" var="startFormat"
 															pattern="yyyy-MM-dd" />
 														<td><a
-															href="${pageContext.request.contextPath}/showAdvanceOrderDetail/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
+															href="${pageContext.request.contextPath}/showAdvanceOrderDetailByOrderHistory/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
 																	class="fa fa-table" aria-hidden="true"></i> </abbr>
 														</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:if

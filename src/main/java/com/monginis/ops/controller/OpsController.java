@@ -869,6 +869,7 @@ public class OpsController {
 						sellBillDetail.setTotalTax(itemBillList.get(i).getTaxAmt());
 						sellBillDetail.setGrandTotal(itemBillList.get(i).getTotal());
 						sellBillDetail.setItemName(itemBillList.get(i).getItemName());
+						sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
 						sellbilldetaillist.add(sellBillDetail);
 						total = total + sellBillDetail.getGrandTotal();
 						taxableAmt = taxableAmt + sellBillDetail.getTaxableAmt();
@@ -2317,8 +2318,21 @@ public class OpsController {
 			String modePay1 = request.getParameter("modePay1"); // single/split
 			int modType2 = 0;
 			int modType1 = 0;
+			int cardType=0;
+			int ePayType=0;
 			System.err.println("hii id list " + modePay1);
 			modType1 = Integer.parseInt(request.getParameter("modType1"));// cash/card
+			try {
+				cardType = Integer.parseInt(request.getParameter("cardType1"));
+			}catch(Exception e) {
+			}
+			
+			try {
+				ePayType = Integer.parseInt(request.getParameter("ePayType1"));
+			}catch(Exception e) {
+			}
+			
+			
 			String type = "0";
 
 			System.err.println("head id list " + checkedList.toString());
@@ -2338,12 +2352,15 @@ public class OpsController {
 				if (modType1 == 1) {
 					cashAmt1 = settleAmt;
 					type = "0,1";
+					
 				} else if (modType1 == 2) {
 					cardAmt1 = settleAmt;
-					type = "0,2";
+					//type = "0,2";
+					type = "0,"+cardType;
 				} else {
 					epayAmt1 = settleAmt;
-					type = "0,3";
+					//type = "0,3";
+					type = "0,"+ePayType;
 				}
 
 				expTrans.setSellBillNo(headId);
@@ -2351,13 +2368,16 @@ public class OpsController {
 				expTrans.setCashAmt(cashAmt1);
 				expTrans.setDiscType(0);
 				expTrans.setePayAmt(epayAmt1);
-				expTrans.setePayType(0);
+				expTrans.setePayType(ePayType);
 				expTrans.setPayMode(modType2);
 				expTrans.setTransactionDate(sf1.format(date));
 
 				expTrans.setExInt2(0);
 				expTrans.setExInt1(frEmpDetails.getFrEmpId());
-				expTrans.setExVar1(String.valueOf(modType1));// +prodMixingReqP1.get(i).getMulFactor()
+				
+				
+				expTrans.setExVar1(type);
+				//expTrans.setExVar1(String.valueOf(modType1));// +prodMixingReqP1.get(i).getMulFactor()
 				expTrans.setExVar2(String.valueOf(pendingAmt - settleAmt));
 				expTrans.setExFloat1(billAmt-discAmt);
 				expTrans.setExFloat2(0);
@@ -2514,7 +2534,7 @@ public class OpsController {
 			mvm.add("frId", frDetails.getFrId());
 			mvm.add("flag", tempType);
 			mvm.add("tabType", tabType);
-			TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransaction",
+			TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransactionWithDisc",
 					mvm, TransactionDetail[].class);
 
 			itemsList = new ArrayList<TransactionDetail>(Arrays.asList(itemsList1));

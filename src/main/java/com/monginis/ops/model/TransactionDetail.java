@@ -34,6 +34,10 @@ public class TransactionDetail implements Serializable{
 	private String exVar1;// Payment type
 		
 	private String exVar2;
+	
+	private float discAmt;
+	private float discPer;
+	
 
 	public int getTrId() {
 		return trId;
@@ -162,6 +166,26 @@ public class TransactionDetail implements Serializable{
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	
+	
+
+	public float getDiscAmt() {
+		return discAmt;
+	}
+
+	public void setDiscAmt(float discAmt) {
+		this.discAmt = discAmt;
+	}
+
+	public float getDiscPer() {
+		return discPer;
+	}
+
+	public void setDiscPer(float discPer) {
+		this.discPer = discPer;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -169,6 +193,6 @@ public class TransactionDetail implements Serializable{
 				+ ", payMode=" + payMode + ", cashAmt=" + cashAmt + ", cardAmt=" + cardAmt + ", ePayType=" + ePayType
 				+ ", ePayAmt=" + ePayAmt + ", discType=" + discType + ", delStatus=" + delStatus + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + "]";
+				+ ", exVar2=" + exVar2 + ", discAmt=" + discAmt + ", discPer=" + discPer + "]";
 	}
 }

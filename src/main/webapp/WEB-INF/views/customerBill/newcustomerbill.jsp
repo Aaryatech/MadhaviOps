@@ -1398,13 +1398,14 @@ body {
 					</div>
 				</div>
 
+				<div class="frm_row_one">
 
-				<div id="singleDiv1">
-					<div class="calcy_1">
+					<div class="four_one three" style="width: 33%">
 						<div class="add_customer_one">Type</div>
 						<div class="add_input">
 							<select name="modType1" id="modType1" data-placeholder="Type"
-								class="input_add " style="text-align: left;">
+								onchange="onPayTypeChange1(this.value)" class="input_add "
+								style="text-align: left;">
 								<option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
 								<option value="3" style="text-align: left;">E-Pay</option>
@@ -1412,9 +1413,45 @@ body {
 
 						</div>
 					</div>
-					<div class="calcy_2">
 
-						<div class="add_frm_one">
+					<div class="four_one three" style="width: 33%">
+						<div class="add_frm_one" id="cardTypeDiv1"
+							style="display: none; margin: 0px;">
+							<div class="add_customer_one">Card Type</div>
+							<div class="add_input">
+								<select name="cardType1" id="cardType1"
+									data-placeholder="Card Type" class="input_add "
+									style="text-align: left;">
+									<option value="" style="text-align: left;">Select Card</option>
+
+									<option value="4" style="text-align: left;">Debit Card</option>
+									<option value="5" style="text-align: left;">Credit
+										Card</option>
+								</select>
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						<div class="add_frm_one" id="epayTypeDiv1"
+							style="display: none; margin: 0px;">
+							<div class="add_customer_one">E-Pay Type</div>
+							<div class="add_input">
+								<select name="ePayType1" id="ePayType1"
+									data-placeholder="E-Pay Type" class="input_add "
+									style="text-align: left;">
+									<option value="">Select E-Pay Type</option>
+									<option value="6" style="text-align: left;">Phone Pe</option>
+									<option value="7" style="text-align: left;">Paytm</option>
+									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="9" style="text-align: left;">Amazon Pay</option>
+								</select>
+							</div>
+							<div class="clr"></div>
+						</div>
+					</div>
+
+					<div class="four_one three" style="width: 33%">
+						<div class="add_frm_one" style="margin: 0px;">
 							<div class="add_customer_one">Received Amt</div>
 							<div class="add_input">
 								<input placeholder="Received Amt" name="receivedAmt"
@@ -1425,10 +1462,10 @@ body {
 							<div class="clr"></div>
 						</div>
 						<input type="hidden" name="finTotal" id="total" value="0">
-
 					</div>
-
 				</div>
+
+
 
 
 				<!-- <div id="modeOfPayDiv1">
@@ -1785,7 +1822,7 @@ body {
 			  
 				$("#modeofpay").show();
 				$("#trAction").hide();
-				$("#discTh").hide();
+				$("#discTh").show();
 				$("#payableTh").hide();
 
 				 $.post('${getCustBillsTransaction}',
@@ -1885,6 +1922,7 @@ body {
 														tr.append($('<td ></td>').html(data.exVar2));
 														tr.append($('<td ></td>').html(data.transactionDate));
 														tr.append($('<td ></td>').html(data.exFloat1));
+														tr.append($('<td ></td>').html(data.discAmt));
 														tr.append($('<td ></td>').html(paidAmount));
 														tr.append($('<td ></td>').html(data.exFloat2));
 														tr.append($('<td class="gradient-multiline"></td>').html(resultPayType));
@@ -1938,6 +1976,22 @@ function matchSplitAmt(flag){
 			}else if(type==3){
 				$('#epayTypeDiv').show();
 				$('#cardTypeDiv').hide();
+
+			}
+		}
+		
+		function onPayTypeChange1(type){
+			if(type==1){
+				$('#cardTypeDiv1').hide();
+				$('#epayTypeDiv1').hide();
+			}else
+			if(type==2){
+				$('#cardTypeDiv1').show();
+				$('#epayTypeDiv1').hide();
+
+			}else if(type==3){
+				$('#epayTypeDiv1').show();
+				$('#cardTypeDiv1').hide();
 
 			}
 		}
@@ -2169,7 +2223,34 @@ function matchSplitAmt(flag){
 	<script type="text/javascript">
 		$('#sbtbtn').click(function() {
 			
+			var billType =  $('#modType1').val() ;
+			//alert(billType);
+			
+			var isValid=0;
+			
+			if(billType==2) {
+				var cardType = $('#cardType1 option:selected').val();
+				if(cardType=="") {
+					alert("Please Select Card Type");
+				}else{
+					isValid=1;
+				}
+			}else if(billType==3) {
+				var ePayType =  $('#ePayType1 option:selected').val();
+				if(ePayType=="") {
+					alert("Please Select E-Pay Type");
+				}else{
+					isValid=1;
+				}
+			}
+			
+			
+			if(isValid==1){
+			
+			
+			
 			if(document.getElementById("receivedAmt").value>0){
+				alert("hi");
 				document.getElementById("overlay2").style.display = "block";
 			$.ajax({
 				type : "POST",
@@ -2194,10 +2275,11 @@ function matchSplitAmt(flag){
 					$("#overlay").fadeOut(300);
 				}, 500);
 			});
-			}else
-				{
+			}else {
 				alert("Please Enter Valid Received Amount!!")
-				}
+			}
+			
+		}
 		});
 	</script>
 
@@ -3716,9 +3798,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		if(billType==1){
 			payTypeFlag=0;
 			payType=1;
-		}else
-		if(billType==2)
-			{
+		}else if(billType==2) {
 			var cardType = $('#cardType option:selected').val();
 			if(cardType=="")
 				{

@@ -50,6 +50,7 @@
 				<jsp:include page="/WEB-INF/views/include/left.jsp">
 					<jsp:param name="myMenu" value="${menuList}" />
 				</jsp:include>
+				<br>
 				<div class="sidebarright">
 
 					<div class="order-left">
@@ -60,7 +61,7 @@
 					<div class="order-right" align="right"></div>
 					<form name="frm_search" id="frm_search" method="get"
 						action="${pageContext.request.contextPath}/showExpenseList">
-
+<br>
 						<div class="col-md -3">
 							<%-- 	<c:choose>
 						<c:when test="${isEdit==1}">
