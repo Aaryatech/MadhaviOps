@@ -628,10 +628,8 @@
 							<div class="add_frm_one">
 								<div class="add_customer_one">Password</div>
 								<div class="add_input">
-									<input name="pass" type="text" class="input_add" id="pass"
-										minlength="4" maxlength="4"
-										oninput="this.value = this.value.replace(/[^0-9]{4}/g, '').replace(/(\..*)\./g, '$1');"
-										value="${emp.password}" size="4" required />
+									<input name="pass" type="password" class="input_add" id="pass"
+										value="${emp.password}" required />
 								</div>
 								<div class="clr"></div>
 							</div>
@@ -852,10 +850,12 @@
 			else if ($('#pass').val() == "") {
 				valid = 1;
 				alert("Enter Password");
-			} else if ($('#pass').val().length != 4) {
+			} 
+			/* else if ($('#pass').val().length != 4) {
 				valid = 1;
 				alert("Enter 4 digit Password");
-			} else if ($('#emp_code').val() == "") {
+			} */
+			else if ($('#emp_code').val() == "") {
 				valid = 1;
 				alert("Enter Employee Code");
 			}

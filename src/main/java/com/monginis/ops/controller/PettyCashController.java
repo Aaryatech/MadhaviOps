@@ -764,9 +764,14 @@ public class PettyCashController {
 
 			System.err.println("DATE **************************** " + currentDate);
 
-			PettyCashHandover data = rest.postForObject(Constant.URL + "/getLastCashHandover", map,
+			PettyCashHandover data=null;
+			try {
+			data = rest.postForObject(Constant.URL + "/getLastCashHandover", map,
 					PettyCashHandover.class);
-
+			}catch(Exception e) {
+				data=null;
+			}
+			
 			System.err.println("PREV HANDOVER **************************** " + data);
 
 			float prevAmt = 0;

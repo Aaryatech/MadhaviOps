@@ -1105,12 +1105,37 @@ public class OpsController {
 
 						float detailGrandTotal = CustomerBillController
 								.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+						
+						float baseRate=((detailGrandTotal*100)/(100+itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2()));
+						float totalTaxedAmt=CustomerBillController
+								.roundUp(baseRate*((itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2())/100));
+						
+						
+						/*System.err.println("ITEM TOTAL = "+itemBillList.get(i).getTotal());
+						System.err.println("DISC AMT = "+discAmt);
+						System.err.println("ITEM DISC PER = "+detailDiscPer);
+						System.err.println("ITEM GRAND TOTAL = "+detailGrandTotal);
+						System.err.println("ITEM CGST = "+itemsListByIds.get(j).getItemTax2());
+						System.err.println("ITEM SGST = "+itemsListByIds.get(j).getItemTax1());
+						System.err.println("ITEM BASE RATE = "+baseRate);
+						System.err.println("ITEM TOTAL TAXED AMT = "+totalTaxedAmt);*/
+						
+						float detailSgstRs = totalTaxedAmt/2;
+						float detailCgstRs = totalTaxedAmt/2;
+						float detailIgstRs = totalTaxedAmt;
+						
+						/*System.err.println("ITEM SGST AMT = "+detailSgstRs);
+						System.err.println("ITEM CGST AMT = "+detailCgstRs);
+						System.err.println("ITEM IGST AMT = "+detailIgstRs);*/
 
-						float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+						/*float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 						float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
-						float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+						float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;*/
+						
+						
+						
 
-						System.err.println("rate - " + i + " = " + itemBillList.get(i).getOrignalMrp());
+						/*System.err.println("rate - " + i + " = " + itemBillList.get(i).getOrignalMrp());
 						System.err.println("qty - " + i + " = " + itemBillList.get(i).getQty());
 
 						System.err.println("getTotal - " + i + " = " + itemBillList.get(i).getTotal());
@@ -1118,9 +1143,9 @@ public class OpsController {
 						System.err.println("discAmt - " + discAmt);
 
 						System.err.println("detailDiscAmt - " + detailDiscAmt);
-						System.err.println("detailGrandTotal - " + detailGrandTotal);
+						System.err.println("detailGrandTotal - " + detailGrandTotal);*/
 
-						System.err.println("-------------------------------------------------------- - ");
+						
 
 						detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
 						detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
@@ -1131,7 +1156,10 @@ public class OpsController {
 
 						float detailTaxableAmt = detailGrandTotal - detailTotalTax;
 						detailTaxableAmt = CustomerBillController.roundUp(detailTaxableAmt);
-
+						
+						System.err.println("TAXABLE AMT = "+detailTaxableAmt);
+						System.err.println("-------------------------------------------------------- - ");
+						
 						sellBillDetail.setSgstRs(detailSgstRs);
 						sellBillDetail.setCgstRs(detailCgstRs);
 						sellBillDetail.setIgstRs(detailIgstRs);
@@ -1457,27 +1485,30 @@ public class OpsController {
 											/ (100 + itemBillList.get(i).getTaxPer());
 									sellBillDetail.setMrpBaseRate(mrpBaseRate);
 
+									/*float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+									float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+
+									float detailGrandTotal = CustomerBillController
+											.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);*/
+									
 									float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
 									float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
 									float detailGrandTotal = CustomerBillController
 											.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+									
+									float baseRate=((detailGrandTotal*100)/(100+itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2()));
+									float totalTaxedAmt=CustomerBillController
+											.roundUp(baseRate*((itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2())/100));
+									
+									
+									float detailSgstRs = totalTaxedAmt/2;
+									float detailCgstRs = totalTaxedAmt/2;
+									float detailIgstRs = totalTaxedAmt;
 
-									/*
-									 * float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 +
-									 * itemsListByIds.get(j).getItemTax3());
-									 * sellBillDetail.setMrpBaseRate(mrpBaseRate);
-									 * 
-									 * // -----------------------------------------
-									 * 
-									 * float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-									 * (discAmt / 100)); float detailGrandTotal = CustomerBillController
-									 * .roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
-									 */
-
-									float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+									/*float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 									float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
-									float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+									float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;*/
 
 									detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
 									detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
@@ -1534,27 +1565,30 @@ public class OpsController {
 									/ (100 + itemBillList.get(i).getTaxPer());
 							sellBillDetail.setMrpBaseRate(mrpBaseRate);
 
+							/*float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+							float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+
+							float detailGrandTotal = CustomerBillController
+									.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);*/
+							
+							
 							float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
 							float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
 							float detailGrandTotal = CustomerBillController
 									.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
+							
+							float baseRate=((detailGrandTotal*100)/(100+itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2()));
+							float totalTaxedAmt=CustomerBillController
+									.roundUp(baseRate*((itemsListByIds.get(j).getItemTax1()+itemsListByIds.get(j).getItemTax2())/100));
+							
+							float detailSgstRs = totalTaxedAmt/2;
+							float detailCgstRs = totalTaxedAmt/2;
+							float detailIgstRs = totalTaxedAmt;
 
-							/*
-							 * float mrpBaseRate = (sellBillDetail.getMrp() * 100) / (100 +
-							 * itemsListByIds.get(j).getItemTax3());
-							 * sellBillDetail.setMrpBaseRate(mrpBaseRate);
-							 * 
-							 * 
-							 * 
-							 * float detailDiscAmt = (itemBillList.get(i).getTotal() / (billAmtWtDisc / 100)
-							 * (discAmt / 100)); float detailGrandTotal = CustomerBillController
-							 * .roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
-							 */
-
-							float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
+							/*float detailSgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax1()) / 100;
 							float detailCgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax2()) / 100;
-							float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;
+							float detailIgstRs = (detailGrandTotal * itemsListByIds.get(j).getItemTax3()) / 100;*/
 
 							detailSgstRs = CustomerBillController.roundUp(detailSgstRs);
 							detailCgstRs = CustomerBillController.roundUp(detailCgstRs);
@@ -1649,12 +1683,12 @@ public class OpsController {
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(grandTot));
 			if (discPer != 0) {
-				sellBillHeader.setDiscountPer(discPer);//
+				sellBillHeader.setDiscountPer(discPer);
 			} else {
-				sellBillHeader.setDiscountPer(discAmt / (billAmtWtDisc / 100));//
+				sellBillHeader.setDiscountPer(discAmt / (billAmtWtDisc / 100));
 			}
 
-			sellBillHeader.setDiscountAmt(discAmt);//
+			sellBillHeader.setDiscountAmt(discAmt);
 			/*
 			 * if (creditBill == 1) { sellBillHeader.setStatus(3);
 			 * sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());

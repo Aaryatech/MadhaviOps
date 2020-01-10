@@ -56,7 +56,7 @@
 <div class="container">
 <c:forEach items="${empList}" var="empList">
 <input type="hidden" name="empId" id="empId${count.index}" value="${empList.frEmpId}" />
-<div class="items" onclick="showNumPad(${empList.frEmpId})">
+<div class="items" id="items" onclick="showNumPad(${empList.frEmpId})">
     <div class="icon-wrapper">
       <i class="fa fa-user-o "></i>
     </div>
@@ -70,12 +70,13 @@
   <div>
   
      <div class="keypad_wrapper">    <a href="#" title="Close" class="modal-close" onclick="hideNumPad()">Close</a>
-	<div class="screen"></div>
+	<input type="password" class="screen" id="screen" autofocus="autofocus">
+	
 	<div class="flasher"></div>
 	<div class="error notification">ERROR</div>
 	<div class="success notification">SUCCESS</div>
 	
-	<div class="key">1</div>
+	<!-- <div class="key">a</div>
 	<div class="key">2</div>
 	<div class="key">3</div>
 	<div class="key">4</div>
@@ -84,39 +85,56 @@
 	<div class="key">7</div>
 	<div class="key">8</div>
 	<div class="key">9</div>
-	<div class="key last">0</div>
+	<div class="key last">0</div> -->
 	
 </div></div>
 </div>
 </div>
 <script type="text/javascript">
+$(function() {
+	  $(document).on("keypress", function() {
+	    $("#screen").focus();
+	  });
+	  
+	
+	});
+
+$('#open-container').on('shown', function () {
+    $('#screen').focus();
+})
 
 window.pass = "~~~~";
 window.redirectURL = '${pageContext.request.contextPath}/frLoginProcess';
 
 function showNumPad(empId)
 {
+	
 	            $.post('${checkValidEmployee}',
 				{
 		            empId: empId,
 					ajax: 'true'
 				},
 				function(data) {
+					//document.getElementById('screen').focus();
 					window.pass =data;
 				});
 	var div = document.getElementById('open-modal');
 	div.style.visibility = 'visible';
+	
 	div.style.opacity = '1';
 	div.style.pointerEvents = "auto";
+	document.getElementById('screen').focus();
 
 }
 function hideNumPad()
 {
+	
 	var div = document.getElementById('open-modal');
 	div.style.visibility = 'hidden';
 	div.style.opacity = '0';
 	div.style.pointerEvents = "none";
 	$('.screen').html('');	window.tries = 0;
+	document.getElementById('screen').value="";
 
 }
 $(document).ready(function() {
@@ -125,9 +143,13 @@ $(document).ready(function() {
 
 
 function start(){
-	window.tries = 0;
 	
-	$(".key").click(function(){
+
+	
+	
+	window.tries = 0;
+	$('#screen').bind('input', function() { 
+	
 		var n = $(this).html();
 		$('.screen').append( n );
 		window.tries++;
@@ -137,6 +159,7 @@ function start(){
 }
 
 function updateFlasher(){
+	
 	if (window.tries <=3){
 		var dis = window.tries * 55;
 		$('.flasher').css({
@@ -152,21 +175,24 @@ function updateFlasher(){
 }
 
 function validate(){
-	if (window.tries >= 4){
+	$('#screen').keyup(function(e) { 
+
+	    if(e.keyCode == 13) { 
+		
 		checkWin();
-		$('.screen').html('');
+		$('.screen').val('');
 		window.tries = 0;
 		$('.flasher').css({
 			'display' : 'block'
 		});
-	}
-	else{
-		
-	}
+	    }});
+	
 }
 
 function checkWin(){
-	var w = $('.screen').html();
+
+
+	var w = $('#screen').val();
 	if (w == window.pass){
 		document.getElementById("overlay2").style.display = "block";
 
@@ -185,5 +211,8 @@ function checkWin(){
 	}
 }
 </script>
+
+
+
 </body>
 </html>

@@ -105,11 +105,10 @@ public class ItemController {
 			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
 					CustList[].class);
 			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
- 
+
 			mav.addObject("custList", custList);
 			mav.addObject("frId", frDetails.getFrId());
-			
-			
+
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -118,11 +117,10 @@ public class ItemController {
 			rowData.add("Sr. No");
 			rowData.add("Customer");
 			rowData.add("Mobile no");
-			rowData.add("GST No."); 
-			expoExcel.setRowData(rowData); 
+			rowData.add("GST No.");
+			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
-			 
 			for (int i = 0; i < custList.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
@@ -130,21 +128,20 @@ public class ItemController {
 				rowData.add("" + (i + 1));
 				rowData.add("" + custList.get(i).getUserName());
 				rowData.add("" + custList.get(i).getUserPhone());
-				rowData.add("" + custList.get(i).getUserGstNo()); 
+				rowData.add("" + custList.get(i).getUserGstNo());
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 
-				 
 			}
 
 			session = request.getSession();
 			session.setAttribute("exportExcelListNew", exportToExcelList);
 			session.setAttribute("excelNameNew", "CustomerList");
-			session.setAttribute("reportNameNew", "Customer List"); 
+			session.setAttribute("reportNameNew", "Customer List");
 			session.setAttribute("mergeUpto1", "$A$1:$D$1");
 			session.setAttribute("mergeUpto2", "$A$2:$D$2");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -152,23 +149,24 @@ public class ItemController {
 		return mav;
 
 	}
-	
+
 	@RequestMapping(value = "pdf/getcustomerListPdf/{frId}", method = RequestMethod.GET)
-	public ModelAndView getCrnCheckedHeadersNew(@PathVariable int frId,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getCrnCheckedHeadersNew(@PathVariable int frId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/getcustomerListPdf");
 
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 
-			MultiValueMap<String, Object> map  = new LinkedMultiValueMap<String, Object>();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
-			 
+
 			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
 					CustList[].class);
 			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
- 
-			model.addObject("custList", custList); 
+
+			model.addObject("custList", custList);
 
 		} catch (Exception e) {
 			System.err.println("Exce Occured ");
@@ -336,31 +334,28 @@ public class ItemController {
 		for (int i = 0; i < frItemList.size(); i++) {
 
 			if (frDetails.getFrRateCat() == 1) {
-				double rate=0;
-				if(frDetails.getFrKg1()==1) {
-					rate=frItemList.get(i).getItemMrp1();
-				}else
-				{
-					rate=frItemList.get(i).getItemRate1();
+				double rate = 0;
+				if (frDetails.getFrKg1() == 1) {
+					rate = frItemList.get(i).getItemMrp1();
+				} else {
+					rate = frItemList.get(i).getItemRate1();
 				}
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 			} else if (frDetails.getFrRateCat() == 2) {
-				double rate=0;
-				if(frDetails.getFrKg1()==1) {
-					rate=frItemList.get(i).getItemMrp2();
-				}else
-				{
-					rate=frItemList.get(i).getItemRate2();
+				double rate = 0;
+				if (frDetails.getFrKg1() == 1) {
+					rate = frItemList.get(i).getItemMrp2();
+				} else {
+					rate = frItemList.get(i).getItemRate2();
 				}
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 
 			} else if (frDetails.getFrRateCat() == 3) {
-				double rate=0;
-				if(frDetails.getFrKg1()==1) {
-					rate=frItemList.get(i).getItemMrp3();
-				}else
-				{
-					rate=frItemList.get(i).getItemRate3();
+				double rate = 0;
+				if (frDetails.getFrKg1() == 1) {
+					rate = frItemList.get(i).getItemMrp3();
+				} else {
+					rate = frItemList.get(i).getItemRate3();
 				}
 				grandTotal = grandTotal + (frItemList.get(i).getItemQty() * rate);
 
@@ -386,32 +381,29 @@ public class ItemController {
 					qty = qty + frItemList.get(j).getItemQty();
 
 					if (frDetails.getFrRateCat() == 1) {
-						double rate=0;
-						if(frDetails.getFrKg1()==1) {
-							rate=frItemList.get(i).getItemMrp1();
-						}else
-						{
-							rate=frItemList.get(i).getItemRate1();
+						double rate = 0;
+						if (frDetails.getFrKg1() == 1) {
+							rate = frItemList.get(i).getItemMrp1();
+						} else {
+							rate = frItemList.get(i).getItemRate1();
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
 
 					} else if (frDetails.getFrRateCat() == 2) {
-						double rate=0;
-						if(frDetails.getFrKg1()==1) {
-							rate=frItemList.get(i).getItemMrp2();
-						}else
-						{
-							rate=frItemList.get(j).getItemRate2();
+						double rate = 0;
+						if (frDetails.getFrKg1() == 1) {
+							rate = frItemList.get(i).getItemMrp2();
+						} else {
+							rate = frItemList.get(j).getItemRate2();
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
 
 					} else if (frDetails.getFrRateCat() == 3) {
-						double rate=0;
-						if(frDetails.getFrKg1()==1) {
-							rate=frItemList.get(j).getItemMrp3();
-						}else
-						{
-							rate=frItemList.get(j).getItemRate3();
+						double rate = 0;
+						if (frDetails.getFrKg1() == 1) {
+							rate = frItemList.get(j).getItemMrp3();
+						} else {
+							rate = frItemList.get(j).getItemRate3();
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
 
@@ -839,7 +831,7 @@ public class ItemController {
 				System.out.println("Delivery date: " + deliveryDate);
 
 				// if date time verified then place order
-// 
+				//
 				List<GetFrItem> orderList = new ArrayList<>();
 
 				for (int i = 0; i < frItemList.size(); i++) {
@@ -917,12 +909,23 @@ public class ItemController {
 						System.out.println("order qty===***************" + frItem.getItemQty());
 
 						if (rateCat == 1) {
-							order.setOrderMrp(frItem.getItemMrp1());
-							order.setOrderRate(frItem.getItemRate1());
+
+							if (frDetails.getFrKg1() == 1) {
+								order.setOrderMrp(frItem.getItemMrp1());
+								order.setOrderRate(frItem.getItemMrp1());
+							} else {
+								order.setOrderMrp(frItem.getItemMrp1());
+								order.setOrderRate(frItem.getItemRate1());
+							}
 
 						} else if (rateCat == 3) {
-							order.setOrderMrp(frItem.getItemMrp3());
-							order.setOrderRate(frItem.getItemRate3());
+							if (frDetails.getFrKg1() == 1) {
+								order.setOrderMrp(frItem.getItemMrp3());
+								order.setOrderRate(frItem.getItemMrp3());
+							} else {
+								order.setOrderMrp(frItem.getItemMrp3());
+								order.setOrderRate(frItem.getItemRate3());
+							}
 
 						}
 

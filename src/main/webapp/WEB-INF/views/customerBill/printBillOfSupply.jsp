@@ -49,29 +49,30 @@
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
 		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
 		<tbody>
-		
+
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><img
 					src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg"
 					alt="madhvi_logo"></td>
 			</tr>
-	        <tr>
+			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><b>BILL
 						OF SUPPLY</b></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName} <br> (Madhvi Dairy Retail Outlet)</b><br />
-					</td>
+					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><b>${frDetails.frName}
+						<br> (Madhvi Dairy Retail Outlet)
+				</b><br /></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 11px;">${frDetails.frAddress}
-					<br />Outlet Ph:&nbsp;<strong>${frDetails.frMob}</strong><br />
-					<span
-					style="font-size:11px; font-family: verdana;">GSTIN:&nbsp;<b>${frDetails.frGstNo}</b> State:&nbsp; ${frSup.frState} <br>FSSAI:&nbsp;&nbsp;${frDetails.fbaLicenseDate}
+					<br />Outlet Ph:&nbsp;<strong>${frDetails.frMob}</strong><br /> <span
+					style="font-size: 11px; font-family: verdana;">GSTIN:&nbsp;<b>${frDetails.frGstNo}</b>
+						State:&nbsp; ${frSup.frState} <br>FSSAI:&nbsp;&nbsp;${frDetails.fbaLicenseDate}
 				</span>
 				</td>
 			</tr>
@@ -113,8 +114,10 @@
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item<span
 													style="font-size: 8">(HSN)</span></th>
+													
+												<th width="8%" bgcolor="#ECECEC" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
-													<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
+												<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
 												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
@@ -122,62 +125,69 @@
 											<c:forEach items="${sellBillHeaderAndDetail.list}"
 												var="itemBillList" varStatus="count">
 												<tr>
-													<td><span style="font-size: 11px">${itemBillList.itemName}<br />
+													<td ><span style="font-size: 11px">${itemBillList.itemName}<br />
 															<span style="font-size: 8px">HSN-${itemBillList.qty}
 																${itemBillList.itemHsncd}</span></span></td>
-													<td align="right"><span style="font-size: 11px">
-													<c:choose><c:when test="${itemBillList.isDecimal==1}">
-													<fmt:formatNumber
-																type="number" groupingUsed="false"
-																value="${itemBillList.qty}" maxFractionDigits="3"
-																minFractionDigits="3" /> 
-													</c:when>
-													<c:otherwise>
-													<fmt:formatNumber
-																type="number" groupingUsed="false"
-																value="${itemBillList.qty}" maxFractionDigits="0"
-																minFractionDigits="0" /> 
-													</c:otherwise>
-													</c:choose>
+																
+														<td  align="right"><span style="font-size: 11px">
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></td>		
+																
+													<td  align="right"><span style="font-size: 11px">
+															<c:choose>
+																<c:when test="${itemBillList.isDecimal==1}">
+																	<fmt:formatNumber type="number" groupingUsed="false"
+																		value="${itemBillList.qty}" maxFractionDigits="3"
+																		minFractionDigits="3" />
+																</c:when>
+																<c:otherwise>
+																	<fmt:formatNumber type="number" groupingUsed="false"
+																		value="${itemBillList.qty}" maxFractionDigits="0"
+																		minFractionDigits="0" />
+																</c:otherwise>
+															</c:choose>
 													</span></td>
-													<td align="right">
-													<span style="font-size: 11px">
-													${itemBillList.itemUom}
-													</span></td>
-													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
+													<td  align="right"><span style="font-size: 11px">
+															${itemBillList.itemUom} </span></td>
+													<td  align="right"><span style="font-size: 11px"><fmt:formatNumber
 																type="number" groupingUsed="false"
 																value="${itemBillList.mrp}" maxFractionDigits="0"
 																minFractionDigits="0" /> </span></td>
-													<td align="right"><span style="font-size: 11px">
+													<td  align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.qty*itemBillList.mrp}" maxFractionDigits="2"
-																minFractionDigits="2" var="total"/> ${total}
-													<c:set var="calTotalAmt" value="${total+calTotalAmt}"></c:set>			
+																value="${itemBillList.qty*itemBillList.mrp}"
+																maxFractionDigits="2" minFractionDigits="2" var="total" />
+															${total} <c:set var="calTotalAmt"
+																value="${total+calTotalAmt}"></c:set>
 													</span></td>
 													<c:set var="totalAmt"
 														value="${totalAmt+itemBillList.grandTotal}"></c:set>
 												</tr>
 											</c:forEach>
-                                          <c:if test="${sellBillHeaderAndDetail.discountAmt>0}">
-											<tr>
-												<td colspan="4" align="right"><span class="style7">SubTotal:</span></td>
-												<td align="right"><span class="style7"><fmt:formatNumber
-															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${calTotalAmt}" groupingUsed="false" /></span></td>
-											</tr>
-                                           <tr>
-												<td colspan="4" align="right"><span class="style7">Disc Amt:</span></td>
-												<td align="right"><span class="style7"><fmt:formatNumber
-															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
-											</tr>
+											<c:if test="${sellBillHeaderAndDetail.discountAmt>0}">
+												<tr>
+													<td colspan="4" align="right"><span class="style7">SubTotal:</span></td>
+													<td align="right"><span class="style7"><fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2" value="${calTotalAmt}"
+																groupingUsed="false" /></span></td>
+												</tr>
+												<tr>
+													<td colspan="4" align="right"><span class="style7">Disc
+															Amt:</span></td>
+													<td align="right"><span class="style7"><fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2"
+																value="${sellBillHeaderAndDetail.discountAmt}"
+																groupingUsed="false" /></span></td>
+												</tr>
 											</c:if>
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Bill
 														Total:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
+															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+															groupingUsed="false" /></span></td>
 											</tr>
 										</tbody>
 									</table></td>
@@ -189,39 +199,40 @@
 			<tr>
 				<td colspan="2"><table width="100%" border="0" cellspacing="0"
 						cellpadding="7">
+						
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
-									Customer Care: 9824051188  </span></td>
+									Customer Care: 9824051188 </span></td>
 						</tr>
 						<tr>
 							<td align="left"
-								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								>
-								 For wholesale inquiry contact DairyMart Team <br>Ph: 82600 60048/49<br>
-								 Visit us on  www.madhvi.in<br>
-								 Please Email us your feedback/suggestions on<br>
-								 madhvidairy@gmail.com<br>
-								 This is a computer generated invoice <br>
-								 Subject to ${frDetails.frCity} Jurisdiction</span></td>
+								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
+									For wholesale inquiry contact DairyMart Team <br>Ph: 82600
+									60048/49<br> Visit us on www.madhvi.in<br> Please
+									Email us your feedback/suggestions on<br>
+									madhvidairy@gmail.com<br> This is a computer generated
+									invoice <br> Subject to ${frDetails.frCity} Jurisdiction
+							</span></td>
 						</tr>
 
 					</table></td>
 			</tr>
 			<c:choose>
-							<c:when test="${frDetails.frGstType!=0}">
-			<tr>
-				<td colspan="2"><table width="100%" border="0" cellspacing="0"
-						cellpadding="7">
-						<tr>
-							<td align="center"
-								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								>Composition Taxable Person,Not eligible to collect Tax on Supplies</span></td>
-						</tr>
+				<c:when test="${frDetails.frGstType!=0}">
+					<tr>
+						<td colspan="2"><table width="100%" border="0"
+								cellspacing="0" cellpadding="7">
+								<tr>
+									<td align="center"
+										style="border-top: 1px solid #E7E7E7; padding: 3px;"
+										colspan="6"><span>Composition Taxable
+											Person,Not eligible to collect Tax on Supplies</span></td>
+								</tr>
 
-					</table></td>
-			</tr>
-			</c:when>
+							</table></td>
+					</tr>
+				</c:when>
 			</c:choose>
 			<tr>
 				<td colspan="2"><table width="100%" border="0" cellspacing="0"
@@ -229,7 +240,8 @@
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span
-								style="font-weight: bold;"> With You @ Your Great Moments!</span></td>
+								style="font-weight: bold;"> With You @ Your Great
+									Moments!</span></td>
 						</tr>
 
 					</table></td>

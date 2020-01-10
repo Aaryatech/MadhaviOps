@@ -456,7 +456,8 @@ public class PosPlaceOrderController {
 			advHeader.setExFloat2(0);
 			advHeader.setExInt1(1);
 			advHeader.setExInt2(1);
-			//String strDelTime = LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
+			// String strDelTime =
+			// LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
 			String strDelTime = deliveryTime;
 
 			advHeader.setExVar1(dateFormat.format(date));// Order Time
@@ -471,6 +472,7 @@ public class PosPlaceOrderController {
 			advHeader.setIsBillGenerated(0);
 			advHeader.setIsSellBillGenerated(0);
 			float discAmt = 0.0f;
+			float billTotal=0;
 			for (int i = 0; i < frItemList.size(); i++) {
 
 				GetFrItem item = frItemList.get(i);
@@ -515,20 +517,52 @@ public class PosPlaceOrderController {
 						det.setDiscPer(item.getDiscPer());
 						if (rateCat == 1) {
 							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp1())));
-							det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
-							float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+
+							float calTotal = 0;
+
+							if (frDetails.getFrKg1() == 1) {
+								det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp1()))));
+								calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp1()))) * qty;
+							} else {
+								det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
+								calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) * qty;
+							}
+
+							// det.setRate((Float.parseFloat(String.valueOf(item.getItemRate1()))));
+							// float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate1()))) *
+							// qty;
+
 							float discountAmount = (calTotal * item.getDiscPer()) / 100;
 							float subTotal = calTotal - discountAmount;
 							discAmt = discAmt + discountAmount;
 							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+							
+							billTotal = billTotal+calTotal;
+							
+							
 						} else if (rateCat == 3) {
 							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
-							det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
-							float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
+
+							float calTotal = 0;
+
+							if (frDetails.getFrKg1() == 1) {
+								det.setRate((Float.parseFloat(String.valueOf(item.getItemMrp3()))));
+								calTotal = (Float.parseFloat(String.valueOf(item.getItemMrp3()))) * qty;
+							} else {
+								det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
+								calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
+							}
+
+							//det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
+							//float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
+							
 							float discountAmount = (calTotal * item.getDiscPer()) / 100;
 							discAmt = discAmt + discountAmount;
 							float subTotal = calTotal - discountAmount;
 							det.setSubTotal(CustomerBillController.roundUp(subTotal));
+							
+							billTotal = billTotal+calTotal;
+							
 						}
 					}
 					det.setEvents("");
@@ -563,6 +597,17 @@ public class PosPlaceOrderController {
 					advDetailList.add(det);
 				}
 			}
+			
+			if(dm==1) {
+				advHeader.setTotal(billTotal);	
+				
+				float adv=Float.parseFloat(advanceAmt);
+				float rem=billTotal-adv;
+				
+				advHeader.setRemainingAmt(rem);
+				
+			}
+			
 			if (advDetailList.size() > 0 && (date1.compareTo(date2) > 0)) {
 				advHeader.setDiscAmt(discAmt);
 				advHeader.setDetailList(advDetailList);

@@ -472,7 +472,7 @@ jQuery(document).ready(function(){
 																<fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
-																		value="${orderList.orderQty * orderList.orderRate}" />
+																		value="${orderList.orderQty * orderList.orderMrp}" />
 																</c:otherwise>
 																</c:choose>
 																
@@ -558,7 +558,7 @@ jQuery(document).ready(function(){
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.advanceAmt}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.remainingAmt}" /></td>
+																value="${orderList.total-orderList.advanceAmt}" /></td>
 
 														<c:choose>
 

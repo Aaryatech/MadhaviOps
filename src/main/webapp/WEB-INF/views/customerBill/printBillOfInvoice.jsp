@@ -186,7 +186,7 @@
 											</tr>
                                             </c:if>
 											<tr>
-												<td colspan="4" align="right"><span class="style7">Bill
+												<td colspan="5" align="right"><span class="style7">Bill
 														Total:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -281,12 +281,12 @@
 </body>
 <body onload="directPrint()">
 	<script>
-		/* function directPrint()
+		 function directPrint()
 		{
 			//alert("JJ");
 			window.print();
 			//window.close();
-		} */
+		} 
 	</script>
 </body>
 

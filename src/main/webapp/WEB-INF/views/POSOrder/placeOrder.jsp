@@ -568,7 +568,7 @@ input:checked+.slider:before {
 																	<c:otherwise>
 																	<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" />
+																				maxFractionDigits="2" value="${mrp * qty}" />
 																	</c:otherwise>	
 																	</c:choose>		
 																				</td>
@@ -615,7 +615,7 @@ input:checked+.slider:before {
 																	<c:otherwise>
 																	<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" />
+																				maxFractionDigits="2" value="${mrp * qty}" />
 																	</c:otherwise>	
 																	</c:choose>	</td>
 
@@ -663,7 +663,7 @@ input:checked+.slider:before {
 																	<c:otherwise>
 																	<fmt:formatNumber
 																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${rate * qty}" />
+																				maxFractionDigits="2" value="${mrp * qty}" />
 																	</c:otherwise>	
 																	</c:choose>	</td>
 
@@ -1580,7 +1580,7 @@ function addCustomer() {
 						  var total = mrp * qty;
 						   $('#total1'+id).html(total.toFixed(2));
 						}else{
-				    var total = rate * qty;
+				    var total = mrp * qty;
 				   $('#total1'+id).html(total.toFixed(2));
 						}
 				}else

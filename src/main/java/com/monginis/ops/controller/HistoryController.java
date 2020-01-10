@@ -171,7 +171,7 @@ public class HistoryController {
 						if (frDetails.getFrKg1() == 1) {
 							total = itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderMrp();
 						} else {
-							total = itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderRate();
+							total = itemOrderHistory.get(i).getOrderQty() * itemOrderHistory.get(i).getOrderMrp();
 						}
 						rowData.add("" + (i + 1));
 						rowData.add("" + itemOrderHistory.get(i).getItemName());
@@ -779,7 +779,7 @@ public class HistoryController {
 		map.add("deliveryDt", parsedDate);
 		map.add("frId", frId);
 		map.add("flag", flag);
-		AdvanceOrderHeader[] itemOrderList = rest.postForObject(Constant.URL + "/advanceOrderHistoryHeader", map,
+		AdvanceOrderHeader[] itemOrderList = rest.postForObject(Constant.URL + "/advanceOrderHistoryHeaderForDispFr", map,
 				AdvanceOrderHeader[].class);
 
 		List<AdvanceOrderHeader> advHeadList = new ArrayList<AdvanceOrderHeader>(Arrays.asList(itemOrderList));
