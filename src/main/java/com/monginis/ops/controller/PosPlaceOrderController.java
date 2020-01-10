@@ -472,7 +472,7 @@ public class PosPlaceOrderController {
 			advHeader.setIsBillGenerated(0);
 			advHeader.setIsSellBillGenerated(0);
 			float discAmt = 0.0f;
-			float billTotal=0;
+			float billTotal = 0;
 			for (int i = 0; i < frItemList.size(); i++) {
 
 				GetFrItem item = frItemList.get(i);
@@ -536,10 +536,9 @@ public class PosPlaceOrderController {
 							float subTotal = calTotal - discountAmount;
 							discAmt = discAmt + discountAmount;
 							det.setSubTotal(CustomerBillController.roundUp(subTotal));
-							
-							billTotal = billTotal+calTotal;
-							
-							
+
+							billTotal = billTotal + calTotal;
+
 						} else if (rateCat == 3) {
 							det.setMrp(Float.parseFloat(String.valueOf(item.getItemMrp3())));
 
@@ -553,16 +552,17 @@ public class PosPlaceOrderController {
 								calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
 							}
 
-							//det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
-							//float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) * qty;
-							
+							// det.setRate((Float.parseFloat(String.valueOf(item.getItemRate3()))));
+							// float calTotal = (Float.parseFloat(String.valueOf(item.getItemRate3()))) *
+							// qty;
+
 							float discountAmount = (calTotal * item.getDiscPer()) / 100;
 							discAmt = discAmt + discountAmount;
 							float subTotal = calTotal - discountAmount;
 							det.setSubTotal(CustomerBillController.roundUp(subTotal));
-							
-							billTotal = billTotal+calTotal;
-							
+
+							billTotal = billTotal + calTotal;
+
 						}
 					}
 					det.setEvents("");
@@ -597,17 +597,17 @@ public class PosPlaceOrderController {
 					advDetailList.add(det);
 				}
 			}
-			
-			if(dm==1) {
-				advHeader.setTotal(billTotal);	
-				
-				float adv=Float.parseFloat(advanceAmt);
-				float rem=billTotal-adv;
-				
+
+			if (dm == 1) {
+				advHeader.setTotal(billTotal);
+
+				float adv = Float.parseFloat(advanceAmt);
+				float rem = billTotal - adv;
+
 				advHeader.setRemainingAmt(rem);
-				
+
 			}
-			
+
 			if (advDetailList.size() > 0 && (date1.compareTo(date2) > 0)) {
 				advHeader.setDiscAmt(discAmt);
 				advHeader.setDetailList(advDetailList);
@@ -730,7 +730,12 @@ public class PosPlaceOrderController {
 				res = 0;// exists
 				System.out.println("0s" + res);
 			} else {
-				res = 1;
+				try {
+					res = Integer.parseInt(info.getMessage());
+				} catch (Exception e) {
+					res = 0;
+				}
+
 				System.out.println("1888" + res);
 			}
 

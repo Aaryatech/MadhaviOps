@@ -782,6 +782,8 @@
 
 	<script type="text/javascript">
 		function checkContactNo() {
+			
+			var empId = $('#fr_emp_id').val();
 
 			var mobNo = $('#emp_contact').val();
 			if (mobNo != "" || mobNo != null) {
@@ -793,10 +795,14 @@
 
 					//alert("Info : "+JSON.stringify(data)); 
 					if (data.error == false) {
+						
+						if(data.message!=empId){
+						
 						document.getElementById("emp_contact").value = "";
 						alert("Contact No. Already Exist.");
 						$('#emp_contact').focus();
 						return true;
+						}
 					}
 
 				});

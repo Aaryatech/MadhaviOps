@@ -2648,18 +2648,19 @@ function matchSplitAmt(flag){
 			var custType = document.getElementById("custType").value;
 			custType=3;
 			var ageRange = document.getElementById("ageRange").value;
-			if(custId!=0)
+			/* if(custId!=0)
 				{
 				phNo="0000000000";
-				}
+				} */
 			$.getJSON('${checkEmailText}', {
 				phoneNo : phNo,	
 					ajax : 'true',
 			},
 
 			function(saveFlag) {
+			
 				document.getElementById("saveCust").style.display="block"; 
-				 if(parseInt(saveFlag)==1){		
+				 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){		
 					 document.getElementById("saveCust").style.display="block"; 
 					   alert("Duplicate Mobile Number Found.");
 						//document.getElementById("sbtbtn4").disabled = true;
@@ -3306,7 +3307,30 @@ $("#enterQty").focus();
 			if(flag==1){
 				
 				var calDiscAmt = parseFloat(grandTot*discPer/100);
+				
+				if(discPer>100){
+					alert("Discount percent is invalid");
+					document.getElementById("discAmt").value =0;
+					document.getElementById("discPer").value =0;
+					//document.getElementById("payAmt").value =totalAmtPopup;
+					
+					var totalAmt=totalAmtPopup-0;
+					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					
+				}else{
+				
 				var totalAmt=totalAmtPopup-calDiscAmt;
+				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				}
+				
+				
+				
+				
+				
+				/* var totalAmt=totalAmtPopup-calDiscAmt;
 				
 				if(isNaN(calDiscAmt)){
 					calDiscAmt=0;
@@ -3315,10 +3339,33 @@ $("#enterQty").focus();
 				
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(2); */
 				 
 			}else{
+				
+				 if(discAmt>grandTot){
+					 if(discAmt!=0){
+						alert("Discount amount should be smaller than total amount");
+					 }
+					document.getElementById("discPer").value =0;
+					document.getElementById("discAmt").value =0;
+					//document.getElementById("payAmt").value=payableAmount;
+					
+					var totalAmt=payableAmount-0;
+					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					
+				}else{
+				
 				var calDiscPer = parseFloat((discAmt/(grandTot/100)));
+
+				var totalAmt=totalAmtPopup-discAmt;
+				document.getElementById("discPer").value = calDiscPer.toFixed(2);;
+				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				} 
+				
+				/* var calDiscPer = parseFloat((discAmt/(grandTot/100)));
 				var totalAmt=totalAmtPopup-discAmt;
 				
 				if(isNaN(calDiscPer)){
@@ -3328,7 +3375,7 @@ $("#enterQty").focus();
 				
 				document.getElementById("discPer").value = calDiscPer;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt;
-				document.getElementById("payAmt").value = totalAmt;
+				document.getElementById("payAmt").value = totalAmt; */
 
 			}
 		}

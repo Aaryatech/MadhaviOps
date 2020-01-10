@@ -79,16 +79,17 @@ body {
 
 .screen{
 	height: 75px;
-	width: 225px;
+	width: 425px;
 	border-radius: 15px;
-	border: 8px solid #2b2b2b;
-	background-color: #111;
+	border: 8px solid #FD2549;
+	background-color: #ffffff;
 	font-size: 50px;
-	color: limegreen;
+	color: #FD2549;
 	padding: 0px 20px 0px 20px;
 	letter-spacing: 26px;
 	font-family: 'VT323', monospace;
 	position: relative;
+	
 }
 .flasher{
 	content: "";
@@ -104,10 +105,12 @@ body {
 }
 .keypad_wrapper{
 	position: relative;
-	width: 250px;
-	height: 460px;
-	background-color: #2b2b2b;
+	width: 500px;
+	background-color: #ffffff;
 	margin: 100px auto;
+	height: 400px;
+	text-align: center;
+	
 }
 .key{
 	width: 75px;
@@ -216,7 +219,7 @@ a {
 
 
 .modal-window div:not(:last-of-type) {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 }

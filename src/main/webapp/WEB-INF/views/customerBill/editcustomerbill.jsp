@@ -904,54 +904,54 @@ body {
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
 					<div class="add_input" id="discountPopup">
-					
-					<c:choose>
-					<c:when test="${defaultCustomer==tempCust}">
-					<input type="number" name="discPer" id="discPer" readonly="readonly"
-							onchange="itemDiscPerCalculation(1)"
-							onkeyup="itemDiscPerCalculation(1)" class="form-control"
-							value="${tempHeader.discountPer}" placeholder="Disc %"
-							style="text-align: center; width: 90px; border-radius: 20px;"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-					</c:when>
-					
-					<c:otherwise>
-					<input type="number" name="discPer" id="discPer" 
-							onchange="itemDiscPerCalculation(1)"
-							onkeyup="itemDiscPerCalculation(1)" class="form-control"
-							value="${tempHeader.discountPer}" placeholder="Disc %"
-							style="text-align: center; width: 90px; border-radius: 20px;"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-					</c:otherwise>
-					</c:choose>
-					
-					
-					<label for="discAmtLabel"
+
+						<c:choose>
+							<c:when test="${defaultCustomer==tempCust}">
+								<input type="number" name="discPer" id="discPer"
+									readonly="readonly" onchange="itemDiscPerCalculation(1)"
+									onkeyup="itemDiscPerCalculation(1)" class="form-control"
+									value="${tempHeader.discountPer}" placeholder="Disc %"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+							</c:when>
+
+							<c:otherwise>
+								<input type="number" name="discPer" id="discPer"
+									onchange="itemDiscPerCalculation(1)"
+									onkeyup="itemDiscPerCalculation(1)" class="form-control"
+									value="${tempHeader.discountPer}" placeholder="Disc %"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+							</c:otherwise>
+						</c:choose>
+
+
+						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
 							Amt&nbsp;</label>
-					
-					<c:choose>
-					<c:when test="${defaultCustomer==tempCust}">
-					 <input type="number" name="discAmt" id="discAmt" readonly="readonly"
-							onchange="itemDiscPerCalculation(2)"
-							onkeyup="itemDiscPerCalculation(2)" class="form-control"
-							value="${tempHeader.discountAmt}" placeholder="Disc Amt"
-							style="text-align: center; width: 90px; border-radius: 20px;"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-					</c:when>
-					
-					<c:otherwise>
-					 <input type="number" name="discAmt" id="discAmt"
-							onchange="itemDiscPerCalculation(2)"
-							onkeyup="itemDiscPerCalculation(2)" class="form-control"
-							value="${tempHeader.discountAmt}" placeholder="Disc Amt"
-							style="text-align: center; width: 90px; border-radius: 20px;"
-							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-					</c:otherwise>
-					</c:choose>
-						
-					
-					
+
+						<c:choose>
+							<c:when test="${defaultCustomer==tempCust}">
+								<input type="number" name="discAmt" id="discAmt"
+									readonly="readonly" onchange="itemDiscPerCalculation(2)"
+									onkeyup="itemDiscPerCalculation(2)" class="form-control"
+									value="${tempHeader.discountAmt}" placeholder="Disc Amt"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+							</c:when>
+
+							<c:otherwise>
+								<input type="number" name="discAmt" id="discAmt"
+									onchange="itemDiscPerCalculation(2)"
+									onkeyup="itemDiscPerCalculation(2)" class="form-control"
+									value="${tempHeader.discountAmt}" placeholder="Disc Amt"
+									style="text-align: center; width: 90px; border-radius: 20px;"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+							</c:otherwise>
+						</c:choose>
+
+
+
 					</div>
 					<div class="clr"></div>
 				</div>
@@ -991,6 +991,30 @@ body {
 						</c:choose>
 
 
+
+					</div>
+
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Previous AMT</div>
+					<div class="add_input">
+						<%-- <fmt:formatNumber type="number" groupingUsed="false"
+							value="${advAmtTransaction}" maxFractionDigits="2"
+							minFractionDigits="2" /> --%>
+
+
+						<input type="number" class="form-control" disabled="disabled"
+							value="${tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
+							style="text-align: center; width: 90px; border-radius: 20px;" />
+
+
+						<label for="discAmtLabel"
+							style="font-weight: 700; padding-left: 5px;">&nbsp;Add
+							Amt&nbsp;</label> <input type="number" class="form-control" id="additionalAmt"
+							value="${tempHeader.paidAmt-advAmtTransaction-tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
+							style="text-align: center; width: 90px; border-radius: 20px;"
+							disabled="disabled" />
 
 					</div>
 
@@ -3110,6 +3134,10 @@ function matchSplitAmt(flag){
 			document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
         	document.getElementById("epayLabel").style.color="black";
 
+        	
+        	/* document.getElementById("discPer").value =${tempHeader.discountPer};
+        	document.getElementById("discAmt").value =${tempHeader.discountAmt}; */
+        	
 			var discPer = parseFloat($('#discPer').val());
 			var discAmt = parseFloat($('#discAmt').val());
 			var totalAmtPopup;
@@ -3127,6 +3155,9 @@ function matchSplitAmt(flag){
 			
  			var advAmt = document.getElementById("advAmt").value;
  			//alert("ADv - "+advAmt);
+ 			
+ 			var PreviousPaidAmt=${tempHeader.paidAmt};
+ 			var additionalAmt=0;
  			
 			if(parseFloat(advAmt)>0){
 				totalAmtPopup= parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
@@ -3150,15 +3181,24 @@ function matchSplitAmt(flag){
 					//document.getElementById("payAmt").value =totalAmtPopup;
 					
 					var totalAmt=totalAmtPopup-0;
+					
+					additionalAmt=totalAmt-PreviousPaidAmt;
+					
 					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					document.getElementById("additionalAmt").value = additionalAmt.toFixed(2);
 					
 				}else{
 				
 				var totalAmt=totalAmtPopup-calDiscAmt;
+				
+				additionalAmt=totalAmt-PreviousPaidAmt;
+				
+				
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("additionalAmt").value = additionalAmt.toFixed(2);
 				}
 				 
 			}else{
@@ -3172,17 +3212,25 @@ function matchSplitAmt(flag){
 					//document.getElementById("payAmt").value=payableAmount;
 					
 					var totalAmt=payableAmount-0;
+					
+					additionalAmt=totalAmt-PreviousPaidAmt;
+					
 					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					document.getElementById("additionalAmt").value = additionalAmt.toFixed(2);
 					
 				}else{
 				
 				var calDiscPer = parseFloat((discAmt/(payableAmount/100)));
 
 				var totalAmt=totalAmtPopup-discAmt;
+				
+				additionalAmt=totalAmt-PreviousPaidAmt;
+				
 				document.getElementById("discPer").value = calDiscPer.toFixed(2);;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("additionalAmt").value = additionalAmt.toFixed(2);
 				} 
 
 			}  
@@ -3946,6 +3994,9 @@ function getCurrentItemList() {
 	document.getElementById("epayAmt").value =0;
 	document.getElementById("epayLabel").innerHTML =" Total: &nbsp;&nbsp;"+0;
 	document.getElementById("epayLabel").style.color="black";
+	
+	document.getElementById("discPer").value =${tempHeader.discountPer};
+	document.getElementById("discAmt").value =${tempHeader.discountAmt};
 	
 	var advAmt = document.getElementById("advAmt").value;
 	if(parseFloat(advAmt)>0){
