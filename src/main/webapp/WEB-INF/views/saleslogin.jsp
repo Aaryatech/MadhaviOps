@@ -103,7 +103,7 @@
 						</div>
 					
 					<div class="project-name">
-							<p id="error" class="error" style="color: RED; display: none;">ERROR</p>
+							<p id="error" class="error" style="color: RED; display: none;">Loading...</p>
 							<p id="success" class="success" style="color: limegreen; display: none;">SUCCESS</p>
 						</div>
 					
@@ -259,29 +259,54 @@
 			
 			var w = $('#screen').val();
 			
-			//alert(w);
+			//alert(w+" ---------- "+window.pass);
+			
+			var flag=0;
 			
 			if (w == window.pass) {
+				flag=1;
+
 				document.getElementById("overlay2").style.display = "block";
-				$('.error').hide();
+				/* $('.error').hide();
 				$('.success').show().delay(5000).queue(function(n) {
 					$('.error').hide();
 					$('.success').hide();
 					n();
 					hideNumPad();
-				});
+					
+				}); */
 				var u = window.redirectURL;
 				$(location).attr('href', u);
+				
 				//document.getElementById("overlay2").style.display = "none";
+				
 
 			} else {
+				flag=0;
+				
+				/* $('.error').hide();
+				$('.error').show().delay(1000).queue(function(n) {
+					$('.error').hide();
+					n();
+					
+				}); */
+			}
+			
+			if(flag==1){
+				var u = window.redirectURL;
+				$(location).attr('href', u);
+				$('.error').hide();
+				
+				
+			}else{
 				$('.error').hide();
 				$('.error').show().delay(1000).queue(function(n) {
 					$('.error').hide();
-					//alert("ERROR!")
 					n();
+					
 				});
 			}
+			
 		}
 	</script>
 

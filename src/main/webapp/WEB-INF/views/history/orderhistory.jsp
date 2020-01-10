@@ -520,6 +520,7 @@ jQuery(document).ready(function(){
 													<th class="col-sm-1" style="text-align: center;">Delivery
 														Time</th>
 													<th class="col-md-2" style="text-align: right;">Total</th>
+													<th class="col-md-2" style="text-align: right;">Disc Amt</th>
 													<th class="col-md-1" style="text-align: right;">Advance
 													</th>
 													<th class="col-sm-1" style="text-align: right;">Remaining
@@ -555,10 +556,12 @@ jQuery(document).ready(function(){
 																value="${orderList.exVar2}" /></td>
 														<td class="col-md-2" style="text-align: right;"><c:out
 																value="${orderList.total}" /></td>
+																<td class="col-md-2" style="text-align: right;"><c:out
+																value="${orderList.discAmt}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.advanceAmt}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
-																value="${orderList.total-orderList.advanceAmt}" /></td>
+																value="${orderList.total-orderList.advanceAmt-orderList.discAmt}" /></td>
 
 														<c:choose>
 
@@ -619,6 +622,8 @@ jQuery(document).ready(function(){
 										</table>
 									</div>
 								</div>
+								
+								<br>
 
 
 <div class="col-md-2">
@@ -627,6 +632,8 @@ jQuery(document).ready(function(){
 					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button> -->
 				</div>
+				
+				<br><br>
 				
 								<br />
 							</c:when>

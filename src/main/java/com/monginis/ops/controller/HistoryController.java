@@ -239,6 +239,7 @@ public class HistoryController {
 					rowData.add("Delivery Date");
 					rowData.add("Delivery Time");
 					rowData.add("Total");
+					rowData.add("Disc Amt");
 					rowData.add("Advance Amt");
 					rowData.add("Remaining Amt");
 					rowData.add("Is Dairy Mart?");
@@ -263,8 +264,9 @@ public class HistoryController {
 						rowData.add("" + itemOrderHistory.get(i).getDeliveryDate());
 						rowData.add("" + itemOrderHistory.get(i).getExVar2());
 						rowData.add("" + itemOrderHistory.get(i).getTotal());
+						rowData.add("" + itemOrderHistory.get(i).getDiscAmt());
 						rowData.add("" + itemOrderHistory.get(i).getAdvanceAmt());
-						rowData.add("" + itemOrderHistory.get(i).getRemainingAmt());
+						rowData.add("" + (itemOrderHistory.get(i).getTotal()-itemOrderHistory.get(i).getAdvanceAmt()-itemOrderHistory.get(i).getDiscAmt()));
 						if (itemOrderHistory.get(i).getIsDailyMart() == 2) {
 							rowData.add("YES");
 						} else {

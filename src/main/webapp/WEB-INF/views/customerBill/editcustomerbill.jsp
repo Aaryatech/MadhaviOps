@@ -3157,6 +3157,8 @@ function matchSplitAmt(flag){
  			//alert("ADv - "+advAmt);
  			
  			var PreviousPaidAmt=${tempHeader.paidAmt};
+ 			PreviousPaidAmt=PreviousPaidAmt-advAmt;
+ 			
  			var additionalAmt=0;
  			
 			if(parseFloat(advAmt)>0){
@@ -3195,6 +3197,7 @@ function matchSplitAmt(flag){
 				additionalAmt=totalAmt-PreviousPaidAmt;
 				
 				
+				
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
 				document.getElementById("payAmt").value = totalAmt.toFixed(2);
@@ -3226,6 +3229,8 @@ function matchSplitAmt(flag){
 				var totalAmt=totalAmtPopup-discAmt;
 				
 				additionalAmt=totalAmt-PreviousPaidAmt;
+				
+				//alert(totalAmt+" -------- "+additionalAmt+" ------------ "+PreviousPaidAmt);
 				
 				document.getElementById("discPer").value = calDiscPer.toFixed(2);;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);

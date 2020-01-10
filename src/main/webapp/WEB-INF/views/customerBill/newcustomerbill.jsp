@@ -2251,6 +2251,8 @@ function matchSplitAmt(flag){
 				}else{
 					isValid=1;
 				}
+			}else if(billType==1) {
+				isValid=1;
 			}
 			
 			

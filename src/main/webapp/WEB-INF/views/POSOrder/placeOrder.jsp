@@ -333,6 +333,7 @@ input:checked+.slider:before {
 
 				</jsp:include>
 
+<br>
 
 				<!--leftNav-->
 				<!--rightSidebar-->
@@ -1517,7 +1518,7 @@ function addCustomer() {
 	<script>
 		function checkAdd() {
 			if (document.getElementById("dm").checked == true) {
-				 document.getElementById("custId2_chosen").style.width="178px";
+				 document.getElementById("custId2_chosen").style.width="184px";
 				//alert("dairyMart");
               		$('#form1').hide();
               		$('#form2').show();		

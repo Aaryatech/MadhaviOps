@@ -249,9 +249,10 @@ jQuery(document).ready(function(){
 											<th class="col-sm-1" style="text-align: center;">Delivery
 												Time</th>
 											<th class="col-md-2" style="text-align: center;">Total</th>
+											<th class="col-md-2" style="text-align: center;">Disc Amt</th>
 											<th class="col-md-1" style="text-align: center;">Advance</th>
-											<th class="col-sm-1" style="text-align: center;">Remaining
-												Amount</th>
+											<th class="col-sm-1" style="text-align: center;">Rem
+												Amt</th>
 											<th class="col-sm-1" style="text-align: right;">Is Dairy
 												Mart</th>
 											<th class="col-sm-1" style="text-align: center;">Action</th>
@@ -281,10 +282,12 @@ jQuery(document).ready(function(){
 														value="${orderList.exVar2}" /></td>
 												<td class="col-md-2" style="text-align: right;"><c:out
 														value="${orderList.total}" /></td>
+														<td class="col-md-2" style="text-align: right;"><c:out
+														value="${orderList.discAmt}" /></td>
 												<td class="col-md-1" style="text-align: right;"><c:out
 														value="${orderList.advanceAmt}" /></td>
 												<td style="text-align: center;" class="col-sm-1"><c:out
-														value="${orderList.total-orderList.advanceAmt}" /></td>
+														value="${orderList.total-orderList.advanceAmt-orderList.discAmt}" /></td>
 
 												<c:choose>
 													<c:when test="${orderList.isDailyMart==2}">
@@ -336,6 +339,8 @@ jQuery(document).ready(function(){
 									</tbody>
 
 								</table>
+								
+								<br><br>
 							</div>
 						</div>
 
