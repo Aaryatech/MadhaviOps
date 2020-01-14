@@ -692,7 +692,7 @@ body {
 
 			<div class="add_frm">
 				<div class="add_frm_one">
-					<div class="add_customer_one">Customer Name</div>
+					<div class="add_customer_one">Customer Name *</div>
 					<div class="add_input">
 						<input type="text" class="input_add"
 							placeholder="Enter Customer Name" name="customerName"
@@ -702,7 +702,7 @@ body {
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Mobile Number</div>
+					<div class="add_customer_one">Mobile Number *</div>
 					<div class="add_input">
 						<input type="text" class="input_add"
 							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
@@ -713,7 +713,7 @@ body {
 				</div>
 
 				<div class="add_frm_one">
-					<div class="add_customer_one">Gender</div>
+					<div class="add_customer_one">Gender *</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
@@ -745,7 +745,7 @@ body {
 					</div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Age-Group</div>
+					<div class="add_customer_one">Age-Group *</div>
 					<div class="add_input">
 						<select name="ageRange" id="ageRange"
 							data-placeholder="Customer Age-Group" class="input_add"
@@ -772,7 +772,7 @@ body {
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Business</div>
+					<div class="add_customer_one">Business *</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
@@ -793,7 +793,7 @@ body {
 				</div>
 				<div style="display: none;" id="isbuissnessdiv">
 					<div class="add_frm_one">
-						<div class="add_customer_one">Company Name</div>
+						<div class="add_customer_one">Company Name *</div>
 						<div class="add_input">
 							<input placeholder="Enter Company Name" name="companyName"
 								onchange="trim(this)" id="companyName" type="text"
@@ -802,15 +802,15 @@ body {
 						<div class="clr"></div>
 					</div>
 					<div class="add_frm_one">
-						<div class="add_customer_one">GST Number</div>
+						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
 							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
-								onchange="trim(this)" type="text" class="input_add" />
+								onchange="trim(this)" type="text" maxlength="15" class="input_add" />
 						</div>
 						<div class="clr"></div>
 					</div>
 					<div class="add_frm_one">
-						<div class="add_customer_one">Address</div>
+						<div class="add_customer_one">Address *</div>
 						<div class="add_input">
 							<input placeholder="Enter Address" name="custAdd" id="custAdd"
 								onchange="trim(this)" type="text" class="input_add" />
@@ -2660,6 +2660,8 @@ function matchSplitAmt(flag){
 			},
 
 			function(saveFlag) {
+				
+				//alert(saveFlag);
 			
 				document.getElementById("saveCust").style.display="block"; 
 				 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){		
@@ -2813,6 +2815,7 @@ function matchSplitAmt(flag){
 			return;
 		}
 		function validateMobile(mobile) {
+			//alert(mobile);
 			var mob = /^[1-9]{1}[0-9]{9}$/;
 
 			if (mob.test($.trim(mobile)) == false) {

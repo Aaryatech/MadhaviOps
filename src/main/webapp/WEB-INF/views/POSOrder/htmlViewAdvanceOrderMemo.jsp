@@ -122,7 +122,7 @@
 								<fmt:formatDate value="${myDate}" var="startFormat"
 									pattern="dd-MM-yyyy" />
 								<td align="left">Delivery Date:</td>
-								<td align="left" colspan="3">${startFormat}${delTime}</td>
+								<td align="left" colspan="3">${startFormat} ${delTime}</td>
 
 							</tr>
 							<tr>

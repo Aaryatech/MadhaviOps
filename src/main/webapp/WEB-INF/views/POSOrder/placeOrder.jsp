@@ -416,7 +416,7 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<div class="clearfix">
-								<input type="text" id="delTime1" name="delTime" value="00:00" style="text-align: center;"/>
+								<input type="text" id="delTime1" name="delTime" value="" style="text-align: center;"/>
 								
 <!-- 									<div class="input-group clockpicker-with-callbacks">
 										 <input type="time" class="form-control" value="00:00" required
@@ -702,7 +702,7 @@ input:checked+.slider:before {
 
 							<div class="row">
 
-								<div class="col-md-1">Advance:</div>
+								<div class="col-md-2">Advance Amt:</div>
 
 								<div class="col-md-1">
 
@@ -795,7 +795,7 @@ input:checked+.slider:before {
 							<div class="col-md-2">
 								<div class="clearfix">
 								
-								<input type="text" id="delTime2" name="delTime" value="00:00" style="text-align: center;"/>
+								<input type="text" id="delTime2" name="delTime" value="" style="text-align: center;"/>
 								
 <!-- 									<div class="input-group clockpicker-with-callbacks">
 										<input type="time" class="form-control" value="00:00" required
@@ -1065,7 +1065,7 @@ input:checked+.slider:before {
 
 							<div class="row">
 
-								<div class="col-md-1">Advance:</div>
+								<div class="col-md-2">Advance Amt:</div>
 
 								<div class="col-md-1">
 
@@ -1697,9 +1697,9 @@ $(document).ready(function($) {
  				   }else  if(devDate==""){
  					   alert("Please Select Delivery Date")
  				   }
- 				   /* else if(delTime=="00:00"){
+ 				    else if(delTime==""){
  					   alert("Please Select Delivery Time")
- 				   } */
+ 				   } 
  				   else{
 						document.getElementById("overlay2").style.display = "block";
 
@@ -1751,9 +1751,9 @@ $(document).ready(function($) {
  				   }else  if(devDate==""){
  					   alert("Please Select Delivery Date")
  				   }
- 				   /* else if(delTime=="00:00"){
+ 				    else if(delTime==""){
  					   alert("Please Select Delivery Time")
- 				   } */
+ 				   } 
  				   else if(adv==""){
  					   alert("Please Enter Advance Amount")
  				   }else{

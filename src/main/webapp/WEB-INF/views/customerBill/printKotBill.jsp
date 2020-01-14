@@ -55,14 +55,15 @@
 					style="padding: 0px; border-top: 1px solid #E7E7E7;"><span><b>${frName}</b><br />
 				</span></td>
 			</tr>
-           	<tr>
+			<tr>
 				<td colspan="2" align="center"
-					style="padding: 0px; border-top: 1px solid #E7E7E7;font-size: 11px;"><span><b>Sales Person:&nbsp;${frEmpMaster.frEmpName} </b><br />
-				</span></td>
+					style="padding: 0px; border-top: 1px solid #E7E7E7; font-size: 11px;"><span><b>Sales
+							Person:&nbsp;${frEmpMaster.frEmpName} </b><br /> </span></td>
 			</tr>
-			<tr>	
-				<td  colspan="2" align="center"
-					style="padding: 0px; border-top: 1px solid #E7E7E7;font-size: 11px;"><span><b>Date & Time:&nbsp;</b>${sellBillHeaderAndDetail.timestamp}</span><br /></td>
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 0px; border-top: 1px solid #E7E7E7; font-size: 11px;"><span><b>Date
+							& Time:&nbsp;</b>${sellBillHeaderAndDetail.timestamp}</span><br /></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -75,9 +76,13 @@
 										cellspacing="0" cellpadding="3" class="tbl-inner">
 										<tbody>
 											<tr>
+												<td align="left">Inv No:</td>
+												<td align="left" colspan="3">${sellBillHeaderAndDetail.invoiceNo}</td>
+											</tr>
+											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
-													<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
+												<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
 												<th width="13%" bgcolor="#ECECEC" align="right">Rate</th>
 												<th width="29%" align="right" bgcolor="#ECECEC">AMT</th>
 											</tr>
@@ -86,42 +91,40 @@
 												<tr>
 													<td><span style="font-size: 11px">${itemBillList.itemName}</span>
 													</td>
-													<td align="right"><span style="font-size: 11px"><c:choose><c:when test="${itemBillList.isDecimal==1}">
-													<fmt:formatNumber
-																type="number" groupingUsed="false"
-																value="${itemBillList.qty}" maxFractionDigits="3"
-																minFractionDigits="3" /> 
-													</c:when>
-													<c:otherwise>
-													<fmt:formatNumber
-																type="number" groupingUsed="false"
-																value="${itemBillList.qty}" maxFractionDigits="0"
-																minFractionDigits="0" /> 
-													</c:otherwise>
-													</c:choose> </span></td>
-													<td align="right">
-													<span style="font-size: 11px">
-													${itemBillList.itemUom}
-													</span></td>
+													<td align="right"><span style="font-size: 11px"><c:choose>
+																<c:when test="${itemBillList.isDecimal==1}">
+																	<fmt:formatNumber type="number" groupingUsed="false"
+																		value="${itemBillList.qty}" maxFractionDigits="3"
+																		minFractionDigits="3" />
+																</c:when>
+																<c:otherwise>
+																	<fmt:formatNumber type="number" groupingUsed="false"
+																		value="${itemBillList.qty}" maxFractionDigits="0"
+																		minFractionDigits="0" />
+																</c:otherwise>
+															</c:choose> </span></td>
+													<td align="right"><span style="font-size: 11px">
+															${itemBillList.itemUom} </span></td>
 													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
 																type="number" groupingUsed="false"
 																value="${itemBillList.mrp}" maxFractionDigits="0"
 																minFractionDigits="0" /> </span></td>
 													<td align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.qty*itemBillList.mrp}" maxFractionDigits="2"
-																minFractionDigits="2" var="total"/> ${total}
-							<c:set var="calTotalAmt" value="${calTotalAmt+total}"></c:set>
-																
+																value="${itemBillList.qty*itemBillList.mrp}"
+																maxFractionDigits="2" minFractionDigits="2" var="total" />
+															${total} <c:set var="calTotalAmt"
+																value="${calTotalAmt+total}"></c:set>
+
 													</span></td>
 													<c:set var="totalAmt"
 														value="${totalAmt+itemBillList.grandTotal}"></c:set>
 												</tr>
 											</c:forEach>
-                                                
+
 											<tr>
-											
-											<td colspan="3" align="right"><span class="style7">Bill
+
+												<td colspan="3" align="right"><span class="style7">Bill
 														Total:</span></td>
 												<td align="right"><span class="style7"> <fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
