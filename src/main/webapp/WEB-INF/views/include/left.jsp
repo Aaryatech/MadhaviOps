@@ -251,7 +251,14 @@
 								<div class="title">Purchase Bills</div></a></li>
 					</c:if>
 
-
+					<c:if
+						test="${(sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2 or sessionScope.frEmpDetails.designation==3) && flag==1}">
+						<li><a href="${pageContext.request.contextPath}/insertCreditNote"><div
+									class="img">
+									<i class="fa fa-file-pdf-o"></i>
+								</div>
+								<div class="title">Credit Note</div></a></li>
+					</c:if>
 
 
 					<%-- <c:set var="flag" value="${0}"></c:set>
@@ -379,12 +386,13 @@
 
 						<li><a
 							href="${pageContext.request.contextPath}/showPattyCashMgmnt">
-							<div class="img">
+								<div class="img">
 									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Petty <span>Cash</span>
-								</div></a></li>
+								</div>
+						</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/showExpenseList"><div
 									class="img">
