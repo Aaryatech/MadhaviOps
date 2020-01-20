@@ -35,6 +35,29 @@
 			<section class="main_container">
 				<!--page title-start-->
 				<div class="page_head">
+				
+				<div class="latestNews" style="background: #ed1c24;">
+					
+						<a href="${pageContext.request.contextPath}/homeMessages"><h3 class="latestNewsTitle" style="background: #fcf300; color: #111111;">Latest News</h3></a>
+							<div class="microsoft marquee">
+						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
+						
+					            <c:set var="colors" value=""/>
+					            <c:choose>
+					            <c:when test="${count.index%2==0}">
+					            <c:set var="colors" value="white"/>
+					           </c:when>
+					           <c:otherwise>
+					            <c:set var="colors" value="lightblue"/>
+					          </c:otherwise>
+					          </c:choose>
+								<span style="color:${colors}"> ${schedulerLists.schMessage} </span>
+							
+						
+						</c:forEach>
+						</div>
+					</div>
+				
 					<div class="page_title">Dashboard</div>
 
 					<%-- <h3>${type}</h3> --%>

@@ -81,6 +81,17 @@
 			<c:set var="totaltax" value="${0 }" />
 			<c:set var="cgst" value="${0 }" />
 			<c:set var="sgst" value="${0 }" />
+			
+			<c:if test="${sellBillHeaderAndDetail.remainingAmt>0}">
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 11px;">
+					<b>Credit Bill</b>
+				</td>
+			</tr>
+			</c:if>
+			
+			
 			<tr>
 				<td colspan="2">
 					<table width="100%" border="0" cellspacing="0" cellpadding="2">

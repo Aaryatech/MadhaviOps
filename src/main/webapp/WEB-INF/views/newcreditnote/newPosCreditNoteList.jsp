@@ -314,7 +314,7 @@ table, th, td {
 				</div>
 				<br>
 				<div class="row" style="text-align: center;">
-					<button class="buttonsaveorder" onclick="getData()">Search
+					<button class="buttonsaveorder" onclick="getData()">Save
 					</button>
 				</div>
 
@@ -618,8 +618,8 @@ table, th, td {
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			'<p class="detail" id="tax_'+crn.crnDetailNo+'">'
-																					+ crn.cgstAmt
-																					+ crn.sgstAmt
+																					+ (crn.cgstAmt
+																					+ crn.sgstAmt)
 																					+ '</p>'));
 
 													tr

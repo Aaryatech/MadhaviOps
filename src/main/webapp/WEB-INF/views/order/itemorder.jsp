@@ -323,7 +323,7 @@ a:hover {
 																	<c:otherwise>
 																		<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
+																			maxFractionDigits="2" value="${rate * qty}" />
 																	</c:otherwise>
 																	</c:choose>
 																	</td>
@@ -393,7 +393,7 @@ a:hover {
 																	<c:otherwise>
 																	<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
+																			maxFractionDigits="2" value="${rate * qty}" />
 																	</c:otherwise>
 																	</c:choose>		
 																	</td>
@@ -460,7 +460,7 @@ a:hover {
 																	<c:otherwise>
 																	<fmt:formatNumber
 																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
+																			maxFractionDigits="2" value="${rate * qty}" />
 																	</c:otherwise>
 																	</c:choose>		
 																	</td>
@@ -639,7 +639,7 @@ a:hover {
 					 var total = mrp * qty;
 					 $('#total'+id).html(total.toFixed(2));
 					}else{
-			         var total = mrp * qty;
+			         var total = rate * qty;
 			         $('#total'+id).html(total.toFixed(2));
 					}
 			}else

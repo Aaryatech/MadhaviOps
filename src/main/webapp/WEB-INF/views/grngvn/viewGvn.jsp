@@ -172,9 +172,11 @@ table, th, td {
 													<c:when test="${grnList.grngvnStatus==7}">
 														<c:set var="status" value="Reject From Account"></c:set>
 													</c:when>
-
-													<c:otherwise>
+														<c:when test="${grnList.grngvnStatus==8}">
 														<c:set var="status" value="Partially Approved"></c:set>
+													</c:when>
+													<c:otherwise>
+														<c:set var="status" value="Pending"></c:set>
 													</c:otherwise>
 
 												</c:choose>

@@ -1143,6 +1143,7 @@ input:checked+.slider:before {
 			<div class="add_frm_one">
 				<div class="add_customer_one">Mobile Number</div>
 				<div class="add_input">
+				
 					<input type="text" class="input_add"
 						placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
 						onchange="trim(this)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
@@ -1501,6 +1502,7 @@ function addCustomer() {
 </script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
 			$('#addcust').popup({
 				focusdelay : 400,
 				outline : true,

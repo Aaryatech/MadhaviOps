@@ -373,6 +373,39 @@ public class HomeController {
 		return model;
 
 	}
+	
+	
+	@RequestMapping(value = "/homeMessages", method = RequestMethod.GET)
+	public ModelAndView displayHomeMessages(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws ParseException {
+
+		ModelAndView model = new ModelAndView("homeMessages");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
+			ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
+			int frId = (Integer) session.getAttribute("frId");
+
+			System.out.println("***************Schedular List*****************" + schedulerLists);
+			System.out.println("***************msgList*****************" + msgList);
+			System.out.println("***************frId*****************" + frId);
+
+			model.addObject("schedulerLists", schedulerLists);
+			model.addObject("msgList", msgList);
+			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	
 
 	@RequestMapping(value = "/getCatSellList", method = RequestMethod.POST)
 	@ResponseBody

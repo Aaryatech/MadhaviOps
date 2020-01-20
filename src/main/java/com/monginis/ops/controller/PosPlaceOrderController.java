@@ -56,6 +56,7 @@ import com.monginis.ops.model.ItemSup;
 import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.TabTitleData;
+import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
@@ -404,7 +405,7 @@ public class PosPlaceOrderController {
 	public AdvanceOrderHeader saveAdvanceOrder(HttpServletRequest request, HttpServletResponse response) {
 		AdvanceOrderHeader info = null;
 		try {
-
+			RestTemplate restTemplate = new RestTemplate();
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			// LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
@@ -454,7 +455,21 @@ public class PosPlaceOrderController {
 			advHeader.setDelStatus(0);
 			advHeader.setExFloat1(0);
 			advHeader.setExFloat2(0);
-			advHeader.setExInt1(1);
+
+			int frId = frDetails.getFrId();
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map, FrSetting.class);
+			int memoNo = 0;
+			try {
+				if (frSetting != null) {
+					memoNo = Integer.parseInt(frSetting.getExVarchar());
+				}
+			} catch (Exception e) {
+				memoNo = 0;
+			}
+
+			advHeader.setExInt1(memoNo);
 			advHeader.setExInt2(1);
 			// String strDelTime =
 			// LocalTime.parse(deliveryTime).format(DateTimeFormatter.ofPattern("h:mm a"));
@@ -611,10 +626,16 @@ public class PosPlaceOrderController {
 			if (advDetailList.size() > 0 && (date1.compareTo(date2) > 0)) {
 				advHeader.setDiscAmt(discAmt);
 				advHeader.setDetailList(advDetailList);
-				RestTemplate restTemplate = new RestTemplate();
 
 				info = restTemplate.postForObject(Constant.URL + "/saveAdvanceOrderHeadAndDetail", advHeader,
 						AdvanceOrderHeader.class);
+				
+				if(info.getAdvHeaderId()>0) {
+					
+					Info updateFrSettingAdvOrderMemoSerialNo = restTemplate.postForObject(Constant.URL + "updateFrSettingAdvOrderMemoSerialNo", map, Info.class);
+
+				}
+				
 			} else {
 				System.err.println("inside saveAdvanceOrder");
 				info = new AdvanceOrderHeader();

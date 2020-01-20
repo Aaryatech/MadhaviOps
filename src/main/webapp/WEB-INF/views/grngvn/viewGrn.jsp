@@ -153,25 +153,7 @@ table, th, td {
 														value="${grnList.aprGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
 												<c:set var="status" value="a"></c:set>
 												<c:choose>
-													<c:when test="${grnList.grngvnStatus==1}">
-														<c:set var="status" value="Pending"></c:set>
-
-													</c:when>
-													<c:when test="${grnList.grngvnStatus==2}">
-														<c:set var="status" value="Approved From Dispatch"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==3}">
-														<c:set var="status" value="Reject From Dispatch"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==4}">
-														<c:set var="status" value="Approved From Sales"></c:set>
-													</c:when>
-
-													<c:when test="${grnList.grngvnStatus==5}">
-														<c:set var="status" value="Reject From Sales"></c:set>
-													</c:when>
+													
 
 													<c:when test="${grnList.grngvnStatus==6}">
 														<c:set var="status" value="Approved From Account"></c:set>
@@ -181,8 +163,11 @@ table, th, td {
 														<c:set var="status" value="Reject From Account"></c:set>
 													</c:when>
 
-													<c:otherwise>
+													<c:when test="${grnList.grngvnStatus==8}">
 														<c:set var="status" value="Partially Approved"></c:set>
+													</c:when>
+													<c:otherwise>
+														<c:set var="status" value="Pending"></c:set>
 													</c:otherwise>
 
 												</c:choose>
