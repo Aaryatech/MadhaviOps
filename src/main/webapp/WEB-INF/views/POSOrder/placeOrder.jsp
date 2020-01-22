@@ -273,9 +273,12 @@ input:checked+.slider:before {
 }
 </style>
 
-<link href="${pageContext.request.contextPath}/resources/css/mdtimepicker.css" rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/resources/css/mdtimepicker.css"
+	rel="stylesheet" type="text/css">
 
-<script src="${pageContext.request.contextPath}/resources/js/mdtimepicker.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/mdtimepicker.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>    
@@ -333,7 +336,7 @@ input:checked+.slider:before {
 
 				</jsp:include>
 
-<br>
+				<br>
 
 				<!--leftNav-->
 				<!--rightSidebar-->
@@ -346,11 +349,12 @@ input:checked+.slider:before {
 
 					<div class="order-left">
 						<h2 class="pageTitle">Advance Order</h2>
+						
 
 					</div>
-					
-				
-					
+
+
+
 
 					<div class="row">
 						<div class="col-md-3"></div>
@@ -362,9 +366,9 @@ input:checked+.slider:before {
 						</div>
 						</label>
 					</div>
-					
-					
-					
+
+
+
 
 					<form action="${pageContext.request.contextPath}/saveAdvanceOrder"
 						name="form1" id="form1" method="post">
@@ -407,8 +411,8 @@ input:checked+.slider:before {
 								<input id="fromdatepicker" class="texboxitemcode texboxcal"
 									required placeholder="Delivery Date" name="devDate"
 									autocomplete="off" type="text" value="">
-									
-										
+
+
 
 							</div>
 							<div class="col-md-1">
@@ -416,9 +420,10 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<div class="clearfix">
-								<input type="text" id="delTime1" name="delTime" value="" style="text-align: center;"/>
-								
-<!-- 									<div class="input-group clockpicker-with-callbacks">
+									<input type="text" id="delTime1" name="delTime" value=""
+										style="text-align: center;" />
+
+									<!-- 									<div class="input-group clockpicker-with-callbacks">
 										 <input type="time" class="form-control" value="00:00" required
 											name="delTime" id="delTime1" style="line-height: 15px;">
 											 <span
@@ -559,20 +564,18 @@ input:checked+.slider:before {
 																		<c:set var="rate" value="${items.itemRate1}" />
 																		<c:set var="mrp" value="${items.itemMrp1}" />
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}">
-																			<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																		<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																	<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:otherwise>	
-																	</c:choose>		
-																				</td>
+																		<td class="col-md-1-1" id="total1${items.id}"><c:choose>
+																				<c:when test="${frDetails.frKg1==1}">
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:when>
+																				<c:otherwise>
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:otherwise>
+																			</c:choose></td>
 
 																	</tr>
 																</c:when>
@@ -607,18 +610,18 @@ input:checked+.slider:before {
 																		<c:set var="qty" value="${items.itemQty}" />
 
 
-																		<td class="col-md-1-1" id="total1${items.id}">	<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																		<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																	<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:otherwise>	
-																	</c:choose>	</td>
+																		<td class="col-md-1-1" id="total1${items.id}"><c:choose>
+																				<c:when test="${frDetails.frKg1==1}">
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:when>
+																				<c:otherwise>
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:otherwise>
+																			</c:choose></td>
 
 
 
@@ -653,20 +656,20 @@ input:checked+.slider:before {
 																				value='${items.itemRate3}' /></td>
 																		<c:set var="rate" value="${items.itemRate3}" />
 																		<c:set var="mrp" value="${items.itemMrp3}" />
-																		
+
 																		<c:set var="qty" value="${items.itemQty}" />
-																		<td class="col-md-1-1" id="total1${items.id}">	<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																		<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																	<fmt:formatNumber
-																				type="number" minFractionDigits="2"
-																				maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:otherwise>	
-																	</c:choose>	</td>
+																		<td class="col-md-1-1" id="total1${items.id}"><c:choose>
+																				<c:when test="${frDetails.frKg1==1}">
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:when>
+																				<c:otherwise>
+																					<fmt:formatNumber type="number"
+																						minFractionDigits="2" maxFractionDigits="2"
+																						value="${mrp * qty}" />
+																				</c:otherwise>
+																			</c:choose></td>
 
 																	</tr>
 																</c:when>
@@ -708,8 +711,8 @@ input:checked+.slider:before {
 
 									<input type="text" name="advanceAmt" id="advanceAmt1"
 										onkeypress="return event.charCode >= 48" onchange="setAmt(1)"
-										oninput="setAmt(1)" class="texboxitemcode texboxcal2" value="0"
-										autocomplete="off" class="form-control" size="20"
+										oninput="setAmt(1)" class="texboxitemcode texboxcal2"
+										value="0" autocomplete="off" class="form-control" size="20"
 										required="required" />
 								</div>
 
@@ -732,8 +735,10 @@ input:checked+.slider:before {
 							<input type="hidden" id="fintotal1" name="fintotal1" value="0">
 							<div class="order-btn textright">
 
-								<input name="subm1" id="subm1" class="buttonsaveorder"
-									value="SAVE ORDER" type="button">
+								<c:if test="${dispButton==0}">
+									<input name="subm1" id="subm1" class="buttonsaveorder"
+										value="SAVE ORDER" type="button">
+								</c:if>
 							</div>
 						</div>
 						<input type="hidden" name="dailyFlagMart" id="dailyFlagMart1"
@@ -794,10 +799,11 @@ input:checked+.slider:before {
 							</div>
 							<div class="col-md-2">
 								<div class="clearfix">
-								
-								<input type="text" id="delTime2" name="delTime" value="" style="text-align: center;"/>
-								
-<!-- 									<div class="input-group clockpicker-with-callbacks">
+
+									<input type="text" id="delTime2" name="delTime" value=""
+										style="text-align: center;" />
+
+									<!-- 									<div class="input-group clockpicker-with-callbacks">
 										<input type="time" class="form-control" value="00:00" required
 											name="delTime" id="delTime2" style="line-height: 15px;">
 											 <span
@@ -1098,8 +1104,11 @@ input:checked+.slider:before {
 								value="2">
 							<div class="order-btn textright">
 
-								<input name="subm2" id="subm2" class="buttonsaveorder"
+								<c:if test="${dispButton==0}">
+									<input name="subm2" id="subm2" class="buttonsaveorder"
 									value="SAVE ORDER" type="button">
+								</c:if>
+								
 							</div>
 						</div>
 
@@ -1131,7 +1140,7 @@ input:checked+.slider:before {
 
 		<div class="add_frm">
 			<div class="add_frm_one">
-				<div class="add_customer_one">Customer Name</div>
+				<div class="add_customer_one">Customer Name *</div>
 				<div class="add_input">
 					<input type="text" class="input_add"
 						placeholder="Enter Customer Name" name="customerName"
@@ -1141,18 +1150,19 @@ input:checked+.slider:before {
 				<div class="clr"></div>
 			</div>
 			<div class="add_frm_one">
-				<div class="add_customer_one">Mobile Number</div>
+				<div class="add_customer_one">Mobile Number *</div>
 				<div class="add_input">
-				
+
 					<input type="text" class="input_add"
 						placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
-						onchange="trim(this)" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+						onchange="trim(this)" maxlength="10"
+						oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
 				</div>
 				<div class="clr"></div>
 			</div>
 
 			<div class="add_frm_one">
-				<div class="add_customer_one">Gender</div>
+				<div class="add_customer_one">Gender *</div>
 				<div class="add_input">
 					<div class="radio_row popup_radio">
 						<ul>
@@ -1184,7 +1194,7 @@ input:checked+.slider:before {
 				</div>
 			</div>
 			<div class="add_frm_one">
-				<div class="add_customer_one">Age-Group</div>
+				<div class="add_customer_one">Age-Group *</div>
 				<div class="add_input">
 					<select name="ageRange" id="ageRange"
 						data-placeholder="Customer Age-Group" class="input_add"
@@ -1211,7 +1221,7 @@ input:checked+.slider:before {
 				<div class="clr"></div>
 			</div>
 			<div class="add_frm_one">
-				<div class="add_customer_one">Business</div>
+				<div class="add_customer_one">Business *</div>
 				<div class="add_input">
 					<div class="radio_row popup_radio">
 						<ul>
@@ -1232,7 +1242,7 @@ input:checked+.slider:before {
 			</div>
 			<div style="display: none;" id="isbuissnessdiv">
 				<div class="add_frm_one">
-					<div class="add_customer_one">Company Name</div>
+					<div class="add_customer_one">Company Name *</div>
 					<div class="add_input">
 						<input placeholder="Enter Company Name" name="companyName"
 							onchange="trim(this)" id="companyName" type="text"
@@ -1241,7 +1251,7 @@ input:checked+.slider:before {
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">GST Number</div>
+					<div class="add_customer_one">GST Number *</div>
 					<div class="add_input">
 						<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
 							onchange="trim(this)" type="text" class="input_add" />
@@ -1249,7 +1259,7 @@ input:checked+.slider:before {
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Address</div>
+					<div class="add_customer_one">Address *</div>
 					<div class="add_input">
 						<input placeholder="Enter Address" name="custAdd" id="custAdd"
 							onchange="trim(this)" type="text" class="input_add" />
@@ -1321,6 +1331,19 @@ function isBuissness(value) {
 
 }
 
+function checkGST(g){
+    let regTest = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/.test(g)
+     if(regTest){
+        let a=65,b=55,c=36;
+        return Array['from'](g).reduce((i,j,k,g)=>{ 
+           p=(p=(j.charCodeAt(0)<a?parseInt(j):j.charCodeAt(0)-b)*(k%2+1))>c?1+(p-c):p;
+           return k<14?i+p:j==((c=(c-(i%c)))<10?c:String.fromCharCode(c+b));
+        },0); 
+    }
+    return regTest
+}
+
+
 function addCustomer() {
 	
 	document.getElementById("saveCust").style.display="none";
@@ -1342,7 +1365,7 @@ function addCustomer() {
 
 	function(saveFlag) {
 		document.getElementById("saveCust").style.display="block";
-		 if(parseInt(saveFlag)==1){		
+		 if(parseInt(saveFlag)>0){		
 			 
 			 document.getElementById("saveCust").style.display="block";
 			 
@@ -1393,6 +1416,10 @@ function addCustomer() {
 		} else if (gstNo == "") {
 			alert("Enter GST No");
 			flag = 1;
+		}else if(checkGST(gstNo)==false){
+			alert("Invalid GST No");
+			flag = 1;
+			
 		} else if (custAdd == "") {
 			alert("Enter Address");
 			flag = 1;
@@ -2027,7 +2054,7 @@ $('#check-minutes').click(function(e){
 		src="${pageContext.request.contextPath}/resources/newpos/timeassets/js/highlight.min.js"></script>
 
 
-<script>
+	<script>
   $(document).ready(function(){
 	  
     $('#delTime1').mdtimepicker(); //Initializes the time picker

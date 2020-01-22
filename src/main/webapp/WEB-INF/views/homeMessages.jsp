@@ -37,7 +37,7 @@
 
 						<h3 class="latestNewsTitle"
 							style="background: #fcf300; color: #111111;">Latest News</h3>
-						<div class="microsoft marquee">
+						<div class="microsoft marquee" style="margin-left: 70px;">
 							<c:forEach items="${schedulerLists}" var="schedulerLists"
 								varStatus="count">
 

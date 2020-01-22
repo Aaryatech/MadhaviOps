@@ -57,6 +57,7 @@ import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.TabTitleData;
 import com.monginis.ops.model.frsetting.FrSetting;
+import com.monginis.ops.model.pettycash.PettyCashManagmt;
 import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
@@ -99,6 +100,60 @@ public class PosPlaceOrderController {
 			e.printStackTrace();
 
 		}
+		
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
+		Date date2 = new Date();
+		
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", frDetails.getFrId());
+		PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+				PettyCashManagmt.class);
+		
+		String billDate=sf.format(date2);
+		if(petty!=null) {
+			
+			SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+		
+			
+			Date d1=cal.getTime();
+			
+			billDate=ymdSDF.format(cal.getTime());
+			
+			Calendar cal2 = Calendar.getInstance();
+			cal2.set(Calendar.HOUR_OF_DAY, 0);
+			cal2.set(Calendar.MINUTE, 0);
+			cal2.set(Calendar.SECOND, 0);
+			
+			date2=cal2.getTime();
+			
+			System.err.println("DATE 1 ---------------------- "+d1);
+			System.err.println("DATE 2 ---------------------- "+date2);
+			
+			
+			System.err.println("DATE COMPARE-------------------------- "+d1.compareTo(date2));
+			
+			if(d1.compareTo(date2)>0) {
+				System.err.println("ZERO");
+				model.addObject("dispButton", 1);
+			}else {
+				System.err.println("NOT ZERO");
+				model.addObject("dispButton", 0);
+			}
+			
+			
+			
+			
+		}
+		
+		
 
 		mAllCategoryList = categoryList.getmCategoryList();
 
@@ -119,7 +174,7 @@ public class PosPlaceOrderController {
 		String currentDate = df.format(date);
 		String currentDateFc = dfdmy.format(date);
 
-		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		
 
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 

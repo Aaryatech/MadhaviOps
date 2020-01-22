@@ -12,6 +12,8 @@ public class SellBillHeader implements Serializable{
 	private String invoiceNo;
 		
 	private String billDate;
+	
+	private String timestamp;
 		
 	private int frId;
 		
@@ -315,20 +317,36 @@ public class SellBillHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	
+	
+
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	
+	
 
 
 	@Override
 	public String toString() {
 		return "SellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
-				+ ", frId=" + frId + ", frCode=" + frCode + ", discType=" + discType + ", discAmtItem=" + discAmtItem
-				+ ", taxableAmt=" + taxableAmt + ", discountPer=" + discountPer + ", discountAmt=" + discountAmt
-				+ ", payableAmt=" + payableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt="
-				+ paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", isDairyMartBill="
-				+ isDairyMartBill + ", advanceAmt=" + advanceAmt + ", couponNo=" + couponNo + ", custId=" + custId
-				+ ", custLoyaltyPtRate=" + custLoyaltyPtRate + ", custLoyaltyPt=" + custLoyaltyPt + ", userName="
-				+ userName + ", userGstNo=" + userGstNo + ", userPhone=" + userPhone + ", status=" + status
-				+ ", billType=" + billType + ", delStatus=" + delStatus + ", extInt1=" + extInt1
-				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
+				+ ", timestamp=" + timestamp + ", frId=" + frId + ", frCode=" + frCode + ", discType=" + discType
+				+ ", discAmtItem=" + discAmtItem + ", taxableAmt=" + taxableAmt + ", discountPer=" + discountPer
+				+ ", discountAmt=" + discountAmt + ", payableAmt=" + payableAmt + ", totalTax=" + totalTax
+				+ ", grandTotal=" + grandTotal + ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt
+				+ ", paymentMode=" + paymentMode + ", isDairyMartBill=" + isDairyMartBill + ", advanceAmt=" + advanceAmt
+				+ ", couponNo=" + couponNo + ", custId=" + custId + ", custLoyaltyPtRate=" + custLoyaltyPtRate
+				+ ", custLoyaltyPt=" + custLoyaltyPt + ", userName=" + userName + ", userGstNo=" + userGstNo
+				+ ", userPhone=" + userPhone + ", status=" + status + ", billType=" + billType + ", delStatus="
+				+ delStatus + ", extInt1=" + extInt1 + ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
 
 	 

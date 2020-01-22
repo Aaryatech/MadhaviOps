@@ -7,9 +7,9 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
- <style>
+<style>
 table, th, td {
-    border: 1px solid #9da88d;
+	border: 1px solid #9da88d;
 }
 </style>
 <!--topLeft-nav-->
@@ -42,44 +42,68 @@ table, th, td {
 			<!--leftNav-->
 
 
-
+<br>
 			<!--rightSidebar-->
 			<div class="sidebarright">
-				<div class="order-left">
-					<h2 class="pageTitle">GVN Headers</h2>
 
+				<div class="order-left" style="width: 100%">
+
+
+
+					<div class="colOuter">
+						<div class="col-md-8">
+							<h2 class="pageTitle">GVN Headers</h2>
+						</div>
+
+						<div class="col-md-4" style="text-align: right;">
+							
+							<br>
+						</div>
+
+					</div><br>
 				</div>
+				
+				<br>
 				<form id="validation-form">
- <input type="hidden" value="${gstType}" name="type" id="type"/>
+					<input type="hidden" value="${gstType}" name="type" id="type" />
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="calender-title">From</div>
-						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal" autocomplete="off"
-								value="${cDate}" name="from_Date" type="text">
-						</div>
-
-						<div class="calender-title">TO</div>
-						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal" autocomplete="off"
-								value="${cDate}" name="to_Date" type="text">
-						</div>
-
-
-
-						<div class="col-sm-2">
-							<label>OR Gvn Sr No</label>
-							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
-						 name="headerCheckBox" id="headerCheckBox"
-							/> -->
-						</div>
 						<div class="col-md-1">
+							<div class="col1title">
+								<b>From</b>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								autocomplete="off" value="${cDate}" name="from_Date" type="text">
+						</div>
+
+						<div class="col-md-1">
+							<div class="col1title">
+								<b>TO</b>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<input id="datepicker2" class="texboxitemcode texboxcal"
+								autocomplete="off" value="${cDate}" name="to_Date" type="text">
+						</div>
+
+
+						<div class="col-md-2">
+							<div class="col1title">
+								<b>OR Gvn Sr No</b>
+							</div>
+						</div>
+						<div class="col-md-2">
 							<input type="text" class="form-control" id="headeIdText"
 								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
-						<div class="col-md-1"></div>
-						<div class="col-md-1">
+
+
+
+
+						<div class="col-md-2">
 
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="searchGRN()">Search</button>
@@ -95,37 +119,42 @@ table, th, td {
 						<!--tabMenu-->
 
 
-						<div id="table-scroll"> <!-- class="table-scroll"> -->
+						<div id="table-scroll">
+							<!-- class="table-scroll"> -->
 							<div id="faux-table" class="faux-table" aria="hidden">
 								<table id="table_grid1" class="main-table">
 									<thead>
 										<tr class="bgpink">
 										</tr>
-										</thead>
+									</thead>
 								</table>
 							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-3" style="text-align: center;">GvnSr No</th>
-											<th  class="col-md-2" style="text-align: center;">Date</th>
-											<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
+											<th class="col-md-3" style="text-align: center;">GvnSr
+												No</th>
+											<th class="col-md-2" style="text-align: center;">Date</th>
+											<th class="col-md-2" style="text-align: center;">Taxable
+												Amt</th>
 											<th class="col-md-2" style="text-align: center;">Tax Amt</th>
 											<th class="col-md-2" style="text-align: center;">Amount</th>
-											<th class="col-md-2" style="text-align: center;">Approved Amt</th>
+											<th class="col-md-2" style="text-align: center;">Approved
+												Amt</th>
 											<th class="col-md-3" style="text-align: center;">Status</th>
 											<th class="col-md-1" style="text-align: center;">Credited?</th>
-											<th class="col-md-1" style="text-align: center;">Credit Number</th>
+											<th class="col-md-1" style="text-align: center;">Credit
+												Number</th>
 											<th class="col-md-2" style="text-align: center;">Action</th>
-										
+
 										</tr>
 									</thead>
 									<tbody>
 
 										<c:forEach items="${gvnList}" var="grnList" varStatus="count">
 											<tr>
-												<td class="col-md-1" style="text-align:center;"><c:out
+												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnList.grngvnSrno}" /> <input type="hidden"
 													name="headerId" id="headerId"
 													value="${grnList.grnGvnHeaderId}"></td>
@@ -135,16 +164,18 @@ table, th, td {
 
 												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnList.taxableAmt}" /></td>
-												<td class="col-md-1" style="text-align: center;"><c:out value="${grnList.taxAmt}" /></td>
+												<td class="col-md-1" style="text-align: center;"><c:out
+														value="${grnList.taxAmt}" /></td>
 
-												<td class="col-md-1" style="text-align: center;"><c:out value="${grnList.totalAmt}" /></td>
+												<td class="col-md-1" style="text-align: center;"><c:out
+														value="${grnList.totalAmt}" /></td>
 
-												<td class="col-md-1" style="text-align: center;"><fmt:formatNumber type="number"
-														minFractionDigits="2" maxFractionDigits="2"
+												<td class="col-md-1" style="text-align: center;"><fmt:formatNumber
+														type="number" minFractionDigits="2" maxFractionDigits="2"
 														value="${grnList.aprGrandTotal}" /></td>
 
 												<c:set var="status" value="a"></c:set>
-												<c:choose>
+												<%-- <c:choose>
 													<c:when test="${grnList.grngvnStatus==1}">
 														<c:set var="status" value="Pending"></c:set>
 
@@ -172,8 +203,23 @@ table, th, td {
 													<c:when test="${grnList.grngvnStatus==7}">
 														<c:set var="status" value="Reject From Account"></c:set>
 													</c:when>
-														<c:when test="${grnList.grngvnStatus==8}">
+													<c:when test="${grnList.grngvnStatus==8}">
 														<c:set var="status" value="Partially Approved"></c:set>
+													</c:when>
+													<c:otherwise>
+														<c:set var="status" value="Pending"></c:set>
+													</c:otherwise>
+
+												</c:choose> --%>
+
+
+												<c:choose>
+
+													<c:when test="${grnList.grngvnStatus==7}">
+														<c:set var="status" value="Approved from Account"></c:set>
+													</c:when>
+													<c:when test="${grnList.grngvnStatus==8}">
+														<c:set var="status" value="Rejected from Account"></c:set>
 													</c:when>
 													<c:otherwise>
 														<c:set var="status" value="Pending"></c:set>
@@ -181,9 +227,10 @@ table, th, td {
 
 												</c:choose>
 
-												<td class="col-md-1" style="text-align: center;"><c:out value="${status}"></c:out></td>
-												
-												
+												<td class="col-md-1" style="text-align: center;"><c:out
+														value="${status}"></c:out></td>
+
+
 												<c:choose>
 													<c:when test="${grnList.isCreditNote==1}">
 														<c:set var="isCredit" value="Yes"></c:set>
@@ -193,41 +240,49 @@ table, th, td {
 													</c:otherwise>
 												</c:choose>
 
-												<td class="col-md-1"><c:out
-														value="${isCredit}"></c:out></td>
+												<td class="col-md-1"><c:out value="${isCredit}"></c:out></td>
 
 												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnList.creditNoteId}"></c:out></td>
-												
-												
-	<%-- 											<td class="col-md-1" style="text-align: center;"><a href='#' class='action_btn'
+
+
+												<%-- 											<td class="col-md-1" style="text-align: center;"><a href='#' class='action_btn'
 													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
 														title='Detail'><i class='fa fa-list'></i></abbr></a>&nbsp;<a href='#' class='action_btn'
 													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
 														title='Pdf'><i class='fa fa-file-pdf-o' style="color:red"></i></abbr></a> <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"></td>
- --%><c:choose>
+ --%>
+												<c:choose>
 													<c:when test="${grnList.isCreditNote==1}">
-															<td class="col-md-2" ><a href='#' class='action_btn'
-													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
-														title='Detail'><i class='fa fa-list'></i></abbr></a>&nbsp;<a href='#' class='action_btn'
-													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
-														title='Pdf'><i class='fa fa-file-pdf-o' style="color:red"></i></abbr></a> &nbsp;<a href='#' class='action_btn'
-													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
-														title='Pdf'><i class='fa fa-file-pdf-o' style="color:red"></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
+														<td class="col-md-2"><a href='#' class='action_btn'
+															onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
+																title='Detail'><i class='fa fa-list'></i></abbr></a>&nbsp;<a
+															href='#' class='action_btn'
+															onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+																title='Pdf'><i class='fa fa-file-pdf-o'
+																	style="color: red"></i></abbr></a> &nbsp;<a href='#'
+															class='action_btn'
+															onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+																title='Pdf'><i class='fa fa-file-pdf-o'
+																	style="color: red"></i></abbr></a> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
 
 													</c:when>
 													<c:otherwise>
-														<td class="col-md-2" ><a href='#' class='action_btn'
-													onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
-														title='Detail'><i class='fa fa-list'></i></abbr></a>&nbsp;<a href='#' class='action_btn'
-													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
-														title='Pdf'><i class='fa fa-file-pdf-o' style="color:red"></i></abbr></a>&nbsp;<%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
+														<td class="col-md-2"><a href='#' class='action_btn'
+															onclick="getGvnDetail(${grnList.grnGvnHeaderId})"><abbr
+																title='Detail'><i class='fa fa-list'></i></abbr></a>&nbsp;<a
+															href='#' class='action_btn'
+															onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
+																title='Pdf'><i class='fa fa-file-pdf-o'
+																	style="color: red"></i></abbr></a>&nbsp;<%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
 
 													</c:otherwise>
 												</c:choose>
 												<%-- <td class="col-md-1"><a href='#' class='action_btn'
 													onclick="genPdf(${grnList.grnGvnHeaderId})"><abbr
-														title='Pdf'><i class='fa fa-list'></i></abbr></a> --%> <%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%></td>
+														title='Pdf'><i class='fa fa-list'></i></abbr></a> --%>
+												<%-- <input type="button" onclick="getGvnDetail(${grnList.grnGvnHeaderId})" id="grnDetailButton" value="Detail"> --%>
+												</td>
 
 											</tr>
 										</c:forEach>
@@ -305,7 +360,7 @@ document.getElementById("headeIdText").value=0;
 						
 						var grnStatus;
 								
-								if(grndata.grngvnStatus==1)
+								/* if(grndata.grngvnStatus==1)
 									grnStatus="Pending";
 							 if(grndata.grngvnStatus==2)
 									grnStatus="Approved From Dispatch";
@@ -320,7 +375,16 @@ document.getElementById("headeIdText").value=0;
 							 else if(grndata.grngvnStatus==7)
 									grnStatus="Reject From Account";
 							 else if(grndata.grngvnStatus==8)
-									grnStatus="Partially Approved";
+									grnStatus="Partially Approved"; */
+									
+									
+								if(grndata.grngvnStatus==6)
+									grnStatus="Approved from Account";
+								if(grndata.grngvnStatus==7)
+									grnStatus="Rejected from Account";
+								else 
+									grnStatus="Pending";
+									
 							 
 							 var credited;
 							 if(grndata.isCreditNote==1){

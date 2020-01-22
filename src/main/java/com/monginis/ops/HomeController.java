@@ -219,6 +219,7 @@ public class HomeController {
 			model.addObject("msgList", msgList);
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("isSpDayShow", spDayShow);
+			model.addObject("msgListCount", msgList.size());
 
 			logger.info("/login request mapping.");
 
@@ -396,6 +397,7 @@ public class HomeController {
 
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
+			
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 
 		} catch (Exception e) {

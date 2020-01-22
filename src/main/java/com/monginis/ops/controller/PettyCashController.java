@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -55,6 +56,7 @@ import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.FrEmpLoginResp;
 import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.GetCurrentStockDetails;
+import com.monginis.ops.model.GetTotalAmt;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.PettyCashEmp;
 import com.monginis.ops.model.PettyCashHandover;
@@ -147,6 +149,17 @@ public class PettyCashController {
 			model.addObject("trCashAmt", amtData.getTrCashAmt());
 			model.addObject("advAmt", amtData.getAdvAmt());
 			model.addObject("expAmt", amtData.getExpAmt());
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frid);
+			map.add("date", newDate);
+			
+			 DecimalFormat df = new DecimalFormat("0.00");
+
+
+			GetTotalAmt creditNoteAmt = rest.postForObject(Constant.URL + "/getTotalPOSCreditNoteAmt", map,
+					GetTotalAmt.class);
+			model.addObject("creditNote", df.format(creditNoteAmt.getTotalAmt()));
 
 			/*
 			 * map.add("frId", frid); map.add("date",

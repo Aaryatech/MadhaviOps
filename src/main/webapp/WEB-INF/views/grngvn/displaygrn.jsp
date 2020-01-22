@@ -91,7 +91,8 @@
 									<c:forEach items="${grnList}" var="grnList" varStatus="count">
 										<c:set var="color" value="white"></c:set>
 										<c:choose>
-											<c:when test="${grnList.grnGvnQty!=grnList.aprQtyAcc || grnList.grnGvnStatus==7}">
+											<c:when
+												test="${grnList.grnGvnQty!=grnList.aprQtyAcc || grnList.grnGvnStatus==7}">
 												<c:set var="color" value="re-order"></c:set>
 											</c:when>
 											<c:otherwise>
@@ -118,6 +119,9 @@
 												<c:when test="${grnList.grnType==4}">
 													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 												</c:when>
+												<c:otherwise>
+												<td class="col-md-1"><c:out value="-"></c:out></td>
+												</c:otherwise>
 											</c:choose>
 
 											<td class="col-md-1"><c:out value="${grnList.itemRate}" /></td>
@@ -136,7 +140,8 @@
 													value="${grnList.aprTaxableAmt}" /></td>
 											<td class="col-md-1"><c:out
 													value="${grnList.aprTotalTax}" /></td>
-											<c:choose>
+
+											<%-- <c:choose>
 												<c:when test="${grnList.grnGvnStatus==1}">
 													<td class="col-md-1"><c:out value="Pending"></c:out></td>
 												</c:when>
@@ -166,6 +171,20 @@
 															value="Reject From Account"></c:out></td>
 												</c:when>
 
+											</c:choose> --%>
+
+											<c:choose>
+												<c:when test="${grnList.grnGvnStatus==6}">
+													<td class="col-md-1"><c:out
+															value="Approved From Account"></c:out></td>
+												</c:when>
+												<c:when test="${grnList.grnGvnStatus==7}">
+													<td class="col-md-1"><c:out
+															value="Reject From Account"></c:out></td>
+												</c:when>
+												<c:otherwise>
+													<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												</c:otherwise>
 											</c:choose>
 
 										</tr>

@@ -169,7 +169,7 @@ table, th, td {
 										<td class="col-md-1"><a href="${url}${gvnList.gvnPhotoUpload2}"
 											data-lightbox="image-2">Image 2</a></td>
 
-										<c:choose>
+										<%-- <c:choose>
 											<c:when test="${gvnList.grnGvnStatus==1}">
 												<c:set var="status" value="Pending"></c:set>
 											</c:when>
@@ -197,7 +197,24 @@ table, th, td {
 											<c:when test="${gvnList.grnGvnStatus==7}">
 												<c:set var="status" value="Reject From Account"></c:set>
 											</c:when>
-										</c:choose>
+										</c:choose> --%>
+										
+										
+										
+										<c:choose>
+											<c:when test="${gvnList.grnGvnStatus==6}">
+												<c:set var="status" value="Approved From Account"></c:set>
+											</c:when>
+
+											<c:when test="${gvnList.grnGvnStatus==7}">
+												<c:set var="status" value="Reject From Account"></c:set>
+											</c:when>
+											<c:otherwise>
+											<c:set var="status" value="Pending"></c:set>
+											</c:otherwise>
+										</c:choose> 
+										
+										
 										<td class="col-md-1"><c:out value="${status}" /></td>
 								</c:forEach>
 

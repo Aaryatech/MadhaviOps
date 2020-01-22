@@ -37,6 +37,7 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.otheritems.RawMaterialUom;
+import com.monginis.ops.model.pettycash.PettyCashManagmt;
 
 @Controller
 @Scope("session")
@@ -185,6 +186,8 @@ public class ExpenseController {
 			@RequestParam("photo") List<MultipartFile> photo) {
 
 		try {
+			
+			RestTemplate restTemplate = new RestTemplate();
 
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
@@ -242,7 +245,28 @@ public class ExpenseController {
 			exp.setChalanNo(chalanNo);
 			exp.setChAmt(amount);
 			exp.setDelStatus(0);
-			exp.setExpDate(expDate);
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			String billDate=expDate;
+			if(petty!=null) {
+				
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				
+				billDate=ymdSDF.format(cal.getTime());
+				System.err.println("BILL DATE ---------------- "+billDate);
+			}
+			
+			
+			
+			exp.setExpDate(billDate);
 			exp.setExpType(isActive);
 			exp.setRemark(remark);
 			exp.setStatus(Integer.parseInt(isActive));
@@ -260,13 +284,13 @@ public class ExpenseController {
 
 			exp.setFrId(frDetails.getFrId());
 
-			RestTemplate restTemplate = new RestTemplate();
+			
 
 			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveExpense", exp, Info.class);
 			System.out.println("Response: " + errorMessage.toString());
 
 			if (errorMessage.isError() == false && expId.equals("0")) {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map = new LinkedMultiValueMap<String, Object>();
 				System.err.println("incr " + chSeq + 1);
 				map.add("frId", frDetails.getFrId());
 				map.add("chSeq", chSeq + 1);

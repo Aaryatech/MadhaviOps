@@ -38,8 +38,8 @@
 				
 				<div class="latestNews" style="background: #ed1c24;">
 					
-						<a href="${pageContext.request.contextPath}/homeMessages"><h3 class="latestNewsTitle" style="background: #fcf300; color: #111111;">Latest News</h3></a>
-							<div class="microsoft marquee">
+						<a href="${pageContext.request.contextPath}/homeMessages"><h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News <c:if test="${msgListCount>0}">- ${msgListCount}</c:if> </h3></a>
+							<div class="microsoft marquee" style="margin-left: 70px;">
 						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
 						
 					            <c:set var="colors" value=""/>

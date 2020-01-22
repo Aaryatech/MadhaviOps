@@ -395,7 +395,7 @@ page-break-inside: auto !important
 					</p> --%>
 					<p
 						style="color: #000; font-weight:bold; font-size: 13px; text-align: left; margin: 0px;"><%-- Place
-						of supply: &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ${Constants.STATE}    &nbsp;&nbsp;&nbsp;&nbsp; --%>&nbsp; Date Of Remo.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${frDetails.billDate}&nbsp;&nbsp;${frDetails.billTime}</p>
+						of supply: &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ${Constants.STATE}    &nbsp;&nbsp;&nbsp;&nbsp; --%>&nbsp; </p>
 				</td>
 			</tr>
 		<%-- 	<tr>

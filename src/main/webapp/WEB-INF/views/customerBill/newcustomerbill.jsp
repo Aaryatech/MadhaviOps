@@ -79,6 +79,8 @@
 <c:url var="deleteSellBill" value="/deleteSellBill" />
 
 <c:url var="getItemsOfBill" value="/getItemsOfBill" />
+<c:url var="alertSaveBillAfterPettyCashDayEnd"
+	value="/alertSaveBillAfterPettyCashDayEnd" />
 
 
 <style>
@@ -805,7 +807,8 @@ body {
 						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
 							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
-								onchange="trim(this)" type="text" maxlength="15" class="input_add" />
+								onchange="trim(this)" type="text" maxlength="15"
+								class="input_add" />
 						</div>
 						<div class="clr"></div>
 					</div>
@@ -1648,8 +1651,9 @@ body {
 
 									<th style="text-align: center;" width="2%">Sr</th>
 									<th style="text-align: center;">Bill No</th>
-									<th style="text-align: center;" id="billDateLabel">Bill Date</th>
-									<th style="text-align: center;" width="10%" >Bill Amt</th>
+									<th style="text-align: center;" id="billDateLabel">Bill
+										Date</th>
+									<th style="text-align: center;" width="10%">Bill Amt</th>
 									<th style="text-align: center;" width="10%" id="discTh">Disc
 										Amt</th>
 									<th style="text-align: center;" width="10%" id="payableTh">Payable
@@ -2633,6 +2637,21 @@ function matchSplitAmt(flag){
 			}
 
 		}
+		
+		
+		
+		function checkGST(g){
+		    let regTest = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/.test(g)
+		     if(regTest){
+		        let a=65,b=55,c=36;
+		        return Array['from'](g).reduce((i,j,k,g)=>{ 
+		           p=(p=(j.charCodeAt(0)<a?parseInt(j):j.charCodeAt(0)-b)*(k%2+1))>c?1+(p-c):p;
+		           return k<14?i+p:j==((c=(c-(i%c)))<10?c:String.fromCharCode(c+b));
+		        },0); 
+		    }
+		    return regTest
+		}
+		
 
 		function addCustomer() {
 			
@@ -2711,7 +2730,13 @@ function matchSplitAmt(flag){
 				} else if (gstNo == "") {
 					alert("Enter GST No");
 					flag = 1;
-				} else if (custAdd == "") {
+				}else if(checkGST(gstNo)==false){
+					alert("Invalid GST No");
+					flag = 1;
+					
+				}
+				
+				else if (custAdd == "") {
 					alert("Enter Address");
 					flag = 1;
 				}
@@ -3667,91 +3692,129 @@ $("#enterQty").focus();
 	<script type="text/javascript">
 	
 	function submitBill(printbilltype) {
-		var advAmt = document.getElementById("advAmt").value;
-		var advOrderDate = document.getElementById("advOrderDate").value;
-		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
-		var key =  $('#key').val() ;
-		/* var key =  $('#advKey').val() ; */
-		var custId =  $('#cust').val() ;
-		var selectedText = $("#cust option:selected").text(); 
-		document.getElementById("credAmt").innerHTML="0.0";
-
-		var frtype =  $('#frtype').val() ;
-		var rowcount = $('#itemBillTable tr').length;
-		var flag = 0;
-		   
-		 if(rowcount<=1){
-			 alert("Select Minimum Product");
-			 flag=1;
-		 }else if(custId==0){
-			 flag=1;
-			 alert("Select Customer");
-		 }
-		 
-		 if(flag==0){
-		 document.getElementById("overlay2").style.display = "block";
-		   $
+		
+		 $
 			.post(
-					'${submitBill}',
+					'${alertSaveBillAfterPettyCashDayEnd}',
 					{
-						key : key,  
-						custId : custId,
- 						selectedText : selectedText,
- 						advAmt:advAmt,
- 						advOrderDate:advOrderDate,
- 						isAdvanceOrder:isAdvanceOrder,
 						ajax : 'true'
 					},
 					function(data) {
-						  if(advAmt>0){
-						 document.getElementById("advAmt").value = 0; 
-						 document.getElementById("advBillLable").style.display = 'none';
-						 document.getElementById("actionName").innerHTML= 'ADD BILL';
-						  }
-							if(key==0){
-								
-								if(printbilltype==1){
-									
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-								}
-								
-								 	var defaultCustomer =  $('#defaultCustomer').val() ;
-								 	//alert(defaultCustomer)
-								 	document.getElementById("cust").value = defaultCustomer;
-									getCurrentItemList(); 
-									$('.chosen-select').trigger(
-									'chosen:updated');
-									document.getElementById("overlay2").style.display = "none";	 
-							 }else{
-								 if(printbilltype==1){
-										
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-								}
-								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-							 }
-						 
-						 
 						
-					});    
-		 }
+						if(data==1){
+						
+						if (confirm("Todays day end process competed! Bill will be generated for next day.")) {
+						   
+							
+						var advAmt = document.getElementById("advAmt").value;
+						var advOrderDate = document.getElementById("advOrderDate").value;
+						var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
+						var key =  $('#key').val() ;
+						/* var key =  $('#advKey').val() ; */
+						var custId =  $('#cust').val() ;
+						var selectedText = $("#cust option:selected").text(); 
+						document.getElementById("credAmt").innerHTML="0.0";
+
+						var frtype =  $('#frtype').val() ;
+						var rowcount = $('#itemBillTable tr').length;
+						var flag = 0;
+						   
+						 if(rowcount<=1){
+							 alert("Select Minimum Product");
+							 flag=1;
+						 }else if(custId==0){
+							 flag=1;
+							 alert("Select Customer");
+						 }
+						 
+						 if(flag==0){
+						 document.getElementById("overlay2").style.display = "block";
+						   $
+							.post(
+									'${submitBill}',
+									{
+										key : key,  
+										custId : custId,
+				 						selectedText : selectedText,
+				 						advAmt:advAmt,
+				 						advOrderDate:advOrderDate,
+				 						isAdvanceOrder:isAdvanceOrder,
+										ajax : 'true'
+									},
+									function(data) {
+										  if(advAmt>0){
+										 document.getElementById("advAmt").value = 0; 
+										 document.getElementById("advBillLable").style.display = 'none';
+										 document.getElementById("actionName").innerHTML= 'ADD BILL';
+										  }
+											if(key==0){
+												
+												if(printbilltype==1){
+													
+													 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+													 
+												}else if(printbilltype==2){
+													 
+													if(frtype<10000000){
+														window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+													}else{
+														window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+													}
+												}
+												
+												 	var defaultCustomer =  $('#defaultCustomer').val() ;
+												 	//alert(defaultCustomer)
+												 	document.getElementById("cust").value = defaultCustomer;
+													getCurrentItemList(); 
+													$('.chosen-select').trigger(
+													'chosen:updated');
+													document.getElementById("overlay2").style.display = "none";	 
+											 }else{
+												 if(printbilltype==1){
+														
+													 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+													 
+												}else if(printbilltype==2){
+													 
+													if(frtype<10000000){
+														window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+													}else{
+														window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+													}
+												}
+												 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+											 }
+										 
+										 
+										
+									});    
+						 }
+							
+							
+							
+							
+						} else {
+						    // Do nothing!
+						}
+						
+						}
+						
+						
+						
+						
+						
+						
+					}); 
+		
+		
+		
+		
 		  
 	}
+	
+	
+	
+	
 	
 	function openPaymentPopup() {
 		var advAmt = document.getElementById("advAmt").value;
@@ -3813,220 +3876,265 @@ if(parseInt(custId)==parseInt(dfCust)){
 		 }
 		  
 	}
+	
+	
 	}
 	
 	function submitBillByPaymentOption(printbilltype) {
 		
-		var advAmt = document.getElementById("advAmt").value;
-		var advOrderDate = document.getElementById("advOrderDate").value;
-		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
-		var flagPayable=0;
-		
-		document.getElementById("credAmt").innerHTML="0.0";
-
-		if (document.getElementById('split').checked) {
-					
-			var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
-			
-			var cashAmt =  $('#cashAmt').val() ;
-			var cardAmt =  $('#cardAmt').val() ;
-			var epayAmt =  $('#epayAmt').val() ;
-		 
-			
-			var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
- 			 
-		 if(totalPayableAmt==epayLabel){
-			 
-			 flagPayable=1;
-		 }else{
-			 
-			 flagPayable=2;
-		 }
-		}
- 
-		if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
-			alert("Please Enter the valid Bill Amount!!");
-			
-		}else{
-		   
-		var key =  $('#key').val() ;
-		var custId =  $('#cust').val() ;
-		var cashAmt =  $('#cashAmt').val() ;
-		var cardAmt =  $('#cardAmt').val() ;
-		var epayAmt =  $('#epayAmt').val() ;
-		var billType =  $('#billType').val() ;
-		var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
-		if(billType==1){
-			payTypeFlag=0;
-			payType=1;
-		}else if(billType==2) {
-			var cardType = $('#cardType option:selected').val();
-			if(cardType=="")
-				{
-				payTypeFlag=1;
-				msg="Please Select Pay Type( Card Type Or E-Pay type)";
-				}
-			payType=cardType;
-			}else if(billType==3)
-				{
-				var ePayType =  $('#ePayType option:selected').val();
-				if(ePayType=="")
-				{
-				payTypeFlag=1;
-				msg="Please Select Pay Type( Card Type Or E-Pay type)";
-				}
-				payType=ePayType;
-				} 
-		var payAmt =  $('#payAmt').val() ;
-		var frtype =  $('#frtype').val() ;
-		var discPer =  $('#discPer').val() ;
-		var discAmt =  $('#discAmt').val() ;
-		
-		var billAmtWtDisc;
-		
-		if(parseFloat(advAmt)>0){
-		 
-			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
-		}else{
-			billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
-		}
 		
 		
-		var creditBill = 1;
-		var single = 1;
-		var selectedText = $("#cust option:selected").text(); 
-		var flag=0;
-		
-		if (document.getElementById('creditBillno').checked) {
-			creditBill = 2;
-		}
-		if (document.getElementById('split').checked) {
-			single = 2;
-			if(cashAmt>0){
-				payTypeSplit=",1";
-			}
-			var cardTypeSplit = $('#cardTypeSplit option:selected').val();
-			if(cardTypeSplit=="" && cardAmt>0)
-				{
-				msg="Please Select Card Type";
-				payTypeFlag=1;
-				}else if(cardAmt>0)
+		 $
+			.post(
+					'${alertSaveBillAfterPettyCashDayEnd}',
 					{
-					payTypeSplit=payTypeSplit+","+cardTypeSplit;
-					}
-			var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
-			if(ePayTypeSplit=="" && epayAmt>0)
-			{
-				msg="Please Select Card & E-pay Type";payTypeFlag=1;
-			}else if(epayAmt>0)
-			{
-				payTypeSplit=payTypeSplit+","+ePayTypeSplit;
-			}
-		}
-		
-		if (cashAmt=="") {
-			cashAmt=0;
-		}
-		if (cardAmt=="") {
-			cardAmt=0;
-		}
-		if (epayAmt=="") {
-			epayAmt=0;
-		}
-		if (discPer=="") {
-			discPer=0;
-		}
-		if (discAmt=="") {
-			discAmt=0;
-		}
-		
-		if(creditBill==2 && single==1 && payAmt==""){
-			alert("Please Enter Amount");
-		}else
-			if(payTypeFlag==1){
-				alert(msg);
-			}else{
-			 $('#payment').popup('hide');
-			  document.getElementById("overlay2").style.display = "block";
-			   $
-				.post(
-						'${submitBillByPaymentOption}',
-						{
-							key : key,  
-							custId : custId,
-							creditBill : creditBill,
-							paymentMode : single,
-							billType : billType,
-							payType:payType,
-							payTypeSplit:payTypeSplit,
-							cashAmt : cashAmt,
-							cardAmt : cardAmt,
-							epayAmt : epayAmt,
-							selectedText : selectedText,
-							payAmt : payAmt,
-							discPer:discPer,
-							discAmt:discAmt,
-							billAmtWtDisc:billAmtWtDisc,
-							advAmt:advAmt,
-							advOrderDate:advOrderDate,
-							isAdvanceOrder:isAdvanceOrder,
-							ajax : 'true'
-						},
-						function(data) {
-							 if(advAmt>0){
-							 document.getElementById("advAmt").value = 0; 
-							 document.getElementById("advBillLable").style.display = 'none';
-							 document.getElementById("actionName").innerHTML= 'ADD BILL';
-							 }
-							 if(key==0){
-								 if(printbilltype==1){
-										
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-								}
-								 var defaultCustomer =  $('#defaultCustomer').val() ;
-									document.getElementById("cust").value = defaultCustomer;
-									getCurrentItemList(); 
-									$('.chosen-select').trigger(
-									'chosen:updated');
-									document.getElementById("overlay2").style.display = "none";	
-									
-									 
-									 document.getElementById('creditBillno').checked = true;
-									 document.getElementById('single').checked = true;
-									 document.getElementById("cashAmt").value = 0; 
-									 document.getElementById("cardAmt").value = 0; 
-									 document.getElementById("epayAmt").value = 0; 
-									 document.getElementById("payAmt").value = 0; 
-									 $("#splitDiv").hide();
-									 $("#singleDiv").show();
-							 }else{
-								 if(printbilltype==1){
-										
-									 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
-									 
-								}else if(printbilltype==2){
-									 
-									if(frtype<10000000){
-										window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
-									}else{
-										window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
-									}
-								}
-								 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
-							 }
+						ajax : 'true'
+					},
+					function(data) {
+						
+						if(data==1){
 							
-						});   
-		} 
-		}
+							if (confirm("Todays day end process competed! Bill will be generated for next day.")) {
+							
+								
+								var advAmt = document.getElementById("advAmt").value;
+								var advOrderDate = document.getElementById("advOrderDate").value;
+								var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
+								var flagPayable=0;
+								
+								document.getElementById("credAmt").innerHTML="0.0";
+
+								if (document.getElementById('split').checked) {
+											
+									var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+									
+									var cashAmt =  $('#cashAmt').val() ;
+									var cardAmt =  $('#cardAmt').val() ;
+									var epayAmt =  $('#epayAmt').val() ;
+								 
+									
+									var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
+						 			 
+								 if(totalPayableAmt==epayLabel){
+									 
+									 flagPayable=1;
+								 }else{
+									 
+									 flagPayable=2;
+								 }
+								}
+						 
+								if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
+									alert("Please Enter the valid Bill Amount!!");
+									
+								}else{
+								   
+								var key =  $('#key').val() ;
+								var custId =  $('#cust').val() ;
+								var cashAmt =  $('#cashAmt').val() ;
+								var cardAmt =  $('#cardAmt').val() ;
+								var epayAmt =  $('#epayAmt').val() ;
+								var billType =  $('#billType').val() ;
+								var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+								if(billType==1){
+									payTypeFlag=0;
+									payType=1;
+								}else if(billType==2) {
+									var cardType = $('#cardType option:selected').val();
+									if(cardType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+									payType=cardType;
+									}else if(billType==3)
+										{
+										var ePayType =  $('#ePayType option:selected').val();
+										if(ePayType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+										payType=ePayType;
+										} 
+								var payAmt =  $('#payAmt').val() ;
+								var frtype =  $('#frtype').val() ;
+								var discPer =  $('#discPer').val() ;
+								var discAmt =  $('#discAmt').val() ;
+								
+								var billAmtWtDisc;
+								
+								if(parseFloat(advAmt)>0){
+								 
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+								}else{
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
+								}
+								
+								
+								var creditBill = 1;
+								var single = 1;
+								var selectedText = $("#cust option:selected").text(); 
+								var flag=0;
+								
+								if (document.getElementById('creditBillno').checked) {
+									creditBill = 2;
+								}
+								if (document.getElementById('split').checked) {
+									single = 2;
+									if(cashAmt>0){
+										payTypeSplit=",1";
+									}
+									var cardTypeSplit = $('#cardTypeSplit option:selected').val();
+									if(cardTypeSplit=="" && cardAmt>0)
+										{
+										msg="Please Select Card Type";
+										payTypeFlag=1;
+										}else if(cardAmt>0)
+											{
+											payTypeSplit=payTypeSplit+","+cardTypeSplit;
+											}
+									var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
+									if(ePayTypeSplit=="" && epayAmt>0)
+									{
+										msg="Please Select Card & E-pay Type";payTypeFlag=1;
+									}else if(epayAmt>0)
+									{
+										payTypeSplit=payTypeSplit+","+ePayTypeSplit;
+									}
+								}
+								
+								if (cashAmt=="") {
+									cashAmt=0;
+								}
+								if (cardAmt=="") {
+									cardAmt=0;
+								}
+								if (epayAmt=="") {
+									epayAmt=0;
+								}
+								if (discPer=="") {
+									discPer=0;
+								}
+								if (discAmt=="") {
+									discAmt=0;
+								}
+								
+								if(creditBill==2 && single==1 && payAmt==""){
+									alert("Please Enter Amount");
+								}else
+									if(payTypeFlag==1){
+										alert(msg);
+									}else{
+									 $('#payment').popup('hide');
+									  document.getElementById("overlay2").style.display = "block";
+									   $
+										.post(
+												'${submitBillByPaymentOption}',
+												{
+													key : key,  
+													custId : custId,
+													creditBill : creditBill,
+													paymentMode : single,
+													billType : billType,
+													payType:payType,
+													payTypeSplit:payTypeSplit,
+													cashAmt : cashAmt,
+													cardAmt : cardAmt,
+													epayAmt : epayAmt,
+													selectedText : selectedText,
+													payAmt : payAmt,
+													discPer:discPer,
+													discAmt:discAmt,
+													billAmtWtDisc:billAmtWtDisc,
+													advAmt:advAmt,
+													advOrderDate:advOrderDate,
+													isAdvanceOrder:isAdvanceOrder,
+													ajax : 'true'
+												},
+												function(data) {
+													 if(advAmt>0){
+													 document.getElementById("advAmt").value = 0; 
+													 document.getElementById("advBillLable").style.display = 'none';
+													 document.getElementById("actionName").innerHTML= 'ADD BILL';
+													 }
+													 if(key==0){
+														 if(printbilltype==1){
+																
+															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															}else{
+																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															}
+														}
+														 var defaultCustomer =  $('#defaultCustomer').val() ;
+															document.getElementById("cust").value = defaultCustomer;
+															getCurrentItemList(); 
+															$('.chosen-select').trigger(
+															'chosen:updated');
+															document.getElementById("overlay2").style.display = "none";	
+															
+															 
+															 document.getElementById('creditBillno').checked = true;
+															 document.getElementById('single').checked = true;
+															 document.getElementById("cashAmt").value = 0; 
+															 document.getElementById("cardAmt").value = 0; 
+															 document.getElementById("epayAmt").value = 0; 
+															 document.getElementById("payAmt").value = 0; 
+															 $("#splitDiv").hide();
+															 $("#singleDiv").show();
+													 }else{
+														 if(printbilltype==1){
+																
+															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															}else{
+																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															}
+														}
+														 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+													 }
+													
+												});   
+								} 
+								}
+								
+							
+							}else{
+							}
+							
+						}
+							
+							
+						
+						
+					});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
+	
+	
+	
+	
+	
 	/* function printDiv(divName) {
 	     var printContents = document.getElementById(divName).innerHTML;
 	     var originalContents = document.body.innerHTML;

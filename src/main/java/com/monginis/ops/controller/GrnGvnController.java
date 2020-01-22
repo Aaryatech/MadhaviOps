@@ -2152,10 +2152,16 @@ public class GrnGvnController {
 			e.printStackTrace();
 			System.out.println("Ex in grn Detail " + e.getMessage());
 		}
-		String grnDate = grnDetailList.get(0).getGrnGvnDate();
+		
+		try {
+			String grnDate = grnDetailList.get(0).getGrnGvnDate();
+			modelAndView.addObject("grnDate", grnDate);
+
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		modelAndView.addObject("grnList", grnDetailList);
-		modelAndView.addObject("grnDate", grnDate);
 
 		return modelAndView;
 

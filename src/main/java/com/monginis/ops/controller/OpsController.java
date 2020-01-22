@@ -51,6 +51,7 @@ import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.newpos.SellBillHeaderAndDetail;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.pettycash.PettyCashManagmt;
 import com.monginis.ops.model.setting.NewSetting;
 import com.steadystate.css.ParseException;
 
@@ -796,6 +797,7 @@ public class OpsController {
 	public Info submitBill(HttpServletRequest request, HttpServletResponse responsel) {
 
 		Info info = new Info();
+		RestTemplate restTemplate = new RestTemplate();
 
 		try {
 
@@ -890,7 +892,27 @@ public class OpsController {
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
 			sellBillHeader.setUserName(customerById.getCustName());
-			sellBillHeader.setBillDate(sf.format(date));
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			String billDate=sf.format(date);
+			if(petty!=null) {
+				
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				
+				billDate=ymdSDF.format(cal.getTime());
+				System.err.println("BILL DATE ---------------- "+billDate);
+			}
+			
+			
+			sellBillHeader.setBillDate(billDate);
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
 			sellBillHeader.setPaidAmt(Math.round(total));
@@ -918,7 +940,6 @@ public class OpsController {
 			hashMap.remove(index);
 			itemBillList = new ArrayList<>();
 			SimpleDateFormat sf1 = new SimpleDateFormat("dd-MM-yyyy");
-			RestTemplate restTemplate = new RestTemplate();
 			SellBillHeader sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData",
 					sellBillHeader, SellBillHeader.class);
 
@@ -936,10 +957,16 @@ public class OpsController {
 					transactionDetail.setCashAmt(total);
 					transactionDetail.setExInt2(0);
 				}
+				
+				System.err.println("BILLDATE ============ "+billDate);
 
 				transactionDetail.setPayMode(1);
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
-				transactionDetail.setTransactionDate(sf1.format(date));
+				//transactionDetail.setTransactionDate(sf1.format(date));
+				
+				Date dt=sf.parse(billDate);
+				
+				transactionDetail.setTransactionDate(sf1.format(dt));
 				transactionDetail.setExVar1("0,1");
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				dList.add(transactionDetail);
@@ -1199,7 +1226,28 @@ public class OpsController {
 			sellBillHeader.setFrCode(frDetails.getFrCode());
 			sellBillHeader.setDelStatus(0);
 			sellBillHeader.setUserName(customerById.getCustName());
-			sellBillHeader.setBillDate(sf.format(date));
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			String billDate=sf.format(date);
+			if(petty!=null) {
+				
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat ymdSDF1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				
+				billDate=ymdSDF.format(cal.getTime());
+			}
+			
+			//sellBillHeader.setBillDate(sf.format(date));
+			sellBillHeader.setBillDate(billDate);
+			
 			sellBillHeader.setCustId(custId);
 			sellBillHeader.setInvoiceNo(getInvoiceNo(request, responsel));
 			sellBillHeader.setSellBillNo(0);
@@ -1251,7 +1299,12 @@ public class OpsController {
 
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes.getSellBillNo());
-				transactionDetail.setTransactionDate(sf1.format(date));
+				//transactionDetail.setTransactionDate(sf1.format(date));
+				
+				Date dt=sf.parse(billDate);
+				
+				transactionDetail.setTransactionDate(sf1.format(dt));
+				
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				transactionDetail.setePayType(payType);
 				if (creditBill == 1) {
@@ -1758,6 +1811,24 @@ public class OpsController {
 
 			SellBillHeader sellBillHeaderRes1 = restTemplate.postForObject(Constant.URL + "insertSellBillData",
 					sellBillHeader, SellBillHeader.class);
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			String billDate=sf.format(date);
+			if(petty!=null) {
+				
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				
+				billDate=ymdSDF.format(cal.getTime());
+			}
+			
 
 			if (sellBillHeaderRes1 != null) {
 
@@ -1768,7 +1839,11 @@ public class OpsController {
 
 				TransactionDetail transactionDetail = new TransactionDetail();
 				transactionDetail.setSellBillNo(sellBillHeaderRes1.getSellBillNo());
-				transactionDetail.setTransactionDate(sf1.format(date));
+				//transactionDetail.setTransactionDate(sf1.format(date));
+				
+				Date dt=sf.parse(billDate);
+				
+				transactionDetail.setTransactionDate(sf1.format(dt));
 				transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 				transactionDetail.setePayType(payType);
 				if (creditBill == 1) {
@@ -2581,5 +2656,59 @@ public class OpsController {
 
 		return itemsList;
 	}
+	
+	
+	@RequestMapping(value = "/alertSaveBillAfterPettyCashDayEnd", method = RequestMethod.POST)
+	@ResponseBody
+	public int alertSaveBillAfterPettyCashDayEnd(HttpServletRequest request, HttpServletResponse response) {
+
+		int res = 0;
+
+		try {
+			
+			RestTemplate restTemplate = new RestTemplate();
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			PettyCashManagmt petty = restTemplate.postForObject(Constant.URL + "/getPettyCashDetails", map,
+					PettyCashManagmt.class);
+			
+			String billDate=sf.format(date);
+			if(petty!=null) {
+				
+				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				
+				billDate=ymdSDF.format(cal.getTime());
+				System.err.println("BILL DATE ---------------- "+billDate);
+				
+				
+				Calendar newDate=Calendar.getInstance();
+				
+				System.err.println("OUTPUT --------------****************------ "+cal.getTime().compareTo(newDate.getTime()));
+				
+				if(cal.getTime().compareTo(newDate.getTime())>0) {
+					res=1;
+				}
+				
+			}
+
+
+		} catch (Exception e) {
+			System.err.println("Exception in alertSaveBillAfterPettyCashDayEnd : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return res;
+
+	}
+	
 
 }

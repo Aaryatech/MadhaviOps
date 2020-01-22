@@ -365,7 +365,7 @@ public class ItemController {
 		}
 
 		subCatList.addAll(setName);
-
+		
 		List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
 
 		for (int i = 0; i < subCatList.size(); i++) {
@@ -382,21 +382,28 @@ public class ItemController {
 
 					if (frDetails.getFrRateCat() == 1) {
 						double rate = 0;
+						
+						
 						if (frDetails.getFrKg1() == 1) {
-							rate = frItemList.get(i).getItemMrp1();
+							rate = frItemList.get(j).getItemMrp1();
 						} else {
-							rate = frItemList.get(i).getItemRate1();
+							rate = frItemList.get(j).getItemRate1();
 						}
+						
+						
 						total = total + (rate * frItemList.get(j).getItemQty());
+						
 
 					} else if (frDetails.getFrRateCat() == 2) {
 						double rate = 0;
 						if (frDetails.getFrKg1() == 1) {
-							rate = frItemList.get(i).getItemMrp2();
+							rate = frItemList.get(j).getItemMrp2();
 						} else {
 							rate = frItemList.get(j).getItemRate2();
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
+						
+
 
 					} else if (frDetails.getFrRateCat() == 3) {
 						double rate = 0;
@@ -407,6 +414,7 @@ public class ItemController {
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
 
+
 					}
 
 				}
@@ -415,8 +423,12 @@ public class ItemController {
 
 			TabTitleData tabTitleData = new TabTitleData();
 			tabTitleData.setName(subCat);
+			System.err.println("isSameDayApplicable ---------------------------------- "+isSameDayApplicable);
 
 			if (isSameDayApplicable != 2) {
+				
+				System.err.println(""+isSameDayApplicable+" ***********************    "+total);
+				
 				tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")");
 			} else if (isSameDayApplicable == 2) {
 				if (subCat.equalsIgnoreCase("FRESH CREAM PASTRIES (EL)")) {

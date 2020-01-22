@@ -142,7 +142,7 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="main_container">
-
+				
 					<div class="page_head">
 						<div class="page_title">Petty Cash Management</div>
 						<div class="custom_right">
@@ -174,7 +174,7 @@ table, th, td {
 							<div class="four_one three">
 								<div class="multi_title">Today's Amt</div>
 								<input id="cash_amt" class="form-control"
-									value="${trCashAmt+advAmt-expAmt}" autocomplete="off"
+									value="${trCashAmt+advAmt-expAmt-creditNote}" autocomplete="off"
 									placeholder="Today's Amt" name="cash_amt"
 									onchange="calClosingAmt()" type="text"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
@@ -221,7 +221,7 @@ table, th, td {
 							<div class="custom_right">
 								<a href="#"
 									class="buttonsaveorder singlebtn initialism slide_open"
-									id="popbtn" style="display: none;"> Cash Hand Over Data</a>
+									id="popbtn" style="display: none;" onclick="getData()"> Cash Hand Over Data</a>
 							</div>
 						</div>
 
@@ -238,14 +238,14 @@ table, th, td {
 							<div class="four_one three">
 								<div class="multi_title">Selling Amt</div>
 								<input id="sell_amt" class="form-control"
-									value="${trCashAmt+advAmt-expAmt}" autocomplete="off"
+									value="${trCashAmt+advAmt-expAmt-creditNote}" autocomplete="off"
 									placeholder="Selling Amt" name="sell_amt" readonly="readonly"
 									type="text">
 							</div>
 							<div class="four_one three">
 								<div class="multi_title">Total Cash Hand Over Amt</div>
 								<input id="total_cash_amt" class="form-control"
-									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt}"
+									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
 									autocomplete="off" placeholder="Total Cash Amt"
 									name="total_cash_amt" readonly="readonly" type="text">
 							</div>
@@ -255,7 +255,7 @@ table, th, td {
 										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
 										type="text"> --%>
 								<input id="actual_cash_amt" class="form-control"
-									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt}"
+									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
 									autocomplete="off" placeholder="Actual Cash Amt"
 									name="actual_cash_amt" type="text">
 
@@ -375,7 +375,7 @@ table, th, td {
 					<!--table-->
 					<div class="clearfix"></div>
 
-					<div class="pending_tab" style="overflow-x: auto;">
+					<div class="pending_tab" style="overflow-x: auto; height: 350px;">
 						<table class="pending_tab1" id="table_grid">
 							<thead>
 								<tr>

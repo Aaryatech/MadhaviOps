@@ -301,6 +301,7 @@ public class NewCreditNoteController {
 	public ModelAndView creditNoteHeaderList(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = null;
 		HttpSession session = request.getSession();
+		
 
 		model = new ModelAndView("newcreditnote/newPosCreditNoteList");
 
