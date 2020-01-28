@@ -5,6 +5,9 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
+	<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
+	type="images/png" sizes="32x32">
 <style>
 table, th, td {
 	border: 1px solid #9da88d;
