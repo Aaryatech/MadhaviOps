@@ -2639,12 +2639,14 @@ public class OpsController {
 			int custId = Integer.parseInt(request.getParameter("cust"));
 			int tempType = Integer.parseInt(request.getParameter("tempType"));
 			int tabType = Integer.parseInt(request.getParameter("tabType"));// cust/todays
+			String date = request.getParameter("date");// cust/todays
 
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("custId", custId);
 			mvm.add("frId", frDetails.getFrId());
 			mvm.add("flag", tempType);
 			mvm.add("tabType", tabType);
+			mvm.add("date", DateConvertor.convertToYMD(date));
 			TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransactionWithDisc",
 					mvm, TransactionDetail[].class);
 

@@ -221,7 +221,7 @@ span.add_txt{display: block; font-size: 14px; font-weight: 700; text-align: left
 
 .bx_tabs{display: inline-block; width: 100%; margin: 0 0 15px 0;}
 .bx_tabs ul{margin: 0px; padding: 0px;}
-.bx_tabs ul li{list-style-type: none; display: inline-block; font-size: 14px; margin: 0 0 0 4px;}
+.bx_tabs ul li{list-style-type: none; display: inline-block; font-size: 14px; margin: 0 0 4px 4px;}
 .bx_tabs ul li a{background: #fef200; color: #333; font-weight: 600; text-decoration:none; padding: 8px 15px; text-transform: uppercase; display: block; border-radius: 3px; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 .bx_tabs ul li a:hover,.bx_tabs ul li a.act{background: #ed1c24; color: #FFF; -webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s;}
 
