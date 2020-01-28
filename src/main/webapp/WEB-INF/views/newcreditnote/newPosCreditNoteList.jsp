@@ -43,6 +43,12 @@ table, th, td {
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/loader.css">
+		<!-- chosen CSS ============================================ -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
+
+<!-- ----------------------------------------------------END------------------------------------------------------------ -->
+		
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -140,7 +146,7 @@ table, th, td {
 							</div>
 						</div>
 						<div class="col-md-3">
-							<select name="cust" id="cust" class="form-control" required>
+							<select name="cust" id="cust" class="form-control chosen-select" required>
 								<option value="0">Select Customer</option>
 
 
@@ -337,7 +343,12 @@ table, th, td {
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-
+<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 
 
 	<script type="text/javascript">

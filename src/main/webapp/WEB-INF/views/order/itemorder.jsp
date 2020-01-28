@@ -290,9 +290,8 @@ a:hover {
 
 																	<td class="col-md-2">${items.itemName}<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1"></a></td>
+																		
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
@@ -363,9 +362,7 @@ a:hover {
 
 																	<td class="col-md-1">${items.itemName}<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1"></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}'
@@ -430,9 +427,7 @@ a:hover {
 
 																	<td class="col-md-1">${items.itemName}<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1"></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}'
@@ -513,15 +508,15 @@ a:hover {
 						</ul>
 					</div>
 					<!--tabNavigation-->
+					
 
-					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textright">
-
+ <a href="#" onClick="openNav()">   <input type="button" value="Go Back"  class="buttonsaveorder" /> </a>
 						<input name="" id="subm" class="buttonsaveorder"
 							value="SAVE ORDER" type="button" ONCLICK="button1()">
 					</div>
 
-
+        
 
 				</form>
 

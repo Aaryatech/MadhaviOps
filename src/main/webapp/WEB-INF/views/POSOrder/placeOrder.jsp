@@ -299,6 +299,7 @@ input:checked+.slider:before {
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 	<c:url value="/saveCustomerFromBill" var="saveCustomerFromBill"></c:url>
+    <c:url var="editCustomerFromBill" value="/editCustomerFromBill" />
 
 	<div id="overlay2">
 		<div id="text2">
@@ -402,8 +403,11 @@ input:checked+.slider:before {
 								<button class="plus_btn addcust_open" type="button">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
+							
+								<button class="plus_btn" type="button" onclick="editCustomer(1)">
+									<i class="fa fa-pencil" aria-hidden="true"></i>
+								</button>
 							</div>
-
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
 							</div>
@@ -539,9 +543,7 @@ input:checked+.slider:before {
 																	<tr>
 																		<td class="col-md-2">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
@@ -585,9 +587,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
@@ -633,9 +633,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
@@ -727,7 +725,7 @@ input:checked+.slider:before {
 
 
 								<div class="col-md-1">Total:</div>
-								<div class="col-md-1" id="calTotal1" style="color: red;">00
+								<div class="col-md-1" id="calTotal1" style=" font-size:25px;color: red;text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px yellow;">00
 								</div>
 
 
@@ -783,8 +781,11 @@ input:checked+.slider:before {
 								<button class="plus_btn addcust_open" type="button">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
+							
+								<button class="plus_btn" type="button" onclick="editCustomer(2)">
+									<i class="fa fa-pencil" aria-hidden="true"></i>
+								</button>
 							</div>
-
 							<div class="col-md-2">
 								<div class="col1title">Delivery Date</div>
 							</div>
@@ -917,9 +918,7 @@ input:checked+.slider:before {
 																	<tr>
 																		<td class="col-md-2">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
@@ -963,9 +962,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
@@ -1011,9 +1008,7 @@ input:checked+.slider:before {
 
 																		<td class="col-md-1">${items.itemName}<a
 																			href="${url}${items.itemImage}"
-																			data-lightbox="image-1" tabindex="-1"><i
-																				class="fa fa-file-image-o"
-																				style="font-size: 16px; color: green"></i></a></td>
+																			data-lightbox="image-1" tabindex="-1"></a></td>
 																		<td class="col-md-1"><c:out
 																				value='${items.minQty}' /></td>
 
@@ -1093,7 +1088,7 @@ input:checked+.slider:before {
 
 
 								<div class="col-md-1">Total:</div>
-								<div class="col-md-1" id="calTotal2" style="color: red;">00
+								<div class="col-md-1"  id="calTotal2" style=" font-size:25px; color: red;text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px yellow;">00
 								</div>
 
 
@@ -1132,7 +1127,7 @@ input:checked+.slider:before {
 
 	<!--  To submit Order-->
 	<div id="addcust" class="add_customer" style="display: none;">
-		<button class="addcust_close close_popup"
+		<button class="addcust_close close_popup" id="addcust_close"
 			onclick="clearAddCustomerpopup()">
 			<i class="fa fa-times" aria-hidden="true"></i>
 		</button>
@@ -1149,6 +1144,22 @@ input:checked+.slider:before {
 				</div>
 				<div class="clr"></div>
 			</div>
+			<div class="add_frm_one">
+					<div class="add_customer_one">Address *</div>
+					<div class="add_input">
+						<input placeholder="Enter Address" name="custAdd" id="custAdd"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Distance(In Kms) *</div>
+					<div class="add_input">
+						<input placeholder="Enter distance in kms" name="kms" id="kms"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
 			<div class="add_frm_one">
 				<div class="add_customer_one">Mobile Number *</div>
 				<div class="add_input">
@@ -1258,14 +1269,7 @@ input:checked+.slider:before {
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div class="add_frm_one">
-					<div class="add_customer_one">Address *</div>
-					<div class="add_input">
-						<input placeholder="Enter Address" name="custAdd" id="custAdd"
-							onchange="trim(this)" type="text" class="input_add" />
-					</div>
-					<div class="clr"></div>
-				</div>
+				
 			</div>
 		</div>
 
@@ -1353,6 +1357,7 @@ function addCustomer() {
 	var custId = document.getElementById("custId").value;
 	var customerName = document.getElementById("customerName").value;
 	var mobileNo = document.getElementById("mobileNo").value;
+	var  kms= document.getElementById("kms").value;
 	var dateOfBirth = document.getElementById("dateOfBirth").value;
 	var custType = document.getElementById("custType").value;
 	custType=3;
@@ -1365,7 +1370,7 @@ function addCustomer() {
 
 	function(saveFlag) {
 		document.getElementById("saveCust").style.display="block";
-		 if(parseInt(saveFlag)>0){		
+		 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){		
 			 
 			 document.getElementById("saveCust").style.display="block";
 			 
@@ -1391,10 +1396,17 @@ function addCustomer() {
 	var flag = 0;
 //alert(gstNo);
 	if (customerName == "") {
-		alert("Enter Customer Name");
+		alert("Please Enter Customer Name");
 		flag = 1;
-	} else if (mobileNo == "" || !validateMobile(mobileNo)) {
-		alert("Enter Valid Mobile No");
+	}else if (custAdd == "") {
+		alert("Please Enter Address");
+		flag = 1;
+	}else if (kms == "" || isNaN(kms)) {
+		alert("Please Enter valid Distance");
+		flag = 1;
+	}
+	else if (mobileNo == "" || !validateMobile(mobileNo)) {
+		alert("Please Enter Valid Mobile No");
 		flag = 1;
 	}
 	/* else if (dateOfBirth == "") {
@@ -1411,19 +1423,16 @@ function addCustomer() {
 	} else if (buisness == 1) {
 
 		if (companyName == "") {
-			alert("Enter Company Name");
+			alert("Please Enter Company Name");
 			flag = 1;
 		} else if (gstNo == "") {
-			alert("Enter GST No");
+			alert("Please Enter GST No");
 			flag = 1;
 		}else if(checkGST(gstNo)==false){
 			alert("Invalid GST No");
 			flag = 1;
 			
-		} else if (custAdd == "") {
-			alert("Enter Address");
-			flag = 1;
-		}
+		} 
 	}
 
 	if (flag == 0) {
@@ -1441,6 +1450,7 @@ function addCustomer() {
 							custId : custId,
 							custType:custType,
 							ageRange:ageRange,
+							kms:kms,
 							gender:gender,
 							ajax : 'true'
 						},
@@ -1481,7 +1491,7 @@ function addCustomer() {
 
 								document.getElementById("customerName").value = "";
 								document.getElementById("mobileNo").value = "";
-
+								document.getElementById("kms").value = "";
 								document.getElementById("dateOfBirth").value = "";
 
 								document.getElementById("n-option").checked = true;
@@ -1501,12 +1511,14 @@ function addCustomer() {
 
 								if (custId != 0) {
 									alert("Update Successfully");
-									//clearAddCustomerpopup()
+									
+
 								} else {
 									alert("Customer Added Successfully");
-									$('#addcust').popup('hide'); 
+									
 								}
-								
+								$('#addcust').popup('hide'); 
+
 							} else {
 								alert("Failed To Add Customer");
 							}
@@ -1541,6 +1553,29 @@ function addCustomer() {
 				vertical : 'top'
 			}); */
 		});
+	function clearAddCustomerpopup() {
+			
+			document.getElementById("myBtn").disabled = false; 
+
+			document.getElementById("customerName").value = "";
+			document.getElementById("mobileNo").value = "";
+			document.getElementById("kms").value = "";
+			document.getElementById("dateOfBirth").value = "";
+			document.getElementById("n-option").checked = true;
+			document.getElementById("companyName").value = "";
+			document.getElementById("gstNo").value = "";
+			document.getElementById("custAdd").value = "";
+			document.getElementById("custId").value = 0;
+			document.getElementById("moption").checked = true;
+			document.getElementById("custType").value ="0";
+			$("#custType").trigger("chosen:updated");	
+			document.getElementById("ageRange").value ="0";
+		    $("#ageRange").trigger("chosen:updated");
+			$('.chosen-select').trigger('chosen:updated');
+			document.getElementById("add_cust_head_name").innerHTML = "Add Customer";
+			$("#isbuissnessdiv").hide();
+		}
+
 	</script>
 
 
@@ -1706,7 +1741,61 @@ function validateMobile(mobile) {
 	}
 	return true;
 } 
- 
+function editCustomer(flag) {
+
+	var custId = document.getElementById("custId"+flag).value;
+
+	if (custId != 0) {
+		//document.getElementById("overlay2").style.display = "block";
+		$
+				.post(
+						'${editCustomerFromBill}',
+						{
+							custId : custId,
+							ajax : 'true'
+						},
+						function(data) {
+							//document.getElementById("overlay2").style.display = "none";
+							$('.addcust_open').trigger('click');
+							//$('#myModalEdit').modal('show');
+							//$('#addcust').popup('show');
+							document
+									.getElementById("add_cust_head_name").innerHTML = "Edit Customer";
+							document.getElementById("customerName").value = data.custName;
+							document.getElementById("mobileNo").value = data.phoneNumber;
+							document.getElementById("kms").value = data.exVar1;
+							document.getElementById("custId").value = data.custId;
+							document.getElementById("dateOfBirth").value = data.custDob;
+							document.getElementById("custAdd").value = data.address;
+
+							if (data.gender == 1) {
+								document.getElementById("moption").checked = true;
+								}else{
+								document.getElementById("foption").checked = true;
+								}
+								document.getElementById("custType").value =data.exInt1;
+								$("#custType").trigger("chosen:updated");
+								document.getElementById("ageRange").value =data.ageGroup;
+								$("#ageRange").trigger("chosen:updated");
+								$('.chosen-select').trigger('chosen:updated');
+							if (data.isBuissHead == 1) {
+
+								$("#isbuissnessdiv").show();
+								document.getElementById("y-option").checked = true;
+								document.getElementById("companyName").value = data.companyName;
+								document.getElementById("gstNo").value = data.gstNo;
+							} else {
+								$("#isbuissnessdiv").hide();
+								document.getElementById("y-option").checked = false;
+							}
+
+						});
+
+	} else {
+		alert("Select Customer ");
+	}
+
+}
 		</script>
 
 	<script>
@@ -2059,8 +2148,6 @@ $('#check-minutes').click(function(e){
 	  
     $('#delTime1').mdtimepicker(); //Initializes the time picker
     $('#delTime2').mdtimepicker(); //Initializes the time picker
-    
-  
     
   });
 </script>

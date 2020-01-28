@@ -244,7 +244,7 @@ table, th, td {
 								</div>
 							</div>
 							<div class="col-md-2">
-								<select name="cust" id="cust" class="chosen-select" required
+								<select name="cust" id="cust" class="form-control chosen-select" required 
 									onchange="getBills(this.value)">
 									<option value="0">Select Customer</option>
 
@@ -792,10 +792,15 @@ table, th, td {
 
 	<!-- chosen JS
 		============================================ -->
-	<script
+	<%-- <script
 		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
-
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script> --%>
+<script
+		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/customerBill/init.js"
+		type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

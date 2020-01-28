@@ -461,7 +461,7 @@ body {
 								</select>
 							</div>
 							<div class="customer_three">
-								<button class="plus_btn addcust_open" type="button">
+								<button class="plus_btn addcust_open" type="button" onclick="onPlusClick()">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
@@ -703,6 +703,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
+					<input name="kms" id="kms" type="hidden" value="0"/>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Mobile Number *</div>
 					<div class="add_input">
@@ -1440,7 +1441,7 @@ body {
 							<div class="add_customer_one">E-Pay Type</div>
 							<div class="add_input">
 								<select name="ePayType1" id="ePayType1"
-									data-placeholder="E-Pay Type" class="input_add "
+									data-placeholder="E-Pay Type" class="input_add"
 									style="text-align: left;">
 									<option value="">Select E-Pay Type</option>
 									<option value="6" style="text-align: left;">Phone Pe</option>
@@ -1729,7 +1730,7 @@ body {
 									tr_count = data.length;
 
 									//alert(JSON.stringify(data));
- 			document.getElementById("overlay2").style.display = "";
+ 			                        document.getElementById("overlay2").style.display = "";
 
 									$('#custTable td').remove();
 									$
@@ -1763,16 +1764,20 @@ body {
 															tr.append($('<td ></td>').html(data.paidAmt));
 															tr.append($('<td ></td>').html(data.remainingAmt));
 														/* 	tr.append($('<td ></td>').html("NA")); */
-														
+														var arrStartDate = data.billDate.split("-"); 
+                                                         var billDateJs = new Date(arrStartDate[2], (arrStartDate[1]-1), arrStartDate[0]).setHours(0,0,0,0);
+                                                         var currentDateJs = new Date().setHours(0,0,0,0);
+
 														if(tempType==1 && tabType==2){
 															
 															var adminDesg=${sessionScope.frEmpDetails.designation};
 															adminDesg=0;
 															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
-															
+															/* 
 															if(adminDesg==1){
 																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															}else if(sessionEmpId==data.extInt1){
+															}else  */
+															if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
 																tr.append($('<td ></td>').html('<a href="#" onclick="showCustBillForEdit('+data.sellBillNo+','+data.custId+',0)"  ><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></span></a> &nbsp;&nbsp;  <a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 															}else{
 																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
@@ -1786,11 +1791,8 @@ body {
 															var adminDesg=${sessionScope.frEmpDetails.designation};
 															adminDesg=0;
 															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
-															
-															if(adminDesg==1){
-																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															}else if(sessionEmpId==data.extInt1){
-																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															 if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a>&nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 															}else{
 																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
 															}
@@ -1806,10 +1808,11 @@ body {
 															adminDesg=0;
 															var sessionEmpId=${sessionScope.frEmpDetails.frEmpId};
 															
-															if(adminDesg==1){
-																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
-															}else if(sessionEmpId==data.extInt1){
-																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
+															/* if(adminDesg==1){
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> &nbsp;&nbsp;'));
+															}else */
+															if(sessionEmpId==data.extInt1 && billDateJs.valueOf() == currentDateJs.valueOf()){
+																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a>&nbsp;&nbsp;<a href="#" onclick="deleteSellBill('+data.sellBillNo+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>'));
 															}else{
 																tr.append($('<td ></td>').html('<a href="#" onclick="custBillPdf('+data.sellBillNo+')" ><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></span></a> '));
 															}
@@ -2448,6 +2451,7 @@ function matchSplitAmt(flag){
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			localStorage.setItem("mobileSearched", "");
 			$('#addcust').popup({
 				focusdelay : 400,
 				outline : true,
@@ -2468,8 +2472,6 @@ function matchSplitAmt(flag){
 		document.getElementById( 
         "modType1").selectedIndex = "0"; 
 		
-		//alert(modalId+" ----- "+type);
-	
 		if(type==1){
 			  radiobtn = document.getElementById("single12");
 			radiobtn.checked = true;
@@ -2501,7 +2503,10 @@ function matchSplitAmt(flag){
 			
 			document.getElementById("deletedBillsRadio").style.display = "none";
 			document.getElementById("allDeletedBillsRadio").style.display = "none";
-			
+			$('#cardTypeDiv1').hide();
+			$('#epayTypeDiv1').hide();
+			document.getElementById("ePayType1").value="";
+			document.getElementById("cardType1").value="";
 		}
 	
 		//alert(type);
@@ -2606,6 +2611,7 @@ function matchSplitAmt(flag){
 											.getElementById("add_cust_head_name").innerHTML = "Edit Customer";
 									document.getElementById("customerName").value = data.custName;
 									document.getElementById("mobileNo").value = data.phoneNumber;
+									document.getElementById("kms").value = data.exVar1;
 									document.getElementById("custId").value = data.custId;
 									document.getElementById("dateOfBirth").value = data.custDob;
 									if (data.gender == 1) {
@@ -2664,6 +2670,8 @@ function matchSplitAmt(flag){
 			var custId = document.getElementById("custId").value;
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
+			var  kms= document.getElementById("kms").value;
+
 			phNo=mobileNo;
 			var dateOfBirth = document.getElementById("dateOfBirth").value;
 			var custType = document.getElementById("custType").value;
@@ -2711,7 +2719,9 @@ function matchSplitAmt(flag){
 			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
 				alert("Enter Valid Mobile No");
 				flag = 1;
-			} /* else if (dateOfBirth == "") {
+			} else if (kms == "") {
+				kms=0;
+			}/* else if (dateOfBirth == "") {
 				alert("Enter Date of Birth");
 				flag = 1;
 			} */
@@ -2757,6 +2767,7 @@ function matchSplitAmt(flag){
 									custId : custId,
 									custType:custType,
 									ageRange:ageRange,
+									kms:kms,
 									gender:gender,
 									ajax : 'true'
 								},
@@ -2797,7 +2808,7 @@ function matchSplitAmt(flag){
 
 										document.getElementById("customerName").value = "";
 										document.getElementById("mobileNo").value = "";
-
+										document.getElementById("kms").value = "0";
 										document.getElementById("dateOfBirth").value = "";
 
 										document.getElementById("n-option").checked = true;
@@ -2819,8 +2830,9 @@ function matchSplitAmt(flag){
 											alert("Update Successfully");
 										} else {
 											alert("Customer Add Successfully");
-											$('#addcust').popup('hide'); 
+											
 										}
+										$('#addcust').popup('hide'); 
 										$('.addcust_close').trigger('click');
 									} else {
 										alert("Failed To Add Customer");
@@ -2916,6 +2928,7 @@ function matchSplitAmt(flag){
 
 			document.getElementById("customerName").value = "";
 			document.getElementById("mobileNo").value = "";
+			document.getElementById("kms").value = "0";
 			document.getElementById("dateOfBirth").value = "";
 			document.getElementById("n-option").checked = true;
 			document.getElementById("companyName").value = "";
@@ -3794,12 +3807,103 @@ $("#enterQty").focus();
 							
 							
 						} else {
-						    // Do nothing!
+
+						
+								
 						}
 						
 						}
 						
-						
+						else
+							{
+	   
+							
+							var advAmt = document.getElementById("advAmt").value;
+							var advOrderDate = document.getElementById("advOrderDate").value;
+							var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
+							var key =  $('#key').val() ;
+							/* var key =  $('#advKey').val() ; */
+							var custId =  $('#cust').val() ;
+							var selectedText = $("#cust option:selected").text(); 
+							document.getElementById("credAmt").innerHTML="0.0";
+
+							var frtype =  $('#frtype').val() ;
+							var rowcount = $('#itemBillTable tr').length;
+							var flag = 0;
+							   
+							 if(rowcount<=1){
+								 alert("Select Minimum Product");
+								 flag=1;
+							 }else if(custId==0){
+								 flag=1;
+								 alert("Select Customer");
+							 }
+							 
+							 if(flag==0){
+							 document.getElementById("overlay2").style.display = "block";
+							   $
+								.post(
+										'${submitBill}',
+										{
+											key : key,  
+											custId : custId,
+					 						selectedText : selectedText,
+					 						advAmt:advAmt,
+					 						advOrderDate:advOrderDate,
+					 						isAdvanceOrder:isAdvanceOrder,
+											ajax : 'true'
+										},
+										function(data) {
+											  if(advAmt>0){
+											 document.getElementById("advAmt").value = 0; 
+											 document.getElementById("advBillLable").style.display = 'none';
+											 document.getElementById("actionName").innerHTML= 'ADD BILL';
+											  }
+												if(key==0){
+													
+													if(printbilltype==1){
+														
+														 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+													}else if(printbilltype==2){
+														 
+														if(frtype<10000000){
+															window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														}else{
+															window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														}
+													}
+													
+													 	var defaultCustomer =  $('#defaultCustomer').val() ;
+													 	//alert(defaultCustomer)
+													 	document.getElementById("cust").value = defaultCustomer;
+														getCurrentItemList(); 
+														$('.chosen-select').trigger(
+														'chosen:updated');
+														document.getElementById("overlay2").style.display = "none";	 
+												 }else{
+													 if(printbilltype==1){
+															
+														 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+													}else if(printbilltype==2){
+														 
+														if(frtype<10000000){
+															window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														}else{
+															window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														}
+													}
+													 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+												 }
+											 
+											 
+											
+										});    
+							 }
+								
+								
+							}
 						
 						
 						
@@ -4109,10 +4213,226 @@ if(parseInt(custId)==parseInt(dfCust)){
 								
 							
 							}else{
+								
 							}
 							
 						}
+						else
+							{
 							
+
+								var advAmt = document.getElementById("advAmt").value;
+								var advOrderDate = document.getElementById("advOrderDate").value;
+								var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
+								var flagPayable=0;
+								
+								document.getElementById("credAmt").innerHTML="0.0";
+
+								if (document.getElementById('split').checked) {
+											
+									var totalPayableAmt=parseFloat($('#totalPayableAmt').text());
+									
+									var cashAmt =  $('#cashAmt').val() ;
+									var cardAmt =  $('#cardAmt').val() ;
+									var epayAmt =  $('#epayAmt').val() ;
+								 
+									
+									var epayLabel=parseFloat(cashAmt)+parseFloat(cardAmt)+parseFloat(epayAmt)
+						 			 
+								 if(totalPayableAmt==epayLabel){
+									 
+									 flagPayable=1;
+								 }else{
+									 
+									 flagPayable=2;
+								 }
+								}
+						 
+								if(parseInt(flagPayable)==2 && document.getElementById('creditBillno').checked){
+									alert("Please Enter the valid Bill Amount!!");
+									
+								}else{
+								   
+								var key =  $('#key').val() ;
+								var custId =  $('#cust').val() ;
+								var cashAmt =  $('#cashAmt').val() ;
+								var cardAmt =  $('#cardAmt').val() ;
+								var epayAmt =  $('#epayAmt').val() ;
+								var billType =  $('#billType').val() ;
+								var payType=0;var payTypeFlag=0; var payTypeSplit="0";var msg="";
+								if(billType==1){
+									payTypeFlag=0;
+									payType=1;
+								}else if(billType==2) {
+									var cardType = $('#cardType option:selected').val();
+									if(cardType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+									payType=cardType;
+									}else if(billType==3)
+										{
+										var ePayType =  $('#ePayType option:selected').val();
+										if(ePayType=="")
+										{
+										payTypeFlag=1;
+										msg="Please Select Pay Type( Card Type Or E-Pay type)";
+										}
+										payType=ePayType;
+										} 
+								var payAmt =  $('#payAmt').val() ;
+								var frtype =  $('#frtype').val() ;
+								var discPer =  $('#discPer').val() ;
+								var discAmt =  $('#discAmt').val() ;
+								
+								var billAmtWtDisc;
+								
+								if(parseFloat(advAmt)>0){
+								 
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())-parseFloat(advAmt);
+								}else{
+									billAmtWtDisc=parseFloat($('#totalAmtPopup').text())
+								}
+								
+								
+								var creditBill = 1;
+								var single = 1;
+								var selectedText = $("#cust option:selected").text(); 
+								var flag=0;
+								
+								if (document.getElementById('creditBillno').checked) {
+									creditBill = 2;
+								}
+								if (document.getElementById('split').checked) {
+									single = 2;
+									if(cashAmt>0){
+										payTypeSplit=",1";
+									}
+									var cardTypeSplit = $('#cardTypeSplit option:selected').val();
+									if(cardTypeSplit=="" && cardAmt>0)
+										{
+										msg="Please Select Card Type";
+										payTypeFlag=1;
+										}else if(cardAmt>0)
+											{
+											payTypeSplit=payTypeSplit+","+cardTypeSplit;
+											}
+									var ePayTypeSplit =  $('#ePayTypeSplit option:selected').val();
+									if(ePayTypeSplit=="" && epayAmt>0)
+									{
+										msg="Please Select Card & E-pay Type";payTypeFlag=1;
+									}else if(epayAmt>0)
+									{
+										payTypeSplit=payTypeSplit+","+ePayTypeSplit;
+									}
+								}
+								
+								if (cashAmt=="") {
+									cashAmt=0;
+								}
+								if (cardAmt=="") {
+									cardAmt=0;
+								}
+								if (epayAmt=="") {
+									epayAmt=0;
+								}
+								if (discPer=="") {
+									discPer=0;
+								}
+								if (discAmt=="") {
+									discAmt=0;
+								}
+								
+								if(creditBill==2 && single==1 && payAmt==""){
+									alert("Please Enter Amount");
+								}else
+									if(payTypeFlag==1){
+										alert(msg);
+									}else{
+									 $('#payment').popup('hide');
+									  document.getElementById("overlay2").style.display = "block";
+									   $
+										.post(
+												'${submitBillByPaymentOption}',
+												{
+													key : key,  
+													custId : custId,
+													creditBill : creditBill,
+													paymentMode : single,
+													billType : billType,
+													payType:payType,
+													payTypeSplit:payTypeSplit,
+													cashAmt : cashAmt,
+													cardAmt : cardAmt,
+													epayAmt : epayAmt,
+													selectedText : selectedText,
+													payAmt : payAmt,
+													discPer:discPer,
+													discAmt:discAmt,
+													billAmtWtDisc:billAmtWtDisc,
+													advAmt:advAmt,
+													advOrderDate:advOrderDate,
+													isAdvanceOrder:isAdvanceOrder,
+													ajax : 'true'
+												},
+												function(data) {
+													 if(advAmt>0){
+													 document.getElementById("advAmt").value = 0; 
+													 document.getElementById("advBillLable").style.display = 'none';
+													 document.getElementById("actionName").innerHTML= 'ADD BILL';
+													 }
+													 if(key==0){
+														 if(printbilltype==1){
+																
+															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															}else{
+																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															}
+														}
+														 var defaultCustomer =  $('#defaultCustomer').val() ;
+															document.getElementById("cust").value = defaultCustomer;
+															getCurrentItemList(); 
+															$('.chosen-select').trigger(
+															'chosen:updated');
+															document.getElementById("overlay2").style.display = "none";	
+															
+															 
+															 document.getElementById('creditBillno').checked = true;
+															 document.getElementById('single').checked = true;
+															 document.getElementById("cashAmt").value = 0; 
+															 document.getElementById("cardAmt").value = 0; 
+															 document.getElementById("epayAmt").value = 0; 
+															 document.getElementById("payAmt").value = 0; 
+															 $("#splitDiv").hide();
+															 $("#singleDiv").show();
+													 }else{
+														 if(printbilltype==1){
+																
+															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+														}else if(printbilltype==2){
+															 
+															if(frtype<10000000){
+																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															}else{
+																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															}
+														}
+														 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
+													 }
+													
+												});   
+								} 
+								}
+								
+								
+							}
 							
 						
 						
@@ -4261,7 +4581,9 @@ function handleClick(myRadio) {
    // alert('New value: ' + myRadio.value);
     currentValue = myRadio.value;
 }
-
+function onPlusClick(){
+	document.getElementById("mobileNo").value = localStorage.getItem("mobileSearched");
+}
 </script>
 
 

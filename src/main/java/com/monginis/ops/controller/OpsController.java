@@ -2197,6 +2197,7 @@ public class OpsController {
 			int custType = Integer.parseInt(request.getParameter("custType"));
 			String ageRange = request.getParameter("ageRange");
 			int gender = Integer.parseInt(request.getParameter("gender"));
+			float kms = Float.parseFloat(request.getParameter("kms"));
 
 			Customer save = new Customer();
 			save.setCustName(customerName);
@@ -2211,6 +2212,7 @@ public class OpsController {
 
 			save.setAgeGroup(ageRange);
 			save.setExInt1(custType);
+			save.setExVar1(""+kms);
 			save.setGender(gender);
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
 
@@ -2684,17 +2686,18 @@ public class OpsController {
 				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
-				cal.add(Calendar.DAY_OF_MONTH, 1);
+				//cal.add(Calendar.DAY_OF_MONTH, 1);
 				
 				billDate=ymdSDF.format(cal.getTime());
 				System.err.println("BILL DATE ---------------- "+billDate);
 				
 				
 				Calendar newDate=Calendar.getInstance();
-				
-				System.err.println("OUTPUT --------------****************------ "+cal.getTime().compareTo(newDate.getTime()));
-				
-				if(cal.getTime().compareTo(newDate.getTime())>0) {
+				String todaysDate=ymdSDF.format(newDate.getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+				System.err.println(sdf.parse(billDate).before(sdf.parse(todaysDate))+""+todaysDate+""+billDate+"OUTPUT --------------****************------ "+cal.getTime().compareTo(newDate.getTime()));
+				if(!sdf.parse(billDate).before(sdf.parse(todaysDate))) {
 					res=1;
 				}
 				

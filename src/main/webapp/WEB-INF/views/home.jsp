@@ -38,19 +38,19 @@
 				
 				<div class="latestNews" style="background: #ed1c24;">
 					
-						<a href="${pageContext.request.contextPath}/homeMessages"><h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News <c:if test="${msgListCount>0}">- ${msgListCount}</c:if> </h3></a>
-							<div class="microsoft marquee" style="margin-left: 70px;">
+						<h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News </h3>
+							<div class="microsoft marquee" style="margin-left:37px;">
 						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
 						
-					            <c:set var="colors" value=""/>
-					            <c:choose>
+					            <c:set var="colors" value="white"/>
+					           <%--  <c:choose>
 					            <c:when test="${count.index%2==0}">
 					            <c:set var="colors" value="white"/>
 					           </c:when>
 					           <c:otherwise>
 					            <c:set var="colors" value="lightblue"/>
 					          </c:otherwise>
-					          </c:choose>
+					          </c:choose> --%>
 								<span style="color:${colors}"> ${schedulerLists.schMessage} </span>
 							
 						
@@ -184,12 +184,13 @@
 
 
 
-
-								<div class="sub_right">
-									<input name="submit" class="buttonsaveorder" value="Submit"
+	<div class="sub_right"><input name="submit" class="buttonsaveorder" value="Submit"
 										type="submit" id="submtbtn">
-								</div>
-								
+	</div>
+	<div class="sub_right">
+	<c:if test="${msgListCount>0}">	<a href="${pageContext.request.contextPath}/homeMessages"><button type="button"  class="buttonsaveorder" > Messages - ${msgListCount} </button></a></c:if>
+										
+	</div>
 								
 								
 							</div>
