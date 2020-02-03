@@ -530,7 +530,7 @@ public class RegularSpCakeController {
 					   map.add("frId",frDetails.getFrId());
 					    
                       frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			          Firebase.sendPushNotifForCommunication(frToken,"Regular Cake as Special Order Placed Sucessfully","Your Regular cake Order has been saved. Order Saved is--Item name--"+spName+"--Qty--"+qty+"--Total Amount-"+rgCkGrand+". Thank You.Team Monginis","inbox");
+			          Firebase.sendPushNotifForCommunication(frToken,"Regular Cake as Special Order Placed Sucessfully","Your Regular cake Order has been saved. Order Saved is--Item name--"+spName+"--Qty--"+qty+"--Total Amount-"+rgCkGrand+". Thank You.Team Madhvi","inbox");
 			    	
 			         }
 			         catch(Exception e2)

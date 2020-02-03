@@ -1364,7 +1364,7 @@ public class GrnGvnController {
 					frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
 					Firebase.sendPushNotifForCommunication(frToken, "GRN Punched",
 							"GRN has been punched against value of Rs." + grnHeader.getTotalAmt()
-									+ " Thank You..Team Monginis",
+									+ " Thank You..Team Madhvi",
 							"inbox");
 
 				} catch (Exception e2) {
@@ -1956,7 +1956,7 @@ public class GrnGvnController {
 					frToken = restTemplate.postForObject(Constant.URL + "getFrToken", map, String.class);
 					Firebase.sendPushNotifForCommunication(frToken, "GVN Punched",
 							"GVN has been punched against value of Rs." + grnHeader.getTotalAmt()
-									+ " Thank You..Team Monginis",
+									+ " Thank You..Team Madhvi",
 							"inbox");
 
 				} catch (Exception e2) {

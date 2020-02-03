@@ -8,13 +8,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8" />
-<title>Monginis</title>
+<title>Madhvi</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport"
 	content="width=device-width; initial-scale=1.0; maximum-scale=1.0" />
-<meta name="keywords" content="Monginis" />
-<meta name="description" content="Monginis" />
-<meta name="author" content="Monginis">
+<meta name="keywords" content="Madhvi" />
+<meta name="description" content="Madhvi" />
+<meta name="author" content="Madhvi">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/newpos/css/monginis.css"
 	type="text/css" />
@@ -775,7 +775,7 @@ body {
 					<div class="clr"></div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Business *</div>
+					<div class="add_customer_one">Business</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
@@ -1010,11 +1010,13 @@ body {
 											data-placeholder="E-Pay Type" class="input_add "
 											style="text-align: left;">
 												<option value="">E-Pay Type</option>
-												<option value="6" style="text-align: left;">Phone
-													Pe</option>
+											
 												<option value="7" style="text-align: left;">Paytm</option>
+												
 												<option value="8" style="text-align: left;">Google
 													Pay</option>
+												<option value="6" style="text-align: left;">Phone
+													Pe</option>
 												<option value="9" style="text-align: left;">Amazon
 													Pay</option>
 										</select></li>
@@ -1080,9 +1082,10 @@ body {
 									data-placeholder="E-Pay Type" class="input_add "
 									style="text-align: left;">
 									<option value="">Select E-Pay Type</option>
-									<option value="6" style="text-align: left;">Phone Pe</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="6" style="text-align: left;">Phone Pe</option>
+									
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -1444,9 +1447,9 @@ body {
 									data-placeholder="E-Pay Type" class="input_add"
 									style="text-align: left;">
 									<option value="">Select E-Pay Type</option>
-									<option value="6" style="text-align: left;">Phone Pe</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
+									<option value="6" style="text-align: left;">Phone Pe</option>
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -2000,11 +2003,12 @@ function matchSplitAmt(flag){
 			if(type==2){
 				$('#cardTypeDiv').show();
 				$('#epayTypeDiv').hide();
-
+				document.getElementById("cardType").value=4;
 			}else if(type==3){
 				$('#epayTypeDiv').show();
 				$('#cardTypeDiv').hide();
-
+				
+				document.getElementById("ePayType").value=7;
 			}
 		}
 		
@@ -2016,11 +2020,11 @@ function matchSplitAmt(flag){
 			if(type==2){
 				$('#cardTypeDiv1').show();
 				$('#epayTypeDiv1').hide();
-
+				document.getElementById("cardType1").value=4;
 			}else if(type==3){
 				$('#epayTypeDiv1').show();
 				$('#cardTypeDiv1').hide();
-
+				document.getElementById("ePayType1").value=7;
 			}
 		}
 		
@@ -3937,11 +3941,11 @@ $("#enterQty").focus();
 		var custId =  $('#cust').val() ;
 		
 		var dfCust=${defaultCustomer};
-		 
+/* 		 
 if(parseInt(custId)==parseInt(dfCust)){
 			
 			alert("It's Cash Customer Bill,Please Select Valid Customer For Payment Option!!");
-		} else{	   
+		} else{	  */  
 		var key =  $('#key').val() ;
 	
 		//document.getElementById("discPer").value =0;
@@ -3991,7 +3995,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 			 $('#payment').popup('show');
 		 }
 		  
-	}
+	//}  of cash cust restriction
 	
 	
 	}

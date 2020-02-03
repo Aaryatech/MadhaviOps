@@ -45,7 +45,7 @@ table, th, td {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
+<title>Madhvi</title>
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
@@ -157,7 +157,7 @@ table, th, td {
 					</div>
 
 
-					<form action="addPettyCash" method="post">
+					<form action="${pageContext.request.contextPath}/addPettyCash" method="post" onsubmit="return confirm('Do you want to Day End ?');">
 						<input type="hidden" value="${pettycash.pettycashId}"
 							name="petty_id"> <input type="hidden"
 							value="${pettycash.cashAmt}" name="cash_edit_amt">
@@ -179,7 +179,7 @@ table, th, td {
 								<input id="cash_amt" class="form-control"
 									value="${trCashAmt+advAmt-expAmt-creditNote}" autocomplete="off"
 									placeholder="Today's Amt" name="cash_amt"
-									onchange="calClosingAmt()" type="text"
+									onchange="calClosingAmt()" type="text" readonly="readonly"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 							</div>
 							<div class="four_one three">

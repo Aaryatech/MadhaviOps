@@ -54,7 +54,7 @@
     </tr>
    
     <tr>
-      <td colspan="2" align="center" style="padding:2px; border-bottom:1px solid #E7E7E7;"><span style="font-size: 12px; font-weight:bold; text-align: center;padding:0px;"><b>${sessionScope.frDetails.frName}  </b></span><br /><span style="font-size: 8px; font-family: Arial;">(The Monginis Cake Shop)</span></br>
+      <td colspan="2" align="center" style="padding:2px; border-bottom:1px solid #E7E7E7;"><span style="font-size: 12px; font-weight:bold; text-align: center;padding:0px;"><b>${sessionScope.frDetails.frName}  </b></span><br /><span style="font-size: 8px; font-family: Arial;">(Madhvi)</span></br>
                  <span style="font-size: 10px;">GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong></span><br/>
        </td>
      

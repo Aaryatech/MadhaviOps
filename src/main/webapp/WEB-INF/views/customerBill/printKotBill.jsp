@@ -15,31 +15,27 @@
 </head>
 <style type="text/css">
 .style2 {
-	font-size: 12px;
-	padding-top: 2px;
+	font-size: 14px
 }
 
 .style5 {
-	font-size: 10px;
-	padding-top: 2px;
+	font-size: 10px
 }
 
 .style6 {
-	font-size: 9px;
-	padding-top: 2px;
+	font-size: 9px
 }
 
 .style7 {
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: bold;
-	padding-top: 2px;
 }
 
 .style8 {
 	font-size: 11px;
 	font-weight: bold;
-	padding-top: 2px;
 }
+
 </style>
 </head>
 
@@ -52,17 +48,17 @@
 
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 0px; border-top: 1px solid #E7E7E7;"><span><b>${frName}</b><br />
+					style="padding: 2px; "><span><b>${frName}</b><br />
 				</span></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 0px; border-top: 1px solid #E7E7E7; font-size: 11px;"><span><b>Sales
+					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 12px;"><span><b>Sales
 							Person:&nbsp;${frEmpMaster.frEmpName} </b><br /> </span></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 0px; border-top: 1px solid #E7E7E7; font-size: 11px;"><span><b>Date
+					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 12px;"><span><b>Date
 							& Time:&nbsp;</b>${sellBillHeaderAndDetail.timestamp}</span><br /></td>
 			</tr>
 			<tr>
@@ -166,12 +162,12 @@
 	</table>
 </body>
 <body onload="directPrint()">
-	<script>
-		/* function directPrint() {
-			//alert("JJ");
-			window.print();
-			//window.close();
-		} */
+		<script>
+		 function directPrint()
+		{
+			window.print(); 
+
+		} 
 	</script>
 </body>
 </html>

@@ -53,7 +53,7 @@
       </c:choose></td>  
     </tr>
     <tr>
-      <td colspan="2" align="center" style="padding:0px; border-bottom:1px solid #E7E7E7;"><span style="font-size: 10px; font-weight:12px; text-align: center;padding:2px;" ><b>${sessionScope.frDetails.frName}  </b><br /><span style="font-size: 10px; font-family: Arial;">(The Monginis Cake Shop)</span></span>
+      <td colspan="2" align="center" style="padding:0px; border-bottom:1px solid #E7E7E7;"><span style="font-size: 10px; font-weight:12px; text-align: center;padding:2px;" ><b>${sessionScope.frDetails.frName}  </b><br /><span style="font-size: 10px; font-family: Arial;">(Madhvi)</span></span>
             <span style="font-size: 10px;"> GSTIN:<strong>${sessionScope.frDetails.frGstNo}</strong></span><br/>
       
        </td>

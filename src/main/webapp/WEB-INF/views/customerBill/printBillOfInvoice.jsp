@@ -39,7 +39,7 @@
 	font-size: 11px;
 	font-weight: bold;
 }
--->
+
 </style>
 </head>
 
@@ -294,9 +294,7 @@
 	<script>
 		 function directPrint()
 		{
-			//alert("JJ");
 			window.print();
-			//window.close();
 		} 
 	</script>
 </body>

@@ -707,7 +707,7 @@ System.err.println("Inside Manual Grn POST method ");
 					  map.add("frId",frDetails.getFrId());
 					   
                      frToken= restTemplate.postForObject(Constant.URL+"getFrToken", map, String.class);
-			         Firebase.sendPushNotifForCommunication(frToken,"GRN Punched","GRN has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Monginis","inbox");
+			         Firebase.sendPushNotifForCommunication(frToken,"GRN Punched","GRN has been punched against value of Rs."+grnHeader.getTotalAmt()+ " Thank You..Team Madhvi","inbox");
 			   	
 			        }
 			        catch(Exception e2)

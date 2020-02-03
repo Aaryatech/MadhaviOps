@@ -57,8 +57,7 @@
 				<td colspan="2" align="center"
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;">
 						<b>${billList[0].frName}</b><br /> <span
-							style="font-size: 10px; font-family: Arial;">(The Monginis
-							Cake Shop)</span>
+							style="font-size: 10px; font-family: Arial;">(Madhvi)</span>
 					</td>
 			</tr>
 			<tr>

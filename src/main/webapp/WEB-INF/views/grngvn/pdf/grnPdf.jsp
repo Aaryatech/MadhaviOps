@@ -70,7 +70,7 @@
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><p
 						class="style2">
 						<b>${grnPdf.frName}</b><br /> <span
-							style="font-size: 10px; font-family: Arial;">(The Monginis
+							style="font-size: 10px; font-family: Arial;">(The Madhvi
 							Cake Shop)</span>
 					</p></td>
 			</tr>

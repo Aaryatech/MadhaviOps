@@ -22,7 +22,7 @@ table, th, td {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>Monginis</title>
+<title>Madhvi</title>
 <link href="${pageContext.request.contextPath}/resources/css/monginis.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/feviconicon.png" type="image/x-icon"/> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
@@ -388,7 +388,9 @@ jQuery(document).ready(function(){
 							<c:when test="${orderType==1}">
 
 								<div class="clearfix"></div>
-
+ <c:set var="totalAmount" value="0"> </c:set>
+ 
+ 
 
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
@@ -442,9 +444,10 @@ jQuery(document).ready(function(){
 
 															</tr>
 														</c:forEach>
+														
 													</c:when>
 													<c:otherwise>
-
+                               
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
@@ -461,25 +464,30 @@ jQuery(document).ready(function(){
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderRate}" />
 																<td class="col-md-1" style="text-align: right;">
-																<c:choose>
-																<c:when test="${frDetails.frKg1==1}">
 																<fmt:formatNumber
 																		type="number" maxFractionDigits="2"
-																		minFractionDigits="2" groupingUsed="false"
+																		minFractionDigits="2" groupingUsed="false" var="totalAmt"
 																		value="${orderList.orderQty * orderList.orderMrp}" />
-																</c:when>
-																<c:otherwise>
-																<fmt:formatNumber
-																		type="number" maxFractionDigits="2"
-																		minFractionDigits="2" groupingUsed="false"
-																		value="${orderList.orderQty * orderList.orderMrp}" />
-																</c:otherwise>
-																</c:choose>
-																
+											<c:set var="totalAmount" value="${totalAmount+totalAmt}"> </c:set>
+																		
+																		${totalAmt}
 																</td>
-
 															</tr>
 														</c:forEach>
+                                                        <tr>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														
+														<td class="col-md-1" style="text-align: left;"> Total </td>
+														
+														<td class="col-md-1" style="text-align: right;"> </td>
+														
+														<td class="col-md-1" style="text-align: right;"> </td>
+														
+														<td class="col-md-1" style="text-align: right;"> </td>
+														
+														<td class="col-md-1" style="text-align: right;font-weight: bold;">${totalAmount} </td>
+														
+														</tr>
 													</c:otherwise>
 												</c:choose>
 											</tbody>
@@ -500,7 +508,10 @@ jQuery(document).ready(function(){
 							</c:when>
 
 							<c:when test="${orderType==3}">
-
+<c:set var="advTotal" value="0"> </c:set>
+ <c:set var="advDiscountAmt" value="0"> </c:set>
+ <c:set var="advAmtTotal" value="0"> </c:set>
+ <c:set var="advRemAmt" value="0"> </c:set>
 								<div class="clearfix"></div>
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
@@ -560,7 +571,7 @@ jQuery(document).ready(function(){
 																value="${orderList.discAmt}" /></td>
 														<td class="col-md-1" style="text-align: right;"><c:out
 																value="${orderList.advanceAmt}" /></td>
-														<td style="text-align: center;" class="col-sm-1"><c:out
+														<td style="text-align: right;" class="col-sm-1"><c:out
 																value="${orderList.total-orderList.advanceAmt-orderList.discAmt}" /></td>
 
 														<c:choose>
@@ -612,10 +623,29 @@ jQuery(document).ready(function(){
 															target="_blank"> <abbr title='Advance Order Memo'><i
 																	class="fa fa-info" aria-hidden="true"></i> </abbr>
 														</a></td>
-
+<c:set var="advTotal" value="${advTotal+orderList.total}"> </c:set>
+ <c:set var="advDiscountAmt" value="${advDiscountAmt+orderList.discAmt}"> </c:set>
+ <c:set var="advAmtTotal" value="${advAmtTotal+orderList.advanceAmt}"> </c:set>
+ <c:set var="advRemAmt" value="${advRemAmt+(orderList.total-orderList.advanceAmt-orderList.discAmt)}"> </c:set>
 													</tr>
 												</c:forEach>
-
+                                                       <tr>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: left;">Total</td>
+														
+														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advTotal}</td>
+														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advDiscountAmt}</td>
+														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advAmtTotal}</td>
+														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advRemAmt}</td>
+														
+														<td class="col-md-1" style="text-align: right;">  </td>
+														<td class="col-md-1" style="text-align: right;">  </td>
+														
+														</tr>
 
 											</tbody>
 

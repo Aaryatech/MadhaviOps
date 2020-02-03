@@ -220,7 +220,7 @@ public class ProfileController {
 					   
                        String token= rest.postForObject(Constant.URL+"getFrToken", map, String.class);
 					
-			           Firebase.sendPushNotifForCommunication(token,"Profile Updated","Your Profile has been changed. If you have not done the changes, Kindly report us. Team Monginis","inbox");
+			           Firebase.sendPushNotifForCommunication(token,"Profile Updated","Your Profile has been changed. If you have not done the changes, Kindly report us. Team Madhvi","inbox");
 					
 			         }
 			         catch(Exception e2)

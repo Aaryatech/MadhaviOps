@@ -56,8 +56,7 @@
 				<td colspan="2" align="center"
 					style="padding: 3px; border-bottom: 1px solid #E7E7E7;"><span
 					style="font-size: 12px; font-family: Times New Roman;"><b>${sessionScope.frDetails.frName}</b></span><br />
-					<span style="font-size: 10px; font-family: Times New Roman;">(The
-						Monginis Cake Shop)</span></td>
+					<span style="font-size: 10px; font-family: Times New Roman;">(Madhvi)</span></td>
 			</tr> --%>
 			<tr>
 				<td colspan="2">

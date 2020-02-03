@@ -1070,26 +1070,26 @@ public class ItemController {
 						if (catId == 1) {
 							strMessage = "Your Order has been saved. Total Ordered- Puffs & Pattice --[" + kg1QtyN
 									+ "]-Breads--[" + kg2QtyN + "]-Long Shelf--[" + kg3QtyN
-									+ "] Thank You..Team Monginis";
+									+ "] Thank You..Team Madhvi";
 
 						} else if (catId == 2) {
 							if (isSameDayApplicable == 2) {
 								strMessage = "Your Order has been saved. Total Ordered- Pastries --[" + kg1QtyN1 / 2
 										+ "]-1/2 Kg Cake--[" + kg2QtyN1 / 2 + "]-1 Kg Cake--[" + kg3QtyN1 / 2
-										+ "]-Above 1 Kg Cake--[" + kg4QtyN1 / 2 + "] Thank You..Team Monginis";
+										+ "]-Above 1 Kg Cake--[" + kg4QtyN1 / 2 + "] Thank You..Team Madhvi";
 							} else {
 								strMessage = "Your Order has been saved. Total Ordered- Pastries --[" + kg1QtyN1
 										+ "]-1/2 Kg Cake--[" + kg2QtyN1 + "]-1 Kg Cake--[" + kg3QtyN1
-										+ "]-Above 1 Kg Cake--[" + kg4QtyN1 + "] Thank You..Team Monginis";
+										+ "]-Above 1 Kg Cake--[" + kg4QtyN1 + "] Thank You..Team Madhvi";
 
 							}
 						} else if (catId == 3) {
 
 							strMessage = "Your Order has been saved. Total Ordered- Packing Materials --[" + kg1QtyN
-									+ "]-Celebrations & Party Items--[" + kg2QtyN + "]- Thank You..Team Monginis";
+									+ "]-Celebrations & Party Items--[" + kg2QtyN + "]- Thank You..Team Madhvi";
 						} else if (catId == 4) {
 							strMessage = "Your Order has been saved. Total Ordered- Pack Product --[" + kg1QtyN
-									+ "]-- Thank You..Team Monginis";
+									+ "]-- Thank You..Team Madhvi";
 
 						}
 

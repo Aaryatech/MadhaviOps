@@ -45,13 +45,13 @@
  </tr>
      <tr>
        <td colspan="2" align="center" style="padding:0px;border-top: 1px solid #E7E7E7;">
-      <span><b>${billList[0].frName}</b><br /><span style="font-size: 10px; font-family: Arial;">(The Monginis Cake Shop)</span></span>
+      <span><b>${billList[0].frName}</b><br /><span style="font-size: 10px; font-family: Arial;">(Madhvi)</span></span>
                 <br /> <span style="font-size: 10px;">GSTIN:<b> ${billList[0].gstn} </b>  </span>
       
       </td>
     </tr>
     <%-- tr>
-      <td colspan="2" align="center" style="padding:1px; border-bottom:1px solid #E7E7E7;"><p class="style2" ><b>${billList[0].frName}</b><br /><span style="font-size: 10px; font-family: Arial;">(The Monginis Cake Shop)</span></p>
+      <td colspan="2" align="center" style="padding:1px; border-bottom:1px solid #E7E7E7;"><p class="style2" ><b>${billList[0].frName}</b><br /><span style="font-size: 10px; font-family: Arial;">(Madhvi)</span></p>
        </td>
     </tr> --%>
     <tr>

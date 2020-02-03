@@ -1166,7 +1166,7 @@ public class SpCakeController {
 							"Your SP Order has been saved. Order Saved is--SP Code--" + spCode + "-Sp name--" + spName
 									+ "--Weight--" + spWeight + "--Flavour--" + flavourName + "--Message--"
 									+ spCakeOrderRes.getSpCakeOrder().getSpInstructions() + "--Total Amount-" + spGrand
-									+ ". Thank You.Team Monginis",
+									+ ". Thank You.Team Madhvi",
 							"inbox");
 
 				} catch (Exception e2) {
@@ -2049,7 +2049,7 @@ public class SpCakeController {
 							"Your SP Order has been saved. Order Saved is--SP Code--" + spCode + "-Sp name--" + spName
 									+ "--Weight--" + spWeight + "--Flavour--" + flavourName + "--Message--"
 									+ spCakeOrderRes.getSpCakeOrder().getSpInstructions() + "--Total Amount-" + spGrand
-									+ ". Thank You.Team Monginis",
+									+ ". Thank You.Team Madhvi",
 							"inbox");
 
 				} catch (Exception e2) {

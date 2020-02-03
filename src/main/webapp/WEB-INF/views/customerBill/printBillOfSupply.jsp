@@ -39,7 +39,7 @@
 	font-size: 11px;
 	font-weight: bold;
 }
--->
+
 </style>
 </head>
 
@@ -251,13 +251,11 @@
 	</table>
 </body>
 <body onload="directPrint()">
-	<!-- <script>
+	 <script>
 		function directPrint() {
-			//alert("JJ");
 			window.print();
-			//window.close();
 		}
-	</script> -->
+	</script> 
 </body>
 
 </html>

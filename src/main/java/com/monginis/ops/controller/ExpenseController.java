@@ -231,7 +231,7 @@ public class ExpenseController {
 
 					} catch (IOException e) {
 
-						System.out.println("Exce in File Upload In gvn  Insert " + e.getMessage());
+						System.out.println("Exce in File Upload In Expense  Insert " + e.getMessage());
 						e.printStackTrace();
 					}
 				} else {
@@ -255,12 +255,12 @@ public class ExpenseController {
 			String billDate=expDate;
 			if(petty!=null) {
 				
-				SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat dmySDF = new SimpleDateFormat("dd-MM-yyyy");
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(Long.parseLong(petty.getDate()));
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 				
-				billDate=ymdSDF.format(cal.getTime());
+				billDate=dmySDF.format(cal.getTime());
 				System.err.println("BILL DATE ---------------- "+billDate);
 			}
 			
