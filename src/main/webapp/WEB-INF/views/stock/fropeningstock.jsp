@@ -203,7 +203,7 @@
 															+ item.itemName
 															+ "</td>";
 
-													var itemStockQty = "<td align=center><input type=number min=0 max=500 class=form-control   id= stockQty"
+													var itemStockQty = "<td align=center><input type=text min=0 max=500 class=form-control   id= stockQty"
 									+ item.itemId
 									+ " name=stockQty"
 									+ item.itemId

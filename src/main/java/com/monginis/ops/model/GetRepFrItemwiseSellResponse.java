@@ -1,13 +1,10 @@
 package com.monginis.ops.model;
 
-import java.util.Date;
-
 public class GetRepFrItemwiseSellResponse {
 
-private int sellBillNo;
-	
-	
-	private int frId;
+    private int sellBillNo;
+
+    private int frId;
 	
 	private String frName;
 	
@@ -21,7 +18,7 @@ private int sellBillNo;
 	
 	private String catName;
 	
-	private int qty;
+	private float qty;
 	
 	private float amount;
 
@@ -81,11 +78,11 @@ private int sellBillNo;
 		this.catName = catName;
 	}
 
-	public int getQty() {
+	public float getQty() {
 		return qty;
 	}
 
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 

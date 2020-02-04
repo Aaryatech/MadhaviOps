@@ -123,7 +123,7 @@ jQuery(document).ready(function(){
 					<div class="col-md-3">
 						<select id="category" class="form-control" style="width: 230px"
 							placeholder="Select Category" name="category" tabindex="4">
-							<option value="-1">Select Option</option>
+							<option value="-1">ALL</option>
 
 
 							<c:forEach items="${unSelectedCatList}" var="unSelectedCat"

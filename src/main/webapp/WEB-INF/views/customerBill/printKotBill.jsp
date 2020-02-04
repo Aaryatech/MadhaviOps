@@ -107,7 +107,7 @@
 																minFractionDigits="0" /> </span></td>
 													<td align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.qty*itemBillList.mrp}"
+																value="${itemBillList.discAmt+itemBillList.grandTotal}"
 																maxFractionDigits="2" minFractionDigits="2" var="total" />
 															${total} <c:set var="calTotalAmt"
 																value="${calTotalAmt+total}"></c:set>

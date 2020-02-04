@@ -47,7 +47,7 @@
 <body>
 
 	<table width="250" border="0" cellspacing="0" cellpadding="0"
-		style="padding: 2px; font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
+		style="font-family: verdana; font-size: 11px; border: 1px solid #E7E7E7;">
 		<tbody>
 
 			<tr>
@@ -154,7 +154,7 @@
 																minFractionDigits="0" /> </span></td>
 													<td  align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
-																value="${itemBillList.qty*itemBillList.mrp}"
+																value="${itemBillList.discAmt+itemBillList.grandTotal}"
 																maxFractionDigits="2" minFractionDigits="2" var="total" />
 															${total} <c:set var="calTotalAmt"
 																value="${total+calTotalAmt}"></c:set>
@@ -181,13 +181,29 @@
 																groupingUsed="false" /></span></td>
 												</tr>
 											</c:if>
+											<fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+															groupingUsed="false" var="billTotal"/>
+											<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+															groupingUsed="false" var="total"/>
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Bill
 														Total:</span></td>
+												<td align="right"><span class="style7">${billTotal}</span></td>
+											</tr>
+											<tr>
+												<td colspan="4" align="right"><span class="style7">R.Off:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+															value="${total-billTotal}"
 															groupingUsed="false" /></span></td>
+											</tr>
+											<tr>
+												<td colspan="4" align="right"><span class="style7">Total:</span></td>
+												<td align="right"><span class="style7">${total}</span></td>
 											</tr>
 										</tbody>
 									</table></td>

@@ -141,9 +141,9 @@ table, th, td {
 				<div class="page_head">
 					<div class="page_title">Stock Details</div>
 					<div class="custom_right">
-						<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
+			<c:if test="${sessionScope.frEmpDetails.designation==1}"><a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
 						type="button" value="Add Opening Stock" class="btn btn-info">
-					</a>
+					</a></c:if>
 					</div>
 				</div>
 				

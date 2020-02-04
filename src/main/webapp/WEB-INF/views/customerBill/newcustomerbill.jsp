@@ -978,7 +978,7 @@ body {
 										<li style="padding-left: 5px;"><select
 											name="cardTypeSplit" id="cardTypeSplit"
 											data-placeholder="Card Type" class="input_add "
-											style="text-align: left;">
+											style="text-align: left;font-size:16px;">
 												<option value="" style="text-align: left;">Select
 													Card</option>
 
@@ -1008,7 +1008,7 @@ body {
 										<li style="padding-left: 5px;"><select
 											name="ePayTypeSplit" id="ePayTypeSplit"
 											data-placeholder="E-Pay Type" class="input_add "
-											style="text-align: left;">
+											style="text-align: left;font-size:16px;">
 												<option value="">E-Pay Type</option>
 											
 												<option value="7" style="text-align: left;">Paytm</option>
@@ -1039,7 +1039,7 @@ body {
 							<div class="add_input">
 								<select name="billType" id="billType" data-placeholder="Type"
 									onchange="onPayTypeChange(this.value)" class="input_add "
-									style="text-align: left;">
+									style="text-align: left;font-size:16px;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
 									<option value="3" style="text-align: left;">E-Pay</option>
@@ -1064,7 +1064,7 @@ body {
 							<div class="add_input">
 								<select name="cardType" id="cardType"
 									data-placeholder="Card Type" class="input_add "
-									style="text-align: left;">
+									style="text-align: left;font-size:16px;">
 									<option value="" style="text-align: left;">Select Card</option>
 
 									<option value="4" style="text-align: left;">Debit Card</option>
@@ -3369,20 +3369,20 @@ $("#enterQty").focus();
 				
 				if(discPer>100){
 					alert("Discount percent is invalid");
-					document.getElementById("discAmt").value =0;
-					document.getElementById("discPer").value =0;
+					document.getElementById("discAmt").value=0;
+					document.getElementById("discPer").value=0;
 					//document.getElementById("payAmt").value =totalAmtPopup;
 					
 					var totalAmt=totalAmtPopup-0;
 					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(0);
 					
 				}else{
 				
 				var totalAmt=totalAmtPopup-calDiscAmt;
 				document.getElementById("discAmt").value = calDiscAmt.toFixed(2);
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(0);
 				}
 				
 				
@@ -3406,13 +3406,13 @@ $("#enterQty").focus();
 					 if(discAmt!=0){
 						alert("Discount amount should be smaller than total amount");
 					 }
-					document.getElementById("discPer").value =0;
-					document.getElementById("discAmt").value =0;
+					document.getElementById("discPer").value=0;
+					document.getElementById("discAmt").value=0;
 					//document.getElementById("payAmt").value=payableAmount;
 					
 					var totalAmt=payableAmount-0;
 					document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-					document.getElementById("payAmt").value = totalAmt.toFixed(2);
+					document.getElementById("payAmt").value = totalAmt.toFixed(0);
 					
 				}else{
 				
@@ -3421,7 +3421,7 @@ $("#enterQty").focus();
 				var totalAmt=totalAmtPopup-discAmt;
 				document.getElementById("discPer").value = calDiscPer.toFixed(2);;
 				document.getElementById("totalPayableAmt").innerHTML = totalAmt.toFixed(2);
-				document.getElementById("payAmt").value = totalAmt.toFixed(2);
+				document.getElementById("payAmt").value = totalAmt.toFixed(0);
 				} 
 				
 				/* var calDiscPer = parseFloat((discAmt/(grandTot/100)));
@@ -3618,7 +3618,7 @@ $("#enterQty").focus();
 							
 							
 							
-							document.getElementById("payAmt").value = total.toFixed(2);
+							document.getElementById("payAmt").value = total.toFixed(0);
 
 							//document.getElementById("discPer").value =0;
 							//document.getElementById("discAmt").value =0;
@@ -3771,6 +3771,8 @@ $("#enterQty").focus();
 										ajax : 'true'
 									},
 									function(data) {
+										document.getElementById("discAmt").value=0;
+										document.getElementById("discPer").value=0;
 										  if(advAmt>0){
 										 document.getElementById("advAmt").value = 0; 
 										 document.getElementById("advBillLable").style.display = 'none';
@@ -3870,6 +3872,8 @@ $("#enterQty").focus();
 											ajax : 'true'
 										},
 										function(data) {
+											document.getElementById("discAmt").value=0;
+											document.getElementById("discPer").value=0;
 											  if(advAmt>0){
 											 document.getElementById("advAmt").value = 0; 
 											 document.getElementById("advBillLable").style.display = 'none';
@@ -3972,7 +3976,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 		
 		//document.getElementById("totalPayableAmt").innerHTML = parseFloat($('#totalAmtPopup').text());
 		document.getElementById("totalPayableAmt").innerHTML = amt;
-		document.getElementById("payAmt").innerHTML = amt;
+		document.getElementById("payAmt").value = amt;
 
 		itemDiscPerCalculation(2);
 
@@ -4173,6 +4177,8 @@ if(parseInt(custId)==parseInt(dfCust)){
 													ajax : 'true'
 												},
 												function(data) {
+													document.getElementById("discAmt").value=0;
+													document.getElementById("discPer").value=0;
 													 if(advAmt>0){
 													 document.getElementById("advAmt").value = 0; 
 													 document.getElementById("advBillLable").style.display = 'none';
@@ -4393,8 +4399,10 @@ if(parseInt(custId)==parseInt(dfCust)){
 													ajax : 'true'
 												},
 												function(data) {
+													document.getElementById("discAmt").value=0;
+													document.getElementById("discPer").value=0;
 													 if(advAmt>0){
-													 document.getElementById("advAmt").value = 0; 
+													 document.getElementById("advAmt").value=0; 
 													 document.getElementById("advBillLable").style.display = 'none';
 													 document.getElementById("actionName").innerHTML= 'ADD BILL';
 													 }

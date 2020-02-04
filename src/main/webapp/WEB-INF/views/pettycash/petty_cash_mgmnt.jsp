@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
@@ -168,16 +169,24 @@ table, th, td {
 									autocomplete="off" placeholder="Date" name="cash_date"
 									type="text" value="${pettycash.date}" onchange="compareDate()">
 							</div>
+								<fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${pettycash.openingAmt}"
+															groupingUsed="false" var="openingAmt"/>
 							<div class="four_one three">
 								<div class="multi_title">Opening Amt</div>
 								<input id="opening_amt" class="form-control" readonly="readonly"
-									value="${pettycash.openingAmt}" autocomplete="off"
+									value="${openingAmt}" autocomplete="off"
 									placeholder="Opening Amt" name="opening_amt" type="text">
 							</div>
+								<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${trCashAmt+advAmt-expAmt-creditNote}"
+															groupingUsed="false" var="todaysBillTotal"/>
+							
 							<div class="four_one three">
 								<div class="multi_title">Today's Amt</div>
 								<input id="cash_amt" class="form-control"
-									value="${trCashAmt+advAmt-expAmt-creditNote}" autocomplete="off"
+									value="${todaysBillTotal}" autocomplete="off"
 									placeholder="Today's Amt" name="cash_amt"
 									onchange="calClosingAmt()" type="text" readonly="readonly"
 									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
@@ -230,35 +239,49 @@ table, th, td {
 
 						<form action="insertPettyCashHandOver" method="POST"
 							id="petty_cash_hand" name="petty_cash_hand">
-
+<fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${pettycash.openingAmt}"
+															groupingUsed="false" var="handoverOpeningAmt"/>
 							<div class="four_one three">
 								<div class="multi_title">Opening Amt</div>
 								<input id="open_amt" class="form-control"
-									value="${pettycash.openingAmt}" autocomplete="off"
+									value="${handoverOpeningAmt}" autocomplete="off"
 									placeholder="Opening Amt" name="open_amt" readonly="readonly"
 									type="text">
 							</div>
+							<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${trCashAmt+advAmt-expAmt-creditNote}"
+															groupingUsed="false" var="sellingTotal"/>
 							<div class="four_one three">
 								<div class="multi_title">Selling Amt</div>
 								<input id="sell_amt" class="form-control"
-									value="${trCashAmt+advAmt-expAmt-creditNote}" autocomplete="off"
+									value="${sellingTotal}" autocomplete="off"
 									placeholder="Selling Amt" name="sell_amt" readonly="readonly"
 									type="text">
 							</div>
+							<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
+															groupingUsed="false" var="handOverTotal"/>
 							<div class="four_one three">
 								<div class="multi_title">Total Cash Hand Over Amt</div>
 								<input id="total_cash_amt" class="form-control"
-									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
+									value="${handOverTotal}"
 									autocomplete="off" placeholder="Total Cash Amt"
 									name="total_cash_amt" readonly="readonly" type="text">
 							</div>
+							<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
+															groupingUsed="false" var="actHandOverTotal"/>
 							<div class="four_one three">
 								<div class="multi_title">Actual Cash Hand Over Amt</div>
 								<%-- <input id="actual_cash_amt"  class="form-control" value="${totalCash}"
 										autocomplete="off" placeholder="Actual Cash Amt" name="actual_cash_amt"
 										type="text"> --%>
 								<input id="actual_cash_amt" class="form-control"
-									value="${pettycash.openingAmt+trCashAmt+advAmt-expAmt-creditNote}"
+									value="${actHandOverTotal}"
 									autocomplete="off" placeholder="Actual Cash Amt"
 									name="actual_cash_amt" type="text">
 
@@ -509,7 +532,7 @@ table, th, td {
 
 			var closeAmt = openAmt + cashAmt - withdrawAmt;
 
-			document.getElementById("closing_amt").value = parseFloat(closeAmt);
+			document.getElementById("closing_amt").value = parseFloat(closeAmt).toFixed(0);
 		}
 	</script>
 

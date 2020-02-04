@@ -3180,8 +3180,8 @@ function matchSplitAmt(flag){
 						
 				if(discPer>100){
 					alert("Discount percent is invalid");
-					document.getElementById("discAmt").value =0;
-					document.getElementById("discPer").value =0;
+					document.getElementById("discAmt").value=0;
+					document.getElementById("discPer").value=0;
 					//document.getElementById("payAmt").value =totalAmtPopup;
 					
 					var totalAmt=totalAmtPopup-0;
@@ -3212,8 +3212,8 @@ function matchSplitAmt(flag){
 					 if(discAmt!=0){
 						alert("Discount amount should be smaller than total amount");
 					 }
-					document.getElementById("discPer").value =0;
-					document.getElementById("discAmt").value =0;
+					document.getElementById("discPer").value=0;
+					document.getElementById("discAmt").value=0;
 					//document.getElementById("payAmt").value=payableAmount;
 					
 					var totalAmt=payableAmount-0;
