@@ -114,7 +114,7 @@ table, th, td {
 
 
 							<div id="table-scroll" class="table-scroll responsive-table-one">
-								<div id="faux-table" class="faux-table" aria="hidden">
+							<!-- 	<div id="faux-table" class="faux-table" aria="hidden">
 									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
@@ -139,7 +139,7 @@ table, th, td {
 
 										</tbody>
 									</table>
-								</div>
+								</div> -->
 								<div>
 									<table id="table_grid" class="responsive-table">
 										<thead>
@@ -333,24 +333,11 @@ table, th, td {
 														//	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 
 														var paymentMode = sellBillData.paymentMode;
-														var mode;
-
-														if (paymentMode == 1) {
-															mode = "Cash";
-
-														} else if (paymentMode == 2) {
-															mode = "Card";
-
-														} else if (paymentMode == 3) {
-															mode = "Other";
-
-														}
-
 														tr
 																.append($(
 																		'<td  style="text-align:center;"></td>')
 																		.html(
-																				mode));
+																				paymentMode));
 
 														var billType;
 

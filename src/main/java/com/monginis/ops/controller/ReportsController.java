@@ -2220,15 +2220,7 @@ public class ReportsController {
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
 
-			if (getSellBillHeaderList.get(i).getPaymentMode() == 1) {
-				rowData.add("Cash");
-
-			} else if (getSellBillHeaderList.get(i).getPaymentMode() == 2) {
-				rowData.add("Card");
-
-			} else if (getSellBillHeaderList.get(i).getPaymentMode() == 3) {
-				rowData.add("other");
-			}
+			rowData.add(""+getSellBillHeaderList.get(i).getPaymentMode());
 
 			if (getSellBillHeaderList.get(i).getBillType() == 'E') {
 				rowData.add("Express");

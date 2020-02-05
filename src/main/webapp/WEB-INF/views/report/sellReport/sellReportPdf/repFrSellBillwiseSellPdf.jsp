@@ -106,22 +106,7 @@ th {
 					<c:set var="totalRemaining"
 						value="${totalRemaining + reportList.remainingAmt}" />
 
-
-					<c:choose>
-						<c:when test="${reportList.paymentMode==1}">
-
-							<td style="text-align: center;"><c:out value="Cash" /></td>
-						</c:when>
-						<c:when test="${reportList.paymentMode==2}">
-
-							<td style="text-align: center;"><c:out value="Card" /></td>
-						</c:when>
-						<c:when test="${reportList.paymentMode==3}">
-
-							<td style="text-align: center;"><c:out value="Other" /></td>
-						</c:when>
-					</c:choose>
-
+							<td style="text-align: center;"><c:out value="${reportList.paymentMode}" /></td>
 
 					<c:choose>
 

@@ -124,7 +124,7 @@ table, th, td {
 													<th class="col-md-1" style="text-align: center;">Amount</th>
 													<th class="col-md-1" style="text-align: center;">Cash</th>
 													<th class="col-md-1" style="text-align: center;">Card</th>
-													<th class="col-md-1" style="text-align: center;">Other</th>
+													<th class="col-md-1" style="text-align: center;">E-Pay</th>
 												</tr>
 											</thead>
 
@@ -147,7 +147,7 @@ table, th, td {
 												<th class="col-md-1" style="text-align: center;">Amount</th>
 												<th class="col-md-1" style="text-align: center;">Cash</th>
 												<th class="col-md-1" style="text-align: center;">Card</th>
-												<th class="col-md-1" style="text-align: center;">Other</th>
+												<th class="col-md-1" style="text-align: center;">E-Pay</th>
 											</tr>
 										</thead>
 

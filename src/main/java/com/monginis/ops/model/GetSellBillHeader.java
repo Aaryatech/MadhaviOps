@@ -20,7 +20,7 @@ public class GetSellBillHeader {
 	
 	private float remainingAmt;
 	
-	private int paymentMode;
+	private String paymentMode;
 	
 	private int discountPer;
 	
@@ -103,11 +103,11 @@ public class GetSellBillHeader {
 		this.remainingAmt = remainingAmt;
 	}
 
-	public int getPaymentMode() {
+	public String getPaymentMode() {
 		return paymentMode;
 	}
 
-	public void setPaymentMode(int paymentMode) {
+	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
 	}
 

@@ -738,7 +738,7 @@ body {
 					<div class="add_input">
 						<select name="custType" id="custType"
 							data-placeholder="Customer Type" class="input_add"
-							style="text-align: left;" required>
+							style="text-align: left;font-size:16px;" required>
 							<option value="0" style="text-align: left;">Select
 								Customer Type</option>
 							<option value="1">Owner</option>
@@ -752,7 +752,7 @@ body {
 					<div class="add_input">
 						<select name="ageRange" id="ageRange"
 							data-placeholder="Customer Age-Group" class="input_add"
-							style="text-align: left;" required>
+							style="text-align: left;font-size:16px;" required>
 							<option value="0" style="text-align: left;">Customer
 								Age-Group</option>
 							<option value="14-21">14-21 Years</option>
@@ -954,7 +954,7 @@ body {
 											<!-- <input type="checkbox" id="cashCheck"
 											name="cashCheck" checked> &nbsp;  --> <input type="text"
 											id="cashAmt" name="cashAmt" class=" input_add numberOnly"
-											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
+											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"  style="font-size:16px;"
 											placeholder="Cash Amount" value="0">
 										</li>
 									</ul>
@@ -972,7 +972,7 @@ body {
 											<!-- <input type="checkbox" id="cardCheck"
 											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
 											name="cardAmt" class=" input_add numberOnly"
-											placeholder="Card Amount" value="0"
+											placeholder="Card Amount" value="0" style="font-size:16px;"
 											oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
 										</li>
 										<li style="padding-left: 5px;"><select
@@ -1002,7 +1002,7 @@ body {
 											<!-- <input type="checkbox" id="epayCheck"
 											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
 											name="epayAmt" class="input_add numberOnly"
-											placeholder="E-Pay Ammount" value="0"
+											placeholder="E-Pay Ammount" value="0" style="font-size:16px;"
 											oninput="matchSplitAmt(3)" onchange="matchSplitAmt(3)">
 										</li>
 										<li style="padding-left: 5px;"><select
@@ -1080,7 +1080,7 @@ body {
 							<div class="add_input">
 								<select name="ePayType" id="ePayType"
 									data-placeholder="E-Pay Type" class="input_add "
-									style="text-align: left;">
+									style="text-align: left;font-size:16px;">
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
@@ -1094,10 +1094,10 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
-								<input name="payAmt" id="payAmt" type="text"
+								<input name="payAmt" id="payAmt" type="text" 
 									class="input_add numberOnly" placeholder="Enter Amount"
 									readonly="readonly" value="${totalAmt-advanceAmt}"
-									style="background-color: lightgrey;" />
+									style="background-color: lightgrey;font-size:16px;" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1412,7 +1412,7 @@ body {
 						<div class="add_input">
 							<select name="modType1" id="modType1" data-placeholder="Type"
 								onchange="onPayTypeChange1(this.value)" class="input_add "
-								style="text-align: left;">
+								style="text-align: left;font-size:16px;">
 								<option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
 								<option value="3" style="text-align: left;">E-Pay</option>
@@ -1428,7 +1428,7 @@ body {
 							<div class="add_input">
 								<select name="cardType1" id="cardType1"
 									data-placeholder="Card Type" class="input_add "
-									style="text-align: left;">
+									style="text-align: left;font-size:16px;">
 									<option value="" style="text-align: left;">Select Card</option>
 
 									<option value="4" style="text-align: left;">Debit Card</option>
@@ -1445,7 +1445,7 @@ body {
 							<div class="add_input">
 								<select name="ePayType1" id="ePayType1"
 									data-placeholder="E-Pay Type" class="input_add"
-									style="text-align: left;">
+									style="text-align: left;font-size:16px;">
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
@@ -1463,7 +1463,7 @@ body {
 							<div class="add_input">
 								<input placeholder="Received Amt" name="receivedAmt"
 									onchange="settleCustBill()" id="receivedAmt" type="text"
-									value="0" class="input_add"
+									value="0" class="input_add" style="font-size:16px;"
 									onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 							</div>
 							<div class="clr"></div>
