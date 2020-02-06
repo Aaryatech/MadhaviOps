@@ -96,12 +96,12 @@ public class BillingController {
 				map.add("toDate", dateFormat.format(date));
 				
 				map.add("frId", frId);
-				map.add("typeIdList", "-1");
+				//map.add("typeIdList", "-1");
 			
 				
 				ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 				};
-				ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeader",
+				ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOS",
 						HttpMethod.POST, new HttpEntity<>(map), typeRef);
 				
 				billHeadeResponse = responseEntity.getBody();	
@@ -163,7 +163,7 @@ public class BillingController {
 		
 		ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 		};
-		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeader",
+		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOS",
 				HttpMethod.POST, new HttpEntity<>(map), typeRef);
 		
 		billHeadeResponse = responseEntity.getBody();	
@@ -432,6 +432,8 @@ public class BillingController {
 					Constant.URL + "getBillDetailsForPrint", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			List<GetBillDetailPrint> billDetailsResponse = responseEntity.getBody();
+			
+			System.err.println("BILL DETAIL ----------------------- "+billDetailsResponse);
 
 			List<String> billnos = Arrays.asList(billList.split("\\s*,\\s*"));
 			List<SlabwiseBillList> slabwiseBillList = new ArrayList<>();
@@ -515,6 +517,7 @@ public class BillingController {
 						billPrint.setExVarchar1(billHeadersListForPrint.get(i).getExVarchar1());// new on 2july
 						billPrint.setExVarchar2(billHeadersListForPrint.get(i).getExVarchar2());// new on 2july
 						
+						billPrint.setEwayBillNo(billHeadersListForPrint.get(i).getEwayBillNo());
 						
 						billPrint.setCompany(billHeadersListForPrint.get(i).getCompany());
 						billDetails.add(billDetailsListForPrint.get(j));

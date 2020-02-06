@@ -280,7 +280,17 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;Purchase</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;
+									<c:choose>
+										<c:when test="${sessionScope.frDetails.frKg1==1}">
+											Goods Received 
+										</c:when>
+										<c:otherwise>
+											Purchase
+										</c:otherwise>
+									</c:choose>
+									
+									</h3>
 									<!-- <div class="range">
 										<span class="percen_three"></span>
 									</div> -->

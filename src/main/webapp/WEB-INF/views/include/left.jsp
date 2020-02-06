@@ -244,20 +244,34 @@
 
 					<c:if
 						test="${(sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2 or sessionScope.frEmpDetails.designation==3) && flag==1}">
-						<li><a href="${pageContext.request.contextPath}/showBill"><div
-									class="img">
+						<li><a href="${pageContext.request.contextPath}/showBill">
+
+								<div class="img">
 									<i class="fa fa-money icon"></i>
-								</div>
-								<div class="title">Purchase Bills</div></a></li>
+								</div> 
+								<c:choose>
+									<c:when test="${sessionScope.frDetails.frKg1==1}">
+										<div class="title">Delivery Challan</div>
+									</c:when>
+									<c:otherwise>
+										<div class="title">Purchase Bills</div>
+									</c:otherwise>
+								</c:choose>
+
+						</a></li>
+
 					</c:if>
 
 					<c:if
 						test="${(sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2 or sessionScope.frEmpDetails.designation==3) && flag==1}">
-						<li><a href="${pageContext.request.contextPath}/insertCreditNote"><div
-									class="img">
+						<li><a
+							href="${pageContext.request.contextPath}/insertCreditNote">
+
+								<div class="img">
 									<i class="fa fa-file-pdf-o"></i>
 								</div>
-								<div class="title">Credit Note</div></a></li>
+								<div class="title">Credit Note</div>
+						</a></li>
 					</c:if>
 
 

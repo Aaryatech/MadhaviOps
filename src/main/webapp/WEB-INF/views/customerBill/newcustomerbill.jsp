@@ -1015,8 +1015,7 @@ body {
 												
 												<option value="8" style="text-align: left;">Google
 													Pay</option>
-												<option value="6" style="text-align: left;">Phone
-													Pe</option>
+												<option value="6" style="text-align: left;">Bank Transaction</option>
 												<option value="9" style="text-align: left;">Amazon
 													Pay</option>
 										</select></li>
@@ -1084,7 +1083,7 @@ body {
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="6" style="text-align: left;">Phone Pe</option>
+									<option value="6" style="text-align: left;">Bank Transaction</option>
 									
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
@@ -1449,7 +1448,7 @@ body {
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="6" style="text-align: left;">Phone Pe</option>
+									<option value="6" style="text-align: left;">Bank Transaction</option>
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -1930,7 +1929,7 @@ body {
 												   payType=payType+",Credit Card("+data.cardAmt+")"; 
 											   }
 											   if(str_arr[i] === "6"){
-												   payType=payType+",Phone Pay("+data.ePayAmt+")";  
+												   payType=payType+",Bank Transaction("+data.ePayAmt+")";  
 											   }
 											   if(str_arr[i] === "7"){
 												   payType=payType+",Paytm("+data.ePayAmt+")"; 

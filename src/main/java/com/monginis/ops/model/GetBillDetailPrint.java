@@ -9,8 +9,8 @@ public class GetBillDetailPrint {
 	    private Integer menuId;
 	    private Integer catId;
 	    private Integer itemId;
-	    private Integer orderQty;
-	    private Integer billQty;
+	    private float orderQty;
+	    private float billQty;
 	    private Integer orderId;
 	    private Integer rateType;
 	    private float rate;
@@ -86,16 +86,17 @@ public class GetBillDetailPrint {
 		public void setItemId(Integer itemId) {
 			this.itemId = itemId;
 		}
-		public Integer getOrderQty() {
+		
+		public float getOrderQty() {
 			return orderQty;
 		}
-		public void setOrderQty(Integer orderQty) {
+		public void setOrderQty(float orderQty) {
 			this.orderQty = orderQty;
 		}
-		public Integer getBillQty() {
+		public float getBillQty() {
 			return billQty;
 		}
-		public void setBillQty(Integer billQty) {
+		public void setBillQty(float billQty) {
 			this.billQty = billQty;
 		}
 		public Integer getOrderId() {
