@@ -334,8 +334,10 @@ public class OpsController {
 			String curDateTime = dateFormat.format(cal.getTime());
 			System.err.println("curDateTime" + curDateTime);
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			model.addAttribute("date1", sf.format(date));
+			model.addAttribute("date2", sf1.format(date));
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
 			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
 			model.addAttribute("customerList", customerList);
@@ -2566,6 +2568,7 @@ public class OpsController {
 			int custId = Integer.parseInt(request.getParameter("cust"));
 			int tempType = Integer.parseInt(request.getParameter("tempType"));
 			int tabType = Integer.parseInt(request.getParameter("tabType"));// cust/todays
+			String dateSel = request.getParameter("date");
 			System.err.println("tabType*" + tabType);
 
 			MultiValueMap<String, Object> mvm;
@@ -2595,7 +2598,7 @@ public class OpsController {
 				mvm.add("frId", frDetails.getFrId());
 				String date = sdf.format(Calendar.getInstance().getTimeInMillis());
 				System.err.println("DATE -------------------------------- " + date);
-				mvm.add("date", date);
+				mvm.add("date", dateSel);
 
 				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getDeletedBillAllCust", mvm,
 						SellBillHeader[].class);
@@ -2609,8 +2612,15 @@ public class OpsController {
 				mvm.add("frId", frDetails.getFrId());
 				mvm.add("flag", tempType);
 				mvm.add("tabType", tabType);
-				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBill",
+				mvm.add("date", dateSel);
+				
+//				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBill",
+//						mvm, SellBillHeader[].class);
+				
+				SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTodaysBillWithDate",
 						mvm, SellBillHeader[].class);
+				
+				
 
 				itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
 
@@ -2640,13 +2650,14 @@ public class OpsController {
 			int tempType = Integer.parseInt(request.getParameter("tempType"));
 			int tabType = Integer.parseInt(request.getParameter("tabType"));// cust/todays
 			String date = request.getParameter("date");// cust/todays
+			//String dateSel = request.getParameter("date");
 
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 			mvm.add("custId", custId);
 			mvm.add("frId", frDetails.getFrId());
 			mvm.add("flag", tempType);
 			mvm.add("tabType", tabType);
-			mvm.add("date", DateConvertor.convertToYMD(date));
+			mvm.add("date", date);
 			TransactionDetail[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getAllSellCustBillTransactionWithDisc",
 					mvm, TransactionDetail[].class);
 

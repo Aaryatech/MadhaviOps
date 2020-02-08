@@ -468,6 +468,19 @@
 									Edit <span>Profile</span>
 								</div></a></li>
 					</c:if>
+					
+					<c:if test="${flag==1}">
+
+						<li><a
+							href="${pageContext.request.contextPath}/changePass"><div
+									class="img">
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-lock" aria-hidden="true"></i>
+								</div>
+								<div class="title">
+									Change <span>Password</span>
+								</div></a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>

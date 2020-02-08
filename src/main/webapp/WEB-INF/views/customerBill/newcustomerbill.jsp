@@ -461,7 +461,8 @@ body {
 								</select>
 							</div>
 							<div class="customer_three">
-								<button class="plus_btn addcust_open" type="button" onclick="onPlusClick()">
+								<button class="plus_btn addcust_open" type="button"
+									onclick="onPlusClick()">
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
@@ -703,7 +704,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-					<input name="kms" id="kms" type="hidden" value="0"/>
+				<input name="kms" id="kms" type="hidden" value="0" />
 				<div class="add_frm_one">
 					<div class="add_customer_one">Mobile Number *</div>
 					<div class="add_input">
@@ -738,7 +739,7 @@ body {
 					<div class="add_input">
 						<select name="custType" id="custType"
 							data-placeholder="Customer Type" class="input_add"
-							style="text-align: left;font-size:16px;" required>
+							style="text-align: left; font-size: 16px;" required>
 							<option value="0" style="text-align: left;">Select
 								Customer Type</option>
 							<option value="1">Owner</option>
@@ -752,7 +753,7 @@ body {
 					<div class="add_input">
 						<select name="ageRange" id="ageRange"
 							data-placeholder="Customer Age-Group" class="input_add"
-							style="text-align: left;font-size:16px;" required>
+							style="text-align: left; font-size: 16px;" required>
 							<option value="0" style="text-align: left;">Customer
 								Age-Group</option>
 							<option value="14-21">14-21 Years</option>
@@ -954,8 +955,8 @@ body {
 											<!-- <input type="checkbox" id="cashCheck"
 											name="cashCheck" checked> &nbsp;  --> <input type="text"
 											id="cashAmt" name="cashAmt" class=" input_add numberOnly"
-											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"  style="font-size:16px;"
-											placeholder="Cash Amount" value="0">
+											oninput="matchSplitAmt(1)" onchange="matchSplitAmt(1)"
+											style="font-size: 16px;" placeholder="Cash Amount" value="0">
 										</li>
 									</ul>
 								</div>
@@ -972,13 +973,13 @@ body {
 											<!-- <input type="checkbox" id="cardCheck"
 											name="cardCheck"> &nbsp;  --> <input type="text" id="cardAmt"
 											name="cardAmt" class=" input_add numberOnly"
-											placeholder="Card Amount" value="0" style="font-size:16px;"
+											placeholder="Card Amount" value="0" style="font-size: 16px;"
 											oninput="matchSplitAmt(2)" onchange="matchSplitAmt(2)">
 										</li>
 										<li style="padding-left: 5px;"><select
 											name="cardTypeSplit" id="cardTypeSplit"
 											data-placeholder="Card Type" class="input_add "
-											style="text-align: left;font-size:16px;">
+											style="text-align: left; font-size: 16px;">
 												<option value="" style="text-align: left;">Select
 													Card</option>
 
@@ -1002,20 +1003,22 @@ body {
 											<!-- <input type="checkbox" id="epayCheck"
 											name="epayCheck"> &nbsp;  --> <input type="text" id="epayAmt"
 											name="epayAmt" class="input_add numberOnly"
-											placeholder="E-Pay Ammount" value="0" style="font-size:16px;"
-											oninput="matchSplitAmt(3)" onchange="matchSplitAmt(3)">
+											placeholder="E-Pay Ammount" value="0"
+											style="font-size: 16px;" oninput="matchSplitAmt(3)"
+											onchange="matchSplitAmt(3)">
 										</li>
 										<li style="padding-left: 5px;"><select
 											name="ePayTypeSplit" id="ePayTypeSplit"
 											data-placeholder="E-Pay Type" class="input_add "
-											style="text-align: left;font-size:16px;">
+											style="text-align: left; font-size: 16px;">
 												<option value="">E-Pay Type</option>
-											
+
 												<option value="7" style="text-align: left;">Paytm</option>
-												
+
 												<option value="8" style="text-align: left;">Google
 													Pay</option>
-												<option value="6" style="text-align: left;">Bank Transaction</option>
+												<option value="6" style="text-align: left;">Bank
+													Transaction</option>
 												<option value="9" style="text-align: left;">Amazon
 													Pay</option>
 										</select></li>
@@ -1038,7 +1041,7 @@ body {
 							<div class="add_input">
 								<select name="billType" id="billType" data-placeholder="Type"
 									onchange="onPayTypeChange(this.value)" class="input_add "
-									style="text-align: left;font-size:16px;">
+									style="text-align: left; font-size: 16px;">
 									<option value="1" style="text-align: left;" selected>Cash</option>
 									<option value="2" style="text-align: left;">Card</option>
 									<option value="3" style="text-align: left;">E-Pay</option>
@@ -1063,7 +1066,7 @@ body {
 							<div class="add_input">
 								<select name="cardType" id="cardType"
 									data-placeholder="Card Type" class="input_add "
-									style="text-align: left;font-size:16px;">
+									style="text-align: left; font-size: 16px;">
 									<option value="" style="text-align: left;">Select Card</option>
 
 									<option value="4" style="text-align: left;">Debit Card</option>
@@ -1079,12 +1082,13 @@ body {
 							<div class="add_input">
 								<select name="ePayType" id="ePayType"
 									data-placeholder="E-Pay Type" class="input_add "
-									style="text-align: left;font-size:16px;">
+									style="text-align: left; font-size: 16px;">
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="6" style="text-align: left;">Bank Transaction</option>
-									
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
+
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -1093,10 +1097,10 @@ body {
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
-								<input name="payAmt" id="payAmt" type="text" 
+								<input name="payAmt" id="payAmt" type="text"
 									class="input_add numberOnly" placeholder="Enter Amount"
 									readonly="readonly" value="${totalAmt-advanceAmt}"
-									style="background-color: lightgrey;font-size:16px;" />
+									style="background-color: lightgrey; font-size: 16px;" />
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -1411,7 +1415,7 @@ body {
 						<div class="add_input">
 							<select name="modType1" id="modType1" data-placeholder="Type"
 								onchange="onPayTypeChange1(this.value)" class="input_add "
-								style="text-align: left;font-size:16px;">
+								style="text-align: left; font-size: 16px;">
 								<option value="1" style="text-align: left;" selected>Cash</option>
 								<option value="2" style="text-align: left;">Card</option>
 								<option value="3" style="text-align: left;">E-Pay</option>
@@ -1427,7 +1431,7 @@ body {
 							<div class="add_input">
 								<select name="cardType1" id="cardType1"
 									data-placeholder="Card Type" class="input_add "
-									style="text-align: left;font-size:16px;">
+									style="text-align: left; font-size: 16px;">
 									<option value="" style="text-align: left;">Select Card</option>
 
 									<option value="4" style="text-align: left;">Debit Card</option>
@@ -1444,11 +1448,12 @@ body {
 							<div class="add_input">
 								<select name="ePayType1" id="ePayType1"
 									data-placeholder="E-Pay Type" class="input_add"
-									style="text-align: left;font-size:16px;">
+									style="text-align: left; font-size: 16px;">
 									<option value="">Select E-Pay Type</option>
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="6" style="text-align: left;">Bank Transaction</option>
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -1462,7 +1467,7 @@ body {
 							<div class="add_input">
 								<input placeholder="Received Amt" name="receivedAmt"
 									onchange="settleCustBill()" id="receivedAmt" type="text"
-									value="0" class="input_add" style="font-size:16px;"
+									value="0" class="input_add" style="font-size: 16px;"
 									onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 							</div>
 							<div class="clr"></div>
@@ -1595,10 +1600,22 @@ body {
 					</div>
 					<div id="dateDiv" style="display: none;">
 						<div class="add_frm_one">
+							<%-- <div class="add_customer_one"
+								style="width: 40% ! important; float: left!importan!; display: none;">
+								Date:<span style="color: red; width: 80%" id="date1">&nbsp;&nbsp;${date1}</span>
+							</div> --%>
+
 							<div class="add_customer_one"
 								style="width: 40% ! important; float: left!importan!">
-								Date:<span style="color: red; width: 80%" id="date1">&nbsp;&nbsp;${date1}</span>
+								Date:<span style="color: red; width: 80%">&nbsp;&nbsp;<input
+									autocomplete="off" placeholder="Date" name="dt" id="dt"
+									type="date" class="input_add" value="${date2}"
+									onChange="fetchRecord()" style="width: 200px;" /></span><input type="hidden" id="todaysDate" value="${date2}" style="display: none;">
 							</div>
+
+							
+
+
 
 						</div>
 					</div>
@@ -1690,6 +1707,9 @@ body {
 			//alert(tempType);
 			
 			document.getElementById("overlay2").style.display = "block";
+			
+			var date = document.getElementById("dt").value;
+			//alert(date);
 
 			var custId = document.getElementById("cust").value;
 			var tabType = document.getElementById("popupType").value;
@@ -1726,6 +1746,7 @@ body {
 									cust: custId,
 									tempType: tempType,
 									tabType: tabType,
+									date:date,
 									ajax: 'true'
 								},
 								function(data) {
@@ -1859,7 +1880,7 @@ body {
 								cust: custId,
 								tempType: tempType,
 								tabType: tabType,
-								date:today,
+								date:date,
 								ajax: 'true'
 							},
 							function(data) {
@@ -2534,6 +2555,12 @@ function matchSplitAmt(flag){
 		 
 		 var modal1 = document.getElementById(modalId);
 		 modal1.style.display = "none";
+		 
+		 var date=document.getElementById('todaysDate').value;
+		 //alert(date);
+		 document.getElementById('dt').value=date;
+		 
+		 
 		}
 	
 	</script>
@@ -4610,6 +4637,29 @@ function onPlusClick(){
 </script>
 
 
+	<script type="text/javascript">
+
+function fetchRecord(){
+	
+	//alert("hi");
+
+ var bills=document.getElementById("single12");
+var tr=document.getElementById("split12");
+var pending=document.getElementById("single22");
+var deleted=document.getElementById("deleted13");
+
+if(bills.checked==true){
+	getCustBills(1);
+}else if(tr.checked==true){
+	getCustBills(3);
+}else if(pending.checked==true){
+	getCustBills(2);
+}else if(deleted.checked==true){
+	getCustBills(5);
+} 
+ 
+}
+</script>
 
 
 </body>

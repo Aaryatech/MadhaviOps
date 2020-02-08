@@ -58,6 +58,7 @@ import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
 import com.monginis.ops.model.GetTotalAmt;
+import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LatestNewsResponse;
 import com.monginis.ops.model.Menu;
 import com.monginis.ops.model.Message;
@@ -1349,5 +1350,49 @@ public class HomeController {
 		return model;
 
 	}
+	
+	
+	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
+	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse response, Locale locale)
+			throws ParseException {
+
+		ModelAndView model = new ModelAndView("changePass");
+
+		return model;
+
+	}
+	
+	
+	@RequestMapping(value = "/updatePassword")
+	public String updatePassword(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("Logout Controller User Logout");
+		HttpServletResponse response = (HttpServletResponse) res;
+		
+		String result="";
+
+		String pass=req.getParameter("newPass");
+
+		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+		int empId=frEmpDetails.getFrEmpId();
+		
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("empId",empId);
+		map.add("pass", pass);
+
+		RestTemplate restTemplate = new RestTemplate();
+		Info info = restTemplate.postForObject(Constant.URL + "updateFrEmpPassword", map, Info.class);
+		
+		
+		
+		if(info.isError()) {
+			result="redirect:/changePass";
+		}else {
+			result="redirect:/frEmpLogin";
+		}
+
+		return result;
+	}
+	
+	
 
 }
