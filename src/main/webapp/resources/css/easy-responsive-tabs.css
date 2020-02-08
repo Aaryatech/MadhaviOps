@@ -89,7 +89,7 @@
   -moz-osx-font-smoothing: grayscale;
     text-transform: uppercase;
     color:#333; background:#fcf300;
-  padding-top: 34px; margin-right:5px; text-decoration:none;
+  padding-top: 34px; margin-right:5px; margin-bottom:5px; text-decoration:none;
   
 }
 .no-touch .cd-tabs-navigation a:hover {

@@ -132,12 +132,12 @@ table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 .total_tab table {border-collapse: collapse; border-spacing: 0; width: 100%;}
 .total_tab td { padding: 8px; font-size: 14px; margin: 0 0 1px 0;}
 
-.add_customer{background: #FFF; width: 35%; margin: 30px auto 0 auto;}
+.add_customer{background: #FFF; width: 60%; margin: 30px auto 0 auto;}
 .pop_head{font-size: 18px; padding: 15px; border-bottom: 1px solid #f4f4f4; letter-spacing: 0.5px; display: inline-block; width: 100%;}
 .slide_close.customer{right: 15px; top: 12px;}
 .add_frm{padding: 15px; border-bottom: 1px solid #f4f4f4;}
 .add_frm_one{margin: 10px 0; display: inline-block; width: 100%;}
-.add_customer_one{float: left; width: 30%; font-size: 14px; font-weight: 700; text-align: left; margin:5px 0 0 0;}
+.add_customer_one{float: left; width: 30%; font-size: 16px; font-weight: 700; text-align: left; margin:5px 0 0 0;}
 .add_input{float: right; width: 70%;}
 .input_add{font-size: 12px; font-weight: 400; color: #333; padding: 6px 12px; border: 1px solid #d2d6de; width: 100%;}
 .input_add:focus{border: 1px solid #3c8dbc;}

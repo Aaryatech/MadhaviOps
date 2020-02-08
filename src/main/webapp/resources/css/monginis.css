@@ -644,6 +644,20 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
 .second_titlerow{margin: 50px 0 0 0;}
 
 
+/*morquess new css*/
+.morquee_bx{display: inline-block; background: #ed1c24; width: 100%; line-height: 44px; 
+margin:0 0 20px 0;}
+.morquee_bx_l{float:left; width:11%; height:44px; line-height:44px; background: #fcf300; color: #111111;
+text-align:center; font-size:20px;} 
+.morquee_bx_r{float:left; width:89%; background:#ed1c24; line-height:44px; color:#FFF; 
+display:block;  height:44px; line-height:44px;}
+
+.sub_right{position:relative;}
+.sub_right i{margin:0 3px 0 0; font-size:16px;}
+.sub_right span{position: absolute; border-radius: 50%; width: 20px; background: #F00;
+    color: #FFF; right: -6px; top: -5px;}
+
+
 /*--css-divices--*/
 @media screen and (max-width:1440px){
 	.advance_one{width: 26%;}
@@ -705,6 +719,9 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .four_one.extra_margin {width: 36%;}
   .four_one.extra_margin {margin-top: 27px;}
   
+  .morquee_bx_l{width:20%;}
+  .morquee_bx_r{width:80%;}
+  
 }
 
 @media screen and (max-width:700px){
@@ -736,6 +753,9 @@ top: 50%; left: 50%; transform: translate(-50%, -50%);}
   .order-btn.total{margin: 30px 0 0 0;}
   .cd-tabs-navigation li {float: left; margin: 5px 0;}
   .listarea li{width: 100% !important;}
+  
+  .morquee_bx_l{float:none; width:100%;}
+  .morquee_bx_r{float: none; width:100%;}
   
   
 }

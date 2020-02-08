@@ -63,7 +63,8 @@
 						test="${(sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2 or sessionScope.frEmpDetails.designation==3) && flag==1 }">
 						<li style="border: 1px;"><a href="#" onClick="openNav()"><div
 									class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-sticky-note-o" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Order <span>Booking</span>
@@ -77,13 +78,28 @@
 						<li><a
 							href="${pageContext.request.contextPath}/newcustomerbill/0"><div
 									class="img">
-									<i class="fa fa-file-pdf-o icon"></i>
+									<!-- <i class="fa fa-file-pdf-o icon"></i> -->
+									<i class="fa fa-desktop" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									POINT OF SALE(POS)<span></span>
 								</div></a></li>
 					</c:if>
 
+
+<!-- <i class="fa fa-inr" aria-hidden="true"></i> (View purchase bill)
+<i class="fa fa-desktop" aria-hidden="true"></i>  (pos icon)
+<i class="fa fa-commenting-o" aria-hidden="true"></i> (Message icon)
+<i class="fa fa-commenting" aria-hidden="true"></i>(Message icon)
+<i class="fa fa-money" aria-hidden="true"></i> (expense list icon)
+<i class="fa fa-users" aria-hidden="true"></i> (Credit Note icon)
+<i class="fa fa-sticky-note-o" aria-hidden="true"></i> (Order Booking History)
+<i class="fa fa-list" aria-hidden="true"></i> (Edit profile icon)
+<i class="fa fa-truck" aria-hidden="true"></i> (GRN GVN icon)
+<i class="fa fa-line-chart" aria-hidden="true"></i> (Report Icon)
+<i class="fa fa-cubes" aria-hidden="true"></i> (stock Detail Icon)
+<i class="fa fa-stack-exchange" aria-hidden="true"></i>
+ -->
 
 
 					<c:set var="flag" value="${0}"></c:set>
@@ -162,7 +178,8 @@
 
 						<li><a href="${pageContext.request.contextPath}/viewBill"><div
 									class="img">
-									<i class="fa fa-file-pdf-o icon"></i>
+									<!-- <i class="fa fa-file-pdf-o icon"></i> -->
+									<i class="fa fa-eye" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									View Sell Bills <span></span>
@@ -187,7 +204,8 @@
 					<c:if
 						test="${(sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2) && flag==1}">
 						<li><a href="#" onClick="openNav1()"><div class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-repeat" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Goods <span>Return</span>
@@ -222,7 +240,8 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showAdvanceOrderList"><div
 									class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-list" aria-hidden="true"></i>
 								</div>
 								<div class="title">Advance Order List</div></a></li>
 
@@ -268,7 +287,8 @@
 							href="${pageContext.request.contextPath}/insertCreditNote">
 
 								<div class="img">
-									<i class="fa fa-file-pdf-o"></i>
+								<i class="fa fa-users" aria-hidden="true"></i> 
+									<!-- <i class="fa fa-file-pdf-o"></i> -->
 								</div>
 								<div class="title">Credit Note</div>
 						</a></li>
@@ -332,7 +352,8 @@
 						test="${sessionScope.frEmpDetails.designation==1  && flag==1}">
 
 						<li><a href="#" onClick="openNav4()"><div class="img">
-									<i class="fa fa-file-o icon"></i>
+									<!-- <i class="fa fa-file-o icon"></i> -->
+									<i class="fa fa-file-word-o" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									<span>Reports</span>
@@ -385,7 +406,8 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showstockdetail"><div
 									class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-pie-chart" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Stock <span>Details</span>
@@ -401,7 +423,8 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showPattyCashMgmnt">
 								<div class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-archive" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Petty <span>Cash</span>
@@ -410,7 +433,8 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showExpenseList"><div
 									class="img">
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-list-alt" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Expense <span>List</span>
@@ -437,7 +461,8 @@
 							href="${pageContext.request.contextPath}/showeditprofile"><div
 									class="img">
 
-									<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-pencil" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Edit <span>Profile</span>

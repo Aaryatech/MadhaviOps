@@ -36,10 +36,9 @@
 				<!--page title-start-->
 				<div class="page_head">
 				
-				<div class="latestNews" style="background: #ed1c24;">
-					
-						<h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News </h3>
-							<div class="microsoft marquee" style="margin-left:37px;">
+				<div class="morquee_bx">
+					<div class="morquee_bx_l">Latest News</div>
+					<div class="morquee_bx_r marquee">
 						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
 						
 					            <c:set var="colors" value="white"/>
@@ -55,8 +54,31 @@
 							
 						
 						</c:forEach>
-						</div>
 					</div>
+				</div>
+					
+				
+				<%-- <div class="latestNews" style="background: #ed1c24;">
+					
+						<h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News </h3>
+							<div class="microsoft marquee" style="margin-left:37px;">
+						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
+						
+					            <c:set var="colors" value="white"/>
+					            <c:choose>
+					            <c:when test="${count.index%2==0}">
+					            <c:set var="colors" value="white"/>
+					           </c:when>
+					           <c:otherwise>
+					            <c:set var="colors" value="lightblue"/>
+					          </c:otherwise>
+					          </c:choose>
+								<span style="color:${colors}"> ${schedulerLists.schMessage} </span>
+							
+						
+						</c:forEach>
+						</div>
+					</div> --%>
 				
 					<div class="page_title">Dashboard</div>
 
@@ -188,7 +210,8 @@
 										type="submit" id="submtbtn">
 	</div>
 	<div class="sub_right">
-	<c:if test="${msgListCount>0}">	<a href="${pageContext.request.contextPath}/homeMessages"><button type="button"  class="buttonsaveorder" > Messages - ${msgListCount} </button></a></c:if>
+	<c:if test="${msgListCount>0}">	<a href="${pageContext.request.contextPath}/homeMessages"><button type="button"  class="buttonsaveorder" > 
+	<i class="fa fa-stack-exchange" aria-hidden="true"></i> Messages <span> ${msgListCount}</span> </button></a></c:if>
 										
 	</div>
 								
