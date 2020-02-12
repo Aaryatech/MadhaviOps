@@ -23,7 +23,7 @@ th, td {
 
 
 th {
-    background-color: #EA3291;
+    background-color: #ed1c24;
     color: white;
 }
 </style>
@@ -58,7 +58,7 @@ th {
 								<c:set var="grandTotal"  value="${0}"/>
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
-													<td align="center"><c:out value="${count.index+1}" /></td>
+													<td style="text-align:center;"><c:out value="${count.index+1}" /></td>
 											<%-- 	<c:forEach items="${month}" var="month" varStatus="count1">
 													<c:choose>
 																	<c:when test="${count1.index==reportList.month}">
@@ -68,7 +68,7 @@ th {
 													</c:choose>
 														
 													</c:forEach> --%>
-													<td style="text-align:center;"><c:out value="${reportList.month}" /></td>
+													<td style="text-align:left;"><c:out value="${reportList.month}" /></td>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.taxableAmt}"/> </td>
 													 <c:set var="taxAmount" value="${taxAmount + reportList.taxableAmt}"/>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.igstRs}"/> </td>

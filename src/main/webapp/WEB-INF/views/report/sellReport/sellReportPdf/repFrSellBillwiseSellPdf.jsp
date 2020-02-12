@@ -21,7 +21,7 @@ th, td {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed1c24;
 	color: white;
 }
 </style>
@@ -41,6 +41,7 @@ th {
 				<th style="text-align: center; width: 60px">Sr no.</th>
 				<th style="text-align: center; width: 100px">Invoice No</th>
 				<th style="text-align: center; width: 100px">Bill Date</th>
+				<th style="text-align: center; width: 100px">Customer</th>
 				<th style="text-align: center; width: 100px">Disc%</th>
 				<th style="text-align: center; width: 100px">Taxable</th>
 				<th style="text-align: center; width: 100px">Total Tax</th>
@@ -49,7 +50,6 @@ th {
 				<th style="text-align: center; width: 100px">Paid AMT</th>
 				<th style="text-align: center; width: 100px">Remaining AMT</th>
 				<th style="text-align: center; width: 100px">Payment Mode</th>
-				<th style="text-align: center; width: 100px">Bill Type</th>
 
 
 
@@ -64,13 +64,20 @@ th {
 			<c:set var="totalPaid" value="${0}" />
 			<c:set var="totalRemaining" value="${0}" />
 
+			<c:set var="totalCash" value="${0}" />
+			<c:set var="totalCard" value="${0}" />
+			<c:set var="totalEPay" value="${0}" />
+
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
-					<td><c:out value="${count.index+1}" /></td>
+					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
 
-					<td><c:out value="${reportList.invoiceNo}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.invoiceNo}" /></td>
 
-					<td><c:out value="${reportList.billDate}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.billDate}" /></td>
+
+					<td style="text-align: left;"><c:out
+							value="${reportList.custName}-${reportList.phoneNumber}" /></td>
 
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
@@ -106,40 +113,20 @@ th {
 					<c:set var="totalRemaining"
 						value="${totalRemaining + reportList.remainingAmt}" />
 
-							<td style="text-align: center;"><c:out value="${reportList.paymentMode}" /></td>
-
-					<c:choose>
-
-						<c:when test="${reportList.billType.toString()=='E'}">
-							<c:set var="billType" value="Express" />
-						</c:when>
-
-						<c:when test="${reportList.billType.toString()=='R'}">
-							<c:set var="billType" value="Regular B2C" />
-						</c:when>
-
-						<c:when test="${reportList.billType.toString()=='B'}">
-							<c:set var="billType" value="Regular B2B" />
-						</c:when>
-
-						<c:when test="${reportList.billType.toString()=='S'}">
-							<c:set var="billType" value="Special Cake" />
-						</c:when>
+					<td style="text-align: center;"><c:out
+							value="${reportList.paymentMode}" /></td>
 
 
-						<c:when test="${reportList.billType.toString()=='G'}">
-							<c:set var="billType" value="Against GRN" />
-						</c:when>
+					<c:set var="totalCash" value="${totalCash + reportList.cash}" />
+					<c:set var="totalCard" value="${totalCard + reportList.card}" />
+					<c:set var="totalEPay" value="${totalEPay + reportList.ePay}" />
 
-					</c:choose>
-
-					<td style="text-align: center;"><c:out value="${billType}" /></td>
 
 
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan='4'><b>Total</b></td>
+				<td colspan='5'><b>Total</b></td>
 
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
@@ -159,8 +146,9 @@ th {
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalRemaining}" /></b></td>
-				<td></td>
-				<td></td>
+				 <td style="text-align: right;"><b>
+							${totalCash}-Cash ,${totalCard}-Card ,${totalEPay}-E-Pay"</b></td> 
+
 			</tr>
 		</tbody>
 	</table>

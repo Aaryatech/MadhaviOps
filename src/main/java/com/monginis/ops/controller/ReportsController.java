@@ -74,6 +74,7 @@ import com.monginis.ops.model.BillWisePurchaseReport;
 import com.monginis.ops.model.BillWiseTaxReport;
 import com.monginis.ops.model.BillWiseTaxReportList;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 
@@ -92,6 +93,7 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
+import com.monginis.ops.model.SellBillHeaderNew;
 import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
@@ -112,7 +114,7 @@ public class ReportsController {
 
 	public List<GetRepTaxSell> getRepTaxSell;
 	public List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
-	public List<GetSellBillHeader> getSellBillHeaderList;
+	public List<SellBillHeaderNew> getSellBillHeaderList;
 	// List<GetRepFrDatewiseSellResponse> getRepFrDatewiseSellResponse;
 	public List<GetRepMenuwiseSellResponse> getRepFrMenuwiseSellResponseList;
 	public List<GetRepFrItemwiseSellResponse> getRepFrItemwiseSellResponseList;
@@ -981,6 +983,18 @@ public class ReportsController {
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			model.addObject("frId", frDetails.getFrId());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -1056,6 +1070,18 @@ public class ReportsController {
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			model.addObject("frId", frDetails.getFrId());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2116,9 +2142,27 @@ public class ReportsController {
 
 		ModelAndView model = new ModelAndView("report/sellReport/repFrSellBillwiseSell");
 		try {
+			RestTemplate restTemplate = new RestTemplate();
+
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			model.addObject("frId", frDetails.getFrId());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2126,13 +2170,32 @@ public class ReportsController {
 	}
 
 	@RequestMapping(value = "/getBilwiselReport", method = RequestMethod.GET)
-	public @ResponseBody List<GetSellBillHeader> getSellBillHeader(HttpServletRequest request,
+	public @ResponseBody List<SellBillHeaderNew> getSellBillHeader(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		int type = 0, subType = 0;
 		try {
 			System.out.println("in method");
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
+			String[] cust = request.getParameterValues("cust");
+
+			type = Integer.parseInt(request.getParameter("rdType"));
+			subType = Integer.parseInt(request.getParameter("rdSubType"));
+
+			String custList = "";
+
+			for (int i = 0; i < cust.length; i++) {
+				custList = cust[i] + "," + custList;
+			}
+
+			custList = custList.substring(0, custList.length() - 1);
+
+			custList = custList.replace("\"", "");
+			custList = custList.substring(1, custList.length() - 1);
+
+			System.err.println(
+					"CUST --- " + custList + "              TYPE : " + type + "                SUB = " + subType);
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -2144,15 +2207,87 @@ public class ReportsController {
 			map.add("frId", frId);
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
+			map.add("custId", custList);
 
-			getSellBillHeaderList = new ArrayList<GetSellBillHeader>();
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
 
-			ParameterizedTypeReference<List<GetSellBillHeader>> typeRef = new ParameterizedTypeReference<List<GetSellBillHeader>>() {
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
 			};
-			ResponseEntity<List<GetSellBillHeader>> responseEntity = restTemplate
-					.exchange(Constant.URL + "getSellBillHeader", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getSellBillHeaderNew", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			getSellBillHeaderList = responseEntity.getBody();
+
+			if (type == 1) {
+
+				if (subType == 2) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getRemainingAmt() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				}
+
+			} else {
+
+				if (subType == 1) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getCash() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				} else if (subType == 2) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getCard() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				} else if (subType == 3) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getePay() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				}
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -2162,19 +2297,8 @@ public class ReportsController {
 
 		// export to excel
 
-		/*
-		 * Collections.sort(getSellBillHeaderList, new Comparator<GetSellBillHeader>() {
-		 * public int compare(GetSellBillHeader c1, GetSellBillHeader c2) {
-		 * 
-		 * String[] ar1=c1.getInvoiceNo().split("-"); int a=Integer.parseInt(ar1[1]);
-		 * 
-		 * String[] ar2=c2.getInvoiceNo().split("-"); int b=Integer.parseInt(ar2[1]);
-		 * 
-		 * if (a > b) return 1; if (a < b) return -1; return 0; }});
-		 */
-
-		Collections.sort(getSellBillHeaderList, new Comparator<GetSellBillHeader>() {
-			public int compare(GetSellBillHeader c1, GetSellBillHeader c2) {
+		Collections.sort(getSellBillHeaderList, new Comparator<SellBillHeaderNew>() {
+			public int compare(SellBillHeaderNew c1, SellBillHeaderNew c2) {
 
 				String s1 = c1.getInvoiceNo();
 				String s2 = c2.getInvoiceNo();
@@ -2191,6 +2315,7 @@ public class ReportsController {
 		rowData.add("Invoice No");
 		// rowData.add("Franchisee Name");
 		rowData.add("Bill Date");
+		rowData.add("Customer");
 		rowData.add("Discount Per");
 		rowData.add("Taxable Amt");
 		rowData.add("Total Tax");
@@ -2198,51 +2323,200 @@ public class ReportsController {
 		rowData.add("Payable Amt");
 		rowData.add("Paid Amt");
 		rowData.add("Remaining Amt");
-
 		rowData.add("Payment Mode");
-		rowData.add("Bill Type");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		for (int i = 0; i < getSellBillHeaderList.size(); i++) {
-			expoExcel = new ExportToExcel();
-			rowData = new ArrayList<String>();
 
-			rowData.add("" + (i + 1));
-			rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
-			// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
-			rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
-			rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
-			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+		if (type == 1) {
 
-			rowData.add(""+getSellBillHeaderList.get(i).getPaymentMode());
+			if (subType == 1) {
 
-			if (getSellBillHeaderList.get(i).getBillType() == 'E') {
-				rowData.add("Express");
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
 
-			} else if (getSellBillHeaderList.get(i).getBillType() == 'R') {
-				rowData.add("Regular B2C");
+					rowData.add("" + (i + 1));
+					rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+					// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+					rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+					rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+							+ getSellBillHeaderList.get(i).getPhoneNumber());
+					rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
 
-			} else if (getSellBillHeaderList.get(i).getBillType() == 'B') {
+					rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
-				rowData.add("Regular B2B");
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
 
-			} else if (getSellBillHeaderList.get(i).getBillType() == 'S') {
+				}
+			} else {
 
-				rowData.add("Special Cake");
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
 
-			} else if (getSellBillHeaderList.get(i).getBillType() == 'G') {
-				rowData.add("Against GRN");
+					if (getSellBillHeaderList.get(i).getRemainingAmt() > 0) {
+						expoExcel = new ExportToExcel();
+
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + (i + 1));
+						rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+						// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+						rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+						rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+								+ getSellBillHeaderList.get(i).getPhoneNumber());
+						rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+					}
+
+				}
+
 			}
 
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
+		} else {
 
+			if (subType == 0) {
+				
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						expoExcel = new ExportToExcel();
+
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + (i + 1));
+						rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+						// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+						rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+						rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+								+ getSellBillHeaderList.get(i).getPhoneNumber());
+						rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+
+				}
+
+				
+			}else if (subType == 1){
+				
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+					if (getSellBillHeaderList.get(i).getCash() > 0) {
+						expoExcel = new ExportToExcel();
+
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + (i + 1));
+						rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+						// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+						rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+						rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+								+ getSellBillHeaderList.get(i).getPhoneNumber());
+						rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+					}
+
+				}
+
+				
+			}else if (subType == 2){
+				
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+					if (getSellBillHeaderList.get(i).getCard() > 0) {
+						expoExcel = new ExportToExcel();
+
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + (i + 1));
+						rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+						// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+						rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+						rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+								+ getSellBillHeaderList.get(i).getPhoneNumber());
+						rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+					}
+
+				}
+				
+			}else if (subType == 3){
+				
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+					if (getSellBillHeaderList.get(i).getePay() > 0) {
+						expoExcel = new ExportToExcel();
+
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + (i + 1));
+						rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+						// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+						rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+						rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+								+ getSellBillHeaderList.get(i).getPhoneNumber());
+						rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
+					}
+
+				}
+				
+			}
+			
 		}
 
 		HttpSession session = request.getSession();
@@ -2687,9 +2961,9 @@ public class ReportsController {
 		rowData.add("Quantity");
 		rowData.add("Amount");
 
-		float qtyTotal=0;
-		float amtTotal=0;
-		
+		float qtyTotal = 0;
+		float amtTotal = 0;
+
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		for (int i = 0; i < getRepFrMenuwiseSellResponseList.size(); i++) {
@@ -2703,9 +2977,9 @@ public class ReportsController {
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getAmount());
 
-			qtyTotal=qtyTotal+getRepFrMenuwiseSellResponseList.get(i).getQty();
-			amtTotal=amtTotal+getRepFrMenuwiseSellResponseList.get(i).getAmount();
-			
+			qtyTotal = qtyTotal + getRepFrMenuwiseSellResponseList.get(i).getQty();
+			amtTotal = amtTotal + getRepFrMenuwiseSellResponseList.get(i).getAmount();
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -2720,10 +2994,10 @@ public class ReportsController {
 		rowData.add("Total");
 		rowData.add("" + qtyTotal);
 		rowData.add("" + amtTotal);
-  
+
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "MenuWiseSummarySell");
@@ -3128,48 +3402,47 @@ public class ReportsController {
 		/*
 		 * rowData.add("Sell Bill No"); rowData.add("Franchise Id");
 		 */
-		rowData.add("Franchise Name"); 
+		rowData.add("Franchise Name");
 		rowData.add("Tax %");
 		rowData.add("Taxable Amount");
 		rowData.add("CGST");
-		rowData.add("SGST"); 
-		rowData.add("IGST"); 
-		rowData.add("CESS"); 
+		rowData.add("SGST");
+		rowData.add("IGST");
+		rowData.add("CESS");
 		rowData.add("Bill Amount");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
-		float taxableTotal=0;
-		float cgstTotal=0;
-		float sgstTotal=0;
-		float igstTotal=0;
-		float cessTotal=0;
-		float billTotal=0;
-		
-		
+
+		float taxableTotal = 0;
+		float cgstTotal = 0;
+		float sgstTotal = 0;
+		float igstTotal = 0;
+		float cessTotal = 0;
+		float billTotal = 0;
+
 		for (int i = 0; i < getRepTaxSell.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			 
+
 			rowData.add("" + getRepTaxSell.get(i).getFrName());
-			 
+
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));  
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
-			
-			taxableTotal=taxableTotal+getRepTaxSell.get(i).getTax_amount();
-			cgstTotal=cgstTotal+getRepTaxSell.get(i).getCgst();
-			sgstTotal=sgstTotal+getRepTaxSell.get(i).getSgst();
-			igstTotal=igstTotal+getRepTaxSell.get(i).getIgst();
-			cessTotal=cessTotal+getRepTaxSell.get(i).getCess();
-			billTotal=billTotal+getRepTaxSell.get(i).getBill_amount();
-			
+
+			taxableTotal = taxableTotal + getRepTaxSell.get(i).getTax_amount();
+			cgstTotal = cgstTotal + getRepTaxSell.get(i).getCgst();
+			sgstTotal = sgstTotal + getRepTaxSell.get(i).getSgst();
+			igstTotal = igstTotal + getRepTaxSell.get(i).getIgst();
+			cessTotal = cessTotal + getRepTaxSell.get(i).getCess();
+			billTotal = billTotal + getRepTaxSell.get(i).getBill_amount();
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -3178,19 +3451,19 @@ public class ReportsController {
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
 		rowData.add("");
-		 
-		rowData.add("Total" ); 
+
+		rowData.add("Total");
 		rowData.add("");
 		rowData.add("" + roundUp(taxableTotal));
 		rowData.add("" + roundUp(cgstTotal));
 		rowData.add("" + roundUp(sgstTotal));
 		rowData.add("" + roundUp(igstTotal));
-		rowData.add("" + roundUp(cessTotal));  
+		rowData.add("" + roundUp(cessTotal));
 		rowData.add("" + roundUp(billTotal));
-		 
+
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "TaxReportSell");
@@ -3243,14 +3516,13 @@ public class ReportsController {
 
 			getRepTaxSell = responseEntity.getBody();
 
-			/*Collections.sort(getRepTaxSell, new Comparator<GetRepTaxSell>() {
-				public int compare(GetRepTaxSell c1, GetRepTaxSell c2) {
-
-					String s1 = c1.getSellBillNo();
-					String s2 = c2.getSellBillNo();
-					return s1.compareToIgnoreCase(s2);
-				}
-			});*/
+			/*
+			 * Collections.sort(getRepTaxSell, new Comparator<GetRepTaxSell>() { public int
+			 * compare(GetRepTaxSell c1, GetRepTaxSell c2) {
+			 * 
+			 * String s1 = c1.getSellBillNo(); String s2 = c2.getSellBillNo(); return
+			 * s1.compareToIgnoreCase(s2); } });
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -3265,69 +3537,68 @@ public class ReportsController {
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 		rowData.add("Sr.No");
-		rowData.add("Sell Bill No"); 
+		rowData.add("Sell Bill No");
 		rowData.add("Franchise Name");
-		/*rowData.add("Bill Date");*/
+		/* rowData.add("Bill Date"); */
 		rowData.add("Taxable Amount");
 		rowData.add("Tax %");
 		rowData.add("cgst");
-		rowData.add("sgst"); 
-		rowData.add("igst"); 
+		rowData.add("sgst");
+		rowData.add("igst");
 		rowData.add("cess");
-		/*rowData.add("Gst"); */
+		/* rowData.add("Gst"); */
 		rowData.add("Bill Amount");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
-		float taxableAmt=0;
-		float cgstAmt=0;
-		float sgstAmt=0;
-		float igstAmt=0;
-		float cessAmt=0;
-		float billAmt=0;
-		
+
+		float taxableAmt = 0;
+		float cgstAmt = 0;
+		float sgstAmt = 0;
+		float igstAmt = 0;
+		float cessAmt = 0;
+		float billAmt = 0;
+
 		for (int i = 0; i < getRepTaxSell.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			rowData.add("" + getRepTaxSell.get(i).getSellBillNo()); 
+			rowData.add("" + getRepTaxSell.get(i).getSellBillNo());
 			rowData.add("" + getRepTaxSell.get(i).getFrName());
-			/*rowData.add("" + getRepTaxSell.get(i).getBillDate());*/
+			/* rowData.add("" + getRepTaxSell.get(i).getBillDate()); */
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));  
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
-			
-			taxableAmt = taxableAmt+getRepTaxSell.get(i).getTax_amount();
-			cgstAmt = cgstAmt+getRepTaxSell.get(i).getCgst();
-			sgstAmt = sgstAmt+getRepTaxSell.get(i).getSgst();
-			igstAmt = igstAmt+getRepTaxSell.get(i).getIgst();
-			cessAmt = cessAmt+getRepTaxSell.get(i).getCess();
-			billAmt = billAmt+getRepTaxSell.get(i).getBill_amount();
-			
+
+			taxableAmt = taxableAmt + getRepTaxSell.get(i).getTax_amount();
+			cgstAmt = cgstAmt + getRepTaxSell.get(i).getCgst();
+			sgstAmt = sgstAmt + getRepTaxSell.get(i).getSgst();
+			igstAmt = igstAmt + getRepTaxSell.get(i).getIgst();
+			cessAmt = cessAmt + getRepTaxSell.get(i).getCess();
+			billAmt = billAmt + getRepTaxSell.get(i).getBill_amount();
 
 		}
-		
+
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
 		rowData.add("");
-		rowData.add(""); 
+		rowData.add("");
 		rowData.add("Total");
-		/*rowData.add("" + getRepTaxSell.get(i).getBillDate());*/
+		/* rowData.add("" + getRepTaxSell.get(i).getBillDate()); */
 		rowData.add("" + roundUp(taxableAmt));
 		rowData.add("");
 		rowData.add("" + roundUp(cgstAmt));
 		rowData.add("" + roundUp(sgstAmt));
 		rowData.add("" + roundUp(igstAmt));
 		rowData.add("" + roundUp(cessAmt));
-		rowData.add("" + roundUp(billAmt));    
+		rowData.add("" + roundUp(billAmt));
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -3619,9 +3890,9 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showSellBillwiseReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showSellBillwiseReportPdf/{fromDate}/{toDate}/{frId}/{cust}/{rdType}/{rdSubType}", method = RequestMethod.GET)
 	public ModelAndView showSellBillwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId,@PathVariable String cust,@PathVariable int rdType,@PathVariable int rdSubType, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("BILL LIST pdf");
 
 		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/repFrSellBillwiseSellPdf");
@@ -3633,27 +3904,105 @@ public class ReportsController {
 			 * ses.getAttribute("frDetails");
 			 */
 			RestTemplate restTemplate = new RestTemplate();
+			
+			System.err.println("CUST - "+cust+"          TYPE - "+rdType+"          SUB - "+rdSubType);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			// int frId=frDetails.getFrId();
 			map.add("frId", frId);
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
+			map.add("custId", cust);
 
-			getSellBillHeaderList = new ArrayList<GetSellBillHeader>();
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
 
-			ParameterizedTypeReference<List<GetSellBillHeader>> typeRef = new ParameterizedTypeReference<List<GetSellBillHeader>>() {
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
 			};
-			ResponseEntity<List<GetSellBillHeader>> responseEntity = restTemplate
-					.exchange(Constant.URL + "getSellBillHeader", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getSellBillHeaderNew", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			getSellBillHeaderList = responseEntity.getBody();
+			
+			
+			if (rdType == 1) {
+
+				if (rdSubType == 2) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getRemainingAmt() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				}
+
+			} else {
+
+				if (rdSubType == 1) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getCash() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				} else if (rdSubType == 2) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getCard() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				} else if (rdSubType == 3) {
+
+					List<SellBillHeaderNew> tempList = new ArrayList<SellBillHeaderNew>();
+
+					for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+
+						if (getSellBillHeaderList.get(i).getePay() > 0) {
+							tempList.add(getSellBillHeaderList.get(i));
+						}
+
+					}
+
+					getSellBillHeaderList.clear();
+					getSellBillHeaderList = tempList;
+
+				}
+
+			}
+			
+			
+			
+			
 			System.out.println("BILL LIST" + getSellBillHeaderList.toString());
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			Collections.sort(getSellBillHeaderList, new Comparator<GetSellBillHeader>() {
-				public int compare(GetSellBillHeader c1, GetSellBillHeader c2) {
+			Collections.sort(getSellBillHeaderList, new Comparator<SellBillHeaderNew>() {
+				public int compare(SellBillHeaderNew c1, SellBillHeaderNew c2) {
 
 					String s1 = c1.getInvoiceNo();
 					String s2 = c2.getInvoiceNo();
@@ -4707,7 +5056,7 @@ public class ReportsController {
 						doc.add(table);
 					}
 				}
-//////////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////////////////
 				float totalQty = 0;
 				float totalRate = 0;
 				float totalMrp = 0;

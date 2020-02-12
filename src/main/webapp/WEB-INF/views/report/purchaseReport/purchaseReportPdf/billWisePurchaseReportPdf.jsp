@@ -22,7 +22,7 @@ th, td {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed1c24;
 	color: white;
 }
 </style>
@@ -61,15 +61,19 @@ th {
 			<c:set var="grandTotal" value="${0 }" />
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
-					<td align="center"><c:out value="${count.index+1}" /></td>
+					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
 					<!-- 													 <td>GFPL</td>
  -->
 					<!-- <td>#012</td>  -->
-					<td><c:out value="${reportList.invoiceNo}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.invoiceNo}" /></td>
 					<td style="text-align: center;"><c:out value="${reportList.billDate}" /></td>
+					
+					
+					
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.taxableAmt}" /></td>
+							
 					<c:set var="taxAmount" value="${taxAmount + reportList.taxableAmt}" />
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
@@ -93,10 +97,10 @@ th {
 						value="${grandTotal+reportList.grandTotal }" />
 
 				</tr>
-			</c:forEach>
+			</c:forEach><!-- ${taxAmount} -->
 			<tr>
 				<td colspan='3'><b>Total</b></td>
-				<td style="text-align: right;"><b><fmt:formatNumber
+				<td style="text-align: right;"><b><fmt:formatNumber pattern="#,##0"
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${taxAmount}" /></b></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
@@ -116,6 +120,26 @@ th {
 			</tr>
 		</tbody>
 	</table>
+
+
+<script type="text/javascript">
+
+function addCommas(x){
+	
+	 x=String(x).toString();
+	  var afterPoint = '';
+	  if(x.indexOf('.') > 0)
+	     afterPoint = x.substring(x.indexOf('.'),x.length);
+	  x = Math.floor(x);
+	  x=x.toString();
+	  var lastThree = x.substring(x.length-3);
+	  var otherNumbers = x.substring(0,x.length-3);
+	  if(otherNumbers != '')
+	      lastThree = ',' + lastThree;
+	  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+	}
+
+</script>
 
 
 </body>

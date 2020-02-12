@@ -1440,7 +1440,7 @@ public class GrnGvnController {
 	String billDate = null;
 
 	@RequestMapping(value = "/getViewGvnOption", method = RequestMethod.GET)
-	public String getViewGvnOption(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getViewGvnOption(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgvn");
 
@@ -1450,9 +1450,34 @@ public class GrnGvnController {
 		billDate = request.getParameter("bill_date");
 
 		System.out.println("BILL DATE SELECTED TO RECIEVE BILL NOS " + billDate);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		modelAndView = showGvnProcess(request, response);
-		return "redirect:/showGvn";
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		int frId = frDetails.getFrId();
+		
+		map.add("frId", frId);
+		map.add("billDate", billDate);
+		
+		GetBillsForFrList billsForFr = new GetBillsForFrList();
+		
+		billsForFr = restTemplate.postForObject(Constant.URL + "getBillsForFrByBillDate", map,
+				GetBillsForFrList.class);
+
+
+		frBillList = new ArrayList<>();
+
+		frBillList = billsForFr.getGetBillsForFr();
+
+		//modelAndView = showGvnProcess(request, response);
+		
+		modelAndView.addObject("frBillList", frBillList);
+		modelAndView.addObject("curDate", billDate);
+		
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/showGvn", method = RequestMethod.GET)

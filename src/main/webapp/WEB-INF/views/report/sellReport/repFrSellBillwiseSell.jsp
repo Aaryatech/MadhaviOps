@@ -10,8 +10,18 @@
 table, th, td {
 	border: 1px solid #9da88d;
 }
+
+chosen-container {
+	width: 82%;
+}
 </style>
-<body>
+
+<link rel="stylesheet"
+	href="/ops/resources/dropdownmultiple/bootstrap-chosen.css">
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
+<body onload="searchSellBill()">
 
 	<!--datepicker-->
 	<script type="text/javascript"
@@ -66,80 +76,154 @@ table, th, td {
 
 
 					<div class="row">
+						<br>
 						<div class="col-md-12">
 							<h2 class="pageTitle">Billwise Sale Report</h2>
+
+						</div>
+						<br>
+					</div>
+
+					<input type="hidden" name="frId" id="frId" value="${frId}">
+
+					<div class="row">
+						<br>
+						<div class="form-group">
+
+							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">From Date
+							</label>
+							<div class="col-sm-6 col-lg-4">
+
+								<input id="fromdatepicker" placeholder="From Date"
+									class="texboxitemcode texboxcal float_l" name="from_Date"
+									value="${fromDate}" type="text" autocomplete="off" size="35">
+							</div>
+
+							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">To Date </label>
+							<div class="col-sm-6 col-lg-4">
+
+								<input id="todatepicker" placeholder="To Date" name="to_Date"
+									class="texboxitemcode texboxcal float_l" autocomplete="off"
+									value="${toDate}" type="text" size="35">
+							</div>
+
 						</div>
 					</div>
 
-					<div class="colOuter">
-						<div align="center">
-							<div class="col1">
-								<div class="col1title">
-									<span class="frm_txt">From</span> <input id="fromdatepicker"
-										placeholder="From Date"
-										class="texboxitemcode texboxcal float_l" name="from_Date"
-										type="text" autocomplete="off" size="35">
-								</div>
+					<div class="row">
+						<br>
+						<div class="form-group">
+
+							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
+								Option </label>
+							<div class="col-sm-6 col-lg-4" style="text-align: left;">
+
+								<input type="radio" id="rdRem" name="radio" value="1"
+									onchange="radioOption()" checked="checked">Remaining
+								Amt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rdPay"
+									onchange="radioOption()" name="radio" value="2">Payment
+								Option
 							</div>
-							<div class="col2">
-								<div class="col1title">
-									<span class="frm_txt">To</span> <input id="todatepicker"
-										placeholder="To Date" name="to_Date"
-										class="texboxitemcode texboxcal float_l" autocomplete="off"
-										type="text" size="35">
+
+							<div id="divRemAmt">
+
+								<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
+									Remaining Amt Option </label>
+								<div class="col-sm-6 col-lg-4" style="text-align: left;">
+
+
+									<select data-placeholder="Choose Remaining Amt Option"
+										name="selRemOpt" tabindex="-1" id="selRemOpt"
+										data-rule-required="true" class="chosen-select"
+										style="text-align: left; width: 82%;" required="">
+
+										<option selected value="1"><c:out value="All" /></option>
+										<option value="2"><c:out value="Remaining Amount" /></option>
+									</select>
 								</div>
+
 							</div>
-							<input type="hidden" name="frId" id="frId" value="${frId}">
-						</div>
+
+							<div id="divPayOpt" style="display: none;">
+
+								<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
+									Payment Option </label>
+								<div class="col-sm-6 col-lg-4" style="text-align: left;">
+
+									<select data-placeholder="Choose Payment Option"
+										name="selPayOpt" tabindex="-1" id="selPayOpt"
+										data-rule-required="true" class="chosen-select"
+										style="text-align: left; width: 82%;" required="">
+
+										<option selected value="0"><c:out value="All" /></option>
+										<option value="1"><c:out value="Cash" /></option>
+										<option value="2"><c:out value="Card" /></option>
+										<option value="3"><c:out value="E-Pay" /></option>
+
+									</select>
+
+								</div>
+
+							</div>
 
 
-						<div align="center" class="right_btn">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML
-								View</button>
-
-							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-							<button class="btn btn-primary" value="PDF" id="PDFButton"
-								onclick="genPdf()">PDF</button>
-
-
-							<br>
 						</div>
 					</div>
+
 
 
 					<div class="row">
+						<br>
+						<div class="form-group">
+
+							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Customer </label>
+							<div class="col-sm-6 col-lg-7">
+
+								<select data-placeholder="Choose Customer" multiple="multiple"
+									class="chosen-select chosen" tabindex="6" id="selCust"
+									name="selCust">
+
+									<option selected value="0"><c:out value="All" /></option>
+
+									<c:forEach items="${customerList}" var="cust" varStatus="count">
+										<option value="${cust.custId}"><c:out
+												value="${cust.custName}-${cust.phoneNumber}" /></option>
+									</c:forEach>
+								</select>
+
+							</div>
+
+							<div class="col-sm-6 col-lg-3">
+								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
+									View</button>
+
+								<button class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()">PDF</button>
+							</div>
+
+							<div align="center" id="loader" style="display: none">
+								 <span>
+								 <br>
+									<h4>
+										<font color="#343690">Loading</font>
+									</h4>
+								</span> <span class="l-1"></span> <span class="l-2"></span> <span
+									class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+								<span class="l-6"></span>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<br>
 						<div class="col-md-12">
 							<!--table-->
 							<div class="clearfix"></div>
 
 
 							<div id="table-scroll" class="table-scroll responsive-table-one">
-							<!-- 	<div id="faux-table" class="faux-table" aria="hidden">
-									<table id="table_grid" class="responsive-table">
-										<thead>
-											<tr class="bgpink">
 
-												<th style="text-align: center;">Sr.No.</th>
-												<th style="text-align: center;">Invoice No</th>
-												<th style="text-align: center;">Bill Date</th>
-												<th style="text-align: center;">Disc%</th>
-												<th style="text-align: center;">Taxable</th>
-												<th style="text-align: center;">Total Tax</th>
-												<th style="text-align: center;">Grand Total</th>
-												<th style="text-align: center;">Payable AMT</th>
-												<th style="text-align: center;">Paid AMT</th>
-												<th style="text-align: center;">Remaining AMT</th>
-												<th style="text-align: center;">Payment Mode</th>
-												<th style="text-align: center;">BillType</th>
-
-											</tr>
-										</thead>
-
-										<tbody>
-
-										</tbody>
-									</table>
-								</div> -->
 								<div>
 									<table id="table_grid" class="responsive-table">
 										<thead>
@@ -148,6 +232,7 @@ table, th, td {
 												<th style="text-align: center;">Sr.No.</th>
 												<th style="text-align: center;">Invoice No</th>
 												<th style="text-align: center;">Bill Date</th>
+												<th style="text-align: center; width: 40px;">Customer</th>
 												<th style="text-align: center;">Disc%</th>
 												<th style="text-align: center;">Taxable</th>
 												<th style="text-align: center;">Total Tax</th>
@@ -156,7 +241,6 @@ table, th, td {
 												<th style="text-align: center;">Paid AMT</th>
 												<th style="text-align: center;">Remaining AMT</th>
 												<th style="text-align: center;">Payment Mode</th>
-												<th style="text-align: center;">BillType</th>
 
 											</tr>
 										</thead>
@@ -204,10 +288,31 @@ table, th, td {
 	<!--easyTabs-->
 
 
+
+
+	<script type="text/javascript">
+		function radioOption() {
+
+			var val1 = document.getElementById("rdRem");
+			var val2 = document.getElementById("rdPay");
+
+			if (val1.checked == true) {
+				$('#divRemAmt').show();
+				$('#divPayOpt').hide();
+			} else {
+				$('#divRemAmt').hide();
+				$('#divPayOpt').show();
+			}
+
+		}
+	</script>
+
+
 	<script type="text/javascript">
 		function searchSellBill() {
 
 			$('#table_grid td').remove();
+			$('#loader').show();
 
 			var isValid = validate();
 
@@ -215,6 +320,26 @@ table, th, td {
 				//document.getElementById('btn_pdf').style.display = "block";
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
+				//var cust = document.getElementById("selCust").value;
+				var cust = $("#selCust").val();
+
+				var rdRem = document.getElementById("rdRem");
+				var rdpay = document.getElementById("rdPay");
+
+				var rdType = 0;
+				var rdSubType = 0;
+
+				//alert("jj");
+
+				if (rdRem.checked == true) {
+					rdType = "1";
+					rdSubType = document.getElementById("selRemOpt").value;
+				} else {
+					rdType = "2";
+					rdSubType = document.getElementById("selPayOpt").value;
+				}
+
+				//alert(JSON.stringify(cust));
 
 				$
 						.getJSON(
@@ -223,10 +348,17 @@ table, th, td {
 
 									fromDate : fromDate,
 									toDate : toDate,
+									cust : JSON.stringify(cust),
+									rdType : rdType,
+									rdSubType : rdSubType,
 									ajax : 'true',
 
 								},
 								function(data) {
+
+									$('#loader').hide();
+
+									//alert( JSON.stringify(data));
 
 									//$('#table_grid td').remove();
 
@@ -243,6 +375,11 @@ table, th, td {
 									var payableTotal = 0;
 									var paidTotal = 0;
 									var remainingTotal = 0;
+
+									var cashTotal = 0;
+									var cardTotal = 0;
+									var epayTotal = 0;
+
 									//var otherTotal=0;
 									$
 											.each(
@@ -256,21 +393,31 @@ table, th, td {
 
 														var tr = $('<tr class="responsive-table"></tr>');
 
-														tr.append($(
-																'<td  ></td>')
-																.html(key + 1));
+														tr
+																.append($(
+																		'<td  style="text-align:center;"></td>')
+																		.html(
+																				key + 1));
 
 														tr
 																.append($(
-																		'<td   ></td>')
+																		'<td  style="text-align:center;" ></td>')
 																		.html(
 																				sellBillData.invoiceNo));
 
 														tr
 																.append($(
-																		'<td ></td>')
+																		'<td style="text-align:center;"></td>')
 																		.html(
 																				sellBillData.billDate));
+
+														var cust = sellBillData.custName
+																+ "_"
+																+ sellBillData.phoneNumber;
+
+														tr.append($(
+																'<td ></td>')
+																.html(cust));
 
 														tr
 																.append($(
@@ -332,32 +479,20 @@ table, th, td {
 																+ sellBillData.remainingAmt;
 														//	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 
+														cashTotal = cashTotal
+																+ sellBillData.cash;
+														cardTotal = cardTotal
+																+ sellBillData.card;
+														epayTotal = epayTotal
+																+ sellBillData.ePay;
+
 														var paymentMode = sellBillData.paymentMode;
+
 														tr
 																.append($(
 																		'<td  style="text-align:center;"></td>')
 																		.html(
 																				paymentMode));
-
-														var billType;
-
-														if (sellBillData.billType == 'E') {
-															billType = "Express";
-														} else if (sellBillData.billType == 'R') {
-															billType = "Regular B2C";
-														} else if (sellBillData.billType == 'S') {
-															billType = "Special Cake";
-														} else if (sellBillData.billType == 'B') {
-															billType = "Regular B2B";
-														} else if (sellBillData.billType == 'G') {
-															billType = "Against GRN";
-														} 
-
-														tr
-																.append($(
-																		'<td   style="text-align:center;"></td>')
-																		.html(
-																				billType));
 
 														$('#table_grid tbody')
 																.append(tr);
@@ -365,7 +500,7 @@ table, th, td {
 													})
 
 									var tr = "<tr>";
-									var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+									var total = "<td colspan='5'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 
 									var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (amtTotal).toFixed(2);
@@ -389,6 +524,13 @@ table, th, td {
 											+ (remainingTotal).toFixed(2);
 									+"</b></td>";
 
+									var payMode = cashTotal + "-Cash ,"
+											+ cardTotal + "-Card ," + epayTotal
+											+ "-E-pay";
+
+									var pay = "<td style=text-align:right;><b>"
+											+ payMode + "</b></td>";
+
 									var td = "<td></td>";
 
 									var trclosed = "</tr>";
@@ -396,14 +538,13 @@ table, th, td {
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
-									$('#table_grid tbody').append(taxable);
-									$('#table_grid tbody').append(tax);
-									$('#table_grid tbody').append(totalAmt);
-									$('#table_grid tbody').append(payable);
-									$('#table_grid tbody').append(paid);
-									$('#table_grid tbody').append(remaining);
-									$('#table_grid tbody').append(td);
-									$('#table_grid tbody').append(td);
+									$('#table_grid tbody').append(addCommas(taxable));
+									$('#table_grid tbody').append(addCommas(tax));
+									$('#table_grid tbody').append(addCommas(totalAmt));
+									$('#table_grid tbody').append(addCommas(payable));
+									$('#table_grid tbody').append(addCommas(paid));
+									$('#table_grid tbody').append(addCommas(remaining));
+									$('#table_grid tbody').append(pay);
 									$('#table_grid tbody').append(trclosed);
 									$('#table_grid tbody').append(trclosed);
 								});
@@ -411,11 +552,65 @@ table, th, td {
 			}
 		}
 	</script>
+
+	<script type="text/javascript">
+		function getSelectValues(select) {
+			var result = [];
+			var options = select && select.options;
+			var opt;
+
+			for (var i = 0, iLen = options.length; i < iLen; i++) {
+				opt = options[i];
+
+				if (opt.selected) {
+					result.push(opt.value || opt.text);
+				}
+			}
+			return result;
+		}
+	</script>
+	
+	<script type="text/javascript">
+	
+	 function addCommas(nStr)
+		{
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+			return x1 + x2;
+		} 
+		
+		/* function addCommas(x){
+			
+			 x=String(x).toString();
+			  var afterPoint = '';
+			  if(x.indexOf('.') > 0)
+			     afterPoint = x.substring(x.indexOf('.'),x.length);
+			  x = Math.floor(x);
+			  x=x.toString();
+			  var lastThree = x.substring(x.length-3);
+			  var otherNumbers = x.substring(0,x.length-3);
+			  if(otherNumbers != '')
+			      lastThree = ',' + lastThree;
+			  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+			} */
+	
+	</script>
+
+
 	<script type="text/javascript">
 		function validate() {
 
 			var fromDate = $("#fromdatepicker").val();
 			var toDate = $("#todatepicker").val();
+			var cust = $("#selCust").val();
+
+			//alert(cust);
 
 			var isValid = true;
 
@@ -427,7 +622,12 @@ table, th, td {
 
 				isValid = false;
 				alert("Please select To Date");
+			} else if (cust == "" || cust == null) {
+
+				isValid = false;
+				alert("Please select Customer");
 			}
+
 			return isValid;
 
 		}
@@ -458,12 +658,41 @@ table, th, td {
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
 				var frId = document.getElementById("frId").value;
+
+				var cust = $("#selCust").val();
+
+				var rdRem = document.getElementById("rdRem");
+				var rdpay = document.getElementById("rdPay");
+
+				var rdType = 0;
+				var rdSubType = 0;
+
+				//alert("jj");
+
+				if (rdRem.checked == true) {
+					rdType = "1";
+					rdSubType = document.getElementById("selRemOpt").value;
+				} else {
+					rdType = "2";
+					rdSubType = document.getElementById("selPayOpt").value;
+				}
+
 				window
 						.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellBillwiseReportPdf/'
-								+ fromDate + '/' + toDate + '/' + frId);
+								+ fromDate
+								+ '/'
+								+ toDate
+								+ '/'
+								+ frId
+								+ '/'
+								+ cust + '/' + rdType + '/' + rdSubType);
 			}
 
 		}
 	</script>
+
+	<script src="/ops/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script src="/ops/resources/dropdownmultiple/chosen-active.js"></script>
+
 </body>
 </html>

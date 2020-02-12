@@ -876,8 +876,8 @@ body {
 
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
-					<div class="add_input" id="discountPopup">
-						<input type="number" name="discPer" id="discPer"
+					<div class="add_input" id="discountPopup"> 
+						<input type="text" name="discPer" id="discPer" step="0.01"
 							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(1)"
 							onkeyup="itemDiscPerCalculation(1)" class="form-control"
@@ -885,7 +885,7 @@ body {
 							style="text-align: center; width: 90px; border-radius: 20px;" />
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Disc
-							Amt&nbsp;</label> <input type="number" name="discAmt" id="discAmt"
+							Amt&nbsp;</label> <input type="text" name="discAmt" id="discAmt"
 							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(2)"
 							onkeyup="itemDiscPerCalculation(2)" class="form-control"
@@ -1610,10 +1610,12 @@ body {
 								Date:<span style="color: red; width: 80%">&nbsp;&nbsp;<input
 									autocomplete="off" placeholder="Date" name="dt" id="dt"
 									type="date" class="input_add" value="${date2}"
-									onChange="fetchRecord()" style="width: 200px;" /></span><input type="hidden" id="todaysDate" value="${date2}" style="display: none;">
+									onChange="fetchRecord()" style="width: 200px;" /></span><input
+									type="hidden" id="todaysDate" value="${date2}"
+									style="display: none;">
 							</div>
 
-							
+
 
 
 
@@ -3808,14 +3810,40 @@ $("#enterQty").focus();
 												
 												if(printbilltype==1){
 													
-													 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+													// window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
 													 
+													var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body"); 
+													
+													
+													
+													
 												}else if(printbilltype==2){
 													 
 													if(frtype<10000000){
-														window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														
+														var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body"); 
+														
 													}else{
-														window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+														var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body");
+														 
 													}
 												}
 												
@@ -3828,15 +3856,42 @@ $("#enterQty").focus();
 													document.getElementById("overlay2").style.display = "none";	 
 											 }else{
 												 if(printbilltype==1){
+													 
+													 //alert("hii");
 														
-													 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+													 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+													 
+													 
+													 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														
+													 $("<iframe>")                             
+											        .hide()                               
+											        .attr("src",url) 
+											        .appendTo("body"); 
 													 
 												}else if(printbilltype==2){
 													 
 													if(frtype<10000000){
-														window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														
+														
+														 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+															
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body"); 
+														
 													}else{
-														window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+														var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body"); 
+														
 													}
 												}
 												 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
@@ -3909,14 +3964,49 @@ $("#enterQty").focus();
 													
 													if(printbilltype==1){
 														
-														 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														//alert("hiii");
 														 
+														//window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+														//alert("hi");
+														//var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														//alert(url);
+														
+														var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+														
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body");   
+												        
+												        
+														
+														
+														
+														
 													}else if(printbilltype==2){
 														 
 														if(frtype<10000000){
-															window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");   
+													        
+														
 														}else{
-															window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");   
+														
 														}
 													}
 													
@@ -3930,14 +4020,40 @@ $("#enterQty").focus();
 												 }else{
 													 if(printbilltype==1){
 															
-														 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+														 
+														 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+															
+														 $("<iframe>")                             
+												        .hide()                               
+												        .attr("src",url) 
+												        .appendTo("body");   
+														 
 														 
 													}else if(printbilltype==2){
 														 
 														if(frtype<10000000){
-															window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+															
+															
+															var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");  
+															
 														}else{
-															window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+															//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+														
+															var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+															
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body");  
+														
+														
 														}
 													}
 													 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
@@ -4213,14 +4329,38 @@ if(parseInt(custId)==parseInt(dfCust)){
 													 if(key==0){
 														 if(printbilltype==1){
 																
-															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															// window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
+															
 															 
 														}else if(printbilltype==2){
 															 
 															if(frtype<10000000){
-																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																 
 															}else{
-																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																 
 															}
 														}
 														 var defaultCustomer =  $('#defaultCustomer').val() ;
@@ -4242,14 +4382,38 @@ if(parseInt(custId)==parseInt(dfCust)){
 													 }else{
 														 if(printbilltype==1){
 																
-															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															// window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
+															 
 															 
 														}else if(printbilltype==2){
 															 
 															if(frtype<10000000){
-																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																 
 															}else{
-																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
 															}
 														}
 														 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
@@ -4435,14 +4599,38 @@ if(parseInt(custId)==parseInt(dfCust)){
 													 if(key==0){
 														 if(printbilltype==1){
 																
-															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
+															 
 															 
 														}else if(printbilltype==2){
 															 
 															if(frtype<10000000){
-																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
 															}else{
-																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
 															}
 														}
 														 var defaultCustomer =  $('#defaultCustomer').val() ;
@@ -4464,14 +4652,37 @@ if(parseInt(custId)==parseInt(dfCust)){
 													 }else{
 														 if(printbilltype==1){
 																
-															 window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 //window.open('${pageContext.request.contextPath}/printKotBill/'+data.message,'_blank');
+															 
+															 var url="${pageContext.request.contextPath}/printKotBill/"+data.message;
+																
+															 $("<iframe>")                             
+													        .hide()                               
+													        .attr("src",url) 
+													        .appendTo("body"); 
 															 
 														}else if(printbilltype==2){
 															 
 															if(frtype<10000000){
-																window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfSupply/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfSupply/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																
 															}else{
-																window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																//window.open('${pageContext.request.contextPath}/printBillOfInvoice/'+data.message,'_blank');
+																
+																 var url="${pageContext.request.contextPath}/printBillOfInvoice/"+data.message;
+																	
+																 $("<iframe>")                             
+														        .hide()                               
+														        .attr("src",url) 
+														        .appendTo("body"); 
+																 
 															}
 														}
 														 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";

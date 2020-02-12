@@ -27,6 +27,8 @@ table, th, td {
 </script>
 <!--datepicker-->
 <c:url var="getBillWisePurchase" value="/findBillWisePurchase" />
+
+<body onload="billWisePurchaseReport()">
 <div class="sidebarOuter"></div>
 <div class="wrapper">
 	<!--topHeader-->
@@ -55,20 +57,21 @@ table, th, td {
 
 
 				<div class="row">
+					<br>
 					<div class="col-md-12">
 						<h2 class="pageTitle">Billwise Purchase Report</h2>
 					</div>
+					<br>
 				</div>
-
 				<div class="row">
-					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<input type="hidden" name="factoryName" id="factoryName"
-						value="${Constant.FACTORYNAME}">
+					<br> <input type="hidden" name="frId" id="frId"
+						value="${frId}"> <input type="hidden" name="factoryName"
+						id="factoryName" value="${Constant.FACTORYNAME}">
 					<div class="col-md-2 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input id="fromdatepicker" autocomplete="off"
+						<input id="fromdatepicker" autocomplete="off" value="${fromDate}"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="fromDate" type="text">
 					</div>
@@ -76,18 +79,26 @@ table, th, td {
 						<h4 class="pull-left">To:-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input id="todatepicker" autocomplete="off"
+						<input id="todatepicker" autocomplete="off" value="${toDate}"
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
+						<button class="buttonsaveorder"
 							onclick="billWisePurchaseReport()">Search</button>
 						<%-- 		  &nbsp;&nbsp;&nbsp;   <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
 
+					</div>
+					
+					<div class="form-group" style="display: none;" id="range">
+						<div class="col-sm-3  controls">
+							<input type="button" id="expExcel" class="btn btn-primary"
+								value="EXPORT TO Excel" onclick="exportToExcel();"
+								disabled="disabled">
+						</div>
 					</div>
 
 				</div>
@@ -96,8 +107,10 @@ table, th, td {
 					<div class="clearfix"></div>
 
 
-					<div id="table-scroll"><!--  class="table-scroll" -->
-						<div id="faux-table" class="faux-table" aria="hidden" style="display:none; ">
+					<div id="table-scroll">
+						<!--  class="table-scroll" -->
+						<div id="faux-table" class="faux-table" aria="hidden"
+							style="display: none;">
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>
@@ -122,7 +135,7 @@ table, th, td {
 											<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
 											<th class="col-md-2" style="text-align: center;">Bill
 												Amount</th>
-											<th class="col-md-1" style="text-align: center;" >Action</th>
+											<th class="col-md-1" style="text-align: center;">Action</th>
 										</tr>
 
 									</thead>
@@ -132,7 +145,8 @@ table, th, td {
 							</div>
 						</div>
 						<div class="table-wrap">
-							<table id="table_grid" class="responsive-table" border="1"><!-- class="main-table" -->
+							<table id="table_grid" class="responsive-table" border="1">
+								<!-- class="main-table" -->
 								<thead>
 									<tr class="bgpink">
 
@@ -152,7 +166,7 @@ table, th, td {
 										<!-- 	<th class="col-md-1" style="text-align: center;">R.off</th> -->
 										<th class="col-md-2" style="text-align: center;">Bill
 											Amount</th>
-										<th class="col-md-1" style="text-align: center;" >Action</th>
+										<th class="col-md-1" style="text-align: center;">Action</th>
 									</tr>
 
 								</thead>
@@ -164,14 +178,10 @@ table, th, td {
 					</div>
 					<!--table end-->
 					<br>
-					<div class="form-group" style="display: none;" id="range">
-						<div class="col-sm-3  controls">
-							<input type="button" id="expExcel" class="btn btn-primary"
-								value="EXPORT TO Excel" onclick="exportToExcel();"
-								disabled="disabled">
-						</div>
-					</div>
+					
 				</div>
+				
+				
 			</div>
 		</div>
 		<!--rightSidebar-->
@@ -245,7 +255,7 @@ table, th, td {
 
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			key + 1));
 													/* 	tr.append($('<td class="col-md-1" ></td>').html(partyname));
@@ -254,7 +264,7 @@ table, th, td {
 													 */
 													tr
 															.append($(
-																	'<td class="col-md-1"></td>')
+																	'<td class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			billWisePurchaseData.invoiceNo));
 
@@ -267,30 +277,30 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
-																	.html(
-																			(billWisePurchaseData.taxableAmt)
-																					.toFixed(2)));
+																	.html(addCommas((billWisePurchaseData.taxableAmt)
+																			.toFixed(2))
+																			));
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
-																	.html(
+																	.html(addCommas(
 																			(billWisePurchaseData.igstRs)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
-																	.html(
+																	.html(addCommas(
 																			(billWisePurchaseData.cgstRs)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
-																	.html(
+																	.html(addCommas(
 																			(billWisePurchaseData.sgstRs)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													/* 	tr
 																.append($(
@@ -302,9 +312,9 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
-																	.html(
+																	.html(addCommas(
 																			(billWisePurchaseData.grandTotal)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													tr
 															.append($('<td class="col-md-2" style="text-align:center">  &nbsp;&nbsp;<a href="#" class="action_btn" onclick="genPdfSingle('
@@ -347,21 +357,21 @@ table, th, td {
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')
-												.html((taxTotal).toFixed(2)));
+												.html(addCommas((taxTotal).toFixed(2))));
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')
-												.html(igstTotal.toFixed(2)));
+												.html(addCommas(igstTotal.toFixed(2))));
 
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')
-												.html(cgstTotal.toFixed(2)));
+												.html(addCommas(cgstTotal.toFixed(2))));
 
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')
-												.html(sgstTotal.toFixed(2)));
+												.html(addCommas(sgstTotal.toFixed(2))));
 
 								/* 	tr
 											.append($(
@@ -371,7 +381,7 @@ table, th, td {
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')
-												.html(billTotal.toFixed(2)));
+												.html(addCommas(billTotal.toFixed(2))));
 
 								tr.append($('<td class="col-md-1"></td>').html(
 										""));
@@ -406,6 +416,9 @@ table, th, td {
 	}
 </script>
 
+
+
+
 <script>
 	function genPdfSingle(billNo) {
 		//alert(billNo);
@@ -417,7 +430,42 @@ table, th, td {
 						+ billNo);
 
 	}
+	
+	
+	 function addCommas(nStr)
+	{
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+		}
+		return x1 + x2;
+	} 
+	
+	/* function addCommas(x){
+		
+		 x=String(x).toString();
+		  var afterPoint = '';
+		  if(x.indexOf('.') > 0)
+		     afterPoint = x.substring(x.indexOf('.'),x.length);
+		  x = Math.floor(x);
+		  x=x.toString();
+		  var lastThree = x.substring(x.length-3);
+		  var otherNumbers = x.substring(0,x.length-3);
+		  if(otherNumbers != '')
+		      lastThree = ',' + lastThree;
+		  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+		} */
+	
+	
 </script>
+
+
+
+
 
 <script>
 	/*
