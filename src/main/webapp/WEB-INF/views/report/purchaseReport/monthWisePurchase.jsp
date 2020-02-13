@@ -569,7 +569,6 @@ table, th, td {
 
 			}, function(data) {
 
-
 				$('#loader').hide();
 				//alert(data);
 				if (data == "") {
@@ -778,7 +777,7 @@ table, th, td {
 	</script>
 
 	<script type="text/javascript">
-		function addCommas(nStr) {
+		/* function addCommas(nStr) {
 			nStr += '';
 			x = nStr.split('.');
 			x1 = x[0];
@@ -788,6 +787,22 @@ table, th, td {
 				x1 = x1.replace(rgx, '$1' + ',' + '$2');
 			}
 			return x1 + x2;
+		} */
+
+		function addCommas(x) {
+
+			x = String(x).toString();
+			var afterPoint = '';
+			if (x.indexOf('.') > 0)
+				afterPoint = x.substring(x.indexOf('.'), x.length);
+			x = Math.floor(x);
+			x = x.toString();
+			var lastThree = x.substring(x.length - 3);
+			var otherNumbers = x.substring(0, x.length - 3);
+			if (otherNumbers != '')
+				lastThree = ',' + lastThree;
+			return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",")
+					+ lastThree + afterPoint;
 		}
 	</script>
 

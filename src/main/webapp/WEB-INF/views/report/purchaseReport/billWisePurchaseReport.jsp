@@ -432,7 +432,7 @@ table, th, td {
 	}
 	
 	
-	 function addCommas(nStr)
+	/*  function addCommas(nStr)
 	{
 		nStr += '';
 		x = nStr.split('.');
@@ -443,9 +443,9 @@ table, th, td {
 			x1 = x1.replace(rgx, '$1' + ',' + '$2');
 		}
 		return x1 + x2;
-	} 
+	}  */
 	
-	/* function addCommas(x){
+	 function addCommas(x){
 		
 		 x=String(x).toString();
 		  var afterPoint = '';
@@ -458,7 +458,7 @@ table, th, td {
 		  if(otherNumbers != '')
 		      lastThree = ',' + lastThree;
 		  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
-		} */
+		} 
 	
 	
 </script>

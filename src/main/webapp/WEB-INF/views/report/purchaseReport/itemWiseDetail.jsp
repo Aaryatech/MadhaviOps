@@ -11,6 +11,9 @@ table, th, td {
 }
 </style>
 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
+
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +77,8 @@ jQuery(document).ready(function(){
 <!--datepicker-->
 
 
+
+
 <c:url var="getItemWiseDetailReport" value="/findItemWiseDetailReport" />
 <c:url var="getItemListBycatId" value="/getItemListBycatId" />
 <c:url var="getSpcakeList" value="/getSpcakeList" />
@@ -112,6 +117,7 @@ jQuery(document).ready(function(){
 
 
 				<div class="row">
+					<br>
 					<div class="col-md-12">
 						<h2 class="pageTitle">Itemwise-Billwise-Datewise Purchase
 							Report</h2>
@@ -121,7 +127,7 @@ jQuery(document).ready(function(){
 
 
 				<div class="row">
-
+					<br>
 
 					<div class="col-md-1 pull-left">
 						<h4 class="pull-left">Group:-</h4>
@@ -172,7 +178,7 @@ jQuery(document).ready(function(){
 						value="${Constant.FACTORYNAME}">
 
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From</h4>
+						<h4 class="pull-left">From Date</h4>
 					</div>
 					<div class="col-md-3 ">
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
@@ -180,7 +186,7 @@ jQuery(document).ready(function(){
 							type="text">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To</h4>
+						<h4 class="pull-left">To Date</h4>
 					</div>
 					<div class="col-md-3 ">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
@@ -188,14 +194,23 @@ jQuery(document).ready(function(){
 							type="text">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
-							onclick="itemWiseTaxReport()">Search</button>
+						<button class="buttonsaveorder" onclick="itemWiseTaxReport()">Search</button>
 						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseDetailPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
 					</div>
 
+				</div>
+
+				<div align="center" id="loader" style="display: none">
+					<span> <br>
+						<h4>
+							<font color="#343690">Loading</font>
+						</h4>
+					</span> <span class="l-1"></span> <span class="l-2"></span> <span
+						class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+					<span class="l-6"></span>
 				</div>
 
 				<div class="row">
@@ -310,8 +325,8 @@ jQuery(document).ready(function(){
 		} else {
 
 			var subCat = document.getElementById("item_grp2").value;
-			
-			 $.getJSON('${getItemsResBySubCatId}', {
+
+			$.getJSON('${getItemsResBySubCatId}', {
 				catId : subCat,
 				ajax : 'true'
 			}, function(data) {
@@ -340,6 +355,9 @@ jQuery(document).ready(function(){
 </script>
 <script type="text/javascript">
 	function itemWiseTaxReport() {
+
+		$('#loader').show();
+
 		$('#table_grid td').remove();
 
 		var isValid = validate();
@@ -430,17 +448,17 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td  class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			key + 1));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td  class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			itemWiseTaxData.billDate));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td  class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			itemWiseTaxData.billNo));
 
@@ -456,7 +474,7 @@ jQuery(document).ready(function(){
 																			itemWiseTaxData.itemName));
 													tr
 															.append($(
-																	'<td  class="col-md-1"></td>')
+																	'<td  class="col-md-1" style="text-align:center;"></td>')
 																	.html(
 																			itemWiseTaxData.expiryDate));
 
@@ -471,15 +489,15 @@ jQuery(document).ready(function(){
 															.append($(
 																	'<td  class="col-md-1" style="text-align:right;"></td>')
 																	.html(
-																			(itemWiseTaxData.rate)
-																					.toFixed(2)));
+																			addCommas((itemWiseTaxData.rate)
+																					.toFixed(2))));
 
 													tr
 															.append($(
 																	'<td  class="col-md-1" style="text-align:right;"></td>')
 																	.html(
-																			(itemWiseTaxData.total)
-																					.toFixed(2)));
+																			addCommas((itemWiseTaxData.total)
+																					.toFixed(2))));
 
 													tr
 															.append($(
@@ -515,16 +533,16 @@ jQuery(document).ready(function(){
 
 								tr
 										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
-												.html(qtyTotal.toFixed(2)));
+												'<td  class="col-md-1" style="text-align:right; font-weight:700;"></td>')
+												.html(addCommas(qtyTotal.toFixed(2))));
 
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 
 								tr
 										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
-												.html(amtTotal.toFixed(2)));
+												'<td  class="col-md-1" style="text-align:right; font-weight:700;"></td>')
+												.html(addCommas(amtTotal.toFixed(2))));
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 								$('#table_grid tbody').append(tr);
@@ -654,5 +672,37 @@ jQuery(document).ready(function(){
 		}
 	}
 </script>
+
+<script>
+	/* function addCommas(nStr) {
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ',' + '$2');
+		}
+		return x1 + x2;
+	} */
+
+	function addCommas(x) {
+
+		x = String(x).toString();
+		var afterPoint = '';
+		if (x.indexOf('.') > 0)
+			afterPoint = x.substring(x.indexOf('.'), x.length);
+		x = Math.floor(x);
+		x = x.toString();
+		var lastThree = x.substring(x.length - 3);
+		var otherNumbers = x.substring(0, x.length - 3);
+		if (otherNumbers != '')
+			lastThree = ',' + lastThree;
+		return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+				+ afterPoint;
+	}
+</script>
+
+
 </body>
 </html>

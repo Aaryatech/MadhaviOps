@@ -46,6 +46,7 @@ import com.monginis.ops.billing.Info;
 import com.monginis.ops.billing.SellBillDataCommon;
 import com.monginis.ops.billing.SellBillDetail;
 import com.monginis.ops.billing.SellBillHeader;
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
@@ -1477,6 +1478,8 @@ public class GrnGvnController {
 		modelAndView.addObject("frBillList", frBillList);
 		modelAndView.addObject("curDate", billDate);
 		
+		view="0";
+		
 		return modelAndView;
 	}
 
@@ -1494,9 +1497,11 @@ public class GrnGvnController {
 			java.util.Date cDate = new java.util.Date();
 			String curDate = new SimpleDateFormat("dd-MM-yyyy").format(cDate);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			// String view = request.getParameter("view_opt");
+			 //String view = request.getParameter("view_opt");
 
 			int frId = frDetails.getFrId();
+			
+			System.err.println("VIEW ============= "+view);
 
 			if (view.contains("0")) {
 
@@ -1608,6 +1613,7 @@ public class GrnGvnController {
 				
 				objShowGvn.setCalcBaseRate(roundUp(calcBaseRate));
 				objShowGvn.setDiscPer(grnConfList.get(i).getDiscPer());
+				objShowGvn.setDiscAmt(roundUp(discAmt/grnConfList.get(i).getBillQty()));
 
 				objShowGvnList.add(objShowGvn);
 

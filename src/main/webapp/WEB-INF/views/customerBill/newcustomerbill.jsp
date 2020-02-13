@@ -1886,6 +1886,9 @@ body {
 								ajax: 'true'
 							},
 							function(data) {
+								
+								//alert(tabType+" ----------- "+tempType)
+								
 								tr_count = data.length;
 								document.getElementById("overlay2").style.display = "";
 
@@ -4160,7 +4163,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 						
 						if(data==1){
 							
-							if (confirm("Todays day end process competed! Bill will be generated for next day.")) {
+							if (confirm("Todays day end process completed! Bill will be generated for next day.")) {
 							
 								
 								var advAmt = document.getElementById("advAmt").value;

@@ -237,7 +237,7 @@
 								<div class="title">
 									Order <span>History</span>
 								</div></a></li>
-						<li><a
+						<li style="display: none;"><a
 							href="${pageContext.request.contextPath}/showAdvanceOrderList"><div
 									class="img">
 									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->

@@ -42,7 +42,7 @@ table, th, td {
 			<!--leftNav-->
 
 
-<br>
+			<br>
 			<!--rightSidebar-->
 			<div class="sidebarright">
 
@@ -51,38 +51,35 @@ table, th, td {
 
 
 					<div class="colOuter">
-						<div class="col-md-8">
+						<div class="col-md-12">
 							<h2 class="pageTitle">GVN Headers</h2>
-						</div>
-
-						<div class="col-md-4" style="text-align: right;">
-							
 							<br>
 						</div>
 
-					</div><br>
+
+
+					</div>
+
 				</div>
-				
-				<br>
+
+
 				<form id="validation-form">
-					<input type="hidden" value="${gstType}" name="type" id="type" />
+
+					<input type="hidden" value="${gstType}" name="type" id="type" /> <br>
 					<div class="colOuter">
+
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-1">
-							<div class="col1title">
-								<b>From</b>
-							</div>
+						<div class="col-md-2" style="float: none;">
+							<h4 class="pull-left">From Date:-</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								autocomplete="off" value="${cDate}" name="from_Date" type="text">
 						</div>
 
-						<div class="col-md-1">
-							<div class="col1title">
-								<b>TO</b>
-							</div>
+						<div class="col-md-1" style="text-align: center;">
+							<h4 class="pull-left" style="text-align: center;">To Date:-</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
@@ -90,12 +87,12 @@ table, th, td {
 						</div>
 
 
-						<div class="col-md-2">
+						<div class="col-md-2" style="display: none;">
 							<div class="col1title">
 								<b>OR Gvn Sr No</b>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2" style="display: none;">
 							<input type="text" class="form-control" id="headeIdText"
 								name="headeIdText" value="0" style="width: 120px;" />
 						</div>
@@ -162,15 +159,15 @@ table, th, td {
 														value="${grnList.grngvnDate}" /></td>
 
 
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: right;"><c:out
 														value="${grnList.taxableAmt}" /></td>
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: right;"><c:out
 														value="${grnList.taxAmt}" /></td>
 
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: right;"><c:out
 														value="${grnList.totalAmt}" /></td>
 
-												<td class="col-md-1" style="text-align: center;"><fmt:formatNumber
+												<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
 														type="number" minFractionDigits="2" maxFractionDigits="2"
 														value="${grnList.aprGrandTotal}" /></td>
 
@@ -215,10 +212,10 @@ table, th, td {
 
 												<c:choose>
 
-													<c:when test="${grnList.grngvnStatus==7}">
+													<c:when test="${grnList.grngvnStatus==6}">
 														<c:set var="status" value="Approved from Account"></c:set>
 													</c:when>
-													<c:when test="${grnList.grngvnStatus==8}">
+													<c:when test="${grnList.grngvnStatus==7}">
 														<c:set var="status" value="Rejected from Account"></c:set>
 													</c:when>
 													<c:otherwise>
@@ -227,7 +224,7 @@ table, th, td {
 
 												</c:choose>
 
-												<td class="col-md-1" style="text-align: center;"><c:out
+												<td class="col-md-1" style="text-align: left;"><c:out
 														value="${status}"></c:out></td>
 
 
@@ -240,7 +237,7 @@ table, th, td {
 													</c:otherwise>
 												</c:choose>
 
-												<td class="col-md-1"><c:out value="${isCredit}"></c:out></td>
+												<td class="col-md-1"  style="text-align: left;"><c:out value="${isCredit}"></c:out></td>
 
 												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnList.creditNoteId}"></c:out></td>

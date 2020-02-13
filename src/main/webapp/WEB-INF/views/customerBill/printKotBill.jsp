@@ -120,12 +120,31 @@
 
 											<tr>
 
-												<td colspan="3" align="right"><span class="style7">Bill
+												<td colspan="3" align="right"><span class="style7">Sub
 														Total:</span></td>
 												<td align="right"><span class="style7"> <fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${calTotalAmt}" groupingUsed="false" /></span></td>
+															value="${sellBillHeaderAndDetail.grandTotal}" groupingUsed="false" /></span></td>
 											</tr>
+											
+											
+											<tr>
+
+												<td colspan="3" align="right"><span class="style7">Disc Amt:</span></td>
+												<td align="right"><span class="style7"> <fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
+											</tr>
+
+											<tr>
+
+												<td colspan="3" align="right"><span class="style7">Bill Total:</span></td>
+												<td align="right"><span class="style7"> <fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															value="${sellBillHeaderAndDetail.payableAmt}" groupingUsed="false" /></span></td>
+											</tr>
+											
+											
 										</tbody>
 									</table></td>
 							</tr>

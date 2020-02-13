@@ -30,10 +30,23 @@ public class ShowGrnBean {
         private String hsnCode;
         private float taxAmt;
         private float discPer;
+        
+        private float discAmt;
+        
+        
+        
        
         
         
-	    public String getHsnCode() {
+	    public float getDiscAmt() {
+			return discAmt;
+		}
+
+		public void setDiscAmt(float discAmt) {
+			this.discAmt = discAmt;
+		}
+
+		public String getHsnCode() {
 			return hsnCode;
 		}
 
@@ -223,6 +236,8 @@ public class ShowGrnBean {
 		public void setTaxAmt(float taxAmt) {
 			this.taxAmt = taxAmt;
 		}
+		
+		
 
 		@Override
 		public String toString() {
@@ -233,7 +248,7 @@ public class ShowGrnBean {
 					+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", autoGrnQty=" + autoGrnQty + ", taxPer="
 					+ taxPer + ", grnAmt=" + grnAmt + ", billDateTime=" + billDateTime + ", taxableAmt=" + taxableAmt
 					+ ", grnRate=" + grnRate + ", hsnCode=" + hsnCode + ", taxAmt=" + taxAmt + ", discPer=" + discPer
-					+ "]";
+					+ ", discAmt=" + discAmt + "]";
 		}
          
 }

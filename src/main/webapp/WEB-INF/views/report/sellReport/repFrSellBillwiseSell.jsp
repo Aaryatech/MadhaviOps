@@ -23,6 +23,8 @@ chosen-container {
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <body onload="searchSellBill()">
 
+
+
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -90,8 +92,8 @@ chosen-container {
 						<br>
 						<div class="form-group">
 
-							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">From Date
-							</label>
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">From Date </label>
 							<div class="col-sm-6 col-lg-4">
 
 								<input id="fromdatepicker" placeholder="From Date"
@@ -99,7 +101,8 @@ chosen-container {
 									value="${fromDate}" type="text" autocomplete="off" size="35">
 							</div>
 
-							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">To Date </label>
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">To Date </label>
 							<div class="col-sm-6 col-lg-4">
 
 								<input id="todatepicker" placeholder="To Date" name="to_Date"
@@ -114,8 +117,8 @@ chosen-container {
 						<br>
 						<div class="form-group">
 
-							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
-								Option </label>
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">Choose Option </label>
 							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
 								<input type="radio" id="rdRem" name="radio" value="1"
@@ -127,8 +130,9 @@ chosen-container {
 
 							<div id="divRemAmt">
 
-								<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
-									Remaining Amt Option </label>
+								<label class="col-sm-3 col-lg-2 control-label"
+									style="text-align: right;">Choose Remaining Amt Option
+								</label>
 								<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
 
@@ -146,8 +150,8 @@ chosen-container {
 
 							<div id="divPayOpt" style="display: none;">
 
-								<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Choose
-									Payment Option </label>
+								<label class="col-sm-3 col-lg-2 control-label"
+									style="text-align: right;">Choose Payment Option </label>
 								<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
 									<select data-placeholder="Choose Payment Option"
@@ -176,7 +180,8 @@ chosen-container {
 						<br>
 						<div class="form-group">
 
-							<label class="col-sm-3 col-lg-2 control-label" style="text-align: right;">Customer </label>
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">Customer </label>
 							<div class="col-sm-6 col-lg-7">
 
 								<select data-placeholder="Choose Customer" multiple="multiple"
@@ -202,8 +207,7 @@ chosen-container {
 							</div>
 
 							<div align="center" id="loader" style="display: none">
-								 <span>
-								 <br>
+								<span> <br>
 									<h4>
 										<font color="#343690">Loading</font>
 									</h4>
@@ -284,10 +288,13 @@ chosen-container {
 	<!--wrapper-end-->
 
 	<!--easyTabs-->
-	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	<%-- <script src="${pageContext.request.contextPath}/resources/js/main.js"></script> --%>
 	<!--easyTabs-->
 
-
+	<script type="text/javascript"
+		src="/ops/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script type="text/javascript"
+		src="/ops/resources/dropdownmultiple/chosen-active.js"></script>
 
 
 	<script type="text/javascript">
@@ -538,12 +545,18 @@ chosen-container {
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
-									$('#table_grid tbody').append(addCommas(taxable));
-									$('#table_grid tbody').append(addCommas(tax));
-									$('#table_grid tbody').append(addCommas(totalAmt));
-									$('#table_grid tbody').append(addCommas(payable));
-									$('#table_grid tbody').append(addCommas(paid));
-									$('#table_grid tbody').append(addCommas(remaining));
+									$('#table_grid tbody').append(
+											addCommas(taxable));
+									$('#table_grid tbody').append(
+											addCommas(tax));
+									$('#table_grid tbody').append(
+											addCommas(totalAmt));
+									$('#table_grid tbody').append(
+											addCommas(payable));
+									$('#table_grid tbody').append(
+											addCommas(paid));
+									$('#table_grid tbody').append(
+											addCommas(remaining));
 									$('#table_grid tbody').append(pay);
 									$('#table_grid tbody').append(trclosed);
 									$('#table_grid tbody').append(trclosed);
@@ -569,11 +582,9 @@ chosen-container {
 			return result;
 		}
 	</script>
-	
+
 	<script type="text/javascript">
-	
-	 function addCommas(nStr)
-		{
+		 function addCommas(nStr) {
 			nStr += '';
 			x = nStr.split('.');
 			x1 = x[0];
@@ -584,7 +595,7 @@ chosen-container {
 			}
 			return x1 + x2;
 		} 
-		
+
 		/* function addCommas(x){
 			
 			 x=String(x).toString();
@@ -598,8 +609,7 @@ chosen-container {
 			  if(otherNumbers != '')
 			      lastThree = ',' + lastThree;
 			  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
-			} */
-	
+			} */ 
 	</script>
 
 
@@ -691,8 +701,7 @@ chosen-container {
 		}
 	</script>
 
-	<script src="/ops/resources/dropdownmultiple/chosen.jquery.js"></script>
-	<script src="/ops/resources/dropdownmultiple/chosen-active.js"></script>
+
 
 </body>
 </html>

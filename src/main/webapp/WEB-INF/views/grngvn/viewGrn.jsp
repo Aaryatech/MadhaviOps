@@ -70,10 +70,8 @@ table, th, td {
 						<!-- copy div kalpesh -->
 
 
-						<div class="col-md-1">
-							<div class="col1title">
-								<b>From</b>
-							</div>
+						<div class="col-md-2" style="float: none;">
+							<h4 class="pull-left">From Date:-</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
@@ -81,9 +79,7 @@ table, th, td {
 						</div>
 
 						<div class="col-md-1">
-							<div class="col1title">
-								<b>TO</b>
-							</div>
+							<h4 class="pull-left" style="text-align: center;">To Date:-</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
@@ -91,12 +87,12 @@ table, th, td {
 						</div>
 
 
-						<div class="col-md-2">
+						<div class="col-md-2" style="display: none;">
 							<div class="col1title">
 								<b>OR Grn Sr No</b>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-2" style="display: none;">
 							<input type="text" class="form-control" id="headeIdText"
 								style="width: 120px" name="headeIdText" value="0" />
 						</div>
@@ -180,14 +176,14 @@ table, th, td {
 													value="${grnList.grnGvnHeaderId}"></td>
 												<td class="col-md-2" style="text-align: center;"><c:out
 														value="${grnList.grngvnDate}" /></td>
-												<td class="col-md-2" style="text-align: center;"><c:out
+												<td class="col-md-2" style="text-align: right;"><c:out
 														value="${grnList.taxableAmt}" /></td>
-												<td class="col-md-2" style="text-align: center;"><c:out
+												<td class="col-md-2" style="text-align: right;"><c:out
 														value="${grnList.taxAmt}" /></td>
-												<td class="col-md-2" style="text-align: center;"><c:out
+												<td class="col-md-2" style="text-align: right;"><c:out
 														value="${grnList.totalAmt}" /></td>
 
-												<td class="col-md-2" style="text-align: center;"><fmt:formatNumber
+												<td class="col-md-2" style="text-align: right;"><fmt:formatNumber
 														type="number" minFractionDigits="2" maxFractionDigits="2"
 														value="${grnList.aprGrandTotal}" /> <%-- <c:out value="${grnList.taxableAmt}" /> --%></td>
 												<c:set var="status" value="a"></c:set>
@@ -314,7 +310,37 @@ table, th, td {
 <!--wrapper-end-->
 
 
+<script>
 
+/* function addCommas(nStr)
+{
+nStr += '';
+x = nStr.split('.');
+x1 = x[0];
+x2 = x.length > 1 ? '.' + x[1] : '';
+var rgx = /(\d+)(\d{3})/;
+while (rgx.test(x1)) {
+x1 = x1.replace(rgx, '$1' + ',' + '$2');
+}
+return x1 + x2;
+} */
+
+ function addCommas(x){
+
+x=String(x).toString();
+ var afterPoint = '';
+ if(x.indexOf('.') > 0)
+    afterPoint = x.substring(x.indexOf('.'),x.length);
+ x = Math.floor(x);
+ x=x.toString();
+ var lastThree = x.substring(x.length-3);
+ var otherNumbers = x.substring(0,x.length-3);
+ if(otherNumbers != '')
+     lastThree = ',' + lastThree;
+ return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+} 
+
+</script>
 
 
 <script type="text/javascript">

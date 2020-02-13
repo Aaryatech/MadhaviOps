@@ -18,7 +18,7 @@ public class ItemOrderHis {
 	private int isEdit;
 	private int editQty;
 	private int userId;
-	private int isPositive;//discPer
+	private float isPositive;//discPer
 	private int menuId;
 	private String menuTitle;
 	private String itemName;
@@ -78,7 +78,7 @@ public class ItemOrderHis {
 	public int getUserId() {
 		return userId;
 	}
-	public int getIsPositive() {
+	public float getIsPositive() {
 		return isPositive;
 	}
 	public int getMenuId() {
@@ -141,7 +141,7 @@ public class ItemOrderHis {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public void setIsPositive(int isPositive) {
+	public void setIsPositive(float isPositive) {
 		this.isPositive = isPositive;
 	}
 	public void setMenuId(int menuId) {

@@ -388,9 +388,10 @@ jQuery(document).ready(function(){
 							<c:when test="${orderType==1}">
 
 								<div class="clearfix"></div>
- <c:set var="totalAmount" value="0"> </c:set>
- 
- 
+								<c:set var="totalAmount" value="0">
+								</c:set>
+
+
 
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
@@ -433,10 +434,16 @@ jQuery(document).ready(function(){
 																<td style="text-align: center;" class="col-sm-1"><c:out
 																		value="${orderList.qty}" /></td>
 
+																<%-- <td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																		type="number" maxFractionDigits="2"
+																		minFractionDigits="2" groupingUsed="false"
+																		value="${orderList.qty * orderList.rate}" /></td> --%>
+
 																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.qty * orderList.rate}" /></td>
+
 																<td class="col-md-1" style="text-align: center;"><a
 																	href="${pageContext.request.contextPath}/showRegCakeOrderHisPDF/${orderList.rspId}"
 																	target="_blank"><abbr title="PDF"><i
@@ -444,10 +451,10 @@ jQuery(document).ready(function(){
 
 															</tr>
 														</c:forEach>
-														
+
 													</c:when>
 													<c:otherwise>
-                               
+
 														<c:forEach items="${orderHistory}" var="orderList"
 															varStatus="count">
 
@@ -463,30 +470,32 @@ jQuery(document).ready(function(){
 																		type="number" maxFractionDigits="2"
 																		minFractionDigits="2" groupingUsed="false"
 																		value="${orderList.orderRate}" />
-																<td class="col-md-1" style="text-align: right;">
-																<fmt:formatNumber
+																<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
 																		type="number" maxFractionDigits="2"
-																		minFractionDigits="2" groupingUsed="false" var="totalAmt"
+																		minFractionDigits="2" groupingUsed="false"
+																		var="totalAmt"
 																		value="${orderList.orderQty * orderList.orderMrp}" />
-											<c:set var="totalAmount" value="${totalAmount+totalAmt}"> </c:set>
-																		
-																		${totalAmt}
-																</td>
+																	<c:set var="totalAmount"
+																		value="${totalAmount+totalAmt}">
+																	</c:set> ${totalAmt}</td>
 															</tr>
 														</c:forEach>
-                                                        <tr>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														
-														<td class="col-md-1" style="text-align: left;"> Total </td>
-														
-														<td class="col-md-1" style="text-align: right;"> </td>
-														
-														<td class="col-md-1" style="text-align: right;"> </td>
-														
-														<td class="col-md-1" style="text-align: right;"> </td>
-														
-														<td class="col-md-1" style="text-align: right;font-weight: bold;">${totalAmount} </td>
-														
+														<tr>
+															<td class="col-md-1" style="text-align: right;"></td>
+
+															<td class="col-md-1" style="text-align: left;">
+																Total</td>
+
+															<td class="col-md-1" style="text-align: right;"></td>
+
+															<td class="col-md-1" style="text-align: right;"></td>
+
+															<td class="col-md-1" style="text-align: right;"></td>
+
+															<td class="col-md-1"
+																style="text-align: right; font-weight: bold;">${totalAmount}
+															</td>
+
 														</tr>
 													</c:otherwise>
 												</c:choose>
@@ -497,21 +506,25 @@ jQuery(document).ready(function(){
 								</div>
 
 
-<div class="col-md-2">
-					<input type="button" id="expExcel" class="btn btn-primary"
-						value="EXPORT TO Excel" onclick="exportToExcel();">
-					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
+								<div class="col-md-2">
+									<input type="button" id="expExcel" class="btn btn-primary"
+										value="EXPORT TO Excel" onclick="exportToExcel();">
+									<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button> -->
-				</div>
-				
+								</div>
+
 								<br />
 							</c:when>
 
 							<c:when test="${orderType==3}">
-<c:set var="advTotal" value="0"> </c:set>
- <c:set var="advDiscountAmt" value="0"> </c:set>
- <c:set var="advAmtTotal" value="0"> </c:set>
- <c:set var="advRemAmt" value="0"> </c:set>
+								<c:set var="advTotal" value="0">
+								</c:set>
+								<c:set var="advDiscountAmt" value="0">
+								</c:set>
+								<c:set var="advAmtTotal" value="0">
+								</c:set>
+								<c:set var="advRemAmt" value="0">
+								</c:set>
 								<div class="clearfix"></div>
 								<div id="table-scroll" class="table-scroll">
 									<div id="faux-table" class="faux-table" aria="hidden"></div>
@@ -531,7 +544,8 @@ jQuery(document).ready(function(){
 													<th class="col-sm-1" style="text-align: center;">Delivery
 														Time</th>
 													<th class="col-md-2" style="text-align: right;">Total</th>
-													<th class="col-md-2" style="text-align: right;">Disc Amt</th>
+													<th class="col-md-2"
+														style="text-align: right; display: none;">Disc Amt</th>
 													<th class="col-md-1" style="text-align: right;">Advance
 													</th>
 													<th class="col-sm-1" style="text-align: right;">Remaining
@@ -549,7 +563,7 @@ jQuery(document).ready(function(){
 													varStatus="count">
 
 													<tr>
-														<td class="col-md-1">${count.index+1}</td>
+														<td class="col-md-1" style="text-align: center;">${count.index+1}</td>
 														<td class="col-md-2"><c:forEach
 																items="${customerList}" var="customerList"
 																varStatus="cnt">
@@ -557,21 +571,28 @@ jQuery(document).ready(function(){
 														${customerList.custName}
 														</c:if>
 															</c:forEach></td>
-														<td class="col-md-2"><c:out
+														<td class="col-md-2" style="text-align: center;"><c:out
 																value="${orderList.orderDate}" /></td>
-														<td class="col-md-1" style="text-align: right;"><c:out
+														<td class="col-md-1" style="text-align: center;"><c:out
 																value="${orderList.prodDate}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.deliveryDate}" /></td>
 														<td style="text-align: center;" class="col-sm-1"><c:out
 																value="${orderList.exVar2}" /></td>
-														<td class="col-md-2" style="text-align: right;"><c:out
+														<td class="col-md-2" style="text-align: right;"><fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.total}" /></td>
-																<td class="col-md-2" style="text-align: right;"><c:out
+														<td class="col-md-2"
+															style="text-align: right; display: none;"><c:out
 																value="${orderList.discAmt}" /></td>
-														<td class="col-md-1" style="text-align: right;"><c:out
+														<td class="col-md-1" style="text-align: right;"><fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.advanceAmt}" /></td>
-														<td style="text-align: right;" class="col-sm-1"><c:out
+														<td style="text-align: right;" class="col-sm-1"><fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2" groupingUsed="false"
 																value="${orderList.total-orderList.advanceAmt-orderList.discAmt}" /></td>
 
 														<c:choose>
@@ -599,72 +620,85 @@ jQuery(document).ready(function(){
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetailByOrderHistory/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
 																	class="fa fa-table" aria-hidden="true"></i> </abbr>
-														</a>&nbsp;&nbsp;&nbsp;&nbsp; 
-														
-														<c:choose>
-														
-														<c:when test="${orderList.delStatus==1}">
-														<c:if
-																test="${orderList.isSellBillGenerated==0}">
-																<a href="#"
-																	onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
-																	<abbr title='Generate Sell Bill'> <i
-																		class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
-																</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if> 
-														</c:when>
-														
-														</c:choose>
-														
-														
-																
-																
-																<a
+														</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:choose>
+
+																<c:when test="${orderList.delStatus==1}">
+																	<c:if test="${orderList.isSellBillGenerated==0}">
+																		<a href="#"
+																			onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
+																			<abbr title='Generate Sell Bill'> <i
+																				class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
+																		</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+																</c:when>
+
+															</c:choose> <a
 															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${startFormat}/${orderList.frId}"
 															target="_blank"> <abbr title='Advance Order Memo'><i
 																	class="fa fa-info" aria-hidden="true"></i> </abbr>
 														</a></td>
-<c:set var="advTotal" value="${advTotal+orderList.total}"> </c:set>
- <c:set var="advDiscountAmt" value="${advDiscountAmt+orderList.discAmt}"> </c:set>
- <c:set var="advAmtTotal" value="${advAmtTotal+orderList.advanceAmt}"> </c:set>
- <c:set var="advRemAmt" value="${advRemAmt+(orderList.total-orderList.advanceAmt-orderList.discAmt)}"> </c:set>
+														<c:set var="advTotal" value="${advTotal+orderList.total}">
+														</c:set>
+														<c:set var="advDiscountAmt"
+															value="${advDiscountAmt+orderList.discAmt}">
+														</c:set>
+														<c:set var="advAmtTotal"
+															value="${advAmtTotal+orderList.advanceAmt}">
+														</c:set>
+														<c:set var="advRemAmt"
+															value="${advRemAmt+(orderList.total-orderList.advanceAmt-orderList.discAmt)}">
+														</c:set>
 													</tr>
 												</c:forEach>
-                                                       <tr>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: left;">Total</td>
-														
-														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advTotal}</td>
-														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advDiscountAmt}</td>
-														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advAmtTotal}</td>
-														<td class="col-md-1" style="text-align: right;font-weight:bold;">${advRemAmt}</td>
-														
-														<td class="col-md-1" style="text-align: right;">  </td>
-														<td class="col-md-1" style="text-align: right;">  </td>
-														
-														</tr>
+												<tr>
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1"
+														style="text-align: left; font-weight: bold;">Total</td>
+
+													<td class="col-md-1"
+														style="text-align: right; font-weight: bold;"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															groupingUsed="false" value="${advTotal}" /></td>
+													<td class="col-md-1"
+														style="text-align: right; font-weight: bold; display: none;"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															groupingUsed="false" value="${advDiscountAmt}" /></td>
+													<td class="col-md-1"
+														style="text-align: right; font-weight: bold;"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															groupingUsed="false" value="${advAmtTotal}" /></td>
+													<td class="col-md-1"
+														style="text-align: right; font-weight: bold;"><fmt:formatNumber
+															type="number" maxFractionDigits="2" minFractionDigits="2"
+															groupingUsed="false" value="${advRemAmt}" /></td>
+
+													<td class="col-md-1" style="text-align: right;"></td>
+													<td class="col-md-1" style="text-align: right;"></td>
+
+												</tr>
 
 											</tbody>
 
 										</table>
 									</div>
 								</div>
-								
+
 								<br>
 
 
-<div class="col-md-2">
-					<input type="button" id="expExcel" class="btn btn-primary"
-						value="EXPORT TO Excel" onclick="exportToExcel();">
-					<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
+								<div class="col-md-2">
+									<input type="button" id="expExcel" class="btn btn-primary"
+										value="EXPORT TO Excel" onclick="exportToExcel();">
+									<!-- <button class="btn btn-primary" value="PDF" id="PDFButton"
 						onclick="genPdf()">PDF</button> -->
-				</div>
-				
-				<br><br>
-				
+								</div>
+
+								<br>
+								<br>
+
 								<br />
 							</c:when>
 							<%--  <c:when test="${selectedMenu.mainCatId !='5'}">
@@ -817,9 +851,8 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-				
-				<br>
-				<br>
+
+				<br> <br>
 
 				<!--tab1-->
 

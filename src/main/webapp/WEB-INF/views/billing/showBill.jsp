@@ -5,6 +5,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <%-- <!DOCTYPE html>
 <html>
@@ -90,7 +92,7 @@
 
 			<!--leftNav-->
 
-
+<br>
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
@@ -103,15 +105,12 @@
 					action="${pageContext.request.contextPath}/showBillProcess">
 					<input type="hidden" name="mod_ser" id="mod_ser"
 						value="search_result">
-
-					
 						<div class="col-md -3">
-							
 								<div class="col1title" align="left"><h3>View Bills</h3></div>
 						</div>
-					<div class="colOuter">
+					<div class="row">
 						<div class="col-md-2">
-							<div class="col1title">From Date</div>
+							<h4>From Date</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="fromdatepicker" class="texboxitemcode texboxcal"
@@ -121,7 +120,7 @@
 
 
 						<div class="col-md-2">
-							<div class="col1title">To Date</div>
+							<h4>To Date</h4>
 						</div>
 						<div class="col-md-2">
 							<input id="todatepicker" class="texboxitemcode texboxcal"
@@ -159,54 +158,67 @@
 
 							<thead>
 								<tr class="bgpink">
-								    <th class="col-sm-1">Sr. No</th>
-									<th class="col-sm-1">Invoice No</th>
-									<th class="col-md-1">Date</th>
-									<th class="col-md-1">Taxable Amt</th>
-									<th class="col-md-1">Tax Amt</th>
-									<th class="col-md-1">Total</th>
-									<th class="col-md-1">Status</th>
-									<th class="col-md-1">Remark</th>
-									<th class="col-md-1">Action</th>
+								    <th class="col-sm-1"  style="text-align: center;">Sr. No</th>
+									<th class="col-sm-1" style="text-align: center;">Invoice No</th>
+									<th class="col-md-1" style="text-align: center;">Date</th>
+									<th class="col-md-1" style="text-align: center;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+									<th class="col-md-1" style="text-align: center;">Total</th>
+									<th class="col-md-1" style="text-align: center;">Status</th>
+									<th class="col-md-1" style="text-align: center;">Remark</th>
+									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
+							
+							<c:set var = "taxableTot" value = "0"/>
+							<c:set var = "taxTot" value = "0"/>
+							<c:set var = "grandTot" value = "0"/>
 
 								<c:forEach items="${billHeader}" var="billHeader"
 									varStatus="count">
-									<tr><td class="col-sm-1" style="text-align: left;">${count.index+1}</td>
+									<tr><td class="col-sm-1" style="text-align: center;">${count.index+1}</td>
 									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td class="col-sm-1" style="text-align: left;"><c:out value="${billHeader.invoiceNo}" /></td>
-										<td class="col-md-1" style="text-align: left;"><c:out
+										<td class="col-sm-1" style="text-align: center;"><c:out value="${billHeader.invoiceNo}" /></td>
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${billHeader.billDate}" /></td>
 										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${billHeader.taxableAmt}" /></td>
+												
+												<c:set var = "taxableTot" value = "${taxableTot+billHeader.taxableAmt}"/>
+												
 										<td class="col-md-1"style="text-align: right;"><c:out
 												value="${billHeader.totalTax}" /></td>
+												
+												<c:set var = "taxTot" value = "${taxTot+billHeader.totalTax}"/>
+												
 										<td class="col-md-1"style="text-align: right;"><c:out
 												value="${billHeader.grandTotal}" /></td>
+												
+												<c:set var = "grandTot" value = "${grandTot+billHeader.grandTotal}"/>
+												
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
 											<c:when test="${billHeader.status==1}">
-												<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												<td class="col-md-1"  style="text-align: left;"><c:out value="Pending"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==2}">
-												<td class="col-md-1"><c:out value="Received"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="Received"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==3}">
-												<td class="col-md-1"><c:out value="GVN Apply"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="GVN Apply"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==4}">
-												<td class="col-md-1"><c:out value="GVN Approve"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="GVN Approve"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==5}">
-												<td class="col-md-1"><c:out value="GRN Apply"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="GRN Apply"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==6}">
-												<td class="col-md-1"><c:out value="GRN Approve"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="GRN Approve"></c:out></td>
 											</c:when>
 											<c:when test="${billHeader.status==7}">
-												<td class="col-md-1"><c:out value="Closed"></c:out></td>
+												<td class="col-md-1" style="text-align: left;"><c:out value="Closed"></c:out></td>
 											</c:when>
 
 										</c:choose>
@@ -225,7 +237,25 @@
 											</div></td>
 										<c:set var="billNo" value="${billHeader.billNo}" />
 									</tr>
+									
+								
+									
 								</c:forEach>
+								
+									<tr>
+									
+									<td colspan="3"><b>TOTAL</b></td>
+									<td><b><fmt:formatNumber type="number" maxFractionDigits="2"
+											value="${taxableTot}" /></b></td>
+									<td><b><fmt:formatNumber type="number" maxFractionDigits="2"
+											value="${taxTot}" /></b></td>
+									<td><b><fmt:formatNumber type="number" maxFractionDigits="2"
+											value="${grandTot}" /></b></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									
+									</tr>
 						</table>
 
 					</div>
