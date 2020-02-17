@@ -130,14 +130,14 @@ jQuery(document).ready(function(){
 					<br>
 
 					<div class="col-md-1 pull-left">
-						<h4 class="pull-left">Group:-</h4>
+						<h4 class="pull-left">Category:-</h4>
 					</div>
 
 					<div class="col-md-3">
 						<select name="catId" id="catId" class="form-control chosen"
 							required onchange="getSubCategoriesByCatId()">
-							<option value="" selected>Select Group</option>
-
+							<option value="" selected>Select Category</option>
+							<option value="-1">All</option>
 							<c:forEach items="${catList}" var="catList">
 								<option value="${catList.catId}">${catList.catName}</option>
 							</c:forEach>
@@ -150,7 +150,7 @@ jQuery(document).ready(function(){
 					</div>
 					<div class="col-md-3">
 						<select name="item_grp2" id="item_grp2"
-							data-placeholder="Choose Items..." class="chosen-select"
+							data-placeholder="Select Sub Category" class="chosen-select"
 							style="text-align: left;" required onchange="getItemList()">
 
 						</select>
@@ -161,7 +161,7 @@ jQuery(document).ready(function(){
 					</div>
 					<div class="col-md-3">
 						<select name="itemId" id="itemId"
-							data-placeholder="Choose Items..." class="chosen-select"
+							data-placeholder="Select Items" class="chosen-select"
 							style="text-align: left;" required multiple="multiple">
 
 						</select>
@@ -199,6 +199,12 @@ jQuery(document).ready(function(){
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
+					</div>
+					
+					<div class="form-group"  class="col-md-1"  style="display: none;" id="range">
+						<input type="button" id="expExcel" class="btn btn-primary"
+							value="EXPORT TO Excel" onclick="exportToExcel();"
+							disabled="disabled">							
 					</div>
 
 				</div>
@@ -241,6 +247,7 @@ jQuery(document).ready(function(){
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Qty</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
+											<th class="col-md-1" style="text-align: center;">Discount</th>
 											<th class="col-md-1" style="text-align: center;">Amount</th>
 											<th class="col-md-1" style="text-align: center;">GRN
 												TYPE</th>
@@ -256,7 +263,7 @@ jQuery(document).ready(function(){
 						</div>
 						<!--table end-->
 						<br>
-						<div class="form-group" style="display: none;" id="range">
+						<!-- <div class="form-group" style="display: none;" id="range">
 
 
 
@@ -265,7 +272,7 @@ jQuery(document).ready(function(){
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							</div>
-						</div>
+						</div> -->
 
 
 					</div>
@@ -407,6 +414,7 @@ jQuery(document).ready(function(){
 
 								var qtyTotal = 0;
 								var amtTotal = 0;
+								var discTotal = 0;
 
 								$('#loader').hide();
 								var len = data.length;
@@ -491,6 +499,12 @@ jQuery(document).ready(function(){
 																	.html(
 																			addCommas((itemWiseTaxData.rate)
 																					.toFixed(2))));
+													tr
+													.append($(
+															'<td  class="col-md-1" style="text-align:right;"></td>')
+															.html(
+																	addCommas((itemWiseTaxData.discAmt)
+																			.toFixed(2))));
 
 													tr
 															.append($(
@@ -507,6 +521,8 @@ jQuery(document).ready(function(){
 
 													qtyTotal = qtyTotal
 															+ itemWiseTaxData.qty;
+													discTotal = discTotal 
+															+ itemWiseTaxData.discAmt;
 													amtTotal = amtTotal
 															+ itemWiseTaxData.total;
 
@@ -518,26 +534,31 @@ jQuery(document).ready(function(){
 								var tr = $('<tr></tr>');
 
 								tr
-										.append($(
+								.append($(
 												'<td class="col-md-1" style="font-weight:bold;"></td>')
 												.html("Total"));
 
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 								tr.append($('<td  class="col-md-1"></td>')
-										.html(""));
+										.html(""));	
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
-
+								
 								tr
-										.append($(
-												'<td  class="col-md-1" style="text-align:right; font-weight:700;"></td>')
-												.html(addCommas(qtyTotal.toFixed(2))));
+								.append($(
+										'<td  class="col-md-1" style="text-align:right; font-weight:700;"></td>')
+										.html(addCommas(qtyTotal.toFixed(2))));
 
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
+								
+								tr
+								.append($(
+										'<td  class="col-md-1" style="text-align:right; font-weight:700;"></td>')
+										.html(addCommas(discTotal.toFixed(2))));
 
 								tr
 										.append($(
@@ -596,7 +617,7 @@ jQuery(document).ready(function(){
 <script type="text/javascript">
 	function getSubCategoriesByCatId() {
 		var catId = $("#catId").val();
-
+//alert("Cat   "+catId)
 		$
 				.getJSON(
 						'${getGroup2ByCatId}',
@@ -619,12 +640,18 @@ jQuery(document).ready(function(){
 							/* $("#item_grp2").append(
 									$("<option></option>").attr("value", -1)
 											.text("ALL")); */
+						if(catId>0){
 							for (var i = 0; i < len; i++) {
 								$("#item_grp2").append(
 										$("<option ></option>").attr("value",
 												data[i].subCatId).text(
 												data[i].subCatName));
 							}
+						}else{
+							$("#item_grp2").append(
+									$("<option selected></option>").attr("value", -1)
+											.text("ALL"));
+						}
 							$("#item_grp2").trigger("chosen:updated");
 							getItemList();
 						});
@@ -660,6 +687,7 @@ jQuery(document).ready(function(){
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var frId = document.getElementById("frId").value;
+			var subCat = document.getElementById("item_grp2").value;
 			window
 					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseItemwiseDetailPdf/'
 							+ fromDate
@@ -668,7 +696,7 @@ jQuery(document).ready(function(){
 							+ '/'
 							+ frId
 							+ '/'
-							+ catId + '/' + values);
+							+ catId + '/' + values + '/' + subCat);
 		}
 	}
 </script>

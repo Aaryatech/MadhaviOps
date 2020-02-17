@@ -1276,13 +1276,15 @@ public class ReportsController {
 		rowData.add("Purchase Bill No");
 		// rowData.add("Item Id");
 		rowData.add("Item Name");
-		rowData.add("Rate");
 		rowData.add("Quantity");
+		rowData.add("Rate");
+		rowData.add("Discount");
 		rowData.add("Total Amount");
 		rowData.add("Grn type");
 
 		float totalQty = 0.0f;
 		float totalAmt = 0.0f;
+		float totalDisc = 0.0f;
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -1295,10 +1297,11 @@ public class ReportsController {
 
 			// rowData.add("" + itemWiseDetailReportList.get(i).getItemId());
 			rowData.add("" + itemWiseDetailReportList.get(i).getItemName());
-			rowData.add("" + itemWiseDetailReportList.get(i).getRate());
-
 			rowData.add("" + itemWiseDetailReportList.get(i).getQty());
+			rowData.add("" + itemWiseDetailReportList.get(i).getRate());		
+			rowData.add("" + itemWiseDetailReportList.get(i).getDiscAmt());
 			rowData.add("" + itemWiseDetailReportList.get(i).getTotal());
+			
 			if (itemWiseDetailReportList.get(i).getGrnType() == 0) {
 				rowData.add("GRN 1");
 			} else if (itemWiseDetailReportList.get(i).getGrnType() == 1) {
@@ -1313,7 +1316,8 @@ public class ReportsController {
 
 			totalQty = totalQty + itemWiseDetailReportList.get(i).getQty();
 			totalAmt = totalAmt + itemWiseDetailReportList.get(i).getTotal();
-
+			totalDisc = totalDisc + itemWiseDetailReportList.get(i).getDiscAmt();
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -1326,9 +1330,9 @@ public class ReportsController {
 		rowData.add("Total");
 		rowData.add("");
 		rowData.add("");
-		rowData.add("");
-		rowData.add("");
 		rowData.add("" + roundUp(totalQty));
+		rowData.add("");
+		rowData.add("" + roundUp(totalDisc));		
 		rowData.add("" + roundUp(totalAmt));
 		rowData.add("");
 
@@ -4232,13 +4236,14 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}", method = RequestMethod.GET)
-	public ModelAndView showPurchaseItemwiseDetailpPdf(@PathVariable String fromDate, @PathVariable String toDate,
+	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}/{subCat}", method = RequestMethod.GET)
+	public ModelAndView showPurchaseItemwiseDetailpPdf(@PathVariable String fromDate, @PathVariable String toDate,@PathVariable int subCat,
 			@PathVariable int frId, @PathVariable int catId, @PathVariable String values, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseDetailPdf");
 		try {
+			
 			RestTemplate restTemplate = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -4248,7 +4253,7 @@ public class ReportsController {
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
 			map.add("itemIds", values);
-
+			map.add("subCat", subCat);
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate

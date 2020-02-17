@@ -23,7 +23,7 @@ public class ItemWiseDetail {
 	private String billDate;
 	
 	private String expiryDate;
-	
+	private float discAmt;
 	public int getGrnType() {
 		return grnType;
 	}
@@ -107,11 +107,19 @@ public class ItemWiseDetail {
 		this.expiryDate = expiryDate;
 	}
 
+	public float getDiscAmt() {
+		return discAmt;
+	}
+
+	public void setDiscAmt(float discAmt) {
+		this.discAmt = discAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "ItemWiseDetail [billNo=" + billNo + ", itemId=" + itemId + ", billDetailNo=" + billDetailNo + ", rate="
 				+ rate + ", qty=" + qty + ", grnType=" + grnType + ", total=" + total + ", itemName=" + itemName
-				+ ", billDate=" + billDate + ", expiryDate=" + expiryDate + "]";
+				+ ", billDate=" + billDate + ", expiryDate=" + expiryDate + ", discAmt=" + discAmt + "]";
 	}
 
 	

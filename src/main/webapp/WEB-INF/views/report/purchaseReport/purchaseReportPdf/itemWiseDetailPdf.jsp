@@ -32,8 +32,8 @@ th {
 <body onload="myFunction()">
 	<h4 align="center">Itemwise-Billwise-Datewise Purchase Report</h4>
 	<div align="center">
-		<h6>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h6>
+		<h4>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
+			&nbsp;To &nbsp; ${toDate}</h4>
 	</div>
 	<table width="100%" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -42,11 +42,11 @@ th {
 				<th style="text-align: center;">Sr.No.</th>
 				<th style="text-align: center;">Bill Date</th>
 				<th style="text-align: center;">Bill No</th>
-				<th style="text-align: center;">Party Name</th>
 				<th style="text-align: center;">Item Name</th>
 				<th style="text-align: center;">Expiry Date</th>
 				<th style="text-align: center;">Qty</th>
 				<th style="text-align: center;">Rate</th>
+				<th style="text-align: center;">Discount</th>
 				<th style="text-align: center;">Amount</th>
 				<th style="text-align: center;">GRN TYPE</th>
 
@@ -56,14 +56,16 @@ th {
 		<tbody>
 		<tbody>
 
-			<c:set var="grandTotal" value="${0 }" />
+			<c:set var="grandTotal" value="${0}" />
+			<c:set var="qtyTotal" value="${0}" />
+			<c:set var="discTotal" value="${0}" />
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
 					<td align="center"><c:out value="${count.index+1}" /></td>
 					<td><c:out value="${reportList.billDate}" /></td>
 					<td><c:out value="${reportList.billNo}" /></td>
 
-					<td style="text-align: center;">${Constant.FACTORYNAME}</td>
+					<%-- <td style="text-align: center;">${Constant.FACTORYNAME}</td> --%>
 					<td><c:out value="${reportList.itemName}" /></td>
 					<td><c:out value="${reportList.expiryDate}" /></td>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
@@ -74,8 +76,15 @@ th {
 							value="${reportList.rate}" /></td>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
+							value="${reportList.discAmt}" /></td>
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.total}" /></td>
+							
 					<c:set var="grandTotal" value="${grandTotal+reportList.total }" />
+					<c:set var="qtyTotal" value="${qtyTotal+reportList.qty }" />
+					<c:set var="discTotal" value="${discTotal+reportList.discAmt }" />
+					
 					<td style="text-align: center;"><c:choose>
 							<c:when test="${reportList.grnType==0}">
 								<c:out value="GRN 1" />
@@ -96,11 +105,23 @@ th {
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan='7'><b>Total</b></td>
-
-				<td style="text-align: right;"><b><fmt:formatNumber
+			<td colspan='2'><b>Total</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
-							value="${grandTotal}" /></b></td>
+							value="${qtyTotal}" /></b></td>
+						
+			<td></td>	
+			
+			<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${discTotal}" /></b></td>		
+
+			<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${grandTotal}" /></b></td> 
 				<td></td>
 			</tr>
 		</tbody>

@@ -121,8 +121,7 @@ public class SalesReportController3 {
 			boolean isAllCatSelected = false;
 
 			System.out.println(
-					"System.out.println(selectedCat);System.out.println(selectedCat);System.out.println(selectedCat);"
-							+ selectedCat);
+					"System.out.println(selectedCat);"+ selectedCat);
 
 			if (selectedCat.contains("-1")) {
 				isAllCatSelected = true;
