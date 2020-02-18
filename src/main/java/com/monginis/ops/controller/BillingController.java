@@ -101,7 +101,7 @@ public class BillingController {
 				
 				ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 				};
-				ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOS",
+				ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOSOnlyRegBills",
 						HttpMethod.POST, new HttpEntity<>(map), typeRef);
 				
 				billHeadeResponse = responseEntity.getBody();	
@@ -122,7 +122,7 @@ public class BillingController {
 	}
 	
 	
-	@RequestMapping(value = "/showBillProcess", method = RequestMethod.POST)
+	@RequestMapping(value = "/showBillProcess", method = RequestMethod.GET)
 	public ModelAndView   showBillProcess(HttpServletRequest request,
 			HttpServletResponse response) {
 		
@@ -519,6 +519,12 @@ public class BillingController {
 						
 						billPrint.setEwayBillNo(billHeadersListForPrint.get(i).getEwayBillNo());
 						
+						billPrint.setExVarchar3(billHeadersListForPrint.get(i).getExVarchar3());
+						billPrint.setExVarchar4(billHeadersListForPrint.get(i).getExVarchar4());
+						billPrint.setExVarchar5(billHeadersListForPrint.get(i).getExVarchar5());
+						
+						billPrint.setIsDairyMart(billHeadersListForPrint.get(i).getIsDairyMart());
+						
 						billPrint.setCompany(billHeadersListForPrint.get(i).getCompany());
 						billDetails.add(billDetailsListForPrint.get(j));
 
@@ -549,6 +555,9 @@ public class BillingController {
 				billPrint.setSubCatList(filteredSubCat);
 				if (billPrint != null)
 					billPrintList.add(billPrint);
+				
+				model.addObject("isDairy",billHeadersListForPrint.get(i).getIsDairyMart());
+				model.addObject("isOwnFr",billHeadersListForPrint.get(i).getExVarchar2());
 
 			}
 			System.err.println("sub Cat List  " +billPrint.getSubCatList().toString());

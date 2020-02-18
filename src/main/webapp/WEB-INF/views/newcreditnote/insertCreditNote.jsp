@@ -210,23 +210,25 @@ table, th, td {
 				<br>
 				<div class="sidebarright">
 					<div class="order-left" style="width: 100%">
-						
+
 
 
 						<div class="colOuter">
-							<div class="col-md-8"><h2 class="pageTitle">Insert Credit Note</h2></div>
-							
-							<div class="col-md-4" style="text-align: right;">
-							<a
-								href="${pageContext.request.contextPath}/creditNoteHeaderList"><input
-								type="button" value="Credit Note List"
-								class="btn btn-info"> </a>
-								<br><br> 
+							<div class="col-md-8">
+								<h2 class="pageTitle">Sell Credit Note</h2>
 							</div>
-							
+
+							<div class="col-md-4" style="text-align: right;">
+								<a
+									href="${pageContext.request.contextPath}/creditNoteHeaderList"><input
+									type="button" value="Credit Note List" class="buttonsaveorder">
+								</a> <br>
+								<br>
+							</div>
+
 						</div>
 
-						
+
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 					</div>
 
@@ -244,8 +246,8 @@ table, th, td {
 								</div>
 							</div>
 							<div class="col-md-2">
-								<select name="cust" id="cust" class="form-control chosen-select" required 
-									onchange="getBills(this.value)">
+								<select name="cust" id="cust" class="form-control chosen-select"
+									required onchange="getBills(this.value)">
 									<option value="0">Select Customer</option>
 
 
@@ -303,7 +305,7 @@ table, th, td {
 								</div>
 								<div class="col-md-1" style="text-align: left; margin-top: 7px;">
 									<input type="number" id="returnPer" name="returnPer" value="0"
-										max="100" style="width: 50px;"
+										min="0" max="100" style="width: 50px;"
 										oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
 
 
@@ -334,7 +336,7 @@ table, th, td {
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
-												<th class="col-md-1" style="text-align: center;">Check</th>
+												<th class="col-md-1" style="text-align: center; display: none;">Check</th>
 												<th class="col-md-2" style="text-align: center;">Item
 													Name</th>
 												<th class="col-sm-1" style="text-align: right;">Rate</th>
@@ -550,153 +552,162 @@ table, th, td {
 		function getBillDetails() {
 			//alert("hi");
 
-			var billNo = $('#billno').val();
-			var retPer = $('#returnPer').val();
-			//alert("jhgjjhg "+billNo);
-
 			$('#table_grid td').remove();
 
-			$
-					.getJSON(
-							'${getCustBillDetailsForCreditNote}',
-							{
-								sellBillNo : billNo,
-								ajax : 'true'
-							},
-							function(data) {
+			var billNo = $('#billno').val();
+			var retPer = $('#returnPer').val();
 
-								//alert(JSON.stringify(data));
-								document.getElementById("frmSubmit").style.display = "block";
+			if(billNo==0){
+				alert("Please Select Bill");
+			}else if (retPer == "") {
+				alert("Please Enter Return Percent");
+			} else if (retPer <= 0) {
+				alert("Please Enter Return Percent");
+			} else {
 
-								if (data == "") {
-									alert("No records found !!");
-									document.getElementById("frmSubmit").style.display = "none";
-								}
+				$
+						.getJSON(
+								'${getCustBillDetailsForCreditNote}',
+								{
+									sellBillNo : billNo,
+									ajax : 'true'
+								},
+								function(data) {
 
-								$
-										.each(
-												data,
-												function(key, sellBillData) {
+									//alert(JSON.stringify(data));
+									document.getElementById("frmSubmit").style.display = "block";
 
-													//alert(JSON.stringify(sellBillData));
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("frmSubmit").style.display = "none";
+									}
 
-													var index = key + 1;
+									$
+											.each(
+													data,
+													function(key, sellBillData) {
 
-													var tr = $('<tr></tr>');
-													//tr.append($('<td></td>').html(key + 1));
+														//alert(JSON.stringify(sellBillData));
 
-													//tr.append($('<td></td>').html('<a  href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + ');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a>'));
+														var index = key + 1;
 
-													tr
-															.append($(
-																	'<td style="text-align:center;"></td>')
-																	.html(
-																			'<input type="checkbox" id="'
-																					+ sellBillData.sellBillDetailNo
-																					+ '" name="chk" class="detail" value="'
-																					+ sellBillData.sellBillDetailNo
-																					+ '" onClick="checkboxOperation(this,this.value)">'));
+														var tr = $('<tr></tr>');
+														//tr.append($('<td></td>').html(key + 1));
 
-													tr
-															.append($(
-																	'<td style="text-align:center;"></td>')
-																	.html(
-																			sellBillData.itemName));
+														//tr.append($('<td></td>').html('<a  href="" onclick="return custBillPdf('+sellBillData.sellBillNo+',\'' + sellBillData.billType + ');"><abbr title="PDF"><i class="fa fa-file-pdf-o"></i></abbr></a>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="rate_'+sellBillData.sellBillDetailNo+'">'
-																					+ sellBillData.mrp
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:center; display:none;" ></td>')
+																		.html(
+																				'<input type="checkbox" id="'
+																						+ sellBillData.sellBillDetailNo
+																						+ '" name="chk" class="detail" value="'
+																						+ sellBillData.sellBillDetailNo
+																						+ '" onClick="checkboxOperation(this,this.value)">'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="oldQty_'+sellBillData.sellBillDetailNo+'">'
-																					+ sellBillData.qty
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:center;"></td>')
+																		.html(
+																				sellBillData.itemName));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="discAmt_'+sellBillData.sellBillDetailNo+'">'
-																					+ sellBillData.discAmt
-																							.toFixed(2)
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="rate_'+sellBillData.sellBillDetailNo+'">'
+																						+ sellBillData.mrp
+																						+ '</p>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:center;"></td>')
-																	.html(
-																			'<input class="detail" type="number" min="0" style="text_align:center; width:50px;" name="qty'
-																					+ sellBillData.sellBillDetailNo
-																					+ '" id="qty_'
-																					+ sellBillData.sellBillDetailNo
-																					+ '"  value="0" onchange="qtyChange('
-																					+ sellBillData.sellBillDetailNo
-																					+ ')" readonly>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="oldQty_'+sellBillData.sellBillDetailNo+'">'
+																						+ sellBillData.qty
+																						+ '</p>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="billTot_'+sellBillData.sellBillDetailNo+'">0</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="discAmt_'+sellBillData.sellBillDetailNo+'">'
+																						+ sellBillData.discAmt
+																								.toFixed(2)
+																						+ '</p>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" name="ratePer'+sellBillData.sellBillDetailNo+'" id="retPer_'+sellBillData.sellBillDetailNo+'">'
-																					+ retPer
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:center;"></td>')
+																		.html(
+																				'<input class="detail" type="text" min="0" style="text_align:center; width:70px;" name="qty'
+																						+ sellBillData.sellBillDetailNo
+																						+ '" id="qty_'
+																						+ sellBillData.sellBillDetailNo
+																						+ '"  value="0" onKeyup="qtyChange('
+																						+ sellBillData.sellBillDetailNo
+																						+ ')" >'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="taxable_'+sellBillData.sellBillDetailNo+'">0</p>'));
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="tax_'+sellBillData.sellBillDetailNo+'">0</p>'));
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="cess_'+sellBillData.sellBillDetailNo+'">0</p>'));
-													tr
-															.append($(
-																	'<td style="text-align:right;"></td>')
-																	.html(
-																			'<p class="detail" id="grandTot_'+sellBillData.sellBillDetailNo+'">0</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="billTot_'+sellBillData.sellBillDetailNo+'">0</p>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right; display:none;"></td>')
-																	.html(
-																			'<p class="detail" id="sgstPer_'+sellBillData.sellBillDetailNo+'">'
-																					+ sellBillData.sgstPer
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" name="ratePer'+sellBillData.sellBillDetailNo+'" id="retPer_'+sellBillData.sellBillDetailNo+'">'
+																						+ retPer
+																						+ '</p>'));
 
-													tr
-															.append($(
-																	'<td style="text-align:right; display:none;"></td>')
-																	.html(
-																			'<p class="detail" id="cgstPer_'+sellBillData.sellBillDetailNo+'">'
-																					+ sellBillData.cgstPer
-																					+ '</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="taxable_'+sellBillData.sellBillDetailNo+'">0</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="tax_'+sellBillData.sellBillDetailNo+'">0</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="cess_'+sellBillData.sellBillDetailNo+'">0</p>'));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				'<p class="detail" id="grandTot_'+sellBillData.sellBillDetailNo+'">0</p>'));
 
-													$('#table_grid tbody')
-															.append(tr);
+														tr
+																.append($(
+																		'<td style="text-align:right; display:none;"></td>')
+																		.html(
+																				'<p class="detail" id="sgstPer_'+sellBillData.sellBillDetailNo+'">'
+																						+ sellBillData.sgstPer
+																						+ '</p>'));
 
-												});
+														tr
+																.append($(
+																		'<td style="text-align:right; display:none;"></td>')
+																		.html(
+																				'<p class="detail" id="cgstPer_'+sellBillData.sellBillDetailNo+'">'
+																						+ sellBillData.cgstPer
+																						+ '</p>'));
 
-							});
+														$('#table_grid tbody')
+																.append(tr);
+
+													});
+
+								});
+
+			}//else
 
 		}
 	</script>
@@ -723,7 +734,7 @@ table, th, td {
 
 	<script type="text/javascript">
 		function qtyChange(x) {
-
+			
 			// var x = document.getElementsByClassName("detail")[0].id;
 			//alert(x);
 
@@ -732,6 +743,15 @@ table, th, td {
 			var qty = parseFloat(document.getElementById("qty_" + x).value);
 			var oldQty = parseFloat(document.getElementById("oldQty_" + x).innerHTML);
 
+			//alert(qty);
+			
+			if(isNaN(qty)==true){
+				//alert("dsf")
+				qty=0;
+				document.getElementById("qty_" + x).value=qty;
+			}
+			
+			
 			if (qty > oldQty) {
 				alert("Invalid Qty");
 				document.getElementById("qty_" + x).value = 0;
@@ -796,7 +816,7 @@ table, th, td {
 		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script> --%>
-<script
+	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
 	<script

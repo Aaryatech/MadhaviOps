@@ -313,8 +313,8 @@ body {
 					<div class="dual_bx" style=""></div>
 					<div class="cat_list_bx" id="catItmDiv">
 
-						<div class="cat_list">
-							<div class="carlist_scrollbars" id="scrollDiv">
+						<div class="cat_list" style="height: 400px;">
+							<div class="carlist_scrollbars" id="scrollDiv"  style="height: 380px;">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 

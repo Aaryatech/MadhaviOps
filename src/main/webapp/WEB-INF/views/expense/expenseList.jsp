@@ -3,6 +3,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
+
+<jsp:useBean id="dateValue" class="java.util.Date" />
+<%-- <jsp:setProperty name="dateValue" property="time" value="${h.time}" /> --%>
+
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
 	type="images/png" sizes="32x32">
@@ -64,10 +71,9 @@
 
 					<div class="order-right" align="right">
 						<a href="${pageContext.request.contextPath}/showAddExpense"><button
-								class="btn btn-info">Add Expense</button></a>
+								class="buttonsaveorder">Add Expense</button></a>
 					</div>
-						<br>
-					<br>
+					<br> <br>
 
 					<form name="frm_search" id="frm_search" method="get"
 						action="${pageContext.request.contextPath}/showExpenseList">
@@ -139,9 +145,12 @@
 								<thead>
 									<tr class="bgpink">
 										<th class="col-sm-1" style="text-align: center;">Sr No</th>
-										<th class="col-md-1" style="text-align: center;">Chalan No.</th>
+										<th class="col-md-1" style="text-align: center;">Chalan
+											No.</th>
 										<th class="col-md-1" style="text-align: center;">Date</th>
 										<th class="col-md-1" style="text-align: center;">Amount</th>
+										<th class="col-md-1" style="text-align: center;">Remark</th>
+										<th class="col-md-1" style="text-align: center;">User</th>
 										<th class="col-md-1" style="text-align: center;">Status</th>
 										<th class="col-md-1" style="text-align: center;">Action</th>
 
@@ -152,11 +161,18 @@
 									<c:forEach items="${expList}" var="expList" varStatus="count">
 
 										<tr>
-											<td class="col-sm-1" style="text-align: center;"><c:out value="${count.index+1}" /></td>
-											<td class="col-md-2" style="text-align: center;"><c:out value="${expList.chalanNo}" /></td>
+											<td class="col-sm-1" style="text-align: center;"><c:out
+													value="${count.index+1}" /></td>
+											<td class="col-md-2" style="text-align: center;"><c:out
+													value="${expList.chalanNo}" /></td>
 
-											<td class="col-md-2" style="text-align: center;"><c:out value="${expList.expDate}" /></td>
+											<td class="col-md-2" style="text-align: center;"><c:out
+													value="${expList.expDate}" /></td>
 											<td class="col-md-1"><c:out value="${expList.chAmt}" /></td>
+
+											<td class="col-md-1" style="text-align: left;"><c:out value="${expList.remark}" /></td>
+											
+											<td class="col-md-1" style="text-align: left;"><c:out value="${expList.exVar2}" /></td>
 
 											<td class="col-md-2" style="text-align: center;"><c:choose>
 													<c:when test="${expList.expType==1}">
@@ -166,9 +182,12 @@
 												         Payment Chalan
 												    </c:otherwise>
 												</c:choose></td>
+
+											
+
 											<td class="col-md-2" style="text-align: center;"><div>
 
-													<c:if test="${expList.expType==1}">
+													<c:if test="${expList.expType==1 && sessionScope.frEmpDetails.frEmpId==expList.exInt2 && (currDate == expList.expDate)}">
 														<a
 															href="${pageContext.request.contextPath}/showEditExpense/${expList.expId}">
 															<abbr title='Edit'><i class='fa fa-edit'></i></abbr>
@@ -179,7 +198,7 @@
 														</a>
 													</c:if>
 
-													<c:if test="${expList.expType==2}">
+													<c:if test="${expList.expType==2 && sessionScope.frEmpDetails.frEmpId==expList.exInt2 && (currDate == expList.expDate)}">
 														<c:if test="${expList.status==2}">
 
 															<a

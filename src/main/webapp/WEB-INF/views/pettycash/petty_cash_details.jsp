@@ -5,7 +5,7 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
-		<link rel="icon"
+<link rel="icon"
 	href="${pageContext.request.contextPath}/resources/newpos/images/favicon.png"
 	type="images/png" sizes="32x32">
 <style>
@@ -143,7 +143,7 @@ table, th, td {
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
-				<br>
+					<br>
 					<div class="order-left">
 						<h2 class="pageTitle">Petty Cash Management</h2>
 						<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
@@ -155,42 +155,42 @@ table, th, td {
 						</a>
 					</div>
 					<!-- <form action="addPettyCash" method="post"> -->
-					
+
 					<br>
 
 					<div class="colOuter">
 						<div class="col-md-2">
 							<div class="col1title" align="left">From Date</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								autocomplete="off" value="${firstDate}" name="from_Date"
 								type="text">
 						</div>
 
-						<div class="col-md-1"></div>
 
 						<div class="col-sm-2">
 							<div class="col1title" align="left">To Date</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								autocomplete="off" value="${currentDate}" name="to_Date"
 								type="text">
 						</div>
 
+						<div class="col-sm-4">
+							<input class="buttonsaveorder" value="Submit" type="submit"
+								onclick="getData()">
+
+							<button type="button" class="buttonsaveorder" onclick="genPdf()"
+								disabled id="pdf">PDF</button>
+								
+						</div>
+
 
 					</div>
 
-					<div class="four_one three" style="width: 100%;text-align: center;">
-
-						<input class="buttonsaveorder" value="Submit" type="submit"
-							onclick="getData()">
-
-						<button type="button" class="btn btn-primary" onclick="genPdf()"
-							disabled id="pdf">PDF</button>
-
-					</div>
+					
 
 					<div align="center" id="loader" style="display: none">
 
@@ -223,6 +223,7 @@ table, th, td {
  -->
 
 								<div id="table-scroll" class="table-scroll responsive-table-one">
+								<br>
 									<!-- class="table-scroll" -->
 									<div>
 										<!--  class="table-wrap" -->
@@ -230,12 +231,17 @@ table, th, td {
 											<!-- class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-1">Sr. No</th>
-													<th class="col-md-1">Date</th>
-													<th class="col-md-1">Opening Amt</th>
-													<th class="col-md-1">Cash Amt</th>
-													<th class="col-md-1">Withdrawal Amt</th>
-													<th class="col-md-1">Closing Amt</th>
+													<th class="col-md-1" style="text-align: center;">Sr.
+														No</th>
+													<th class="col-md-1" style="text-align: center;">Date</th>
+													<th class="col-md-1" style="text-align: center;">Opening
+														Amt</th>
+													<th class="col-md-1" style="text-align: center;">Cash
+														Amt</th>
+													<th class="col-md-1" style="text-align: center;">Withdrawal
+														Amt</th>
+													<th class="col-md-1" style="text-align: center;">Closing
+														Amt</th>
 													<!-- <th class="col-md-1">Action</th> -->
 												</tr>
 
@@ -352,22 +358,47 @@ table, th, td {
 				//alert("Petty Info1----"+JSON.stringify(data));
 				$('#table_grid td').remove();
 
+				var cashTotal = 0;
+				var withdrawlTotal = 0;
+
 				$.each(data, function(i, v) {
 
 					//	var acButton = '&nbsp;&nbsp;<a href="#" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>';
 
 					var tr = $('<tr></tr>');
 
-					tr.append($('<td></td>').html(i + 1));
-					tr.append($('<td></td>').html(v.date));
-					tr.append($('<td></td>').html(v.openingAmt));
-					tr.append($('<td></td>').html(v.cashAmt));
-					tr.append($('<td></td>').html(v.withdrawalAmt));
-					tr.append($('<td></td>').html(v.closingAmt));
+					tr.append($('<td style="text-align:center;"></td>').html(
+							i + 1));
+					tr.append($('<td style="text-align:center;"></td>').html(
+							v.date));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							v.openingAmt));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							v.cashAmt));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							v.withdrawalAmt));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							v.closingAmt));
 					//tr.append($('<td></td>').html(acButton));
+
+					cashTotal = cashTotal + v.cashAmt;
+					withdrawlTotal = withdrawlTotal + v.withdrawalAmt;
+
 					$('#table_grid tbody').append(tr);
 
 				})
+
+				var tr = $('<tr></tr>');
+
+				tr.append($('<td colspan="2"></td>').html("TOTAL"));
+				tr.append($('<td></td>').html(" "));
+				tr.append($('<td style="text-align:right;"></td>').html(
+						"" + cashTotal));
+				tr.append($('<td style="text-align:right;"></td>').html(
+						"" + withdrawlTotal));
+				tr.append($('<td></td>').html(" "));
+
+				$('#table_grid tbody').append(tr);
 
 			});
 

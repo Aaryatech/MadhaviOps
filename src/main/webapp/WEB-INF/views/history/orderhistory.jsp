@@ -593,7 +593,7 @@ jQuery(document).ready(function(){
 														<td style="text-align: right;" class="col-sm-1"><fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																minFractionDigits="2" groupingUsed="false"
-																value="${orderList.total-orderList.advanceAmt-orderList.discAmt}" /></td>
+																value="${orderList.total-orderList.advanceAmt}" /></td>
 
 														<c:choose>
 
@@ -645,7 +645,7 @@ jQuery(document).ready(function(){
 															value="${advAmtTotal+orderList.advanceAmt}">
 														</c:set>
 														<c:set var="advRemAmt"
-															value="${advRemAmt+(orderList.total-orderList.advanceAmt-orderList.discAmt)}">
+															value="${advRemAmt+(orderList.total-orderList.advanceAmt)}">
 														</c:set>
 													</tr>
 												</c:forEach>

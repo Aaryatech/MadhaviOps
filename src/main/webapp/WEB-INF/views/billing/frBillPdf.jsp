@@ -27,7 +27,23 @@ table {
 		<c:set var="totalRowCount" value="0" />
 		<c:set var="maxRowCount" value="79" />
 		<div style="text-align: center; font-size: 12px;">
-			<b>TAX INVOICE</b>
+			<!-- <b>TAX INVOICE</b> -->
+			
+			 <c:choose>
+				<c:when test="${isDairy==2}">
+					<b>TAX INVOICE</b>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${isOwnFr==1}">
+						<b>DELIVERY CHALLAN</b>
+					</c:if>
+					<c:if test="${isOwnFr==0}">
+						<b>TAX INVOICE</b>
+					</c:if>
+
+				</c:otherwise>
+			</c:choose> 
+			
 		</div>
 		<div style="text-align: right; font-size: 10px;">CIN :
 			${frDetails.company.cinNo}</div>

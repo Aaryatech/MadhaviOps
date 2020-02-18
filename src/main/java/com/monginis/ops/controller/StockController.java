@@ -331,7 +331,7 @@ public class StockController {
 			}
 		}
 		System.err.println("Cat Id: " + catId + "running month " + runningMonth+"itemShow"+itemShow);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 		Date todaysDate = new Date();
@@ -401,8 +401,15 @@ public class StockController {
 				}
 
 				// strDate="01/"+runningMonth+"/"+year;
+				
+				if(runningMonth<10) {
+					strDate = year + "-0" + runningMonth + "-01";
+				}else {
+					strDate = year + "-" + runningMonth + "-01";
+				}
+				
 
-				strDate = year + "/" + runningMonth + "/01";
+				//strDate = year + "/" + runningMonth + "/01";
 
 				map.add("fromDate", strDate);
 			} else {
@@ -413,12 +420,21 @@ public class StockController {
 
 			map.add("frId", frDetails.getFrId());
 			map.add("frStockType", frDetails.getStockType());
-			// map.add("fromDate", dateFormat1.format(firstDay));
+			//map.add("fromDate", dateFormat1.format(firstDay));
 			map.add("toDate", dateFormat.format(todaysDate));
 			map.add("currentMonth", String.valueOf(runningMonth));
 			map.add("year", yearFormat.format(todaysDate));
 			map.add("catId", catId);
 			map.add("itemIdList", itemShow);
+			
+			
+			System.out.println("inside rest getCurrentStock : I/p : frId: " + frDetails.getFrId());
+			System.out.println("inside rest getCurrentStock : I/p : frStockType: " + frDetails.getStockType());
+			System.out.println("inside rest getCurrentStock : I/p : fromDate: " + dateFormat.format(firstDay));
+			System.out.println("inside rest getCurrentStock : I/p : toDate: " + dateFormat.format(todaysDate));
+			System.out.println("inside rest getCurrentStock : I/p : currentMonth: " + String.valueOf(runningMonth));
+			System.out.println("inside rest getCurrentStock : I/p : year: " + yearFormat.format(todaysDate));
+			System.out.println("inside rest getCurrentStock : I/p : itemIdList: " + itemShow);
 
 			ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
 			};
@@ -426,7 +442,7 @@ public class StockController {
 					.exchange(Constant.URL + "getCurrentStock", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			currentStockDetailList = responseEntity.getBody();
-			System.out.println("Current Stock Details : " + currentStockDetailList.toString());
+			System.out.println("Current Stock Details :-----------------------------1 " + currentStockDetailList.toString());
 
 		} else {
 
@@ -467,7 +483,7 @@ public class StockController {
 						Constant.URL + "/getStockBetweenDates", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 				currentStockDetailList = responseEntity.getBody();
-				System.out.println("Current Stock Details Monthwise : " + currentStockDetailList.toString());
+				System.out.println("Current Stock Details Monthwise : ---------------------2" + currentStockDetailList.toString());
 
 			} catch (Exception e) {
 				e.printStackTrace();

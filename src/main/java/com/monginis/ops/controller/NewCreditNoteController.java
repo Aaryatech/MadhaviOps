@@ -216,7 +216,7 @@ public class NewCreditNoteController {
 					SellBillDetail billDetail = getSellBillDetailList.get(i);
 
 					try {
-						int crnQty = Integer.parseInt(
+						float crnQty = Float.parseFloat(
 								request.getParameter("qty" + getSellBillDetailList.get(i).getSellBillDetailNo()));
 
 						if (crnQty > 0) {
@@ -243,7 +243,7 @@ public class NewCreditNoteController {
 							cr.setItemId(billDetail.getItemId());
 							cr.setItemName(billDetail.getItemName());
 							cr.setCrnQty(crnQty);
-							cr.setBillQty((int) billDetail.getQty());
+							cr.setBillQty(billDetail.getQty());
 							cr.setRate(billDetail.getMrp());
 							cr.setDiscAmt(billDetail.getDiscAmt());
 							cr.setBillTotal(billTotal);
@@ -263,6 +263,7 @@ public class NewCreditNoteController {
 							cr.setUserId(userId);
 							cr.setCustId(custId);
 							cr.setIsStockable(stockable);
+							cr.setExInt1(frDetails.getFrId());
 
 							crnList.add(cr);
 						}
@@ -328,7 +329,8 @@ public class NewCreditNoteController {
 		headerList = new ArrayList<CreditNotePosHeaderDisp>();
 
 		try {
-
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
 			int custId = Integer.parseInt(request.getParameter("custId"));
@@ -339,6 +341,7 @@ public class NewCreditNoteController {
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 			map.add("custId", custId);
+			map.add("frId", frDetails.getFrId());
 
 			headerList = restTemplate.postForObject(Constant.URL + "/getPosCreditNoteHeaderDisp", map, ArrayList.class);
 
@@ -416,7 +419,7 @@ public class NewCreditNoteController {
 					CreditNotePos crn = crnList.get(i);
 
 					try {
-						int crnQty = Integer.parseInt(request.getParameter("qty" + crn.getCrnDetailNo()));
+						float crnQty = Float.parseFloat(request.getParameter("qty" + crn.getCrnDetailNo()));
 						float returnPer = Integer.parseInt(request.getParameter("retPer" + crn.getCrnDetailNo()));
 
 						if (crnQty > 0) {

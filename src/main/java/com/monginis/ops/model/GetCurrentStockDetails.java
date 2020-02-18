@@ -33,6 +33,8 @@ public class GetCurrentStockDetails {
 	private float reOrderQty;
 	
 	private int subCatId;
+	
+	private float sellCreditNote;
 
 	public int getStockDetailId() {
 		return stockDetailId;
@@ -161,6 +163,18 @@ public class GetCurrentStockDetails {
 	public void setSubCatId(int subCatId) {
 		this.subCatId = subCatId;
 	}
+	
+	
+
+	public float getSellCreditNote() {
+		return sellCreditNote;
+	}
+
+	public void setSellCreditNote(float sellCreditNote) {
+		this.sellCreditNote = sellCreditNote;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -169,7 +183,8 @@ public class GetCurrentStockDetails {
 				+ spOpeningStock + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
-				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + ", subCatId=" + subCatId + "]";
+				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + ", subCatId=" + subCatId
+				+ ", sellCreditNote=" + sellCreditNote + "]";
 	}
     
 	

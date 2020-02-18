@@ -532,7 +532,8 @@ public class PosPlaceOrderController {
 
 			advHeader.setExVar1(dateFormat.format(date));// Order Time
 			advHeader.setExVar2(strDelTime);// Delivery Time
-			advHeader.setIsDailyMart(dm);
+			//advHeader.setIsDailyMart(dm);
+			advHeader.setIsDailyMart(2);
 			advHeader.setRemainingAmt(Float.parseFloat(remainAmt));
 			advHeader.setTotal(Float.parseFloat(total));
 			advHeader.setFrId(frDetails.getFrId());

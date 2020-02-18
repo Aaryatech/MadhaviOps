@@ -43,12 +43,12 @@ table, th, td {
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/loader.css">
-		<!-- chosen CSS ============================================ -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
+	<!-- chosen CSS ============================================ -->
+	<link rel="stylesheet"
+		href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 
-<!-- ----------------------------------------------------END------------------------------------------------------------ -->
-		
+	<!-- ----------------------------------------------------END------------------------------------------------------------ -->
+
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -131,7 +131,7 @@ table, th, td {
 
 						<div class="col-md-4" style="text-align: right;">
 							<a href="${pageContext.request.contextPath}/insertCreditNote"><input
-								type="button" value="Add Credit Note" class="btn btn-info">
+								type="button" value="Add Credit Note" class="buttonsaveorder">
 							</a> <br> <br>
 						</div>
 
@@ -146,8 +146,9 @@ table, th, td {
 							</div>
 						</div>
 						<div class="col-md-3">
-							<select name="cust" id="cust" class="form-control chosen-select" required>
-								<option value="0">Select Customer</option>
+							<select name="cust" id="cust" class="form-control chosen-select"
+								required>
+								<option value="0">All</option>
 
 
 								<c:forEach items="${customerList}" var="customerList">
@@ -206,23 +207,20 @@ table, th, td {
 
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
-							<div class="table-wrap"
-								style="max-height: none; min-height: none;">
+							<div class="table-responsive">
 								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1" style="text-align: center;">Sr No</th>
-											<th class="col-md-2" style="text-align: center;">Crn No.</th>
 											<th class="col-md-1" style="text-align: center;">Crn
 												Invoice</th>
-											<th class="col-sm-1" style="text-align: center;">Bill
+											<th class="col-md-1" style="text-align: center;">Bill
 												Invoice</th>
 											<th class="col-md-1" style="text-align: center;">Date</th>
-											<th class="col-md-1" style="text-align: center;">Taxable
-												Amt</th>
+											<th class="col-md-1" style="text-align: center;">Customer</th>
 											<th class="col-md-1" style="text-align: center;">Grand
 												Total</th>
+											<th class="col-md-1" style="text-align: center;">User</th>
 											<th class="col-md-1" style="text-align: center;">Action</th>
 
 										</tr>
@@ -320,8 +318,7 @@ table, th, td {
 				</div>
 				<br>
 				<div class="row" style="text-align: center;">
-					<button class="buttonsaveorder" onclick="getData()">Save
-					</button>
+					<button class="buttonsaveorder" onclick="getData()" id="editSave">Save</button>
 				</div>
 
 			</form>
@@ -343,7 +340,7 @@ table, th, td {
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 
-<script
+	<script
 		src="${pageContext.request.contextPath}/resources/customerBill/chosen.jquery.js"
 		type="text/javascript"></script>
 	<script
@@ -417,98 +414,97 @@ table, th, td {
 			var custId = $('#cust').val();
 			//alert("jhgjjhg "+custId);
 
-			if (custId == 0) {
-				alert("Please select customer");
-			} else {
+			//if (custId == 0) {
+			//	alert("Please select customer");
+			//} else {
 
-				$('#table_grid td').remove();
+			$('#table_grid td').remove();
 
-				$
-						.getJSON(
-								'${getPosCreditNoteHeaderList}',
-								{
-									fromDate : fromDate,
-									toDate : toDate,
-									custId : custId,
-									ajax : 'true'
-								},
-								function(data) {
+			$
+					.getJSON(
+							'${getPosCreditNoteHeaderList}',
+							{
+								fromDate : fromDate,
+								toDate : toDate,
+								custId : custId,
+								ajax : 'true'
+							},
+							function(data) {
 
-									//alert(JSON.stringify(data));
+								//alert(JSON.stringify(data));
 
-									if (data == "") {
-										alert("No records found !!");
-									}
+								if (data == "") {
+									alert("No records found !!");
+								}
 
-									$
-											.each(
-													data,
-													function(key, crn) {
+								$
+										.each(
+												data,
+												function(key, crn) {
 
-														//alert(JSON.stringify(sellBillData));
+													//alert(JSON.stringify(sellBillData));
 
-														var index = key + 1;
+													var index = key + 1;
 
-														var tr = $('<tr></tr>');
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				key + 1));
+													var tr = $('<tr></tr>');
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:center;"></td>')
+																	.html(
+																			key + 1));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				crn.crnNo));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:center;"></td>')
+																	.html(
+																			crn.crnInvoiceNo));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				crn.crnInvoiceNo));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:center;"></td>')
+																	.html(
+																			crn.billInvoice));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				crn.billInvoice));
+													tr
+															.append($(
+																	'<td id="date'+crn.crnNo+'" class="col-md-1" style="text-align:center;"></td>')
+																	.html(
+																			crn.crnDate));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				crn.crnDate));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:left;"></td>')
+																	.html(
+																			crn.custName));
 
-														tr
-																.append($(
-																		'<td style="text-align:right;"></td>')
-																		.html(
-																				crn.taxableAmt
-																						.toFixed(2)));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right;"></td>')
+																	.html(
+																			crn.grandTotal
+																					.toFixed(2)));
 
-														tr
-																.append($(
-																		'<td style="text-align:right;"></td>')
-																		.html(
-																				crn.grandTotal
-																						.toFixed(2)));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:left;"></td>')
+																	.html(
+																			crn.userName));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				'<a  href="" onClick="getDetailsByCrnNo('
-																						+ crn.crnNo
-																						+ ')" class="buttonsaveorder singlebtn initialism slide_open"><abbr title="PDF"><i class="fa fa-pencil"></i></abbr></a>'));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:center;"></td>')
+																	.html(
+																			'<a  href="" onClick="getDetailsByCrnNo('
+																					+ crn.crnNo
+																					+ ','+crn.userId+ ')" class="buttonsaveorder singlebtn initialism slide_open"><abbr title="Edit"><i class="fa fa-pencil"></i></abbr></a>'));
 
-														$('#table_grid tbody')
-																.append(tr);
+													$('#table_grid tbody')
+															.append(tr);
 
-													});
+												});
 
-								});
-			}
+							});
+			//}
 
 		}
 	</script>
@@ -516,8 +512,41 @@ table, th, td {
 
 
 	<script type="text/javascript">
-		function getDetailsByCrnNo(x) {
+		function getDetailsByCrnNo(x,eId) {
 			//alert("hi");
+
+			
+			
+			var dt=document.getElementById("date"+x).innerHTML;
+			
+			//alert(dt);
+			
+			const parts = dt.split("-");
+
+			var month = parts[1];
+			var year = parts[0];
+
+			//alert(month+"          "+year);
+
+			
+			var currentdate = new Date();
+			var cur_month = currentdate.getMonth() + 1;
+			var cur_year = currentdate.getFullYear();
+			
+			var empId=${sessionScope.frEmpDetails.frEmpId};
+			//alert(empId+"           "+eId);
+			
+
+			
+			if (cur_month == month && year == cur_year && empId==eId) {
+				//alert("in this month");
+				
+				$('#editSave').show();
+				
+			} else {
+				 //alert("not in this month");
+				$('#editSave').hide();
+			}  
 
 			$('#table_grid1 td').remove();
 
@@ -585,13 +614,13 @@ table, th, td {
 															.append($(
 																	'<td style="text-align:center;"></td>')
 																	.html(
-																			'<input class="detail" type="number" min="0" value="'
+																			'<input class="detail" type="text" min="0" value="'
 																					+ crn.crnQty
 																					+ '" style="text_align:center; width:50px;" name="qty'
 																					+ crn.crnDetailNo
 																					+ '" id="qty_'
 																					+ crn.crnDetailNo
-																					+ '"  value="0" onchange="qtyChange('
+																					+ '"  value="0" onkeyup="qtyChange('
 																					+ crn.crnDetailNo
 																					+ ')" >'));
 
@@ -600,7 +629,7 @@ table, th, td {
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			'<p class="detail" id="billTot_'+crn.crnDetailNo+'">'
-																					+ crn.billTotal
+																					+ crn.billTotal.toFixed(2)
 																					+ '</p>'));
 
 													tr
@@ -622,15 +651,14 @@ table, th, td {
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			'<p class="detail" id="taxable_'+crn.crnDetailNo+'">'
-																					+ crn.taxableAmt
+																					+ crn.taxableAmt.toFixed(2)
 																					+ '</p>'));
 													tr
 															.append($(
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			'<p class="detail" id="tax_'+crn.crnDetailNo+'">'
-																					+ (crn.cgstAmt
-																					+ crn.sgstAmt)
+																					+ (crn.cgstAmt + crn.sgstAmt).toFixed(2)
 																					+ '</p>'));
 
 													tr
@@ -638,7 +666,7 @@ table, th, td {
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			'<p class="detail" id="grandTot_'+crn.crnDetailNo+'">'
-																					+ crn.grandTotal
+																					+ crn.grandTotal.toFixed(2)
 																					+ '</p>'));
 
 													tr
@@ -646,7 +674,7 @@ table, th, td {
 																	'<td style="text-align:right; display:none;"></td>')
 																	.html(
 																			'<p class="detail" id="sgstPer_'+crn.crnDetailNo+'">'
-																					+ crn.sgstPer
+																					+ crn.sgstPer.toFixed(2)
 																					+ '</p>'));
 
 													tr
@@ -654,7 +682,7 @@ table, th, td {
 																	'<td style="text-align:right; display:none;"></td>')
 																	.html(
 																			'<p class="detail" id="cgstPer_'+crn.crnDetailNo+'">'
-																					+ crn.cgstPer
+																					+ crn.cgstPer.toFixed(2)
 																					+ '</p>'));
 
 													$('#table_grid1 tbody')
@@ -680,6 +708,12 @@ table, th, td {
 
 			var qty = parseFloat(document.getElementById("qty_" + x).value);
 			var oldQty = parseFloat(document.getElementById("oldQty_" + x).innerHTML);
+			
+			if(isNaN(qty)==true){
+				qty=0;
+				document.getElementById("qty_" + x).value=0;
+			}
+			
 
 			//alert(qty + "              " + oldQty);
 
@@ -702,8 +736,6 @@ table, th, td {
 						.getElementById("sgstPer_" + x).innerHTML);
 				var cgstPer = parseFloat(document
 						.getElementById("cgstPer_" + x).innerHTML);
-
-				
 
 				var billTot = parseFloat((rate - (discAmt / oldQty)) * qty);
 

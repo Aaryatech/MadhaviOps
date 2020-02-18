@@ -37,6 +37,7 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.otheritems.RawMaterialUom;
+import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.pettycash.PettyCashManagmt;
 
 @Controller
@@ -151,6 +152,12 @@ public class ExpenseController {
 			toDate = formatter.format(date);
 
 		}
+		
+		Calendar currCal=Calendar.getInstance();
+		SimpleDateFormat ss = new SimpleDateFormat("dd-MM-yyyy");
+		
+		
+		model.addObject("currDate", ss.format(currCal.getTime()));
 
 		model.addObject("fromDate", fromDate);
 		model.addObject("toDate", toDate);
@@ -273,7 +280,11 @@ public class ExpenseController {
 			exp.setImgName(gvnPhoto1);
 
 			exp.setExInt1(0);
-			exp.setExInt2(0);
+			
+			FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			int empId=frEmpDetails.getFrEmpId();
+			
+			exp.setExInt2(empId);
 			exp.setExInt3(0);
 			exp.setExInt4(0);
 

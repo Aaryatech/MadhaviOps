@@ -142,7 +142,7 @@ table, th, td {
 					<div class="page_title">Stock Details</div>
 					<div class="custom_right">
 			<c:if test="${sessionScope.frEmpDetails.designation==1}"><a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
-						type="button" value="Add Opening Stock" class="btn btn-info">
+						type="button" value="Add Opening Stock" class="buttonsaveorder">
 					</a></c:if>
 					</div>
 				</div>
@@ -367,7 +367,7 @@ table, th, td {
 									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
-												<th class="col-md-1">Item Id</th>
+												<!-- <th class="col-md-1">Item Id</th> -->
 												<th class="col-md-1">Item_Name</th>
 												<th class="col-md-1">Rate/MRP</th><!---->
 												<th class="col-md-1">Op Stock</th>
@@ -377,9 +377,11 @@ table, th, td {
 												<th class="col-md-1">Pur Value</th>
 												<!-- <th class="col-md-1">Sp Pur Qty</th> -->
 												<th class="col-md-1">Grn-Gvn Qty</th>
-												<th class="col-md-1">Grn-Gvn VAlue</th>
+												<th class="col-md-1">Grn-Gvn Value</th>
 												<th class="col-md-1">Reg Sale</th>
 												<th class="col-md-1">Reg Sale Value</th>
+												<th class="col-md-1">Credit Sale</th>
+												<th class="col-md-1">Credit Sale Value</th>
 												<th class="col-md-1">Curr Stock</th>
 												<th class="col-md-1">Curr Stock Value</th>
 												<c:if test="${isMonthCloseApplicable eq true}">
@@ -676,7 +678,7 @@ table, th, td {
 
 								$('#table_grid th').remove();
 								var tr = $('<tr class=bgpink></tr>');
-								tr.append($('<th align=left>Item Id</th>'));
+								//tr.append($('<th align=left>Item Id</th>'));
 								tr.append($('<th align=left>Item Name</th>'));
 								tr.append($('<th align=center>Rate/MRP</th>'));
 								tr.append($('<th align=left>Op Stock</th>'));
@@ -693,9 +695,13 @@ table, th, td {
 								/* tr.append($('<th align=left>Reorder Qty</th>')); */
 								tr
 										.append($('<th align=left>Reg Sale Val</th>'));
+								
+								tr.append($('<th align=center>Credit Sale</th>'));
+								tr.append($('<th align=center>Credit Sale Value</th>'));
+								
 								tr.append($('<th align=center>Cur Stock</th>'));
 								tr
-										.append($('<th align=center>CurStock Val</th>'));
+										.append($('<th align=center>Cur Stock Val</th>'));
 								tr
 										.append($('<th align=left>Physical Stock</th>'));
 
@@ -712,6 +718,9 @@ table, th, td {
 												var regCurrentStock = item.currentRegStock;
 												var reOrderQty = item.reOrderQty;
 												if (stType == 1) {
+													
+													//alert("stType=1");
+													
 													if (regCurrentStock > reOrderQty) {
 														var tr = $('<tr ></tr>');
 
@@ -719,11 +728,11 @@ table, th, td {
 														var tr = $('<tr class="re-order" ></tr>');
 													}
 
-													tr
+													/* tr
 															.append($(
 																	'<td class="col-md-1"></td>')
 																	.html(
-																			item.itemId));
+																			item.itemId)); */
 													tr
 															.append($(
 																	'<td class="col-md-1" ></td>')
@@ -873,6 +882,52 @@ table, th, td {
 																	.html(
 																			reOrderQty));
 													 */
+													 
+													 
+													 if (item.sellCreditNote < 0) {
+															tr
+																	.append($(
+																			'<td class="col-md-1" style="text-align:right;"></td>')
+																			.html(0));
+														} else {
+															tr
+																	.append($(
+																			'<td class="col-md-1" style="text-align:right;"></td>')
+																			.html(
+																					item.sellCreditNote
+																							.toFixed(2)));
+														}
+				
+													 
+													 
+													 if (selectRate == 1) {
+															var regCreditVal = item.spOpeningStock
+																	* item.sellCreditNote;
+
+															tr
+																	.append($(
+																			'<td class="col-md-1" style="text-align:right;"></td>')
+																			.html(
+																					regCreditVal
+																							.toFixed(2)));
+														} else
+
+														{
+															var regCreditVal = item.spTotalPurchase
+																	* item.sellCreditNote;
+															tr
+																	.append($(
+																			'<td class="col-md-1" style="text-align:right;"></td>')
+																			.html(
+																					regCreditVal
+																							.toFixed(2)));
+														} 
+													 
+													 
+													 
+													 
+													 
+													 
 													if (regCurrentStock < 0) {
 														tr
 																.append($(
@@ -952,14 +1007,17 @@ table, th, td {
 															.append(tr);
 
 												} else if (stType == 2) {
+													
+													//alert("stType=2");
+													
 													if (regCurrentStock > 0) {
 														var tr = $('<tr ></tr>');
 
-														tr
+														/* tr
 																.append($(
 																		'<td class="col-md-1"></td>')
 																		.html(
-																				item.itemId));
+																				item.itemId)); */
 														tr
 																.append($(
 																		'<td class="col-md-1" ></td>')
@@ -1110,6 +1168,46 @@ table, th, td {
 																			.html(
 																					reOrderQty)); */
 
+																					if (item.sellCreditNote < 0) {
+																						tr
+																								.append($(
+																										'<td class="col-md-1" style="text-align:right;"></td>')
+																										.html(0));
+																					} else {
+																						tr
+																								.append($(
+																										'<td class="col-md-1" style="text-align:right;"></td>')
+																										.html(
+																												item.sellCreditNote
+																														.toFixed(2)));
+																					}									
+																					
+																					
+																					if (selectRate == 1) {
+																						var creditVal = item.spOpeningStock
+																								* item.sellCreditNote;
+
+																						tr
+																								.append($(
+																										'<td class="col-md-1" style="text-align:right;"></td>')
+																										.html(
+																												creditVal
+																														.toFixed(2)));
+																					} else
+
+																					{
+																						var creditVal = item.spTotalPurchase
+																								* item.sellCreditNote;
+																						tr
+																								.append($(
+																										'<td class="col-md-1" style="text-align:right;"></td>')
+																										.html(
+																												creditVal
+																														.toFixed(2)));
+																					}
+																					
+																					
+																					
 														if (regCurrentStock < 0) {
 															tr
 																	.append($(
@@ -1191,6 +1289,9 @@ table, th, td {
 																.append(tr);
 													}
 												} else if (stType == 3) {
+													
+													//alert("stType=3");
+													
 													if (regCurrentStock == 0) {
 
 														var tr = $('<tr class="re-order" ></tr>');

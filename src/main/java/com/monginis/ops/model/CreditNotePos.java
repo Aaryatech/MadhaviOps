@@ -11,8 +11,8 @@ public class CreditNotePos {
 	private String crnDate;
 	private int itemId;
 	private String itemName;
-	private int crnQty;
-	private int billQty;
+	private float crnQty;
+	private float billQty;
 	private float rate;
 	private float discAmt;
 	private float billTotal;
@@ -112,19 +112,21 @@ public class CreditNotePos {
 		this.itemName = itemName;
 	}
 
-	public int getCrnQty() {
+	
+
+	public float getCrnQty() {
 		return crnQty;
 	}
 
-	public void setCrnQty(int crnQty) {
+	public void setCrnQty(float crnQty) {
 		this.crnQty = crnQty;
 	}
 
-	public int getBillQty() {
+	public float getBillQty() {
 		return billQty;
 	}
 
-	public void setBillQty(int billQty) {
+	public void setBillQty(float billQty) {
 		this.billQty = billQty;
 	}
 

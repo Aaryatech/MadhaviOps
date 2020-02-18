@@ -183,7 +183,8 @@
 											<div class="profilefildset">Franchisee Name</div>
 											<div class="profileinput">
 												<input class="texboxitemcode" placeholder="franchisee Name"
-													name="fr_name" type="text" value="${frDetails.frName}">
+													name="fr_name" type="text" value="${frDetails.frName}"
+													readonly="readonly">
 											</div>
 										</div>
 
@@ -214,12 +215,12 @@
 
 											</div>
 										</div>
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">Route</div>
 											<div class="profileinput mardis">${route.routeName}</div>
 
 										</div>
-										<div class="profile">
+										<div class="profile"  style="display: none;">
 											<div class="profilefildset">Tax Type</div>
 											<div class="profileinput mardis">
 												<c:choose>
@@ -288,7 +289,7 @@
 													name="fr_owner" type="text" value="${frDetails.frOwner}">
 											</div>
 										</div>
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">Rate Type</div>
 											<div class="profileinput mardis">
 												<c:choose>
@@ -299,7 +300,7 @@
 											</div>
 
 										</div>
-										<div class="profile">
+										<div class="profile" style="display: none;">
 											<div class="profilefildset">Distance (Km.)</div>
 											<div class="profileinput mardis">${frDetails.frKg3}</div>
 
@@ -343,7 +344,8 @@
 									</div>
 
 
-									<div class="frm_row_one" style="margin-top: 20px;">
+									<div class="frm_row_one"
+										style="margin-top: 20px; display: none;">
 
 										<div class="four_one three" style="width: 50%;">
 											<input name="" class="" value="Change Admin Password"
@@ -601,11 +603,11 @@
 								</div>
 								<div class="clr"></div>
 							</div>
-	<input name="ttl_limit" type="hidden" class="input_add"
-										id="ttl_limit" value="1"
-										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-										required />
-						<%-- 	<div class="add_frm_one">
+							<input name="ttl_limit" type="hidden" class="input_add"
+								id="ttl_limit" value="1"
+								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+								required />
+							<%-- 	<div class="add_frm_one">
 								<div class="add_customer_one">Total Limit</div>
 								<div class="add_input">
 									<input name="ttl_limit" type="text" class="input_add"
@@ -671,10 +673,10 @@
 								<div class="clr"></div>
 							</div>
 
-<input name="curr_bill_amt" type="hidden" class="input_add"
-										id="curr_bill_amt" value="1"
-										oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-										required />
+							<input name="curr_bill_amt" type="hidden" class="input_add"
+								id="curr_bill_amt" value="1"
+								oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+								required />
 							<%-- <div class="add_frm_one">
 								<div class="add_customer_one">Current Bill Amt</div>
 								<div class="add_input">
@@ -782,7 +784,7 @@
 
 	<script type="text/javascript">
 		function checkContactNo() {
-			
+
 			var empId = $('#fr_emp_id').val();
 
 			var mobNo = $('#emp_contact').val();
@@ -795,13 +797,13 @@
 
 					//alert("Info : "+JSON.stringify(data)); 
 					if (data.error == false) {
-						
-						if(data.message!=empId){
-						
-						document.getElementById("emp_contact").value = "";
-						alert("Contact No. Already Exist.");
-						$('#emp_contact').focus();
-						return true;
+
+						if (data.message != empId) {
+
+							document.getElementById("emp_contact").value = "";
+							alert("Contact No. Already Exist.");
+							$('#emp_contact').focus();
+							return true;
 						}
 					}
 
@@ -856,7 +858,7 @@
 			else if ($('#pass').val() == "") {
 				valid = 1;
 				alert("Enter Password");
-			} 
+			}
 			/* else if ($('#pass').val().length != 4) {
 				valid = 1;
 				alert("Enter 4 digit Password");
@@ -888,7 +890,7 @@
 						$("#fr_emp_form").trigger("reset");
 						$('#addcust').popup('hide');
 						alert("Employee Saved Successfylly");
-						
+
 						getCurrentEmpCode();
 					}
 				}

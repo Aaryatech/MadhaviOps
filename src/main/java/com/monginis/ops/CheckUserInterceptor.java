@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.monginis.ops.model.FrEmpLoginResp;
 import com.monginis.ops.model.Franchisee;
 
 public class CheckUserInterceptor extends HandlerInterceptorAdapter {
@@ -50,10 +51,11 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
         
 
 				Franchisee userObj = null;
+				FrEmpLoginResp empObj = null;
          try {
         	 
         	 userObj = (Franchisee) session.getAttribute("frDetails");
-        	
+        	 empObj = (FrEmpLoginResp) session.getAttribute("frEmpDetails");
         	 
          }catch (Exception e) {
 			// TODO: handle exception
@@ -99,5 +101,33 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
 		//System.out.println("post intercept hanlder");
 		super.postHandle(request, response, handler, modelAndView);
 	}
+	
+	
+	
+/*	
+	 if( userObj == null ) {
+     	// System.out.println("Session Expired");
+
+      //    request.setAttribute("emassage", "login failed");                
+          response.sendRedirect(request.getContextPath()+"/sessionTimeOut");
+
+          return false;          
+      }else{   
+     	 if(userObj != null && empObj ==null) {
+     		 if(request.getServletPath().equals("/frEmpLogin") || request.getServletPath().equals("/frLoginProcess")){ //||request.getServletPath().equals("/logout")
+     	        	 System.out.println("IN IF");
+     	             return true;
+     	         }else {
+     	        	 System.out.println("IN ELSE");
+     	        	 response.sendRedirect(request.getContextPath()+"/sessionTimeOut");
+     	        	 return false;
+     	         }
+     	 }
+         
+      } */
+	
+	
+	
+	
 
 }

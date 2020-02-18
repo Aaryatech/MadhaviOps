@@ -35,7 +35,6 @@
 	font-size: 11px;
 	font-weight: bold;
 }
-
 </style>
 </head>
 
@@ -47,8 +46,7 @@
 		<tbody>
 
 			<tr>
-				<td colspan="2" align="center"
-					style="padding: 2px; "><span><b>${frName}</b><br />
+				<td colspan="2" align="center" style="padding: 2px;"><span><b>${frName}</b><br />
 				</span></td>
 			</tr>
 			<tr>
@@ -58,7 +56,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 12px;"><span><b>Date
+					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 9px;"><span><b>Date
 							& Time:&nbsp;</b>${sellBillHeaderAndDetail.timestamp}</span><br /></td>
 			</tr>
 			<tr>
@@ -124,27 +122,44 @@
 														Total:</span></td>
 												<td align="right"><span class="style7"> <fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${sellBillHeaderAndDetail.grandTotal}" groupingUsed="false" /></span></td>
+															value="${sellBillHeaderAndDetail.grandTotal}"
+															groupingUsed="false" /></span></td>
 											</tr>
-											
-											
+
+
+											<c:if test="${sellBillHeaderAndDetail.discountAmt > 0}">
+
+												<tr>
+
+													<td colspan="3" align="right"><span class="style7">Disc
+															Amt:</span></td>
+													<td align="right"><span class="style7"> <fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																minFractionDigits="2"
+																value="${sellBillHeaderAndDetail.discountAmt}"
+																groupingUsed="false" /></span></td>
+												</tr>
+
+											</c:if>
+
+
+
 											<tr>
 
-												<td colspan="3" align="right"><span class="style7">Disc Amt:</span></td>
+												<td colspan="3" align="right"><span class="style7">Bill
+														Total:</span></td>
 												<td align="right"><span class="style7"> <fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${sellBillHeaderAndDetail.discountAmt}" groupingUsed="false" /></span></td>
+															value="${sellBillHeaderAndDetail.payableAmt}"
+															groupingUsed="false" /></span></td>
 											</tr>
+
 
 											<tr>
-
-												<td colspan="3" align="right"><span class="style7">Bill Total:</span></td>
-												<td align="right"><span class="style7"> <fmt:formatNumber
-															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${sellBillHeaderAndDetail.payableAmt}" groupingUsed="false" /></span></td>
+												<td align="left" colspan="5" style="border-top: 1px solid;">This
+													is not tax invoice. For tax invoice please ask cashier.</td>
 											</tr>
-											
-											
+
 										</tbody>
 									</table></td>
 							</tr>
@@ -181,12 +196,11 @@
 	</table>
 </body>
 <body onload="directPrint()">
-		<script>
-		 function directPrint()
-		{
-			window.print(); 
+	<script>
+		function directPrint() {
+			window.print();
 
-		} 
+		}
 	</script>
 </body>
 </html>
