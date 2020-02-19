@@ -1358,6 +1358,7 @@ public class ReportsController {
 		try {
 
 			int catId = Integer.parseInt(request.getParameter("catId"));
+			System.out.println("Sub Cat    "+catId);
 
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -3687,6 +3688,13 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float taxableAmt=0;
+		float ttlIgst = 0;
+		float ttlSgst = 0;
+		float ttlCgst = 0;
+		float ttlBill = 0;
+		
 		for (int i = 0; i < getRepTaxSell.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -3708,7 +3716,30 @@ public class ReportsController {
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
+			taxableAmt = taxableAmt+getRepTaxSell.get(i).getTax_amount();
+			ttlIgst = ttlIgst+getRepTaxSell.get(i).getIgst();
+			ttlSgst = ttlSgst+getRepTaxSell.get(i).getSgst();
+			ttlCgst = ttlCgst+getRepTaxSell.get(i).getCgst();
+			ttlBill = ttlBill+getRepTaxSell.get(i).getBill_amount();
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		
+		rowData.add("Total");	
+		rowData.add("");
+		rowData.add("");
+		rowData.add("");
+		rowData.add("" + roundUp(ttlCgst));
+		rowData.add("" + roundUp(ttlSgst));
+		rowData.add("" + roundUp(ttlIgst));
+		rowData.add("");
+		rowData.add("");
+		rowData.add("" + roundUp(taxableAmt));
+		rowData.add("" + roundUp(ttlBill));
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);

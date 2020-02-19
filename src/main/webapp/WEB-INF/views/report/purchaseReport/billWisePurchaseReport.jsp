@@ -342,18 +342,20 @@ table, th, td {
 												});
 
 								var tr = $('<tr></tr>');
-
-								tr.append($('<td class="col-md-1"></td>').html(
-										""));
-
-								tr.append($('<td class="col-md-1"></td>').html(
-										""));
-
+								
 								tr
-										.append($(
-												'<td class="col-md-2" style="font-weight:bold;"></td>')
-												.html("Total"));
+								.append($(
+										'<td class="col-md-2" style="font-weight:bold;"></td>')
+										.html("Total"));
 
+
+								tr.append($('<td class="col-md-1"></td>').html(
+										""));
+
+								tr.append($('<td class="col-md-1"></td>').html(
+										""));
+
+								
 								tr
 										.append($(
 												'<td class="col-md-1" style="text-align:right"></td>')

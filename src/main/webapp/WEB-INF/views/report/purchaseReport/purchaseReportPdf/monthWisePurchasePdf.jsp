@@ -30,21 +30,21 @@ th {
 </head>
 <body onload="myFunction()">
 <h4 align="center">Monthwise Purchase Report</h4>
-<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+<div align="center"> <h3>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From: &nbsp; ${fromDate}  &nbsp;To: &nbsp; ${toDate}</h3></div>
 	<table width="100%" border="1" cellspacing="0"
 														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
 									
 									<th style="text-align:center;">Sr.No.</th>
-									<th style="text-align:center;">MONTH</th>
+									<th style="text-align:center;">Month</th>
 									<th style="text-align:center;">Taxable Amt</th>
 									<th style="text-align:center;">IGST</th>
 									<th style="text-align:center;">CGST</th>
 									<th style="text-align:center;">SGST</th>
 									<th style="text-align:center;">CESS</th>
 								<!-- 	<th style="text-align:center;">ROFF</th> -->
-									<th style="text-align:center;">TOTAL</th>
+									<th style="text-align:center;">Total</th>
 								
 								  </tr>
 								

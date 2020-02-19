@@ -28,10 +28,10 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-	<h4 align="center">Billwise Purchase Report</h4>
+	<h3 align="center">Billwise Purchase Report</h3>
 	<div align="center">
-		<h6>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h6>
+		<h3>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
+			&nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		cellpadding="0" id="table_grid" class="table table-bordered">
@@ -48,7 +48,7 @@ th {
 				<th style="text-align: center;">CGST Amt</th>
 				<th style="text-align: center;">SGST Amt</th>
 			<!-- 	<th style="text-align: center;">R.off</th> -->
-				<th style="text-align: center;">BILL Amount</th>
+				<th style="text-align: center;">Bill Amount</th>
 			</tr>
 		</thead>
 

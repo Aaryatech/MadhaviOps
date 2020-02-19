@@ -60,7 +60,7 @@ table, th, td {
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
 						<div class="col-md-1">
-							<h4 class="pull-left">From :-</h4>
+							<h4 class="pull-left">From Month:-</h4>
 						</div>
 						<div class="col-md-2 ">
 							<input type='text' placeholder="Select From Month" id='txtDate'
@@ -68,7 +68,7 @@ table, th, td {
 								autocomplete="off" name="from_stockdate" required size="25" />
 						</div>
 						<div class="col-md-1">
-							<h4 class="pull-left">To:-</h4>
+							<h4 class="pull-left">To Month:-</h4>
 						</div>
 						<div class="col-md-2 ">
 							<input type='text' placeholder="Select To Month" id='txtDateto'
@@ -118,7 +118,7 @@ table, th, td {
 
 
 													<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-													<th class="col-md-1" style="text-align: center;">MONTH</th>
+													<th class="col-md-1" style="text-align: center;">Month</th>
 													<th class="col-md-1" style="text-align: center;">Taxable
 														Amt</th>
 													<th class="col-md-1" style="text-align: center;">IGST</th>
@@ -126,7 +126,7 @@ table, th, td {
 													<th class="col-md-1" style="text-align: center;">SGST</th>
 													<th class="col-md-1" style="text-align: center;">CESS</th>
 													<!-- 	<th class="col-md-1" style="text-align: center;">ROFF</th> -->
-													<th class="col-md-1" style="text-align: center;">TOTAL</th>
+													<th class="col-md-1" style="text-align: center;">Total</th>
 
 												</tr>
 											</thead>
@@ -144,7 +144,7 @@ table, th, td {
 
 
 												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-												<th class="col-md-1" style="text-align: center;">MONTH</th>
+												<th class="col-md-1" style="text-align: center;">Month</th>
 												<th class="col-md-1" style="text-align: center;">Taxable
 													Amt</th>
 												<th class="col-md-1" style="text-align: center;">IGST</th>
@@ -152,7 +152,7 @@ table, th, td {
 												<th class="col-md-1" style="text-align: center;">SGST</th>
 												<th class="col-md-1" style="text-align: center;">CESS</th>
 												<!-- <th class="col-md-1" style="text-align: center;">ROFF</th> -->
-												<th class="col-md-1" style="text-align: center;">TOTAL</th>
+												<th class="col-md-1" style="text-align: center;">Total</th>
 
 											</tr>
 										</thead>
@@ -373,15 +373,16 @@ table, th, td {
 
 													});
 
-									var tr = $('<tr></tr>');
-
-									tr.append($('<td class="col-md-1"></td>')
-											.html(""));
+									var tr = $('<tr></tr>');									
 
 									tr
 											.append($(
 													'<td class="col-md-1" style="font-weight:bold;"></td>')
 													.html("Total"));
+									
+									tr.append($('<td class="col-md-1"></td>')
+											.html(""));
+									
 
 									tr
 											.append($(
@@ -559,7 +560,7 @@ table, th, td {
 			var toDate = document.getElementById("txtDateto").value;
 			var typeId = document.getElementById("typeId").value;
 
-			alert(fromDate + " ---- " + toDate);
+			//alert(fromDate + " ---- " + toDate);
 			$.getJSON('${monthWisePurchaseReport}', {
 
 				fromDate : fromDate,

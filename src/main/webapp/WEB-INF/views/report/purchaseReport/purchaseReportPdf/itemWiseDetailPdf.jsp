@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Item wise Purchase Detail</title>
+<title>Itemwise-Billwise-Datewise Purchase</title>
 
 <style type="text/css">
 table {
@@ -24,7 +24,7 @@ th, td {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed3f3c;
 	color: white;
 }
 </style>
@@ -32,8 +32,8 @@ th {
 <body onload="myFunction()">
 	<h4 align="center">Itemwise-Billwise-Datewise Purchase Report</h4>
 	<div align="center">
-		<h4>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h4>
+		<h4>${frName} &nbsp;&nbsp;&nbsp;&nbsp;From: &nbsp;  ${fromDate}
+			&nbsp; To: &nbsp; ${toDate}</h4>
 	</div>
 	<table width="100%" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -61,13 +61,13 @@ th {
 			<c:set var="discTotal" value="${0}" />
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
-					<td align="center"><c:out value="${count.index+1}" /></td>
-					<td><c:out value="${reportList.billDate}" /></td>
-					<td><c:out value="${reportList.billNo}" /></td>
+					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.billDate}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.billNo}" /></td>
 
 					<%-- <td style="text-align: center;">${Constant.FACTORYNAME}</td> --%>
-					<td><c:out value="${reportList.itemName}" /></td>
-					<td><c:out value="${reportList.expiryDate}" /></td>
+					<td style="text-align: left;"><c:out value="${reportList.itemName}" /></td>
+					<td style="text-align: center;"><c:out value="${reportList.expiryDate}" /></td>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.qty}" /></td>

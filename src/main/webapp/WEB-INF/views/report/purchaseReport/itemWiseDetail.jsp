@@ -133,7 +133,7 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">Category:-</h4>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<select name="catId" id="catId" class="form-control chosen"
 							required onchange="getSubCategoriesByCatId()">
 							<option value="" selected>Select Category</option>
@@ -148,7 +148,7 @@ jQuery(document).ready(function(){
 					<div class="col-md-1 pull-left">
 						<h4 class="pull-left">Sub-Cat:-</h4>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<select name="item_grp2" id="item_grp2"
 							data-placeholder="Select Sub Category" class="chosen-select"
 							style="text-align: left;" required onchange="getItemList()">
@@ -156,10 +156,15 @@ jQuery(document).ready(function(){
 						</select>
 					</div>
 
+					
+				</div>
+				
+				<div class="row">
+					<br>
 					<div class="col-md-1 pull-left">
 						<h4 class="pull-left">Items:-</h4>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-9">
 						<select name="itemId" id="itemId"
 							data-placeholder="Select Items" class="chosen-select"
 							style="text-align: left;" required multiple="multiple">
@@ -332,6 +337,7 @@ jQuery(document).ready(function(){
 		} else {
 
 			var subCat = document.getElementById("item_grp2").value;
+			//alert("Sub Cat*** "+subCat)
 
 			$.getJSON('${getItemsResBySubCatId}', {
 				catId : subCat,
@@ -342,16 +348,25 @@ jQuery(document).ready(function(){
 
 				//alert(len);
 				$('#itemId').find('option').remove().end()
+				
+				if(subCat==-1){
+					for (var i = 0; i < len; i++) {
+
+						$("#itemId").append(
+								$("<option selected style='text-align:left; height:40%;'></option>").attr("value",
+										data[i].id).text(data[i].itemName));
+					}
+				}else{
 				$("#itemId").append(
-						$("<option align=left; selected></option>").attr(
+						$("<option style='text-align:left;' selected></option>").attr(
 								"value", 0).text("ALL"));
-				for (var i = 0; i < len; i++) {
-
-					$("#itemId").append(
-							$("<option align=left;></option>").attr("value",
-									data[i].id).text(data[i].itemName));
+					for (var i = 0; i < len; i++) {
+	
+						$("#itemId").append(
+								$("<option style='text-align:left;'></option>").attr("value",
+										data[i].id).text(data[i].itemName));
+					}
 				}
-
 				$('.chosen-select').trigger('chosen:updated');
 
 			});
@@ -641,15 +656,18 @@ jQuery(document).ready(function(){
 									$("<option></option>").attr("value", -1)
 											.text("ALL")); */
 						if(catId>0){
+							$("#item_grp2").append(
+									$("<option selected style='text-align:left;'></option>").attr("value", -1)
+											.text("ALL"));
 							for (var i = 0; i < len; i++) {
 								$("#item_grp2").append(
-										$("<option ></option>").attr("value",
+										$("<option style='text-align:left;'></option>").attr("value",
 												data[i].subCatId).text(
 												data[i].subCatName));
 							}
 						}else{
 							$("#item_grp2").append(
-									$("<option selected></option>").attr("value", -1)
+									$("<option selected style='text-align:left;'></option>").attr("value", -1)
 											.text("ALL"));
 						}
 							$("#item_grp2").trigger("chosen:updated");

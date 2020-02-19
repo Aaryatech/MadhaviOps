@@ -151,7 +151,7 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th class="col-md-1">Sr.No.</th>
+											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
 											<!-- <th class="col-md-1">Bill No</th> -->
 											<th class="col-md-1" style="text-align: center;">Date</th>
 											<th class="col-md-1" style="text-align: center;">Tax
@@ -175,7 +175,7 @@ jQuery(document).ready(function(){
 									<thead>
 										<tr class="bgpink">
 
-											<th class="col-md-1">Sr.No.</th>
+											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
 											<!-- <th class="col-md-1">Bill No</th> -->
 											<th class="col-md-1" style="text-align: center;">Date</th>
 											<th class="col-md-1" style="text-align: center;">Tax
@@ -289,7 +289,7 @@ jQuery(document).ready(function(){
 
 													var tr = $('<tr></tr>');
 
-													tr.append($('<td></td>')
+													tr.append($('<td style="text-align:center;"></td>')
 															.html(key + 1));
 
 													tr
@@ -355,7 +355,9 @@ jQuery(document).ready(function(){
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var total = "<td colspan='1'><b> Total</b></td>";
+								var col1 = "<td colspan='1'></td>";
+								var col2 = "<td colspan='1'></td>";
 
 								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ taxTotal.toFixed(2);
@@ -378,6 +380,8 @@ jQuery(document).ready(function(){
 
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
+								$('#table_grid tbody').append(col1);
+								$('#table_grid tbody').append(col2);								
 								$('#table_grid tbody').append(totalTax)
 								$('#table_grid tbody').append(igst);
 								$('#table_grid tbody').append(cgst);

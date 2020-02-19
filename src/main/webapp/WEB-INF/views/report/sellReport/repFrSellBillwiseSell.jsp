@@ -188,10 +188,10 @@ chosen-container {
 									class="chosen-select chosen" tabindex="6" id="selCust"
 									name="selCust">
 
-									<option selected value="0"><c:out value="All" /></option>
+									<option selected value="0" style="text-align: left;"><c:out value="All" /></option>
 
 									<c:forEach items="${customerList}" var="cust" varStatus="count">
-										<option value="${cust.custId}"><c:out
+										<option value="${cust.custId}" style="text-align: left;"><c:out
 												value="${cust.custName}-${cust.phoneNumber}" /></option>
 									</c:forEach>
 								</select>

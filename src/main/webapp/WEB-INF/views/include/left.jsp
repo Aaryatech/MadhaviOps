@@ -810,11 +810,13 @@
 									<div class="ibox-title">Other Reports</div>
 								</div>
 
-								<a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
+								 <%-- <a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 									class="fa fa-files-o icon"></i>SP Advance Report</a>
-								<%--  <a
+								 
+								 // <a
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
-								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%>
+								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> //
+								
 								<a
 									href="${pageContext.request.contextPath}/showInsertCreditNote"><i
 									class="fa fa-files-o icon"></i>Credit Note Report</a> <a
@@ -823,7 +825,9 @@
 									href="${pageContext.request.contextPath}/grnReport"><i
 									class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/gvnReport"><i
-									class="fa fa-files-o icon"></i> GVN Report (Sale)</a> <a
+									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  --%>
+									 
+									<a
 									href="${pageContext.request.contextPath}/showCutomerList"><i
 									class="fa fa-files-o icon"></i>Customer List(Sale)</a>
 							</div>
@@ -882,9 +886,10 @@
 									href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
 									class="fa fa-files-o icon"></i>Credit Note HSNwise Report</a> <a
 									href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
-									class="fa fa-files-o icon"></i>HSN wise Summery Report</a> <a
+									class="fa fa-files-o icon"></i>HSN wise Summery Report</a> 
+									<%-- <a
 									href="${pageContext.request.contextPath}/showGstRegister"><i
-									class="fa fa-files-o icon"></i>Billwise HSN Register Report</a>
+									class="fa fa-files-o icon"></i>Billwise HSN Register Report</a> --%>
 								<%-- <a
 								href="${pageContext.request.contextPath}/viewItemWiseReport"><i
 								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> --%>
