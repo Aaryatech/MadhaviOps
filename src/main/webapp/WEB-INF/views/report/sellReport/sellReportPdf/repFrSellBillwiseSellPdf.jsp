@@ -27,10 +27,10 @@ th {
 </style>
 </head>
 <body>
-	<h4 align="center">Billwise Sale Report</h4>
+	<h3 align="center">Billwise Sale Report</h3>
 	<div align="center">
-		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h6>
+		<h3>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
+			&nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -43,12 +43,13 @@ th {
 				<th style="text-align: center; width: 100px">Bill Date</th>
 				<th style="text-align: center; width: 100px">Customer</th>
 				<th style="text-align: center; width: 100px">Disc%</th>
+				<th style="text-align: center; width: 100px">Disc Amt</th>
 				<th style="text-align: center; width: 100px">Taxable</th>
 				<th style="text-align: center; width: 100px">Total Tax</th>
 				<th style="text-align: center; width: 100px">Grand Total</th>
-				<th style="text-align: center; width: 100px">Payable AMT</th>
-				<th style="text-align: center; width: 100px">Paid AMT</th>
-				<th style="text-align: center; width: 100px">Remaining AMT</th>
+				<th style="text-align: center; width: 100px">Payable Amt</th>
+				<th style="text-align: center; width: 100px">Paid Amt</th>
+				<th style="text-align: center; width: 100px">Remaining Amt</th>
 				<th style="text-align: center; width: 100px">Payment Mode</th>
 
 
@@ -63,6 +64,7 @@ th {
 			<c:set var="totalTPayable" value="${0}" />
 			<c:set var="totalPaid" value="${0}" />
 			<c:set var="totalRemaining" value="${0}" />
+			<c:set var="totalDicsAmt" value="${0}" />
 
 			<c:set var="totalCash" value="${0}" />
 			<c:set var="totalCard" value="${0}" />
@@ -82,6 +84,9 @@ th {
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.discountPer}" /></td>
+					<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${reportList.discountAmt}" /></td>
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.taxableAmt}" /></td>
@@ -112,6 +117,8 @@ th {
 					<c:set var="totalPaid" value="${totalPaid + reportList.paidAmt}" />
 					<c:set var="totalRemaining"
 						value="${totalRemaining + reportList.remainingAmt}" />
+					<c:set var="totalDicsAmt"
+						value="${totalDicsAmt + reportList.discountAmt}" />
 
 					<td style="text-align: center;"><c:out
 							value="${reportList.paymentMode}" /></td>
@@ -127,6 +134,10 @@ th {
 			</c:forEach>
 			<tr>
 				<td colspan='5'><b>Total</b></td>
+				
+				<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalDicsAmt}" /></b></td>
 
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"

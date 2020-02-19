@@ -17,6 +17,8 @@ public class SellBillHeaderNew {
 	private float totalTax;
 
 	private float grandTotal;
+	
+	private float discountAmt;
 
 	private float paidAmt;
 
@@ -209,14 +211,24 @@ public class SellBillHeaderNew {
 		this.ePay = ePay;
 	}
 
+	public float getDiscountAmt() {
+		return discountAmt;
+	}
+
+	public void setDiscountAmt(float discountAmt) {
+		this.discountAmt = discountAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "SellBillHeaderNew [id=" + id + ", sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate="
 				+ billDate + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal
-				+ ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode
-				+ ", discountPer=" + discountPer + ", payableAmt=" + payableAmt + ", frName=" + frName + ", custId="
-				+ custId + ", custName=" + custName + ", phoneNumber=" + phoneNumber + ", gstNo=" + gstNo + ", address="
-				+ address + ", cash=" + cash + ", card=" + card + ", ePay=" + ePay + "]";
+				+ ", discountAmt=" + discountAmt + ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt
+				+ ", paymentMode=" + paymentMode + ", discountPer=" + discountPer + ", payableAmt=" + payableAmt
+				+ ", frName=" + frName + ", custId=" + custId + ", custName=" + custName + ", phoneNumber="
+				+ phoneNumber + ", gstNo=" + gstNo + ", address=" + address + ", cash=" + cash + ", card=" + card
+				+ ", ePay=" + ePay + "]";
 	}
 
+	
 }

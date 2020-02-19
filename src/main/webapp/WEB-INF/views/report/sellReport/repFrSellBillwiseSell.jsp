@@ -238,12 +238,13 @@ chosen-container {
 												<th style="text-align: center;">Bill Date</th>
 												<th style="text-align: center; width: 40px;">Customer</th>
 												<th style="text-align: center;">Disc%</th>
+												<th style="text-align: center;">Disc Amt</th>
 												<th style="text-align: center;">Taxable</th>
 												<th style="text-align: center;">Total Tax</th>
 												<th style="text-align: center;">Grand Total</th>
-												<th style="text-align: center;">Payable AMT</th>
-												<th style="text-align: center;">Paid AMT</th>
-												<th style="text-align: center;">Remaining AMT</th>
+												<th style="text-align: center;">Payable Amt</th>
+												<th style="text-align: center;">Paid Amt</th>
+												<th style="text-align: center;">Remaining Amt</th>
 												<th style="text-align: center;">Payment Mode</th>
 
 											</tr>
@@ -382,6 +383,7 @@ chosen-container {
 									var payableTotal = 0;
 									var paidTotal = 0;
 									var remainingTotal = 0;
+									var ttlDiscAmt = 0;
 
 									var cashTotal = 0;
 									var cardTotal = 0;
@@ -432,6 +434,13 @@ chosen-container {
 																		.html(
 																				sellBillData.discountPer
 																						.toFixed(2)));
+														tr
+														.append($(
+																'<td style="text-align:right;"></td>')
+																.html(
+																		sellBillData.discountAmt
+																				.toFixed(2)));
+														
 														tr
 																.append($(
 																		'<td style="text-align:right;"></td>')
@@ -493,6 +502,9 @@ chosen-container {
 														epayTotal = epayTotal
 																+ sellBillData.ePay;
 
+														ttlDiscAmt = ttlDiscAmt
+																+sellBillData.discountAmt;
+														
 														var paymentMode = sellBillData.paymentMode;
 
 														tr
@@ -508,6 +520,10 @@ chosen-container {
 
 									var tr = "<tr>";
 									var total = "<td colspan='5'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+									
+
+									var totalDiscAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (ttlDiscAmt).toFixed(2);
 
 									var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (amtTotal).toFixed(2);
@@ -544,7 +560,9 @@ chosen-container {
 
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
-									$('#table_grid tbody').append(total);
+									$('#table_grid tbody').append(total);									
+									$('#table_grid tbody').append(
+											addCommas(totalDiscAmt));
 									$('#table_grid tbody').append(
 											addCommas(taxable));
 									$('#table_grid tbody').append(
