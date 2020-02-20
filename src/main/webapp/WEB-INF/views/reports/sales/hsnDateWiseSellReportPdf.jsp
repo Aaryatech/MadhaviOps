@@ -21,16 +21,16 @@ th, td {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed3f3c;
 	color: white;
 }
 </style>
 </head>
 <body>
-	<h4 align="center">HSN Date Wise Sell Report</h4>
+	<h3 align="center">Bill wise HSN Wise Report</h3>
 	<div align="center">
-		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h6>
+		<h3>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
+			&nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -69,16 +69,16 @@ th {
 
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
-					<td><c:out value="${count.index+1}" /></td>
+					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
 
-					<td><c:out value="${reportList.invoiceNo}" /></td>
-					<td style="text-align: right;"><c:out
+					<td style="text-align: center;"><c:out value="${reportList.invoiceNo}" /></td>
+					<td style="text-align: center;"><c:out
 							value="${reportList.billDate}" /></td>
-					<td style="text-align: right;"><c:out
+					<td style="text-align: left;"><c:out
 							value="${reportList.userName}" /></td>
-					<td style="text-align: right;"><c:out
+					<td style="text-align: center;"><c:out
 							value="${reportList.userGstNo}" /></td>
-					<td style="text-align: right;"><c:out
+					<td style="text-align: center;"><c:out
 							value="${reportList.hsnCode}" /></td>
 
 					<td style="text-align: right;"><c:out
@@ -127,8 +127,8 @@ th {
 				</tr>
 			</c:forEach>
 			<tr>
-				<td></td>
 				<td><b>Total</b></td>
+				<td></td>				
 				<td></td>
 				<td></td>
 				<td></td>

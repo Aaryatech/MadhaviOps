@@ -192,8 +192,8 @@ table, th, td {
 							</div>
 
 							<div class="col-md-3" style="text-align: center;">
-								<input type="button" id="submit" class="btn btn-primary"
-									value="Search Report" onclick="searchReport()"> <input
+								<input type="button" id="submit" class="buttonsaveorder"
+									value="Search" onclick="searchReport()"> <input
 									class="btn btn-primary" value="PDF" id="PDFButton"
 									onclick="genPdf()" value="PDF" type="button">
 							</div>

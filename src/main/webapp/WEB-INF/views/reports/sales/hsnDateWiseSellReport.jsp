@@ -171,12 +171,13 @@ table, th, td {
 
 								<div class="col-md-3"
 									style="margin-top: 3px; text-align: right;">
-									<input type="button" id="submit" class="btn btn-primary"
-										value="Search Report" onclick="searchReport()">
+									<input type="button" id="submit" class="buttonsaveorder"
+										value="Search" onclick="searchReport()">
 
 
-									<button class="btn btn-primary" value="PDF" id="PDFButton"
-										onclick="genPdf()">PDF</button>
+									<input
+									class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()" value="PDF" type="button">
 
 								</div>
 
@@ -412,13 +413,13 @@ table, th, td {
 
 													tr
 															.append($(
-																	'<td class="col-sm-1"></td>')
+																	'<td class="col-sm-1"  style=text-align:center;></td>')
 																	.html(
 																			key + 1));
 
 													tr
 															.append($(
-																	'<td class="col-md-3" style=text-align:left;></td>')
+																	'<td class="col-md-3" style=text-align:center;></td>')
 																	.html(
 																			sellBillData.invoiceNo));
 													tr
@@ -435,13 +436,13 @@ table, th, td {
 
 													tr
 															.append($(
-																	'<td class="col-md-2" style=text-align:left;></td>')
+																	'<td class="col-md-2" style=text-align:center;></td>')
 																	.html(
 																			sellBillData.userGstNo));
 
 													tr
 															.append($(
-																	'<td class="col-md-2" style=text-align:left;></td>')
+																	'<td class="col-md-2" style=text-align:center;></td>')
 																	.html(
 																			sellBillData.hsnCode));
 
@@ -454,8 +455,8 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.taxableAmt));
+																	.html(addCommas(
+																			sellBillData.taxableAmt)));
 
 													tr
 															.append($(
@@ -466,8 +467,8 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.cgstRs));
+																	.html(addCommas(
+																			sellBillData.cgstRs)));
 
 													tr
 															.append($(
@@ -478,20 +479,20 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.sgstRs));
+																	.html(addCommas(
+																			sellBillData.sgstRs)));
 
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.total));
+																	.html(addCommas(
+																			sellBillData.total)));
 
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.billTotal));
+																	.html(addCommas(
+																			sellBillData.billTotal)));
 
 													sumQty = sumQty
 															+ sellBillData.qty;
@@ -522,65 +523,96 @@ table, th, td {
 
 												});
 
-								var tr = "<tr>";
-								var blank = "<td class='col-md-1'></td>";
-								var total = "<td class='col-md-3'><b> Total</b></td>";
-
-								var totalQty = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumQty) + "</b></td>";
-
-								var totalAmt = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumTotal).toFixed(2) + "</b></td>";
-
-								var totalTaxableAmt = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumTaxableAmt).toFixed(2)
-										+ "</b></td>";
-
-								var totalCgstPer = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumCgstPer).toFixed(2) + "</b></td>";
-
-								var totalCgstRs = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumCgstRs).toFixed(2) + "</b></td>";
-
-								var totalSgstPer = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumSgstPer).toFixed(2) + "</b></td>";
-
-								var totalSgstRs = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumSgstRs).toFixed(2) + "</b></td>";
-
-								var totalBill = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (sumBillTotal).toFixed(2)
-										+ "</b></td>";
-
-								var td = "<td></td>";
-
-								var trclosed = "</tr>";
-
-								$('#table_grid tbody').append(tr);
-								$('#table_grid tbody').append(tr);
-								$('#table_grid tbody').append(blank);
-								$('#table_grid tbody').append(total);
-								$('#table_grid tbody').append(blank);
-								$('#table_grid tbody').append(blank);
-								$('#table_grid tbody').append(blank);
-								$('#table_grid tbody').append(blank);
-								$('#table_grid tbody').append(totalQty);
-								$('#table_grid tbody').append(totalTaxableAmt);
-								$('#table_grid tbody').append(totalCgstPer);
-								$('#table_grid tbody').append(totalSgstRs);
-								$('#table_grid tbody').append(totalSgstPer);
-								$('#table_grid tbody').append(totalSgstRs);
-								$('#table_grid tbody').append(totalAmt);
-								$('#table_grid tbody').append(totalBill);
-								$('#table_grid tbody').append(trclosed);
-								$('#table_grid tbody').append(trclosed);
-							});
+								var tr = $('<tr></tr>');		
+								tr
+								.append($(
+										'<td class="col-md-1" style=text-align:right;></td>')
+										.html('Total'));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(''));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(''));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(''));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(''));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(''));
+								 tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(sumQty.toFixed(2)));
+								
+								
+								
+								 tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(addCommas(sumtaxableAmt.toFixed(2))));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(sumCgstPer));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(addCommas(sumCgstRs.toFixed(2))));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(sumSgstPer));
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(addCommas(sumSgstRs.toFixed(2))));
+								 tr
+									.append($(
+											'<td class="col-md-2" style=text-align:right;></td>')
+											.html(addCommas(sumTotal.toFixed(2))));
+								 
+								tr
+								.append($(
+										'<td class="col-md-2" style=text-align:right;></td>')
+										.html(addCommas(sumBillTotal.toFixed(2))));
+								
+								
+								$('#table_grid tbody')
+								.append(tr);
+								
+							
+							}); 
 		}
 	</script>
 
 
 
 	<script>
+	function addCommas(x) {
+
+		x = String(x).toString();
+		var afterPoint = '';
+		if (x.indexOf('.') > 0)
+			afterPoint = x.substring(x.indexOf('.'), x.length);
+		x = Math.floor(x);
+		x = x.toString();
+		var lastThree = x.substring(x.length - 3);
+		var otherNumbers = x.substring(0, x.length - 3);
+		if (otherNumbers != '')
+			lastThree = ',' + lastThree;
+		return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+				+ afterPoint;
+	}
+	
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcelNew");

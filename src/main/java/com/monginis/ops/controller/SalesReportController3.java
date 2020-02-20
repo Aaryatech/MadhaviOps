@@ -2996,7 +2996,7 @@ public class SalesReportController3 {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 
-			rowData.add("TOTAL");
+			rowData.add("Total");
 
 			float sumQty = 0, sumAmt = 0, sumTaxableAmt = 0, sumTaxAmt = 0;
 			for (int i = 0; i < reportList.size(); i++) {
@@ -3022,8 +3022,8 @@ public class SalesReportController3 {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "SubCat_Date_Wise_Sell_Report");
-			session.setAttribute("reportNameNew", "Sub Category Date Wise Sell Report");
+			session.setAttribute("excelNameNew", "Sub-Category Wise Sell Report");
+			session.setAttribute("reportNameNew", "Sub-Category Wise Sell Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
 			session.setAttribute("mergeUpto1", "$A$1:$C$1");
 			session.setAttribute("mergeUpto2", "$A$2:$C$2");
@@ -3269,7 +3269,7 @@ public class SalesReportController3 {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 
-			rowData.add("TOTAL");
+			rowData.add("Total");
 			rowData.add(" ");
 			rowData.add(" ");
 			rowData.add(" ");
@@ -3311,8 +3311,8 @@ public class SalesReportController3 {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "HSN_Date_Wise_Sell_Report");
-			session.setAttribute("reportNameNew", "HSN Date Wise Sell Report");
+			session.setAttribute("excelNameNew", "Bill wise HSN Wise Report");
+			session.setAttribute("reportNameNew", "Bill wise HSN Wise Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
 			session.setAttribute("mergeUpto1", "$A$1:$M$1");
 			session.setAttribute("mergeUpto2", "$A$2:$M$2");

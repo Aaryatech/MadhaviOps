@@ -225,7 +225,7 @@ chosen-container {
 							<!--table-->
 							<div class="clearfix"></div>
 
-
+<div class="table-responsive">
 							<div id="table-scroll" class="table-scroll responsive-table-one">
 
 								<div>
@@ -258,6 +258,7 @@ chosen-container {
 
 								</div>
 
+							</div>
 							</div>
 							<!--table end-->
 							<br>

@@ -130,7 +130,7 @@ table, th, td {
 							type="text">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left"
+						<button class="buttonsaveorder"
 							onclick="itemWiseReport()">Search</button>
 						<%-- 		   &nbsp;&nbsp;&nbsp; <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseItemwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
@@ -160,10 +160,10 @@ table, th, td {
 												<!-- <th class="col-md-1" style="text-align: center;">Party
 													Name</th> -->
 												<th style="text-align: center;">Item Name</th>
-												<th class="col-md-1" style="text-align: center;">GRN
-													Type</th>
+												<!-- <th class="col-md-1" style="text-align: center;">GRN
+													Type</th> -->
 												<th class="col-md-1" style="text-align: center;">Rate</th>
-												<th class="col-md-1" style="text-align: center;">QTY</th>
+												<th class="col-md-1" style="text-align: center;">Qty.</th>
 												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 												<th class="col-md-1" style="text-align: center;">Amount</th>
 
@@ -186,10 +186,10 @@ table, th, td {
 											<!-- <th class="col-md-1" style="text-align: center;">Party
 												Name</th> -->
 											<th style="text-align: center;">Item Name</th>
-											<th class="col-md-1" style="text-align: center;">GRN
-												Type</th>
+											<!-- <th class="col-md-1" style="text-align: center;">GRN
+												Type</th> -->
 											<th class="col-md-1" style="text-align: center;">Rate</th>
-											<th class="col-md-1" style="text-align: center;">QTY</th>
+											<th class="col-md-1" style="text-align: center;">Qty.</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Amount</th>
 
@@ -282,7 +282,7 @@ table, th, td {
 
 					var tr = $('<tr></tr>');
 
-					tr.append($('<td></td>').html(key + 1));
+					tr.append($('<td style="text-align:center;"></td>').html(key + 1));
 
 					/* tr
 							.append($(
@@ -292,12 +292,12 @@ table, th, td {
 
 					tr.append($('<td style="text-align:left;"></td>').html(
 							itemWiseTaxData.itemName));
-					tr.append($('<td style="text-align:left;"></td>').html(
-							itemWiseTaxData.grnType));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							(itemWiseTaxData.rate).toFixed(2)));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							(itemWiseTaxData.qty).toFixed(2)));
+					/* tr.append($('<td style="text-align:left;"></td>').html(
+							itemWiseTaxData.grnType)); */
+					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
+							(itemWiseTaxData.rate).toFixed(2))));
+					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
+							(itemWiseTaxData.qty).toFixed(2))));
 
 					/* tr
 							.append($(
@@ -306,8 +306,8 @@ table, th, td {
 											(itemWiseTaxData.rate)
 													.toFixed(2))); */
 
-					tr.append($('<td style="text-align:right;"></td>').html(
-							(itemWiseTaxData.total).toFixed(2)));
+					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
+							(itemWiseTaxData.total).toFixed(2))));
 
 					qtyTotal = qtyTotal + itemWiseTaxData.qty;
 					amtTotal = amtTotal + itemWiseTaxData.total;
@@ -320,17 +320,14 @@ table, th, td {
 
 				tr.append($('<td   style="font-weight:bold;"></td>').html(
 						"Total"));
+				/* tr.append($('<td  ></td>').html("")); */
 				tr.append($('<td  ></td>').html(""));
 				tr.append($('<td  ></td>').html(""));
-				tr.append($('<td  ></td>').html(""));
-				tr.append($('<td    style="text-align:right;"></td>').html(
-						qtyTotal.toFixed(2)));
+				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
+						qtyTotal.toFixed(2))));
 
-				/* tr.append($('<td  class="col-md-1"></td>')
-						.html("")); */
-
-				tr.append($('<td    style="text-align:right;"></td>').html(
-						amtTotal.toFixed(2)));
+				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
+						amtTotal.toFixed(2))));
 
 				$('#table_grid tbody').append(tr);
 			}
@@ -340,6 +337,23 @@ table, th, td {
 	}
 </script>
 <script type="text/javascript">
+
+function addCommas(x) {
+
+	x = String(x).toString();
+	var afterPoint = '';
+	if (x.indexOf('.') > 0)
+		afterPoint = x.substring(x.indexOf('.'), x.length);
+	x = Math.floor(x);
+	x = x.toString();
+	var lastThree = x.substring(x.length - 3);
+	var otherNumbers = x.substring(0, x.length - 3);
+	if (otherNumbers != '')
+		lastThree = ',' + lastThree;
+	return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+			+ afterPoint;
+}
+
 	function validate() {
 
 		var fromDate = $("#fromdatepicker").val();

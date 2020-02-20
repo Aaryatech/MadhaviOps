@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sub Category Date wise Sell Report</title>
+<title>Sub-Category Wise Sell Report</title>
 <style type="text/css">
 table {
 	border-collapse: collapse;
@@ -27,10 +27,10 @@ th {
 </style>
 </head>
 <body>
-	<h4 align="center">Sub Category Date Wise Sale Report</h4>
+	<h3 align="center">Sub-Category Wise Sell Report</h3>
 	<div align="center">
-		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
-			&nbsp;To &nbsp; ${toDate}</h6>
+		<h3>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
+			&nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -56,7 +56,7 @@ th {
 
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
-					<td><c:out value="${count.index+1}" /></td>
+					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
 					<%-- 	<td><c:out value="${reportList.sellBillNo}" /></td> --%>
 					<td><c:out value="${reportList.subCatName}" /></td>
 					<td style="text-align: right;"><c:out
@@ -80,9 +80,9 @@ th {
 				</tr>
 			</c:forEach>
 			<tr>
-				<td></td>
+				
 				<td ><b>Total</b></td>
-
+				<td></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="0" maxFractionDigits="0"
 							value="${totalQty}" /></b></td>
