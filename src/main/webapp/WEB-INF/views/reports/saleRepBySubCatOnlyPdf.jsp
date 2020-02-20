@@ -46,6 +46,7 @@ th {
 }
 </style>
 </head>
+
 <body onload="myFunction()">
 	<h3 align="center">${FACTORYNAME}</h3>
 	<h4 align="center">${FACTORYADDRESS}</h4>
