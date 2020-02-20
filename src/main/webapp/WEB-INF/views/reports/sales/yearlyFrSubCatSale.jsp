@@ -125,7 +125,7 @@ table, th, td {
 
 
 							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
+								<div class="col-sm-3 col-lg-2	">From Month</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
@@ -136,7 +136,7 @@ table, th, td {
 
 					<div class="form-group  "> -->
 
-								<div class="col-sm-3 col-lg-2	">To Date</div>
+								<div class="col-sm-3 col-lg-2	">To Month</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
@@ -207,8 +207,8 @@ table, th, td {
 
 
 								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submit" class="btn btn-primary"
-										value="Search Report" onclick="searchReport()">
+									<input type="button" id="submit" class="buttonsaveorder"
+										value="Search" onclick="searchReport()">
 								</div>
 
 							</div>
@@ -240,7 +240,7 @@ table, th, td {
 
 
 							<div class="form-group">
-								<div class="col-sm-3 col-lg-2	">From Date</div>
+								<div class="col-sm-3 col-lg-2	">From Month</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
@@ -248,7 +248,7 @@ table, th, td {
 								</div>
 
 								
-								<div class="col-sm-3 col-lg-2	">To Date</div>
+								<div class="col-sm-3 col-lg-2	">To Month</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem" size="30"
@@ -299,8 +299,8 @@ table, th, td {
 
 
 								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submitItem" class="btn btn-primary"
-										value="Search Report" onclick="searchItemReport()">
+									<input type="button" id="submitItem" class="buttonsaveorder"
+										value="Search" onclick="searchItemReport()">
 								</div>
 
 							</div>

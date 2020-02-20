@@ -41,17 +41,17 @@ h6 {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed3f3c;
 	color: white;
 }
 </style>
 </head>
 <body onload="myFunction()">
 	<h3 align="center">${FACTORYNAME}</h3>
-	<p align="center">${FACTORYADDRESS}</p>
+	<h4 align="center">${FACTORYADDRESS}</h4>
 	<div align="center">
-		<h5>Sales Report (Franchisee Wise) &nbsp;&nbsp;&nbsp;&nbsp; From
-			&nbsp; ${fromDate} &nbsp;To &nbsp; ${toDate}</h5>
+		<h3>Sales Report (Franchisee Wise) &nbsp;&nbsp;&nbsp;&nbsp; From
+			&nbsp; ${fromDate} &nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">
@@ -88,7 +88,7 @@ th {
 			<c:forEach items="${subCatReportList}" var="report" varStatus="count">
 				<tr>
 
-					<td width="10"><c:out value="${count.index+1}" /></td>
+					<td width="10" align="center"><c:out value="${count.index+1}" /></td>
 					<td width="500"><c:out value="${report.subCatName}" /></td>
 					<td width="10" align="right"><fmt:formatNumber type="number"
 							maxFractionDigits="2" minFractionDigits="2"
@@ -150,12 +150,10 @@ th {
 
 			</c:forEach>
 
-			<tr>
-
-				<td></td>
+			<tr>				
 
 				<td colspan='1'><b>Total</b></td>
-
+				<td></td>
 
 				<td width="10" align="right"><b><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"

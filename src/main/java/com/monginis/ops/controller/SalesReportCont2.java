@@ -189,8 +189,9 @@ public class SalesReportCont2 {
 			}
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
-			rowData.add(" ");
+			
 			rowData.add("Total");
+			rowData.add(" ");
 
 			rowData.add("" + roundUp(totalSoldQty));
 			rowData.add("" + roundUp(totalSoldAmt));
@@ -208,8 +209,8 @@ public class SalesReportCont2 {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "SaleBillWiseDate");
-			session.setAttribute("reportNameNew", "Bill-wise Report");
+			session.setAttribute("excelNameNew", "Sub-Category Summary Report");
+			session.setAttribute("reportNameNew", "Sub-Category Summary Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
 			session.setAttribute("mergeUpto1", "$A$1:$K$1");
 			session.setAttribute("mergeUpto2", "$A$2:$K$2");
