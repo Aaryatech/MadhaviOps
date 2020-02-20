@@ -107,7 +107,6 @@ table, th, td {
 				<br>
 
 
-
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 					<input type="hidden" name="factoryName" id="factoryName"
