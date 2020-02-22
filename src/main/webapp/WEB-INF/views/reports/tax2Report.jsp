@@ -9,6 +9,7 @@
 <style>
 table, th, td {
 	border: 1px solid #9da88d;
+	text-align: center;
 }
 </style>
 
@@ -108,7 +109,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Billwiise Tax Percentage Report</h2>
+						<h2 class="pageTitle">Billwise Tax Percentage Report</h2>
 					</div>
 				</div>
 
@@ -136,7 +137,7 @@ jQuery(document).ready(function(){
 										name="toDate" type="text">
 								</div>
 								<div class="col-md-2">
-									<button class="btn search_btn pull-left"
+									<button class="buttonsaveorder"
 										onclick="searchReport()">Search</button>
 
 								</div>
@@ -148,7 +149,7 @@ jQuery(document).ready(function(){
 					<div class="row">
 						<div class="clearfix"></div>
 
-
+<div class="table-responsive">
 						<div id="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
 								<table id="table_grid1" class="main-table" border="1">
@@ -219,7 +220,7 @@ jQuery(document).ready(function(){
 											<th>CGST @ 0%</th>
 											<th>SGST Value</th>
 											<th>CGST Value</th>
-											<th>GROSS BILL</th>
+											<th>GrossBill</th>
 
 
 										</tr>
@@ -318,6 +319,7 @@ jQuery(document).ready(function(){
 
 
 										<tr>
+										<td style="text-align: left;">Total</td>
 											<td></td>
 											<td></td>
 											<td></td>
@@ -330,7 +332,7 @@ jQuery(document).ready(function(){
 											<td></td>
 
 
-											<td style="text-align: left;">Total</td>
+											
 											<td style="text-align: right;"><fmt:formatNumber
 													type="number" maxFractionDigits="2" minFractionDigits="2"
 													value="${totalTaxableAmt}" /></td>
@@ -365,6 +367,7 @@ jQuery(document).ready(function(){
 
 							</div>
 
+						</div>
 						</div>
 						<!--table end-->
 						<br>

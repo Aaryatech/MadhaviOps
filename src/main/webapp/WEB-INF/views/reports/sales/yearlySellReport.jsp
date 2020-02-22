@@ -187,8 +187,8 @@ table, th, td {
 
 
 								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submit" class="btn btn-primary"
-										value="Search Report" onclick="searchReport()">
+									<input type="button" id="submit" class="buttonsaveorder"
+										value="Search" onclick="searchReport()">
 								</div>
 
 							</div>
@@ -269,8 +269,8 @@ table, th, td {
 
 
 								<div class="col-sm-12 " style="text-align: center;">
-									<input type="button" id="submitItem" class="btn btn-primary"
-										value="Search Report" onclick="searchItemReport()">
+									<input type="button" id="submitItem" class="buttonsaveorder"
+										value="Search" onclick="searchItemReport()">
 								</div>
 
 							</div>

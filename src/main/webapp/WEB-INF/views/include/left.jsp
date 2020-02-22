@@ -877,9 +877,9 @@
 								</div>
 
 								<a href="${pageContext.request.contextPath}/showTaxReport"><i
-									class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report
+									class="fa fa-files-o icon"></i>Billwise Tax Report
 								</a> <a href="${pageContext.request.contextPath}/showTax2Report"><i
-									class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report</a>
+									class="fa fa-files-o icon"></i>Billwise Tax Percentage Report</a>
 								<a href="${pageContext.request.contextPath}/showCRNoteRegister"><i
 									class="fa fa-files-o icon"></i>Credit Note Tax Percentage
 									Report</a> <a

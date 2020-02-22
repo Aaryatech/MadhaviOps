@@ -1486,7 +1486,7 @@ public class ReportControllerV2 {
 			rowData.add("CGST @ 0%");
 			rowData.add("SGST Value");
 			rowData.add("CGST Value");
-			rowData.add("GROSS BILL");
+			rowData.add("Gross Bill");
 
 			float totalTaxableValue = 0.0f;
 			float totalCgstValue = 0.0f;
@@ -1532,7 +1532,8 @@ public class ReportControllerV2 {
 				float cgstSum = Math.round((taxReportList.get(i).getCgstAmtTwentyEight()
 						+ taxReportList.get(i).getCgstAmtEighteen() + taxReportList.get(i).getCgstAmtTwelve()
 						+ taxReportList.get(i).getCgstAmtFive() + taxReportList.get(i).getCgstAmtZero()));
-				float grossSell = Math.round((taxableAmt + sgstSum + cgstSum));
+				float grossSum=taxableAmt + sgstSum + cgstSum;
+				float grossSell = Math.round(grossSum);
 				rowData.add("" + sgstSum);
 				rowData.add("" + cgstSum);
 				rowData.add("" + grossSell);
@@ -1550,6 +1551,7 @@ public class ReportControllerV2 {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 
+			rowData.add("Total");
 			rowData.add("");
 
 			rowData.add("");
@@ -1559,8 +1561,7 @@ public class ReportControllerV2 {
 			rowData.add("");
 			rowData.add("");
 			rowData.add("");
-			rowData.add("");
-			rowData.add("Total");
+			rowData.add("");			
 			rowData.add("");
 
 			rowData.add("" + roundUp(totalTaxableValue));

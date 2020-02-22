@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Billwiise Tax Percentage Report</h2>
+						<h2 class="pageTitle">Billwise Tax Percentage Report</h2>
 					</div>
 				</div>
 
@@ -136,7 +136,7 @@ jQuery(document).ready(function(){
 										name="toDate" type="text">
 								</div>
 								<div class="col-md-2">
-									<button class="btn search_btn pull-left"
+									<button class="buttonsaveorder"
 										onclick="searchReport()">Search</button>
 
 								</div>
