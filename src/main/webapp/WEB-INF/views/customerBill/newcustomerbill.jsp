@@ -186,7 +186,7 @@ body {
 							<a href="#"><abbr title="Full Screen"><i
 									class="fa fa-arrows-alt" aria-hidden="true"></i></abbr></a>
 						</div>
-						<a href="${pageContext.request.contextPath}/frEmpLogin"> <abbr
+						<a href="${pageContext.request.contextPath}/logoutEmp"> <abbr
 							title="Logout"><i class="fa fa-sign-out"
 								aria-hidden="true"></i></abbr></a>
 					</div>

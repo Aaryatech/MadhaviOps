@@ -66,7 +66,7 @@
 	
 <%-- 		<img src="${pageContext.request.contextPath}/resources/newpos/images/fullscreen.png"  id="fs-doc-button" alt="F" style="margin-top:8px;">
  --%>		<%-- <img src="${pageContext.request.contextPath}/resources/newpos/images/normal.png"  id="fs-exit-doc-button" alt="N" style="margin-top:8px;"> --%>
-		<div class="logout_btn"><a href="${pageContext.request.contextPath}/frEmpLogin"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></div>
+		<div class="logout_btn"><a href="${pageContext.request.contextPath}/logoutEmp"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout </a></div>
 	</div>
 	<div class="clr"></div>
 <!-- 	<i class="fa fa-eye-slash"  aria-hidden="true"> -->

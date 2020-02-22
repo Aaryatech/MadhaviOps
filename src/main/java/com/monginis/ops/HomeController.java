@@ -1063,6 +1063,7 @@ public class HomeController {
 		String resp="";
 
 		try {
+			System.err.println("Anmol");
 			 empId =Integer.parseInt(request.getParameter("empId"));
             if(empList.size()>0)
             {
@@ -1086,6 +1087,8 @@ public class HomeController {
 	@RequestMapping(value = "/frLoginProcess", method = RequestMethod.GET)
 	public String frLoginProcess(HttpSession ses, HttpServletRequest request, HttpServletResponse response)
 			throws ParseException {
+		
+		System.err.println("Fr Emp Login " );
 
 		logger.info("/frLoginProcess request mapping.");
 
@@ -1391,6 +1394,20 @@ public class HomeController {
 		}
 
 		return result;
+	}
+	
+	
+	@RequestMapping(value = "/logoutEmp")
+	public String logoutEmp(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("Logout Controller User Logout");
+		ModelAndView model = new ModelAndView("login");
+		
+		session.removeAttribute("frEmpDetails");
+
+		// session.invalidate();
+
+		return "redirect:/frEmpLogin";
+		// return "redirect:/";
 	}
 	
 	

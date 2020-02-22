@@ -717,6 +717,10 @@ table, th, td {
 
 												var regCurrentStock = item.currentRegStock;
 												var reOrderQty = item.reOrderQty;
+												
+												//alert(regCurrentStock+"        stType ="+stType);
+												
+												
 												if (stType == 1) {
 													
 													//alert("stType=1");
@@ -1336,9 +1340,7 @@ table, th, td {
 																	.append($(
 																			'<td class="col-md-1" style="text-align:right;"></td>')
 																			.html(
-																					regOpStockValue.toFixed(2))
-																			.toFixed(
-																					2));
+																					regOpStockValue.toFixed(2)));
 														} else
 
 														{
@@ -1452,6 +1454,48 @@ table, th, td {
 																			.html(
 																					reOrderQty));
 														 */
+														 
+														 
+
+															if (item.sellCreditNote < 0) {
+																tr
+																		.append($(
+																				'<td class="col-md-1" style="text-align:right;"></td>')
+																				.html(0));
+															} else {
+																tr
+																		.append($(
+																				'<td class="col-md-1" style="text-align:right;"></td>')
+																				.html(
+																						item.sellCreditNote
+																								.toFixed(2)));
+															}									
+															
+															
+															if (selectRate == 1) {
+																var creditVal = item.spOpeningStock
+																		* item.sellCreditNote;
+
+																tr
+																		.append($(
+																				'<td class="col-md-1" style="text-align:right;"></td>')
+																				.html(
+																						creditVal
+																								.toFixed(2)));
+															} else
+
+															{
+																var creditVal = item.spTotalPurchase
+																		* item.sellCreditNote;
+																tr
+																		.append($(
+																				'<td class="col-md-1" style="text-align:right;"></td>')
+																				.html(
+																						creditVal
+																								.toFixed(2)));
+															}
+														 
+														 
 														if (regCurrentStock < 0) {
 															tr
 																	.append($(
@@ -1533,7 +1577,7 @@ table, th, td {
 													}
 												}
 
-											})
+											});
 						});
 	}
 </script>

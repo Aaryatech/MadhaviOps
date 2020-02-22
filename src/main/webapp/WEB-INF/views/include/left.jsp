@@ -418,7 +418,7 @@
 
 
 					<c:if
-						test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2}">
+						test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2 or sessionScope.frEmpDetails.designation==3}">
 
 						<li><a
 							href="${pageContext.request.contextPath}/showPattyCashMgmnt">
