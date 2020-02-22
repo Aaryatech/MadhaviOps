@@ -29,8 +29,8 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-<h4 align="center">Datewise Sale Report</h4>
-<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+<h3 align="center">Datewise Sale Report</h3>
+<div align="center"> <h3>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h3></div>
 	<table width="100%" border="1" cellspacing="0"
 														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
@@ -54,9 +54,9 @@ th {
 								<c:set var="totalOther"  value="${0 }"/>
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
-													<td style="text-align:left;"><c:out value="${count.index+1}" /></td>
-													<td><c:out value="${reportList.day}" /></td>
-													<td><c:out value="${reportList.billDate}" /></td>
+													<td style="text-align:center;"><c:out value="${count.index+1}" /></td>
+													<td style="text-align:center;"><c:out value="${reportList.day}" /></td>
+													<td style="text-align:center;"><c:out value="${reportList.billDate}" /></td>
 													<c:set var="amt"  value="${reportList.cash + reportList.card + reportList.other }"/>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${amt}" /></td>
 													 <c:set var="totalAmount" value="${totalAmount + amt}"/>

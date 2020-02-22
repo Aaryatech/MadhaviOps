@@ -1741,7 +1741,7 @@ public class SalesReportController3 {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 
-			rowData.add("TOTAL");
+			rowData.add("Total");
 
 			for (int i = 0; i < reportList.size(); i++) {
 

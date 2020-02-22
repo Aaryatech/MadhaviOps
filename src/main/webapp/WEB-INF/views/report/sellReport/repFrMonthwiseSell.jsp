@@ -287,7 +287,7 @@ jQuery(document).ready(function(){
 									
 									var tr = $('<tr></tr>');
 
-								  	tr.append($('<td <th class="col-md-1">></td>').html(key+1));
+								  	tr.append($('<td <th class="col-md-1" style=text-align:center;></td>').html(key+1));
 
 								  	var monthNumber = sellBillData.month;
 								    
@@ -296,17 +296,17 @@ jQuery(document).ready(function(){
 							 tr.append($('<td class="col-md-1"style="text-align:left;"></td>').html(monthNumber));
 								  	
 								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
-								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((amt).toFixed(2)));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((amt).toFixed(2))));
 								  	
 								  	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 									
-								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.cash).toFixed(2)));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.cash).toFixed(2))));
 								  	cashTotal=cashTotal + sellBillData.cash;
 
-								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.card).toFixed(2)));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.card).toFixed(2))));
 								  	cardTotal=cardTotal + sellBillData.card;
 								  	
-									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html((sellBillData.other).toFixed(2)));
+									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.other).toFixed(2))));
 								  	otherTotal=otherTotal + sellBillData.other; 
 
 								  	
@@ -320,19 +320,20 @@ jQuery(document).ready(function(){
 												})
 												
 							var tr = "<tr>";
-								 var total = "<td colspan='2'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+							 var non = "<td colspan='1'></td>";
+								 var total = "<td colspan='1' style=text-align:left;>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 								 
 								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-									+ (amtTotal).toFixed(2)
+									+ addCommas((amtTotal).toFixed(2))
 									+ "</b></td>";
 								 var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-									+  (cashTotal).toFixed(2)
+									+  addCommas((cashTotal).toFixed(2))
 									+ "</b></td>";
 								var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-									+ (cardTotal).toFixed(2)
+									+ addCommas((cardTotal).toFixed(2))
 									+ "</b></td>";
 								var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-									+ (otherTotal).toFixed(2)
+									+ addCommas((otherTotal).toFixed(2))
 									+ "</b></td>"; 
 									
 								
@@ -343,6 +344,8 @@ jQuery(document).ready(function(){
 								.append(tr);
 								$('#table_grid tbody')
 								.append(total);
+								$('#table_grid tbody')
+								.append(non);
 								$('#table_grid tbody')
 								.append(totalAmt);
 								 $('#table_grid tbody')
@@ -578,7 +581,22 @@ function showChart(){
 			}
 </script>
  <script>
-	
+ function addCommas(x) {
+
+		x = String(x).toString();
+		var afterPoint = '';
+		if (x.indexOf('.') > 0)
+			afterPoint = x.substring(x.indexOf('.'), x.length);
+		x = Math.floor(x);
+		x = x.toString();
+		var lastThree = x.substring(x.length - 3);
+		var otherNumbers = x.substring(0, x.length - 3);
+		if (otherNumbers != '')
+			lastThree = ',' + lastThree;
+		return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+				+ afterPoint;
+	}
+ 
 (function() {
   var fauxTable = document.getElementById("faux-table");
   var mainTable = document.getElementById("table_grid");

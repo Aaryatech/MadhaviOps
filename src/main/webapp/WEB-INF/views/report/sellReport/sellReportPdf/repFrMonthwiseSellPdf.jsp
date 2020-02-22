@@ -22,14 +22,14 @@ th, td {
 
 
 th {
-    background-color: #EA3291;
+    background-color: #ed3f3c;
     color: white;
 }
 </style>
 </head>
 <body onload="myFunction()">
-<h4 align="center">Monthwise Sale Report</h4>
-<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+<h3 align="center">Monthwise Sale Report</h3>
+<div align="center"> <h3>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h3></div>
 	<table width="100%" border="1" cellspacing="0"
 														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >

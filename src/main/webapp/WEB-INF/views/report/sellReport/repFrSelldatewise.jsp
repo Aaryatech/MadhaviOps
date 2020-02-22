@@ -267,19 +267,19 @@ table, th, td {
 
 														tr
 																.append($(
-																		'<td class="col-md-1" style="text-align:left;"></td>')
+																		'<td class="col-md-1" style="text-align:center;"></td>')
 																		.html(
 																				key + 1));
 
 														/* tr.append($('<td class="col-md-1"></td>').html(sellBillData.billNo)); */
 														tr
 																.append($(
-																		'<td class="col-md-1"></td>')
+																		'<td class="col-md-1" style="text-align:center;"></td>')
 																		.html(
 																				sellBillData.day));
 														tr
 																.append($(
-																		'<td class="col-md-1"></td>')
+																		'<td class="col-md-1" style="text-align:center;"></td>')
 																		.html(
 																				sellBillData.billDate));
 
@@ -289,9 +289,9 @@ table, th, td {
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(amt)
-																						.toFixed(2)));
+																						.toFixed(2))));
 
 														amtTotal = amtTotal
 																+ sellBillData.cash
@@ -301,27 +301,27 @@ table, th, td {
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.cash)
-																						.toFixed(2)));
+																						.toFixed(2))));
 														cashTotal = cashTotal
 																+ sellBillData.cash;
 
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.card)
-																						.toFixed(2)));
+																						.toFixed(2))));
 														cardTotal = cardTotal
 																+ sellBillData.card;
 
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.other)
-																						.toFixed(2)));
+																						.toFixed(2))));
 														otherTotal = otherTotal
 																+ sellBillData.other;
 
@@ -334,16 +334,16 @@ table, th, td {
 									var total = "<td colspan='3'style=text-align:left;>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 
 									var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-											+ (amtTotal).toFixed(2);
+											+ addCommas((amtTotal).toFixed(2));
 									+"</b></td>";
 									var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-											+ (cashTotal).toFixed(2);
+											+ addCommas((cashTotal).toFixed(2));
 									+"</b></td>";
 									var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-											+ (cardTotal).toFixed(2);
+											+ addCommas((cardTotal).toFixed(2));
 									+"</b></td>";
 									var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-											+ (otherTotal).toFixed(2);
+											+ addCommas((otherTotal).toFixed(2));
 									+"</b></td>";
 
 									var trclosed = "</tr>";
@@ -362,6 +362,23 @@ table, th, td {
 		}
 	</script>
 	<script type="text/javascript">
+	function addCommas(x) {
+
+		x = String(x).toString();
+		var afterPoint = '';
+		if (x.indexOf('.') > 0)
+			afterPoint = x.substring(x.indexOf('.'), x.length);
+		x = Math.floor(x);
+		x = x.toString();
+		var lastThree = x.substring(x.length - 3);
+		var otherNumbers = x.substring(0, x.length - 3);
+		if (otherNumbers != '')
+			lastThree = ',' + lastThree;
+		return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+				+ afterPoint;
+	}
+	
+	
 		function validate() {
 
 			var fromDate = $("#fromdatepicker").val();

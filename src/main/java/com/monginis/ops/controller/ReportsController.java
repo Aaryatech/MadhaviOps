@@ -3043,9 +3043,9 @@ public class ReportsController {
 
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
-		rowData.add("");
-		rowData.add("");
 		rowData.add("Total");
+		rowData.add("");
+		rowData.add("");		
 		rowData.add("" + totalMonthSale);
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);

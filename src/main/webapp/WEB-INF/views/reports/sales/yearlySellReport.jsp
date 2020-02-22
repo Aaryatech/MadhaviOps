@@ -494,15 +494,25 @@ table, th, td {
 												$("<option ></option>").attr(
 														"value", "").text(
 														"Select Sub Category")); */
+								if(catId==-1){
+									for (var i = 0; i < len; i++) {
+										$("#item_grp2").append(
+												$("<option selected></option>").attr(
+														"value", data[i].subCatId)
+														.text(data[i].subCatName));
+									}
+								}else{
+														
 								$("#item_grp2").append(
 										$("<option></option>")
 												.attr("value", -1).text("ALL"));
 								for (var i = 0; i < len; i++) {
 									$("#item_grp2").append(
-											$("<option ></option>").attr(
+											$("<option></option>").attr(
 													"value", data[i].subCatId)
 													.text(data[i].subCatName));
 								}
+							}
 								$('.chosen-select').trigger('chosen:updated');
 
 							});
