@@ -89,7 +89,7 @@
 
 
 					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">Search
+						<button class="buttonsaveorder" onclick="searchSellBill()">Search
 						</button>
 						<%--   &nbsp;&nbsp;&nbsp;
 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
@@ -115,7 +115,7 @@
 
 
 											<th width="7%" style="text-align: center;">Sr.</th>
-											<th style="text-align: center;">Item Name</th>
+											<!-- <th style="text-align: center;">Item Name</th> -->
 											<th class="col-md-1" style="text-align: center;">HSN No.</th>
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
@@ -224,12 +224,12 @@
 																	.html(
 																			key + 1));
 
-													tr
+													/* tr
 															.append($(
 																	'<td   style="text-align:left"></td>')
 																	.html(
 																			list.itemName));
-
+ */
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -296,8 +296,8 @@
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
-
+								var total = "<td colspan='1'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var non1 = "<td colspan='1'></td>";
 								var cgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+ cgstTotal.toFixed(2);
 								+"</b></td>";
@@ -325,6 +325,7 @@
 
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
+								$('#table_grid tbody').append(non1);
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
 								$('#table_grid tbody').append(igst);

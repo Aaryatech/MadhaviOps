@@ -19,6 +19,12 @@ private int sellBillNo;
 	
  	private String frName;
 
+	private float discountAmt;
+	private float pendingAmt;
+	private float advAmt;
+	private float regular;
+	private float chalan;
+
 	public String getDay() {
 		return day;
 	}
@@ -91,13 +97,53 @@ private int sellBillNo;
 		this.month = month;
 	}
 
+	public float getDiscountAmt() {
+		return discountAmt;
+	}
+
+	public void setDiscountAmt(float discountAmt) {
+		this.discountAmt = discountAmt;
+	}
+
+	public float getPendingAmt() {
+		return pendingAmt;
+	}
+
+	public void setPendingAmt(float pendingAmt) {
+		this.pendingAmt = pendingAmt;
+	}
+
+	public float getAdvAmt() {
+		return advAmt;
+	}
+
+	public void setAdvAmt(float advAmt) {
+		this.advAmt = advAmt;
+	}
+
+	public float getRegular() {
+		return regular;
+	}
+
+	public void setRegular(float regular) {
+		this.regular = regular;
+	}
+
+	public float getChalan() {
+		return chalan;
+	}
+
+	public void setChalan(float chalan) {
+		this.chalan = chalan;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRepFrDatewiseSellResponse [sellBillNo=" + sellBillNo + ", billDate=" + billDate + ", frId=" + frId
-				+ ", month=" + month + ", cash=" + cash + ", card=" + card + ", other=" + other + ", frName=" + frName
-				+ "]";
+				+ ", month=" + month + ", day=" + day + ", cash=" + cash + ", card=" + card + ", other=" + other
+				+ ", frName=" + frName + ", discountAmt=" + discountAmt + ", pendingAmt=" + pendingAmt + ", advAmt="
+				+ advAmt + ", regular=" + regular + ", chalan=" + chalan + "]";
 	}
 
-	 
  	
 }

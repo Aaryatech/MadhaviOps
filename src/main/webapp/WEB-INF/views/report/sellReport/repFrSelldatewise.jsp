@@ -91,9 +91,9 @@ table, th, td {
 
 
 						<div align="center" class="right_btn">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML
+							<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 								View</button>
-							<button class="btn search_btn" onclick="showChart()">Graph</button>
+							<button class="buttonsaveorder" onclick="showChart()">Graph</button>
 							<%-- 		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
 							<button class="btn btn-primary" value="PDF" id="PDFButton"
@@ -120,11 +120,16 @@ table, th, td {
 													<th class="col-md-1" style="text-align: center;">Sr.No.</th>
 													<!--       <th class="col-md-1" style="text-align:center;">Bill No</th>  -->
 													<th class="col-md-1" style="text-align: center;">Day</th>
-													<th class="col-md-1" style="text-align: center;">Date</th>
-													<th class="col-md-1" style="text-align: center;">Amount</th>
+													<th class="col-md-1" style="text-align: center;">Date</th>													
 													<th class="col-md-1" style="text-align: center;">Cash</th>
 													<th class="col-md-1" style="text-align: center;">Card</th>
 													<th class="col-md-1" style="text-align: center;">E-Pay</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>													
+													<th class="col-md-1" style="text-align: center;">Disc Amt</th>
+													<th class="col-md-1" style="text-align: center;">Pending</th>
+													<th class="col-md-1" style="text-align: center;">Advance</th>
+													<th class="col-md-1" style="text-align: center;">Regular</th>
+													<th class="col-md-1" style="text-align: center;">Challan</th>
 												</tr>
 											</thead>
 
@@ -141,13 +146,18 @@ table, th, td {
 											<tr class="bgpink">
 
 												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-												<!--  <th class="col-md-1"style="text-align:center;">Bill No</th> -->
-												<th class="col-md-1" style="text-align: center;">Day</th>
-												<th class="col-md-1" style="text-align: center;">Date</th>
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-												<th class="col-md-1" style="text-align: center;">Cash</th>
-												<th class="col-md-1" style="text-align: center;">Card</th>
-												<th class="col-md-1" style="text-align: center;">E-Pay</th>
+													<!--       <th class="col-md-1" style="text-align:center;">Bill No</th>  -->
+													<th class="col-md-1" style="text-align: center;">Day</th>
+													<th class="col-md-1" style="text-align: center;">Date</th>													
+													<th class="col-md-1" style="text-align: center;">Cash</th>
+													<th class="col-md-1" style="text-align: center;">Card</th>
+													<th class="col-md-1" style="text-align: center;">E-Pay</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>													
+													<th class="col-md-1" style="text-align: center;">Disc Amt</th>
+													<th class="col-md-1" style="text-align: center;">Pending</th>
+													<th class="col-md-1" style="text-align: center;">Advance</th>
+													<th class="col-md-1" style="text-align: center;">Regular</th>
+													<th class="col-md-1" style="text-align: center;">Challan</th>
 											</tr>
 										</thead>
 
@@ -254,6 +264,12 @@ table, th, td {
 									var cardTotal = 0;
 									var amtTotal = 0;
 									var otherTotal = 0;
+									
+									var ttlDisc = 0;
+									var ttlPendng = 0;
+									var ttlAdv = 0;
+									var ttlReg = 0;
+									var ttlChaln = 0;
 									$
 											.each(
 													data,
@@ -283,47 +299,123 @@ table, th, td {
 																		.html(
 																				sellBillData.billDate));
 
-														var amt = sellBillData.cash
-																+ sellBillData.card
-																+ sellBillData.other;
+													
+														
+										
+														
+														
+														
+														
 														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(amt)
-																						.toFixed(2))));
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.cash)
+																				.toFixed(2))));
+												cashTotal = cashTotal
+														+ sellBillData.cash;
 
+												tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.card)
+																				.toFixed(2))));
+												cardTotal = cardTotal
+														+ sellBillData.card;
+
+												tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.other)
+																				.toFixed(2))));
+												otherTotal = otherTotal
+														+ sellBillData.other;
+
+													
+														
+												var amt = sellBillData.cash
+												+ sellBillData.card
+												+ sellBillData.other;
+										tr
+												.append($(
+														'<td class="col-md-1"style="text-align:right;"></td>')
+														.html(addCommas(
+																(amt)
+																		.toFixed(2))));
+														
+														
+														
 														amtTotal = amtTotal
 																+ sellBillData.cash
 																+ sellBillData.card
 																+ sellBillData.other;
 
+														
+														
+												
 														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.cash)
-																						.toFixed(2))));
-														cashTotal = cashTotal
-																+ sellBillData.cash;
-
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.discountAmt)
+																				.toFixed(2))));
+														
+														ttlDisc = ttlDisc
+																+sellBillData.discountAmt;
+														
 														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.card)
-																						.toFixed(2))));
-														cardTotal = cardTotal
-																+ sellBillData.card;
-
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.pendingAmt)
+																				.toFixed(2))));
+														
+														ttlPendng = ttlPendng
+																+sellBillData.pendingAmt;
+														
+														
+														
 														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.other)
-																						.toFixed(2))));
-														otherTotal = otherTotal
-																+ sellBillData.other;
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.advAmt)
+																				.toFixed(2))));
+														ttlAdv = ttlAdv
+																+sellBillData.advAmt;
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.regular)
+																				.toFixed(2))));
+														
+														
+														
+														ttlReg = ttlReg
+																+sellBillData.regular;
+														
+														tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(addCommas(
+																		(sellBillData.chalan)
+																				.toFixed(2))));
+														ttlChaln = ttlChaln
+																+sellBillData.chalan;
 
 														$('#table_grid tbody')
 																.append(tr);
@@ -336,24 +428,57 @@ table, th, td {
 									var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ addCommas((amtTotal).toFixed(2));
 									+"</b></td>";
-									var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									
+									var disc = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((ttlDisc).toFixed(2));
+									+"</b></td>";
+									
+									var pending = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((ttlPendng).toFixed(2));
+									+"</b></td>";
+									
+									var adv = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((ttlAdv).toFixed(2));
+									+"</b></td>";
+									
+									var cash = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp; <b>"
 											+ addCommas((cashTotal).toFixed(2));
 									+"</b></td>";
-									var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									var card = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
 											+ addCommas((cardTotal).toFixed(2));
 									+"</b></td>";
-									var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									var other = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
 											+ addCommas((otherTotal).toFixed(2));
 									+"</b></td>";
+									
+									var regular = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((ttlReg).toFixed(2));
+								+"</b></td>";
+								
+								var chalan = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
+									+ addCommas((ttlChaln).toFixed(2));
+							+"</b></td>";
 
 									var trclosed = "</tr>";
 
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
-									$('#table_grid tbody').append(totalAmt);
+									
 									$('#table_grid tbody').append(cash);
 									$('#table_grid tbody').append(card);
-									$('#table_grid tbody').append(other);
+									$('#table_grid tbody').append(other);									
+									
+									$('#table_grid tbody').append(totalAmt);
+									
+									$('#table_grid tbody').append(disc);
+									$('#table_grid tbody').append(pending);
+									$('#table_grid tbody').append(adv);
+									
+								
+									
+									$('#table_grid tbody').append(regular);									
+									$('#table_grid tbody').append(chalan);
+									
 									$('#table_grid tbody').append(trclosed);
 
 								});

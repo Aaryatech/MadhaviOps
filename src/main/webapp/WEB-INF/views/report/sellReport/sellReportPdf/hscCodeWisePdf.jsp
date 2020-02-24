@@ -23,20 +23,20 @@ th, td {
 
 
 th {
-    background-color: #EA3291;
+    background-color: #ed3f3c;
     color: white;
 }
 </style>
 </head>
 <body onload="myFunction()">
-<h4 align="center">HSN Code Wise Sale Report</h4>
-<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+<h3 align="center">HSN Code Wise Sale Report</h3>
+<div align="center"> <h3>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h3></div>
 	<table width="100%" border="1" cellspacing="0"
 														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
 									<tr class="bgpink">
 									<th style="text-align:center;">Sr no.</th>
-									<th style="text-align:center;" >Item Name</th>
+								<!-- 	<th style="text-align:center;" >Item Name</th> -->
 									<th style="text-align:center;">HSN Code</th> 
 									<th style="text-align:center;">IGST</th>
 								 	<th style="text-align:center;">CGST</th>
@@ -58,7 +58,7 @@ th {
 												<tr>
 													<td align="center"><c:out value="${count.index+1}" /></td>
 													 
-													<td><c:out value="${reportList.itemName}" /></td> 
+													<%-- <td><c:out value="${reportList.itemName}" /></td>  --%>
 													<td><c:out value="${reportList.hsnNo}" /></td> 
 													<td style="text-align:right">
 													<fmt:formatNumber type = "number"  maxFractionDigits = "2" minFractionDigits="2" value = "${reportList.cgst}"/>
@@ -96,7 +96,7 @@ th {
 												</tr>
 												</c:forEach>
 								  <tr>
-								  <td colspan='3'><b>Total</b></td>
+								  <td colspan='2'><b>Total</b></td>
 								  <td style="text-align:right"><b><fmt:formatNumber type = "number" minFractionDigits="2"  maxFractionDigits = "2" value ="${cgst}"/></b></td>
 								    
 								  <td style="text-align:right"><b><fmt:formatNumber type = "number" minFractionDigits="2" maxFractionDigits = "2" value ="${sgst}"/></b></td>

@@ -44,6 +44,7 @@ th {
 									<th style="text-align:center">IGST</th>
 								 	<th style="text-align:center">CGST</th>
 									<th style="text-align:center">SGST</th> 
+									<th style="text-align:center">Amount</th> 
 									<!-- <th align="center">CESS</th>  -->
 								  </tr>
 								</thead>
@@ -52,6 +53,7 @@ th {
 								<c:set var="igst"  value="${0 }"/>
 								<c:set var="cgst"  value="${0 }"/>
 								<c:set var="sgst"  value="${0 }"/>
+								<c:set var="ttlBill"  value="${0 }"/>
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
 													<td style="text-align:center;"><c:out value="${count.index+1}" /></td>
@@ -73,6 +75,11 @@ th {
 													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.sgst}"/>
 													</td>
 														<c:set var="sgst"  value="${sgst+reportList.sgst }"/>
+														
+													<td style="text-align:right;">
+													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.bill_amount}"/>
+													</td>
+														<c:set var="ttlBill"  value="${ttlBill+reportList.bill_amount }"/>
 													<%-- <td><c:out value="${reportList.sess}" /></td> --%>
 													
 													
@@ -81,9 +88,10 @@ th {
 								  <tr>
 								  <td colspan='3'><b>Total</b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${taxAmount}"/></b></td>
-								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${igst}"/></b></td>
-								      <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${cgst}"/></b></td>
-								       <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${sgst}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${igst}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${cgst}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${sgst}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${ttlBill}"/></b></td>
 								     <!--  <td><b>Total</b></td> -->
 								  </tr>
 							 </tbody>

@@ -129,9 +129,9 @@ jQuery(document).ready(function(){
 
 
 					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
+						<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
+						<button class="buttonsaveorder" onclick="showChart()">Graph</button>
 						<%-- 		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none" >PDF</a>
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
@@ -162,6 +162,7 @@ jQuery(document).ready(function(){
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
 											<th class="col-md-1" style="text-align: center;">CESS</th>
+											<th class="col-md-1" style="text-align: center;">Amount</th>
 										</tr>
 									</thead>
 
@@ -186,6 +187,7 @@ jQuery(document).ready(function(){
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
 											<th class="col-md-1" style="text-align: center;">CESS</th>
+											<th class="col-md-1" style="text-align: center;">Amount</th>
 										</tr>
 									</thead>
 
@@ -276,7 +278,7 @@ jQuery(document).ready(function(){
 								var cgstTotal = 0;
 								var sgstTotal = 0;
 								var cessTotal = 0;
-
+								var ttlBillAmt = 0;
 								$
 										.each(
 												data,
@@ -307,47 +309,56 @@ jQuery(document).ready(function(){
 													tr
 															.append($(
 																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellTaxData.tax_amount)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													taxTotal = taxTotal
 															+ sellTaxData.tax_amount;
 
 													tr
 															.append($(
 																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellTaxData.igst)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													igstTotal = igstTotal
 															+ sellTaxData.igst;
 
 													tr
 															.append($(
 																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellTaxData.cgst)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													cgstTotal = cgstTotal
 															+ sellTaxData.cgst;
 
 													tr
 															.append($(
 																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellTaxData.sgst)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													sgstTotal = sgstTotal
 															+ sellTaxData.sgst;
 
 													tr
 															.append($(
 																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellTaxData.cess)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													cessTotal = cessTotal
 															+ sellTaxData.cess;
+													
+													tr
+													.append($(
+															'<td class="col-md-1"  style="text-align:right;"></td>')
+															.html(addCommas(
+																	(sellTaxData.bill_amount)
+																			.toFixed(2))));
+													ttlBillAmt = ttlBillAmt
+															+ sellTaxData.bill_amount;
 
 													$('#table_grid tbody')
 															.append(tr);
@@ -360,21 +371,25 @@ jQuery(document).ready(function(){
 								var col2 = "<td colspan='1'></td>";
 
 								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
-										+ taxTotal.toFixed(2);
+										+ addCommas(taxTotal.toFixed(2));
 								+"</b></td>";
 
 								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ igstTotal.toFixed(2);
+										+ addCommas(igstTotal.toFixed(2));
 								+"</b></td>";
 								var cgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ cgstTotal.toFixed(2);
+										+ addCommas(cgstTotal.toFixed(2));
 								+"</b></td>";
 								var sgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ sgstTotal.toFixed(2);
+										+ addCommas(sgstTotal.toFixed(2));
 								+"</b></td>";
 								var cess = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ cessTotal.toFixed(2);
+										+ addCommas(cessTotal.toFixed(2));
 								+"</b></td>";
+								
+								var ttlBill = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas(ttlBillAmt.toFixed(2));
+							+"</b></td>";
 
 								var trclosed = "</tr>";
 
@@ -387,6 +402,7 @@ jQuery(document).ready(function(){
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
 								$('#table_grid tbody').append(cess);
+								$('#table_grid tbody').append(ttlBill);
 								$('#table_grid tbody').append(trclosed);
 
 							});
@@ -395,6 +411,21 @@ jQuery(document).ready(function(){
 	}
 </script>
 <script type="text/javascript">
+function addCommas(x){
+
+	x=String(x).toString();
+	 var afterPoint = '';
+	 if(x.indexOf('.') > 0)
+	    afterPoint = x.substring(x.indexOf('.'),x.length);
+	 x = Math.floor(x);
+	 x=x.toString();
+	 var lastThree = x.substring(x.length-3);
+	 var otherNumbers = x.substring(0,x.length-3);
+	 if(otherNumbers != '')
+	     lastThree = ',' + lastThree;
+	 return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+	} 
+	
 	function validate() {
 
 		var fromDate = $("#fromdatepicker").val();

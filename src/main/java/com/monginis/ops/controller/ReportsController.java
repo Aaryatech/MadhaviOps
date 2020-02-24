@@ -2790,6 +2790,7 @@ public class ReportsController {
 			ResponseEntity<List<GetRepFrDatewiseSellResponse>> responseEntity = restTemplate
 					.exchange(Constant.URL + "getRepDatewiseSell", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
+			
 			getRepFrDatewiseSellResponse = responseEntity.getBody();
 
 			/*
@@ -2828,7 +2829,7 @@ public class ReportsController {
 			System.out.println(e.getMessage());
 		}
 
-		System.out.println("Sell Bill Header " + getRepFrDatewiseSellResponse.toString());
+		System.out.println("Sell Bill Header---------------------- " + getRepFrDatewiseSellResponse.toString());
 
 		// export to excel
 
@@ -2849,12 +2850,25 @@ public class ReportsController {
 		rowData.add("Card");
 		/* rowData.add("Other"); */
 
+		rowData.add("Discount");
+		rowData.add("Pending");
+		rowData.add("Advance");
+		rowData.add("Regular");
+		rowData.add("Challan");
+		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
 		float totalDaySale = 0;
 		float totalCash = 0;
 		float totalCard = 0;
+		
+		float ttlDisc = 0;
+		float ttlPending = 0;
+		float ttlAdv = 0;
+		
+		float ttlRegular = 0;
+		float ttlChalan = 0;
 
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -2879,6 +2893,20 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
 			/* rowData.add(""+getRepFrDatewiseSellResponse.get(i).getOther()); */
+			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDiscountAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getPendingAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getAdvAmt());
+			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRegular());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getChalan());
+			
+			ttlDisc = ttlDisc + getRepFrDatewiseSellResponse.get(i).getDiscountAmt();
+			ttlPending = ttlPending + getRepFrDatewiseSellResponse.get(i).getPendingAmt();
+			ttlAdv = ttlAdv + getRepFrDatewiseSellResponse.get(i).getAdvAmt();
+			
+			ttlRegular = ttlRegular + getRepFrDatewiseSellResponse.get(i).getRegular();
+			ttlChalan = ttlChalan + getRepFrDatewiseSellResponse.get(i).getChalan();
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -2896,6 +2924,13 @@ public class ReportsController {
 		rowData.add("" + totalDaySale);
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);
+		
+		rowData.add("" + ttlDisc);
+		rowData.add("" + ttlPending);
+		rowData.add("" + ttlAdv);
+		
+		rowData.add("" + ttlRegular);
+		rowData.add("" + ttlChalan);		
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -5139,11 +5174,12 @@ public class ReportsController {
 					}
 
 				}
-				MCategory mCat = new MCategory();
-				mCat.setCatId(5);
-				mCat.setCatName("Special Cake");
-
-				catList.getmCategoryList().add(mCat);
+				/*
+				 * MCategory mCat = new MCategory(); mCat.setCatId(5);
+				 * mCat.setCatName("Special Cake");
+				 * 
+				 * catList.getmCategoryList().add(mCat);
+				 */
 				for (int i = 0; i < catList.getmCategoryList().size(); i++) {
 					if (catList.getmCategoryList().get(i).getCatId() == 5) {
 						PdfPTable table = new PdfPTable(5);
