@@ -3036,6 +3036,12 @@ public class ReportsController {
 		rowData.add("Cash");
 		rowData.add("Card");
 		rowData.add("Other");
+		
+		rowData.add("Discount");
+		rowData.add("Pending");
+		rowData.add("Advance");
+		rowData.add("Regular");
+		rowData.add("Challan");
 
 		String[] monthNames = { "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
 				"Dec" };
@@ -3047,6 +3053,13 @@ public class ReportsController {
 		float totalCash = 0;
 		float totalCard = 0;
 		float totalOther = 0;
+		
+		float ttlDisc = 0;
+		float ttlPending = 0;
+		float ttlAdvance = 0;
+		float ttlRegular = 0;
+		float ttlChallan = 0;
+		
 
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -3070,6 +3083,23 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getOther());
+			
+			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDiscountAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getPendingAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getAdvAmt());
+			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRegular());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getChalan());
+			
+			
+			 ttlDisc = ttlDisc + getRepFrDatewiseSellResponse.get(i).getDiscountAmt();
+			 ttlPending = ttlPending + getRepFrDatewiseSellResponse.get(i).getPendingAmt();
+			 ttlAdvance = ttlAdvance + getRepFrDatewiseSellResponse.get(i).getAdvAmt();
+			 ttlRegular = ttlRegular + getRepFrDatewiseSellResponse.get(i).getRegular();
+			 ttlChallan = ttlChallan + getRepFrDatewiseSellResponse.get(i).getChalan();
+			
+			
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -3085,6 +3115,13 @@ public class ReportsController {
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);
 		rowData.add("" + totalOther);
+		
+		rowData.add("" + ttlDisc);
+		rowData.add("" + ttlPending);
+		rowData.add("" + ttlAdvance);
+		rowData.add("" + ttlRegular);
+		rowData.add("" + ttlChallan);
+		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 

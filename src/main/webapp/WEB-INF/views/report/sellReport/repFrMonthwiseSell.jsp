@@ -128,8 +128,8 @@ jQuery(document).ready(function(){
  
 	
  	<div align="center"class="right_btn"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
-		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
+		    <button class="buttonsaveorder" onclick="searchSellBill()" >HTML View </button>
+		    <button class="buttonsaveorder" onclick="showChart()" >Graph</button>
 <%-- 		    	    <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellMonthwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>		 		 												<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
  
@@ -159,6 +159,13 @@ jQuery(document).ready(function(){
 									<th class="col-md-1" style="text-align:center;">Cash</th>
 								 	<th class="col-md-1" style="text-align:center;">Card</th>
 									<!-- <th class="col-md-1" style="text-align:center;">Other</th>  -->
+									
+									<th class="col-md-1" style="text-align:center;">Disc Amt</th>
+									<th class="col-md-1" style="text-align:center;">Pending</th>
+									<th class="col-md-1" style="text-align:center;">Advance</th>
+									<th class="col-md-1" style="text-align:center;">Regular</th>
+									<th class="col-md-1" style="text-align:center;">Challan</th>
+									
 								  </tr>
 								</thead>
 								
@@ -182,6 +189,13 @@ jQuery(document).ready(function(){
 									<th class="col-md-1" style="text-align:center;">Cash</th>
 								 	<th class="col-md-1" style="text-align:center;">Card</th>
 									 <th class="col-md-1" style="text-align:center;">Other</th>  
+									 
+									 
+									 <th class="col-md-1" style="text-align:center;">Disc Amt</th>
+									<th class="col-md-1" style="text-align:center;">Pending</th>
+									<th class="col-md-1" style="text-align:center;">Advance</th>
+									<th class="col-md-1" style="text-align:center;">Regular</th>
+									<th class="col-md-1" style="text-align:center;">Challan</th>
 								  </tr>
 								</thead>
 								
@@ -279,6 +293,12 @@ jQuery(document).ready(function(){
 								var cardTotal=0;
 								var amtTotal=0;
 								var otherTotal=0;
+								
+								var ttlDisc = 0;
+								var ttlPending = 0;
+								var ttlAdv = 0;
+								var ttlReg = 0;
+								var ttlChalan = 0;
 								$.each(data,function(key, sellBillData) {
 
 									
@@ -293,7 +313,7 @@ jQuery(document).ready(function(){
 								    
 								    var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-							 tr.append($('<td class="col-md-1"style="text-align:left;"></td>').html(monthNumber));
+									 tr.append($('<td class="col-md-1"style="text-align:left;"></td>').html(monthNumber));
 								  	
 								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
 								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((amt).toFixed(2))));
@@ -308,6 +328,24 @@ jQuery(document).ready(function(){
 								  	
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.other).toFixed(2))));
 								  	otherTotal=otherTotal + sellBillData.other; 
+								  	
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.discountAmt).toFixed(2))));
+								  	ttlDisc=ttlDisc + sellBillData.discountAmt; 
+								  	
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.pendingAmt).toFixed(2))));
+								  	ttlPending=ttlPending + sellBillData.pendingAmt; 
+								  	
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.advAmt).toFixed(2))));
+								  	ttlAdv=ttlAdv + sellBillData.advAmt; 
+								  	
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.regular).toFixed(2))));
+								  	ttlReg=ttlReg + sellBillData.regular; 
+								  	
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.other).toFixed(2))));
+								  	ttlChalan=ttlChalan + sellBillData.chalan; 
+								  	
+								  	
+								  	
 
 								  	
 
@@ -336,6 +374,27 @@ jQuery(document).ready(function(){
 									+ addCommas((otherTotal).toFixed(2))
 									+ "</b></td>"; 
 									
+								var disc = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+										+ addCommas((ttlDisc).toFixed(2))
+										+ "</b></td>"; 
+										
+								var pending = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+											+ addCommas((ttlPending).toFixed(2))
+											+ "</b></td>"; 
+											
+								var adv = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+												+ addCommas((ttlAdv).toFixed(2))
+												+ "</b></td>"; 
+												
+								var reg = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+													+ addCommas((ttlReg).toFixed(2))
+													+ "</b></td>"; 
+													
+													
+								var chlalan = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+														+ addCommas((ttlChalan).toFixed(2))
+														+ "</b></td>"; 
+									
 								
 								var trclosed = "</tr>";
 								
@@ -353,7 +412,20 @@ jQuery(document).ready(function(){
 								 $('#table_grid tbody')
 								.append(card);
 						 	$('#table_grid tbody')
-								.append(other);  
+								.append(other); 
+						 	
+						 	$('#table_grid tbody')
+							.append(disc); 
+						 	$('#table_grid tbody')
+							.append(pending); 
+						 	$('#table_grid tbody')
+							.append(adv); 
+						 	
+						 	$('#table_grid tbody')
+							.append(reg); 
+						 	$('#table_grid tbody')
+							.append(chlalan); 
+						 	
 								$('#table_grid tbody')
 								.append(trclosed); 
 								 
