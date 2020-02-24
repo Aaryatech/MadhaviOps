@@ -803,13 +803,13 @@
 						</li>
 
 
-						<%-- <li class="small-box">
+						 <li class="small-box">
 
 							<div class="ibox">
 								<div class="ibox-head">
 									<div class="ibox-title">Other Reports</div>
 								</div>
-
+<%-- 
 								 <a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 									class="fa fa-files-o icon"></i>SP Advance Report</a>
 								 
@@ -825,13 +825,13 @@
 									href="${pageContext.request.contextPath}/grnReport"><i
 									class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/gvnReport"><i
-									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  
+									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  --%> 
 									 
 									<a
 									href="${pageContext.request.contextPath}/showCutomerList"><i
 									class="fa fa-files-o icon"></i>Customer List(Sale)</a>
 							</div>
-						</li> --%>
+						</li> 
 						<li class="small-box">
 
 							<div class="ibox">
@@ -923,6 +923,19 @@
 							</div>
 
 						</li>
+						
+						
+						<li class="small-box">
+
+							<div class="ibox">
+								<div class="ibox-head">
+									<div class="ibox-title">Customer Reports</div>
+								</div>
+									<a
+									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
+									class="fa fa-files-o icon"></i>Customer Pending Report</a>
+							</div>
+						</li> >
 
 					</div>
 				</ul>

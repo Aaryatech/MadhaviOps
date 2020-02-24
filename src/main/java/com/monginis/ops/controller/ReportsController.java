@@ -2853,8 +2853,8 @@ public class ReportsController {
 		rowData.add("Discount");
 		rowData.add("Pending");
 		rowData.add("Advance");
-		rowData.add("Regular");
-		rowData.add("Challan");
+		rowData.add("Regular Expense");
+		rowData.add("Challan Expense");
 		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -3040,8 +3040,8 @@ public class ReportsController {
 		rowData.add("Discount");
 		rowData.add("Pending");
 		rowData.add("Advance");
-		rowData.add("Regular");
-		rowData.add("Challan");
+		rowData.add("Regular Expense");
+		rowData.add("Challan Expense");
 
 		String[] monthNames = { "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
 				"Dec" };
@@ -6338,5 +6338,219 @@ public class ReportsController {
 
 		}
 	}
+	
+	
+	//24-02-2020 Mahendra
+	@RequestMapping(value = "/showCutomerPendingList", method = RequestMethod.GET)
+	public ModelAndView showCutomerPendingList(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = new ModelAndView("report/sellReport/custRemainAmt");
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+
+			
+			
+			String[] cust = request.getParameterValues("cust");
+
+			//type = Integer.parseInt(request.getParameter("rdType"));
+			//subType = Integer.parseInt(request.getParameter("rdSubType"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("cust", cust);
+
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
+
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+			};
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getRemainingAmtByCust", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+
+			model.addObject("getSellBillHeaderList", getSellBillHeaderList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/getCustPendingAmtReport", method = RequestMethod.GET)
+	public @ResponseBody List<SellBillHeaderNew> getCustPendingAmtReport(HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("in method");
+		// int type = 0, subType = 0;
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("custId", custId);
+
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
+
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+			};
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getCustRemainingAmt", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No.");
+			rowData.add("Invoice No");
+			rowData.add("Bill Date");
+			rowData.add("Grand Total");
+			rowData.add("Paid Amt");
+			rowData.add("Remaining Amt");
+			rowData.add("Payment Mode");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			float ttlGrndTtl = 0;
+			float ttlPaidAmt = 0;
+			float ttlRemainAmt = 0;
+
+			float ttlCash = 0;
+			float ttlCard = 0;
+			float ttlEPay = 0;
+			String custName = new String();
+
+			for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + (i + 1));
+				rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());				
+				rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+				/*
+				 * rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_" +
+				 * getSellBillHeaderList.get(i).getPhoneNumber());
+				 */
+				rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+				rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+				rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+				rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				ttlGrndTtl = ttlGrndTtl + getSellBillHeaderList.get(i).getGrandTotal();
+				ttlPaidAmt = ttlPaidAmt + getSellBillHeaderList.get(i).getPaidAmt();
+				ttlRemainAmt = ttlRemainAmt + getSellBillHeaderList.get(i).getRemainingAmt();
+
+				ttlCash = ttlCash + getSellBillHeaderList.get(i).getCash();
+				ttlCard = ttlCard + getSellBillHeaderList.get(i).getCard();
+				ttlEPay = ttlEPay + getSellBillHeaderList.get(i).getePay();
+				custName = getSellBillHeaderList.get(i).getCustName() + "_" +
+						 getSellBillHeaderList.get(i).getPhoneNumber();
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+
+			rowData.add("" + roundUp(ttlGrndTtl));
+			rowData.add("" + roundUp(ttlPaidAmt));
+			rowData.add("" + roundUp(ttlRemainAmt));
+			rowData.add("" + roundUp(ttlCash) + "-Cash, " + roundUp(ttlCard) + "-Card, " + roundUp(ttlEPay) + "-EPay");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "Customer Remaining Amount");
+			session.setAttribute("reportNameNew", "Customer Remaining Amount Details Report");
+			session.setAttribute("searchByNew", "Customer Name : "+custName);
+			session.setAttribute("mergeUpto1", "$A$1:$G$1");
+			session.setAttribute("mergeUpto2", "$A$2:$G$2");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return getSellBillHeaderList;
+
+	}
+	@RequestMapping(value = "pdf/showCustRemainAmtRepPdf/{frId}/{cust}", method = RequestMethod.GET)
+	public ModelAndView showCustRemainAmtRepPdf(@PathVariable int frId,@PathVariable String cust, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("BILL LIST pdf");
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/custRemainAmtDetailPdf");
+		try {
+			System.out.println("BILL LIST try");
+
+			
+			RestTemplate restTemplate = new RestTemplate();
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			// int frId=frDetails.getFrId();
+			map.add("frId", frId);
+			
+			map.add("custId", cust);
+
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
+
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+			};
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getCustRemainingAmt", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+			String custName = new String();
+			for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+				custName = getSellBillHeaderList.get(i).getCustName()+" - "+getSellBillHeaderList.get(i).getPhoneNumber();
+			}
+			
+			
+			map.add("frId", frId);
+			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+					Franchisee.class, frId);
+			model.addObject("frName", franchisee.getFrName());
+			model.addObject("custName", custName);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		model.addObject("reportList", getSellBillHeaderList);
+		return model;
+	}
 }

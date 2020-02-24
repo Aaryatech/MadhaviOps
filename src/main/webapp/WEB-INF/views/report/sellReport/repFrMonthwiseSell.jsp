@@ -163,8 +163,8 @@ jQuery(document).ready(function(){
 									<th class="col-md-1" style="text-align:center;">Disc Amt</th>
 									<th class="col-md-1" style="text-align:center;">Pending</th>
 									<th class="col-md-1" style="text-align:center;">Advance</th>
-									<th class="col-md-1" style="text-align:center;">Regular</th>
-									<th class="col-md-1" style="text-align:center;">Challan</th>
+									<th class="col-md-1" style="text-align:center;">Regular Expense</th>
+									<th class="col-md-1" style="text-align:center;">Challan Expense</th>
 									
 								  </tr>
 								</thead>
@@ -194,8 +194,8 @@ jQuery(document).ready(function(){
 									 <th class="col-md-1" style="text-align:center;">Disc Amt</th>
 									<th class="col-md-1" style="text-align:center;">Pending</th>
 									<th class="col-md-1" style="text-align:center;">Advance</th>
-									<th class="col-md-1" style="text-align:center;">Regular</th>
-									<th class="col-md-1" style="text-align:center;">Challan</th>
+									<th class="col-md-1" style="text-align:center;">Regular Expense</th>
+									<th class="col-md-1" style="text-align:center;">Challan Expense</th>
 								  </tr>
 								</thead>
 								

@@ -23,7 +23,7 @@ th, td {
 
 
 th {
-    background-color: #EA3291;
+    background-color: #ed3f3c;
     color: white;
 }
 </style>
@@ -51,8 +51,8 @@ th {
 									<th style="text-align: center;">Pending</th>
 									<th style="text-align: center;">Advance</th>
 																 	
-									<th style="text-align: center;">Regular</th>
-									<th style="text-align: center;">Challan</th>
+									<th style="text-align: center;">Regular Expense</th>
+									<th style="text-align: center;">Challan Expense</th>
 									<!-- <th style="text-align:center;">Other </th>  -->
 								  </tr>
 								</thead>

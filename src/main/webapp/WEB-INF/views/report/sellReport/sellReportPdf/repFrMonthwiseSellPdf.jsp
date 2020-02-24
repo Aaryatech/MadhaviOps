@@ -45,8 +45,8 @@ th {
 									<th style="text-align:center;">Discount</th>
 									<th style="text-align:center;">Pending</th>
 									<th style="text-align:center;">Advance</th>
-								 	<th style="text-align:center;">Regular</th>
-									<th style="text-align:center;">Challan </th> 
+								 	<th style="text-align:center;">Regular Expense </th>
+									<th style="text-align:center;">Challan Expense</th> 
 								  </tr>
 								</thead>
 								
