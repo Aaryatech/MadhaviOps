@@ -31,7 +31,7 @@ import com.monginis.ops.model.PostFrItemStockDetail;;
 
 @Controller
 @Scope("session")
-public class OpeneningStockController {
+public class OpeneningStockController { 
 
 	List<PostFrItemStockDetail> detailList = new ArrayList<PostFrItemStockDetail>();
 
