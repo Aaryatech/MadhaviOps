@@ -24,6 +24,8 @@ private int sellBillNo;
 	private float advAmt;
 	private float regular;
 	private float chalan;
+	private float creditNoteTotalAmt;
+	private float withdrawalAmt;
 
 	public String getDay() {
 		return day;
@@ -137,13 +139,29 @@ private int sellBillNo;
 		this.chalan = chalan;
 	}
 
+	public float getCreditNoteTotalAmt() {
+		return creditNoteTotalAmt;
+	}
+
+	public void setCreditNoteTotalAmt(float creditNoteTotalAmt) {
+		this.creditNoteTotalAmt = creditNoteTotalAmt;
+	}
+
+	public float getWithdrawalAmt() {
+		return withdrawalAmt;
+	}
+
+	public void setWithdrawalAmt(float withdrawalAmt) {
+		this.withdrawalAmt = withdrawalAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRepFrDatewiseSellResponse [sellBillNo=" + sellBillNo + ", billDate=" + billDate + ", frId=" + frId
 				+ ", month=" + month + ", day=" + day + ", cash=" + cash + ", card=" + card + ", other=" + other
 				+ ", frName=" + frName + ", discountAmt=" + discountAmt + ", pendingAmt=" + pendingAmt + ", advAmt="
-				+ advAmt + ", regular=" + regular + ", chalan=" + chalan + "]";
+				+ advAmt + ", regular=" + regular + ", chalan=" + chalan + ", creditNoteTotalAmt=" + creditNoteTotalAmt
+				+ ", withdrawalAmt=" + withdrawalAmt + "]";
 	}
 
- 	
 }

@@ -2856,6 +2856,10 @@ public class ReportsController {
 		rowData.add("Regular Expense");
 		rowData.add("Challan Expense");
 		
+		rowData.add("Withdrawal Amt");
+		rowData.add("Credit Note Amt");
+		rowData.add("Petty Cash Amt");
+		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
@@ -2869,6 +2873,10 @@ public class ReportsController {
 		
 		float ttlRegular = 0;
 		float ttlChalan = 0;
+		
+		float ttlWidthraw = 0;
+		float ttlCreditNote = 0;
+		float ttlpettyCash = 0;
 
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -2901,12 +2909,27 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRegular());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getChalan());
 			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt());			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt());
+			
+			float calPetty = (getRepFrDatewiseSellResponse.get(i).getCash()+
+							getRepFrDatewiseSellResponse.get(i).getAdvAmt()+
+							getRepFrDatewiseSellResponse.get(i).getRegular())-
+							getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt();
+			
+			rowData.add("" + calPetty);
+			
 			ttlDisc = ttlDisc + getRepFrDatewiseSellResponse.get(i).getDiscountAmt();
 			ttlPending = ttlPending + getRepFrDatewiseSellResponse.get(i).getPendingAmt();
 			ttlAdv = ttlAdv + getRepFrDatewiseSellResponse.get(i).getAdvAmt();
 			
 			ttlRegular = ttlRegular + getRepFrDatewiseSellResponse.get(i).getRegular();
 			ttlChalan = ttlChalan + getRepFrDatewiseSellResponse.get(i).getChalan();
+			
+			
+			ttlWidthraw = ttlWidthraw + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt();
+			ttlCreditNote = ttlCreditNote + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt();
+			ttlpettyCash = ttlpettyCash + calPetty;
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -2930,7 +2953,11 @@ public class ReportsController {
 		rowData.add("" + ttlAdv);
 		
 		rowData.add("" + ttlRegular);
-		rowData.add("" + ttlChalan);		
+		rowData.add("" + ttlChalan);	
+		
+		rowData.add("" + ttlWidthraw);
+		rowData.add("" + ttlCreditNote);
+		rowData.add("" + ttlpettyCash);
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -6554,3 +6581,5 @@ public class ReportsController {
 		return model;
 	}
 }
+
+

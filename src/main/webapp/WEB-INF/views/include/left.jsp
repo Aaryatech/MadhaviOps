@@ -935,7 +935,7 @@
 									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
 									class="fa fa-files-o icon"></i>Customer Pending Report</a>
 							</div>
-						</li> >
+						</li> 
 
 					</div>
 				</ul>
