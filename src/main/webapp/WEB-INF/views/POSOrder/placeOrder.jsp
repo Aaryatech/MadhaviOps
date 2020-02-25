@@ -295,7 +295,7 @@ input:checked+.slider:before {
 		});
  
 </script>
-<body>
+<body onload="checkAdd()">
 	<c:url var="qtyValidation" value="/quantityValidation"></c:url>
 	<c:url value="/checkEmailText" var="checkEmailText"></c:url>
 	<c:url value="/saveCustomerFromBill" var="saveCustomerFromBill"></c:url>
@@ -357,15 +357,18 @@ input:checked+.slider:before {
 
 
 
-					<div class="row">
+					<div class="row" >
 						<div class="col-md-3"></div>
+						<div style="display: none;">
 						<div class="col-md-1">Dairy mart</div>
 						<div class="col-md-2">
 							<label class="switch"> <input type="checkbox" name="dm"
-								id="dm" onchange="checkAdd() "> <span
+								id="dm" onchange="checkAdd()" checked="checked"> <span
 								class="slider round"></span>
-						</div>
+					
 						</label>
+						</div>
+						</div>
 					</div>
 
 
