@@ -163,7 +163,7 @@ public class BillingController {
 		
 		ParameterizedTypeReference<GetBillHeaderResponse> typeRef = new ParameterizedTypeReference<GetBillHeaderResponse>() {
 		};
-		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOS",
+		ResponseEntity<GetBillHeaderResponse> responseEntity = restTemplate.exchange(Constant.URL + "getBillHeaderPOSOnlyRegBills",
 				HttpMethod.POST, new HttpEntity<>(map), typeRef);
 		
 		billHeadeResponse = responseEntity.getBody();	
