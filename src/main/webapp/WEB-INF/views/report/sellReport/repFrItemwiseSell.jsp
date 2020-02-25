@@ -95,9 +95,9 @@ table, th, td {
 
 
 					<div align="left" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
+						<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 							View</button>
-						<button class="btn search_btn" onclick="showChart()">Graph</button>
+						<button class="buttonsaveorder" onclick="showChart()">Graph</button>
 						<button id="btn_pdf" class="btn btn-primary" onclick="genPdf()">PDF
 						</button>
 					</div>

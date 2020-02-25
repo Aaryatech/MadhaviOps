@@ -2183,6 +2183,7 @@ public class ReportsController {
 			System.out.println("in method");
 			String fromDate = request.getParameter("fromDate");
 			String toDate = request.getParameter("toDate");
+			String age = request.getParameter("age");
 			String[] cust = request.getParameterValues("cust");
 
 			type = Integer.parseInt(request.getParameter("rdType"));
@@ -2200,7 +2201,7 @@ public class ReportsController {
 			custList = custList.substring(1, custList.length() - 1);
 
 			System.err.println(
-					"CUST --- " + custList + "              TYPE : " + type + "                SUB = " + subType);
+					"CUST --- " + custList + "              TYPE : " + type + "                SUB = " + subType+ " AGE--"+age);
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -2213,6 +2214,7 @@ public class ReportsController {
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
 			map.add("custId", custList);
+			map.add("age", age);
 
 			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
 

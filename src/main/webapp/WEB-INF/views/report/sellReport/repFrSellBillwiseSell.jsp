@@ -198,6 +198,52 @@ chosen-container {
 
 							</div>
 
+							<!-- <div class="col-sm-6 col-lg-3">
+								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
+									View</button>
+
+								<button class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()">PDF</button>
+							</div>
+
+							<div align="center" id="loader" style="display: none">
+								<span> <br>
+									<h4>
+										<font color="#343690">Loading</font>
+									</h4>
+								</span> <span class="l-1"></span> <span class="l-2"></span> <span
+									class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
+								<span class="l-6"></span>
+							</div> -->
+
+						</div>
+					</div>
+					
+					<div class="row">
+						<br>
+						<div class="form-group">
+
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">Age-Group </label>
+							<div class="col-sm-6 col-lg-7">
+
+								<select name="ageRange" id="ageRange"
+							data-placeholder="Customer Age-Group" class="input_add"
+							style="text-align: left; font-size: 16px;" required>
+							<option value="0" style="text-align: left;">Customer
+								Age-Group</option>
+							<option value="14-21">14-21 Years</option>
+							<option value="22-28">22-28 Years</option>
+							<option value="29-35">29-35 Years</option>
+							<option value="36-42">36-42 Years</option>
+							<option value="43-49">43-49 Years</option>
+							<option value="50-56">50-56 Years</option>
+							<option value="57 & above">57 & above</option>
+
+						</select>
+
+							</div>
+
 							<div class="col-sm-6 col-lg-3">
 								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 									View</button>
@@ -218,6 +264,7 @@ chosen-container {
 
 						</div>
 					</div>
+					
 
 					<div class="row">
 						<br>
@@ -329,6 +376,7 @@ chosen-container {
 				//document.getElementById('btn_pdf').style.display = "block";
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
+				var age = document.getElementById("ageRange").value;
 				//var cust = document.getElementById("selCust").value;
 				var cust = $("#selCust").val();
 
@@ -360,6 +408,7 @@ chosen-container {
 									cust : JSON.stringify(cust),
 									rdType : rdType,
 									rdSubType : rdSubType,
+									age : age,
 									ajax : 'true',
 
 								},
