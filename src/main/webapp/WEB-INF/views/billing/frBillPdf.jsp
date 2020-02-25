@@ -126,11 +126,11 @@ table {
 					style="border-top: 1px solid #313131; padding: 7px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 13px; text-align:; left; margin: 0px;">
-						<b> Billed To:&nbsp; &nbsp; ${frDetails.partyName} [GSTIN:
-							${frDetails.partyGstin}]</b>
+						<b> Billed To:&nbsp; &nbsp; ${frDetails.exVarchar3} [GSTIN:
+							${frDetails.exVarchar4}]</b>
 					</p>
 					<p
-						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.partyAddress}</p>
+						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.exVarchar5}</p>
 
 				</td>
 				<td width="50%" colspan="5"
