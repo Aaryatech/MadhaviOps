@@ -142,7 +142,7 @@ jQuery(document).ready(function(){
 		<div class="col-md-12">
 		<!--table-->
 			<div class="clearfix"></div>
-
+			<div class="table-responsive">
 
 				<div id="table-scroll" >
 					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
@@ -165,6 +165,9 @@ jQuery(document).ready(function(){
 									<th class="col-md-1" style="text-align:center;">Advance</th>
 									<th class="col-md-1" style="text-align:center;">Regular Expense</th>
 									<th class="col-md-1" style="text-align:center;">Challan Expense</th>
+									<th class="col-md-1" style="text-align: center;">Withdrawal Amt</th>
+									<th class="col-md-1" style="text-align: center;">Credit Note Amt</th>
+									<th class="col-md-1" style="text-align: center;">Petty Cash Amt</th>
 									
 								  </tr>
 								</thead>
@@ -196,6 +199,9 @@ jQuery(document).ready(function(){
 									<th class="col-md-1" style="text-align:center;">Advance</th>
 									<th class="col-md-1" style="text-align:center;">Regular Expense</th>
 									<th class="col-md-1" style="text-align:center;">Challan Expense</th>
+									<th class="col-md-1" style="text-align: center;">Withdrawal Amt</th>
+									<th class="col-md-1" style="text-align: center;">Credit Note Amt</th>
+									<th class="col-md-1" style="text-align: center;">Petty Cash Amt</th>
 								  </tr>
 								</thead>
 								
@@ -213,7 +219,7 @@ jQuery(document).ready(function(){
 											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
 											</div>
 											</div>
-		
+		</div>
 		<!--table end-->
 		 
 		</div>	
@@ -299,6 +305,10 @@ jQuery(document).ready(function(){
 								var ttlAdv = 0;
 								var ttlReg = 0;
 								var ttlChalan = 0;
+								var ttlWithdra = 0;
+								var ttlCreditAmt = 0;
+								var ttlPettyCashAmt = 0;
+								
 								$.each(data,function(key, sellBillData) {
 
 									
@@ -344,14 +354,44 @@ jQuery(document).ready(function(){
 								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.other).toFixed(2))));
 								  	ttlChalan=ttlChalan + sellBillData.chalan; 
 								  	
-								  	
-								  	
+								  	tr
+									.append($(
+											'<td class="col-md-1"style="text-align:right;"></td>')
+											.html(
+													addCommas((sellBillData.withdrawalAmt)
+															.toFixed(2))));
+									ttlWithdra = ttlWithdra
+										+ sellBillData.withdrawalAmt;
 
-								  	
+									tr
+										.append($(
+											'<td class="col-md-1"style="text-align:right;"></td>')
+											.html(
+													addCommas((sellBillData.creditNoteTotalAmt)
+															.toFixed(2))));
+									ttlCreditAmt = ttlCreditAmt
+										+ sellBillData.creditNoteTotalAmt;
 
-									$('#table_grid tbody').append(tr);
-
-									
+							
+									var pettyCashAmt = (sellBillData.cash
+										+ sellBillData.advAmt
+										+ sellBillData.regular)-sellBillData.creditNoteTotalAmt;
+	
+									tr
+										.append($(
+												'<td class="col-md-1"style="text-align:right;"></td>')
+												.html(
+														addCommas((pettyCashAmt)
+																.toFixed(2))));
+	
+									ttlPettyCashAmt = ttlPettyCashAmt+((sellBillData.cash
+											+ sellBillData.advAmt
+											+ sellBillData.regular)-sellBillData.creditNoteTotalAmt); 
+									  	
+	
+										$('#table_grid tbody').append(tr);
+	
+										
 									
 													
 
@@ -395,6 +435,17 @@ jQuery(document).ready(function(){
 														+ addCommas((ttlChalan).toFixed(2))
 														+ "</b></td>"; 
 									
+								var withdraw = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
+												+ addCommas((ttlWithdra).toFixed(2));
+												+"</b></td>";
+
+								var credit = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
+												+ addCommas((ttlCreditAmt).toFixed(2));
+												+"</b></td>";
+
+								var petty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;<b>"
+												+ addCommas((ttlPettyCashAmt).toFixed(2));
+												+"</b></td>";
 								
 								var trclosed = "</tr>";
 								
@@ -407,27 +458,29 @@ jQuery(document).ready(function(){
 								.append(non);
 								$('#table_grid tbody')
 								.append(totalAmt);
-								 $('#table_grid tbody')
-									.append(cash);
-								 $('#table_grid tbody')
-								.append(card);
-						 	$('#table_grid tbody')
-								.append(other); 
-						 	
-						 	$('#table_grid tbody')
-							.append(disc); 
-						 	$('#table_grid tbody')
-							.append(pending); 
-						 	$('#table_grid tbody')
-							.append(adv); 
-						 	
-						 	$('#table_grid tbody')
-							.append(reg); 
-						 	$('#table_grid tbody')
-							.append(chlalan); 
-						 	
 								$('#table_grid tbody')
-								.append(trclosed); 
+									.append(cash);
+								$('#table_grid tbody')
+								.append(card);
+							 	$('#table_grid tbody')
+									.append(other); 
+							 	
+							 	$('#table_grid tbody')
+								.append(disc); 
+							 	$('#table_grid tbody')
+								.append(pending); 
+							 	$('#table_grid tbody')
+								.append(adv); 
+							 	
+							 	$('#table_grid tbody')
+								.append(reg); 
+							 	$('#table_grid tbody')
+								.append(chlalan); 
+							 	$('#table_grid tbody').append(withdraw);
+								$('#table_grid tbody').append(credit);
+								$('#table_grid tbody').append(petty); 
+								$('#table_grid tbody')
+									.append(trclosed); 
 								 
 							});
 

@@ -3069,6 +3069,10 @@ public class ReportsController {
 		rowData.add("Advance");
 		rowData.add("Regular Expense");
 		rowData.add("Challan Expense");
+		
+		rowData.add("Withdrawal Amt");
+		rowData.add("Credit Note Amt");
+		rowData.add("Petty Cash Amt");
 
 		String[] monthNames = { "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
 				"Dec" };
@@ -3087,6 +3091,9 @@ public class ReportsController {
 		float ttlRegular = 0;
 		float ttlChallan = 0;
 		
+		float ttlWidthraw = 0;
+		float ttlCreditNote = 0;
+		float ttlpettyCash = 0;
 
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -3120,13 +3127,26 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getChalan());
 			
 			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt());			
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt());
+			
+			float calPetty = (getRepFrDatewiseSellResponse.get(i).getCash()+
+							getRepFrDatewiseSellResponse.get(i).getAdvAmt()+
+							getRepFrDatewiseSellResponse.get(i).getRegular())-
+							getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt();
+			
+			rowData.add("" + calPetty);
+			
+			
 			 ttlDisc = ttlDisc + getRepFrDatewiseSellResponse.get(i).getDiscountAmt();
 			 ttlPending = ttlPending + getRepFrDatewiseSellResponse.get(i).getPendingAmt();
 			 ttlAdvance = ttlAdvance + getRepFrDatewiseSellResponse.get(i).getAdvAmt();
 			 ttlRegular = ttlRegular + getRepFrDatewiseSellResponse.get(i).getRegular();
 			 ttlChallan = ttlChallan + getRepFrDatewiseSellResponse.get(i).getChalan();
 			
-			
+			 ttlWidthraw = ttlWidthraw + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt();
+			 ttlCreditNote = ttlCreditNote + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt();
+			 ttlpettyCash = ttlpettyCash + calPetty;
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -3148,6 +3168,10 @@ public class ReportsController {
 		rowData.add("" + ttlAdvance);
 		rowData.add("" + ttlRegular);
 		rowData.add("" + ttlChallan);
+		
+		rowData.add("" + ttlWidthraw);
+		rowData.add("" + ttlCreditNote);
+		rowData.add("" + ttlpettyCash);
 		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);

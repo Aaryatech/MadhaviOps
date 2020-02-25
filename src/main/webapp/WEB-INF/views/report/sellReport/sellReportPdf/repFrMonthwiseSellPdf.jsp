@@ -47,6 +47,10 @@ th {
 									<th style="text-align:center;">Advance</th>
 								 	<th style="text-align:center;">Regular Expense </th>
 									<th style="text-align:center;">Challan Expense</th> 
+									
+									<th style="text-align: center;">Withdrawal Amt</th>
+									<th style="text-align: center;">Credit Note Amt</th>
+									<th style="text-align:center;">Petty Cash Amt </th>
 								  </tr>
 								</thead>
 								
@@ -63,6 +67,14 @@ th {
 								<c:set var="totalRegular"  value="${0 }"/>
 								<c:set var="totalChallan"  value="${0 }"/>								
 								
+								<c:set var="totalWithdraw"  value="${0 }"/>
+								<c:set var="totalCreditNote"  value="${0 }"/>
+								<c:set var="totalPetty"  value="${0 }"/>
+								
+								<c:set var="calPettyAmt"  value="${0 }"/>
+								<c:set var="sumCash"  value="${0 }"/>
+								<c:set var="pettyCash"  value="${0 }"/>
+								<c:set var="calPettyAmt"  value="${0 }"/>
 								
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
@@ -102,6 +114,20 @@ th {
 														<c:set var="totalRegular"  value="${totalRegular+reportList.regular }"/>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.chalan}" /></td>
 														<c:set var="totalChallan"  value="${totalChallan+reportList.chalan }"/>
+														
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.withdrawalAmt}" /></td>
+													<c:set var="totalWithdraw"  value="${totalWithdraw + reportList.withdrawalAmt}"/>
+													
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.creditNoteTotalAmt}" /></td>
+													<c:set var="totalCreditNote"  value="${totalCreditNote + reportList.creditNoteTotalAmt}"/>
+													
+													
+													
+													<c:set var="sumCash"  value="${reportList.cash+ reportList.advAmt+ reportList.regular}"/>
+													<c:set var="pettyCash"  value="${sumCash-reportList.creditNoteTotalAmt}"/>
+													
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${pettyCash}" /></td>
+													<c:set var="calPettyAmt"  value="${calPettyAmt + pettyCash}"/>
 													
 												</tr>
 												</c:forEach>
@@ -118,7 +144,11 @@ th {
 								     
 								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalRegular}"/></b></td>
 								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalChallan}"/></b></td>
-								     <!--  <td><b>Total</b></td> -->
+								    
+								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalWithdraw}"/></b></td>
+								  	 <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalCreditNote}"/></b></td>
+								 	 <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${calPettyAmt}"/></b></td> 
+								      <!--  <td><b>Total</b></td> -->
 								  </tr>
 							 </tbody>
 								</table>

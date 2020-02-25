@@ -107,7 +107,7 @@ table, th, td {
 						<div class="col-md-12">
 							<!--table-->
 							<div class="clearfix"></div>
-
+							<div class="table-responsive">
 
 							<div id="table-scroll">
 								<div id="faux-table" class="faux-table" aria="hidden"
@@ -133,7 +133,7 @@ table, th, td {
 														Expense</th>
 													<th class="col-md-1" style="text-align: center;">Challan
 														Expense</th>
-													<th class="col-md-1" style="text-align: center;">Widthdrawal
+													<th class="col-md-1" style="text-align: center;">Withdrawal
 														Amt</th>
 													<th class="col-md-1" style="text-align: center;">Credit
 														Note Amt</th>
@@ -200,6 +200,7 @@ table, th, td {
 
 
 								</div>
+							</div>
 							</div>
 							<!--table end-->
 
