@@ -2200,7 +2200,11 @@ public class OpsController {
 			String ageRange = request.getParameter("ageRange");
 			int gender = Integer.parseInt(request.getParameter("gender"));
 			float kms = Float.parseFloat(request.getParameter("kms"));
+			String pincode = request.getParameter("pincode");
+			String remark = request.getParameter("remark");
 
+			String str = pincode+"-"+remark;
+			
 			Customer save = new Customer();
 			save.setCustName(customerName);
 			save.setPhoneNumber(mobileNo);
@@ -2216,6 +2220,7 @@ public class OpsController {
 			save.setExInt1(custType);
 			save.setExVar1(""+kms);
 			save.setGender(gender);
+			save.setExVar2(str);
 			Customer res = restTemplate.postForObject(Constant.URL + "/saveCustomer", save, Customer.class);
 
 			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);

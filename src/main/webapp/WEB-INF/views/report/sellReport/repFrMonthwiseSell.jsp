@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
  
   </script> --%>
 
-<body onload="showGraph()"> 
+<body ><!-- onload="showGraph()" -->
 <c:url var="getMonthwiselReport" value="/getMonthwiselReport" />
 	
 	<div class="sidebarOuter"></div>

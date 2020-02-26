@@ -136,6 +136,11 @@
 
 							</tr>
 							<tr>
+								<td align="left">Remark:</td>
+								<td align="left" colspan="3">${remark}</td>
+
+							</tr>
+							<tr>
 								<td colspan="${cols}"><table width="100%" border="0"
 										cellspacing="0" cellpadding="4" class="tbl-inner">
 

@@ -398,6 +398,7 @@ body {
 								value="${defaultCustomer}" /><input name="frtype" id="frtype"
 								type="hidden" value="${frtype}" />
 							<div class="customer_one">Customer</div>
+							
 							<div class="customer_two">
 								<select name="cust" id="cust" data-placeholder="Select Customer"
 									class="input_add chosen-select" onchange="setCustAmt()"

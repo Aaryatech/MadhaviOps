@@ -200,7 +200,12 @@ table, th, td {
 							</div>
 						</div>
 						<!--table end-->
-						<br>
+						
+
+
+					</div>
+				</div>
+				<br>
 						<div class="form-group" style="display: none;" id="range">
 
 
@@ -211,10 +216,6 @@ table, th, td {
 									disabled="disabled">
 							</div>
 						</div>
-
-
-					</div>
-				</div>
 
 
 

@@ -571,7 +571,7 @@ table, th, td {
 			}, function(data) {
 
 				$('#loader').hide();
-				//alert(data);
+				//alert(JSON.stringify(data));
 				if (data == "") {
 					alert("No records found !!");
 
@@ -607,7 +607,8 @@ table, th, td {
 						var totalTax = item.cgstRs + item.sgstRs;
 						dataTable.addRows([
 
-						[ monthNames[monthNumber], item.taxableAmt, totalTax, ]
+						[item.month, item.taxableAmt, totalTax, ]
+						//[ monthNames[item.month], item.taxableAmt, totalTax, ]
 
 						]);
 					})

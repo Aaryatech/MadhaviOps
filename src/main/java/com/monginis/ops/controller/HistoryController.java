@@ -525,15 +525,21 @@ public class HistoryController {
 
 		System.err.println("headDet list" + headDet.toString());
 		Customer cust = new Customer();
+		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		map.add("custId", headDet.getCustId());
 		cust = rest.postForObject(Constant.URL + "/getCustomerByCustId", map, Customer.class);
+		
+		String str = cust.getExVar2();
+		String[] strArr = str.split("-");
+		String remark = strArr[1];
 		headDet.setOrderDate(DateConvertor.convertToDMY(headDet.getOrderDate()));
 		System.err.println("cust list" + cust.toString());
 		model.addObject("itemList", itemOrderHistory);
 		model.addObject("frDetails", frDetails);
 		model.addObject("headDetails", headDet);
 		model.addObject("cust", cust);
+		model.addObject("remark", remark);
 		return model;
 	}
 

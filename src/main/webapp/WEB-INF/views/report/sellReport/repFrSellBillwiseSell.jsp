@@ -7,6 +7,9 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <style>
+.chosen-single{
+text-align: left;
+}
 table, th, td {
 	border: 1px solid #9da88d;
 }
@@ -121,7 +124,7 @@ chosen-container {
 								style="text-align: right;">Choose Option </label>
 							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
-								<input type="radio" id="rdRem" name="radio" value="1"
+								<input type="radio" id="rdRem" name="radio" value="1" 
 									onchange="radioOption()" checked="checked">All/Pending Bill
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rdPay"
 									onchange="radioOption()" name="radio" value="2">Payment
@@ -157,7 +160,7 @@ chosen-container {
 									<select data-placeholder="Choose Payment Option"
 										name="selPayOpt" tabindex="-1" id="selPayOpt"
 										data-rule-required="true" class="chosen-select"
-										style="text-align: left; width: 82%;" required="">
+										style="text-align: left; width: 82%;" required="required">
 
 										<option selected value="0"><c:out value="All" /></option>
 										<option value="1"><c:out value="Cash" /></option>
@@ -182,10 +185,12 @@ chosen-container {
 								style="text-align: right;">Choose Option </label>
 							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
-								<input type="radio" id="idCust" name="radio" value="1"
+								<input type="radio" id="idCust" name="opt" value="1"
 									onchange="custAge(this.value)" checked="checked">Customer
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="idAge"
-									onchange="custAge(this.value)" name="radio" value="2"> Age Group								
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								
+								<input type="radio" id="idAge"
+									onchange="custAge(this.value)" name="opt" value="2"> Age Group								
 							</div>
 
 							<div id="div_cust">
@@ -347,8 +352,6 @@ chosen-container {
 	
 	function custAge(val){
 		//alert(val);	
-		var val1 = document.getElementById("idCust");
-		var val2 = document.getElementById("idAge");
 		
 		if (val==1) {
 			$('#div_cust').show();

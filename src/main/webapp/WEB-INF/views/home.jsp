@@ -267,7 +267,7 @@
 
 									<h1 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.saleAmt}" />
 									</h1>
 								</div>
@@ -287,7 +287,7 @@
 
 									<h5 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.discountAmt}" />
 									</h5>
 								</div>
@@ -319,7 +319,7 @@
 									</div> -->
 									<h5 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.purchaseAmt}" />
 									</h5>
 
@@ -374,7 +374,7 @@
 									<h3 class="sale_head">${typeTitle}&nbsp;Advance Amt</h3>
 									<h5 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.advanceAmt}" />
 									</h5>
 								</div>
@@ -395,7 +395,7 @@
 									<h3 class="sale_head">${typeTitle}&nbsp;Credit Bill Amt</h3>
 									<h5 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.creditAmt-creditAdvAmt}" />
 									</h5>
 								</div>
@@ -413,7 +413,7 @@
 									<h3 class="sale_head">${typeTitle}&nbsp;Expenses</h3>
 									<h5 class="price_sale">
 										Rs.
-										<fmt:formatNumber type="number" maxFractionDigits="3"
+										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.expenseAmt}" />
 									</h5>
 								</div>
@@ -427,17 +427,17 @@
 								<div class="sale-list">
 									<div class="sale_epay">
 										EPAY <span>Rs.<fmt:formatNumber type="number"
-												maxFractionDigits="3" value="${countDetails.epayAmt}" />
+												pattern="#" value="${countDetails.epayAmt}" />
 										</span>
 									</div>
 									<div class="sale_epay">
 										Cash <span>Rs.<fmt:formatNumber type="number"
-												maxFractionDigits="3" value="${countDetails.cashAmt}" />
+												pattern="#" value="${countDetails.cashAmt}" />
 										</span>
 									</div>
 									<div class="sale_epay">
 										Card <span>Rs.<fmt:formatNumber type="number"
-												maxFractionDigits="3" value="${countDetails.cardAmt}" />
+												pattern="#" value="${countDetails.cardAmt}" />
 										</span>
 									</div>
 									<div class="clr"></div>
@@ -454,7 +454,7 @@
 										varStatus="count">
 										<div class="sale_epay">
 											${dailyList.orderDate} <span>Rs.<fmt:formatNumber
-													type="number" maxFractionDigits="3"
+													type="number" pattern="#"
 													value="${dailyList.total}" />
 											</span>
 										</div>
@@ -474,7 +474,7 @@
 										varStatus="count">
 										<div class="sale_epay">
 											${advOrderList.orderDate} <span>Rs.<fmt:formatNumber
-													type="number" maxFractionDigits="3"
+													type="number" pattern="#"
 													value="${advOrderList.total}" />
 											</span>
 										</div>

@@ -6,6 +6,9 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <style>
+.chosen-single{
+text-align: left;
+}
 table, th, td {
 	border: 1px solid #9da88d;
 }
@@ -149,7 +152,7 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">Sub-Cat:-</h4>
 					</div>
 					<div class="col-md-4">
-						<select name="item_grp2" id="item_grp2"
+						<select name="item_grp2" id="item_grp2" style="text-align:left;"
 							data-placeholder="Select Sub Category" class="chosen-select"
 							style="text-align: left;" required onchange="getItemList()">
 
@@ -641,7 +644,7 @@ jQuery(document).ready(function(){
 							ajax : 'true'
 						},
 						function(data) {
-							var html = '<option multiple="multiple" value="">Sub Category</option>';
+							var html = '<option multiple="multiple" value="" style="text-align:left;">Sub Category</option>';
 
 							var len = data.length;
 

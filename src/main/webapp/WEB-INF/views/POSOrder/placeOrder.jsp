@@ -1155,6 +1155,16 @@ input:checked+.slider:before {
 					</div>
 					<div class="clr"></div>
 				</div>
+			<div class="add_frm_one">
+				<div class="add_customer_one">Pin Code *</div>
+				<div class="add_input">
+
+					<input type="text" class="input_add"
+						placeholder="Enter Pin Code" name="pincode" id="pincode"
+						onchange="trim(this)" maxlength="6" pattern="[0-9]"/>
+				</div>
+				<div class="clr"></div>
+			</div>
 				<div class="add_frm_one">
 					<div class="add_customer_one">Distance(In Kms) *</div>
 					<div class="add_input">
@@ -1274,6 +1284,17 @@ input:checked+.slider:before {
 				</div>
 				
 			</div>
+			
+			<div class="add_frm_one">
+				<div class="add_customer_one">Remark</div>
+				<div class="add_input">
+
+					<input type="text" class="input_add"
+						placeholder="Enter Remark" name="remark" id="remark"
+						onchange="trim(this)"/>
+				</div>
+				<div class="clr"></div>
+			</div>
 		</div>
 
 		<div class="pop_btns">
@@ -1327,7 +1348,10 @@ input:checked+.slider:before {
 
 
 	<script type="text/javascript">
-
+	$('#pincode').on('input', function() {
+		 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
 function isBuissness(value) {
 
 	if (value == 1) {
@@ -1395,6 +1419,9 @@ function addCustomer() {
 	var companyName = document.getElementById("companyName").value;
 	var gstNo = document.getElementById("gstNo").value;
 	var custAdd = document.getElementById("custAdd").value;
+	var pincode = document.getElementById("pincode").value;
+	var remark = document.getElementById("remark").value;
+	
 
 	var flag = 0;
 //alert(gstNo);
@@ -1412,10 +1439,10 @@ function addCustomer() {
 		alert("Please Enter Valid Mobile No");
 		flag = 1;
 	}
-	/* else if (dateOfBirth == "") {
-		alert("Enter Date of Birth");
+	else if (pincode == "") {
+		alert("Enter Pin Code");
 		flag = 1;
-	} */
+	} 
 	/* else if (custType == 0) {
 		alert("Please Select Customer Type");
 		flag = 1;
@@ -1455,6 +1482,8 @@ function addCustomer() {
 							ageRange:ageRange,
 							kms:kms,
 							gender:gender,
+							pincode:pincode,
+							remark:remark,
 							ajax : 'true'
 						},
 						function(data) {
@@ -1496,6 +1525,8 @@ function addCustomer() {
 								document.getElementById("mobileNo").value = "";
 								document.getElementById("kms").value = "";
 								document.getElementById("dateOfBirth").value = "";
+								document.getElementById("pincode").value = "";
+								document.getElementById("remark").value = "";
 
 								document.getElementById("n-option").checked = true;
 								document.getElementById("companyName").value = "";
@@ -1770,6 +1801,10 @@ function editCustomer(flag) {
 							document.getElementById("custId").value = data.custId;
 							document.getElementById("dateOfBirth").value = data.custDob;
 							document.getElementById("custAdd").value = data.address;
+							var str = data.exVar2;
+							var strArr = str.split('-');
+							document.getElementById("pincode").value = strArr[0];
+							document.getElementById("remark").value = strArr[1];
 
 							if (data.gender == 1) {
 								document.getElementById("moption").checked = true;
