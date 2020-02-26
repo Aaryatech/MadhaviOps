@@ -41,17 +41,17 @@ h6 {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed3f3c;
 	color: white;
 }
 </style>
 </head>
 <body onload="myFunction()">
 	<h3 align="center">${FACTORYNAME}</h3>
-	<p align="center">${FACTORYADDRESS}</p>
+	<h3 align="center">${FACTORYADDRESS}</h3>
 	<div align="center">
-		<h5>Sales Report (Franchisee Wise) &nbsp;&nbsp;&nbsp;&nbsp; From
-			&nbsp; ${fromDate} &nbsp;To &nbsp; ${toDate}</h5>
+		<h3>Sales Report (Franchisee Wise) &nbsp;&nbsp;&nbsp;&nbsp; From
+			&nbsp; ${fromDate} &nbsp;To &nbsp; ${toDate}</h3>
 	</div>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		id="table_grid" class="table table-bordered">

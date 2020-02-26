@@ -122,8 +122,8 @@ chosen-container {
 							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
 								<input type="radio" id="rdRem" name="radio" value="1"
-									onchange="radioOption()" checked="checked">Remaining
-								Amt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rdPay"
+									onchange="radioOption()" checked="checked">All/Pending Bill
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rdPay"
 									onchange="radioOption()" name="radio" value="2">Payment
 								Option
 							</div>
@@ -177,12 +177,13 @@ chosen-container {
 
 
 					<div class="row">
+					<div class="col-lg-12">
 						<br>
 						<div class="form-group">
 
-							<label class="col-sm-3 col-lg-2 control-label"
+							<label class="col-md-2 control-label"
 								style="text-align: right;">Customer </label>
-							<div class="col-sm-6 col-lg-7">
+							<div class="col-md-4">
 
 								<select data-placeholder="Choose Customer" multiple="multiple"
 									class="chosen-select chosen" tabindex="6" id="selCust"
@@ -198,24 +199,26 @@ chosen-container {
 
 							</div>
 
-							<!-- <div class="col-sm-6 col-lg-3">
-								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
-									View</button>
+							<label class="col-md-2 control-label"
+								style="text-align: right;">Age-Group </label>
+							<div class="col-md-4">
 
-								<button class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()">PDF</button>
+								<select name="ageRange" id="ageRange" class="chosen-select chosen"
+							style="text-align: left; font-size: 16px;">
+							<option value="0" style="text-align: left;"><c:out value="Customer Age-Group"/></option>
+							<option value="14-21" style="text-align: left;">14-21 Years</option>
+							<option value="22-28" style="text-align: left;">22-28 Years</option>
+							<option value="29-35" style="text-align: left;">29-35 Years</option>
+							<option value="36-42" style="text-align: left;">36-42 Years</option>
+							<option value="43-49" style="text-align: left;">43-49 Years</option>
+							<option value="50-56" style="text-align: left;">50-56 Years</option>
+							<option value="57 & above" style="text-align: left;">57 & above</option>
+
+						</select>
+
 							</div>
 
-							<div align="center" id="loader" style="display: none">
-								<span> <br>
-									<h4>
-										<font color="#343690">Loading</font>
-									</h4>
-								</span> <span class="l-1"></span> <span class="l-2"></span> <span
-									class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
-								<span class="l-6"></span>
-							</div> -->
-
+						</div>
 						</div>
 					</div>
 					
@@ -223,34 +226,13 @@ chosen-container {
 						<br>
 						<div class="form-group">
 
-							<label class="col-sm-3 col-lg-2 control-label"
-								style="text-align: right;">Age-Group </label>
-							<div class="col-sm-6 col-lg-7">
-
-								<select name="ageRange" id="ageRange"
-							data-placeholder="Customer Age-Group" class="input_add"
-							style="text-align: left; font-size: 16px;" required>
-							<option value="0" style="text-align: left;">Customer
-								Age-Group</option>
-							<option value="14-21">14-21 Years</option>
-							<option value="22-28">22-28 Years</option>
-							<option value="29-35">29-35 Years</option>
-							<option value="36-42">36-42 Years</option>
-							<option value="43-49">43-49 Years</option>
-							<option value="50-56">50-56 Years</option>
-							<option value="57 & above">57 & above</option>
-
-						</select>
-
-							</div>
-
-							<div class="col-sm-6 col-lg-3">
+							
 								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 									View</button>
 
 								<button class="btn btn-primary" value="PDF" id="PDFButton"
 									onclick="genPdf()">PDF</button>
-							</div>
+							
 
 							<div align="center" id="loader" style="display: none">
 								<span> <br>
@@ -451,6 +433,12 @@ chosen-container {
 																.getElementById('range').style.display = 'block';
 
 														var tr = $('<tr class="responsive-table"></tr>');
+														
+														var cash = sellBillData.cash;
+														var card = sellBillData.card;
+														var epay = sellBillData.ePay;
+														
+														if(cash!=0 || card!=0 || epay!=0){
 
 														tr
 																.append($(
@@ -543,15 +531,14 @@ chosen-container {
 																+ sellBillData.paidAmt;
 														remainingTotal = remainingTotal
 																+ sellBillData.remainingAmt;
-														//	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 
-														cashTotal = cashTotal
+														 cashTotal = cashTotal
 																+ sellBillData.cash;
 														cardTotal = cardTotal
 																+ sellBillData.card;
 														epayTotal = epayTotal
 																+ sellBillData.ePay;
-
+ 
 														ttlDiscAmt = ttlDiscAmt
 																+sellBillData.discountAmt;
 														
@@ -565,7 +552,7 @@ chosen-container {
 
 														$('#table_grid tbody')
 																.append(tr);
-
+													}
 													})
 
 									var tr = "<tr>";
