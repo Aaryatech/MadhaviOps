@@ -174,53 +174,68 @@ chosen-container {
 						</div>
 					</div>
 
-
-
 					<div class="row">
-					<div class="col-lg-12">
 						<br>
 						<div class="form-group">
 
-							<label class="col-md-2 control-label"
-								style="text-align: right;">Customer </label>
-							<div class="col-md-4">
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">Choose Option </label>
+							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
-								<select data-placeholder="Choose Customer" multiple="multiple"
-									class="chosen-select chosen" tabindex="6" id="selCust"
-									name="selCust">
-
-									<option selected value="0" style="text-align: left;"><c:out value="All" /></option>
-
-									<c:forEach items="${customerList}" var="cust" varStatus="count">
-										<option value="${cust.custId}" style="text-align: left;"><c:out
-												value="${cust.custName}-${cust.phoneNumber}" /></option>
-									</c:forEach>
-								</select>
-
+								<input type="radio" id="idCust" name="radio" value="1"
+									onchange="custAge(this.value)" checked="checked">Customer
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="idAge"
+									onchange="custAge(this.value)" name="radio" value="2"> Age Group								
 							</div>
 
-							<label class="col-md-2 control-label"
-								style="text-align: right;">Age-Group </label>
-							<div class="col-md-4">
-
-								<select name="ageRange" id="ageRange" class="chosen-select chosen"
-							style="text-align: left; font-size: 16px;">
-							<option value="0" style="text-align: left;"><c:out value="Customer Age-Group"/></option>
-							<option value="14-21" style="text-align: left;">14-21 Years</option>
-							<option value="22-28" style="text-align: left;">22-28 Years</option>
-							<option value="29-35" style="text-align: left;">29-35 Years</option>
-							<option value="36-42" style="text-align: left;">36-42 Years</option>
-							<option value="43-49" style="text-align: left;">43-49 Years</option>
-							<option value="50-56" style="text-align: left;">50-56 Years</option>
-							<option value="57 & above" style="text-align: left;">57 & above</option>
-
-						</select>
-
+							<div id="div_cust">
+							<div class="form-group">
+	
+								<label class="col-sm-3 col-lg-2 control-label"
+									style="text-align: right;">Customer </label>
+								<div class="col-sm-6 col-lg-4">
+	
+									<select data-placeholder="Choose Customer" multiple="multiple"
+										class="chosen-select chosen" tabindex="6" id="selCust"
+										name="selCust">
+	
+										<option selected value="0" style="text-align: left;"><c:out value="All" /></option>
+	
+										<c:forEach items="${customerList}" var="cust" varStatus="count">
+											<option value="${cust.custId}" style="text-align: left;"><c:out
+													value="${cust.custName}-${cust.phoneNumber}" /></option>
+										</c:forEach>
+									</select>
+	
+								</div>
 							</div>
-
-						</div>
+							</div>
+							
+							<div id="age_div" style="display: none;">
+								<label class="col-sm-3 col-lg-2 control-label" 
+									style="text-align: right;">Age-Group </label>
+								<div class="col-sm-6 col-lg-4">
+	
+									<select name="ageRange" id="ageRange" class="chosen-select chosen"
+								style="text-align: left; font-size: 16px;">
+								<option value="0" style="text-align: left;"><c:out value="Customer Age-Group"/></option>
+								<option value="14-21" style="text-align: left;">14-21 Years</option>
+								<option value="22-28" style="text-align: left;">22-28 Years</option>
+								<option value="29-35" style="text-align: left;">29-35 Years</option>
+								<option value="36-42" style="text-align: left;">36-42 Years</option>
+								<option value="43-49" style="text-align: left;">43-49 Years</option>
+								<option value="50-56" style="text-align: left;">50-56 Years</option>
+								<option value="57 & above" style="text-align: left;">57 & above</option>
+	
+							</select>
+	
+								</div>
+							</div>
 						</div>
 					</div>
+
+
+					
 					
 					<div class="row">
 						<br>
@@ -329,6 +344,21 @@ chosen-container {
 
 
 	<script type="text/javascript">
+	
+	function custAge(val){
+		//alert(val);	
+		var val1 = document.getElementById("idCust");
+		var val2 = document.getElementById("idAge");
+		
+		if (val==1) {
+			$('#div_cust').show();
+			$('#age_div').hide();
+		} else {	
+			$('#div_cust').hide();
+			$('#age_div').show();
+		}
+	}
+	
 		function radioOption() {
 
 			var val1 = document.getElementById("rdRem");
