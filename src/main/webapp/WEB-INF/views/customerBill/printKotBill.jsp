@@ -156,8 +156,7 @@
 
 
 											<tr>
-												<td align="left" colspan="5" style="border-top: 1px solid;">This
-													is not tax invoice. For tax invoice please ask cashier.</td>
+												<td align="left" colspan="5" style="border-top: 1px solid;"> Please ask Cashier for Tax Invoice.</td>
 											</tr>
 
 										</tbody>
