@@ -12,8 +12,17 @@ public class ItemListForCustomerBill {
 	private float taxableAmt;
 	private float taxAmt;
 	private float total;
+	private String hsn;
 	
 	
+	
+	
+	public String getHsn() {
+		return hsn;
+	}
+	public void setHsn(String hsn) {
+		this.hsn = hsn;
+	}
 	public int getIsDecimal() {
 		return isDecimal;
 	}
@@ -75,11 +84,13 @@ public class ItemListForCustomerBill {
 	public void setUom(String uom) {
 		this.uom = uom;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "ItemListForCustomerBill [itemId=" + itemId + ", orignalMrp=" + orignalMrp + ", qty=" + qty
 				+ ", itemName=" + itemName + ", uom=" + uom + ", isDecimal=" + isDecimal + ", taxPer=" + taxPer
-				+ ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", total=" + total + "]";
+				+ ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", total=" + total + ", hsn=" + hsn + "]";
 	}
 	
 }

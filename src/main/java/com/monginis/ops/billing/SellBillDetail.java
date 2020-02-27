@@ -65,9 +65,22 @@ public class SellBillDetail implements Serializable{
 	private int delStatus;
 	
 	private float extFloat1;
+	
+	private String extVar1;
+	
+	
 
 	
 	
+
+	public String getExtVar1() {
+		return extVar1;
+	}
+
+	public void setExtVar1(String extVar1) {
+		this.extVar1 = extVar1;
+	}
+
 	public float getDiscPer() {
 		return discPer;
 	}
@@ -263,7 +276,7 @@ public class SellBillDetail implements Serializable{
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", discPer=" + discPer + ", discAmt=" + discAmt
 				+ ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus="
-				+ delStatus + ", extFloat1=" + extFloat1 + "]";
+				+ delStatus + ", extFloat1=" + extFloat1 + ", extVar1=" + extVar1 + "]";
 	}
 
 	
