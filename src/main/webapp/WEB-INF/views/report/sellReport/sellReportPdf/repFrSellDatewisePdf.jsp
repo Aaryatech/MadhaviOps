@@ -48,7 +48,7 @@ th {
 								
 								 	
 								 	<th style="text-align: center;">Disc Amt</th>
-									<th style="text-align: center;">Pending</th>
+									<th style="text-align: center;">Remaining</th>
 									<th style="text-align: center;">Advance</th>
 																 	
 									<th style="text-align: center;">Regular Expense</th>

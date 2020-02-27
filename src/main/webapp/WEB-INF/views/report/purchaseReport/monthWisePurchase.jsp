@@ -592,10 +592,10 @@ table, th, td {
 					var dataTable = new google.visualization.DataTable();
 
 					dataTable.addColumn('string', 'Month'); // Implicit domain column.
-					dataTable.addColumn('number', 'Amount'); // Implicit data column.
+					dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
 					// dataTable.addColumn({type:'string', role:'interval'});
 					//  dataTable.addColumn({type:'string', role:'interval'});
-					dataTable.addColumn('number', 'Total Tax');
+					dataTable.addColumn('number', 'Grand Total');
 					$.each(data, function(key, item) {
 
 						var monthNumber = item.month;
@@ -607,7 +607,7 @@ table, th, td {
 						var totalTax = item.cgstRs + item.sgstRs;
 						dataTable.addRows([
 
-						[item.month, item.taxableAmt, totalTax, ]
+						[item.month, totalTax,item.grandTotal]
 						//[ monthNames[item.month], item.taxableAmt, totalTax, ]
 
 						]);
@@ -617,8 +617,8 @@ table, th, td {
 						width : 500,
 						height : 500,
 						chart : {
-							title : ' Taxable Amount & Total Tax',
-							subtitle : 'Tax percent wise Total Tax & Amount '
+							title : ' Total Tax Amount & Grand Total Amount'
+							//subtitle : 'Tax percent wise & Total Amount '
 						},
 						series : {
 							0 : {
@@ -632,11 +632,11 @@ table, th, td {
 						axes : {
 							y : {
 								distance : {
-									label : 'Taxable Amount'
+									label : 'Total Tax Amount'
 								}, // Left y-axis.
 								brightness : {
 									side : 'right',
-									label : 'Total Tax'
+									label : 'Grand Total'
 								}
 							// Right y-axis.
 							}
@@ -665,7 +665,7 @@ table, th, td {
 					var dataTable = new google.visualization.DataTable();
 
 					dataTable.addColumn('string', 'Month'); // Implicit domain column.
-					dataTable.addColumn('number', 'Taxable Amount'); // Implicit data column.
+					dataTable.addColumn('number', 'Total Tax Amount'); // Implicit data column.
 					//  dataTable.addColumn({type:'string', role:'interval'});
 					//  dataTable.addColumn({type:'string', role:'interval'});
 					//dataTable.addColumn('number', 'TaxableAmt');
@@ -680,7 +680,7 @@ table, th, td {
 						var totalTax = item.cgstRs + item.sgstRs;
 						dataTable.addRows([
 
-						[ monthNames[monthNumber], item.taxableAmt, ]
+						[ item.month, totalTax ]
 
 						]);
 					})
@@ -688,9 +688,9 @@ table, th, td {
 					var chart = new google.visualization.PieChart(document
 							.getElementById('pieChart_div'));
 					chart.draw(dataTable, {
-						width : 500,
+						width : 550,
 						height : 500,
-						title : 'Taxable Amount'
+						title : 'Total Tax Amount'
 					});
 
 				}
@@ -703,7 +703,7 @@ table, th, td {
 					var dataTable = new google.visualization.DataTable();
 
 					dataTable.addColumn('string', 'Month'); // Implicit domain column.
-					dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
+					dataTable.addColumn('number', 'Grand Total'); // Implicit data column.
 					//  dataTable.addColumn({type:'string', role:'interval'});
 					//  dataTable.addColumn({type:'string', role:'interval'});
 					//dataTable.addColumn('number', 'TaxableAmt');
@@ -718,7 +718,7 @@ table, th, td {
 						var totalTax = item.cgstRs + item.sgstRs;
 						dataTable.addRows([
 
-						[ monthNames[monthNumber], totalTax, ]
+						[ item.month, item.grandTotal ]
 
 						]);
 					})
@@ -726,9 +726,9 @@ table, th, td {
 					var chart = new google.visualization.PieChart(document
 							.getElementById('Piechart'));
 					chart.draw(dataTable, {
-						width : 500,
+						width : 550,
 						height : 500,
-						title : 'Total tax'
+						title : 'Grand Total'
 					});
 
 				}

@@ -164,7 +164,7 @@ table, th, td {
 												<th class="col-md-1" style="text-align: center;">Amount</th>
 												<th class="col-md-1" style="text-align: center;">Disc
 													Amt</th>
-												<th class="col-md-1" style="text-align: center;">Pending</th>
+												<th class="col-md-1" style="text-align: center;">Remaining</th>
 												<th class="col-md-1" style="text-align: center;">Advance</th>
 												<th class="col-md-1" style="text-align: center;">Regular
 													Expense</th>

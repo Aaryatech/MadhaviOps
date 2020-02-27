@@ -87,7 +87,7 @@ jQuery(document).ready(function(){
 <c:url var="getSpcakeList" value="/getSpcakeList" />
 <c:url var="getGroup2ByCatId" value="/getSubCatListByCatId"></c:url>
 <div class="sidebarOuter"></div>
-<c:url var="getItemsResBySubCatId" value="/getItemsResBySubCatId"></c:url>
+<c:url var="getItemsByCatIdAndSubCatId" value="/getItemsByCatIdAndSubCatId"></c:url>
 <div class="wrapper">
 
 	<!--topHeader-->
@@ -310,40 +310,15 @@ jQuery(document).ready(function(){
 
 <script>
 	function getItemList() {
-
 		var catId = document.getElementById("catId").value;
+		//alert("Cat   "+catId)
+		
+		var subCat = document.getElementById("item_grp2").value;			
+		//alert("Sub Cat*** "+subCat)
 
-		if (catId == 5) {
-
-			$.getJSON('${getSpcakeList}', {
-
-				ajax : 'true'
-			}, function(data) {
-
-				var len = data.length;
-
-				$('#itemId').find('option').remove().end()
-				$("#itemId").append(
-						$("<option align=left; selected></option>").attr(
-								"value", 0).text("ALL"));
-				for (var i = 0; i < len; i++) {
-
-					$("#itemId").append(
-							$("<option align=left;></option>").attr("value",
-									data[i].spId).text(data[i].spName));
-				}
-
-				$('.chosen-select').trigger('chosen:updated');
-
-			});
-
-		} else {
-
-			var subCat = document.getElementById("item_grp2").value;
-			//alert("Sub Cat*** "+subCat)
-
-			$.getJSON('${getItemsResBySubCatId}', {
-				catId : subCat,
+			$.getJSON('${getItemsByCatIdAndSubCatId}', {
+				subCat : subCat,
+				catId:catId,
 				ajax : 'true'
 			}, function(data) {
 
@@ -362,7 +337,7 @@ jQuery(document).ready(function(){
 				}else{
 				$("#itemId").append(
 						$("<option style='text-align:left;' selected></option>").attr(
-								"value", 0).text("ALL"));
+								"value", 0).text("All"));
 					for (var i = 0; i < len; i++) {
 	
 						$("#itemId").append(
@@ -374,7 +349,7 @@ jQuery(document).ready(function(){
 
 			});
 
-		}
+		
 
 	}
 </script>
@@ -635,7 +610,7 @@ jQuery(document).ready(function(){
 <script type="text/javascript">
 	function getSubCategoriesByCatId() {
 		var catId = $("#catId").val();
-//alert("Cat   "+catId)
+	//alert("Cat   "+catId)
 		$
 				.getJSON(
 						'${getGroup2ByCatId}',
@@ -661,7 +636,7 @@ jQuery(document).ready(function(){
 						if(catId>0){
 							$("#item_grp2").append(
 									$("<option selected style='text-align:left;'></option>").attr("value", -1)
-											.text("ALL"));
+											.text("All"));
 							for (var i = 0; i < len; i++) {
 								$("#item_grp2").append(
 										$("<option style='text-align:left;'></option>").attr("value",
@@ -671,7 +646,7 @@ jQuery(document).ready(function(){
 						}else{
 							$("#item_grp2").append(
 									$("<option selected style='text-align:left;'></option>").attr("value", -1)
-											.text("ALL"));
+											.text("All"));
 						}
 							$("#item_grp2").trigger("chosen:updated");
 							getItemList();

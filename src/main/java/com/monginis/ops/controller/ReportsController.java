@@ -1378,6 +1378,36 @@ public class ReportsController {
 		return items;
 
 	}
+	
+	@RequestMapping(value = "/getItemsByCatIdAndSubCatId", method = RequestMethod.GET)
+	public @ResponseBody List<ItemRes> getItemsByCatIdAndSubCatId(HttpServletRequest request, HttpServletResponse response) {
+
+		List<ItemRes> items = new ArrayList<ItemRes>();
+		try {
+
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			int subCat = Integer.parseInt(request.getParameter("subCat"));
+			System.out.println("Sub Cat    "+catId);
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("catId", catId);
+			map.add("subCatId", subCat);
+
+			ItemRes[] ItemRes = restTemplate.postForObject(Constant.URL + "/getItemsResByCatAndSubCatId", map,
+					ItemRes[].class);
+
+			items = new ArrayList<>(Arrays.asList(ItemRes));
+
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
+
+	}
 
 	@RequestMapping(value = "/getItemListBycatId", method = RequestMethod.GET)
 	public @ResponseBody List<Item> getItemListBycatId(HttpServletRequest request, HttpServletResponse response) {
@@ -2853,7 +2883,7 @@ public class ReportsController {
 		/* rowData.add("Other"); */
 
 		rowData.add("Discount");
-		rowData.add("Pending");
+		rowData.add("Remaining");
 		rowData.add("Advance");
 		rowData.add("Regular Expense");
 		rowData.add("Challan Expense");
