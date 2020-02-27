@@ -19,6 +19,10 @@ public class GetRepMenuwiseSellResponse {
 		private int qty;
 		
 		private float amount;
+		
+		private float discAmt;
+		private float payableAmt;
+
 
 		public int getSellBillNo() {
 			return sellBillNo;
@@ -76,11 +80,27 @@ public class GetRepMenuwiseSellResponse {
 			this.amount = amount;
 		}
 
+		public float getDiscAmt() {
+			return discAmt;
+		}
+
+		public void setDiscAmt(float discAmt) {
+			this.discAmt = discAmt;
+		}
+
+		public float getPayableAmt() {
+			return payableAmt;
+		}
+
+		public void setPayableAmt(float payableAmt) {
+			this.payableAmt = payableAmt;
+		}
+
 		@Override
 		public String toString() {
 			return "GetRepMenuwiseSellResponse [sellBillNo=" + sellBillNo + ", frId=" + frId + ", frName=" + frName
-					+ ", catId=" + catId + ", catName=" + catName + ", qty=" + qty + ", amount=" + amount + "]";
+					+ ", catId=" + catId + ", catName=" + catName + ", qty=" + qty + ", amount=" + amount + ", discAmt="
+					+ discAmt + ", payableAmt=" + payableAmt + "]";
 		}
-		
 
 }

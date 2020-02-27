@@ -3332,11 +3332,15 @@ public class ReportsController {
 		rowData.add("Sr.No.");
 		rowData.add("Franchise Name");
 		rowData.add("Cat Name");
+		rowData.add("Discount Amt");
+		rowData.add("Payable Amt");		
 		rowData.add("Quantity");
 		rowData.add("Amount");
 
 		float qtyTotal = 0;
 		float amtTotal = 0;
+		float discTotal = 0;
+		float payableTotal = 0;
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -3348,11 +3352,15 @@ public class ReportsController {
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getFrName());
 
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getCatName());
+			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getDiscAmt());
+			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getPayableAmt());
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getAmount());
 
 			qtyTotal = qtyTotal + getRepFrMenuwiseSellResponseList.get(i).getQty();
 			amtTotal = amtTotal + getRepFrMenuwiseSellResponseList.get(i).getAmount();
+			discTotal = discTotal+getRepFrMenuwiseSellResponseList.get(i).getDiscAmt();
+			payableTotal = payableTotal+getRepFrMenuwiseSellResponseList.get(i).getPayableAmt();
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -3366,6 +3374,8 @@ public class ReportsController {
 		rowData.add("");
 
 		rowData.add("Total");
+		rowData.add("" + discTotal);
+		rowData.add("" + payableTotal);
 		rowData.add("" + qtyTotal);
 		rowData.add("" + amtTotal);
 

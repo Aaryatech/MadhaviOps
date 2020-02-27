@@ -115,16 +115,18 @@ jQuery(document).ready(function(){
 
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
+					<div class="col-md-1">
+						<button class="buttonsaveorder" value="Search" id="Search"
+							onclick="genJSP()">Search</button>
+					</div>
+
 
 					<div class="col-md-1">
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
 					</div>
 
-					<div class="col-md-1">
-						<button class="btn btn-primary" value="Search" id="Search"
-							onclick="genJSP()">Search</button>
-					</div>
+					
 					<br>
 				</div>
 			</div>

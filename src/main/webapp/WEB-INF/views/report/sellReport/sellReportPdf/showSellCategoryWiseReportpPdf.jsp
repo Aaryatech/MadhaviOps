@@ -40,12 +40,16 @@ th {
 									<!-- <th style="text-align:center;">Item Name</th> -->
 									<!-- <th style="text-align:center;">Item Id</th> -->
 									<th style="text-align:center;">Group Name</th>
+									<th style="text-align:center;">Discount Amt</th> 
+									<th style="text-align:center;">Payable Amt</th>
 								 	<th style="text-align:center;">Quantity</th>
 									<th style="text-align:center;">Amount</th> 
 								  </tr>
 								</thead>
 								 <tbody >
 								 <c:set var="totalAmount"   value="${0}"/>
+								 <c:set var="totalDiscount"   value="${0}"/>
+								 <c:set var="totalPayable"   value="${0}"/>
 								<c:set var="qty"  value="${0 }"/>
 									  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
@@ -54,6 +58,12 @@ th {
 													<%-- <td><c:out value="${reportList.itemName}" /></td> --%>
 													<%-- <td><c:out value="${reportList.itemId}" /></td> --%>
 													<td style="text-align:left;"><c:out value="${reportList.catName}" /></td>
+													<td style="text-align:right;"><c:out value="${reportList.discAmt}" /></td>
+													<c:set var="totalDiscount"  value="${totalDiscount + reportList.discAmt }"/>
+													
+													<td style="text-align:right;"><c:out value="${reportList.payableAmt}" /></td>
+													<c:set var="totalPayable"  value="${totalPayable + reportList.payableAmt }"/>
+													
 													<td style="text-align:right;"><c:out value="${reportList.qty}" /></td>
 													<c:set var="qty"  value="${qty + reportList.qty }"/>
 													
@@ -67,8 +77,11 @@ th {
 										</c:forEach>
 								  <tr>
 								  <td colspan='2'><b>Total</b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number"  minFractionDigits = "2"  maxFractionDigits = "2" value = "${totalDiscount}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number"  minFractionDigits = "2"  maxFractionDigits = "2" value = "${totalPayable}"/></b></td>
+								  
 								  <td style="text-align:right;"><b><c:out value="${qty}" /></b></td>
-								     <td style="text-align:right;"><b><fmt:formatNumber type = "number"  minFractionDigits = "2"  maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number"  minFractionDigits = "2"  maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
 								     
 								     <!--  <td><b>Total</b></td> -->
 								  </tr>

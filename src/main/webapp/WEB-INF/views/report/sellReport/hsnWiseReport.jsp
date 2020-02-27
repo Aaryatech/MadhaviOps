@@ -235,7 +235,12 @@
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
 																			list.hsnNo));
-
+													if(list.cgst<0){
+														tr
+														.append($(
+																'<td class="col-md-1" style="text-align:right"></td>')
+																.html(0));
+													}else{
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -244,7 +249,14 @@
 																					.toFixed(2)));
 													cgstTotal = cgstTotal
 															+ list.cgst;
-
+													}
+													
+													if(list.sgst<0){
+														tr
+														.append($(
+																'<td class="col-md-1" style="text-align:right"></td>')
+																.html(0));
+													}else{
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -253,7 +265,7 @@
 																					.toFixed(2)));
 													sgstTotal = sgstTotal
 															+ list.sgst;
-
+													}
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')

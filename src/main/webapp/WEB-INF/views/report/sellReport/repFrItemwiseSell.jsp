@@ -183,6 +183,8 @@ table, th, td {
 										<th style="text-align: center;">Sr no.</th>
 										<!-- <th align="center">Bill No</th> -->
 										<th style="text-align: center;">Category Name</th>
+										<th style="text-align: center;">Discount Amt</th>
+										<th style="text-align: center;">Payable Amt</th>
 										<th style="text-align: center;">Quantity</th>
 										<th style="text-align: center;">Amount</th>
 									</tr>
@@ -288,7 +290,8 @@ table, th, td {
 								}
 
 								var amtTotal = 0;
-
+								var ttlDisc = 0;
+								var ttlPayable = 0;
 								var totalQty = 0;
 
 								$
@@ -314,6 +317,22 @@ table, th, td {
 																					+ ');>'
 																					+ sellBillData.catName
 																					+ '</p>'));
+													tr
+													.append($(
+															'<td style=text-align:right;></td>')
+															.html(addCommas(
+																	(sellBillData.discAmt)
+																			.toFixed(2))));
+													ttlDisc = ttlDisc+sellBillData.discAmt;
+													
+													tr
+													.append($(
+															'<td style=text-align:right;></td>')
+															.html(addCommas(
+																	(sellBillData.payableAmt)
+																			.toFixed(2))));
+													ttlPayable = ttlPayable+sellBillData.payableAmt
+													
 
 													tr
 															.append($(
@@ -342,6 +361,11 @@ table, th, td {
 								var tr = "<tr>";
 								var total = "<td colspan='2' style='color:blue;'  onclick=getAllItemSellBill()>&nbsp;&nbsp;&nbsp;<b> Total</b> </td>";
 
+								var totalDisc = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ addCommas((ttlDisc).toFixed(2)) + "</b></td>";
+								var totalPay = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas((ttlPayable).toFixed(2)) + "</b></td>";
+								
 								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
 								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
@@ -351,6 +375,8 @@ table, th, td {
 
 								$('#table_menu tbody').append(tr);
 								$('#table_menu tbody').append(total);
+								$('#table_menu tbody').append(totalDisc);
+								$('#table_menu tbody').append(totalPay);
 								$('#table_menu tbody').append(totalQty);
 								$('#table_menu tbody').append(totalAmt);
 								$('#table_menu tbody')

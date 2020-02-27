@@ -483,7 +483,7 @@ table, th, td {
 								ajax : 'true'
 							},
 							function(data) {
-								var html = '<option multiple="multiple" value="">Sub Category</option>';
+								var html = '<option multiple="multiple" value="" style=text-align:left;>Sub Category</option>';
 
 								var len = data.length;
 
@@ -497,18 +497,18 @@ table, th, td {
 								if(catId==-1){
 									for (var i = 0; i < len; i++) {
 										$("#item_grp2").append(
-												$("<option selected></option>").attr(
+												$("<option selected style=text-align:left;></option>").attr(
 														"value", data[i].subCatId)
 														.text(data[i].subCatName));
 									}
 								}else{
 														
 								$("#item_grp2").append(
-										$("<option></option>")
+										$("<option style=text-align:left;></option>")
 												.attr("value", -1).text("ALL"));
 								for (var i = 0; i < len; i++) {
 									$("#item_grp2").append(
-											$("<option></option>").attr(
+											$("<option style=text-align:left;></option>").attr(
 													"value", data[i].subCatId)
 													.text(data[i].subCatName));
 								}
