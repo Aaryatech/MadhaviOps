@@ -31,6 +31,8 @@ table, th, td {
 
 <c:url var="getItemwiselReport" value="/getItemwiselReport" />
 <c:url var="getMenuwiselReport" value="/getMenuwiselReport" />
+<c:url var="getAllItemwiselReport" value="/getAllItemwiselReport" />
+
 
 <div class="sidebarOuter"></div>
 
@@ -100,6 +102,13 @@ table, th, td {
 						<button class="buttonsaveorder" onclick="showChart()">Graph</button>
 						<button id="btn_pdf" class="btn btn-primary" onclick="genPdf()">PDF
 						</button>
+						
+						
+					</div>
+					<div align="left" class="right_btn" style="margin-left: 5px; display: none;" id="range">
+						<button  type="button" id="expExcel" class="btn btn-primary"
+								onclick="exportToExcel();" 
+								disabled="disabled">EXPORT TO Excel</button>
 					</div>
 				</div>
 
@@ -131,6 +140,7 @@ table, th, td {
 
 						</div>
 					</div>
+	
 					<div id="table-scroll" class="table-scroll">
 						<div class="table-wrap">
 							<table id="table_grid" class="responsive-table">
@@ -143,6 +153,10 @@ table, th, td {
 										<!-- <th style="text-align:center;"class="col-sm-1">Item Id</th> -->
 										<th style="text-align: center;" class="col-md-1">Group
 											Name</th>
+										<c:if test="${frPos==0}">	
+											<th style="text-align: center;" class="col-md-1">Rate</th>
+										</c:if>
+										<th style="text-align: center;" class="col-md-1">MRP</th>
 										<th style="text-align: center;" class="col-md-1">Quantity</th>
 										<th style="text-align: center;" class="col-md-1">Amount</th>
 									</tr>
@@ -169,7 +183,6 @@ table, th, td {
 										<th style="text-align: center;">Sr no.</th>
 										<!-- <th align="center">Bill No</th> -->
 										<th style="text-align: center;">Category Name</th>
-
 										<th style="text-align: center;">Quantity</th>
 										<th style="text-align: center;">Amount</th>
 									</tr>
@@ -184,7 +197,7 @@ table, th, td {
 					</div>
 				</div>
 
-				<br>
+				<!-- <br>
 				<div class="form-group" style="display: none;" id="range">
 
 
@@ -196,7 +209,7 @@ table, th, td {
 					</div>
 
 
-				</div>
+				</div> -->
 
 				<div id="chart" style="display: none">
 					<br> <br> <br>
@@ -305,18 +318,18 @@ table, th, td {
 													tr
 															.append($(
 																	'<td style=text-align:right;></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellBillData.qty)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													totalQty = totalQty
 															+ sellBillData.qty;
 
 													tr
 															.append($(
 																	'<td style=text-align:right;></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellBillData.amount)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													amtTotal = amtTotal
 															+ sellBillData.amount;
@@ -327,12 +340,12 @@ table, th, td {
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='2'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var total = "<td colspan='2' style='color:blue;'  onclick=getAllItemSellBill()>&nbsp;&nbsp;&nbsp;<b> Total</b> </td>";
 
 								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-										+ (amtTotal).toFixed(2) + "</b></td>";
+										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
 								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-										+ (totalQty).toFixed(2) + "</b></td>";
+										+ addCommas((totalQty).toFixed(2)) + "</b></td>";
 
 								var trclosed = "</tr>";
 
@@ -348,6 +361,150 @@ table, th, td {
 
 		}
 	}
+	
+	function getAllItemSellBill() {
+		
+		$('#table_grid td').remove();
+		
+		document.getElementById('table').style.display = "block";
+		document.getElementById('chart').style = "display:none";
+		document.getElementById('menuTable').style = "display:none";
+
+		var fromDate = document.getElementById("fromdatepicker").value;
+		var toDate = document.getElementById("todatepicker").value;
+		var fr = ${frPos};
+		var isValid = validate();
+		
+		if (isValid) {
+			
+			$
+					.getJSON(
+							'${getAllItemwiselReport}',
+							{
+
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//$('#table_grid td').remove();
+
+								if (data == "") {
+									alert("No records found !!");
+									document.getElementById("expExcel").disabled = true;
+								}
+
+								var amtTotal = 0;
+								var amtRate = 0;
+								var amtMrp = 0;
+								var totalQty = 0;
+
+								$
+										.each(
+												data,
+												function(key, sellBillData) {
+
+													document
+															.getElementById("expExcel").disabled = false;
+													document
+															.getElementById('range').style.display = 'block';
+													var tr = $('<tr></tr>');
+
+													tr
+															.append($(
+																	'<td class="col-md-1"></td>')
+																	.html(
+																			key + 1));
+
+													tr
+															.append($(
+																	'<td class="col-md-2" style=text-align:left;></td>')
+																	.html(
+																			sellBillData.itemName));
+
+													/*  	tr.append($('<td style=text-align:center; class="col-sm-1"></td>').html(sellBillData.itemId)); */
+
+													tr
+															.append($(
+																	'<td style=text-align:left; class="col-md-1"></td>')
+																	.html(
+																			sellBillData.catName));
+													if(fr==0){
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.rate)
+																	.toFixed(2))));
+													
+													amtRate = amtRate+sellBillData.rate;
+													}
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.mrp)
+																	.toFixed(2))));
+													
+													amtMrp = amtMrp+sellBillData.mrp;
+													
+
+													tr
+															.append($(
+																	'<td style=text-align:right; class="col-md-1"></td>')
+																	.html(addCommas(
+																			(sellBillData.qty)
+																					.toFixed(2))));
+													totalQty = totalQty
+															+ sellBillData.qty;
+
+													tr
+															.append($(
+																	'<td style=text-align:right; class="col-md-1"></td>')
+																	.html(addCommas(
+																			(sellBillData.amount)
+																					.toFixed(2))));
+
+													amtTotal = amtTotal
+															+ sellBillData.amount;
+
+													$('#table_grid tbody')
+															.append(tr);
+
+												})
+
+								var tr = "<tr>";
+								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var totalRate= "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas((amtRate).toFixed(2)) + "</b></td>";
+
+								var totalMrp = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((amtMrp).toFixed(2)) + "</b></td>";
+
+								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
+								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+										+ addCommas((totalQty).toFixed(2)) + "</b></td>";
+
+								var trclosed = "</tr>";
+
+								$('#table_grid tbody').append(tr);
+								$('#table_grid tbody').append(total);
+								if(fr==0){
+								$('#table_grid tbody').append(totalRate);
+								}
+								$('#table_grid tbody').append(totalMrp);
+								$('#table_grid tbody').append(totalQty);
+								$('#table_grid tbody').append(totalAmt);
+								$('#table_grid tbody').append(trclosed);
+
+							});
+
+		}
+	
+	}
 </script>
 
 <script type="text/javascript">
@@ -358,6 +515,8 @@ table, th, td {
 		document.getElementById('chart').style = "display:none";
 		document.getElementById('menuTable').style = "display:none";
 		// document.getElementById('showchart').style.display = "block";
+		var fr = ${frPos};
+		
 		$('#table_grid td').remove();
 
 		var isValid = validate();
@@ -389,7 +548,8 @@ table, th, td {
 								}
 
 								var amtTotal = 0;
-
+								var amtRate = 0;
+								var amtMrp = 0;
 								var totalQty = 0;
 
 								$
@@ -422,22 +582,40 @@ table, th, td {
 																	'<td style=text-align:center; class="col-md-1"></td>')
 																	.html(
 																			sellBillData.catName));
-
+													if(fr==0){
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.rate)
+																	.toFixed(2))));
+													
+													amtRate = amtRate+sellBillData.rate;
+													}
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.mrp)
+																	.toFixed(2))));
+													
+													amtMrp = amtMrp+sellBillData.mrp;
+													
 													tr
 															.append($(
 																	'<td style=text-align:right; class="col-md-1"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellBillData.qty)
-																					.toFixed(2)));
+																					.toFixed(2))));
 													totalQty = totalQty
 															+ sellBillData.qty;
 
 													tr
 															.append($(
 																	'<td style=text-align:right; class="col-md-1"></td>')
-																	.html(
+																	.html(addCommas(
 																			(sellBillData.amount)
-																					.toFixed(2)));
+																					.toFixed(2))));
 
 													amtTotal = amtTotal
 															+ sellBillData.amount;
@@ -449,19 +627,26 @@ table, th, td {
 
 								var tr = "<tr>";
 								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var totalRate = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ addCommas((amtRate).toFixed(2)) + "</b></td>";
+								var totalMrp = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas((amtMrp).toFixed(2)) + "</b></td>";
 
 								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-										+ (amtTotal).toFixed(2) + "</b></td>";
+										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
 								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
-										+ (totalQty).toFixed(2) + "</b></td>";
+										+ addCommas((totalQty).toFixed(2)) + "</b></td>";
 
 								var trclosed = "</tr>";
 
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
+								if(fr==0){
+								$('#table_grid tbody').append(totalRate);
+								}
+								$('#table_grid tbody').append(totalMrp);
 								$('#table_grid tbody').append(totalQty);
 								$('#table_grid tbody').append(totalAmt);
-								$('#table_grid tbody')
 
 								$('#table_grid tbody').append(trclosed);
 
@@ -472,6 +657,22 @@ table, th, td {
 </script>
 
 <script type="text/javascript">
+function addCommas(x) {
+
+	x = String(x).toString();
+	var afterPoint = '';
+	if (x.indexOf('.') > 0)
+		afterPoint = x.substring(x.indexOf('.'), x.length);
+	x = Math.floor(x);
+	x = x.toString();
+	var lastThree = x.substring(x.length - 3);
+	var otherNumbers = x.substring(0, x.length - 3);
+	if (otherNumbers != '')
+		lastThree = ',' + lastThree;
+	return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+			+ afterPoint;
+}
+
 	function validate() {
 
 		var fromDate = $("#fromdatepicker").val();

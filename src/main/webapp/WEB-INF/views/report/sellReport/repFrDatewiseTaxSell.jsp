@@ -351,14 +351,22 @@ jQuery(document).ready(function(){
 													cessTotal = cessTotal
 															+ sellTaxData.cess;
 													
-													tr
+													/* tr
 													.append($(
 															'<td class="col-md-1"  style="text-align:right;"></td>')
 															.html(addCommas(
 																	(sellTaxData.bill_amount)
-																			.toFixed(2))));
+																			.toFixed(2)))); */
+												var billAmt = sellTaxData.tax_amount + sellTaxData.cgst + sellTaxData.sgst;
+														tr
+														.append($(
+															'<td class="col-md-1"  style="text-align:right;"></td>')
+															.html(addCommas(
+																	(billAmt)
+																		.toFixed(2)))); 
+														
 													ttlBillAmt = ttlBillAmt
-															+ sellTaxData.bill_amount;
+															+ billAmt;
 
 													$('#table_grid tbody')
 															.append(tr);

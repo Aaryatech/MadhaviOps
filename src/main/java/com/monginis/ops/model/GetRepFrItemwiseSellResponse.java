@@ -21,6 +21,10 @@ public class GetRepFrItemwiseSellResponse {
 	private float qty;
 	
 	private float amount;
+	
+	private float rate;
+	
+	private float mrp;	
 
 	public int getSellBillNo() {
 		return sellBillNo;
@@ -102,14 +106,30 @@ public class GetRepFrItemwiseSellResponse {
 		this.billDate = billDate;
 	}
 
+	public float getRate() {
+		return rate;
+	}
+
+	public void setRate(float rate) {
+		this.rate = rate;
+	}
+
+	public float getMrp() {
+		return mrp;
+	}
+
+	public void setMrp(float mrp) {
+		this.mrp = mrp;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRepFrItemwiseSellResponse [sellBillNo=" + sellBillNo + ", frId=" + frId + ", frName=" + frName
 				+ ", itemId=" + itemId + ", billDate=" + billDate + ", itemName=" + itemName + ", catId=" + catId
-				+ ", catName=" + catName + ", qty=" + qty + ", amount=" + amount + "]";
+				+ ", catName=" + catName + ", qty=" + qty + ", amount=" + amount + ", rate=" + rate + ", mrp=" + mrp
+				+ "]";
 	}
 
-	 
 	
 
 }

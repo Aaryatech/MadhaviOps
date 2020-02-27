@@ -3223,6 +3223,7 @@ public class ReportsController {
 		ModelAndView model = new ModelAndView("report/sellReport/repFrItemwiseSell");
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+		model.addObject("frPos", frDetails.getFrKg1());
 		model.addObject("frId", frDetails.getFrId());
 		/*
 		 * List<MCategory> mCategoryList; RestTemplate restTemplate = new
@@ -3411,7 +3412,7 @@ public class ReportsController {
 			ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
 			};
 			ResponseEntity<List<GetRepFrItemwiseSellResponse>> responseEntity = restTemplate
-					.exchange(Constant.URL + "getRepItemwiseSell", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+					.exchange(Constant.URL + "getItemWiseSellRep", HttpMethod.POST, new HttpEntity<>(map), typeRef); //getRepItemwiseSell
 
 			getRepFrItemwiseSellResponseList = responseEntity.getBody();
 		} catch (Exception e) {
@@ -3482,6 +3483,104 @@ public class ReportsController {
 		return getRepFrItemwiseSellResponseList;
 
 	}
+	
+	/***********************************************************/
+	@RequestMapping(value = "/getAllItemwiselReport", method = RequestMethod.GET)
+	public @ResponseBody List<GetRepFrItemwiseSellResponse> getAllItemwiselReport(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+			System.out.println("in method");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			getRepFrItemwiseSellResponseList = new ArrayList<GetRepFrItemwiseSellResponse>();
+
+			ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepFrItemwiseSellResponse>>() {
+			};
+			ResponseEntity<List<GetRepFrItemwiseSellResponse>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getRepAllItemwiseSell", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getRepFrItemwiseSellResponseList = responseEntity.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("Sell Bill Header " + getRepFrItemwiseSellResponseList.toString());
+
+		// export to excel
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+		rowData.add("Sr No.");
+		/*
+		 * rowData.add("Sell Bill No");
+		 *//*
+			 * rowData.add("Franchise Id");
+			 */ rowData.add("Franchise Name");
+		/*
+		 * rowData.add("Bill Date");
+		 *//*
+			 * rowData.add("Item Id");
+			 */
+		rowData.add("Item Name");
+
+		/*
+		 * rowData.add("Cat Id");
+		 */
+		rowData.add("Cat Name");
+		rowData.add("Quantity");
+		rowData.add("Amount");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		for (int i = 0; i < getRepFrItemwiseSellResponseList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			rowData.add("" + (i + 1));
+			/*
+			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getSellBillNo());
+			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrId());
+			 */
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrName());
+			/*
+			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate());
+			 */
+			/*
+			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemId());
+			 */ rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
+			/*
+			 * rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatId());
+			 */ rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getQty());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getAmount());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "ItemWiseSummarySell");
+
+		return getRepFrItemwiseSellResponseList;
+
+	}
+	/***********************************************************/
 
 	@RequestMapping(value = "/viewDateItemwiseSellBill", method = RequestMethod.GET)
 	public ModelAndView viewDateItemwiseSellBill(HttpServletRequest request, HttpServletResponse response) {
@@ -4079,8 +4178,13 @@ public class ReportsController {
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
 			rowData.add("" + getRepTaxSell.get(i).getGstn());
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
+			
+			float grndTtl = getRepTaxSell.get(i).getTax_amount() +getRepTaxSell.get(i).getSgst()+getRepTaxSell.get(i).getCgst();
+			//rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
+			rowData.add("" + roundUp(grndTtl));
 
+			
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -4088,7 +4192,8 @@ public class ReportsController {
 			ttlIgst = ttlIgst+getRepTaxSell.get(i).getIgst();
 			ttlSgst = ttlSgst+getRepTaxSell.get(i).getSgst();
 			ttlCgst = ttlCgst+getRepTaxSell.get(i).getCgst();
-			ttlBill = ttlBill+getRepTaxSell.get(i).getBill_amount();
+			//ttlBill = ttlBill+getRepTaxSell.get(i).getBill_amount();
+			ttlBill = ttlBill+grndTtl; 
 		}
 		
 		expoExcel = new ExportToExcel();

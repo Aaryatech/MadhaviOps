@@ -54,6 +54,7 @@ th {
 								<c:set var="cgst"  value="${0 }"/>
 								<c:set var="sgst"  value="${0 }"/>
 								<c:set var="ttlBill"  value="${0 }"/>
+								<c:set var="grndTTl"  value="${0 }"/>
 								  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
 													<td style="text-align:center;"><c:out value="${count.index+1}" /></td>
@@ -76,11 +77,17 @@ th {
 													</td>
 														<c:set var="sgst"  value="${sgst+reportList.sgst }"/>
 														
-													<td style="text-align:right;">
+													<%-- <td style="text-align:right;">
 													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.bill_amount}"/>
 													</td>
-														<c:set var="ttlBill"  value="${ttlBill+reportList.bill_amount }"/>
-													<%-- <td><c:out value="${reportList.sess}" /></td> --%>
+														<c:set var="ttlBill"  value="${ttlBill+reportList.bill_amount }"/> --%>
+														
+														<c:set var="grndTTl"  value="${reportList.tax_amount + reportList.cgst + reportList.sgst}"/>
+														<td style="text-align:right;">
+													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${grndTTl}"/>
+													</td>
+														<c:set var="ttlBill"  value="${ttlBill+grndTTl}"/>
+													
 													
 													
 												</tr>
