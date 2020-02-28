@@ -55,7 +55,7 @@ import com.monginis.ops.model.pettycash.PettyCashManagmt;
 import com.monginis.ops.model.setting.NewSetting;
 import com.steadystate.css.ParseException;
 
-@Controller
+@Controller 
 @Scope("session")
 public class OpsController {
 

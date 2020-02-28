@@ -39,7 +39,7 @@ import com.monginis.ops.model.SalesReportFranchisee;
 @Scope("session")
 public class SalesReportController2 {
 
-	String todaysDate;  
+	String todaysDate;   
 	
 	@RequestMapping(value = "/showFranchiseeWiseBillReport", method = RequestMethod.GET)
 	public ModelAndView showFranchiseeWiseBillReport(HttpServletRequest request, HttpServletResponse response) {
