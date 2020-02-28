@@ -158,7 +158,7 @@ table, th, td {
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
 											<th class="col-md-1" style="text-align: center;">From Bill</th>
-											<th class="col-md-1" style="text-align: center;">From Bill</th>
+											<th class="col-md-1" style="text-align: center;">To Bill</th>
 
 											<th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
