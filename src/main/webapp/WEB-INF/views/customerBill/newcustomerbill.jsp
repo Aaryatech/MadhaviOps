@@ -671,9 +671,11 @@ body {
 								Option</a> <a href="#" class="hold bill_btn "
 								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
-						<div class="button_two">
-							<a href="#" class="hold pay_btn " onclick="submitBill(1)">KOT
+						<div class="button_one">
+							<a href="#" class="hold pay_btn " onclick="submitBill(10)">KOT
 								Bill</a>
+							<a href="#" class="hold pay_print_btn " onclick="submitBill(1)">KOT
+								Bill Print</a>
 						</div>
 					</div>
 
@@ -1978,7 +1980,7 @@ body {
 														tr.append($('<td ></td>').html(data.exVar2));
 														tr.append($('<td ></td>').html(data.transactionDate));
 														tr.append($('<td ></td>').html(data.exFloat1));
-														tr.append($('<td ></td>').html(data.discAmt));
+														tr.append($('<td ></td>').html(Math.round(data.discAmt)));
 														tr.append($('<td ></td>').html(paidAmount));
 														tr.append($('<td ></td>').html(data.exFloat2));
 														tr.append($('<td class="gradient-multiline"></td>').html(resultPayType));

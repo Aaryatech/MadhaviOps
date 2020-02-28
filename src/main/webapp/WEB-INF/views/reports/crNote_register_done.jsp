@@ -90,7 +90,7 @@ table, th, td {
 							name="toDate" type="text" value="${todaysDate}">
 					</div>
 					<div class="col-md-2">
-						<button class="btn search_btn pull-left" onclick="searchReport()">Search</button>
+						<button class="buttonsaveorder" onclick="searchReport()">Search</button>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()" disabled="disabled">PDF</button>
 
