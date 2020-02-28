@@ -95,7 +95,7 @@
 					</div>
 					
 					<div class="col-md-2" >
-						<button class="btn search_btn pull-left"
+						<button class="buttonsaveorder"
 							onclick="billWiseTaxReport()">Search</button>
 						<%-- 		  &nbsp;&nbsp;&nbsp;  <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseTaxBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>

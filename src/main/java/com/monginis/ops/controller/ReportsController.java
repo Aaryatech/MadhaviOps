@@ -3885,6 +3885,8 @@ public class ReportsController {
 		 * rowData.add("Sell Bill No"); rowData.add("Franchise Id");
 		 */
 		rowData.add("Franchise Name");
+		rowData.add("From Bill");
+		rowData.add("To Bill");
 		rowData.add("Tax %");
 		rowData.add("Taxable Amount");
 		rowData.add("CGST");
@@ -3909,19 +3911,22 @@ public class ReportsController {
 			rowData.add("" + (i + 1));
 
 			rowData.add("" + getRepTaxSell.get(i).getFrName());
+			rowData.add("" + getRepTaxSell.get(i).getFromBill());
+			rowData.add("" + getRepTaxSell.get(i).getToBill());
 
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
+			//rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
+			rowData.add("" + roundUp(0));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
 
 			taxableTotal = taxableTotal + getRepTaxSell.get(i).getTax_amount();
 			cgstTotal = cgstTotal + getRepTaxSell.get(i).getCgst();
 			sgstTotal = sgstTotal + getRepTaxSell.get(i).getSgst();
-			igstTotal = igstTotal + getRepTaxSell.get(i).getIgst();
+			igstTotal = igstTotal + 0;
 			cessTotal = cessTotal + getRepTaxSell.get(i).getCess();
 			billTotal = billTotal + getRepTaxSell.get(i).getBill_amount();
 
@@ -3935,6 +3940,8 @@ public class ReportsController {
 		rowData.add("");
 
 		rowData.add("Total");
+		rowData.add("");
+		rowData.add("");
 		rowData.add("");
 		rowData.add("" + roundUp(taxableTotal));
 		rowData.add("" + roundUp(cgstTotal));

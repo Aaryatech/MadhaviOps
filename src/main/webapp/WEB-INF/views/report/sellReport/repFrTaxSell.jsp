@@ -157,13 +157,15 @@ table, th, td {
 										<tr class="bgpink">
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+											<th class="col-md-1" style="text-align: center;">From Bill</th>
+											<th class="col-md-1" style="text-align: center;">From Bill</th>
 
 											<th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">IGST</th>
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
+											<th class="col-md-1" style="text-align: center;">IGST</th>
 											<th class="col-md-1" style="text-align: center;">CESS</th>
 											<th class="col-md-1" style="text-align: center;">Bill Amt</th>
 										</tr>
@@ -291,6 +293,18 @@ table, th, td {
 																			key + 1));
 
 													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:center;"></td>')
+															.html(
+																	sellTaxData.fromBill));
+
+													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:center;"></td>')
+															.html(
+																	sellTaxData.toBill));
+
+													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
 																	.html(addCommas(
@@ -305,15 +319,7 @@ table, th, td {
 																					.toFixed(2))));
 													taxTotal = taxTotal
 															+ sellTaxData.tax_amount;
-
-													tr
-															.append($(
-																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(addCommas(
-																			(sellTaxData.igst)
-																					.toFixed(2))));
-													igstTotal = igstTotal
-															+ sellTaxData.igst;
+													
 
 													tr
 															.append($(
@@ -332,6 +338,13 @@ table, th, td {
 																					.toFixed(2))));
 													sgstTotal = sgstTotal
 															+ sellTaxData.sgst;
+													
+													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:right;"></td>')
+															.html(0));
+											igstTotal = igstTotal
+													+ sellTaxData.igst;
 
 													tr
 															.append($(
@@ -358,21 +371,22 @@ table, th, td {
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='1' style='text-align:left;'><b> Total</b></td>";
-								var non = "<td colspan='1'></td>";
+								var total = "<td colspan='4' style='text-align:left;'><b> Total</b></td>";
+								/* var non = "<td colspan='1'></td>"; */
 								
 								taxTotal = taxTotal.toFixed(2);
 								var totalTax = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;<b>"
 										+ addCommas(taxTotal)+ "</b></td>";
 
-								var igst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
-										+ addCommas(igstTotal.toFixed(2));
+								
 								+"</b></td>";
 								var cgst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas(cgstTotal.toFixed(2));
 								+"</b></td>";
 								var sgst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas(sgstTotal.toFixed(2));
+								var igst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas(0);
 								+"</b></td>";
 								var cess = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas(cessTotal) + "</b></td>";
@@ -383,12 +397,12 @@ table, th, td {
 								var trclosed = "</tr>";
 
 								$('#table_grid tbody').append(tr);
-								$('#table_grid tbody').append(total);
-								$('#table_grid tbody').append(non);
+								$('#table_grid tbody').append(total);/* 
+								$('#table_grid tbody').append(non); */
 								$('#table_grid tbody').append(totalTax);
-								$('#table_grid tbody').append(igst);
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
+								$('#table_grid tbody').append(igst);
 								$('#table_grid tbody').append(cess);
 								$('#table_grid tbody').append(ttlBill);
 								$('#table_grid tbody').append(trclosed);
