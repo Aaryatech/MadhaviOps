@@ -453,7 +453,7 @@ public class OpsController {
 			mvm.add("settingKey", "DEFLTCUST");
 			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
 					NewSetting.class);
-			System.err.println(settingValue.toString());
+			System.err.println("Default Customer Val------------------"+settingValue.toString());
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
 
 			model.addAttribute("frtype", frDetails.getFrGstType());

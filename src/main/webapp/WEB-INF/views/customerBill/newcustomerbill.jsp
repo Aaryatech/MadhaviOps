@@ -159,6 +159,7 @@ body {
 .itemDummyClass {
 	cursor: pointer;
 }
+.def_customer{ display: none; }
 </style>
 <body>
 	<form action="" method="get">
@@ -466,10 +467,12 @@ body {
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
-							<div class="customer_three">
-								<button class="plus_btn" type="button" onclick="editCustomer()">
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</button>
+							<div class="def_customer" id=defCust>
+								<div class="customer_three">
+									<button class="plus_btn" type="button" onclick="editCustomer()">
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</button>
+								</div>
 							</div>
 							<div class="clr"></div>
 						</div>
@@ -2342,6 +2345,16 @@ function matchSplitAmt(flag){
 			
 		}
 		});
+		
+		function validateDefCustomer(custId){
+			var defCust=$("#defaultCustomer").val();
+			//alert(custId+" - "+defCust);
+			if(defCust!=custId){
+				//document.getElementById("defCust").style.display = "none";
+				$('#defCust').removeClass('def_customer');
+			
+			}
+		}
 	</script>
 
 	<script type="text/javascript">
@@ -2576,8 +2589,8 @@ function matchSplitAmt(flag){
 	<script type="text/javascript">
 	
 	function setCustAmt() {
-		
 		var cust =  $('#cust').val() ;
+		validateDefCustomer(cust);
 		document.getElementById("credAmt").innerHTML = 0; 
 		//document.getElementById("advCustAmt").innerHTML = 0;
 		  $
