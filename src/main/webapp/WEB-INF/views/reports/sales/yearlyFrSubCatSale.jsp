@@ -22,7 +22,7 @@ table, th, td {
 <body>
 
 	<!--datepicker-->
-	<script type="text/javascript"
+	<%-- <script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 	<script>
 		$(function() {
@@ -45,7 +45,7 @@ table, th, td {
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-	</script>
+	</script> --%>
 	<!--datepicker-->
 
 
@@ -129,7 +129,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
-										size="30" type="text" value="${todaysDate}" />
+										size="30" type="text" value="${fromDate}" />
 								</div>
 
 								<!-- </div>
@@ -140,7 +140,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
-										type="text" value="${todaysDate}" />
+										type="text" value="${toDate}" />
 								</div>
 							</div>
 
@@ -155,7 +155,7 @@ table, th, td {
 									class="chosen-select" name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
 									data-rule-required="true" multiple="multiple">
-									<option value="-1">Select All</option>
+									<option value="${catIds}">Select All</option>
 
 									<c:forEach items="${mCategoryList}" var="mCategoryList">
 										<option value="${mCategoryList.catId}"><c:out
@@ -244,7 +244,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
-										size="30" type="text" value="${todaysDate}" />
+										size="30" type="text" value="${fromDate}" />
 								</div>
 
 								
@@ -252,7 +252,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem" size="30"
-										type="text" value="${todaysDate}" />
+										type="text" value="${toDate}" />
 								</div>
 							</div>
 
@@ -267,7 +267,7 @@ table, th, td {
 									class="chosen-select" name="item_grp1Item" tabindex="-1"
 									 id="item_grp1Item"
 									data-rule-required="true" multiple="multiple">
-									<option value="-1">Select All</option>
+									<option value="${catIds}">Select All</option>
 
 									<c:forEach items="${mCategoryList}" var="mCategoryList">
 										<option value="${mCategoryList.catId}"><c:out
@@ -526,7 +526,7 @@ table, th, td {
 								ajax : 'true'
 							},
 							function(data) {
-								var html = '<option multiple="multiple" value="">Sub Category</option>';
+								var html = '<option multiple="multiple" value="" style="text-align: left;">Sub Category</option>';
 
 								var len = data.length;
 
@@ -538,11 +538,11 @@ table, th, td {
 														"value", "").text(
 														"Select Sub Category")); */
 								$("#item_grp2").append(
-										$("<option></option>")
+										$('<option style="text-align: left;"></option>')
 												.attr("value", -1).text("ALL"));
 								for (var i = 0; i < len; i++) {
 									$("#item_grp2").append(
-											$("<option ></option>").attr(
+											$('<option style="text-align: left;"></option>').attr(
 													"value", data[i].subCatId)
 													.text(data[i].subCatName));
 								}
@@ -551,7 +551,169 @@ table, th, td {
 		}
 	</script>
 
+<script>
+		$(document)
+				.ready(
+						function() {
+							$('#fromDate')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
 
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*  if ((selDate = $(this).val()).length > 0) 
+													 {
+													    iYear = selDate.substring(selDate.length - 4, selDate.length);
+													    iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													    $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													 } */
+												}
+											});
+						});
+	</script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#toDate')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
+
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*   if ((selDate = $(this).val()).length > 0) 
+													  {
+													     iYear = selDate.substring(selDate.length - 4, selDate.length);
+													     iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													     $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													  } */
+												}
+											});
+						});
+	</script>
+	
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#fromDateItem')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
+
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*  if ((selDate = $(this).val()).length > 0) 
+													 {
+													    iYear = selDate.substring(selDate.length - 4, selDate.length);
+													    iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													    $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													 } */
+												}
+											});
+						});
+	</script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#toDateItem')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
+
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*   if ((selDate = $(this).val()).length > 0) 
+													  {
+													     iYear = selDate.substring(selDate.length - 4, selDate.length);
+													     iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													     $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													  } */
+												}
+											});
+						});
+	</script>
 
 
 

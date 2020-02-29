@@ -3,6 +3,7 @@ package com.monginis.ops.controller;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -70,15 +71,24 @@ public class SalesReportController3 {
 		model = new ModelAndView("reports/sales/yearlyFrSubCatSale");
 
 		try {
-			ZoneId z = ZoneId.of("Asia/Calcutta");
+			/*ZoneId z = ZoneId.of("Asia/Calcutta");
 
 			LocalDate date = LocalDate.now(z);
 			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d-MM-uuuu");
 			todaysDate = date.format(formatters);
-
+			model.addObject("todaysDate", todaysDate);*/
+			
 			RestTemplate restTemplate = new RestTemplate();
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-yyyy");
 
-			model.addObject("todaysDate", todaysDate);
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 			CategoryListResponse categoryListResponse;
 
@@ -86,9 +96,13 @@ public class SalesReportController3 {
 					CategoryListResponse.class);
 
 			mCategoryList = categoryListResponse.getmCategoryList();
-
+			StringBuilder catIds = new StringBuilder("0");
+			for (int i = 0; i < mCategoryList.size(); i++) {
+				
+				catIds.append(","+mCategoryList.get(i).getCatId());
+			}
 			model.addObject("mCategoryList", mCategoryList);
-
+			model.addObject("catIds", catIds);
 			SubCategory[] subCatList = restTemplate.getForObject(Constant.URL + "getAllSubCatList",
 					SubCategory[].class);
 
@@ -785,9 +799,28 @@ public class SalesReportController3 {
 			String selectedSubCatIdList = request.getParameter("subCat_id_list");
 			String selectedCatIdList = request.getParameter("cat_id_list");
 
-			fromDate = request.getParameter("fromDate");
-			toDate = request.getParameter("toDate");
 			selectedType = request.getParameter("selectedType");
+			//fromDate = request.getParameter("fromDate");
+			//toDate = request.getParameter("toDate");
+			
+			
+			System.out.println("in method");
+			fromDate = request.getParameter("fromDate");
+			System.out.println("fromDate" + fromDate);
+
+			toDate = request.getParameter("toDate");
+			System.out.println("toDate" + toDate);
+
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("MM-uuuu");
+			YearMonth ym = YearMonth.parse(fromDate, f);
+
+			LocalDate fDate = ym.atDay(1);
+			System.out.println("fdate" + fDate);
+
+			YearMonth ym1 = YearMonth.parse(toDate, f);
+			LocalDate tDate = ym1.atEndOfMonth();
+			System.out.println("tdate" + tDate);
+			
 
 			// System.err.println("SC ************************************************** " +
 			// selectedSubCatIdList);
@@ -839,15 +872,14 @@ public class SalesReportController3 {
 
 			System.out.println("Inside If all fr Selected ");
 
-			String frDt = "", toDt = "";
-			try {
-				frDt = DateConvertor.convertToYMD(fromDate);
-				toDt = DateConvertor.convertToYMD(toDate);
-			} catch (Exception e) {
-			}
+			/*
+			 * String frDt = "", toDt = ""; try { frDt =
+			 * DateConvertor.convertToYMD(fromDate); toDt =
+			 * DateConvertor.convertToYMD(toDate); } catch (Exception e) { }
+			 */
 
-			map.add("fromDate", frDt);
-			map.add("toDate", toDt);
+			map.add("fromDate", "" + fDate);
+			map.add("toDate", "" + tDate);
 			map.add("frIdList", "" + frId);
 			map.add("subCatIdList", selectedSubCatIdList);
 
@@ -1354,7 +1386,7 @@ public class SalesReportController3 {
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			model.addObject("frId", frDetails.getFrId());
 
-			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			/*SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			Date date1 = new Date(); // your date
 			// Choose time zone in which you want to interpret your Date
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
@@ -1379,13 +1411,25 @@ public class SalesReportController3 {
 				model.addObject("toDate", sf.format(today));
 				
 				System.out.println(today + "  year date big  " + yeardate);
+			
 			}else {
 				
 				model.addObject("fromDate", sf.format(yeardate));
 				model.addObject("toDate", sf.format(today));
 				System.out.println(today + "  To day big  " + yeardate);
-			}
+			}*/
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-yyyy");
 
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 			
 		} catch (Exception e) {
 
@@ -1420,8 +1464,25 @@ public class SalesReportController3 {
 			List<Integer> cIds = Stream.of(selectedCatIdList.split(",")).map(Integer::parseInt)
 					.collect(Collectors.toList());
 			
+			//fromDate = request.getParameter("fromDate");
+			//toDate = request.getParameter("toDate");
+			System.out.println("in method");
 			fromDate = request.getParameter("fromDate");
+			System.out.println("fromDate" + fromDate);
+
 			toDate = request.getParameter("toDate");
+			System.out.println("toDate" + toDate);
+
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("MM-uuuu");
+			YearMonth ym = YearMonth.parse(fromDate, f);
+
+			LocalDate fDate = ym.atDay(1);
+			System.out.println("fdate" + fDate);
+
+			YearMonth ym1 = YearMonth.parse(toDate, f);
+			LocalDate tDate = ym1.atEndOfMonth();
+			System.out.println("tdate" + tDate);
+
 
 			System.err.println("SC ************************************************** " + selectedSubCatIdList);
 
@@ -1464,15 +1525,14 @@ public class SalesReportController3 {
 
 			System.out.println("Inside If all fr Selected ");
 
-			String frDt = "", toDt = "";
-			try {
-				frDt = DateConvertor.convertToYMD(fromDate);
-				toDt = DateConvertor.convertToYMD(toDate);
-			} catch (Exception e) {
-			}
+			/*
+			 * String frDt = "", toDt = ""; try { frDt =
+			 * DateConvertor.convertToYMD(fromDate); toDt =
+			 * DateConvertor.convertToYMD(toDate); } catch (Exception e) { }
+			 */
 
-			map.add("fromDate", frDt);
-			map.add("toDate", toDt);
+			map.add("fromDate", "" + fDate);
+			map.add("toDate", "" + tDate);
 			map.add("frIdList", "" + frId);
 			map.add("subCatIdList", selectedSubCatIdList);
 
@@ -1838,9 +1898,28 @@ public class SalesReportController3 {
 			System.out.println("Inside ITEM WISE REPORT");
 			frId = Integer.parseInt(request.getParameter("frId"));
 			String selectedCatIdList = request.getParameter("cat_id_list");
-			fromDate = request.getParameter("fromDate");
-			toDate = request.getParameter("toDate");
+			
 			selectedType = request.getParameter("selectedType");
+			//fromDate = request.getParameter("fromDate");
+			//toDate = request.getParameter("toDate");
+			
+			
+			System.out.println("in method");
+			fromDate = request.getParameter("fromDate");
+			System.out.println("fromDate" + fromDate);
+
+			toDate = request.getParameter("toDate");
+			System.out.println("toDate" + toDate);
+
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("MM-uuuu");
+			YearMonth ym = YearMonth.parse(fromDate, f);
+
+			LocalDate fDate = ym.atDay(1);
+			System.out.println("fdate" + fDate);
+
+			YearMonth ym1 = YearMonth.parse(toDate, f);
+			LocalDate tDate = ym1.atEndOfMonth();
+			System.out.println("tdate" + tDate);
 
 			System.err.println("SC ************************************************** " + selectedCatIdList);
 
@@ -1873,15 +1952,14 @@ public class SalesReportController3 {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
 
-			String frDt = "", toDt = "";
-			try {
-				frDt = DateConvertor.convertToYMD(fromDate);
-				toDt = DateConvertor.convertToYMD(toDate);
-			} catch (Exception e) {
-			}
+			/*
+			 * String frDt = "", toDt = ""; try { frDt =
+			 * DateConvertor.convertToYMD(fromDate); toDt =
+			 * DateConvertor.convertToYMD(toDate); } catch (Exception e) { }
+			 */
 
-			map.add("fromDate", frDt);
-			map.add("toDate", toDt);
+			map.add("fromDate", "" + fDate);
+			map.add("toDate", "" + tDate);
 			map.add("frId", frId);
 			map.add("catIdList", selectedCatIdList);
 
@@ -2459,8 +2537,24 @@ public class SalesReportController3 {
 			System.out.println("Inside ITEM WISE SELL REPORT");
 			frId = Integer.parseInt(request.getParameter("frId"));
 			String selectedCatIdList = request.getParameter("cat_id_list");
+			//fromDate = request.getParameter("fromDate");
+			//toDate = request.getParameter("toDate");
+			System.out.println("in method");
 			fromDate = request.getParameter("fromDate");
+			System.out.println("fromDate" + fromDate);
+
 			toDate = request.getParameter("toDate");
+			System.out.println("toDate" + toDate);
+
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("MM-uuuu");
+			YearMonth ym = YearMonth.parse(fromDate, f);
+
+			LocalDate fDate = ym.atDay(1);
+			System.out.println("fdate" + fDate);
+
+			YearMonth ym1 = YearMonth.parse(toDate, f);
+			LocalDate tDate = ym1.atEndOfMonth();
+			System.out.println("tdate" + tDate);
 
 			System.err.println("SC ************************************************** " + selectedCatIdList);
 
@@ -2493,15 +2587,14 @@ public class SalesReportController3 {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
 
-			String frDt = "", toDt = "";
-			try {
-				frDt = DateConvertor.convertToYMD(fromDate);
-				toDt = DateConvertor.convertToYMD(toDate);
-			} catch (Exception e) {
-			}
+			/*
+			 * String frDt = "", toDt = ""; try { frDt =
+			 * DateConvertor.convertToYMD(fromDate); toDt =
+			 * DateConvertor.convertToYMD(toDate); } catch (Exception e) { }
+			 */
 
-			map.add("fromDate", frDt);
-			map.add("toDate", toDt);
+			map.add("fromDate", "" + fDate);
+			map.add("toDate", "" + tDate);
 			map.add("frId", frId);
 			map.add("catIdList", selectedCatIdList);
 

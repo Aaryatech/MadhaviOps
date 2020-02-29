@@ -19,7 +19,7 @@ table, th, td {
 <body>
 
 	<!--datepicker-->
-	<script type="text/javascript"
+	<%-- <script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 
 	<script>
@@ -43,7 +43,7 @@ table, th, td {
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-	</script>
+	</script> --%>
 	<!--datepicker-->
 
 
@@ -519,7 +519,87 @@ table, th, td {
 		}
 	</script>
 
+<script>
+		$(document)
+				.ready(
+						function() {
+							$('#fromDate')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
 
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*  if ((selDate = $(this).val()).length > 0) 
+													 {
+													    iYear = selDate.substring(selDate.length - 4, selDate.length);
+													    iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													    $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													 } */
+												}
+											});
+						});
+	</script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#toDate')
+									.datepicker(
+											{
+												changeMonth : true,
+												changeYear : true,
+												dateFormat : 'mm-yy',
+
+												onClose : function() {
+													var iMonth = $(
+															"#ui-datepicker-div .ui-datepicker-month :selected")
+															.val();
+													var iYear = $(
+															"#ui-datepicker-div .ui-datepicker-year :selected")
+															.val();
+													$(this).datepicker(
+															'setDate',
+															new Date(iYear,
+																	iMonth, 1));
+												},
+
+												beforeShow : function() {
+													$('#ui-datepicker-div')
+															.addClass(
+																	'hide-calendar');
+
+													/*   if ((selDate = $(this).val()).length > 0) 
+													  {
+													     iYear = selDate.substring(selDate.length - 4, selDate.length);
+													     iMonth = jQuery.inArray(selDate.substring(0, selDate.length - 5), $(this).datepicker('option', 'monthNames'));
+													     $(this).datepicker('option', 'defaultDate', new Date(iYear, iMonth, 1));
+													     $(this).datepicker('setDate', new Date(iYear, iMonth, 1));
+													  } */
+												}
+											});
+						});
+	</script>
 
 
 
