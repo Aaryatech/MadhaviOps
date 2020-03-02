@@ -3947,6 +3947,7 @@ function getCurrentItemList() {
 											}
 											window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
 										}
+										 window.location = "${pageContext.request.contextPath}/newcustomerbill/0";
 										 var defaultCustomer =  $('#defaultCustomer').val() ;
 											document.getElementById("cust").value = defaultCustomer;
 											getCurrentItemList(); 
