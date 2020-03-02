@@ -675,10 +675,10 @@ body {
 								onclick="submitBill(2)">Print GST Bill</a>
 						</div>
 						<div class="button_one">
-							<a href="#" class="hold pay_btn " onclick="submitBill(10)">KOT
+							<a href="#" class="hold pay_btn " onclick="submitBill(10)">Save
 								Bill</a>
-							<a href="#" class="hold pay_print_btn " onclick="submitBill(1)">KOT
-								Bill Print</a>
+							<a href="#" class="hold pay_print_btn " onclick="submitBill(1)">Print KOT
+								Bill</a>
 						</div>
 					</div>
 

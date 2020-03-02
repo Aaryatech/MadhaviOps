@@ -165,7 +165,8 @@ table.pending_tab tr:nth-child(even){background-color: #f2f2f2}
 .print_btn:hover{background: #53509b;}
 .bill_btn{background: #001f3f; color: #FFF; border:1px solid #001836;}
 .bill_btn:hover{background: #001635;}
-.pay_btn{background: #00a65a; color: #FFF; border:1px solid #008d4c; height: 66px; line-height: 66px;}
+.pay_btn{background: #00a65a; color: #FFF; border:1px solid #008d4c; }/*height: 66px; line-height: 66px; */
+.pay_print_btn{background: #0a7478; color: #FFF; border:1px solid #001836; }/*height: 66px; line-height: 66px; */
 .pay_btn:hover{background: #008d4c;}
 
 
