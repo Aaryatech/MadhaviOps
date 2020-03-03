@@ -94,6 +94,8 @@ table, th, td {
 
 
 	<c:url var="getPettyCashData" value="/getPettyCashData"></c:url>
+	<c:url var="editPettyCashData" value="/editPettyCashData"></c:url>
+	<c:url var="updateWithdrawAmt" value="/updateWithdrawAmt"></c:url>
 
 
 	<!--topLeft-nav-->
@@ -242,7 +244,7 @@ table, th, td {
 														Amt</th>
 													<th class="col-md-1" style="text-align: center;">Closing
 														Amt</th>
-													<!-- <th class="col-md-1">Action</th> -->
+													<th class="col-sm-1" style="text-align: center;">Action</th>
 												</tr>
 
 											</thead>
@@ -309,12 +311,87 @@ table, th, td {
 
 	</div>
 	<!--wrapper-end-->
+	<div id="slide" class="pending_pop" id="edt_petty">
+			<button class="addcust_close close_popup"
+				onclick="clearAddCustomerpopup()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<h3 class="pop_head" id="add_cust_head_name">Edit Petty Cash</h3>
+
+			<div class="add_frm">
+				<div class="add_frm_one">
+				<input type="hidden"
+							name="pettyId" id="pettyId" value="0" />
+					<div class="add_customer_one">Opening Amt</div>
+					<div class="add_input">
+						<input type="text" class="input_add"
+							 name="opening_amt" readonly="readonly" 
+							onchange="trim(this)" id="opening_amt" /> 
+					</div>
+					<div class="clr"></div>
+				</div>
+			
+				<div class="add_frm_one">
+					<div class="add_customer_one">Withdrawal Amt</div>
+					<div class="add_input">
+						<input type="text" class="input_add" 
+							placeholder="Enter Withdrawal Amt" name="withdrawal_amt"
+							onchange="calClosingAmt()" id="withdrawal_amt" /> 
+					</div>
+					<div class="clr"></div>
+				</div>
+				
+				<div class="add_frm_one">
+					<div class="add_customer_one">Closing Amt</div>
+					<div class="add_input">
+						<input type="text" class="input_add" 
+							readonly="readonly" name="closing_amt"
+							onchange="trim(this)" id="closing_amt" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				
+				<div class="add_frm_one">
+					<!-- <div class="add_customer_one">Cash Amt</div> -->
+					<div class="add_input">
+						<input type="hidden" class="input_add" 
+							readonly="readonly" name="cash_amt"
+							onchange="trim(this)" id="cash_amt" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				
+			</div>
+
+			<div class="pop_btns">
+				<div class="close_l">
+					<button class="addcust_close close_btn"
+						onclick="clearAddCustomerpopup()">Close</button>
+				</div>
+				<div class="close_r">
+					<a href="#" onclick="savePettyCash()" id="savePettyCash">Save</a>
+				</div>
+				<div class="clr"></div>
+			</div>
+
+
+		</div>
+	
+	
 
 	<!--easyTabs-->
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
-
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#slide').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			});
+		});
+	</script>
 	<script>
 		function calClosingAmt() {
 
@@ -327,11 +404,82 @@ table, th, td {
 			document.getElementById("closing_amt").value = parseFloat(closeAmt);
 		}
 
-		function editPettyCashDetails(pettyCashIdId) {
-			//alert("LogId--"+logId);
-			window
-					.open("${pageContext.request.contextPath}/editPettyCash?pettyCashIdId="
-							+ pettyCashIdId);
+		function editPettyCash(pettyCashId) {		
+			
+			$.get('${editPettyCashData}',
+
+			{
+				pettyCashId : pettyCashId,
+				ajax : 'true',
+				
+			}, function(data) {
+				
+				if (data != "") {				
+					$('#loader').hide();
+				}
+										
+					document.getElementById("opening_amt").value = parseFloat(data.openingAmt);
+					document.getElementById("withdrawal_amt").value = parseFloat(data.withdrawalAmt);
+					document.getElementById("closing_amt").value = parseFloat(data.closingAmt);
+					document.getElementById("cash_amt").value = parseFloat(data.cashAmt);
+					document.getElementById("pettyId").value = pettyCashId;
+					
+				
+			});
+		}
+		
+function savePettyCash() {		
+	var closeAmt = $("#closing_amt").val();
+	var withdrawl = $("#withdrawal_amt").val();
+	var id = $("#pettyId").val();
+	
+	alert(closeAmt+" "+withdrawl+" "+id);
+			
+			$.get('${updateWithdrawAmt}',
+
+			{
+				closeAmt : closeAmt,
+				withdrawl : withdrawl,
+				id : id,
+				ajax : 'true',
+				
+			}, function(data) {
+				
+				if (data != "") {				
+					$('#loader').hide();
+				}
+										
+					document.getElementById("opening_amt").value = data.openingAmt;
+					document.getElementById("closing_amt").value = data.withdrawalAmt;
+					document.getElementById("withdrawal_amt").value = data.closingAmt;
+					document.getElementById("cash_amt").value = data.cashAmt;
+					document.getElementById("pettyId").value = pettyCashId;
+					
+				
+			});
+		}
+		
+function clearAddCustomerpopup() {
+			
+			/* document.getElementById("myBtn").disabled = false; 
+
+			document.getElementById("customerName").value = "";
+			document.getElementById("mobileNo").value = "";
+			document.getElementById("kms").value = "";
+			document.getElementById("dateOfBirth").value = "";
+			document.getElementById("n-option").checked = true;
+			document.getElementById("companyName").value = "";
+			document.getElementById("gstNo").value = "";
+			document.getElementById("custAdd").value = "";
+			document.getElementById("custId").value = 0;
+			document.getElementById("moption").checked = true;
+			document.getElementById("custType").value ="0";
+			$("#custType").trigger("chosen:updated");	
+			document.getElementById("ageRange").value ="0";
+		    $("#ageRange").trigger("chosen:updated");
+			$('.chosen-select').trigger('chosen:updated');
+			document.getElementById("add_cust_head_name").innerHTML = "Add Customer"; */
+			$('#edt_petty').popup('hide'); 
 		}
 	</script>
 
@@ -363,7 +511,8 @@ table, th, td {
 
 				$.each(data, function(i, v) {
 
-					//	var acButton = '&nbsp;&nbsp;<a href="#" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>';
+					/* var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>'; */
+					var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCash('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>';
 
 					var tr = $('<tr></tr>');
 
@@ -379,7 +528,7 @@ table, th, td {
 							v.withdrawalAmt));
 					tr.append($('<td style="text-align:right;"></td>').html(
 							v.closingAmt));
-					//tr.append($('<td></td>').html(acButton));
+					tr.append($('<td></td>').html(acButton));
 
 					cashTotal = cashTotal + v.cashAmt;
 					withdrawlTotal = withdrawlTotal + v.withdrawalAmt;

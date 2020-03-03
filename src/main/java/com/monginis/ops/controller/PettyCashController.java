@@ -1054,4 +1054,66 @@ public class PettyCashController {
 		return info;
 
 	}
+	
+	
+	
+	@RequestMapping(value = "/editPettyCashData", method = RequestMethod.GET)	
+	public @ResponseBody PettyCashManagmt editPettyCashData(HttpServletRequest req, HttpServletResponse resp) {
+		PettyCashManagmt petty = new PettyCashManagmt();
+		try {
+
+			int id = Integer.parseInt(req.getParameter("pettyCashId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", id);
+
+			petty = rest.postForObject(Constant.URL + "/getPettyCashById", map,
+					PettyCashManagmt.class);
+			SimpleDateFormat ymdSDF1 = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTimeInMillis(Long.parseLong(petty.getDate()));
+			petty.setDate(ymdSDF1.format(cal1.getTime()));
+			System.err.println("Data---------"+petty);
+		} catch (Exception e) {
+			System.err.println("Exception in editPettyCashData : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return petty;
+	}
+	
+	@RequestMapping(value = "/updateWithdrawAmt", method = RequestMethod.GET)
+	public @ResponseBody int updateWithdrawAmt(HttpServletRequest req, HttpServletResponse resp) {
+		Info info = new Info();
+		int res = 0;
+		try {
+				int id = Integer.parseInt(req.getParameter("id"));
+				float closeAmt = Integer.parseInt(req.getParameter("closeAmt"));
+				float withdrawl = Integer.parseInt(req.getParameter("withdrawl"));
+				
+				System.out.println(id+" "+closeAmt+" "+withdrawl);
+	
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("id", id);
+				map.add("closeAmt", closeAmt);
+				map.add("withdrawl", withdrawl);
+	
+				info = rest.postForObject(Constant.URL + "/editPettyCashWithdrawAmt", map,
+						Info.class);
+				System.err.println("Res--------"+info);
+				
+				if(info.isError()) {
+					res=0;
+				}else {
+					res=1;
+				}
+				
+				
+		} catch (Exception e) {
+			System.err.println("Exception in updateWithdrawAmt : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	
 }
