@@ -159,7 +159,10 @@ body {
 .itemDummyClass {
 	cursor: pointer;
 }
-.def_customer{ display: none; }
+
+.def_customer {
+	display: none;
+}
 </style>
 <body>
 	<form action="" method="get">
@@ -316,7 +319,8 @@ body {
 					<div class="cat_list_bx" id="catItmDiv">
 
 						<div class="cat_list" style="height: 400px;">
-							<div class="carlist_scrollbars" id="scrollDiv" style="height: 380px;">
+							<div class="carlist_scrollbars" id="scrollDiv"
+								style="height: 380px;">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
@@ -467,7 +471,7 @@ body {
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
-							<div class="def_customer" id=defCust>
+							<div id="defCust" style="display: none;">
 								<div class="customer_three">
 									<button class="plus_btn" type="button" onclick="editCustomer()">
 										<i class="fa fa-pencil" aria-hidden="true"></i>
@@ -676,9 +680,8 @@ body {
 						</div>
 						<div class="button_one">
 							<a href="#" class="hold pay_btn " onclick="submitBill(10)">Save
-								Bill</a>
-							<a href="#" class="hold pay_print_btn " onclick="submitBill(1)">Print KOT
-								Bill</a>
+								Bill</a> <a href="#" class="hold pay_print_btn "
+								onclick="submitBill(1)">Print KOT Bill</a>
 						</div>
 					</div>
 
@@ -709,7 +712,35 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				<input name="kms" id="kms" type="hidden" value="0" />
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Address *</div>
+					<div class="add_input">
+						<input placeholder="Enter Address" name="custAdd" id="custAdd"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Pin Code</div>
+					<div class="add_input">
+
+						<input type="text" class="input_add" placeholder="Enter Pin Code"
+							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
+							pattern="[0-9]" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Distance(In Kms)</div>
+					<div class="add_input">
+						<input placeholder="Enter distance in kms" name="kms" id="kms"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
 				<div class="add_frm_one">
 					<div class="add_customer_one">Mobile Number *</div>
 					<div class="add_input">
@@ -819,15 +850,19 @@ body {
 						</div>
 						<div class="clr"></div>
 					</div>
-					<div class="add_frm_one">
-						<div class="add_customer_one">Address *</div>
-						<div class="add_input">
-							<input placeholder="Enter Address" name="custAdd" id="custAdd"
-								onchange="trim(this)" type="text" class="input_add" />
-						</div>
-						<div class="clr"></div>
-					</div>
+
 				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Remark</div>
+					<div class="add_input">
+
+						<input type="text" class="input_add" placeholder="Enter Remark"
+							name="remark" id="remark" onchange="trim(this)" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
 			</div>
 
 			<div class="pop_btns">
@@ -881,7 +916,7 @@ body {
 
 				<div class="add_frm_one">
 					<div class="add_customer_one">Discount %</div>
-					<div class="add_input" id="discountPopup"> 
+					<div class="add_input" id="discountPopup">
 						<input type="text" name="discPer" id="discPer" step="0.01"
 							oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
 							onchange="itemDiscPerCalculation(1)"
@@ -2351,8 +2386,10 @@ function matchSplitAmt(flag){
 			//alert(custId+" - "+defCust);
 			if(defCust!=custId){
 				//document.getElementById("defCust").style.display = "none";
-				$('#defCust').removeClass('def_customer');
-			
+				//$('#defCust').removeClass('def_customer');
+				$('#defCust').show();
+			}else{
+				$('#defCust').hide();
 			}
 		}
 	</script>
@@ -2676,6 +2713,14 @@ function matchSplitAmt(flag){
 									document.getElementById("kms").value = data.exVar1;
 									document.getElementById("custId").value = data.custId;
 									document.getElementById("dateOfBirth").value = data.custDob;
+									
+									document.getElementById("custAdd").value = data.address;
+									var str = data.exVar2;
+									var strArr = str.split('-');
+									document.getElementById("pincode").value = strArr[0];
+									document.getElementById("remark").value = strArr[1];
+									
+									
 									if (data.gender == 1) {
 										document.getElementById("moption").checked = true;
 										}else{
@@ -2692,7 +2737,7 @@ function matchSplitAmt(flag){
 										document.getElementById("y-option").checked = true;
 										document.getElementById("companyName").value = data.companyName;
 										document.getElementById("gstNo").value = data.gstNo;
-										document.getElementById("custAdd").value = data.address;
+										
 									} else {
 										$("#isbuissnessdiv").hide();
 										document.getElementById("y-option").checked = false;
@@ -2733,7 +2778,6 @@ function matchSplitAmt(flag){
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
 			var  kms= document.getElementById("kms").value;
-
 			phNo=mobileNo;
 			var dateOfBirth = document.getElementById("dateOfBirth").value;
 			var custType = document.getElementById("custType").value;
@@ -2744,7 +2788,7 @@ function matchSplitAmt(flag){
 				phNo="0000000000";
 				} */
 			$.getJSON('${checkEmailText}', {
-				phoneNo : phNo,	
+				phoneNo : mobileNo,	
 					ajax : 'true',
 			},
 
@@ -2753,7 +2797,9 @@ function matchSplitAmt(flag){
 				//alert(saveFlag);
 			
 				document.getElementById("saveCust").style.display="block"; 
+				
 				 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){		
+				
 					 document.getElementById("saveCust").style.display="block"; 
 					   alert("Duplicate Mobile Number Found.");
 						//document.getElementById("sbtbtn4").disabled = true;
@@ -2772,26 +2818,21 @@ function matchSplitAmt(flag){
 			var companyName = document.getElementById("companyName").value;
 			var gstNo = document.getElementById("gstNo").value;
 			var custAdd = document.getElementById("custAdd").value;
+			var pincode = document.getElementById("pincode").value;
+			var remark = document.getElementById("remark").value;
 
 			var flag = 0;
 
 			if (customerName == "") {
 				alert("Enter Customer Name");
 				flag = 1;
-			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
+			} else if (custAdd == "") {
+				alert("Please Enter Address");
+				flag = 1;
+			}else if (mobileNo == "" || !validateMobile(mobileNo)) {
 				alert("Enter Valid Mobile No");
 				flag = 1;
-			} else if (kms == "") {
-				kms=0;
-			}/* else if (dateOfBirth == "") {
-				alert("Enter Date of Birth");
-				flag = 1;
-			} */
-			/* else if (custType == 0) {
-				alert("Please Select Customer Type");
-				flag = 1;
-			} */
-			else if (ageRange == 0) {
+			}  else if (ageRange == 0) {
 				alert("Please Select Age Group");
 				flag = 1;
 			} else if (buisness == 1) {
@@ -2805,13 +2846,11 @@ function matchSplitAmt(flag){
 				}else if(checkGST(gstNo)==false){
 					alert("Invalid GST No");
 					flag = 1;
-					
 				}
-				
-				else if (custAdd == "") {
-					alert("Enter Address");
-					flag = 1;
-				}
+			}
+			
+			if (kms == "") {
+				kms=0;
 			}
 
 			if (flag == 0) {
@@ -2831,6 +2870,8 @@ function matchSplitAmt(flag){
 									ageRange:ageRange,
 									kms:kms,
 									gender:gender,
+									pincode:pincode,
+									remark:remark,
 									ajax : 'true'
 								},
 								function(data) {
@@ -2868,6 +2909,8 @@ function matchSplitAmt(flag){
 										$('.chosen-select').trigger(
 												'chosen:updated');
 
+										document.getElementById("pincode").value = "";
+										document.getElementById("remark").value = "";
 										document.getElementById("customerName").value = "";
 										document.getElementById("mobileNo").value = "";
 										document.getElementById("kms").value = "0";
@@ -2987,6 +3030,9 @@ function matchSplitAmt(flag){
 		function clearAddCustomerpopup() {
 			
 			document.getElementById("myBtn").disabled = false; 
+			
+			document.getElementById("pincode").value = "";
+			document.getElementById("remark").value = "";
 
 			document.getElementById("customerName").value = "";
 			document.getElementById("mobileNo").value = "";

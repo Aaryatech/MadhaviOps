@@ -86,22 +86,6 @@
 								</div></a></li>
 					</c:if>
 
-
-<!-- <i class="fa fa-inr" aria-hidden="true"></i> (View purchase bill)
-<i class="fa fa-desktop" aria-hidden="true"></i>  (pos icon)
-<i class="fa fa-commenting-o" aria-hidden="true"></i> (Message icon)
-<i class="fa fa-commenting" aria-hidden="true"></i>(Message icon)
-<i class="fa fa-money" aria-hidden="true"></i> (expense list icon)
-<i class="fa fa-users" aria-hidden="true"></i> (Credit Note icon)
-<i class="fa fa-sticky-note-o" aria-hidden="true"></i> (Order Booking History)
-<i class="fa fa-list" aria-hidden="true"></i> (Edit profile icon)
-<i class="fa fa-truck" aria-hidden="true"></i> (GRN GVN icon)
-<i class="fa fa-line-chart" aria-hidden="true"></i> (Report Icon)
-<i class="fa fa-cubes" aria-hidden="true"></i> (stock Detail Icon)
-<i class="fa fa-stack-exchange" aria-hidden="true"></i>
- -->
-
-
 					<c:set var="flag" value="${0}"></c:set>
 					<c:forEach items="${setList}" var="setting" varStatus="count">
 						<c:choose>
@@ -116,13 +100,14 @@
 
 					<c:if test="${flag==1}">
 						<li><a
-							href="${pageContext.request.contextPath}/showExpressBill"><div
-									class="img">
+							href="${pageContext.request.contextPath}/showExpressBill">
+								<div class="img">
 									<i class="fa fa-file-pdf-o icon"></i>
 								</div>
 								<div class="title">
 									Express Bill <span></span>
-								</div></a></li>
+								</div>
+						</a></li>
 					</c:if>
 
 					<%-- 	<c:set var="flag" value="${0}"></c:set>
@@ -267,8 +252,7 @@
 
 								<div class="img">
 									<i class="fa fa-money icon"></i>
-								</div> 
-								<c:choose>
+								</div> <c:choose>
 									<c:when test="${sessionScope.frDetails.frKg1==1}">
 										<div class="title">Delivery Challan</div>
 									</c:when>
@@ -287,7 +271,7 @@
 							href="${pageContext.request.contextPath}/insertCreditNote">
 
 								<div class="img">
-								<i class="fa fa-users" aria-hidden="true"></i> 
+									<i class="fa fa-users" aria-hidden="true"></i>
 									<!-- <i class="fa fa-file-pdf-o"></i> -->
 								</div>
 								<div class="title">Credit Note</div>
@@ -468,11 +452,10 @@
 									Edit <span>Profile</span>
 								</div></a></li>
 					</c:if>
-					
+
 					<c:if test="${flag==1}">
 
-						<li><a
-							href="${pageContext.request.contextPath}/changePass"><div
+						<li><a href="${pageContext.request.contextPath}/changePass"><div
 									class="img">
 									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
 									<i class="fa fa-lock" aria-hidden="true"></i>
@@ -503,6 +486,9 @@
 								<c:set var="menuFromTime" value="${menu.fromTime}" />
 								<c:set var="menuDesc" value="${menu.menuDesc}" />
 
+								<c:set var="menuDay" value="${menu.day}" />
+								<c:set var="menuDate" value="${menu.date}" />
+
 								<c:set var="frId" value="${menu.frId}" />
 								<c:set var="isSameDayApplicable"
 									value="${menu.isSameDayApplicable}" />
@@ -514,8 +500,13 @@
 									ZoneId z = ZoneId.of("Asia/Calcutta");
 										LocalTime now = LocalTime.now(z); // Explicitly specify the desired/expected time zone.
 
+										//String settType=(String) pageContext.getAttribute("setting");
+
 										String menuToTiming = (String) pageContext.getAttribute("menuToTime");
 										String menuFromTiming = (String) pageContext.getAttribute("menuFromTime");
+
+										String menuDay = (String) pageContext.getAttribute("menuDay");
+										String menuDate = (String) pageContext.getAttribute("menuDate");
 
 										String menuDesc = (String) pageContext.getAttribute("menuDesc");
 
@@ -597,26 +588,30 @@
 										%> <abbr title='${menu.menuDesc}'><a
 											class="listareaBox"
 											href="${pageContext.request.contextPath}/showsPlaceOrder/${loop.index}"><div
-													class="listareaBoximg"></abbr> <%
- 	}
-
- 				} else {
- 					if (settingType != 1)
-
- 					{
-
+													class="listareaBoximg"></abbr> 
+													
+					<%
+ 						}
+ 					} else {
+ 						if (settingType != 1){
  						//if
- %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
+ 					%> 
+ 					
+ 					<abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 											href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-												<div class="listareaBoximg"></abbr> <%
- 	} else {
- %> <abbr title='${menu.menuDesc}'> <a class="listareaBox"
+												<div class="listareaBoximg"></abbr> 
+												
+					<%
+ 						} else {
+ 					%> 
+ 					
+ 					<abbr title='${menu.menuDesc}'> <a class="listareaBox"
 											href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-												<div class="listareaBoximg"></abbr> <%
- 	}
-
- 				}
- 			} else if (catId == 5) {
+												<div class="listareaBoximg"></abbr> 
+					<%
+ 						}
+ 					}
+ 				} else if (catId == 5) {
 
  				// if
  				if (settingType != 1) {
@@ -640,12 +635,64 @@
 					<h2>
 						<c:out value='${menu.menuTitle}' />
 					</h2>
-					<h3>
+					<h3 style="margin-bottom: 0; padding-bottom: 0;">
 						Booking -
 						<c:out value='${fromTime}' />
 						To
 						<c:out value='${toTime}' />
 					</h3>
+
+					<%
+						if (settingType == 1) {
+					%>
+						<h3 style="margin-bottom: 0; padding-bottom: 0;">Daily</h3>
+					<%
+						} else if (settingType == 2) {
+					%>
+						<h3 style="margin-bottom: 0; padding-bottom: 0;">Date : ${menuDate}</h3>
+					<%
+						} else if (settingType == 3) {
+					%>
+						<h3 style="margin-bottom: 0; padding-bottom: 0;">Day : 
+						
+						<c:forTokens items="${menuDay}" delims="," var="name">  
+						
+							<c:if test="${name eq '1'}">
+							Sunday,&nbsp; 
+							</c:if>
+
+							<c:if test="${name eq '2'}">
+							Monday,&nbsp; 
+							</c:if>
+
+							<c:if test="${name eq '3'}">
+							Tuesday,&nbsp;
+							</c:if>
+
+							<c:if test="${name eq '4'}">
+							Wednesday,&nbsp;
+							</c:if>
+
+							<c:if test="${name eq '5'}">
+							Thursday,&nbsp;
+							</c:if>
+
+							<c:if test="${name eq '6'}">
+							Friday,&nbsp;
+							</c:if>
+
+							<c:if test="${name eq '7'}">
+							Saturday
+							</c:if>
+							
+						</c:forTokens>
+						
+						</h3>  
+						
+					<%
+						}
+					%>
+					
 					</a>
 					</li>
 
@@ -676,6 +723,9 @@
 								To
 								<c:out value='${toTime}' />
 							</h3>
+							
+							
+							
 							</a>
 						</div>
 
@@ -803,13 +853,13 @@
 						</li>
 
 
-						 <li class="small-box">
+						<li class="small-box">
 
 							<div class="ibox">
 								<div class="ibox-head">
 									<div class="ibox-title">Other Reports</div>
 								</div>
-<%-- 
+								<%-- 
 								 <a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 									class="fa fa-files-o icon"></i>SP Advance Report</a>
 								 
@@ -825,13 +875,12 @@
 									href="${pageContext.request.contextPath}/grnReport"><i
 									class="fa fa-files-o icon"></i> GRN Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/gvnReport"><i
-									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  --%> 
-									 
-									<a
-									href="${pageContext.request.contextPath}/showCutomerList"><i
+									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  --%>
+
+								<a href="${pageContext.request.contextPath}/showCutomerList"><i
 									class="fa fa-files-o icon"></i>Customer List(Sale)</a>
 							</div>
-						</li> 
+						</li>
 						<li class="small-box">
 
 							<div class="ibox">
@@ -877,17 +926,17 @@
 								</div>
 
 								<a href="${pageContext.request.contextPath}/showTaxReport"><i
-									class="fa fa-files-o icon"></i>Billwise Tax Report
-								</a> <a href="${pageContext.request.contextPath}/showTax2Report"><i
-									class="fa fa-files-o icon"></i>Billwise Tax Percentage Report</a>
-								<a href="${pageContext.request.contextPath}/showCRNoteRegister"><i
+									class="fa fa-files-o icon"></i>Billwise Tax Report </a> <a
+									href="${pageContext.request.contextPath}/showTax2Report"><i
+									class="fa fa-files-o icon"></i>Billwise Tax Percentage Report</a> <a
+									href="${pageContext.request.contextPath}/showCRNoteRegister"><i
 									class="fa fa-files-o icon"></i>Credit Note Tax Percentage
 									Report</a> <a
 									href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
 									class="fa fa-files-o icon"></i>Credit Note HSNwise Report</a> <a
 									href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
-									class="fa fa-files-o icon"></i>HSN wise Summary Report</a> 
-									<%-- <a
+									class="fa fa-files-o icon"></i>HSN wise Summary Report</a>
+								<%-- <a
 									href="${pageContext.request.contextPath}/showGstRegister"><i
 									class="fa fa-files-o icon"></i>Billwise HSN Register Report</a> --%>
 								<%-- <a
@@ -923,19 +972,19 @@
 							</div>
 
 						</li>
-						
-						
+
+
 						<li class="small-box">
 
 							<div class="ibox">
 								<div class="ibox-head">
 									<div class="ibox-title">Customer Reports</div>
 								</div>
-									<a
+								<a
 									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
 									class="fa fa-files-o icon"></i>Customer Pending Report</a>
 							</div>
-						</li> 
+						</li>
 
 					</div>
 				</ul>
@@ -945,201 +994,200 @@
 		</section>
 
 	</div>
-	</div>
-	<%-- </c:if> --%>
-	<script type="text/javascript">
-		var btn = $('#button');
+</div>
+<%-- </c:if> --%>
+<script type="text/javascript">
+	var btn = $('#button');
 
-		$(window).scroll(function() {
-			if ($(window).scrollTop() > 300) {
-				btn.addClass('show');
-			} else {
-				btn.removeClass('show');
-			}
+	$(window).scroll(function() {
+		if ($(window).scrollTop() > 300) {
+			btn.addClass('show');
+		} else {
+			btn.removeClass('show');
+		}
+	});
+
+	btn.on('click', function(e) {
+		e.preventDefault();
+		$('html, body').animate({
+			scrollTop : 0
+		}, '300');
+	});
+	/* 	$('html, body').animate({scrollTop:170}, '300'); */
+</script>
+<script type="text/javascript">
+	var requestFullscreen = function(ele) {
+		if (ele.requestFullscreen) {
+			ele.requestFullscreen();
+		} else if (ele.webkitRequestFullscreen) {
+			ele.webkitRequestFullscreen();
+		} else if (ele.mozRequestFullScreen) {
+			ele.mozRequestFullScreen();
+		} else if (ele.msRequestFullscreen) {
+			ele.msRequestFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+	var exitFullscreen = function() {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		} else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		} else {
+			console.log('Fullscreen API is not supported.');
+		}
+	};
+
+	var fsDocButton = document.getElementById('fs-doc-button');
+	var fsExitDocButton = document.getElementById('fs-exit-doc-button');
+
+	fsDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		requestFullscreen(document.documentElement);
+	});
+
+	fsExitDocButton.addEventListener('click', function(e) {
+		e.preventDefault();
+		exitFullscreen();
+	});
+</script>
+<script>
+	function openNav() {
+		document.getElementById("mySidenav").style.width = "100%";
+	}
+
+	function closeNav() {
+		document.getElementById("mySidenav").style.width = "0";
+	}
+	function openNav1() {
+		document.getElementById("mySidenav1").style.width = "100%";
+	}
+
+	function closeNav1() {
+		document.getElementById("mySidenav1").style.width = "0";
+	}
+	function openNav3() {
+		document.getElementById("mySidenav3").style.width = "100%";
+	}
+
+	function closeNav3() {
+		document.getElementById("mySidenav3").style.width = "0";
+	}
+	function openNav4() {
+		document.getElementById("mySidenav4").style.width = "100%";
+
+	}
+
+	function closeNav4() {
+		document.getElementById("mySidenav4").style.width = "0";
+	}
+</script>
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('.imgpath').click(function() {
+			$(this).hide();
+			$('.videoWrapper').show();
+			$(".sproutvideo-player")[0].src += "?autoplay=1";
+		});
+		var owl = $("#owl-example");
+		owl.owlCarousel({
+			items : 2,
+			loop : false,
+			autoplay : false,
 		});
 
-		btn.on('click', function(e) {
-			e.preventDefault();
-			$('html, body').animate({
-				scrollTop : 0
-			}, '300');
-		});
-		/* 	$('html, body').animate({scrollTop:170}, '300'); */
-	</script>
-	<script type="text/javascript">
-		var requestFullscreen = function(ele) {
-			if (ele.requestFullscreen) {
-				ele.requestFullscreen();
-			} else if (ele.webkitRequestFullscreen) {
-				ele.webkitRequestFullscreen();
-			} else if (ele.mozRequestFullScreen) {
-				ele.mozRequestFullScreen();
-			} else if (ele.msRequestFullscreen) {
-				ele.msRequestFullscreen();
-			} else {
-				console.log('Fullscreen API is not supported.');
-			}
-		};
+	});
+</script>
 
-		var exitFullscreen = function() {
-			if (document.exitFullscreen) {
-				document.exitFullscreen();
-			} else if (document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.msExitFullscreen) {
-				document.msExitFullscreen();
-			} else {
-				console.log('Fullscreen API is not supported.');
-			}
-		};
+<script type="text/javascript">
+	function showWindow(fromTime, toTime) {
+		confirm("Timeout:\n You can place order from " + fromTime + " To "
+				+ toTime);
+	}
+</script>
 
-		var fsDocButton = document.getElementById('fs-doc-button');
-		var fsExitDocButton = document.getElementById('fs-exit-doc-button');
 
-		fsDocButton.addEventListener('click', function(e) {
-			e.preventDefault();
-			requestFullscreen(document.documentElement);
-		});
+<!-- custom scrollbar plugin added by kalpesh -->
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
-		fsExitDocButton.addEventListener('click', function(e) {
-			e.preventDefault();
-			exitFullscreen();
-		});
-	</script>
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "100%";
-		}
 
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-		}
-		function openNav1() {
-			document.getElementById("mySidenav1").style.width = "100%";
-		}
-
-		function closeNav1() {
-			document.getElementById("mySidenav1").style.width = "0";
-		}
-		function openNav3() {
-			document.getElementById("mySidenav3").style.width = "100%";
-		}
-
-		function closeNav3() {
-			document.getElementById("mySidenav3").style.width = "0";
-		}
-		function openNav4() {
-			document.getElementById("mySidenav4").style.width = "100%";
-
-		}
-
-		function closeNav4() {
-			document.getElementById("mySidenav4").style.width = "0";
-		}
-	</script>
-
-	<script
-		src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('.imgpath').click(function() {
-				$(this).hide();
-				$('.videoWrapper').show();
-				$(".sproutvideo-player")[0].src += "?autoplay=1";
+<script type="text/javascript">
+	/*Dropdown Menu*/
+	$('.dropdown').click(function() {
+		$(this).attr('tabindex', 1).focus();
+		$(this).toggleClass('active');
+		$(this).find('.dropdown-menu').slideToggle(300);
+	});
+	$('.dropdown').focusout(function() {
+		$(this).removeClass('active');
+		$(this).find('.dropdown-menu').slideUp(300);
+	});
+	$('.dropdown .dropdown-menu li').click(
+			function() {
+				$(this).parents('.dropdown').find('span').text($(this).text());
+				$(this).parents('.dropdown').find('input').attr('value',
+						$(this).attr('id'));
 			});
-			var owl = $("#owl-example");
-			owl.owlCarousel({
-				items : 2,
-				loop : false,
-				autoplay : false,
-			});
+	/*End Dropdown Menu*/
+</script>
 
-		});
-	</script>
+<!-- custom scrollbar plugin -->
+<script
+	src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mCustomScrollbar.concat.min.js"></script>
 
-	<script type="text/javascript">
-		function showWindow(fromTime, toTime) {
-			confirm("Timeout:\n You can place order from " + fromTime + " To "
-					+ toTime);
-		}
-	</script>
-
-
-	<!-- custom scrollbar plugin added by kalpesh -->
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-
-	<script type="text/javascript">
-		/*Dropdown Menu*/
-		$('.dropdown').click(function() {
-			$(this).attr('tabindex', 1).focus();
-			$(this).toggleClass('active');
-			$(this).find('.dropdown-menu').slideToggle(300);
-		});
-		$('.dropdown').focusout(function() {
-			$(this).removeClass('active');
-			$(this).find('.dropdown-menu').slideUp(300);
-		});
-		$('.dropdown .dropdown-menu li').click(
+<script>
+	(function($) {
+		$(window).on(
+				"load",
 				function() {
-					$(this).parents('.dropdown').find('span').text(
-							$(this).text());
-					$(this).parents('.dropdown').find('input').attr('value',
-							$(this).attr('id'));
-				});
-		/*End Dropdown Menu*/
-	</script>
 
-	<!-- custom scrollbar plugin -->
-	<script
-		src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mCustomScrollbar.concat.min.js"></script>
+					/*
+					get snap amount programmatically or just set it directly (e.g. "273")
+					in this example, the snap amount is list item's (li) outer-width (width+margins)
+					 */
+					var amount = Math.max.apply(Math, $("#content-1 li").map(
+							function() {
+								return $(this).outerWidth(true);
+							}).get());
 
-	<script>
-		(function($) {
-			$(window).on(
-					"load",
-					function() {
-
-						/*
-						get snap amount programmatically or just set it directly (e.g. "273")
-						in this example, the snap amount is list item's (li) outer-width (width+margins)
-						 */
-						var amount = Math.max.apply(Math, $("#content-1 li")
-								.map(function() {
-									return $(this).outerWidth(true);
-								}).get());
-
-						$("#content-1").mCustomScrollbar({
-							axis : "x",
-							theme : "inset",
-							advanced : {
-								autoExpandHorizontalScroll : true
-							},
-							scrollButtons : {
-								enable : true,
-								scrollType : "stepped"
-							},
-							keyboard : {
-								scrollType : "stepped"
-							},
-							snapAmount : amount,
-							mouseWheel : {
-								scrollAmount : amount
-							}
-						});
-
+					$("#content-1").mCustomScrollbar({
+						axis : "x",
+						theme : "inset",
+						advanced : {
+							autoExpandHorizontalScroll : true
+						},
+						scrollButtons : {
+							enable : true,
+							scrollType : "stepped"
+						},
+						keyboard : {
+							scrollType : "stepped"
+						},
+						snapAmount : amount,
+						mouseWheel : {
+							scrollAmount : amount
+						}
 					});
-		})(jQuery);
-	</script>
-	<script>
-		//makes sure the whole site is loaded
-		jQuery(window).load(function() {
-			// will first fade out the loading animation
-			jQuery("#status").fadeOut();
-			// will fade out the whole DIV that covers the website.
-			jQuery("#preloader").delay(1000).fadeOut("fast");
-		})
-	</script>
+
+				});
+	})(jQuery);
+</script>
+<script>
+	//makes sure the whole site is loaded
+	jQuery(window).load(function() {
+		// will first fade out the loading animation
+		jQuery("#status").fadeOut();
+		// will fade out the whole DIV that covers the website.
+		jQuery("#preloader").delay(1000).fadeOut("fast");
+	})
+</script>

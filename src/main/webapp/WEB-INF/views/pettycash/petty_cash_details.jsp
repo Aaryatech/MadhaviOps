@@ -186,13 +186,13 @@ table, th, td {
 
 							<button type="button" class="buttonsaveorder" onclick="genPdf()"
 								disabled id="pdf">PDF</button>
-								
+
 						</div>
 
 
 					</div>
 
-					
+
 
 					<div align="center" id="loader" style="display: none">
 
@@ -225,7 +225,7 @@ table, th, td {
  -->
 
 								<div id="table-scroll" class="table-scroll responsive-table-one">
-								<br>
+									<br>
 									<!-- class="table-scroll" -->
 									<div>
 										<!--  class="table-wrap" -->
@@ -233,18 +233,13 @@ table, th, td {
 											<!-- class="main-table" -->
 											<thead>
 												<tr class="bgpink">
-													<th class="col-md-1" style="text-align: center;">Sr.
-														No</th>
-													<th class="col-md-1" style="text-align: center;">Date</th>
-													<th class="col-md-1" style="text-align: center;">Opening
-														Amt</th>
-													<th class="col-md-1" style="text-align: center;">Cash
-														Amt</th>
-													<th class="col-md-1" style="text-align: center;">Withdrawal
-														Amt</th>
-													<th class="col-md-1" style="text-align: center;">Closing
-														Amt</th>
-													<th class="col-sm-1" style="text-align: center;">Action</th>
+													<th style="text-align: center;">Sr. No</th>
+													<th style="text-align: center;">Date</th>
+													<th style="text-align: center;">Opening Amt</th>
+													<th style="text-align: center;">Cash Amt</th>
+													<th style="text-align: center;">Withdrawal Amt</th>
+													<th style="text-align: center;">Closing Amt</th>
+													<th style="text-align: center;">Action</th>
 												</tr>
 
 											</thead>
@@ -311,79 +306,95 @@ table, th, td {
 
 	</div>
 	<!--wrapper-end-->
-	<div id="slide" class="pending_pop" id="edt_petty">
-			<button class="addcust_close close_popup"
-				onclick="clearAddCustomerpopup()">
-				<i class="fa fa-times" aria-hidden="true"></i>
-			</button>
-			<h3 class="pop_head" id="add_cust_head_name">Edit Petty Cash</h3>
+	<div id="slide" class="pending_pop" id="edt_petty" style="height: 300px;">
+		<button class="slide_close" id="btnCloseModal">
+			<i class="fa fa-times" aria-hidden="true"></i>
+		</button>
+		<!-- <h3 class="pop_head" id="add_cust_head_name">Edit Petty Cash <label>Date</label></h3> -->
 
-			<div class="add_frm">
-				<div class="add_frm_one">
-				<input type="hidden"
-							name="pettyId" id="pettyId" value="0" />
-					<div class="add_customer_one">Opening Amt</div>
-					<div class="add_input">
-						<input type="text" class="input_add"
-							 name="opening_amt" readonly="readonly" 
-							onchange="trim(this)" id="opening_amt" /> 
-					</div>
-					<div class="clr"></div>
+		<h3 class="pop_head" id="add_cust_head_name">
+
+			<div class="row">
+
+				<div class="col-md-6">
+					<b>Edit Petty Cash</b>
 				</div>
-			
-				<div class="add_frm_one">
-					<div class="add_customer_one">Withdrawal Amt</div>
-					<div class="add_input">
-						<input type="text" class="input_add" 
-							placeholder="Enter Withdrawal Amt" name="withdrawal_amt"
-							onchange="calClosingAmt()" id="withdrawal_amt" /> 
-					</div>
-					<div class="clr"></div>
+				<div class="col-md-6" style="text-align: right;">
+					Date : <input type="text" name="edit_date" id="edit_date"
+						style="border: transparent;" readonly="readonly" />
 				</div>
-				
-				<div class="add_frm_one">
-					<div class="add_customer_one">Closing Amt</div>
-					<div class="add_input">
-						<input type="text" class="input_add" 
-							readonly="readonly" name="closing_amt"
-							onchange="trim(this)" id="closing_amt" />
-					</div>
-					<div class="clr"></div>
-				</div>
-				
-				<div class="add_frm_one">
-					<!-- <div class="add_customer_one">Cash Amt</div> -->
-					<div class="add_input">
-						<input type="hidden" class="input_add" 
-							readonly="readonly" name="cash_amt"
-							onchange="trim(this)" id="cash_amt" />
-					</div>
-					<div class="clr"></div>
-				</div>
-				
+
 			</div>
 
-			<div class="pop_btns">
-				<div class="close_l">
-					<button class="addcust_close close_btn"
-						onclick="clearAddCustomerpopup()">Close</button>
+		</h3>
+
+
+
+		<div class="add_frm">
+
+			<input type="text" style="display: none;" name="pettyId" id="pettyId" />
+
+			<div class="row">
+
+				<div class="col-md-2">Opening Amount</div>
+
+				<div class="col-md-4">
+					<input type="text" class="input_add" name="opening_amt"
+						readonly="readonly" onchange="trim(this)" id="opening_amt" />
 				</div>
-				<div class="close_r">
-					<a href="#" onclick="savePettyCash()" id="savePettyCash">Save</a>
+
+				<div class="col-md-2">Cash Amount</div>
+
+				<div class="col-md-4">
+					<input type="text" class="input_add" name="cash_amt"
+						readonly="readonly" onchange="trim(this)" id="cash_amt" />
 				</div>
-				<div class="clr"></div>
+
 			</div>
+
+			<br>
+
+			<div class="row">
+
+				<div class="col-md-2">Withdrawl Amount</div>
+
+				<div class="col-md-4">
+					<input type="text" class="input_add"
+						placeholder="Enter Withdrawal Amt" name="withdrawal_amt"
+						onkeyup="calClosingAmt()" id="withdrawal_amt" />
+				</div>
+
+				<div class="col-md-2">Closing Amount</div>
+
+				<div class="col-md-4">
+					<input type="text" class="input_add" readonly="readonly"
+						name="closing_amt" onchange="trim(this)" id="closing_amt" />
+				</div>
+
+			</div>
+
 
 
 		</div>
-	
-	
+
+		<div class="pop_btns">
+			
+			<div class="close_r">
+				<a href="#" onclick="savePettyCash()" id="savePettyCash">Update</a>
+			</div>
+			<div class="clr"></div>
+		</div>
+
+
+	</div>
+
+
 
 	<!--easyTabs-->
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#slide').popup({
 				focusdelay : 400,
@@ -404,63 +415,79 @@ table, th, td {
 			document.getElementById("closing_amt").value = parseFloat(closeAmt);
 		}
 
-		function editPettyCash(pettyCashId) {		
-			
-			$.get('${editPettyCashData}',
+		function editPettyCash(pettyCashId) {
 
-			{
-				pettyCashId : pettyCashId,
-				ajax : 'true',
-				
-			}, function(data) {
-				
-				if (data != "") {				
-					$('#loader').hide();
-				}
-										
-					document.getElementById("opening_amt").value = parseFloat(data.openingAmt);
-					document.getElementById("withdrawal_amt").value = parseFloat(data.withdrawalAmt);
-					document.getElementById("closing_amt").value = parseFloat(data.closingAmt);
-					document.getElementById("cash_amt").value = parseFloat(data.cashAmt);
-					document.getElementById("pettyId").value = pettyCashId;
-					
-				
-			});
-		}
-		
-function savePettyCash() {		
-	var closeAmt = $("#closing_amt").val();
-	var withdrawl = $("#withdrawal_amt").val();
-	var id = $("#pettyId").val();
-	
-	alert(closeAmt+" "+withdrawl+" "+id);
-			
-			$.get('${updateWithdrawAmt}',
+			$
+					.get(
+							'${editPettyCashData}',
 
-			{
-				closeAmt : closeAmt,
-				withdrawl : withdrawl,
-				id : id,
-				ajax : 'true',
-				
-			}, function(data) {
-				
-				if (data != "") {				
-					$('#loader').hide();
-				}
-										
-					document.getElementById("opening_amt").value = data.openingAmt;
-					document.getElementById("closing_amt").value = data.withdrawalAmt;
-					document.getElementById("withdrawal_amt").value = data.closingAmt;
-					document.getElementById("cash_amt").value = data.cashAmt;
-					document.getElementById("pettyId").value = pettyCashId;
-					
-				
-			});
+							{
+								pettyCashId : pettyCashId,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//alert(JSON.stringify(data));
+
+								if (data != "") {
+									$('#loader').hide();
+								}
+
+								document.getElementById("edit_date").value = data.date;
+
+								document.getElementById("opening_amt").value = parseFloat(data.openingAmt);
+								document.getElementById("withdrawal_amt").value = parseFloat(data.withdrawalAmt);
+								document.getElementById("closing_amt").value = parseFloat(data.closingAmt);
+								document.getElementById("cash_amt").value = parseFloat(data.cashAmt);
+								document.getElementById("pettyId").value = data.pettycashId;
+
+							});
 		}
-		
-function clearAddCustomerpopup() {
-			
+
+		function savePettyCash() {
+			var closeAmt = $("#closing_amt").val();
+			var withdrawl = $("#withdrawal_amt").val();
+			var id = $("#pettyId").val();
+
+			//alert(closeAmt + " " + withdrawl + " " + id);
+
+			if (withdrawl == "") {
+
+				alert("Please Enter Withdrawl Amount");
+
+			} else {
+
+				$.get('${updateWithdrawAmt}',
+
+				{
+					closeAmt : closeAmt,
+					withdrawl : withdrawl,
+					id : id,
+					ajax : 'true',
+
+				}, function(data) {
+
+					//alert(data);
+
+					if (data != "") {
+						$('#loader').hide();
+					}
+
+					if (data == 1) {
+						alert("Record Updated successfully.");
+						getData();
+						document.getElementById("btnCloseModal").click();
+					}
+
+				});
+
+			}
+
+		}
+
+		function clearAddCustomerpopup() {
+
 			/* document.getElementById("myBtn").disabled = false; 
 
 			document.getElementById("customerName").value = "";
@@ -476,10 +503,10 @@ function clearAddCustomerpopup() {
 			document.getElementById("custType").value ="0";
 			$("#custType").trigger("chosen:updated");	
 			document.getElementById("ageRange").value ="0";
-		    $("#ageRange").trigger("chosen:updated");
+			$("#ageRange").trigger("chosen:updated");
 			$('.chosen-select').trigger('chosen:updated');
 			document.getElementById("add_cust_head_name").innerHTML = "Add Customer"; */
-			$('#edt_petty').popup('hide'); 
+			$('#edt_petty').popup('hide');
 		}
 	</script>
 
@@ -490,66 +517,113 @@ function clearAddCustomerpopup() {
 
 			var from_date = $("#datepicker").val();
 			var to_date = $("#datepicker2").val();
-			$.getJSON('${getPettyCashData}',
+			$
+					.getJSON(
+							'${getPettyCashData}',
 
-			{
+							{
 
-				from_date : from_date,
-				to_date : to_date,
-				ajax : 'true'
+								from_date : from_date,
+								to_date : to_date,
+								ajax : 'true'
 
-			}, function(data) {
-				if (data != null) {
-					document.getElementById("pdf").disabled = false;
-					$('#loader').hide();
-				}
-				//alert("Petty Info1----"+JSON.stringify(data));
-				$('#table_grid td').remove();
+							},
+							function(data) {
+								if (data != null) {
+									document.getElementById("pdf").disabled = false;
+									$('#loader').hide();
+								}
+								//alert("Petty Info1----"+JSON.stringify(data));
+								$('#table_grid td').remove();
 
-				var cashTotal = 0;
-				var withdrawlTotal = 0;
+								var cashTotal = 0;
+								var withdrawlTotal = 0;
 
-				$.each(data, function(i, v) {
+								$
+										.each(
+												data,
+												function(i, v) {
 
-					/* var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>'; */
-					var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCash('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>';
+													//alert(JSON.stringify(v));
 
-					var tr = $('<tr></tr>');
+													/* var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>'; */
+													var acButton = '&nbsp;&nbsp;<a href="#" class="slide_open" onclick="editPettyCash('
+															+ v.pettycashId
+															+ ')"><i class="fa fa-edit" style="color: black;"></i></a>';
 
-					tr.append($('<td style="text-align:center;"></td>').html(
-							i + 1));
-					tr.append($('<td style="text-align:center;"></td>').html(
-							v.date));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							v.openingAmt));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							v.cashAmt));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							v.withdrawalAmt));
-					tr.append($('<td style="text-align:right;"></td>').html(
-							v.closingAmt));
-					tr.append($('<td></td>').html(acButton));
+													var tr = $('<tr></tr>');
 
-					cashTotal = cashTotal + v.cashAmt;
-					withdrawlTotal = withdrawlTotal + v.withdrawalAmt;
+													tr
+															.append($(
+																	'<td style="text-align:center;"></td>')
+																	.html(i + 1));
+													tr
+															.append($(
+																	'<td style="text-align:center;"></td>')
+																	.html(
+																			v.date));
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(
+																			v.openingAmt));
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(
+																			v.cashAmt));
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(
+																			v.withdrawalAmt));
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(
+																			v.closingAmt));
 
-					$('#table_grid tbody').append(tr);
+													if ( i==0) {
+														tr
+																.append($(
+																		'<td style="text-align:center;"></td>')
+																		.html(
+																				acButton));
+													} else {
+														tr
+																.append($(
+																		'<td></td>')
+																		.html(
+																				" "));
+													}
 
-				})
+													cashTotal = cashTotal
+															+ v.cashAmt;
+													withdrawlTotal = withdrawlTotal
+															+ v.withdrawalAmt;
 
-				var tr = $('<tr></tr>');
+													$('#table_grid tbody')
+															.append(tr);
 
-				tr.append($('<td colspan="2"></td>').html("TOTAL"));
-				tr.append($('<td></td>').html(" "));
-				tr.append($('<td style="text-align:right;"></td>').html(
-						"" + cashTotal));
-				tr.append($('<td style="text-align:right;"></td>').html(
-						"" + withdrawlTotal));
-				tr.append($('<td></td>').html(" "));
+												})
 
-				$('#table_grid tbody').append(tr);
+								var tr = $('<tr></tr>');
 
-			});
+								tr.append($('<td colspan="2"></td>').html(
+										"TOTAL"));
+								tr.append($('<td></td>').html(" "));
+								tr.append($(
+										'<td style="text-align:right;"></td>')
+										.html("" + cashTotal));
+								tr.append($(
+										'<td style="text-align:right;"></td>')
+										.html("" + withdrawlTotal));
+								tr.append($('<td></td>').html(" "));
+								tr.append($('<td></td>').html(" "));
+
+								$('#table_grid tbody').append(tr);
+
+							});
 
 		}
 	</script>

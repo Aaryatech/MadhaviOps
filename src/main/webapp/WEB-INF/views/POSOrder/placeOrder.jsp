@@ -1156,7 +1156,7 @@ input:checked+.slider:before {
 					<div class="clr"></div>
 				</div>
 			<div class="add_frm_one">
-				<div class="add_customer_one">Pin Code *</div>
+				<div class="add_customer_one">Pin Code</div>
 				<div class="add_input">
 
 					<input type="text" class="input_add"
@@ -1166,7 +1166,7 @@ input:checked+.slider:before {
 				<div class="clr"></div>
 			</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Distance(In Kms) *</div>
+					<div class="add_customer_one">Distance(In Kms)</div>
 					<div class="add_input">
 						<input placeholder="Enter distance in kms" name="kms" id="kms"
 							onchange="trim(this)" type="text" class="input_add" />
@@ -1521,6 +1521,9 @@ function addCustomer() {
 								$('.chosen-select').trigger(
 										'chosen:updated');
 
+								document.getElementById("pincode").value = "";
+								document.getElementById("remark").value = "";
+								document.getElementById("kms").value = "0";
 								document.getElementById("customerName").value = "";
 								document.getElementById("mobileNo").value = "";
 								document.getElementById("kms").value = "";
@@ -1590,10 +1593,13 @@ function addCustomer() {
 	function clearAddCustomerpopup() {
 			
 			document.getElementById("myBtn").disabled = false; 
+			
+			document.getElementById("pincode").value = "";
+			document.getElementById("remark").value = "";
 
 			document.getElementById("customerName").value = "";
 			document.getElementById("mobileNo").value = "";
-			document.getElementById("kms").value = "";
+			document.getElementById("kms").value = "0";
 			document.getElementById("dateOfBirth").value = "";
 			document.getElementById("n-option").checked = true;
 			document.getElementById("companyName").value = "";

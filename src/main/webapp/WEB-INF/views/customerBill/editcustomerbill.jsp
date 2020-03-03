@@ -158,7 +158,7 @@ body {
 	cursor: pointer;
 }
 </style>
-<body>
+<body onload="validateDefCustomer(${tempCust})">
 	<form action="" method="get">
 
 		<!--wrapper-start-->
@@ -314,7 +314,8 @@ body {
 					<div class="cat_list_bx" id="catItmDiv">
 
 						<div class="cat_list" style="height: 400px;">
-							<div class="carlist_scrollbars" id="scrollDiv"  style="height: 380px;">
+							<div class="carlist_scrollbars" id="scrollDiv"
+								style="height: 380px;">
 								<!--<div class="cat_one cat"><a href="#" class="initialism quantity_open"><img src="images/laddu.jpg" alt="laddu"> <p>210</p> <span>Order Booking</span></a></div>-->
 
 
@@ -407,7 +408,7 @@ body {
 								<select name="cust" id="cust" data-placeholder="Select Customer"
 									class="input_add chosen-select" onchange="setCustAmt()"
 									required>
-									<option value="0">Select Customer</option>
+									<!-- <option value="0">Select Customer</option> -->
 
 									<c:choose>
 										<c:when test="${key>0}">
@@ -419,7 +420,7 @@ body {
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${customerList.custId}" disabled="disabled"
+														<option value="${customerList.custId}"
 															style="text-align: left;">${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
@@ -436,7 +437,7 @@ body {
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${customerList.custId}" disabled="disabled"
+														<option value="${customerList.custId}"
 															style="text-align: left;">${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
@@ -453,7 +454,7 @@ body {
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${customerList.custId}" disabled="disabled"
+														<option value="${customerList.custId}"
 															style="text-align: left;">${customerList.custName}
 															&nbsp;${customerList.phoneNumber}</option>
 													</c:otherwise>
@@ -470,7 +471,7 @@ body {
 									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
-							<div class="customer_three">
+							<div class="customer_three" id="defCust">
 								<button class="plus_btn" type="button" onclick="editCustomer()">
 									<i class="fa fa-pencil" aria-hidden="true"></i>
 								</button>
@@ -718,7 +719,7 @@ body {
 
 			<div class="add_frm">
 				<div class="add_frm_one">
-					<div class="add_customer_one">Customer Name</div>
+					<div class="add_customer_one">Customer Name *</div>
 					<div class="add_input">
 						<input type="text" class="input_add"
 							placeholder="Enter Customer Name" name="customerName"
@@ -727,8 +728,37 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
+
 				<div class="add_frm_one">
-					<div class="add_customer_one">Mobile Number</div>
+					<div class="add_customer_one">Address *</div>
+					<div class="add_input">
+						<input placeholder="Enter Address" name="custAdd" id="custAdd"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Pin Code</div>
+					<div class="add_input">
+
+						<input type="text" class="input_add" placeholder="Enter Pin Code"
+							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
+							pattern="[0-9]" />
+					</div>
+					<div class="clr"></div>
+				</div>
+				<div class="add_frm_one">
+					<div class="add_customer_one">Distance(In Kms)</div>
+					<div class="add_input">
+						<input placeholder="Enter distance in kms" name="kms" id="kms"
+							onchange="trim(this)" type="text" class="input_add" />
+					</div>
+					<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Mobile Number *</div>
 					<div class="add_input">
 						<input type="text" class="input_add"
 							placeholder="Enter Mobile Number" name="mobileNo" id="mobileNo"
@@ -738,7 +768,7 @@ body {
 				</div>
 
 				<div class="add_frm_one">
-					<div class="add_customer_one">Gender</div>
+					<div class="add_customer_one">Gender *</div>
 					<div class="add_input">
 						<div class="radio_row popup_radio">
 							<ul>
@@ -755,7 +785,7 @@ body {
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div class="add_frm_one">
+				<div class="add_frm_one" style="display: none;">
 					<div class="add_customer_one">Type</div>
 					<div class="add_input">
 						<select name="custType" id="custType"
@@ -770,7 +800,7 @@ body {
 					</div>
 				</div>
 				<div class="add_frm_one">
-					<div class="add_customer_one">Age-Group</div>
+					<div class="add_customer_one">Age-Group *</div>
 					<div class="add_input">
 						<select name="ageRange" id="ageRange"
 							data-placeholder="Customer Age-Group" class="input_add"
@@ -818,7 +848,7 @@ body {
 				</div>
 				<div style="display: none;" id="isbuissnessdiv">
 					<div class="add_frm_one">
-						<div class="add_customer_one">Company Name</div>
+						<div class="add_customer_one">Company Name *</div>
 						<div class="add_input">
 							<input placeholder="Enter Company Name" name="companyName"
 								onchange="trim(this)" id="companyName" type="text"
@@ -827,21 +857,23 @@ body {
 						<div class="clr"></div>
 					</div>
 					<div class="add_frm_one">
-						<div class="add_customer_one">GST Number</div>
+						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
 							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
 								onchange="trim(this)" type="text" class="input_add" />
 						</div>
 						<div class="clr"></div>
 					</div>
-					<div class="add_frm_one">
-						<div class="add_customer_one">Address</div>
-						<div class="add_input">
-							<input placeholder="Enter Address" name="custAdd" id="custAdd"
-								onchange="trim(this)" type="text" class="input_add" />
-						</div>
-						<div class="clr"></div>
+				</div>
+
+				<div class="add_frm_one">
+					<div class="add_customer_one">Remark</div>
+					<div class="add_input">
+
+						<input type="text" class="input_add" placeholder="Enter Remark"
+							name="remark" id="remark" onchange="trim(this)" />
 					</div>
+					<div class="clr"></div>
 				</div>
 			</div>
 
@@ -851,7 +883,7 @@ body {
 						onclick="clearAddCustomerpopup()">Close</button>
 				</div>
 				<div class="close_r">
-					<a href="#" onclick="addCustomer()">Save</a>
+					<a href="#" onclick="addCustomer()" id="saveCust">Save</a>
 				</div>
 				<div class="clr"></div>
 			</div>
@@ -1011,8 +1043,10 @@ body {
 
 						<label for="discAmtLabel"
 							style="font-weight: 700; padding-left: 5px;">&nbsp;Add
-							Amt&nbsp;</label> <input type="number" class="form-control" id="additionalAmt"
-							value="${tempHeader.paidAmt-advAmtTransaction-tempHeader.paidAmt-advAmtTransaction}" placeholder="0"
+							Amt&nbsp;</label> <input type="number" class="form-control"
+							id="additionalAmt"
+							value="${tempHeader.paidAmt-advAmtTransaction-tempHeader.paidAmt-advAmtTransaction}"
+							placeholder="0"
 							style="text-align: center; width: 90px; border-radius: 20px;"
 							disabled="disabled" />
 
@@ -1152,11 +1186,12 @@ body {
 											data-placeholder="E-Pay Type" class="input_add "
 											style="text-align: left;">
 												<option value="">E-Pay Type</option>
-												
+
 												<option value="7" style="text-align: left;">Paytm</option>
 												<option value="8" style="text-align: left;">Google
 													Pay</option>
-											<option value="6" style="text-align: left;">Bank Transaction</option>
+												<option value="6" style="text-align: left;">Bank
+													Transaction</option>
 												<option value="9" style="text-align: left;">Amazon
 													Pay</option>
 										</select></li>
@@ -1222,10 +1257,11 @@ body {
 									data-placeholder="E-Pay Type" class="input_add "
 									style="text-align: left;">
 									<option value="">Select E-Pay Type</option>
-									
+
 									<option value="7" style="text-align: left;">Paytm</option>
 									<option value="8" style="text-align: left;">Google Pay</option>
-									<option value="6" style="text-align: left;">Bank Transaction</option>
+									<option value="6" style="text-align: left;">Bank
+										Transaction</option>
 									<option value="9" style="text-align: left;">Amazon Pay</option>
 								</select>
 							</div>
@@ -1670,6 +1706,23 @@ body {
 
 	</div>
 	<!-- Modal to show cust   Bill ends -->
+	
+	
+	<script type="text/javascript">
+	
+	function validateDefCustomer(custId){
+		var defCust=$("#defaultCustomer").val();
+		//alert(custId+" - "+defCust);
+		if(defCust!=custId){
+			//document.getElementById("defCust").style.display = "none";
+			//$('#defCust').removeClass('def_customer');
+			$('#defCust').show();
+		}else{
+			$('#defCust').hide();
+		}
+	}
+	
+	</script>
 
 
 	<script type="text/javascript">
@@ -2365,6 +2418,9 @@ function matchSplitAmt(flag){
 		var cust =  $('#cust').val() ;
 		document.getElementById("credAmt").innerHTML = 0; 
 		//document.getElementById("advCustAmt").innerHTML = 0;
+		
+		validateDefCustomer(cust);
+		
 		  $
 		.get(
 				'${getCustAmts}',
@@ -2459,6 +2515,16 @@ function matchSplitAmt(flag){
 									document.getElementById("mobileNo").value = data.phoneNumber;
 									document.getElementById("custId").value = data.custId;
 									document.getElementById("dateOfBirth").value = data.custDob;
+									
+									document.getElementById("kms").value = data.exVar1;
+									
+									document.getElementById("custAdd").value = data.address;
+									var str = data.exVar2;
+									var strArr = str.split('-');
+									document.getElementById("pincode").value = strArr[0];
+									document.getElementById("remark").value = strArr[1];
+									
+									
 									if (data.gender == 1) {
 										document.getElementById("moption").checked = true;
 										}else{
@@ -2475,7 +2541,6 @@ function matchSplitAmt(flag){
 										document.getElementById("y-option").checked = true;
 										document.getElementById("companyName").value = data.companyName;
 										document.getElementById("gstNo").value = data.gstNo;
-										document.getElementById("custAdd").value = data.address;
 									} else {
 										$("#isbuissnessdiv").hide();
 										document.getElementById("y-option").checked = false;
@@ -2490,27 +2555,43 @@ function matchSplitAmt(flag){
 		}
 
 		function addCustomer() {
+			
+			
+			
+			document.getElementById("saveCust").style.display="none"; 
+			//alert("hi");
 			var phNo="";
-			//$('#addcust').modal('hide');
-			//$('#addcust').popup('hide'); //for close popup;
+			
 			var custId = document.getElementById("custId").value;
+			
+			//alert("hi"+custId);
+			
 			var customerName = document.getElementById("customerName").value;
 			var mobileNo = document.getElementById("mobileNo").value;
 			phNo=mobileNo;
+			var  kms= document.getElementById("kms").value;
 			var dateOfBirth = document.getElementById("dateOfBirth").value;
 			var custType = document.getElementById("custType").value;
 			var ageRange = document.getElementById("ageRange").value;
-			if(custId!=0)
+			/* if(custId!=0)
 				{
 				phNo="0000000000";
-				}
+				} */
 			$.getJSON('${checkEmailText}', {
-				phoneNo : phNo,	
+				phoneNo : mobileNo,	
 					ajax : 'true',
 			},
 
 			function(saveFlag) {
-				 if(parseInt(saveFlag)==1){		
+				
+				alert(saveFlag);
+				
+				document.getElementById("saveCust").style.display="block"; 
+				
+				 if(parseInt(saveFlag)>0 && parseInt(saveFlag)!=custId){
+					 
+					 document.getElementById("saveCust").style.display="block"; 
+					 
 					   alert("Duplicate Mobile No Found.");
 						//document.getElementById("sbtbtn4").disabled = true;
 						document.getElementById("mobileNo").value = "";
@@ -2528,22 +2609,25 @@ function matchSplitAmt(flag){
 			var companyName = document.getElementById("companyName").value;
 			var gstNo = document.getElementById("gstNo").value;
 			var custAdd = document.getElementById("custAdd").value;
+			var pincode = document.getElementById("pincode").value;
+			var remark = document.getElementById("remark").value;
 
 			var flag = 0;
 
 			if (customerName == "") {
 				alert("Enter Customer Name");
 				flag = 1;
+			}else if (custAdd == "") {
+				alert("Please Enter Address");
+				flag = 1;
 			} else if (mobileNo == "" || !validateMobile(mobileNo)) {
 				alert("Enter Valid Mobile No");
 				flag = 1;
-			} /* else if (dateOfBirth == "") {
-				alert("Enter Date of Birth");
+			}else if (custAdd == "") {
+				alert("Please Enter Address");
 				flag = 1;
-			} */else if (custType == 0) {
-				alert("Please Select Customer Type");
-				flag = 1;
-			}
+			} 
+			
 			else if (ageRange == 0) {
 				alert("Please Select Age Group");
 				flag = 1;
@@ -2555,10 +2639,12 @@ function matchSplitAmt(flag){
 				} else if (gstNo == "") {
 					alert("Enter GST No");
 					flag = 1;
-				} else if (custAdd == "") {
-					alert("Enter Address");
-					flag = 1;
-				}
+				} 
+				
+			}
+			
+			if (kms == "") {
+				kms=0;
 			}
 
 			if (flag == 0) {
@@ -2576,10 +2662,15 @@ function matchSplitAmt(flag){
 									custId : custId,
 									custType:custType,
 									ageRange:ageRange,
+									kms:kms,
 									gender:gender,
+									pincode:pincode,
+									remark:remark,
 									ajax : 'true'
 								},
 								function(data) {
+									
+									document.getElementById("saveCust").style.display="block"; 
 
 									//alert(JSON.stringify(data));
 
@@ -2611,6 +2702,11 @@ function matchSplitAmt(flag){
 										$("#cust").trigger("chosen:updated");
 										$('.chosen-select').trigger(
 												'chosen:updated');
+										
+										document.getElementById("pincode").value = "";
+										document.getElementById("remark").value = "";
+										document.getElementById("kms").value = "0";
+
 
 										document.getElementById("customerName").value = "";
 										document.getElementById("mobileNo").value = "";
@@ -2729,6 +2825,10 @@ function matchSplitAmt(flag){
 
 		}
 		function clearAddCustomerpopup() {
+			
+			document.getElementById("pincode").value = "";
+			document.getElementById("remark").value = "";
+			document.getElementById("kms").value = "0";
 
 			document.getElementById("customerName").value = "";
 			document.getElementById("mobileNo").value = "";
