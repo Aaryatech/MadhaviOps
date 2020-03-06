@@ -55,7 +55,7 @@ import com.monginis.ops.model.pettycash.PettyCashManagmt;
 import com.monginis.ops.model.setting.NewSetting;
 import com.steadystate.css.ParseException;
 
-@Controller 
+@Controller
 @Scope("session")
 public class OpsController {
 
@@ -453,7 +453,7 @@ public class OpsController {
 			mvm.add("settingKey", "DEFLTCUST");
 			NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", mvm,
 					NewSetting.class);
-			System.err.println("Default Customer Val------------------"+settingValue.toString());
+			System.err.println("Default Customer Val------------------" + settingValue.toString());
 			model.addAttribute("defaultCustomer", settingValue.getSettingValue1());
 
 			model.addAttribute("frtype", frDetails.getFrGstType());
@@ -1609,11 +1609,12 @@ public class OpsController {
 									sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 									sellBillDetail.setDiscAmt(detailDiscAmt);
 									sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
-									
-									System.err.println("ITEM ADD -------------------- "+itemsListByIds.get(j).getExtVar2());
-									
+
+									System.err.println(
+											"ITEM ADD -------------------- " + itemsListByIds.get(j).getExtVar2());
+
 									sellBillDetail.setExtVar1(itemsListByIds.get(j).getExtVar2());
-									
+
 									sellbilldetaillist.add(sellBillDetail);
 									total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
 									taxableAmt = taxableAmt + detailTaxableAmt;
@@ -1700,11 +1701,11 @@ public class OpsController {
 							sellBillDetail.setItemName(itemBillList.get(i).getItemName());
 							sellBillDetail.setDiscAmt(detailDiscAmt);
 							sellBillDetail.setExtFloat1(itemBillList.get(i).getTotal());
-							
-							System.err.println("ITEM ADD -------------------- "+itemsListByIds.get(j).getExtVar2());
-							
+
+							System.err.println("ITEM ADD -------------------- " + itemsListByIds.get(j).getExtVar2());
+
 							sellBillDetail.setExtVar1(itemsListByIds.get(j).getExtVar2());
-							
+
 							sellbilldetaillist.add(sellBillDetail);
 							total = total + detailGrandTotal;// sellBillDetail.getGrandTotal();
 							taxableAmt = taxableAmt + detailTaxableAmt;
@@ -2000,24 +2001,26 @@ public class OpsController {
 
 		////
 
-		int length = String.valueOf(settingValue).length();
+		// int length = String.valueOf(settingValue).length();
 
-		String invoiceNo = null;
+		String invoiceNo = frDetails.getFrCode() + curStrYear + "-" + String.format("%05d", settingValue);
 
-		if (length == 1)
-
-			invoiceNo = curStrYear + "-" + "0000" + settingValue;
-		if (length == 2)
-
-			invoiceNo = curStrYear + "-" + "000" + settingValue;
-
-		if (length == 3)
-
-			invoiceNo = curStrYear + "-" + "00" + settingValue;
-
-		if (length == 4)
-
-			invoiceNo = curStrYear + "-" + "0" + settingValue;
+		// String invoiceNo = null;
+		/*
+		 * if (length == 1)
+		 * 
+		 * invoiceNo = curStrYear + "-" + "0000" + settingValue; if (length == 2)
+		 * 
+		 * invoiceNo = curStrYear + "-" + "000" + settingValue;
+		 * 
+		 * if (length == 3)
+		 * 
+		 * invoiceNo = curStrYear + "-" + "00" + settingValue;
+		 * 
+		 * if (length == 4)
+		 * 
+		 * invoiceNo = curStrYear + "-" + "0" + settingValue;
+		 */
 
 		invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
