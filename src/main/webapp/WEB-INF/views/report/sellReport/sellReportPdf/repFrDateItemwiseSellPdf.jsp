@@ -23,14 +23,14 @@ th, td {
 
 
 th {
-    background-color: #EA3291;
+    background-color: #ed3f3c;
     color: white;
 }
 </style>
 </head>
 <body onload="myFunction()">
-<h4 align="center">Datewise-Itemwise Sale Report</h4>
-<div align="center"> <h6>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h6></div>
+<h3 align="center">Datewise-Itemwise Sale Report</h3>
+<div align="center"> <h3>  ${frName} &nbsp;&nbsp;&nbsp;&nbsp;From &nbsp; ${fromDate}  &nbsp;To &nbsp; ${toDate}</h3></div>
 	<table width="100%" border="1" cellspacing="0"
 														cellpadding="1" id="table_grid" class="table table-bordered">
 								<thead >
@@ -40,12 +40,16 @@ th {
 									<th style="text-align:center;">Item Name</th>
 									<th style="text-align:center;">Group Name</th>
 								 	<th style="text-align:center;">Quantity</th>
+								 	<th style="text-align:center;">Discount Amt</th>
+								 	<th style="text-align:center;">Payable Amt</th>
 									<th style="text-align:center;">Amount</th> 
 								  </tr>
 								</thead>
 								 <tbody >
 								 <c:set var="totalAmount"   value="${0}"/>
 								<c:set var="qty"  value="${0 }"/>
+								<c:set var="disc"  value="${0 }"/>
+								<c:set var="payable"  value="${0 }"/>
 									  	<c:forEach items="${reportList}" var="reportList" varStatus="count">
 												<tr>
 													<td ><c:out value="${count.index+1}" /></td>
@@ -55,6 +59,13 @@ th {
 													<td style="text-align:center;"> <c:out value="${reportList.catName}" /></td>
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.qty}" /></td>
 													<c:set var="qty"  value="${qty + reportList.qty }"/>
+													
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.discAmt}" /></td>
+													 <c:set var="disc" value="${disc + reportList.discAmt}"/>
+													 
+													 <td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.payableAmt}" /></td>
+													 <c:set var="payable" value="${payable + reportList.payableAmt}"/>
+													
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.amount}" /></td>
 													 <c:set var="totalAmount" value="${totalAmount + reportList.amount}"/>
 													 
@@ -65,7 +76,9 @@ th {
 								  <tr>
 								  <td colspan='4'><b>Total</b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${qty}" /></b></td>
-								     <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${disc}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${payable}" /></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalAmount}"/></b></td>
 								     
 								     <!--  <td><b>Total</b></td> -->
 								  </tr>

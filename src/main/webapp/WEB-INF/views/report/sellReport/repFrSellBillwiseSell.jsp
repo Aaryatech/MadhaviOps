@@ -508,49 +508,49 @@ chosen-container {
 														tr
 														.append($(
 																'<td style="text-align:right;"></td>')
-																.html(
+																.html(addCommas(
 																		sellBillData.discountAmt
-																				.toFixed(2)));
+																				.toFixed(2))));
 														
 														tr
 																.append($(
 																		'<td style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				sellBillData.taxableAmt
-																						.toFixed(2)));
+																						.toFixed(2))));
 														tr
 																.append($(
 																		'<td style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				sellBillData.totalTax
-																						.toFixed(2)));
+																						.toFixed(2))));
 
 														tr
 																.append($(
 																		'<td   style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.grandTotal)
-																						.toFixed(2)));
+																						.toFixed(2))));
 														tr
 																.append($(
 																		'<td  style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.payableAmt)
-																						.toFixed(2)));
+																						.toFixed(2))));
 
 														tr
 																.append($(
 																		'<td   style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.paidAmt)
-																						.toFixed(2)));
+																						.toFixed(2))));
 
 														tr
 																.append($(
 																		'<td   style="text-align:right;"></td>')
-																		.html(
+																		.html(addCommas(
 																				(sellBillData.remainingAmt)
-																						.toFixed(2)));
+																						.toFixed(2))));
 
 														amtTotal = amtTotal
 																+ sellBillData.grandTotal;
@@ -580,8 +580,8 @@ chosen-container {
 														tr
 																.append($(
 																		'<td  style="text-align:center;"></td>')
-																		.html(
-																				paymentMode));
+																		.html(addCommas(
+																				paymentMode)));
 
 														$('#table_grid tbody')
 																.append(tr);
@@ -622,7 +622,7 @@ chosen-container {
 											+ "-E-pay";
 
 									var pay = "<td style=text-align:right;><b>"
-											+ payMode + "</b></td>";
+											+ addCommas(payMode) + "</b></td>";
 
 									var td = "<td></td>";
 
@@ -669,6 +669,21 @@ chosen-container {
 			}
 			return result;
 		}
+		
+		 function addCommas(x){
+
+			 x=String(x).toString();
+			  var afterPoint = '';
+			  if(x.indexOf('.') > 0)
+			     afterPoint = x.substring(x.indexOf('.'),x.length);
+			  x = Math.floor(x);
+			  x=x.toString();
+			  var lastThree = x.substring(x.length-3);
+			  var otherNumbers = x.substring(0,x.length-3);
+			  if(otherNumbers != '')
+			      lastThree = ',' + lastThree;
+			  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+			 }
 	</script>
 
 	<script type="text/javascript">
@@ -756,7 +771,7 @@ chosen-container {
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
 				var frId = document.getElementById("frId").value;
-
+				var age = document.getElementById("ageRange").value;
 				var cust = $("#selCust").val();
 
 				var rdRem = document.getElementById("rdRem");
@@ -783,7 +798,7 @@ chosen-container {
 								+ '/'
 								+ frId
 								+ '/'
-								+ cust + '/' + rdType + '/' + rdSubType);
+								+ cust + '/' + rdType + '/' + rdSubType + '/' + age);
 			}
 
 		}

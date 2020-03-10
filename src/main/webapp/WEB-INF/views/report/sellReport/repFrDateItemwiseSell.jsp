@@ -172,7 +172,7 @@ jQuery(document).ready(function(){
 				<!-- </div> -->
 				<div class="row">
 					<div align="center">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
+						<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 							View</button>
 						<!-- <button class="btn search_btn" onclick="showChart()">Graph</button> -->
 						<%-- 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDateItemwisewiseReportpPdf' class="btn search_btn" id="btn_pdf" style="display: none">PDF</a>
@@ -183,7 +183,7 @@ jQuery(document).ready(function(){
 					</div>
 				</div>
 
-				 
+
 				<div class="row" id="table">
 					<div class="col-md-12">
 						<!--table-->
@@ -204,6 +204,8 @@ jQuery(document).ready(function(){
 											<th style="text-align: center;">Item Name</th>
 											<th style="text-align: center;">Group Name</th>
 											<th style="text-align: center;">Quantity</th>
+											<th style="text-align: center;">Discount Amt</th>
+											<th style="text-align: center;">Payable Amt</th>
 											<th style="text-align: center;">Amount</th>
 										</tr>
 									</thead>
@@ -296,6 +298,8 @@ jQuery(document).ready(function(){
 								var amtTotal = 0;
 
 								var totalQty = 0;
+								var disc = 0;
+								var totalPayable = 0;
 
 								$
 										.each(
@@ -338,9 +342,33 @@ jQuery(document).ready(function(){
 																	.html(
 																			(sellBillData.qty)
 																					.toFixed(2)));
-													totalQty = totalQty
-															+ sellBillData.qty;
+													
+															totalQty = totalQty
+																		+ sellBillData.qty;
 
+													
+													
+													tr
+													.append($(
+															'<td class ="col-md-1" style="text-align:right;"></td>')
+															.html(
+																	(sellBillData.discAmt)
+																			.toFixed(2)));
+													disc = disc
+																+sellBillData.discAmt;
+															
+													
+													tr
+													.append($(
+															'<td class ="col-md-1" style="text-align:right;"></td>')
+															.html(
+																	(sellBillData.payableAmt)
+																			.toFixed(2)));
+													
+														totalPayable=totalPayable+
+																	sellBillData.payableAmt;
+													
+													
 													tr
 															.append($(
 																	'<td class ="col-md-1" style="text-align:right;"></td>')
@@ -357,8 +385,12 @@ jQuery(document).ready(function(){
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='4'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+								var total = "<td colspan='4' style=text-align:left;>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 
+								var ttlDisc = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (disc).toFixed(2) + "</b></td>";
+								var pablAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+									+ (totalPayable).toFixed(2) + "</b></td>";
 								var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 										+ (amtTotal).toFixed(2) + "</b></td>";
 								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
@@ -369,6 +401,8 @@ jQuery(document).ready(function(){
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
 								$('#table_grid tbody').append(totalQty);
+								$('#table_grid tbody').append(ttlDisc);
+								$('#table_grid tbody').append(pablAmt);
 								$('#table_grid tbody').append(totalAmt);
 								$('#table_grid tbody')
 

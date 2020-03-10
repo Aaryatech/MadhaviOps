@@ -3683,6 +3683,8 @@ public class ReportsController {
 		/* rowData.add("Cat Id"); */
 
 		rowData.add("Cat Name");
+		rowData.add("Discount Amt");
+		rowData.add("Payable Amt");
 		rowData.add("Quantity");
 		rowData.add("Amount");
 
@@ -3691,6 +3693,8 @@ public class ReportsController {
 
 		float qtyTotal = 0;
 		float amtTotal = 0;
+		float discTotal = 0;
+		float payableTotal = 0;
 
 		for (int i = 0; i < getRepFrItemwiseSellResponseList.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -3701,10 +3705,15 @@ public class ReportsController {
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getQty());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getDiscAmt());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getPayableAmt());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getAmount());
 
 			qtyTotal = qtyTotal + getRepFrItemwiseSellResponseList.get(i).getQty();
 			amtTotal = amtTotal + getRepFrItemwiseSellResponseList.get(i).getAmount();
+			
+			discTotal = discTotal + getRepFrItemwiseSellResponseList.get(i).getDiscAmt();
+			payableTotal = payableTotal + getRepFrItemwiseSellResponseList.get(i).getPayableAmt();
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -3714,11 +3723,13 @@ public class ReportsController {
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
 		rowData.add("");
-		rowData.add("");
-		rowData.add("");
 		rowData.add("Total");
 		rowData.add("");
+		rowData.add("");
+		rowData.add("");
 		rowData.add("" + qtyTotal);
+		rowData.add("" + discTotal);		
+		rowData.add("" + payableTotal);		
 		rowData.add("" + amtTotal);
 
 		expoExcel.setRowData(rowData);
@@ -4699,9 +4710,10 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showSellBillwiseReportPdf/{fromDate}/{toDate}/{frId}/{cust}/{rdType}/{rdSubType}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showSellBillwiseReportPdf/{fromDate}/{toDate}/{frId}/{cust}/{rdType}/{rdSubType}/{age}", method = RequestMethod.GET)
 	public ModelAndView showSellBillwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId,@PathVariable String cust,@PathVariable int rdType,@PathVariable int rdSubType, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId,@PathVariable String cust,@PathVariable int rdType,
+			@PathVariable String age, @PathVariable int rdSubType, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("BILL LIST pdf");
 
 		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/repFrSellBillwiseSellPdf");
@@ -4722,6 +4734,7 @@ public class ReportsController {
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
 			map.add("custId", cust);
+			map.add("age", age);
 
 			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
 
