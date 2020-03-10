@@ -4475,7 +4475,7 @@ public class ReportsController {
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
+			rowData.add("0");
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
 			rowData.add("" + getRepTaxSell.get(i).getGstn());
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
@@ -4490,7 +4490,7 @@ public class ReportsController {
 			exportToExcelList.add(expoExcel);
 
 			taxableAmt = taxableAmt+getRepTaxSell.get(i).getTax_amount();
-			ttlIgst = ttlIgst+getRepTaxSell.get(i).getIgst();
+			//ttlIgst = ttlIgst+getRepTaxSell.get(i).getIgst();
 			ttlSgst = ttlSgst+getRepTaxSell.get(i).getSgst();
 			ttlCgst = ttlCgst+getRepTaxSell.get(i).getCgst();
 			//ttlBill = ttlBill+getRepTaxSell.get(i).getBill_amount();
