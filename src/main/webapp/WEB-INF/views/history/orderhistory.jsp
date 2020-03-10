@@ -620,18 +620,21 @@ jQuery(document).ready(function(){
 															href="${pageContext.request.contextPath}/showAdvanceOrderDetailByOrderHistory/${orderList.advHeaderId}/${startFormat}/${orderList.frId}">
 																<abbr title='Advance Order Detail'><i
 																	class="fa fa-table" aria-hidden="true"></i> </abbr>
-														</a>&nbsp;&nbsp;&nbsp;&nbsp; <c:choose>
+														</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+														<%-- <c:choose>
 
-																<c:when test="${orderList.delStatus==1}">
+																 <c:when test="${orderList.delStatus==1}">
 																	<c:if test="${orderList.isSellBillGenerated==0}">
 																		<a href="#"
 																			onclick="showCustBillForAdvOrder(${orderList.advHeaderId},${orderList.custId})">
 																			<abbr title='Generate Sell Bill'> <i
 																				class="fa fa-address-card-o" aria-hidden="true"></i></abbr>
 																		</a>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-																</c:when>
+																</c:when> 
 
-															</c:choose> <a
+															</c:choose> --%>
+															
+															 <a
 															href="${pageContext.request.contextPath}/showAdvanceOrderMemo/${orderList.advHeaderId}/${startFormat}/${orderList.frId}"
 															target="_blank"> <abbr title='Advance Order Memo'><i
 																	class="fa fa-info" aria-hidden="true"></i> </abbr>
