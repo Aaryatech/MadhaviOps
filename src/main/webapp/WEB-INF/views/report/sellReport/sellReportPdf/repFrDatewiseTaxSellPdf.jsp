@@ -65,7 +65,7 @@ th {
 													</td>
 													 <c:set var="taxAmount" value="${taxAmount + reportList.tax_amount}"/>
 													<td style="text-align:right;">
-													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${reportList.igst}"/>
+													<fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="0"/>
 													</td>
 														<c:set var="igst"  value="${igst + reportList.igst}"/>
 													<td style="text-align:right;">
@@ -95,7 +95,7 @@ th {
 								  <tr>
 								  <td colspan='3'><b>Total</b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${taxAmount}"/></b></td>
-								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${igst}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "0"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${cgst}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${sgst}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${ttlBill}"/></b></td>

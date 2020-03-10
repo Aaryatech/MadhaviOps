@@ -22,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.json.JSONArray;
 import org.slf4j.Logger;
@@ -241,11 +242,10 @@ public class HomeController {
 			if (type == 4) {
 				fromDate = DateConvertor.convertToYMD(request.getParameter("fromDate"));
 				toDate = DateConvertor.convertToYMD(request.getParameter("toDate"));
-				
+
 				String fDate = request.getParameter("fromDate");
 				String tDate = request.getParameter("toDate");
-				
-				
+
 				model.addObject("fromDate", fDate);
 				model.addObject("toDate", tDate);
 				model.addObject("typeTitle", "");
@@ -304,8 +304,10 @@ public class HomeController {
 			}
 
 			map = new LinkedMultiValueMap<String, Object>();
-			
-			System.err.println("PARAM --------------------------------------- FR_ID - "+frId+"         FR_RATE_CAT - "+frDetails.getFrRateCat()+"       FROMDATE - "+fromDate+"          TODATE - "+toDate);
+
+			System.err.println("PARAM --------------------------------------- FR_ID - " + frId
+					+ "         FR_RATE_CAT - " + frDetails.getFrRateCat() + "       FROMDATE - " + fromDate
+					+ "          TODATE - " + toDate);
 
 			map.add("frId", frId);
 			map.add("frRateCat", frDetails.getFrRateCat());
@@ -313,8 +315,8 @@ public class HomeController {
 			map.add("toDate", toDate);
 			PosDashCounts countDet = restTemplate.postForObject(Constant.URL + "/getPosDashCounts", map,
 					PosDashCounts.class);
-			
-			System.err.println("DASH ------------------------ "+countDet);
+
+			System.err.println("DASH ------------------------ " + countDet);
 
 			List<DashAdvanceOrderCounts> dailyList = new ArrayList<DashAdvanceOrderCounts>();
 			List<DashAdvanceOrderCounts> advOrderList = new ArrayList<DashAdvanceOrderCounts>();
@@ -357,7 +359,7 @@ public class HomeController {
 			System.err.println("************" + catSell);
 			// model.addAttribute("data", ((Collection<Setting>) new
 			// JSONArray()).add(catSell));
-			
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
 			map.add("fromDate", fromDate);
@@ -365,9 +367,9 @@ public class HomeController {
 
 			GetTotalAmt creditAdvAmt = restTemplate.postForObject(Constant.URL + "/getTotalCreditAdvAmt", map,
 					GetTotalAmt.class);
-			
+
 			model.addObject("creditAdvAmt", creditAdvAmt.getTotalAmt());
-			System.err.println("CREDIT ADV AMT --------------------------------- "+creditAdvAmt);
+			System.err.println("CREDIT ADV AMT --------------------------------- " + creditAdvAmt);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -375,8 +377,7 @@ public class HomeController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/homeMessages", method = RequestMethod.GET)
 	public ModelAndView displayHomeMessages(HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws ParseException {
@@ -398,7 +399,7 @@ public class HomeController {
 
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
-			
+
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 
 		} catch (Exception e) {
@@ -407,8 +408,6 @@ public class HomeController {
 		return model;
 
 	}
-	
-	
 
 	@RequestMapping(value = "/getCatSellList", method = RequestMethod.POST)
 	@ResponseBody
@@ -506,8 +505,9 @@ public class HomeController {
 			map.add("frId", frDetails.getFrId());
 			map.add("catId", catId);
 			map.add("flag", flag);
-			
-			System.err.println("ITEM PARAM ------------------- DATE - "+fromDate+" - "+toDate+"   CATID - "+catId+"        FLAG - "+flag);
+
+			System.err.println("ITEM PARAM ------------------- DATE - " + fromDate + " - " + toDate + "   CATID - "
+					+ catId + "        FLAG - " + flag);
 
 			CategorywiseItemSell[] catSell = restTemplate.postForObject(Constant.URL + "/getCatwiseItemSell", map,
 					CategorywiseItemSell[].class);
@@ -1032,7 +1032,11 @@ public class HomeController {
 		}
 
 	}
-	List<FrEmpMaster> empList=null;FrEmpLoginResp loginResponse=null;int empId=0;
+
+	List<FrEmpMaster> empList = null;
+	FrEmpLoginResp loginResponse = null;
+	int empId = 0;
+
 	@RequestMapping(value = "/frEmpLogin", method = RequestMethod.GET)
 	public ModelAndView frEmpLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = null;
@@ -1042,7 +1046,7 @@ public class HomeController {
 			model = new ModelAndView("saleslogin");
 			model.addObject("frncihsesID", session.getAttribute("frId"));
 			model.addObject("frName", session.getAttribute("frName"));
-			
+
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
@@ -1058,37 +1062,35 @@ public class HomeController {
 		return model;
 
 	}
+
 	@RequestMapping(value = "/checkValidEmployee", method = RequestMethod.POST)
 	public @ResponseBody String checkValidEmployee(HttpServletRequest request, HttpServletResponse response) {
-		String resp="";
+		String resp = "";
 
 		try {
 			System.err.println("Anmol");
-			 empId =Integer.parseInt(request.getParameter("empId"));
-            if(empList.size()>0)
-            {
-            	for(int i=0;i<empList.size();i++)
-            	{
-            		if(empList.get(i).getFrEmpId()==empId)
-            		{
-            			resp=empList.get(i).getPassword();
-            			break;
-            		}
-            	}
-            }
-        	
-    		
-		}catch (Exception e) {
+			empId = Integer.parseInt(request.getParameter("empId"));
+			if (empList.size() > 0) {
+				for (int i = 0; i < empList.size(); i++) {
+					if (empList.get(i).getFrEmpId() == empId) {
+						resp = empList.get(i).getPassword();
+						break;
+					}
+				}
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resp;
 	}
+
 	/*************************************************************************************************/
 	@RequestMapping(value = "/frLoginProcess", method = RequestMethod.GET)
 	public String frLoginProcess(HttpSession ses, HttpServletRequest request, HttpServletResponse response)
 			throws ParseException {
-		
-		System.err.println("Fr Emp Login " );
+
+		System.err.println("Fr Emp Login ");
 
 		logger.info("/frLoginProcess request mapping.");
 
@@ -1098,222 +1100,218 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("empId",empId);
+		map.add("empId", empId);
 		map.add("frId", frDetails.getFrId());
-		 loginResponse = restTemplate.postForObject(Constant.URL + "/frEmpById", map,
-				FrEmpLoginResp.class);
-		/*int frId = frDetails.getFrId();
+		loginResponse = restTemplate.postForObject(Constant.URL + "/frEmpById", map, FrEmpLoginResp.class);
+		/*
+		 * int frId = frDetails.getFrId();
+		 * 
+		 * String mobNo = request.getParameter("username"); String empPass =
+		 * request.getParameter("password");
+		 * 
+		 * // System.out.println("Cred = "+mobNo+"------"+empPass); // fr FrEmp login
+		 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+		 * Object>(); map.add("mobNo", mobNo); map.add("empPass", empPass);
+		 * map.add("frId", frId);
+		 * 
+		 * RestTemplate restTemplate = new RestTemplate();
+		 * 
+		 * FrEmpLoginResp loginResponse = restTemplate.postForObject(Constant.URL +
+		 * "/frEmpLogin", map, FrEmpLoginResp.class);
+		 * 
+		 * System.out.println("Login Response " + loginResponse.toString());
+		 * 
+		 * if (loginResponse.getLoginInfo().isError()) {
+		 * 
+		 * model.addObject("message", loginResponse.getLoginInfo().getMessage()); return
+		 * "redirect:/";
+		 * 
+		 * } else {
+		 */
 
-		String mobNo = request.getParameter("username");
-		String empPass = request.getParameter("password");
+		// getting fr menus
+		MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
+		menuMap.add("frId", frDetails.getFrId());
 
-		// System.out.println("Cred = "+mobNo+"------"+empPass);
-		// fr FrEmp login
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("mobNo", mobNo);
-		map.add("empPass", empPass);
-		map.add("frId", frId);
+		GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
+				GetFrMenus.class);
 
-		RestTemplate restTemplate = new RestTemplate();
+		System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
-		FrEmpLoginResp loginResponse = restTemplate.postForObject(Constant.URL + "/frEmpLogin", map,
-				FrEmpLoginResp.class);
+		// filter fr menus
 
-		System.out.println("Login Response " + loginResponse.toString());
+		List<FrMenu> frMenuList = getFrMenus.getFrMenus();
+		List<FrMenu> filteredFrMenuList = new ArrayList<>();
 
-		if (loginResponse.getLoginInfo().isError()) {
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
+		Date date = calendar.getTime();
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		String currentDate = df.format(date);
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-			model.addObject("message", loginResponse.getLoginInfo().getMessage());
-			return "redirect:/";
+		System.out.println("Today date " + currentDate);
+		System.out.println("Day of week " + dayOfWeek);
 
-		} else {*/
+		for (int i = 0; i < frMenuList.size(); i++) {
 
-			// getting fr menus
-			MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
-			menuMap.add("frId", frDetails.getFrId());
+			FrMenu frMenu = frMenuList.get(i);
 
-			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
-					GetFrMenus.class);
+			if (frMenu.getSettingType() == 3) { // day basis
+				List<String> dayList = Arrays.asList(frMenu.getDay().split(","));
 
-			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
+				List<Integer> newDayList = dayList.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
 
-			// filter fr menus
+				for (int k = 0; k < newDayList.size(); k++) {
+					if (newDayList.get(k) == dayOfWeek) {
 
-			List<FrMenu> frMenuList = getFrMenus.getFrMenus();
-			List<FrMenu> filteredFrMenuList = new ArrayList<>();
+						filteredFrMenuList.add(frMenu);
 
-			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
-			Date date = calendar.getTime();
-			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-			String currentDate = df.format(date);
-			int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-			System.out.println("Today date " + currentDate);
-			System.out.println("Day of week " + dayOfWeek);
-
-			for (int i = 0; i < frMenuList.size(); i++) {
-
-				FrMenu frMenu = frMenuList.get(i);
-
-				if (frMenu.getSettingType() == 3) { // day basis
-					List<String> dayList = Arrays.asList(frMenu.getDay().split(","));
-
-					List<Integer> newDayList = dayList.stream().map(s -> Integer.parseInt(s))
-							.collect(Collectors.toList());
-
-					for (int k = 0; k < newDayList.size(); k++) {
-						if (newDayList.get(k) == dayOfWeek) {
-
-							filteredFrMenuList.add(frMenu);
-
-						}
 					}
-
-				} else if (frMenu.getSettingType() == 2) { // date basis
-
-					List<String> dateList = Arrays.asList(frMenu.getDate().split(","));
-					List<Integer> newDateList = dateList.stream().map(s -> Integer.parseInt(s))
-							.collect(Collectors.toList());
-
-					for (int k = 0; k < newDateList.size(); k++) {
-						if (newDateList.get(k) == calendar.get(Calendar.DAY_OF_MONTH)) {
-
-							filteredFrMenuList.add(frMenu);
-
-						}
-					}
-				} else if (frMenu.getSettingType() == 1) { // daily basis
-
-					filteredFrMenuList.add(frMenu);
-
 				}
 
-			}
+			} else if (frMenu.getSettingType() == 2) { // date basis
 
-			System.out.println("Fr is: " + loginResponse.getFranchisee().toString());
+				List<String> dateList = Arrays.asList(frMenu.getDate().split(","));
+				List<Integer> newDateList = dateList.stream().map(s -> Integer.parseInt(s))
+						.collect(Collectors.toList());
 
-			System.out.println("filteredFrMenuList is: " + filteredFrMenuList.toString());
+				for (int k = 0; k < newDateList.size(); k++) {
+					if (newDateList.get(k) == calendar.get(Calendar.DAY_OF_MONTH)) {
 
-			// Getting news and messages
+						filteredFrMenuList.add(frMenu);
 
-			LatestNewsResponse latestNewsResponse = restTemplate.getForObject(Constant.URL + "/showLatestNews",
-					LatestNewsResponse.class);
-			List<SchedulerList> schedulerLists = new ArrayList<SchedulerList>();
-			schedulerLists = latestNewsResponse.getSchedulerList();
-			System.out.println("latest news  list " + schedulerLists.toString());
-
-			// sachin 9 sept showFrontEndMessage
-
-			MessageListResponse messageListResponse = restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
-					MessageListResponse.class);
-			List<Message> msgList = new ArrayList<Message>();
-			msgList = messageListResponse.getMessage();
-			System.out.println("messages are " + msgList.toString());
-
-			Setting[] settingListResponse = restTemplate.getForObject(Constant.URL + "/getLeftMenuBySettingValue",
-					Setting[].class);
-
-			List<Setting> setList = new ArrayList<Setting>(Arrays.asList(settingListResponse));
-
-			session.setAttribute("setList", setList);
-
-			System.out.println("setListsetListsetListsetListsetList" + setList.toString());
-
-			// Managing session
-			session.setAttribute("menuList", filteredFrMenuList);
-			session.setAttribute("allMenuList", frMenuList);
-			session.setAttribute("eyeVal", "block");
-			session.setAttribute("frEmpName", loginResponse.getFrEmp().getFrEmpName());
-			session.setAttribute("frEmpDetails", loginResponse.getFrEmp());
-			session.setAttribute("frDetails", loginResponse.getFranchisee());
-			session.setAttribute("loginInfo", loginResponse.getLoginInfo());
-			session.setAttribute("msgList", msgList);
-			session.setAttribute("schedulerLists", schedulerLists);
-			session.setAttribute("frId", loginResponse.getFranchisee().getFrId());
-			session.setAttribute("info", loginResponse.getLoginInfo());
-			session.setAttribute("frImage", loginResponse.getFranchisee().getFrImage());
-			loginResponse.getFranchisee()
-					.setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
-
-			// ---------------------------------Special Day Show Button
-			// Logic-------------------------------------------
-
-			 map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("frId", loginResponse.getFranchisee().getFrId());
-
-			ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate
-					.postForObject(Constant.URL + "/getSpDayCkList", map, ConfiguredSpDayCkResponse.class);
-
-			List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
-
-			configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
-
-			boolean flag = false, spDayShow = false;
-			int count = 0;
-
-			for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
-
-				DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
-				Date startDate;
-
-				startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
-				System.out.println("startDate" + startDate);
-
-				Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
-				System.out.println("endDate" + endDate);
-
-				String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-				Date dateToCheck = dmyFormat.parse(todaysDate);
-
-				System.out.println("dateToCheck" + dateToCheck);
-
-				flag = checkBetween(dateToCheck, startDate, endDate);
-				System.out.println("ShowSpDayCk:" + flag);
-
-				if (flag == true) {
-					count = count + 1;
+					}
 				}
+			} else if (frMenu.getSettingType() == 1) { // daily basis
+
+				filteredFrMenuList.add(frMenu);
 
 			}
 
-			if (count > 0) {
-				spDayShow = true;
+		}
+
+		System.out.println("Fr is: " + loginResponse.getFranchisee().toString());
+
+		System.out.println("filteredFrMenuList is: " + filteredFrMenuList.toString());
+
+		// Getting news and messages
+
+		LatestNewsResponse latestNewsResponse = restTemplate.getForObject(Constant.URL + "/showLatestNews",
+				LatestNewsResponse.class);
+		List<SchedulerList> schedulerLists = new ArrayList<SchedulerList>();
+		schedulerLists = latestNewsResponse.getSchedulerList();
+		System.out.println("latest news  list " + schedulerLists.toString());
+
+		// sachin 9 sept showFrontEndMessage
+
+		MessageListResponse messageListResponse = restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
+				MessageListResponse.class);
+		List<Message> msgList = new ArrayList<Message>();
+		msgList = messageListResponse.getMessage();
+		System.out.println("messages are " + msgList.toString());
+
+		Setting[] settingListResponse = restTemplate.getForObject(Constant.URL + "/getLeftMenuBySettingValue",
+				Setting[].class);
+
+		List<Setting> setList = new ArrayList<Setting>(Arrays.asList(settingListResponse));
+
+		session.setAttribute("setList", setList);
+
+		System.out.println("setListsetListsetListsetListsetList" + setList.toString());
+
+		// Managing session
+		session.setAttribute("menuList", filteredFrMenuList);
+		session.setAttribute("allMenuList", frMenuList);
+		session.setAttribute("eyeVal", "block");
+		session.setAttribute("frEmpName", loginResponse.getFrEmp().getFrEmpName());
+		session.setAttribute("frEmpDetails", loginResponse.getFrEmp());
+		session.setAttribute("frDetails", loginResponse.getFranchisee());
+		session.setAttribute("loginInfo", loginResponse.getLoginInfo());
+		session.setAttribute("msgList", msgList);
+		session.setAttribute("schedulerLists", schedulerLists);
+		session.setAttribute("frId", loginResponse.getFranchisee().getFrId());
+		session.setAttribute("info", loginResponse.getLoginInfo());
+		session.setAttribute("frImage", loginResponse.getFranchisee().getFrImage());
+		loginResponse.getFranchisee().setFrImage(Constant.FR_IMAGE_URL + loginResponse.getFranchisee().getFrImage());
+
+		// ---------------------------------Special Day Show Button
+		// Logic-------------------------------------------
+
+		map = new LinkedMultiValueMap<String, Object>();
+
+		map.add("frId", loginResponse.getFranchisee().getFrId());
+
+		ConfiguredSpDayCkResponse configuredSpDayCkRes = restTemplate.postForObject(Constant.URL + "/getSpDayCkList",
+				map, ConfiguredSpDayCkResponse.class);
+
+		List<GetConfiguredSpDayCk> configureSpDayFrList = new ArrayList<GetConfiguredSpDayCk>();
+
+		configureSpDayFrList = configuredSpDayCkRes.getConfiguredSpDayCkList();
+
+		boolean flag = false, spDayShow = false;
+		int count = 0;
+
+		for (GetConfiguredSpDayCk getConfSpDayCk : configureSpDayFrList) {
+
+			DateFormat dmyFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date startDate;
+
+			startDate = dmyFormat.parse(getConfSpDayCk.getOrderFromDate());
+			System.out.println("startDate" + startDate);
+
+			Date endDate = dmyFormat.parse(getConfSpDayCk.getOrderToDate());
+			System.out.println("endDate" + endDate);
+
+			String todaysDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+			Date dateToCheck = dmyFormat.parse(todaysDate);
+
+			System.out.println("dateToCheck" + dateToCheck);
+
+			flag = checkBetween(dateToCheck, startDate, endDate);
+			System.out.println("ShowSpDayCk:" + flag);
+
+			if (flag == true) {
+				count = count + 1;
 			}
-			// -------------------------------------------------------------------------------------------
 
-			session.setAttribute("isSpDayShow", spDayShow);
+		}
 
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("frId", loginResponse.getFranchisee().getFrId());
-			int month = calendar.get(Calendar.MONTH) + 1;
-			map.add("month", month);
-			System.out.println("Curr Month " + month);
-			map.add("year", calendar.get(Calendar.YEAR));
-			System.out.println("Curr Year" + calendar.get(Calendar.YEAR));
-			FrTotalSale frTotalSale = restTemplate.postForObject(Constant.URL + "/getFrTotalSale", map,
-					FrTotalSale.class);
-			System.out.println("Get Fr Total Sale  " + frTotalSale.toString());
-			float achievedTarget = 0;
+		if (count > 0) {
+			spDayShow = true;
+		}
+		// -------------------------------------------------------------------------------------------
 
-			if (frTotalSale != null) {
-				achievedTarget = frTotalSale.getTotalSale();
-			}
-			session.setAttribute("achievedTarget", achievedTarget);
-			session.setAttribute("fraTarget", frTotalSale.getTargetAmt());
+		session.setAttribute("isSpDayShow", spDayShow);
 
-			model = new ModelAndView("home");
-			System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
-			model.addObject("schedulerLists", schedulerLists);
-			model.addObject("msgList", msgList);
-			model.addObject("isSpDayShow", spDayShow);
-			model.addObject("menuList", filteredFrMenuList);
-			model.addObject("frEmpDetails", loginResponse.getFrEmp());
-			model.addObject("frDetails", loginResponse.getFranchisee());
-			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
-			model.addObject("info", loginResponse.getLoginInfo());
-			return "redirect:/home";
-		/*}*/
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("frId", loginResponse.getFranchisee().getFrId());
+		int month = calendar.get(Calendar.MONTH) + 1;
+		map.add("month", month);
+		System.out.println("Curr Month " + month);
+		map.add("year", calendar.get(Calendar.YEAR));
+		System.out.println("Curr Year" + calendar.get(Calendar.YEAR));
+		FrTotalSale frTotalSale = restTemplate.postForObject(Constant.URL + "/getFrTotalSale", map, FrTotalSale.class);
+		System.out.println("Get Fr Total Sale  " + frTotalSale.toString());
+		float achievedTarget = 0;
+
+		if (frTotalSale != null) {
+			achievedTarget = frTotalSale.getTotalSale();
+		}
+		session.setAttribute("achievedTarget", achievedTarget);
+		session.setAttribute("fraTarget", frTotalSale.getTargetAmt());
+
+		model = new ModelAndView("home");
+		System.out.println("fr Image URL " + loginResponse.getFranchisee().getFrImage());
+		model.addObject("schedulerLists", schedulerLists);
+		model.addObject("msgList", msgList);
+		model.addObject("isSpDayShow", spDayShow);
+		model.addObject("menuList", filteredFrMenuList);
+		model.addObject("frEmpDetails", loginResponse.getFrEmp());
+		model.addObject("frDetails", loginResponse.getFranchisee());
+		model.addObject("url", Constant.MESSAGE_IMAGE_URL);
+		model.addObject("info", loginResponse.getLoginInfo());
+		return "redirect:/home";
+		/* } */
 
 	}
 
@@ -1353,8 +1351,7 @@ public class HomeController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse response, Locale locale)
 			throws ParseException {
@@ -1364,44 +1361,56 @@ public class HomeController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/updatePassword")
 	public String updatePassword(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
 		HttpServletResponse response = (HttpServletResponse) res;
-		
-		String result="";
 
-		String pass=req.getParameter("newPass");
+		String result = "";
+
+		String pass = req.getParameter("newPass");
+		String oldPass = req.getParameter("oldPass");
 
 		FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
-		int empId=frEmpDetails.getFrEmpId();
-		
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		map.add("empId",empId);
-		map.add("pass", pass);
+		int empId = frEmpDetails.getFrEmpId();
 
-		RestTemplate restTemplate = new RestTemplate();
-		Info info = restTemplate.postForObject(Constant.URL + "updateFrEmpPassword", map, Info.class);
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("empId", empId);
+		map.add("pass", pass);
 		
-		
-		
-		if(info.isError()) {
-			result="redirect:/changePass";
-		}else {
-			result="redirect:/frEmpLogin";
+		System.err.println("OLD PASS ---- "+frEmpDetails.getPassword());
+
+		if (!oldPass.equals(frEmpDetails.getPassword())) {
+			session.setAttribute("passMsg", "Old Password not Matched!");
+			result = "redirect:/changePass";
+
+		} else {
+			RestTemplate restTemplate = new RestTemplate();
+			Info info = restTemplate.postForObject(Constant.URL + "updateFrEmpPassword", map, Info.class);
+
+			if (info.isError()) {
+
+				session.setAttribute("passMsg", "Failed to Update!");
+
+				result = "redirect:/changePass";
+			} else {
+
+				session.removeAttribute("passMsg");
+
+				result = "redirect:/frEmpLogin";
+			}
+
 		}
 
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "/logoutEmp")
 	public String logoutEmp(HttpSession session, HttpServletRequest req, HttpServletResponse res) {
 		System.out.println("Logout Controller User Logout");
 		ModelAndView model = new ModelAndView("login");
-		
+
 		session.removeAttribute("frEmpDetails");
 
 		// session.invalidate();
@@ -1409,7 +1418,5 @@ public class HomeController {
 		return "redirect:/frEmpLogin";
 		// return "redirect:/";
 	}
-	
-	
 
 }

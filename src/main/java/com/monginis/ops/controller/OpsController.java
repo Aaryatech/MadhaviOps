@@ -2022,7 +2022,7 @@ public class OpsController {
 		 * invoiceNo = curStrYear + "-" + "0" + settingValue;
 		 */
 
-		invoiceNo = frDetails.getFrCode() + invoiceNo;
+		//invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 

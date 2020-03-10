@@ -45,6 +45,15 @@
 						<h2 class="pageTitle" style="text-align: center; float: none;">Change
 							Password</h2>
 						<br> <br>
+
+						<c:if test="${not empty sessionScope.passMsg}">
+
+							<h4 class="pageTitle"
+								style="text-align: center; float: none; border: 1px solid #ed1c24; color: #ed1c24;">${sessionScope.passMsg}</h4>
+							<br>
+							<br>
+						</c:if>
+					 <% session.removeAttribute("passMsg"); %> 
 					</div>
 
 
@@ -60,8 +69,7 @@
 								style="width: 50%; text-align: right;">Previous Password *</div>
 							<div class="profileinput" style="width: 50%">
 								<input id="oldPass" required name="oldPass" autocomplete="off"
-									class="form-control" type="password" style="width: 200px"
-									onblur="checkOldPass()">
+									class="form-control" type="password" style="width: 200px">
 							</div>
 						</div>
 
@@ -70,7 +78,7 @@
 								style="width: 50%; text-align: right;">New Password *</div>
 							<div class="profileinput" style="width: 50%">
 								<input id="newPass" required name="newPass" autocomplete="off"
-									class="form-control" type="password" style="width: 200px" disabled="disabled">
+									class="form-control" type="password" style="width: 200px">
 							</div>
 						</div>
 
@@ -78,8 +86,9 @@
 							<div class="profilefildset"
 								style="width: 50%; text-align: right;">Confirm Password *</div>
 							<div class="profileinput" style="width: 50%">
-								<input id="confPass" required name="confPass" autocomplete="off" disabled="disabled"
-									class="form-control" type="password" style="width: 200px" onblur="checkNewAndConfirmPass()">
+								<input id="confPass" required name="confPass" autocomplete="off"
+									class="form-control" type="password" style="width: 200px"
+									onblur="checkNewAndConfirmPass()">
 							</div>
 
 						</div>
@@ -90,7 +99,7 @@
 
 						<div class="row">
 							<br> <input name="submit" class="buttonsaveorder"
-								value="Update" type="submit" align="center" id="submtbtn" style="display: none;">
+								value="Update" type="submit" align="center" id="submtbtn">
 						</div>
 
 
@@ -119,50 +128,53 @@
 
 	<script type="text/javascript">
 		function checkOldPass() {
-			var oldPass=document.getElementById("oldPass").value;
-			
-			var savedPass=${sessionScope.frEmpDetails.password}
-			
-			//alert(oldPass +" ------------ "+savedPass);
-			
-			if(oldPass==savedPass){
-				//alert("Match");
+
+			var oldPass = document.getElementById("oldPass").value;
+
+			var savedPass = $
+			{
+				sessionScope.frEmpDetails.password
+			}
+			;
+			//var savedPass="abc";
+			alert(oldPass + " ------------ " + savedPass);
+
+			if (oldPass == savedPass) {
+				alert("Match");
 				document.getElementById("newPass").disabled = false;
 				document.getElementById("confPass").disabled = false;
-				
-			}else{
+
+			} else {
 				alert("Incorrect Previous Password !");
-				document.getElementById("newPass").value="";
-				document.getElementById("confPass").value="";
+				document.getElementById("newPass").value = "";
+				document.getElementById("confPass").value = "";
 				document.getElementById("newPass").disabled = true;
 				document.getElementById("confPass").disabled = true;
 
 				//document.getElementById("submtbtn").disabled = true;
 				$('#submtbtn').hide();
 			}
-			
+
 		}
-		
-		
+
 		function checkNewAndConfirmPass() {
-			 var newPass=document.getElementById("newPass").value;
-			var confPass=document.getElementById("confPass").value;
-			
-			if(newPass==confPass){
+			var newPass = document.getElementById("newPass").value;
+			var confPass = document.getElementById("confPass").value;
+
+			if (newPass == confPass) {
 				//alert("Match");
 				//document.getElementById("submtbtn").disabled = false;
-				
+
 				$('#submtbtn').show();
-				
-			}else{
+
+			} else {
 				alert("Confirm Password Not Matched !");
 				//alert("Not Match");
 				//document.getElementById("newPass").value="";
-				document.getElementById("confPass").value="";
-			} 
-			
+				document.getElementById("confPass").value = "";
+			}
+
 		}
-		
 	</script>
 
 </body>

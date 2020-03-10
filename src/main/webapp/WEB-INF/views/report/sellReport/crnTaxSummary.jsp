@@ -2,52 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-<%-- <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-<title>Madhvi</title>
-
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet" type="text/css"/>	
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
-	
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
-	
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
-<!--rightNav-->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/menuzord.js"></script>
-	
-<script type="text/javascript">
-jQuery(document).ready(function(){
-	jQuery("#menuzord").menuzord({
-		align:"left"
-	});
-});
-</script>
-<!--rightNav-->
-<
-
-</head>
-<body> --%>
-
+<!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 <script>
@@ -62,10 +21,16 @@ jQuery(document).ready(function(){
 		});
 	});
 </script>
+<style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+</style>
 <!--datepicker-->
 
 
-<c:url var="getDatewiseTaxSellReport" value="/getDatewiseTaxSellReport" />
+
+<c:url var="getTaxSellReport" value="/getCRNTaxSellReport" />
 
 <div class="sidebarOuter"></div>
 
@@ -102,25 +67,24 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">View Sell Tax Date wise Report</h2>
+						<h3 class="pageTitle">View Credit Note Tax Report Summary</h3>
 					</div>
 				</div>
-
 				<div class="colOuter">
 					<div align="center">
 						<div class="col1">
 							<div class="col1title">
 								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal float_l"
-									placeholder="From Date" name="from_Date" type="text"
-									size="35">
+									id="fromdatepicker" autocomplete="off" placeholder="From Date"
+									name="from_Date" type="text"
+									class="texboxitemcode texboxcal float_l" size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b><span class="frm_txt">To</span></b> <input id="todatepicker" class="texboxitemcode texboxcal float_l"
-									autocomplete="off" placeholder="To Date" name="to_Date"
-									type="text" size="35">
+								<b><span class="frm_txt">TO</span></b> <input id="todatepicker"
+									class="texboxitemcode texboxcal float_l" autocomplete="off"
+									placeholder="To Date" name="to_Date" type="text" size="35">
 							</div>
 						</div>
 						<input type="hidden" name="frId" id="frId" value="${frId}">
@@ -132,10 +96,11 @@ jQuery(document).ready(function(){
 						<button class="buttonsaveorder" onclick="searchSellBill()">HTML
 							View</button>
 						<button class="buttonsaveorder" onclick="showChart()">Graph</button>
-						<%-- 		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none" >PDF</a>
+						<%-- 		    	    <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
+
 						<br>
 					</div>
 				</div>
@@ -145,49 +110,25 @@ jQuery(document).ready(function(){
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" >
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
-								<table id="table_grid1" class="main-table" border="1">
+						<div id="table-scroll">
+							<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
+							<div class="table-wrap">
+								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<!-- <th class="col-md-1">Bill No</th> -->
-											<th class="col-md-1" style="text-align: center;">Date</th>
-											<th class="col-md-1" style="text-align: center;">Tax
-												Rate</th>
+											<th class="col-md-1" style="text-align: center;">From Bill</th>
+											<th class="col-md-1" style="text-align: center;">To Bill</th>
+
+											<th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
-											<th class="col-md-1" style="text-align: center;">IGST</th>
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
-											<th class="col-md-1" style="text-align: center;">CESS</th>
-											<th class="col-md-1" style="text-align: center;">Amount</th>
-										</tr>
-									</thead>
-
-									<tbody>
-									</tbody>
-
-								</table>
-							</div>
-							<div >
-								<table id="table_grid"  class="responsive-table" border="1">
-									<thead>
-										<tr class="bgpink">
-
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<!-- <th class="col-md-1">Bill No</th> -->
-											<th class="col-md-1" style="text-align: center;">Date</th>
-											<th class="col-md-1" style="text-align: center;">Tax
-												Rate</th>
-											<th class="col-md-1" style="text-align: center;">Taxable
-												Amt</th>
 											<th class="col-md-1" style="text-align: center;">IGST</th>
-											<th class="col-md-1" style="text-align: center;">CGST</th>
-											<th class="col-md-1" style="text-align: center;">SGST</th>
 											<th class="col-md-1" style="text-align: center;">CESS</th>
-											<th class="col-md-1" style="text-align: center;">Amount</th>
+											<th class="col-md-1" style="text-align: center;">Bill Amt</th>
 										</tr>
 									</thead>
 
@@ -216,10 +157,23 @@ jQuery(document).ready(function(){
 				<div id="chart">
 					<br> <br> <br>
 					<hr>
+					<div>
 
 
-					<div id="chart_div" style="width: 100%; height: 500px;"></div>
 
+						<div id="chart_div" style="width: 60%; height: 300; float: left;"
+							style="overflow-y: scroll;"></div>
+
+						<div id="pieChart_div"
+							style="width: 40%%; height: 300; float: right;"></div>
+						<div id="Piechart" style="width: 40%%; height: 300; float: right;"></div>
+						<!-- <div   id="PieChart_div" style="width:40%%; height:300; float: right;" ></div>  -->
+					</div>
+					<!-- <hr style="height:1px; width:50%%;" color="black">
+			<div class="colOuter" >
+			 
+				<div   id="PieChart_div" style="width:100%; height:300;" align="center" ></div>
+				</div> -->
 
 				</div>
 
@@ -244,6 +198,7 @@ jQuery(document).ready(function(){
 
 <script type="text/javascript">
 	function searchSellBill() {
+
 		document.getElementById('table').style.display = "block";
 		document.getElementById('chart').style = "display:none";
 		// document.getElementById('showchart').style.display = "block";
@@ -252,13 +207,14 @@ jQuery(document).ready(function(){
 		var isValid = validate();
 
 		if (isValid) {
-			//	document.getElementById('btn_pdf').style.display = "block";
+
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
+			//document.getElementById('btn_pdf').style.display = "block";
 
 			$
 					.getJSON(
-							'${getDatewiseTaxSellReport}',
+							'${getTaxSellReport}',
 							{
 
 								fromDate : fromDate,
@@ -291,40 +247,44 @@ jQuery(document).ready(function(){
 
 													var tr = $('<tr></tr>');
 
-													tr.append($('<td style="text-align:center;"></td>')
-															.html(key + 1));
-
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:center;"></td>')
 																	.html(
-																			sellTaxData.billDate));
+																			key + 1));
+
+													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:center;"></td>')
+															.html(
+																	sellTaxData.fromBill));
+
+													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:center;"></td>')
+															.html(
+																	sellTaxData.toBill));
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html(
-																			sellTaxData.tax_per));
+																	.html(addCommas(
+																			(sellTaxData.tax_per)
+																					.toFixed(2))));
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td class="col-md-1" style="text-align:right;"></td>')
 																	.html(addCommas(
 																			(sellTaxData.tax_amount)
 																					.toFixed(2))));
 													taxTotal = taxTotal
 															+ sellTaxData.tax_amount;
+													
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
-																	.html(0));
-													igstTotal = igstTotal
-															+ sellTaxData.igst;
-
-													tr
-															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td class="col-md-1" style="text-align:right;"></td>')
 																	.html(addCommas(
 																			(sellTaxData.cgst)
 																					.toFixed(2))));
@@ -333,38 +293,38 @@ jQuery(document).ready(function(){
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td class="col-md-1" style="text-align:right;"></td>')
 																	.html(addCommas(
 																			(sellTaxData.sgst)
 																					.toFixed(2))));
 													sgstTotal = sgstTotal
 															+ sellTaxData.sgst;
+													
+													tr
+													.append($(
+															'<td class="col-md-1" style="text-align:right;"></td>')
+															.html(0));
+											igstTotal = igstTotal
+													+ sellTaxData.igst;
 
 													tr
 															.append($(
-																	'<td class="col-md-1"  style="text-align:right;"></td>')
+																	'<td class="col-md-1" style="text-align:right;"></td>')
 																	.html(addCommas(
 																			(sellTaxData.cess)
 																					.toFixed(2))));
 													cessTotal = cessTotal
 															+ sellTaxData.cess;
 													
-													/* tr
+													
+													tr
 													.append($(
-															'<td class="col-md-1"  style="text-align:right;"></td>')
+															'<td class="col-md-1" style="text-align:right;"></td>')
 															.html(addCommas(
 																	(sellTaxData.bill_amount)
-																			.toFixed(2)))); */
-												var billAmt = sellTaxData.tax_amount + sellTaxData.cgst + sellTaxData.sgst;
-														tr
-														.append($(
-															'<td class="col-md-1"  style="text-align:right;"></td>')
-															.html(addCommas(
-																	(billAmt)
-																		.toFixed(2)))); 
-														
+																			.toFixed(2))));
 													ttlBillAmt = ttlBillAmt
-															+ billAmt;
+															+sellTaxData.bill_amount;
 
 													$('#table_grid tbody')
 															.append(tr);
@@ -372,41 +332,38 @@ jQuery(document).ready(function(){
 												})
 
 								var tr = "<tr>";
-								var total = "<td colspan='1'><b> Total</b></td>";
-								var col1 = "<td colspan='1'></td>";
-								var col2 = "<td colspan='1'></td>";
+								var total = "<td colspan='4' style='text-align:left;'><b> Total</b></td>";
+								/* var non = "<td colspan='1'></td>"; */
+								
+								taxTotal = taxTotal.toFixed(2);
+								var totalTax = "<td style='text-align:right;'>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas(taxTotal)+ "</b></td>";
 
-								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
-										+ addCommas(taxTotal.toFixed(2));
+								
 								+"</b></td>";
-
-								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ 0;
-								+"</b></td>";
-								var cgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+								var cgst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas(cgstTotal.toFixed(2));
 								+"</b></td>";
-								var sgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+								var sgst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas(sgstTotal.toFixed(2));
+								var igst = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
+									+ addCommas(0);
 								+"</b></td>";
-								var cess = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-										+ addCommas(cessTotal.toFixed(2));
-								+"</b></td>";
-								
-								var ttlBill = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
-									+ addCommas(ttlBillAmt.toFixed(2));
-							+"</b></td>";
+								var cess = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
+										+ addCommas(cessTotal) + "</b></td>";
+										
+								var ttlBill = "<td style='text-align:right;'><b>&nbsp;&nbsp;&nbsp;"
+											+ addCommas(ttlBillAmt.toFixed(2)) + "</b></td>";
 
 								var trclosed = "</tr>";
 
 								$('#table_grid tbody').append(tr);
-								$('#table_grid tbody').append(total);
-								$('#table_grid tbody').append(col1);
-								$('#table_grid tbody').append(col2);								
-								$('#table_grid tbody').append(totalTax)
-								$('#table_grid tbody').append(igst);
+								$('#table_grid tbody').append(total);/* 
+								$('#table_grid tbody').append(non); */
+								$('#table_grid tbody').append(totalTax);
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
+								$('#table_grid tbody').append(igst);
 								$('#table_grid tbody').append(cess);
 								$('#table_grid tbody').append(ttlBill);
 								$('#table_grid tbody').append(trclosed);
@@ -417,21 +374,21 @@ jQuery(document).ready(function(){
 	}
 </script>
 <script type="text/javascript">
-function addCommas(x){
+function addCommas(x) {
 
-	x=String(x).toString();
-	 var afterPoint = '';
-	 if(x.indexOf('.') > 0)
-	    afterPoint = x.substring(x.indexOf('.'),x.length);
-	 x = Math.floor(x);
-	 x=x.toString();
-	 var lastThree = x.substring(x.length-3);
-	 var otherNumbers = x.substring(0,x.length-3);
-	 if(otherNumbers != '')
-	     lastThree = ',' + lastThree;
-	 return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
-	} 
-	
+	x = String(x).toString();
+	var afterPoint = '';
+	if (x.indexOf('.') > 0)
+		afterPoint = x.substring(x.indexOf('.'), x.length);
+	x = Math.floor(x);
+	x = x.toString();
+	var lastThree = x.substring(x.length - 3);
+	var otherNumbers = x.substring(0, x.length - 3);
+	if (otherNumbers != '')
+		lastThree = ',' + lastThree;
+	return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree
+			+ afterPoint;
+}
 	function validate() {
 
 		var fromDate = $("#fromdatepicker").val();
@@ -463,14 +420,13 @@ function addCommas(x){
 
 		var fromDate = document.getElementById("fromdatepicker").value;
 		var toDate = document.getElementById("todatepicker").value;
-
 		var isValid = validate();
 
 		if (isValid) {
-			//document.getElementById('btn_pdf').style.display = "block";
+			//	document.getElementById('btn_pdf').style.display = "block";
 			$
 					.getJSON(
-							'${getDatewiseTaxSellReport}',
+							'${getTaxSellReport}',
 							{
 
 								fromDate : fromDate,
@@ -490,6 +446,10 @@ function addCommas(x){
 									'packages' : [ 'corechart', 'bar' ]
 								});
 								google.charts.setOnLoadCallback(drawStuff);
+								google.charts
+										.setOnLoadCallback(drawAmtPieChart);
+								google.charts
+										.setOnLoadCallback(drawTaxPieChart);
 
 								function drawStuff() {
 
@@ -498,39 +458,31 @@ function addCommas(x){
 									document.getElementById("chart_div").style.border = "thin dotted red";
 									var dataTable = new google.visualization.DataTable();
 
-									dataTable.addColumn('string',
-											'Date & Tax %'); // Implicit domain column.
-									dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
-									dataTable.addColumn({
-										type : 'string',
-										role : 'interval'
-									});
-									dataTable.addColumn({
-										type : 'string',
-										role : 'interval'
-									});
-									dataTable.addColumn('number',
-											'Taxable Amount');
+									dataTable
+											.addColumn('string', 'Tax Percent'); // Implicit domain column.
+									dataTable.addColumn('number', 'Amount'); // Implicit data column.
+									// dataTable.addColumn({type:'string', role:'interval'});
+									//  dataTable.addColumn({type:'string', role:'interval'});
+									dataTable.addColumn('number', 'Total Tax');
 									$.each(data, function(key, item) {
 
-										var tax = item.cgst + item.sgst;
-										var date = item.billDate + '\nTax : '
-												+ item.tax_per + '%';
-
+										//var tax=item.cgst + item.sgst;
+										//var date= item.billDate+'\nTax : ' + item.tax_per + '%';
+										var totalTax = item.cgst + item.sgst;
 										dataTable.addRows([
 
-										[ date, tax, "cgst : " + item.cgst,
-												"sgst : " + item.sgst,
-												item.tax_amount, ]
+										[ item.tax_per + ' %', item.tax_amount,
+												totalTax, ]
 
 										]);
 									})
 
 									var materialOptions = {
-										width : 700,
+										width : 600,
+										height : 450,
 										chart : {
-											title : 'Date wise Tax Graph',
-											subtitle : 'Total tax & Taxable Amount per day'
+											title : ' Taxable Amount & Total Tax',
+											subtitle : 'Tax percent wise Total Tax & Amount '
 										},
 										series : {
 											0 : {
@@ -544,20 +496,22 @@ function addCommas(x){
 										axes : {
 											y : {
 												distance : {
-													label : 'Total Tax'
+													label : 'Taxable Amount'
 												}, // Left y-axis.
 												brightness : {
 													side : 'right',
-													label : 'Taxable Amount'
+													label : 'Total Tax'
 												}
 											// Right y-axis.
 											}
 										}
 									};
+									//  var materialChart = new google.charts.Bar(chartDiv);
 
 									function drawMaterialChart() {
 										var materialChart = new google.charts.Bar(
 												chartDiv);
+										//  google.visualization.events.addListener(materialChart, 'select', selectHandler);    
 										materialChart
 												.draw(
 														dataTable,
@@ -567,11 +521,83 @@ function addCommas(x){
 										// button.onclick = drawClassicChart;
 									}
 
-									/*  var chart = new google.visualization.ColumnChart(
-									          document.getElementById('chart_div'));
-									 chart.draw(dataTable,
-									    {width: 800, height: 600, title: 'Tax Summary Chart'}); */
 									drawMaterialChart();
+
+								}
+								;
+
+								function drawAmtPieChart() {
+
+									var chartDiv = document
+											.getElementById('pieChart_div');
+									document.getElementById("pieChart_div").style.border = "thin dotted red";
+									var dataTable = new google.visualization.DataTable();
+
+									dataTable.addColumn('string', 'Per'); // Implicit domain column.
+									dataTable.addColumn('number',
+											'Taxable Amount'); // Implicit data column.
+									//  dataTable.addColumn({type:'string', role:'interval'});
+									//  dataTable.addColumn({type:'string', role:'interval'});
+									//dataTable.addColumn('number', 'TaxableAmt');
+									$.each(data, function(key, item) {
+
+										var amt = item.tax_amount;
+										var per = 'Tax :  ' + item.tax_per
+												+ '%';
+										//  Taxable Amt :   '+item.tax_amount;
+
+										dataTable.addRows([
+										//  [per, tax, item.tax_amount, ]
+										[ per, amt, ]
+
+										]);
+									})
+
+									var chart = new google.visualization.PieChart(
+											document
+													.getElementById('pieChart_div'));
+									chart.draw(dataTable, {
+										width : 400,
+										height : 300,
+										title : 'Taxable Amount'
+									});
+
+								}
+								;
+								function drawTaxPieChart() {
+
+									var chartDiv = document
+											.getElementById('Piechart');
+									document.getElementById("Piechart").style.border = "thin dotted red";
+									var dataTable = new google.visualization.DataTable();
+
+									dataTable.addColumn('string', 'Per'); // Implicit domain column.
+									dataTable.addColumn('number', 'Total Tax'); // Implicit data column.
+									//  dataTable.addColumn({type:'string', role:'interval'});
+									//  dataTable.addColumn({type:'string', role:'interval'});
+									//dataTable.addColumn('number', 'TaxableAmt');
+									$.each(data, function(key, item) {
+
+										var tax = item.cgst + item.sgst;
+										var per = 'Tax :  ' + item.tax_per
+												+ '%';
+										//  Taxable Amt :   '+item.tax_amount;
+
+										dataTable.addRows([
+										//  [per, tax, item.tax_amount, ]
+										[ per, tax, ]
+
+										]);
+									})
+
+									var chart = new google.visualization.PieChart(
+											document.getElementById('Piechart'));
+									chart.draw(dataTable, {
+										width : 400,
+										height : 300,
+										title : 'Total Tax'
+									});
+
 								}
 								;
 
@@ -579,6 +605,7 @@ function addCommas(x){
 		}
 	}
 </script>
+
 
 <script>
 	(function() {
@@ -606,8 +633,8 @@ function addCommas(x){
 			var toDate = document.getElementById("todatepicker").value;
 			var frId = document.getElementById("frId").value;
 			window
-					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxDatewiseReportpPdf/'
-							+ fromDate + '/' + toDate + '/' + frId + '/');
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellTaxReportpPdf/'
+							+ fromDate + '/' + toDate + '/' + frId);
 		}
 	}
 </script>

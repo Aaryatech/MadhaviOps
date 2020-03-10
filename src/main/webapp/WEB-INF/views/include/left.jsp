@@ -969,6 +969,12 @@
 									class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/viewDailySalesReport"><i
 									class="fa fa-files-o icon"></i> Daily Sales Report</a>
+									
+									<a href="${pageContext.request.contextPath}/viewCrnTaxSellBill"><i
+									class="fa fa-file-text-o icon"></i> Tax Report Summary (Credit Note) </a>
+									
+									<a href="${pageContext.request.contextPath}/viewFrCRNTaxSellBill"><i
+									class="fa fa-file-text-o icon"></i> Bill Report (Credit Note) </a>
 							</div>
 
 						</li>

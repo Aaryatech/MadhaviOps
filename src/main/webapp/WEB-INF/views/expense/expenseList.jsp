@@ -66,6 +66,15 @@
 
 					<div class="order-left">
 						<h2 class="pageTitle">Expense List</h2>
+						
+						<c:if test="${not empty sessionScope.passMsg}">
+
+							<h4 class="pageTitle"
+								style="text-align: center; float: none; border: 1px solid #ed1c24; color: #ed1c24;">${sessionScope.passMsg}</h4>
+							<br>
+							<br>
+						</c:if>
+					 <% session.removeAttribute("passMsg"); %> 
 
 					</div>
 
