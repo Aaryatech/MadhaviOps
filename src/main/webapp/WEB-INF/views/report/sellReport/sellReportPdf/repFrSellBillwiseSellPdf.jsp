@@ -158,7 +158,16 @@ th {
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalRemaining}" /></b></td>
 				 <td style="text-align: right;"><b>
-							${totalCash}-Cash ,${totalCard}-Card ,${totalEPay}-E-Pay"</b></td> 
+				 <fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalCash}" />-Cash,
+				<fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalCard}" />-Card,
+				<fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalEPay}" />-E-Pay
+							  </b></td> 
 
 			</tr>
 		</tbody>

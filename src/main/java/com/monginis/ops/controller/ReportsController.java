@@ -2884,13 +2884,14 @@ public class ReportsController {
 		/* rowData.add("Other"); */
 
 		rowData.add("Discount");
-		rowData.add("Remaining");
 		rowData.add("Advance");
+		rowData.add("Remaining");
+		
 		rowData.add("Regular Expense");
 		rowData.add("Challan Expense");
+		rowData.add("Credit Note Amt");
 		
 		rowData.add("Withdrawal Amt");
-		rowData.add("Credit Note Amt");
 		rowData.add("Petty Cash Amt");
 		
 		expoExcel.setRowData(rowData);
@@ -2936,14 +2937,14 @@ public class ReportsController {
 			/* rowData.add(""+getRepFrDatewiseSellResponse.get(i).getOther()); */
 			
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDiscountAmt());
-			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getPendingAmt());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getAdvAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getPendingAmt());
 			
-			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRegular());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRegular());		
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getChalan());
 			
-			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt());			
-			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt());	
 			
 			float calPetty = (getRepFrDatewiseSellResponse.get(i).getCash()+
 							getRepFrDatewiseSellResponse.get(i).getAdvAmt()+
@@ -2982,14 +2983,14 @@ public class ReportsController {
 		rowData.add("" + totalCard);
 		
 		rowData.add("" + ttlDisc);
-		rowData.add("" + ttlPending);
 		rowData.add("" + ttlAdv);
+		rowData.add("" + ttlPending);
 		
 		rowData.add("" + ttlRegular);
+		rowData.add("" + ttlCreditNote);
 		rowData.add("" + ttlChalan);	
 		
 		rowData.add("" + ttlWidthraw);
-		rowData.add("" + ttlCreditNote);
 		rowData.add("" + ttlpettyCash);
 
 		expoExcel.setRowData(rowData);

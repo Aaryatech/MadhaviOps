@@ -39,24 +39,21 @@ th {
 									<!-- <th align="center">Bill No</th> -->
 									<th style="text-align:center;">Day</th>
 									<th style="text-align:center;">Date</th>																					
+									<th style="text-align:center;">Total Day Sale</th>
 									
 									<th style="text-align:center;">Cash</th>
 								 	<th style="text-align:center;">Card</th>
 								 	<th style="text-align:center;">E-Pay</th>
-								 		
-									<th style="text-align:center;">Total Day Sale</th>
-								
 								 	
 								 	<th style="text-align: center;">Disc Amt</th>
-									<th style="text-align: center;">Remaining</th>
-									<th style="text-align: center;">Advance</th>
+								 	<th style="text-align: center;">Advance</th>
+									<th style="text-align: center;">Remaining</th>									
 																 	
 									<th style="text-align: center;">Regular Expense</th>
-									<th style="text-align: center;">Challan Expense</th>
-									<!-- <th style="text-align:center;">Other </th>  -->
-									
-									<th style="text-align: center;">Withdrawal Amt</th>
 									<th style="text-align: center;">Credit Note Amt</th>
+									<th style="text-align: center;">Challan Expense</th>
+									
+									<th style="text-align: center;">Withdrawal Amt</th>									
 									<th style="text-align:center;">Petty Cash Amt </th>
 								  </tr>
 								</thead>
@@ -89,7 +86,9 @@ th {
 													<td style="text-align:center;"><c:out value="${reportList.day}" /></td>
 													<td style="text-align:center;"><c:out value="${reportList.billDate}" /></td>
 													
-												
+													<c:set var="amt"  value="${reportList.cash + reportList.card + reportList.other }"/>
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${amt}" /></td>
+													 <c:set var="totalAmount" value="${totalAmount + amt}"/>
 													
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.cash}" /></td>
 														<c:set var="totalCash"  value="${totalCash + reportList.cash}"/>
@@ -99,9 +98,7 @@ th {
 														<c:set var="totalOther"  value="${totalOther + reportList.other }"/>
 													
 													
-													<c:set var="amt"  value="${reportList.cash + reportList.card + reportList.other }"/>
-													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${amt}" /></td>
-													 <c:set var="totalAmount" value="${totalAmount + amt}"/>
+													
 													 
 													
 													
@@ -109,11 +106,13 @@ th {
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.discountAmt}" /></td>
 													<c:set var="totalDisc"  value="${totalDisc + reportList.discountAmt}"/>
 													
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.advAmt}" /></td>
+													<c:set var="totalAdv"  value="${totalAdv + reportList.advAmt}"/>
+													
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.pendingAmt}" /></td>
 													<c:set var="totalPending"  value="${totalPending + reportList.pendingAmt}"/>
 													
-													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.advAmt}" /></td>
-													<c:set var="totalAdv"  value="${totalAdv + reportList.advAmt}"/>
+													
 													
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.regular}" /></td>
 													<c:set var="totalReg"  value="${totalReg + reportList.regular}"/>
@@ -121,13 +120,12 @@ th {
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.chalan}" /></td>
 													<c:set var="totalChalan"  value="${totalChalan + reportList.chalan}"/>
 													
-													
-													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.withdrawalAmt}" /></td>
-													<c:set var="totalWithdraw"  value="${totalWithdraw + reportList.withdrawalAmt}"/>
-													
 													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.creditNoteTotalAmt}" /></td>
 													<c:set var="totalCreditNote"  value="${totalCreditNote + reportList.creditNoteTotalAmt}"/>
 													
+													
+													<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value="${reportList.withdrawalAmt}" /></td>
+													<c:set var="totalWithdraw"  value="${totalWithdraw + reportList.withdrawalAmt}"/>
 													
 													
 													<c:set var="sumCash"  value="${reportList.cash+ reportList.advAmt+ reportList.regular}"/>
@@ -148,20 +146,21 @@ th {
 								  <td colspan='1'></td>
 								  <td colspan='1'></td>								  
 								 
+								 
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalAmount}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalCash}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalCard}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalOther}"/></b></td>
-								   <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalAmount}"/></b></td>
 								   
-								   <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalDisc}"/></b></td>
-								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalPending}"/></b></td>
-								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalAdv}"/></b></td>								  
+								   <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalDisc}"/></b></td>								   
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalAdv}"/></b></td>	
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value ="${totalPending}"/></b></td>							  
 								  
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalReg}"/></b></td>
+								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalCreditNote}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalChalan}"/></b></td>
 								  
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalWithdraw}"/></b></td>
-								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalCreditNote}"/></b></td>
 								  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${calPettyAmt}"/></b></td> 
 								      <%--  <td style="text-align:right;"><b><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${totalOther}"/></b></td> --%>
 								     <!--  <td><b>Total</b></td> -->

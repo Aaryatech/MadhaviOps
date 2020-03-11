@@ -135,7 +135,18 @@ table, th, td {
  --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 							onclick="genPdf()">PDF</button>
+							
+						
 					</div>
+					
+						
+						<div class="form-group col-md-2" style="display: none;" id="range">
+							
+								<input type="button" id="expExcel" class="btn btn-primary"
+									value="EXPORT TO Excel" onclick="exportToExcel();"
+									disabled="disabled">
+							
+						</div>
 
 				</div>
 
@@ -205,7 +216,7 @@ table, th, td {
 
 					</div>
 				</div>
-				<br>
+				<!-- <br>
 						<div class="form-group" style="display: none;" id="range">
 
 
@@ -216,7 +227,7 @@ table, th, td {
 									disabled="disabled">
 							</div>
 						</div>
-
+ -->
 
 
 

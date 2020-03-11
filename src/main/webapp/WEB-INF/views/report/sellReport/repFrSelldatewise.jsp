@@ -121,22 +121,22 @@ table, th, td {
 													<!--       <th class="col-md-1" style="text-align:center;">Bill No</th>  -->
 													<th class="col-md-1" style="text-align: center;">Day</th>
 													<th class="col-md-1" style="text-align: center;">Date</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>
 													<th class="col-md-1" style="text-align: center;">Cash</th>
 													<th class="col-md-1" style="text-align: center;">Card</th>
-													<th class="col-md-1" style="text-align: center;">E-Pay</th>
-													<th class="col-md-1" style="text-align: center;">Amount</th>
+													<th class="col-md-1" style="text-align: center;">E-Pay</th>													
 													<th class="col-md-1" style="text-align: center;">Disc
-														Amt</th>
-													<th class="col-md-1" style="text-align: center;">Pending</th>
+														Amt</th>														
 													<th class="col-md-1" style="text-align: center;">Advance</th>
+													<th class="col-md-1" style="text-align: center;">Pending</th>
 													<th class="col-md-1" style="text-align: center;">Regular
 														Expense</th>
 													<th class="col-md-1" style="text-align: center;">Challan
 														Expense</th>
-													<th class="col-md-1" style="text-align: center;">Withdrawal
-														Amt</th>
 													<th class="col-md-1" style="text-align: center;">Credit
 														Note Amt</th>
+													<th class="col-md-1" style="text-align: center;">Withdrawal
+														Amt</th>													
 													<th class="col-md-1" style="text-align: center;">Petty
 														Cash Amt</th>
 												</tr>
@@ -157,25 +157,25 @@ table, th, td {
 												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
 												<!--       <th class="col-md-1" style="text-align:center;">Bill No</th>  -->
 												<th class="col-md-1" style="text-align: center;">Day</th>
-												<th class="col-md-1" style="text-align: center;">Date</th>
-												<th class="col-md-1" style="text-align: center;">Cash</th>
-												<th class="col-md-1" style="text-align: center;">Card</th>
-												<th class="col-md-1" style="text-align: center;">E-Pay</th>
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-												<th class="col-md-1" style="text-align: center;">Disc
-													Amt</th>
-												<th class="col-md-1" style="text-align: center;">Remaining</th>
-												<th class="col-md-1" style="text-align: center;">Advance</th>
-												<th class="col-md-1" style="text-align: center;">Regular
-													Expense</th>
-												<th class="col-md-1" style="text-align: center;">Challan
-													Expense</th>
-												<th class="col-md-1" style="text-align: center;">Widthdrawal
-													Amt</th>
-												<th class="col-md-1" style="text-align: center;">Credit
-													Note Amt</th>
-												<th class="col-md-1" style="text-align: center;">Petty
-													Cash Amt</th>
+													<th class="col-md-1" style="text-align: center;">Date</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>
+													<th class="col-md-1" style="text-align: center;">Cash</th>
+													<th class="col-md-1" style="text-align: center;">Card</th>
+													<th class="col-md-1" style="text-align: center;">E-Pay</th>													
+													<th class="col-md-1" style="text-align: center;">Disc
+														Amt</th>														
+													<th class="col-md-1" style="text-align: center;">Advance</th>
+													<th class="col-md-1" style="text-align: center;">Pending</th>
+													<th class="col-md-1" style="text-align: center;">Regular
+														Expense</th>
+													<th class="col-md-1" style="text-align: center;">Challan
+														Expense</th>
+													<th class="col-md-1" style="text-align: center;">Credit
+														Note Amt</th>
+													<th class="col-md-1" style="text-align: center;">Withdrawal
+														Amt</th>													
+													<th class="col-md-1" style="text-align: center;">Petty
+														Cash Amt</th>
 											</tr>
 										</thead>
 
@@ -318,6 +318,22 @@ table, th, td {
 																		'<td class="col-md-1" style="text-align:center;"></td>')
 																		.html(
 																				sellBillData.billDate));
+														var amt = sellBillData.cash
+																+ sellBillData.card
+																+ sellBillData.other;
+													tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(
+																		addCommas((amt)
+																				.toFixed(2))));
+
+																amtTotal = amtTotal
+																		+ sellBillData.cash
+																		+ sellBillData.card
+																		+ sellBillData.other;
+
+														
 
 														tr
 																.append($(
@@ -346,21 +362,7 @@ table, th, td {
 														otherTotal = otherTotal
 																+ sellBillData.other;
 
-														var amt = sellBillData.cash
-																+ sellBillData.card
-																+ sellBillData.other;
-														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
-																				addCommas((amt)
-																						.toFixed(2))));
-
-														amtTotal = amtTotal
-																+ sellBillData.cash
-																+ sellBillData.card
-																+ sellBillData.other;
-
+											
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
@@ -370,6 +372,17 @@ table, th, td {
 
 														ttlDisc = ttlDisc
 																+ sellBillData.discountAmt;
+														
+
+														tr
+																.append($(
+																		'<td class="col-md-1"style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.advAmt)
+																						.toFixed(2))));
+														ttlAdv = ttlAdv
+																+ sellBillData.advAmt;
+														
 
 														tr
 																.append($(
@@ -381,14 +394,6 @@ table, th, td {
 														ttlPendng = ttlPendng
 																+ sellBillData.pendingAmt;
 
-														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
-																				addCommas((sellBillData.advAmt)
-																						.toFixed(2))));
-														ttlAdv = ttlAdv
-																+ sellBillData.advAmt;
 
 														tr
 																.append($(
@@ -408,6 +413,15 @@ table, th, td {
 																						.toFixed(2))));
 														ttlChaln = ttlChaln
 																+ sellBillData.chalan;
+														
+														tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(
+																		addCommas((sellBillData.creditNoteTotalAmt)
+																				.toFixed(2))));
+																	ttlCreditAmt = ttlCreditAmt
+																			+ sellBillData.creditNoteTotalAmt;
 
 														tr
 																.append($(
@@ -418,14 +432,7 @@ table, th, td {
 														ttlWithdra = ttlWithdra
 																+ sellBillData.withdrawalAmt;
 
-														tr
-																.append($(
-																		'<td class="col-md-1"style="text-align:right;"></td>')
-																		.html(
-																				addCommas((sellBillData.creditNoteTotalAmt)
-																						.toFixed(2))));
-														ttlCreditAmt = ttlCreditAmt
-																+ sellBillData.creditNoteTotalAmt;
+													
 
 													
 													var pettyCashAmt = (sellBillData.cash
@@ -503,22 +510,17 @@ table, th, td {
 
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
-
+									$('#table_grid tbody').append(totalAmt);
 									$('#table_grid tbody').append(cash);
 									$('#table_grid tbody').append(card);
 									$('#table_grid tbody').append(other);
-
-									$('#table_grid tbody').append(totalAmt);
-
 									$('#table_grid tbody').append(disc);
-									$('#table_grid tbody').append(pending);
 									$('#table_grid tbody').append(adv);
-
-									$('#table_grid tbody').append(regular);
+									$('#table_grid tbody').append(pending);
+									$('#table_grid tbody').append(regular);									
 									$('#table_grid tbody').append(chalan);
-
-									$('#table_grid tbody').append(withdraw);
 									$('#table_grid tbody').append(credit);
+									$('#table_grid tbody').append(withdraw);
 									$('#table_grid tbody').append(petty); 
 									$('#table_grid tbody').append(trclosed);
 

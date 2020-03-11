@@ -80,7 +80,7 @@ chosen-container {
 					<div class="row">
 						<br>
 						<div class="col-md-12">
-							<h2 class="pageTitle">Remaining Amt of Customer Report</h2>
+							<h2 class="pageTitle">Customer Pending Details</h2>
 
 						</div>
 						<br>
@@ -219,7 +219,7 @@ chosen-container {
 				<button class="slide_close">
 					<i class="fa fa-times" aria-hidden="true"></i>
 				</button>
-				<h2 class="page_title" id="add_cust_head_name">Customer Remaining Amount Details</h2>
+				<h2 class="page_title" id="add_cust_head_name">Customer Pending Details</h2>
 				<div class="clr"></div>
 
 <input type="hidden" id="cust_Id" name="custId">

@@ -859,6 +859,9 @@
 								<div class="ibox-head">
 									<div class="ibox-title">Other Reports</div>
 								</div>
+								<a
+									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
+									class="fa fa-files-o icon"></i>Customer Pending Details</a>
 								<%-- 
 								 <a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 									class="fa fa-files-o icon"></i>SP Advance Report</a>
@@ -980,7 +983,7 @@
 						</li>
 
 
-						<li class="small-box">
+				<%-- 		<li class="small-box">
 
 							<div class="ibox">
 								<div class="ibox-head">
@@ -990,7 +993,7 @@
 									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
 									class="fa fa-files-o icon"></i>Customer Pending Report</a>
 							</div>
-						</li>
+						</li> --%>
 
 					</div>
 				</ul>

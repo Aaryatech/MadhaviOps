@@ -24,7 +24,7 @@ chosen-container {
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
-<body onload="searchSellBill()">
+<body ><!-- onload="searchSellBill()" -->
 
 
 
