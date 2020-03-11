@@ -7057,6 +7057,208 @@ public class ReportsController {
 		model.addObject("reportList", getSellBillHeaderList);
 		return model;
 	}
+	
+	@RequestMapping(value = "/viewCustBillwiseSell", method = RequestMethod.GET)
+	public ModelAndView viewCustBillwiseSell(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/custBillwiseSell");
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			Customer[] customer = restTemplate.getForObject(Constant.URL + "/getAllCustomers", Customer[].class);
+			List<Customer> customerList = new ArrayList<>(Arrays.asList(customer));
+			model.addObject("customerList", customerList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/getCustomerBilwiselReport", method = RequestMethod.GET)
+	public @ResponseBody List<SellBillHeaderNew> getCustomerBilwiselReport(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		int type = 0, subType = 0;
+		try {
+			System.out.println("in method");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			String[] cust = request.getParameterValues("cust");
+
+			String custList = "";
+
+			for (int i = 0; i < cust.length; i++) {
+				custList = cust[i] + "," + custList;
+			}
+
+			custList = custList.substring(0, custList.length() - 1);
+
+			custList = custList.replace("\"", "");
+			custList = custList.substring(1, custList.length() - 1);
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("custId", custList);
+
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
+
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+			};
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getCustSellDetails", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		System.out.println("Sell Bill Header " + getSellBillHeaderList.toString());
+
+		// export to excel
+
+		Collections.sort(getSellBillHeaderList, new Comparator<SellBillHeaderNew>() {
+			public int compare(SellBillHeaderNew c1, SellBillHeaderNew c2) {
+
+				String s1 = c1.getInvoiceNo();
+				String s2 = c2.getInvoiceNo();
+				return s1.compareToIgnoreCase(s2);
+			}
+		});
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Invoice No");
+		// rowData.add("Franchisee Name");
+		rowData.add("Bill Date");
+		rowData.add("Customer");
+		rowData.add("Discount Per");
+		rowData.add("Discount Amt");
+		rowData.add("Taxable Amt");
+		rowData.add("Total Tax");
+		rowData.add("Grand Total");
+		rowData.add("Payable Amt");
+		rowData.add("Paid Amt");
+		rowData.add("Remaining Amt");
+		rowData.add("Payment Mode");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		float ttlDiscAmt = 0;
+		float ttlTaxable = 0;
+		float ttlTax = 0;
+		float ttlGrndTtl = 0;
+		float ttlPablAmt = 0;
+		float ttlPaidAmt = 0;
+		float ttlRemainAmt = 0;
+		
+		float ttlCash = 0;
+		float ttlCard= 0;
+		float ttlEPay = 0;
+
+		
+
+				System.out.println("1");
+				for (int i = 0; i < getSellBillHeaderList.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+
+					rowData.add("" + (i + 1));
+					rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+					// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+					rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+					rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
+							+ getSellBillHeaderList.get(i).getPhoneNumber());
+					rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
+					rowData.add("" + getSellBillHeaderList.get(i).getDiscountAmt());
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTotalTax()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getGrandTotal()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+
+					rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
+
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+					
+					ttlDiscAmt = ttlDiscAmt+getSellBillHeaderList.get(i).getDiscountAmt();
+					ttlTaxable = ttlTaxable+getSellBillHeaderList.get(i).getTaxableAmt();
+					ttlTax = ttlTax+getSellBillHeaderList.get(i).getTotalTax();
+					ttlGrndTtl = ttlGrndTtl+getSellBillHeaderList.get(i).getGrandTotal();
+					ttlPablAmt = ttlPablAmt + getSellBillHeaderList.get(i).getPayableAmt();
+					ttlPaidAmt = ttlPaidAmt+getSellBillHeaderList.get(i).getPaidAmt();
+					ttlRemainAmt = ttlRemainAmt+getSellBillHeaderList.get(i).getRemainingAmt();
+					
+					ttlCash = ttlCash+getSellBillHeaderList.get(i).getCash();
+					ttlCard = ttlCard+getSellBillHeaderList.get(i).getCard();
+					ttlEPay = ttlEPay+getSellBillHeaderList.get(i).getePay();
+				}
+				
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				
+				rowData.add("Total");
+				rowData.add("");
+				rowData.add("");
+				rowData.add("");
+				rowData.add("");
+				rowData.add("" + roundUp(ttlDiscAmt));
+				rowData.add("" + roundUp(ttlTaxable));
+				rowData.add("" + roundUp(ttlTax));
+				rowData.add("" + roundUp(ttlGrndTtl));
+				rowData.add("" + roundUp(ttlPablAmt));
+				rowData.add("" + roundUp(ttlPaidAmt));
+				rowData.add("" + roundUp(ttlRemainAmt));
+				rowData.add("" + roundUp(ttlCash)+"-Cash, "+roundUp(ttlCard)+"-Card, "+roundUp(ttlEPay)+"-EPay");
+				
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				
+			
+
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "BillWiseSell");
+
+		return getSellBillHeaderList;
+
+	}
 }
 
 
