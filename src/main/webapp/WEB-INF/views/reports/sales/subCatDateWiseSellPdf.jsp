@@ -21,7 +21,7 @@ th, td {
 }
 
 th {
-	background-color: #EA3291;
+	background-color: #ed3f3c;
 	color: white;
 }
 </style>
