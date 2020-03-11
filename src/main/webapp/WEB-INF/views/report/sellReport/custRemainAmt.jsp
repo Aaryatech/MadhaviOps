@@ -277,8 +277,7 @@ chosen-container {
 
 							</tbody>
 						</table>
-					</div>
-					<div class="col-sm-6 controls">
+							<div class="col-sm-6 controls">
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
 									onclick="genPdf()">PDF</button>
 					</div>
@@ -289,8 +288,10 @@ chosen-container {
 										value="EXPORT TO Excel" onclick="exportToExcel();"
 										disabled="disabled">
 								</div>
-							</div>
+					</div>
 					
+					</div>
+				
 				</div>
 				
 			</div>
