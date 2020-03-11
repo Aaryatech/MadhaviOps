@@ -911,6 +911,9 @@
 									Report</a> <a
 									href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
 									class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a>
+									 <a
+									href="${pageContext.request.contextPath}/viewCustBillwiseSell"><i
+									class="fa fa-files-o icon"></i>Customer wise Sell Report</a>
 
 
 							</div>

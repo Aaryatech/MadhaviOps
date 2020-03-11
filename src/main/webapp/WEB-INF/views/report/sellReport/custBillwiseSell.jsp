@@ -83,7 +83,7 @@ chosen-container {
 					<div class="row">
 						<br>
 						<div class="col-md-12">
-							<h2 class="pageTitle">Billwise Sale Report</h2>
+							<h2 class="pageTitle">Customer wise Sell Report</h2>
 
 						</div>
 						<br>
