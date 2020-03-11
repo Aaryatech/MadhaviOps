@@ -87,7 +87,7 @@ public class SellReport {
 			rowData.add("HSN Code");
 			rowData.add("CGST");
 			rowData.add("SGST");
-			rowData.add("IGST");
+			/* rowData.add("IGST"); */
 			rowData.add("Taxable Amt"); 
 			rowData.add("Grand Total");
 			
@@ -96,7 +96,7 @@ public class SellReport {
 			
 			float cgstTotal=0;
 			float sgstTotal=0;
-			float igstTotal=0;
+			//float igstTotal=0;
 			float taxableTotal=0;
 			float billTotal=0;
 			
@@ -110,7 +110,7 @@ public class SellReport {
 				rowData.add("" + tSellReport.get(i).getHsnNo());
 				rowData.add("" + roundUp(tSellReport.get(i).getCgst()));
 				rowData.add("" + roundUp(tSellReport.get(i).getSgst()));
-				rowData.add("" + roundUp(tSellReport.get(i).getIgst()));
+				/* rowData.add("" + roundUp(tSellReport.get(i).getIgst())); */
 				rowData.add("" + roundUp(tSellReport.get(i).getTaxableAmt())); 
 				rowData.add("" + roundUp(tSellReport.get(i).getGrandTotal()));
 
@@ -118,7 +118,7 @@ public class SellReport {
 				exportToExcelList.add(expoExcel);
 				cgstTotal=cgstTotal+tSellReport.get(i).getCgst();
 				sgstTotal=sgstTotal+tSellReport.get(i).getSgst();
-				igstTotal=igstTotal+tSellReport.get(i).getIgst();
+				/* igstTotal=igstTotal+tSellReport.get(i).getIgst(); */
 				taxableTotal=taxableTotal+tSellReport.get(i).getTaxableAmt();
 				billTotal=billTotal+tSellReport.get(i).getGrandTotal();
 			}
@@ -131,7 +131,7 @@ public class SellReport {
 			rowData.add("");
 			rowData.add("" + roundUp(cgstTotal));
 			rowData.add("" + roundUp(sgstTotal));
-			rowData.add("" + roundUp(igstTotal));
+			/* rowData.add("" + roundUp(igstTotal)); */
 			rowData.add("" + roundUp(taxableTotal)); 
 			rowData.add("" + roundUp(billTotal));
 

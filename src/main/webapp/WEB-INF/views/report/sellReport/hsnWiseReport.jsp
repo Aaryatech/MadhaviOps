@@ -119,7 +119,7 @@
 											<th class="col-md-1" style="text-align: center;">HSN No.</th>
 											<th class="col-md-1" style="text-align: center;">CGST</th>
 											<th class="col-md-1" style="text-align: center;">SGST</th>
-											<th class="col-md-1" style="text-align: center;">IGST</th>
+											<!-- <th class="col-md-1" style="text-align: center;">IGST</th> -->
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
 											<th class="col-md-1" style="text-align: center;">Total
@@ -266,14 +266,14 @@
 													sgstTotal = sgstTotal
 															+ list.sgst;
 													}
-													tr
+													/* tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
 																			list.igst
 																					.toFixed(2)));
 													igstTotal = igstTotal
-															+ list.igst;
+															+ list.igst; */
 
 													tr
 															.append($(
@@ -318,9 +318,9 @@
 										+ sgstTotal.toFixed(2);
 								+"</b></td>";
 
-								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+							/* 	var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+ igstTotal.toFixed(2);
-								+"</b></td>";
+								+"</b></td>"; */
 
 								var totalAmt = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ taxableTotal.toFixed(2);
@@ -340,7 +340,7 @@
 								$('#table_grid tbody').append(non1);
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
-								$('#table_grid tbody').append(igst);
+								/* $('#table_grid tbody').append(igst); */
 
 								$('#table_grid tbody').append(totalAmt);
 
