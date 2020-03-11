@@ -1513,14 +1513,15 @@ public class ReportsController {
 		rowData.add("Sr.No");
 		// rowData.add("Party Name");
 		rowData.add("Item Name");
-		rowData.add("Rate");
-
 		rowData.add("Quantity");
-
+		rowData.add("Rate");	
+		rowData.add("Discount Amt");
 		rowData.add("Total Amount");
 
 		float totalQty = 0.0f;
 		float totalAmt = 0.0f;
+		float totalRate = 0.0f;
+		float totalDisc = 0.0f;
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -1532,10 +1533,10 @@ public class ReportsController {
 
 			/* rowData.add("" + itemWiseReportList.get(i).getItemId()); */
 			rowData.add("" + itemWiseReportList.get(i).getItemName());
-			rowData.add("" + itemWiseReportList.get(i).getRate());
 
 			rowData.add("" + itemWiseReportList.get(i).getQty());
-
+			rowData.add("" + itemWiseReportList.get(i).getRate());
+			rowData.add("" + itemWiseReportList.get(i).getDiscAmt());
 			rowData.add("" + itemWiseReportList.get(i).getTotal());
 
 			expoExcel.setRowData(rowData);
@@ -1543,18 +1544,18 @@ public class ReportsController {
 
 			totalQty = totalQty + itemWiseReportList.get(i).getQty();
 			totalAmt = totalAmt + itemWiseReportList.get(i).getTotal();
-
+			totalRate = totalRate + itemWiseReportList.get(i).getRate();
+			totalDisc = totalDisc + itemWiseReportList.get(i).getDiscAmt(); 
 		}
 
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
 
 		rowData.add("Total");
-		rowData.add("");		
-		// rowData.add("");
 		rowData.add("");
-
 		rowData.add("" + roundUp(totalQty));
+		rowData.add("" + roundUp(totalRate));
+		rowData.add("" + roundUp(totalDisc));
 		rowData.add("" + roundUp(totalAmt));
 
 		expoExcel.setRowData(rowData);

@@ -44,7 +44,8 @@ th {
 				<th style="text-align: center;">Item Name</th>
 				<!-- <th style="text-align: center;">GRN Type</th> -->
 				<th style="text-align: center;">Qty.</th>
-				<!-- <th style="text-align:center;">Rate</th> -->
+				<th style="text-align:center;">Rate</th> 
+				<th style="text-align:center;">Discount Amt</th> 
 				<th style="text-align: center;">Amount</th>
 
 			</tr>
@@ -55,6 +56,8 @@ th {
 
 			<c:set var="totalQty" value="${0 }" />
 			<c:set var="grandTotal" value="${0 }" />
+			<c:set var="rateTotal" value="${0 }" />
+			<c:set var="discTotal" value="${0 }" />
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
 					<td style="text-align: center;"><c:out value="${count.index+1}" /></td>
@@ -65,7 +68,15 @@ th {
 					<td style="text-align: right;"><c:out
 							value="${reportList.qty}" /></td>
 					<c:set var="totalQty" value="${totalQty+reportList.qty}" />
-					<%-- <td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" value = "${reportList.rate}"/></td> --%>
+					
+					<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" 
+					value = "${reportList.rate}"/></td>
+						<c:set var="rateTotal" value="${rateTotal+reportList.rate}" />
+						
+					<td style="text-align:right;"><fmt:formatNumber type = "number" minFractionDigits = "2" maxFractionDigits = "2" 
+					value = "${reportList.discAmt}"/></td>
+						<c:set var="discTotal" value="${discTotal+reportList.discAmt}" />
+						
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.total}" /></td>
@@ -80,6 +91,12 @@ th {
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalQty}" /></b></td>
+				<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${rateTotal}" /></b></td>
+				<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${discTotal}" /></b></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${grandTotal}" /></b></td>

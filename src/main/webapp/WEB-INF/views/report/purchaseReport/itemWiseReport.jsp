@@ -172,8 +172,9 @@ table, th, td {
 												<th style="text-align: center;">Item Name</th>
 												<!-- <th class="col-md-1" style="text-align: center;">GRN
 													Type</th> -->
-												<th class="col-md-1" style="text-align: center;">Rate</th>
 												<th class="col-md-1" style="text-align: center;">Qty.</th>
+												<th class="col-md-1" style="text-align: center;">Rate</th>
+												<th class="col-md-1" style="text-align: center;">Discount Amt</th>
 												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 												<th class="col-md-1" style="text-align: center;">Amount</th>
 
@@ -193,15 +194,16 @@ table, th, td {
 
 
 											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-											<!-- <th class="col-md-1" style="text-align: center;">Party
-												Name</th> -->
-											<th style="text-align: center;">Item Name</th>
-											<!-- <th class="col-md-1" style="text-align: center;">GRN
-												Type</th> -->
-											<th class="col-md-1" style="text-align: center;">Rate</th>
-											<th class="col-md-1" style="text-align: center;">Qty.</th>
-											<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
-											<th class="col-md-1" style="text-align: center;">Amount</th>
+												<!-- <th class="col-md-1" style="text-align: center;">Party
+													Name</th> -->
+												<th style="text-align: center;">Item Name</th>
+												<!-- <th class="col-md-1" style="text-align: center;">GRN
+													Type</th> -->
+												<th class="col-md-1" style="text-align: center;">Qty.</th>
+												<th class="col-md-1" style="text-align: center;">Rate</th>
+												<th class="col-md-1" style="text-align: center;">Discount Amt</th>
+												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
+												<th class="col-md-1" style="text-align: center;">Amount</th>
 
 										</tr>
 									</thead>
@@ -274,7 +276,8 @@ table, th, td {
 
 				var qtyTotal = 0;
 				var amtTotal = 0;
-
+				var discTotal = 0;
+				var rateTotal = 0;
 				$('#loader').hide();
 				var len = data.length;
 				if (data == "") {
@@ -295,34 +298,22 @@ table, th, td {
 
 					tr.append($('<td style="text-align:center;"></td>').html(key + 1));
 
-					/* tr
-							.append($(
-									'<td class="col-md-1"style="text-align:center;"></td>')
-									.html(
-											partyname)); */
-
 					tr.append($('<td style="text-align:left;"></td>').html(
-							itemWiseTaxData.itemName));
-					/* tr.append($('<td style="text-align:left;"></td>').html(
-							itemWiseTaxData.grnType)); */
+							itemWiseTaxData.itemName));					
+					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
+									(itemWiseTaxData.qty).toFixed(2))));
 					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
 							(itemWiseTaxData.rate).toFixed(2))));
 					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
-							(itemWiseTaxData.qty).toFixed(2))));
-
-					/* tr
-							.append($(
-									'<td class="col-md-1"style="text-align:right;"></td>')
-									.html(
-											(itemWiseTaxData.rate)
-													.toFixed(2))); */
-
+							(itemWiseTaxData.discAmt).toFixed(2))));
+					
 					tr.append($('<td style="text-align:right;"></td>').html(addCommas(
 							(itemWiseTaxData.total).toFixed(2))));
 
 					qtyTotal = qtyTotal + itemWiseTaxData.qty;
 					amtTotal = amtTotal + itemWiseTaxData.total;
-
+					discTotal = discTotal + itemWiseTaxData.discAmt;
+					rateTotal = rateTotal + itemWiseTaxData.rate;
 					$('#table_grid tbody').append(tr);
 
 				});
@@ -330,12 +321,14 @@ table, th, td {
 				var tr = $('<tr></tr>');
 
 				tr.append($('<td   style="font-weight:bold;"></td>').html(
-						"Total"));
-				/* tr.append($('<td  ></td>').html("")); */
-				tr.append($('<td  ></td>').html(""));
+						"Total"));				
 				tr.append($('<td  ></td>').html(""));
 				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
 						qtyTotal.toFixed(2))));
+				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
+						rateTotal.toFixed(2))));
+				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
+						discTotal.toFixed(2))));
 
 				tr.append($('<td    style="text-align:right;"></td>').html(addCommas(
 						amtTotal.toFixed(2))));

@@ -1506,34 +1506,34 @@ public class ReportControllerV2 {
 				rowData.add("" + taxReportList.get(i).getFrName());
 				rowData.add("" + taxReportList.get(i).getFrGstNo());
 
-				rowData.add("" + Math.round(taxReportList.get(i).getTaxableAmtTwentyEight()));
-				rowData.add("" + Math.round(taxReportList.get(i).getTaxableAmtEighteen()));
-				rowData.add("" + Math.round(taxReportList.get(i).getTaxableAmtTwelve()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getTaxableAmtFive()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getTaxableAmtZero()));
-				float taxableAmt =  Math.round((taxReportList.get(i).getTaxableAmtTwentyEight()
+				rowData.add("" + (taxReportList.get(i).getTaxableAmtTwentyEight()));
+				rowData.add("" + (taxReportList.get(i).getTaxableAmtEighteen()));
+				rowData.add("" + (taxReportList.get(i).getTaxableAmtTwelve()));
+				rowData.add("" +  (taxReportList.get(i).getTaxableAmtFive()));
+				rowData.add("" +  (taxReportList.get(i).getTaxableAmtZero()));
+				float taxableAmt =  ((taxReportList.get(i).getTaxableAmtTwentyEight()
 						+ taxReportList.get(i).getTaxableAmtEighteen() + taxReportList.get(i).getTaxableAmtTwelve()
 						+ taxReportList.get(i).getTaxableAmtFive() + taxReportList.get(i).getTaxableAmtZero()));
 
 				rowData.add("" + taxableAmt);
-				rowData.add("" +  Math.round(taxReportList.get(i).getSgstAmtTwentyEight()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getCgstAmtTwentyEight()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getSgstAmtEighteen()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getCgstAmtEighteen()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getSgstAmtTwelve()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getCgstAmtTwelve()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getSgstAmtFive()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getCgstAmtFive()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getSgstAmtZero()));
-				rowData.add("" +  Math.round(taxReportList.get(i).getCgstAmtZero()));
-				float sgstSum =  Math.round((taxReportList.get(i).getSgstAmtTwentyEight()
+				rowData.add("" +  (taxReportList.get(i).getSgstAmtTwentyEight()));
+				rowData.add("" +  (taxReportList.get(i).getCgstAmtTwentyEight()));
+				rowData.add("" +  (taxReportList.get(i).getSgstAmtEighteen()));
+				rowData.add("" +  (taxReportList.get(i).getCgstAmtEighteen()));
+				rowData.add("" +  (taxReportList.get(i).getSgstAmtTwelve()));
+				rowData.add("" +  (taxReportList.get(i).getCgstAmtTwelve()));
+				rowData.add("" +  (taxReportList.get(i).getSgstAmtFive()));
+				rowData.add("" +  (taxReportList.get(i).getCgstAmtFive()));
+				rowData.add("" +  (taxReportList.get(i).getSgstAmtZero()));
+				rowData.add("" +  (taxReportList.get(i).getCgstAmtZero()));
+				float sgstSum =  ((taxReportList.get(i).getSgstAmtTwentyEight()
 						+ taxReportList.get(i).getSgstAmtEighteen() + taxReportList.get(i).getSgstAmtTwelve()
 						+ taxReportList.get(i).getSgstAmtFive() + taxReportList.get(i).getSgstAmtZero()));
-				float cgstSum =  Math.round((taxReportList.get(i).getCgstAmtTwentyEight()
+				float cgstSum =  ((taxReportList.get(i).getCgstAmtTwentyEight()
 						+ taxReportList.get(i).getCgstAmtEighteen() + taxReportList.get(i).getCgstAmtTwelve()
 						+ taxReportList.get(i).getCgstAmtFive() + taxReportList.get(i).getCgstAmtZero()));
 				float grossSum=taxableAmt + sgstSum + cgstSum;
-				float grossSell =  Math.round(grossSum);
+				float grossSell =  (grossSum);
 				rowData.add("" + sgstSum);
 				rowData.add("" + cgstSum);
 				rowData.add("" + grossSell);
@@ -1564,7 +1564,7 @@ public class ReportControllerV2 {
 			rowData.add("");			
 			rowData.add("");
 
-			rowData.add("" +  Math.round(totalTaxableValue));
+			rowData.add("" +  (totalTaxableValue));
 
 			rowData.add("");
 			rowData.add("");
@@ -1576,10 +1576,10 @@ public class ReportControllerV2 {
 			rowData.add("");
 			rowData.add("");
 			rowData.add("");
-			rowData.add("" +  Math.round(totalSgstValue));
-			rowData.add("" +  Math.round(totalCgstValue));
+			rowData.add("" +  (totalSgstValue));
+			rowData.add("" +  (totalCgstValue));
 
-			rowData.add("" +  Math.round(totalGrossBill));
+			rowData.add("" +  (totalGrossBill));
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
