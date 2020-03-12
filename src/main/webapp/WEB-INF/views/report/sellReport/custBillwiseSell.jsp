@@ -185,8 +185,8 @@ chosen-container {
 											<tr class="bgpink">
 
 												<th style="text-align: center;">Sr.No.</th>
-												<th style="text-align: center;">Invoice No</th>
-												<th style="text-align: center;">Bill Date</th>
+												<!-- <th style="text-align: center;">Invoice No</th>
+												<th style="text-align: center;">Bill Date</th> -->
 												<th style="text-align: center; width: 40px;">Customer</th>
 												<th style="text-align: center;">Disc%</th>
 												<th style="text-align: center;">Disc Amt</th>
@@ -359,7 +359,7 @@ chosen-container {
 																		.html(
 																				key + 1));
 
-														tr
+														/* tr
 																.append($(
 																		'<td  style="text-align:center;" ></td>')
 																		.html(
@@ -369,7 +369,7 @@ chosen-container {
 																.append($(
 																		'<td style="text-align:center;"></td>')
 																		.html(
-																				sellBillData.billDate));
+																				sellBillData.billDate)); */
 
 														var cust = sellBillData.custName
 																+ "_"
@@ -459,7 +459,7 @@ chosen-container {
 
 														tr
 																.append($(
-																		'<td  style="text-align:center;"></td>')
+																		'<td  style="text-align:right;"></td>')
 																		.html(addCommas(
 																				paymentMode)));
 
@@ -469,7 +469,7 @@ chosen-container {
 													})
 
 									var tr = "<tr>";
-									var total = "<td colspan='5'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+									var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
 									
 
 									var totalDiscAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
@@ -646,39 +646,23 @@ chosen-container {
 	</script>
 	<script type="text/javascript">
 		function genPdf() {
+		
 			var isValid = validate();
 			if (isValid == true) {
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
 				var frId = document.getElementById("frId").value;
-				var age = document.getElementById("ageRange").value;
 				var cust = $("#selCust").val();
-
-				var rdRem = document.getElementById("rdRem");
-				var rdpay = document.getElementById("rdPay");
-
-				var rdType = 0;
-				var rdSubType = 0;
-
-				//alert("jj");
-
-				if (rdRem.checked == true) {
-					rdType = "1";
-					rdSubType = document.getElementById("selRemOpt").value;
-				} else {
-					rdType = "2";
-					rdSubType = document.getElementById("selPayOpt").value;
-				}
-
+				
 				window
-						.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellBillwiseReportPdf/'
+						.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showCustSellBillPdf/'
 								+ fromDate
 								+ '/'
 								+ toDate
 								+ '/'
 								+ frId
 								+ '/'
-								+ cust + '/' + rdType + '/' + rdSubType + '/' + age);
+								+ cust);
 			}
 
 		}

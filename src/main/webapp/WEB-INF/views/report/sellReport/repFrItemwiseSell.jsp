@@ -158,6 +158,8 @@ table, th, td {
 										</c:if>
 										<th style="text-align: center;" class="col-md-1">MRP</th>
 										<th style="text-align: center;" class="col-md-1">Quantity</th>
+										<th style="text-align: center;" class="col-md-1">Discount Amt</th>
+										<th style="text-align: center;" class="col-md-1">Payable Amt</th>
 										<th style="text-align: center;" class="col-md-1">Amount</th>
 									</tr>
 								</thead>
@@ -426,6 +428,8 @@ table, th, td {
 								var amtRate = 0;
 								var amtMrp = 0;
 								var totalQty = 0;
+								var totalDisc = 0;
+								var totalPay = 0;
 
 								$
 										.each(
@@ -485,6 +489,24 @@ table, th, td {
 																					.toFixed(2))));
 													totalQty = totalQty
 															+ sellBillData.qty;
+													
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.discAmt)
+																			.toFixed(2))));
+													totalDisc = totalDisc
+															+ sellBillData.discAmt;
+													
+													tr
+													.append($(
+															'<td style=text-align:right; class="col-md-1"></td>')
+															.html(addCommas(
+																	(sellBillData.payableAmt)
+																			.toFixed(2))));
+													totalPay = totalPay
+															+ sellBillData.payableAmt;
 
 													tr
 															.append($(
@@ -513,6 +535,12 @@ table, th, td {
 										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
 								var totalQty = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
 										+ addCommas((totalQty).toFixed(2)) + "</b></td>";
+								var ttlDisc = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+										+ addCommas((totalDisc).toFixed(2)) + "</b></td>";
+											
+								var ttlPay = "<td style=text-align:right;><b>&nbsp;&nbsp;&nbsp;"
+										+ addCommas((totalPay).toFixed(2)) + "</b></td>";
+								
 
 								var trclosed = "</tr>";
 
@@ -523,6 +551,8 @@ table, th, td {
 								}
 								$('#table_grid tbody').append(totalMrp);
 								$('#table_grid tbody').append(totalQty);
+								$('#table_grid tbody').append(ttlDisc);
+								$('#table_grid tbody').append(ttlPay);
 								$('#table_grid tbody').append(totalAmt);
 								$('#table_grid tbody').append(trclosed);
 

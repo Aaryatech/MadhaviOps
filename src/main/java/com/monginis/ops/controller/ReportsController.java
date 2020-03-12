@@ -7159,9 +7159,9 @@ public class ReportsController {
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr. No");
-		rowData.add("Invoice No");
+		//rowData.add("Invoice No");
 		// rowData.add("Franchisee Name");
-		rowData.add("Bill Date");
+		//rowData.add("Bill Date");
 		rowData.add("Customer");
 		rowData.add("Discount Per");
 		rowData.add("Discount Amt");
@@ -7196,9 +7196,9 @@ public class ReportsController {
 					rowData = new ArrayList<String>();
 
 					rowData.add("" + (i + 1));
-					rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
+				//	rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
 					// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
-					rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
+				//	rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
 					rowData.add("" + getSellBillHeaderList.get(i).getCustName() + "_"
 							+ getSellBillHeaderList.get(i).getPhoneNumber());
 					rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
@@ -7234,8 +7234,6 @@ public class ReportsController {
 				rowData.add("Total");
 				rowData.add("");
 				rowData.add("");
-				rowData.add("");
-				rowData.add("");
 				rowData.add("" + roundUp(ttlDiscAmt));
 				rowData.add("" + roundUp(ttlTaxable));
 				rowData.add("" + roundUp(ttlTax));
@@ -7258,6 +7256,69 @@ public class ReportsController {
 
 		return getSellBillHeaderList;
 
+	}
+	
+	@RequestMapping(value = "pdf/showCustSellBillPdf/{fromDate}/{toDate}/{frId}/{cust}", method = RequestMethod.GET)
+	public ModelAndView showSellBillwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId,@PathVariable String cust,
+			HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("BILL LIST pdf");
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/custSellBillwisePdf");
+		try {
+			System.out.println("BILL LIST try");
+
+			/*
+			 * HttpSession ses = request.getSession(); Franchisee frDetails = (Franchisee)
+			 * ses.getAttribute("frDetails");
+			 */
+			RestTemplate restTemplate = new RestTemplate();
+			
+			System.err.println("CUST - "+cust);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			// int frId=frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+			map.add("custId", cust);
+
+			getSellBillHeaderList = new ArrayList<SellBillHeaderNew>();
+
+			ParameterizedTypeReference<List<SellBillHeaderNew>> typeRef = new ParameterizedTypeReference<List<SellBillHeaderNew>>() {
+			};
+			ResponseEntity<List<SellBillHeaderNew>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getCustSellDetails", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+		
+			System.out.println("BILL LIST" + getSellBillHeaderList.toString());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			Collections.sort(getSellBillHeaderList, new Comparator<SellBillHeaderNew>() {
+				public int compare(SellBillHeaderNew c1, SellBillHeaderNew c2) {
+
+					String s1 = c1.getInvoiceNo();
+					String s2 = c2.getInvoiceNo();
+					return s1.compareToIgnoreCase(s2);
+				}
+			});
+
+			map.add("frId", frId);
+			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+					Franchisee.class, frId);
+			model.addObject("frName", franchisee.getFrName());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		model.addObject("reportList", getSellBillHeaderList);
+		return model;
 	}
 }
 
