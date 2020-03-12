@@ -77,6 +77,7 @@ import com.monginis.ops.model.CRNSaleTaxBillReport;
 import com.monginis.ops.model.CategoryList;
 import com.monginis.ops.model.Customer;
 import com.monginis.ops.model.ExportToExcel;
+import com.monginis.ops.model.FrInvoiceIssued;
 import com.monginis.ops.model.Franchisee;
 
 import com.monginis.ops.model.GetRepFrDatewiseSellResponse;
@@ -97,6 +98,7 @@ import com.monginis.ops.model.MonthWiseReportList;
 import com.monginis.ops.model.SellBillHeaderNew;
 import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpecialCake;
+import com.monginis.ops.model.TaxSummaryReportModel;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
 import com.monginis.ops.model.reportv2.CrNoteRegItem;
 import com.monginis.ops.model.reportv2.CrNoteRegSp;
@@ -3868,13 +3870,17 @@ public class ReportsController {
 	}
 
 	@RequestMapping(value = "/getTaxSellReport", method = RequestMethod.GET)
-	public @ResponseBody List<GetRepTaxSell> getFrTaxSellBill(HttpServletRequest request,
+	public @ResponseBody TaxSummaryReportModel getFrTaxSellBill(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		TaxSummaryReportModel report=new TaxSummaryReportModel();
+		String fromDate="",toDate="";
+		
+		List<FrInvoiceIssued> issueReport=new ArrayList<>();
 		try {
 			System.out.println("in method");
-			String fromDate = request.getParameter("fromDate");
-			String toDate = request.getParameter("toDate");
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -3895,6 +3901,21 @@ public class ReportsController {
 					HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			getRepTaxSell = responseEntity.getBody();
+			
+			
+			
+			
+			ParameterizedTypeReference<List<FrInvoiceIssued>> typeRef1 = new ParameterizedTypeReference<List<FrInvoiceIssued>>() {
+			};
+			ResponseEntity<List<FrInvoiceIssued>> responseEntity1 = restTemplate.exchange(Constant.URL + "getInvoiceIssuedForFr",
+					HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+			issueReport=responseEntity1.getBody();
+			
+			report.setIssueReport(issueReport);
+			report.setTaxReport(getRepTaxSell);
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -3981,11 +4002,82 @@ public class ReportsController {
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
+		
+		
+		
+		
+		//---------------------------------
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		
+		
+		//---------------------------------
+		
+		//-------ISSUE REPORT----------------
+		
+
+		expoExcel = new ExportToExcel();
+		rowData= new ArrayList<String>();
+
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("No.");
+		rowData.add("From Invoice");
+		rowData.add("To Invoice");
+		rowData.add("Total Number");
+		rowData.add("Cancelled Number");
+		rowData.add("Cancelled Invoices");
+		rowData.add("Net Issued");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+
+		for (int i = 0; i < issueReport.size(); i++) {
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			
+			rowData.add((i + 1) + "");
+			rowData.add("" + issueReport.get(i).getFromInvoice());
+			rowData.add("" + issueReport.get(i).getToInvoice());
+			rowData.add("" + issueReport.get(i).getTotalNumber());
+			rowData.add("" + issueReport.get(i).getTotalDeleted());
+			rowData.add("" + issueReport.get(i).getDeletedInvoice());
+			rowData.add("" + issueReport.get(i).getNetIssued());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "TaxReportSell");
 
-		return getRepTaxSell;
+		return report;
 
 	}
 	

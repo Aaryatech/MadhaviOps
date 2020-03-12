@@ -972,7 +972,13 @@
 									href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i
 									class="fa fa-files-o icon"></i> Bill Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/hsnWiseReport"><i
-									class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a> <a
+									class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a>
+									
+									<a
+									href="${pageContext.request.contextPath}/itemWiseHsnReport"><i
+									class="fa fa-files-o icon"></i> Item wise HSN Report (Sale)</a>
+									
+									 <a
 									href="${pageContext.request.contextPath}/viewDailySalesReport"><i
 									class="fa fa-files-o icon"></i> Daily Sales Report</a>
 									

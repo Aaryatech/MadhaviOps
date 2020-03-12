@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,11 +34,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
+
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GrnGvnReport;
+import com.monginis.ops.model.HSNItemWiseReport;
 import com.monginis.ops.model.TSellReport;
 
 @Controller
@@ -88,19 +94,18 @@ public class SellReport {
 			rowData.add("CGST");
 			rowData.add("SGST");
 			/* rowData.add("IGST"); */
-			rowData.add("Taxable Amt"); 
+			rowData.add("Taxable Amt");
 			rowData.add("Grand Total");
-			
-			expoExcel.setRowData(rowData); 
+
+			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
-			
-			float cgstTotal=0;
-			float sgstTotal=0;
-			//float igstTotal=0;
-			float taxableTotal=0;
-			float billTotal=0;
-			
-			
+
+			float cgstTotal = 0;
+			float sgstTotal = 0;
+			// float igstTotal=0;
+			float taxableTotal = 0;
+			float billTotal = 0;
+
 			for (int i = 0; i < tSellReport.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
@@ -111,18 +116,18 @@ public class SellReport {
 				rowData.add("" + roundUp(tSellReport.get(i).getCgst()));
 				rowData.add("" + roundUp(tSellReport.get(i).getSgst()));
 				/* rowData.add("" + roundUp(tSellReport.get(i).getIgst())); */
-				rowData.add("" + roundUp(tSellReport.get(i).getTaxableAmt())); 
+				rowData.add("" + roundUp(tSellReport.get(i).getTaxableAmt()));
 				rowData.add("" + roundUp(tSellReport.get(i).getGrandTotal()));
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
-				cgstTotal=cgstTotal+tSellReport.get(i).getCgst();
-				sgstTotal=sgstTotal+tSellReport.get(i).getSgst();
+				cgstTotal = cgstTotal + tSellReport.get(i).getCgst();
+				sgstTotal = sgstTotal + tSellReport.get(i).getSgst();
 				/* igstTotal=igstTotal+tSellReport.get(i).getIgst(); */
-				taxableTotal=taxableTotal+tSellReport.get(i).getTaxableAmt();
-				billTotal=billTotal+tSellReport.get(i).getGrandTotal();
+				taxableTotal = taxableTotal + tSellReport.get(i).getTaxableAmt();
+				billTotal = billTotal + tSellReport.get(i).getGrandTotal();
 			}
-			
+
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 
@@ -132,7 +137,7 @@ public class SellReport {
 			rowData.add("" + roundUp(cgstTotal));
 			rowData.add("" + roundUp(sgstTotal));
 			/* rowData.add("" + roundUp(igstTotal)); */
-			rowData.add("" + roundUp(taxableTotal)); 
+			rowData.add("" + roundUp(taxableTotal));
 			rowData.add("" + roundUp(billTotal));
 
 			expoExcel.setRowData(rowData);
@@ -147,6 +152,205 @@ public class SellReport {
 
 		}
 		return tSellReport;
+	}
+
+	@RequestMapping(value = "/itemWiseHsnReport", method = RequestMethod.GET)
+	public ModelAndView itemWiseHsnReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/itemWiseHsnReport");
+
+		HttpSession ses = request.getSession();
+		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+		model.addObject("frId", frDetails.getFrId());
+		model.addObject("frName", frDetails.getFrName());
+
+		return model;
+	}
+
+
+
+	List<HSNItemWiseReport> hsnItemListBill = new ArrayList<>();
+
+	@RequestMapping(value = "/getItemWiseHsnReportAjax", method = RequestMethod.GET)
+	public @ResponseBody List<HSNItemWiseReport> getItemWiseHsnReportAjax(HttpServletRequest request,
+			HttpServletResponse response) {
+		String fromDate = "";
+		String toDate = "";
+		List<HSNItemWiseReport> hsnList = null;
+
+		try {
+			HttpSession ses = request.getSession();
+			System.out.println("Inside get hsnList    ");
+			hsnItemListBill = new ArrayList<>();
+			hsnList = new ArrayList<>();
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			RestTemplate restTemplate = new RestTemplate();
+
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("frId", frDetails.getFrId());
+
+			ParameterizedTypeReference<List<HSNItemWiseReport>> typeRef = new ParameterizedTypeReference<List<HSNItemWiseReport>>() {
+			};
+			ResponseEntity<List<HSNItemWiseReport>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getOPSHsnItemWiseBillReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			hsnItemListBill = responseEntity.getBody();
+			
+			ParameterizedTypeReference<List<HSNItemWiseReport>> typeRef1 = new ParameterizedTypeReference<List<HSNItemWiseReport>>() {
+			};
+			ResponseEntity<List<HSNItemWiseReport>> responseEntity1 = restTemplate
+					.exchange(Constant.URL + "getOPSHsnItemReport", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+
+			hsnList = responseEntity1.getBody();
+
+			System.out.println("hsn List Bill Wise " + hsnList.toString());
+
+			if (hsnItemListBill.isEmpty() && hsnList.isEmpty()) {
+				hsnItemListBill = new ArrayList<>();
+			} else if (!hsnList.isEmpty()) {
+				for (int i = 0; i < hsnList.size(); i++) {
+					for (int j = 0; j < hsnItemListBill.size(); j++) {
+						if (hsnList.get(i).getItemId() == hsnItemListBill.get(j).getItemId()) {
+							hsnItemListBill.get(j).setTaxableAmt(
+									hsnItemListBill.get(j).getTaxableAmt() - hsnList.get(i).getTaxableAmt());
+							hsnItemListBill.get(j).setGrnGvnQty(hsnList.get(i).getBillQty());
+
+							hsnItemListBill.get(j)
+									.setCgstRs(hsnItemListBill.get(j).getCgstRs() - hsnList.get(i).getCgstRs());
+
+							hsnItemListBill.get(j)
+									.setSgstRs(hsnItemListBill.get(j).getSgstRs() - hsnList.get(i).getSgstRs());
+
+						}
+						// hsnListBill.get(j).setGrnGvnQty(0);
+					}
+				}
+			}
+
+			/*
+			 * if (type == 2) { hsnItemListBill.addAll(hsnList); }
+			 */
+			System.out.println(hsnItemListBill.toString());
+			System.out.println(hsnList.toString());
+
+		} catch (Exception e) {
+			System.out.println("get sale Report hsn Wise " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		// exportToExcel
+
+		if (!hsnItemListBill.isEmpty()) {
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr No");
+			rowData.add("Item Name");
+			rowData.add("HSN Code");
+			rowData.add("UOM");
+			rowData.add("Tax %");
+			rowData.add("Bill Qty");
+			rowData.add("Rej Qty");
+			rowData.add("Total Qty");
+			rowData.add("Taxable Amount");
+			rowData.add("CGST");
+			rowData.add("CGST Amount");
+			rowData.add("SGST");
+			rowData.add("SGST Amount");
+			rowData.add("Total");
+
+			float taxableAmt = 0.0f;
+			float cgstSum = 0.0f;
+			float sgstSum = 0.0f;
+			float igstSum = 0.0f;
+			float totalTax = 0.0f;
+			float grandTotal = 0.0f;
+
+			expoExcel.setRowData(rowData);
+			int srno = 1;
+			exportToExcelList.add(expoExcel);
+			for (int i = 0; i < hsnItemListBill.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + srno);
+				rowData.add(hsnItemListBill.get(i).getItemName());
+				rowData.add(hsnItemListBill.get(i).getItemHsncd());
+				rowData.add(hsnItemListBill.get(i).getItemUom());
+				
+				rowData.add(""+(hsnItemListBill.get(i).getItemTax1() + hsnItemListBill.get(i).getItemTax2()));
+				rowData.add(""+hsnItemListBill.get(i).getBillQty());
+				rowData.add(""+hsnItemListBill.get(i).getGrnGvnQty());
+				rowData.add(" " + (hsnItemListBill.get(i).getBillQty() - hsnItemListBill.get(i).getGrnGvnQty()));
+				
+				rowData.add("" + Long.toString((long) (hsnItemListBill.get(i).getTaxableAmt())));
+				
+				rowData.add(""+hsnItemListBill.get(i).getItemTax1());
+				rowData.add(""+hsnItemListBill.get(i).getCgstRs());
+				rowData.add(""+hsnItemListBill.get(i).getItemTax2());
+				rowData.add(""+hsnItemListBill.get(i).getSgstRs());
+				
+				rowData.add(" " + roundUp(hsnItemListBill.get(i).getTaxableAmt() + hsnItemListBill.get(i).getCgstRs()
+						+ hsnItemListBill.get(i).getSgstRs()));
+
+				totalTax = totalTax + roundUp(hsnItemListBill.get(i).getItemTax1())
+						+ roundUp(hsnItemListBill.get(i).getItemTax2());
+				taxableAmt = taxableAmt + roundUp(hsnItemListBill.get(i).getTaxableAmt());
+				cgstSum = cgstSum + roundUp(hsnItemListBill.get(i).getCgstRs());
+				sgstSum = sgstSum + roundUp(hsnItemListBill.get(i).getSgstRs());
+				grandTotal = grandTotal + roundUp(hsnItemListBill.get(i).getTaxableAmt()
+						+ hsnItemListBill.get(i).getCgstRs() + hsnItemListBill.get(i).getSgstRs());
+
+				srno = srno + 1;
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("");
+			rowData.add("Total");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("");
+			rowData.add("" + Long.toString((long) (taxableAmt)));
+			rowData.add("");
+			rowData.add("" + roundUp(cgstSum));
+			rowData.add("");
+			rowData.add("" + roundUp(sgstSum));
+			rowData.add("" + Long.toString((long) (grandTotal)));
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "HSNWiseReport");
+			session.setAttribute("reportNameNew", "View Item Wise Report");
+			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+			session.setAttribute("mergeUpto1", "$A$1:$L$1");
+			session.setAttribute("mergeUpto2", "$A$2:$L$2");
+
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "HSNWiseReport");
+
+		}
+
+		return hsnItemListBill;
 	}
 
 	public static float roundUp(float d) {
@@ -556,7 +760,7 @@ public class SellReport {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/opt/tomcat-latest/webapps/uploads/ordermemo.pdf";
-		String filePath =Constant.SELL_REPORT_PATH;
+		String filePath = Constant.SELL_REPORT_PATH;
 		// String filePath = "C:/pdf/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
