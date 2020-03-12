@@ -73,6 +73,8 @@
 									id="fromdatepicker" autocomplete="off" placeholder="From Date"
 									name="from_Date" type="text" size="35"
 									class="texboxitemcode texboxcal float_l">
+									
+									
 							</div>
 						</div>
 						<div class="col2">
@@ -94,7 +96,7 @@
 						<%--   &nbsp;&nbsp;&nbsp;
 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
 						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+							onclick="genPdf()" style="display: none;">PDF</button>
 						<br>
 					</div>
 				</div>
