@@ -9,7 +9,7 @@ public class ItemWiseReport {
 		
 		private float rate;
 		
-		private int qty;
+		private float qty;
 		
 		private float total;
 		private float discAmt;
@@ -40,11 +40,11 @@ public class ItemWiseReport {
 			this.rate = rate;
 		}
 
-		public int getQty() {
+		public float getQty() {
 			return qty;
 		}
 
-		public void setQty(int qty) {
+		public void setQty(float qty) {
 			this.qty = qty;
 		}
 

@@ -3015,7 +3015,7 @@ public class ReportsController {
 			Calendar now = Calendar.getInstance();
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-			String toyear = "2018";
+			/*String toyear = "2018";
 			String fromyear = "2018";
 
 			if ((now.get(Calendar.MONTH) + 1) > 3) {
@@ -3026,9 +3026,18 @@ public class ReportsController {
 				fromyear = "" + (now.get(Calendar.YEAR) - 1);
 				toyear = "" + (now.get(Calendar.YEAR));
 			}
-
 			model.addObject("frommonth", "03-" + fromyear);
-			model.addObject("tomonth", "04-" + toyear);
+			model.addObject("tomonth", "04-" + toyear);*/
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+			String toDate = sdf.format(cal.getTimeInMillis());
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			String fromDate = sdf.format(cal.getTimeInMillis());
+
+			model.addObject("frommonth",fromDate);
+			model.addObject("tomonth", toDate);
 			model.addObject("frId", frDetails.getFrId());
 
 		} catch (Exception e) {
