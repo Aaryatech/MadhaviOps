@@ -6,7 +6,7 @@ public class SubCatDateWiseSellData {
 	private int subCatId;
 	private int frId;
 	private float soldAmt;
-	private int soldQty;
+	private float soldQty;
 	private String subCatName;
 	private int catId;
 	private float taxableAmt;
@@ -35,10 +35,10 @@ public class SubCatDateWiseSellData {
 	public void setSoldAmt(float soldAmt) {
 		this.soldAmt = soldAmt;
 	}
-	public int getSoldQty() {
+	public float getSoldQty() {
 		return soldQty;
 	}
-	public void setSoldQty(int soldQty) {
+	public void setSoldQty(float soldQty) {
 		this.soldQty = soldQty;
 	}
 	public String getSubCatName() {
