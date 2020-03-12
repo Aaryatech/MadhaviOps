@@ -7,6 +7,11 @@ table, th, td {
 	border: 1px solid #9da88d;
 }
 </style>
+<link rel="stylesheet"
+	href="/ops/resources/dropdownmultiple/bootstrap-chosen.css">
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <!--rightNav-->

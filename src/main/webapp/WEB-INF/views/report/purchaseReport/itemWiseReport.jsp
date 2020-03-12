@@ -10,8 +10,11 @@ table, th, td {
 	border: 1px solid #9da88d;
 }
 </style>
+<link rel="stylesheet"
+	href="/ops/resources/dropdownmultiple/bootstrap-chosen.css">
 
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/loader.css">
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -140,13 +143,13 @@ table, th, td {
 					</div>
 					
 						
-						<div class="form-group col-md-2" style="display: none;" id="range">
+						<!-- <div class="form-group col-md-2" style="display: none;" id="range">
 							
 								<input type="button" id="expExcel" class="btn btn-primary"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							
-						</div>
+						</div> -->
 
 				</div>
 
@@ -154,45 +157,11 @@ table, th, td {
 					<div class="col-md-12">
 						<!--table-->
 						<div class="clearfix"></div>
-
-
-						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"
-								style="display: none;">
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
-										<thead>
-											<tr class="bgpink">
-
-
-
-												<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-												<!-- <th class="col-md-1" style="text-align: center;">Party
-													Name</th> -->
-												<th style="text-align: center;">Item Name</th>
-												<!-- <th class="col-md-1" style="text-align: center;">GRN
-													Type</th> -->
-												<th class="col-md-1" style="text-align: center;">Qty.</th>
-												<th class="col-md-1" style="text-align: center;">Rate</th>
-												<th class="col-md-1" style="text-align: center;">Discount Amt</th>
-												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table">
+						<div class="responsive-table">
+						<div id="table-scroll" class="table-scroll responsive-table-one">						
+						<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
-
-
-
 											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
 												<!-- <th class="col-md-1" style="text-align: center;">Party
 													Name</th> -->
@@ -204,16 +173,21 @@ table, th, td {
 												<th class="col-md-1" style="text-align: center;">Discount Amt</th>
 												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 												<th class="col-md-1" style="text-align: center;">Amount</th>
-
-										</tr>
+									</tr>
 									</thead>
 									<tbody>
 								</table>
-
-							</div>
+						</div>
 						</div>
 						<!--table end-->
-						
+						 <div class="form-group" style="display: none;" id="range">
+								 
+											 
+											 
+											<div class="col-sm-3  controls">
+											 <input type="button" id="expExcel" class="btn btn-primary" value="EXPORT TO Excel" onclick="exportToExcel();" disabled="disabled">
+											</div>
+											</div>
 
 
 					</div>
