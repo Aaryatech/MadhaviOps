@@ -42,6 +42,7 @@ th {
 				<th style="text-align: center; width: 100px">Qty</th>
 				<th style="text-align: center; width: 100px">Taxable Amt</th>
 				<th style="text-align: center; width: 100px">Tax Amt</th>
+				<th style="text-align: center; width: 100px">Discount Amt</th>
 				<th style="text-align: center; width: 100px">Total Amt</th>
 
 			</tr>
@@ -51,6 +52,7 @@ th {
 			<c:set var="totalAmount" value="${0}" />
 			<c:set var="totalTaxableAmount" value="${0}" />
 			<c:set var="totalTaxAmount" value="${0}" />
+			<c:set var="totalDisc" value="${0}" />
 			<c:set var="totalQty" value="${0}" />
 
 
@@ -63,6 +65,7 @@ th {
 							value="${reportList.soldQty}" /></td>
 					<td style="text-align: right;"><c:out value="${reportList.taxableAmt}" /></td>
 					<td style="text-align: right;"><c:out value="${reportList.totalTax}" /></td>
+					<td style="text-align: right;"><c:out value="${reportList.discAmt}" /></td>
 					<td style="text-align: right;"><c:out value="${reportList.soldAmt}" /></td>
 
 
@@ -74,6 +77,9 @@ th {
 
 					<c:set var="totalTaxAmount"
 						value="${totalTaxAmount + reportList.totalTax}" />
+
+					<c:set var="totalDisc"
+						value="${totalDisc + reportList.discAmt}" />
 
 					<c:set var="totalQty" value="${totalQty + reportList.soldQty}" />
 
@@ -94,6 +100,10 @@ th {
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalTaxAmount}" /></b></td>
+
+				<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalDisc}" /></b></td>
 
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"

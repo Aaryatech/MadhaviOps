@@ -3054,9 +3054,10 @@ public class SalesReportController3 {
 
 			rowData.add("Sub Category");
 			rowData.add("Qty");
-			rowData.add("Taxable Amount");
+			rowData.add("Taxable Amt");
 			rowData.add("Tax Amount");
-			rowData.add("Total Amount");
+			rowData.add("Discount Amt");
+			rowData.add("Total Amt");
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -3075,6 +3076,7 @@ public class SalesReportController3 {
 						rowData.add("" + data.getSoldQty());
 						rowData.add("" + data.getTaxableAmt());
 						rowData.add("" + data.getTotalTax());
+						rowData.add("" + data.getDiscAmt());
 						rowData.add("" + data.getSoldAmt());
 
 						expoExcel.setRowData(rowData);
@@ -3091,7 +3093,7 @@ public class SalesReportController3 {
 
 			rowData.add("Total");
 
-			float sumQty = 0, sumAmt = 0, sumTaxableAmt = 0, sumTaxAmt = 0;
+			float sumQty = 0, sumAmt = 0, sumTaxableAmt = 0, sumTaxAmt = 0, ttlDisc = 0;
 			for (int i = 0; i < reportList.size(); i++) {
 
 				SubCatDateWiseSellData data = reportList.get(i);
@@ -3100,12 +3102,13 @@ public class SalesReportController3 {
 				sumAmt = sumAmt + data.getSoldAmt();
 				sumTaxableAmt = sumTaxableAmt + data.getTaxableAmt();
 				sumTaxAmt = sumTaxAmt + data.getTotalTax();
-
+				ttlDisc = ttlDisc + data.getDiscAmt();
 			}
 
 			rowData.add("" + sumQty);
 			rowData.add("" + sumTaxableAmt);
 			rowData.add("" + sumTaxAmt);
+			rowData.add("" + ttlDisc);
 			rowData.add("" + sumAmt);
 
 			expoExcel.setRowData(rowData);

@@ -228,6 +228,8 @@ table, th, td {
 													Amt</th>
 												<th class="col-md-2" style="text-align: center;">Tax
 													Amt</th>
+												<th class="col-md-2" style="text-align: center;">Discount
+													Amt</th>
 												<th class="col-md-2" style="text-align: center;">Total
 													Amt</th>
 
@@ -366,6 +368,7 @@ table, th, td {
 								var amtTotal = 0;
 								var taxableAmtTotal = 0;
 								var taxAmtTotal = 0;
+								var discAmtTotal = 0;
 
 								$
 										.each(
@@ -393,8 +396,8 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.soldQty));
+																	.html(addCommas(
+																			sellBillData.soldQty)));
 
 													qtyTotal = qtyTotal
 															+ sellBillData.soldQty;
@@ -402,8 +405,8 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.taxableAmt));
+																	.html(addCommas(
+																			sellBillData.taxableAmt)));
 
 													taxableAmtTotal = taxableAmtTotal
 															+ sellBillData.taxableAmt;
@@ -411,17 +414,27 @@ table, th, td {
 													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.totalTax));
+																	.html(addCommas(
+																			sellBillData.totalTax)));
 
 													taxAmtTotal = taxAmtTotal
 															+ sellBillData.totalTax;
 
 													tr
+													.append($(
+															'<td class="col-md-2" style=text-align:right;></td>')
+															.html(addCommas(
+																	sellBillData.discAmt)));
+
+													discAmtTotal = discAmtTotal
+															+ sellBillData.discAmt;
+
+													
+													tr
 															.append($(
 																	'<td class="col-md-2" style=text-align:right;></td>')
-																	.html(
-																			sellBillData.soldAmt));
+																	.html(addCommas(
+																			sellBillData.soldAmt)));
 
 													amtTotal = amtTotal
 															+ sellBillData.soldAmt;
@@ -436,17 +449,20 @@ table, th, td {
 								var total = "<td class='col-md-3' style=text-align:left; ><b> Total</b></td>";
 
 								var totalQty = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (qtyTotal) + "</b></td>";
+										+ addCommas((qtyTotal)) + "</b></td>";
 
 								var totalAmt = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (amtTotal).toFixed(2) + "</b></td>";
+										+ addCommas((amtTotal).toFixed(2)) + "</b></td>";
 
 								var totalTaxableAmt = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (taxableAmtTotal).toFixed(2)
+										+ addCommas((taxableAmtTotal).toFixed(2))
 										+ "</b></td>";
-
 								var totalTaxAmt = "<td class='col-md-2' style=text-align:right;><b>"
-										+ (taxAmtTotal).toFixed(2)
+											+ addCommas((taxAmtTotal).toFixed(2))
+											+ "</b></td>";
+
+								var discAmtTotal = "<td class='col-md-2' style=text-align:right;><b>"
+										+ addCommas((discAmtTotal).toFixed(2))
 										+ "</b></td>";
 
 								var td = "<td></td>";
@@ -460,8 +476,8 @@ table, th, td {
 								$('#table_grid tbody').append(totalQty);
 								$('#table_grid tbody').append(totalTaxableAmt);
 								$('#table_grid tbody').append(totalTaxAmt);
+								$('#table_grid tbody').append(discAmtTotal);
 								$('#table_grid tbody').append(totalAmt);
-								$('#table_grid tbody').append(trclosed);
 								$('#table_grid tbody').append(trclosed);
 							});
 		}
@@ -470,6 +486,20 @@ table, th, td {
 
 
 	<script>
+	function addCommas(x){
+
+		x=String(x).toString();
+		 var afterPoint = '';
+		 if(x.indexOf('.') > 0)
+		    afterPoint = x.substring(x.indexOf('.'),x.length);
+		 x = Math.floor(x);
+		 x=x.toString();
+		 var lastThree = x.substring(x.length-3);
+		 var otherNumbers = x.substring(0,x.length-3);
+		 if(otherNumbers != '')
+		     lastThree = ',' + lastThree;
+		 return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+		} 
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcelNew");
