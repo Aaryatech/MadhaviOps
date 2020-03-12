@@ -2884,7 +2884,7 @@ public class ReportsController {
 		rowData.add("Total Day Sale");
 		rowData.add("Cash");
 		rowData.add("Card");
-		/* rowData.add("Other"); */
+		rowData.add("E-Pay");
 
 		rowData.add("Discount");
 		rowData.add("Advance");
@@ -2903,6 +2903,7 @@ public class ReportsController {
 		float totalDaySale = 0;
 		float totalCash = 0;
 		float totalCard = 0;
+		float totalEPay = 0;
 		
 		float ttlDisc = 0;
 		float ttlPending = 0;
@@ -2933,11 +2934,12 @@ public class ReportsController {
 			totalDaySale = totalDaySale + totalAmt;
 			totalCash = totalCash + getRepFrDatewiseSellResponse.get(i).getCash();
 			totalCard = totalCard + getRepFrDatewiseSellResponse.get(i).getCard();
+			
 
 			rowData.add("" + totalAmt);
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
-			/* rowData.add(""+getRepFrDatewiseSellResponse.get(i).getOther()); */
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getOther());
 			
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDiscountAmt());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getAdvAmt());
@@ -2956,6 +2958,7 @@ public class ReportsController {
 			
 			rowData.add("" + calPetty);
 			
+			totalEPay = totalEPay + getRepFrDatewiseSellResponse.get(i).getOther();
 			ttlDisc = ttlDisc + getRepFrDatewiseSellResponse.get(i).getDiscountAmt();
 			ttlPending = ttlPending + getRepFrDatewiseSellResponse.get(i).getPendingAmt();
 			ttlAdv = ttlAdv + getRepFrDatewiseSellResponse.get(i).getAdvAmt();
@@ -2984,6 +2987,7 @@ public class ReportsController {
 		rowData.add("" + totalDaySale);
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);
+		rowData.add("" + totalEPay);
 		
 		rowData.add("" + ttlDisc);
 		rowData.add("" + ttlAdv);
