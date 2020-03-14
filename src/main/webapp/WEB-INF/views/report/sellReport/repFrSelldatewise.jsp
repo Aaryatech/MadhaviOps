@@ -318,20 +318,16 @@ table, th, td {
 																		'<td class="col-md-1" style="text-align:center;"></td>')
 																		.html(
 																				sellBillData.billDate));
-														var amt = sellBillData.cash
-																+ sellBillData.card
-																+ sellBillData.other;
+													
 														tr
 																.append($(
 																		'<td class="col-md-1"style="text-align:right;"></td>')
 																		.html(
-																				addCommas((amt)
+																				addCommas((sellBillData.grandTotal)
 																						.toFixed(2))));
 
 														amtTotal = amtTotal
-																+ sellBillData.cash
-																+ sellBillData.card
-																+ sellBillData.other;
+																+ sellBillData.grandTotal;
 
 														tr
 																.append($(

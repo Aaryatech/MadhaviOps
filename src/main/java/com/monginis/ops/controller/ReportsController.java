@@ -2929,8 +2929,7 @@ public class ReportsController {
 
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDay());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getBillDate());
-			float totalAmt = getRepFrDatewiseSellResponse.get(i).getCash()
-					+ getRepFrDatewiseSellResponse.get(i).getCard() + getRepFrDatewiseSellResponse.get(i).getOther();
+			float totalAmt = getRepFrDatewiseSellResponse.get(i).getGrandTotal();
 			totalDaySale = totalDaySale + totalAmt;
 			totalCash = totalCash + getRepFrDatewiseSellResponse.get(i).getCash();
 			totalCard = totalCard + getRepFrDatewiseSellResponse.get(i).getCard();

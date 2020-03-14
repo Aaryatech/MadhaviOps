@@ -325,10 +325,10 @@ jQuery(document).ready(function(){
 
 									 tr.append($('<td class="col-md-1"style="text-align:left;"></td>').html(monthNumber));
 								  	
-								  	var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
+								  	var amt=sellBillData.grandTotal;
 								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((amt).toFixed(2))));
 								  	
-								  	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
+								  	amtTotal=amtTotal + amt;
 									
 								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.cash).toFixed(2))));
 								  	cashTotal=cashTotal + sellBillData.cash;
@@ -351,7 +351,7 @@ jQuery(document).ready(function(){
 								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.regular).toFixed(2))));
 								  	ttlReg=ttlReg + sellBillData.regular; 
 								  	
-								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.other).toFixed(2))));
+								  	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(addCommas((sellBillData.chalan).toFixed(2))));
 								  	ttlChalan=ttlChalan + sellBillData.chalan; 
 								  	
 								  	tr
