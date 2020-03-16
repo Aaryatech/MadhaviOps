@@ -835,13 +835,15 @@
 			} else if ($('#emp_address').val() == "") {
 				valid = 1;
 				alert("Enter Employee Address");
-			} else if ($('#ttl_limit').val() == 0) {
+			} 
+			/* else if ($('#ttl_limit').val() == 0) {
 				valid = 1;
 				alert("Enter Total Limit");
-			} else if ($('#curr_bill_amt').val() == 0) {
+			} */
+			/* else if ($('#curr_bill_amt').val() == 0) {
 				valid = 1;
 				alert("Enter Current Bill Amount");
-			}
+			} */
 			/*  else if ($('#from_date').val() == "") {
 				 valid = 1;
 				alert("Enter From Date"); 
