@@ -28,8 +28,8 @@ table {
 		<c:set var="maxRowCount" value="79" />
 		<div style="text-align: center; font-size: 12px;">
 			<!-- <b>TAX INVOICE</b> -->
-			
-			 <c:choose>
+
+			<c:choose>
 				<c:when test="${isDairy==2}">
 					<b>TAX INVOICE</b>
 				</c:when>
@@ -42,8 +42,8 @@ table {
 					</c:if>
 
 				</c:otherwise>
-			</c:choose> 
-			
+			</c:choose>
+
 		</div>
 		<div style="text-align: right; font-size: 10px;">CIN :
 			${frDetails.company.cinNo}</div>
@@ -83,18 +83,34 @@ table {
 							State:&nbsp;${frDetails.company.stateCode}
 							${frDetails.company.state} </span>
 					</p> <!--         <p style="color:#000; font-size:13px; text-align:left;margin:0px;"></p>
- -->
-					<p
+ --> 
+ 
+ 
+ 					<c:if test="${isOwnFr==1}">
+						<p
+						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
+						Delivery Challan No: &nbsp;&nbsp;<b>${frDetails.invoiceNo}</b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						Delivery Date: &nbsp;&nbsp;<b>${frDetails.billDate}</b>
+					</p>
+					</c:if> <c:if test="${isOwnFr==0}">
+						<p
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
 						Invoice No: &nbsp;&nbsp;<b>${frDetails.invoiceNo}</b>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<!-- </p>
-					<p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;"> -->
+						
 						Invoice Date: &nbsp;&nbsp;<b>${frDetails.billDate}</b>
 					</p>
+					</c:if>
+					
+
+
+
 					<p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">E-Way Bill No: <b>${frDetails.ewayBillNo}</b></p>
+						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
+						E-Way Bill No: <b>${frDetails.ewayBillNo}</b>
+					</p>
 					<p
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">Is
 						reverse tax Applicable?(Yes/No): No</p>
@@ -232,7 +248,7 @@ table {
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: white; font-size: 10px;">-</td>
 					<td
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: white; font-size: 10px;">-</td>
-						<td
+					<td
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: white; font-size: 10px;">-</td>
 					<td
 						style="border-left: 1px solid #313131; border-right: 1px solid #313131; padding: 3px 5px; color: white; font-size: 10px;"></td>
@@ -481,12 +497,13 @@ table {
 						type="number" maxFractionDigits="2" minFractionDigits="2"
 						value="${billDetails.baseRate}" /></td>
 
-				
+
 				<c:set var="baseRate" value="${billDetails.baseRate}" />
-				<c:set var="totTax" value="${billDetails.cgstPer+billDetails.sgstPer}" />
+				<c:set var="totTax"
+					value="${billDetails.cgstPer+billDetails.sgstPer}" />
 				<c:set var="taxRt" value="${baseRate*((totTax)/100)}" />
 				<c:set var="unitRate" value="${baseRate+taxRt}" />
-				
+
 				<td align="right"
 					style="border-left: 1px solid #313131; padding: 3px 4px; color: #000; font-size: 12px;"><fmt:formatNumber
 						type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -741,7 +758,16 @@ table {
 			<tr>
 				<td colspan="8" width="60%"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px;"><p>
+						
+					
+					<c:if test="${isOwnFr==1}">
+						<b>Delivery Challan Value in Rs.</b> ${frDetails.amtInWords}
+					</c:if> 
+					<c:if test="${isOwnFr==0}">
 						<b>Invoice Value in Rs.</b> ${frDetails.amtInWords}
+					</c:if>
+					
+					
 					</p></td>
 				<td colspan="5" width="40%"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 8px; color: #000; font-size: 15px;">

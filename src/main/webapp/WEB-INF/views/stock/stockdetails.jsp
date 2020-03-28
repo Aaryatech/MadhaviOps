@@ -326,8 +326,10 @@ table, th, td {
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
-						<form action="monthEndProcess" method="POST"
-							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');">
+						<!-- <form action="monthEndProcess" method="POST"
+							onsubmit="substk.disabled = true; return confirm('Do you want to Month End ?');"> -->
+							<form action="monthEndProcess" method="POST"
+							onsubmit="return confirm('Do you want to Month End ?');">
 							<div class="clearfix"></div>
 							<div class="col-md-9"></div>
 							<label for="search" class="col-md-3" id="search"> <i
@@ -985,9 +987,14 @@ table, th, td {
 
 													if (data.monthClosed
 															&& selectedStockOption == 1) {
+														
+														var tempRegCurrStock=0;
+														if (regCurrentStock >= 0) {
+															tempRegCurrStock=regCurrentStock;
+														}
 
 														tr
-																.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
+																.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 step=any style=width:80px; onkeyup= updateStockDiff('
 																		+ item.itemId
 																		+ ','
 																		+ regCurrentStock
@@ -1000,7 +1007,7 @@ table, th, td {
 																		+ ' name=physicalStockQty'
 																		+ item.itemId
 																		+ ' value = '
-																		+ regCurrentStock
+																		+ tempRegCurrStock
 																		+ '></td>'));
 
 														tr
@@ -1267,9 +1274,14 @@ table, th, td {
 
 														if (data.monthClosed
 																&& selectedStockOption == 1) {
+															
+															var tempRegCurrStock=0;
+															if (regCurrentStock >= 0) {
+																tempRegCurrStock=regCurrentStock;
+															}
 
 															tr
-																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
+																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 step=any style=width:80px; onkeyup= updateStockDiff('
 																			+ item.itemId
 																			+ ','
 																			+ regCurrentStock
@@ -1282,7 +1294,7 @@ table, th, td {
 																			+ ' name=physicalStockQty'
 																			+ item.itemId
 																			+ ' value = '
-																			+ regCurrentStock
+																			+ tempRegCurrStock
 																			+ '></td>'));
 
 															tr
@@ -1550,9 +1562,14 @@ table, th, td {
 
 														if (data.monthClosed
 																&& selectedStockOption == 1) {
+															
+															var tempRegCurrStock=0;
+															if (regCurrentStock >= 0) {
+																tempRegCurrStock=regCurrentStock;
+															}
 
 															tr
-																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 style=width:80px; onkeyup= updateStockDiff('
+																	.append($('<td class="col-md-1" style="text-align:right;"> <input type=number min=0 step=any style=width:80px; onkeyup= updateStockDiff('
 																			+ item.itemId
 																			+ ','
 																			+ regCurrentStock
@@ -1565,7 +1582,7 @@ table, th, td {
 																			+ ' name=physicalStockQty'
 																			+ item.itemId
 																			+ ' value = '
-																			+ regCurrentStock
+																			+ tempRegCurrStock
 																			+ '></td>'));
 
 															tr
