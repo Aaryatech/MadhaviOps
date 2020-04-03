@@ -20,7 +20,7 @@ chosen-container {
 </style>
 
 <link rel="stylesheet"
-	href="/ops/resources/dropdownmultiple/bootstrap-chosen.css">
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">

@@ -20,8 +20,9 @@ chosen-container {
 }
 </style>
 
+
 <link rel="stylesheet"
-	href="/ops/resources/dropdownmultiple/bootstrap-chosen.css">
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -202,8 +203,9 @@ chosen-container {
 									<div class="col-sm-6 col-lg-4">
 
 										<select data-placeholder="Choose Customer" multiple="multiple"
-											class="chosen-select chosen" tabindex="6" id="selCust"
-											name="selCust">
+											class="chosen-select" tabindex="6" id="selCust"
+											name="selCust" multiple="multiple">
+
 
 											<option selected value="0" style="text-align: left;"><c:out
 													value="All" /></option>
@@ -511,7 +513,6 @@ chosen-container {
 																.getElementById("expExcel").disabled = false;
 														document
 																.getElementById('range').style.display = 'block';
-
 
 														var tr = $('<tr class="responsive-table"></tr>');
 

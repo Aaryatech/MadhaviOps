@@ -35,30 +35,56 @@
 			<section class="main_container">
 				<!--page title-start-->
 				<div class="page_head">
-				
-				<div class="morquee_bx">
-					<div class="morquee_bx_l">Latest News</div>
-					<div class="morquee_bx_r marquee">
-						<c:forEach items="${schedulerLists}" var="schedulerLists"  varStatus="count">
-						
-					            <c:set var="colors" value="white"/>
-					           <%--  <c:choose>
-					            <c:when test="${count.index%2==0}">
-					            <c:set var="colors" value="white"/>
-					           </c:when>
-					           <c:otherwise>
-					            <c:set var="colors" value="lightblue"/>
-					          </c:otherwise>
-					          </c:choose> --%>
-								<span style="color:${colors}"> ${schedulerLists.schMessage} </span>
-							
-						
-						</c:forEach>
+
+					<%-- <div class="morquee_bx">
+						<div class="morquee_bx_l">Latest News</div>
+						<div class="morquee_bx_r marquee">
+
+							<c:set var="news" value=""></c:set>
+
+							<c:forEach items="${schedulerLists}" var="schedulerLists"
+								varStatus="count">
+
+								<c:set var="news"
+									value="${news}&nbsp;|&nbsp;${schedulerLists.schMessage}"></c:set>
+								<span style="color:${colors}">
+									${schedulerLists.schMessage} </span>
+
+
+							</c:forEach>
+
+							<span style="color:${colors}"> ${news} </span>
+						</div>
+					</div> --%>
+
+					<div class="row"
+						style="display: inline-block; height: 44px; background: #ed1c24; width: 100%; line-height: 44px; margin: 0 0 20px 0;">
+
+						<div class="col-md-2"
+							style="float: left; width: 11%; height: 44px; line-height: 44px; background: #fcf300; color: #111111; text-align: center; font-size: 20px;">Latest
+							News</div>
+						<div class="col-md-10" style="height: 44px; width: 89%;">
+
+							<c:set var="news" value=""></c:set>
+
+
+							<c:forEach items="${schedulerLists}" var="schedulerLists"
+								varStatus="count">
+
+								<c:set var="news"
+									value="${news}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${schedulerLists.schMessage}"></c:set>
+
+
+							</c:forEach>
+							<marquee behavior="scroll" direction="left"
+								style="font-size: 16px; color: white; margin-left: -15px; margin-right: -15px;"
+								scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">${news} </marquee>
+
+						</div>
 					</div>
-				</div>
-					
-				
-				<%-- <div class="latestNews" style="background: #ed1c24;">
+
+
+					<%-- <div class="latestNews" style="background: #ed1c24;">
 					
 						<h3 class="latestNewsTitle" style="background: #fcf300; color: #111111; width: 200px;">Latest News </h3>
 							<div class="microsoft marquee" style="margin-left:37px;">
@@ -79,7 +105,7 @@
 						</c:forEach>
 						</div>
 					</div> --%>
-				
+
 					<div class="page_title">Dashboard</div>
 
 					<%-- <h3>${type}</h3> --%>
@@ -180,42 +206,48 @@
 								</c:choose>
 
 
-								
-									<div id="ihide" style="display: none;">
-										<div class="col-md-1">
-											<div class="col1title">From Date</div>
-										</div>
-										<div class="col-md-2">
-											<input id="fromdatepicker" class="texboxitemcode texboxcal"
-												required="required" placeholder="From Date" name="fromDate"
-												value="${fromDate}" autocomplete="off" type="text">
 
-										</div>
-										<div class="col-md-1">
-											<div class="col1title">To Date</div>
-										</div>
-										<div class="col-md-2">
-											<input id="todatepicker" class="texboxitemcode texboxcal"
-												required="required" placeholder="To Date" name="toDate"
-												value="${toDate}" autocomplete="off" type="text">
+								<div id="ihide" style="display: none;">
+									<div class="col-md-1">
+										<div class="col1title">From Date</div>
+									</div>
+									<div class="col-md-2">
+										<input id="fromdatepicker" class="texboxitemcode texboxcal"
+											required="required" placeholder="From Date" name="fromDate"
+											value="${fromDate}" autocomplete="off" type="text">
 
-										</div>
+									</div>
+									<div class="col-md-1">
+										<div class="col1title">To Date</div>
+									</div>
+									<div class="col-md-2">
+										<input id="todatepicker" class="texboxitemcode texboxcal"
+											required="required" placeholder="To Date" name="toDate"
+											value="${toDate}" autocomplete="off" type="text">
 
 									</div>
 
+								</div>
 
 
 
-	<div class="sub_right"><input name="submit" class="buttonsaveorder" value="Submit"
+
+								<div class="sub_right">
+									<input name="submit" class="buttonsaveorder" value="Submit"
 										type="submit" id="submtbtn">
-	</div>
-	<div class="sub_right">
-	<c:if test="${msgListCount>0}">	<a href="${pageContext.request.contextPath}/homeMessages"><button type="button"  class="buttonsaveorder" > 
-	<i class="fa fa-stack-exchange" aria-hidden="true"></i> Messages <span> ${msgListCount}</span> </button></a></c:if>
-										
-	</div>
-								
-								
+								</div>
+								<div class="sub_right">
+									<c:if test="${msgListCount>0}">
+										<a href="${pageContext.request.contextPath}/homeMessages"><button
+												type="button" class="buttonsaveorder">
+												<i class="fa fa-stack-exchange" aria-hidden="true"></i>
+												Messages <span> ${msgListCount}</span>
+											</button></a>
+									</c:if>
+
+								</div>
+
+
 							</div>
 						</form>
 					</div>
@@ -304,15 +336,15 @@
 								</div>
 								<div class="sale_r">
 									<h3 class="sale_head">${typeTitle}&nbsp;
-									<c:choose>
-										<c:when test="${sessionScope.frDetails.frKg1==1}">
+										<c:choose>
+											<c:when test="${sessionScope.frDetails.frKg1==1}">
 											Goods Received 
 										</c:when>
-										<c:otherwise>
+											<c:otherwise>
 											Purchase
 										</c:otherwise>
-									</c:choose>
-									
+										</c:choose>
+
 									</h3>
 									<!-- <div class="range">
 										<span class="percen_three"></span>
@@ -337,7 +369,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;No. of Bill</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;No.ofBill</h3>
 									<h5 class="price_sale">${countDetails.noOfBillGenerated}</h5>
 								</div>
 								<div class="clr"></div>
@@ -371,7 +403,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;Advance Amt</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;AdvanceAmt</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" pattern="#"
@@ -392,7 +424,7 @@
 
 								</div>
 								<div class="sale_r">
-									<h3 class="sale_head">${typeTitle}&nbsp;Credit Bill Amt</h3>
+									<h3 class="sale_head">${typeTitle}&nbsp;CreditBillAmt</h3>
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" pattern="#"
@@ -454,8 +486,7 @@
 										varStatus="count">
 										<div class="sale_epay">
 											${dailyList.orderDate} <span>Rs.<fmt:formatNumber
-													type="number" pattern="#"
-													value="${dailyList.total}" />
+													type="number" pattern="#" value="${dailyList.total}" />
 											</span>
 										</div>
 
@@ -474,8 +505,7 @@
 										varStatus="count">
 										<div class="sale_epay">
 											${advOrderList.orderDate} <span>Rs.<fmt:formatNumber
-													type="number" pattern="#"
-													value="${advOrderList.total}" />
+													type="number" pattern="#" value="${advOrderList.total}" />
 											</span>
 										</div>
 
@@ -498,67 +528,65 @@
  -->
 						<div id="donutchart"></div>
 						<!-- style="width: 900px; height: 500px;" -->
+						</div>
+						<div class="chart_r">
+							<h3 class="bx_title">Top Products</h3>
+							<div class="right_btns">
+								<input name="submit" class="sub_btn" value="All" type="submit"
+									onclick="itemSellBillCal2(0)" id="submtbtn">
+								<button type="reset" class="sub_btn" value="Reset"
+									onclick="itemSellBillCal2(2)">
+									<i class="fa fa-arrow-down" aria-hidden="true"></i>
+								</button>
+								<button type="reset" class="sub_btn" value="Reset"
+									onclick="itemSellBillCal2(1)">
+									<i class="fa fa-arrow-up" aria-hidden="true"></i>
+								</button>
 
 
-					</div>
-					<div class="chart_r">
-						<h3 class="bx_title">Top Products</h3>
-						<div class="right_btns">
-							<input name="submit" class="sub_btn" value="All" type="submit"
-								onclick="itemSellBillCal2(0)" id="submtbtn">
-							<button type="reset" class="sub_btn" value="Reset"
-								onclick="itemSellBillCal2(2)">
-								<i class="fa fa-arrow-down" aria-hidden="true"></i>
-							</button>
-							<button type="reset" class="sub_btn" value="Reset"
-								onclick="itemSellBillCal2(1)">
-								<i class="fa fa-arrow-up" aria-hidden="true"></i>
-							</button>
 
+							</div>
+
+
+
+							<div class="scrollbars" id="scrollbarsmodaldiv">
+								<table id="custCreditTable">
+
+									<thead>
+										<tr>
+											<th style="text-align: center;">Sr</th>
+											<th style="text-align: center;">Item Name</th>
+											<th style="text-align: center;">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+							</div>
 
 
 						</div>
-
-
-
-						<div class="scrollbars" id="scrollbarsmodaldiv">
-							<table id="custCreditTable">
-
-								<thead>
-									<tr>
-										<th style="text-align: center;">Sr</th>
-										<th style="text-align: center;">Item Name</th>
-										<th style="text-align: center;">Amount</th>
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						</div>
+						<div class="clr"></div>
 
 
 					</div>
-					<div class="clr"></div>
 
+					<div class="charts_bx">
+						<div class="chart_l">
 
-				</div>
-
-				<div class="charts_bx">
-					<div class="chart_l">
-
-						<!-- <div class="a">Map Put Here</div>
+							<!-- <div class="a">Map Put Here</div>
  -->
-						<div id="chart_div"></div>
-						<!-- style="width: 900px; height: 500px;" -->
+							<div id="chart_div"></div>
+							<!-- style="width: 900px; height: 500px;" -->
+
+
+						</div>
+
+						<div class="clr"></div>
 
 
 					</div>
-
-					<div class="clr"></div>
-
-
-				</div>
 			</section>
 		</div>
 		<!--wrapper-end-->
@@ -612,14 +640,14 @@
 					backgroundColor : 'transparent',
 					pieSliceText : 'none',
 					sliceVisibilityThreshold : 0,
-					 legend: {
-					        position: 'labeled',
-					        labeledValueText: 'both',
-					        textStyle: {
-					            color: 'red', 
-					            fontSize: 10
-					        }
-					    },
+					legend : {
+						position : 'labeled',
+						labeledValueText : 'both',
+						textStyle : {
+							color : 'red',
+							fontSize : 10
+						}
+					},
 					is3D : true,
 				};
 				//  alert(222);
@@ -649,8 +677,6 @@
 	</script>
 	<script type="text/javascript">
 		function drawAllCharts() {
-			
-	
 
 			google.charts.load("current", {
 				packages : [ "corechart" ]
@@ -661,10 +687,13 @@
 				'packages' : [ 'corechart', 'bar' ]
 			});
 			google.charts.setOnLoadCallback(drawStuff);
-			
-			
-			var type=${type};
-			
+
+			var type = $
+			{
+				type
+			}
+			;
+
 			if (type == 4) {
 				document.getElementById("ihide").style = "visible"
 				document.getElementById("fromdatepicker").required = true;
@@ -674,7 +703,7 @@
 				document.getElementById("fromdatepicker").required = false;
 				document.getElementById("todatepicker").required = false;
 			}
-			
+
 		}
 	</script>
 	<script type="text/javascript">
