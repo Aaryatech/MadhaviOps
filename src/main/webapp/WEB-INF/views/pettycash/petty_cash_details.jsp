@@ -72,6 +72,9 @@ table, th, td {
 </head>--%>
 <body onload="getData()">
 
+
+${currentDate}
+
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -142,6 +145,8 @@ table, th, td {
 						</c:if>
 					</div>
 				</div>
+
+
 
 				<!--rightSidebar-->
 				<div class="sidebarright">
@@ -306,7 +311,8 @@ table, th, td {
 
 	</div>
 	<!--wrapper-end-->
-	<div id="slide" class="pending_pop" id="edt_petty" style="height: 300px;">
+	<div id="slide" class="pending_pop" id="edt_petty"
+		style="height: 300px;">
 		<button class="slide_close" id="btnCloseModal">
 			<i class="fa fa-times" aria-hidden="true"></i>
 		</button>
@@ -378,7 +384,7 @@ table, th, td {
 		</div>
 
 		<div class="pop_btns">
-			
+
 			<div class="close_r">
 				<a href="#" onclick="savePettyCash()" id="savePettyCash">Update</a>
 			</div>
@@ -544,12 +550,13 @@ table, th, td {
 												data,
 												function(i, v) {
 
-													//alert(JSON.stringify(v));
+													alert(JSON.stringify(v));
 
-													/* var acButton = '&nbsp;&nbsp;<a href="#"class="buttonsaveorder singlebtn initialism slide_open" onclick="editPettyCashDetails('+ v.pettycashId+')"><i class="fa fa-edit" style="color: black;"></i></a>'; */
 													var acButton = '&nbsp;&nbsp;<a href="#" class="slide_open" onclick="editPettyCash('
 															+ v.pettycashId
 															+ ')"><i class="fa fa-edit" style="color: black;"></i></a>';
+															
+															var deleteButton = '<a href="${pageContext.request.contextPath}/deletePettyCashData/'+v.pettycashId+'" onClick="return confirm("Are you sure want to delete this record");"> <abbr title="Delete"><i class="fa fa-trash"></i></abbr> </a>';
 
 													var tr = $('<tr></tr>');
 
@@ -584,11 +591,22 @@ table, th, td {
 																			v.closingAmt));
 
 													if ( i==0) {
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				acButton));
+														
+														if(v.exVar2=="1"){
+															tr
+															.append($(
+																	'<td style="text-align:center;"></td>')
+																	.html(
+																			acButton+" "+deleteButton ));
+															
+														}else{
+															tr
+															.append($(
+																	'<td style="text-align:center;"></td>')
+																	.html(
+																			acButton ));
+															
+														}
 													} else {
 														tr
 																.append($(
@@ -644,7 +662,18 @@ table, th, td {
 		} */
 	</script>
 
+	<script type="text/javascript">
+		function deleteData(id) {
+			window
+					.open('${pageContext.request.contextPath}/deletePettyCashData/'+ id);
+		}
 
+		/* function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		} */
+	</script>
 
 
 	<script>

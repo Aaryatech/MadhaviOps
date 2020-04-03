@@ -350,6 +350,10 @@ public class PettyCashController {
 			List<FrEmpMaster> empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
 			logger.info("---------------------------" + empList);
 			model.addObject("empList", empList);
+			
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			String loginEmpId = "" + loginResponse.getFrEmpId();
+			model.addObject("loginEmpId", loginEmpId);
 
 			model.addObject("frId", frid);
 
@@ -395,8 +399,14 @@ public class PettyCashController {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
+			
+			FrEmpMaster loginResponse = (FrEmpMaster) session.getAttribute("frEmpDetails");
+			int loginEmpId = loginResponse.getFrEmpId();
 
 			String date = DateConvertor.convertToYMD(req.getParameter("cash_date"));
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+			Calendar cal=Calendar.getInstance();
 
 			pettycash.setPettycashId(pettyCashId);
 			pettycash.setCardAmt(0);
@@ -404,8 +414,8 @@ public class PettyCashController {
 			pettycash.setClosingAmt(closAmt);
 			pettycash.setDate(date);
 			pettycash.setExFloat1(0);
-			pettycash.setExInt1(0);
-			pettycash.setExVar1("NA");
+			pettycash.setExInt1(loginEmpId);
+			pettycash.setExVar1(""+sdf.format(cal.getTime()));
 			pettycash.setExVar2("NA");
 			pettycash.setFrId(frid);
 			pettycash.setOpeningAmt(opnAmt);
@@ -530,6 +540,13 @@ public class PettyCashController {
 					Calendar cal1 = Calendar.getInstance();
 					cal1.setTimeInMillis(Long.parseLong(pettyInfo.get(i).getDate()));
 					pettyInfo.get(i).setDate(ymdSDF1.format(cal1.getTime()));
+					
+					if(ymdSDF1.format(cal1.getTime()).equalsIgnoreCase(currntDat)) {
+						pettyInfo.get(i).setExVar2("1");
+					}else {
+						pettyInfo.get(i).setExVar2("0");
+					}
+					
 				}
 			}
 
@@ -1114,6 +1131,24 @@ public class PettyCashController {
 		}
 		return res;
 	}
+	
+	
+	@RequestMapping(value = "/deletePettyCashData/{id}", method = RequestMethod.GET)
+	public String deletePettyCashData(@PathVariable int id, HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", id);
+			int res = rest.postForObject("" + Constant.URL + "deletePettyCashData", map, Integer.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/getPettyCashTransactions";
+	}
+	
+	
 	
 	
 }

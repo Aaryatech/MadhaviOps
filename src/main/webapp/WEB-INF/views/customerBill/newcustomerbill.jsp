@@ -1415,6 +1415,7 @@ body {
 								style="color: red; width: 80%; padding-left: 7px;" id="credCust">
 								NA</span>
 						</div>
+						<input type="hidden" id="creditCustId" name="creditCustId">
 						<div class="add_customer_one">
 							Pending Amount:<span
 								style="color: red; width: 20%; padding-left: 7px;" id="penAmt">
@@ -1792,7 +1793,7 @@ body {
 									ajax: 'true'
 								},
 								function(data) {
-									tr_count = data.length;
+									tr_count = data.length+1;
 
 									//alert(JSON.stringify(data));
  			                        document.getElementById("overlay2").style.display = "";
@@ -1820,7 +1821,12 @@ body {
 											//	document.getElementById("credCust").innerHTML = data.userName; 
   
 															var tr = $('<tr id="bill'+data.sellBillNo+'"></tr>');
-															tr.append($('<td ></td>').html(key + 1));
+															//tr.append($('<td ></td>').html(key + 1));
+															
+															tr_count=tr_count-1;
+															tr.append($('<td ></td>').html(tr_count));
+															
+															
 															tr.append($('<td ></td>').html(invNo));
 															tr.append($('<td ></td>').html(data.billDate));
 															tr.append($('<td ></td>').html(data.grandTotal));
@@ -1929,7 +1935,7 @@ body {
 								
 								//alert(tabType+" ----------- "+tempType)
 								
-								tr_count = data.length;
+								tr_count = data.length+1;
 								document.getElementById("overlay2").style.display = "";
 
 								//alert(JSON.stringify(data));
@@ -2014,7 +2020,10 @@ body {
 
 											}
 														var tr = $('<tr></tr>');
-														tr.append($('<td ></td>').html(key + 1));
+														//tr.append($('<td ></td>').html(key + 1));
+														tr_count=tr_count-1;
+															tr.append($('<td ></td>').html(tr_count));
+														
 														tr.append($('<td ></td>').html(data.exVar2));
 														tr.append($('<td ></td>').html(data.transactionDate));
 														tr.append($('<td ></td>').html(data.exFloat1));
@@ -2138,7 +2147,9 @@ function matchSplitAmt(flag){
 							
 							//alert(data);
 												
-												document.getElementById("credCust").innerHTML = data.userName; 
+												document.getElementById("credCust").innerHTML = data.userName;
+												document.getElementById("creditCustId").value = data.custId; 
+												
 
 												var flag = 0;
 												var y = 0;
@@ -2367,6 +2378,16 @@ function matchSplitAmt(flag){
 						document.getElementById("receivedAmt").value="0";
 						closeMyModal('myModalForCredit');
 						document.getElementById("credAmt").innerHTML="0.0";
+						
+						
+						var url="${pageContext.request.contextPath}/printCreditBill";
+						
+						 $("<iframe>")                             
+				        .hide()                               
+				        .attr("src",url) 
+				        .appendTo("body"); 
+						
+						
 					}
 				}
 			}).done(function() {

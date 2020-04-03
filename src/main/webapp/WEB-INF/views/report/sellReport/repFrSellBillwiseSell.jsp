@@ -7,9 +7,10 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <style>
-.chosen-single{
-text-align: left;
+.chosen-single {
+	text-align: left;
 }
+
 table, th, td {
 	border: 1px solid #9da88d;
 }
@@ -24,7 +25,8 @@ chosen-container {
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
-<body ><!-- onload="searchSellBill()" -->
+<body>
+	<!-- onload="searchSellBill()" -->
 
 
 
@@ -124,10 +126,10 @@ chosen-container {
 								style="text-align: right;">Choose Option </label>
 							<div class="col-sm-6 col-lg-4" style="text-align: left;">
 
-								<input type="radio" id="rdRem" name="radio" value="1" 
-									onchange="radioOption()" checked="checked">All/Pending Bill
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="rdPay"
-									onchange="radioOption()" name="radio" value="2">Payment
+								<input type="radio" id="rdRem" name="radio" value="1"
+									onchange="radioOption()" checked="checked">All/Pending
+								Bill &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
+									id="rdPay" onchange="radioOption()" name="radio" value="2">Payment
 								Option
 							</div>
 
@@ -187,72 +189,115 @@ chosen-container {
 
 								<input type="radio" id="idCust" name="opt" value="1"
 									onchange="custAge(this.value)" checked="checked">Customer
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-								
-								<input type="radio" id="idAge"
-									onchange="custAge(this.value)" name="opt" value="2"> Age Group								
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="idAge"
+									onchange="custAge(this.value)" name="opt" value="2">
+								Age Group
 							</div>
 
 							<div id="div_cust">
-							<div class="form-group">
-	
-								<label class="col-sm-3 col-lg-2 control-label"
-									style="text-align: right;">Customer </label>
-								<div class="col-sm-6 col-lg-4">
-	
-									<select data-placeholder="Choose Customer" multiple="multiple"
-										class="chosen-select chosen" tabindex="6" id="selCust"
-										name="selCust">
-	
-										<option selected value="0" style="text-align: left;"><c:out value="All" /></option>
-	
-										<c:forEach items="${customerList}" var="cust" varStatus="count">
-											<option value="${cust.custId}" style="text-align: left;"><c:out
-													value="${cust.custName}-${cust.phoneNumber}" /></option>
-										</c:forEach>
-									</select>
-	
+								<div class="form-group">
+
+									<label class="col-sm-3 col-lg-2 control-label"
+										style="text-align: right;">Customer </label>
+									<div class="col-sm-6 col-lg-4">
+
+										<select data-placeholder="Choose Customer" multiple="multiple"
+											class="chosen-select chosen" tabindex="6" id="selCust"
+											name="selCust">
+
+											<option selected value="0" style="text-align: left;"><c:out
+													value="All" /></option>
+
+											<c:forEach items="${customerList}" var="cust"
+												varStatus="count">
+												<option value="${cust.custId}" style="text-align: left;"><c:out
+														value="${cust.custName}-${cust.phoneNumber}" /></option>
+											</c:forEach>
+										</select>
+
+									</div>
 								</div>
 							</div>
-							</div>
-							
+
 							<div id="age_div" style="display: none;">
-								<label class="col-sm-3 col-lg-2 control-label" 
+								<label class="col-sm-3 col-lg-2 control-label"
 									style="text-align: right;">Age-Group </label>
 								<div class="col-sm-6 col-lg-4">
-	
-									<select name="ageRange" id="ageRange" class="chosen-select chosen"
-								style="text-align: left; font-size: 16px;">
-								<option value="0" style="text-align: left;"><c:out value="Customer Age-Group"/></option>
-								<option value="14-21" style="text-align: left;">14-21 Years</option>
-								<option value="22-28" style="text-align: left;">22-28 Years</option>
-								<option value="29-35" style="text-align: left;">29-35 Years</option>
-								<option value="36-42" style="text-align: left;">36-42 Years</option>
-								<option value="43-49" style="text-align: left;">43-49 Years</option>
-								<option value="50-56" style="text-align: left;">50-56 Years</option>
-								<option value="57 & above" style="text-align: left;">57 & above</option>
-	
-							</select>
-	
+
+									<select name="ageRange" id="ageRange"
+										class="chosen-select chosen"
+										style="text-align: left; font-size: 16px;">
+										<option value="0" style="text-align: left;"><c:out
+												value="Customer Age-Group" /></option>
+										<option value="14-21" style="text-align: left;">14-21
+											Years</option>
+										<option value="22-28" style="text-align: left;">22-28
+											Years</option>
+										<option value="29-35" style="text-align: left;">29-35
+											Years</option>
+										<option value="36-42" style="text-align: left;">36-42
+											Years</option>
+										<option value="43-49" style="text-align: left;">43-49
+											Years</option>
+										<option value="50-56" style="text-align: left;">50-56
+											Years</option>
+										<option value="57 & above" style="text-align: left;">57
+											& above</option>
+
+									</select>
+
 								</div>
 							</div>
 						</div>
 					</div>
 
 
-					
-					
+					<div class="row" style="display: none;">
+						<br>
+						<div class="form-group">
+
+							<label class="col-sm-3 col-lg-2 control-label"
+								style="text-align: right;">Payment Mode </label>
+							<div class="col-sm-6 col-lg-4" style="text-align: left;">
+
+
+								<select data-placeholder="Select Payment Mode" name="payMode"
+									tabindex="-1" id="payMode" data-rule-required="true"
+									class="chosen-select" style="text-align: left; width: 82%;"
+									required="">
+
+									<option selected value="0"><c:out value="All" /></option>
+									<option value="1"><c:out value="Cash" /></option>
+									<option value="2"><c:out value="Card" /></option>
+									<option value="3"><c:out value="EPay" /></option>
+									<option value="4"><c:out value="Debit Card" /></option>
+									<option value="5"><c:out value="Credit Card" /></option>
+									<option value="6"><c:out value="Bank Transaction" /></option>
+									<option value="7"><c:out value="Paytm" /></option>
+									<option value="8"><c:out value="Google Pay" /></option>
+									<option value="9"><c:out value="Amazon Pay" /></option>
+
+
+								</select>
+							</div>
+
+						</div>
+					</div>
+
+
+
+
 					<div class="row">
 						<br>
 						<div class="form-group">
 
-							
-								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
-									View</button>
 
-								<button class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()">PDF</button>
-							
+							<button class="buttonsaveorder" onclick="searchSellBill()">HTML
+								View</button>
+
+							<button class="btn btn-primary" value="PDF" id="PDFButton"
+								onclick="genPdf()">PDF</button>
+
 
 							<div align="center" id="loader" style="display: none">
 								<span> <br>
@@ -266,7 +311,7 @@ chosen-container {
 
 						</div>
 					</div>
-					
+
 
 					<div class="row">
 						<br>
@@ -274,40 +319,41 @@ chosen-container {
 							<!--table-->
 							<div class="clearfix"></div>
 
-<div class="table-responsive">
-							<div id="table-scroll" class="table-scroll responsive-table-one">
+							<div class="table-responsive">
+								<div id="table-scroll" class="table-scroll responsive-table-one">
 
-								<div>
-									<table id="table_grid" class="responsive-table">
-										<thead>
-											<tr class="bgpink">
+									<div>
+										<table id="table_grid" class="responsive-table">
+											<thead>
+												<tr class="bgpink">
 
-												<th style="text-align: center;">Sr.No.</th>
-												<th style="text-align: center;">Invoice No</th>
-												<th style="text-align: center;">Bill Date</th>
-												<th style="text-align: center; width: 40px;">Customer</th>
-												<th style="text-align: center;">Disc%</th>
-												<th style="text-align: center;">Disc Amt</th>
-												<th style="text-align: center;">Taxable</th>
-												<th style="text-align: center;">Total Tax</th>
-												<th style="text-align: center;">Grand Total</th>
-												<th style="text-align: center;">Payable Amt</th>
-												<th style="text-align: center;">Paid Amt</th>
-												<th style="text-align: center;">Remaining Amt</th>
-												<th style="text-align: center;">Payment Mode</th>
+													<th style="text-align: center;">Sr.No.</th>
+													<th style="text-align: center;">Invoice No</th>
+													<th style="text-align: center;">Bill Date</th>
+													<th style="text-align: center; width: 40px;">Customer</th>
+													<th style="text-align: center;">Disc%</th>
+													<th style="text-align: center;">Disc Amt</th>
+													<th style="text-align: center;">Taxable</th>
+													<th style="text-align: center;">Total Tax</th>
+													<th style="text-align: center;">Grand Total</th>
+													<th style="text-align: center;">Payable Amt</th>
+													<th style="text-align: center;">Paid Amt</th>
+													<th style="text-align: center;">Remaining Amt</th>
+													<th style="text-align: center;">Payment Mode</th>
+													<th style="text-align: center;">Payment Sub Type</th>
 
-											</tr>
-										</thead>
+												</tr>
+											</thead>
 
-										<tbody>
+											<tbody>
 
-										</tbody>
+											</tbody>
 
-									</table>
+										</table>
+
+									</div>
 
 								</div>
-
-							</div>
 							</div>
 							<!--table end-->
 							<br>
@@ -349,19 +395,18 @@ chosen-container {
 
 
 	<script type="text/javascript">
-	
-	function custAge(val){
-		//alert(val);	
-		
-		if (val==1) {
-			$('#div_cust').show();
-			$('#age_div').hide();
-		} else {	
-			$('#div_cust').hide();
-			$('#age_div').show();
+		function custAge(val) {
+			//alert(val);	
+
+			if (val == 1) {
+				$('#div_cust').show();
+				$('#age_div').hide();
+			} else {
+				$('#div_cust').hide();
+				$('#age_div').show();
+			}
 		}
-	}
-	
+
 		function radioOption() {
 
 			var val1 = document.getElementById("rdRem");
@@ -397,6 +442,8 @@ chosen-container {
 
 				var rdRem = document.getElementById("rdRem");
 				var rdpay = document.getElementById("rdPay");
+
+				//var payMode = document.getElementById("payMode");
 
 				var rdType = 0;
 				var rdSubType = 0;
@@ -465,132 +512,195 @@ chosen-container {
 														document
 																.getElementById('range').style.display = 'block';
 
+
 														var tr = $('<tr class="responsive-table"></tr>');
-														
+
 														var cash = sellBillData.cash;
 														var card = sellBillData.card;
 														var epay = sellBillData.ePay;
-														
-														if(cash!=0 || card!=0 || epay!=0){
 
-														tr
-																.append($(
-																		'<td  style="text-align:center;"></td>')
-																		.html(
-																				key + 1));
+														if (cash != 0
+																|| card != 0
+																|| epay != 0) {
 
-														tr
-																.append($(
-																		'<td  style="text-align:center;" ></td>')
-																		.html(
-																				sellBillData.invoiceNo));
+															tr
+																	.append($(
+																			'<td  style="text-align:center;"></td>')
+																			.html(
+																					key + 1));
 
-														tr
-																.append($(
-																		'<td style="text-align:center;"></td>')
-																		.html(
-																				sellBillData.billDate));
+															tr
+																	.append($(
+																			'<td  style="text-align:center;" ></td>')
+																			.html(
+																					sellBillData.invoiceNo));
 
-														var cust = sellBillData.custName
-																+ "_"
-																+ sellBillData.phoneNumber;
+															tr
+																	.append($(
+																			'<td style="text-align:center;"></td>')
+																			.html(
+																					sellBillData.billDate));
 
-														tr.append($(
-																'<td ></td>')
-																.html(cust));
+															var cust = sellBillData.custName
+																	+ "_"
+																	+ sellBillData.phoneNumber;
 
-														tr
-																.append($(
-																		'<td style="text-align:right;"></td>')
-																		.html(
-																				sellBillData.discountPer
-																						.toFixed(2)));
-														tr
-														.append($(
-																'<td style="text-align:right;"></td>')
-																.html(addCommas(
-																		sellBillData.discountAmt
-																				.toFixed(2))));
-														
-														tr
-																.append($(
-																		'<td style="text-align:right;"></td>')
-																		.html(addCommas(
-																				sellBillData.taxableAmt
-																						.toFixed(2))));
-														tr
-																.append($(
-																		'<td style="text-align:right;"></td>')
-																		.html(addCommas(
-																				sellBillData.totalTax
-																						.toFixed(2))));
+															tr
+																	.append($(
+																			'<td ></td>')
+																			.html(
+																					cust));
 
-														tr
-																.append($(
-																		'<td   style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.grandTotal)
-																						.toFixed(2))));
-														tr
-																.append($(
-																		'<td  style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.payableAmt)
-																						.toFixed(2))));
+															tr
+																	.append($(
+																			'<td style="text-align:right;"></td>')
+																			.html(
+																					sellBillData.discountPer
+																							.toFixed(2)));
+															tr
+																	.append($(
+																			'<td style="text-align:right;"></td>')
+																			.html(
+																					addCommas(sellBillData.discountAmt
+																							.toFixed(2))));
 
-														tr
-																.append($(
-																		'<td   style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.paidAmt)
-																						.toFixed(2))));
+															tr
+																	.append($(
+																			'<td style="text-align:right;"></td>')
+																			.html(
+																					addCommas(sellBillData.taxableAmt
+																							.toFixed(2))));
+															tr
+																	.append($(
+																			'<td style="text-align:right;"></td>')
+																			.html(
+																					addCommas(sellBillData.totalTax
+																							.toFixed(2))));
 
-														tr
-																.append($(
-																		'<td   style="text-align:right;"></td>')
-																		.html(addCommas(
-																				(sellBillData.remainingAmt)
-																						.toFixed(2))));
+															tr
+																	.append($(
+																			'<td   style="text-align:right;"></td>')
+																			.html(
+																					addCommas((sellBillData.grandTotal)
+																							.toFixed(2))));
+															tr
+																	.append($(
+																			'<td  style="text-align:right;"></td>')
+																			.html(
+																					addCommas((sellBillData.payableAmt)
+																							.toFixed(2))));
 
-														amtTotal = amtTotal
-																+ sellBillData.grandTotal;
-														taxableTotal = taxableTotal
-																+ sellBillData.taxableAmt;
-														taxTotal = taxTotal
-																+ sellBillData.totalTax;
-														payableTotal = payableTotal
-																+ sellBillData.payableAmt;
-														paidTotal = paidTotal
-																+ sellBillData.paidAmt;
-														remainingTotal = remainingTotal
-																+ sellBillData.remainingAmt;
+															tr
+																	.append($(
+																			'<td   style="text-align:right;"></td>')
+																			.html(
+																					addCommas((sellBillData.paidAmt)
+																							.toFixed(2))));
 
-														 cashTotal = cashTotal
-																+ sellBillData.cash;
-														cardTotal = cardTotal
-																+ sellBillData.card;
-														epayTotal = epayTotal
-																+ sellBillData.ePay;
- 
-														ttlDiscAmt = ttlDiscAmt
-																+sellBillData.discountAmt;
-														
-														var paymentMode = sellBillData.paymentMode;
+															tr
+																	.append($(
+																			'<td   style="text-align:right;"></td>')
+																			.html(
+																					addCommas((sellBillData.remainingAmt)
+																							.toFixed(2))));
 
-														tr
-																.append($(
-																		'<td  style="text-align:center;"></td>')
-																		.html(addCommas(
-																				paymentMode)));
+															amtTotal = amtTotal
+																	+ sellBillData.grandTotal;
+															taxableTotal = taxableTotal
+																	+ sellBillData.taxableAmt;
+															taxTotal = taxTotal
+																	+ sellBillData.totalTax;
+															payableTotal = payableTotal
+																	+ sellBillData.payableAmt;
+															paidTotal = paidTotal
+																	+ sellBillData.paidAmt;
+															remainingTotal = remainingTotal
+																	+ sellBillData.remainingAmt;
 
-														$('#table_grid tbody')
-																.append(tr);
-													}
+															cashTotal = cashTotal
+																	+ sellBillData.cash;
+															cardTotal = cardTotal
+																	+ sellBillData.card;
+															epayTotal = epayTotal
+																	+ sellBillData.ePay;
+
+															ttlDiscAmt = ttlDiscAmt
+																	+ sellBillData.discountAmt;
+
+															var paymentMode = sellBillData.paymentMode;
+
+															tr
+																	.append($(
+																			'<td  style="text-align:center;"></td>')
+																			.html(
+																					addCommas(paymentMode)));
+
+															/* PAYMENT SUB TYPE */
+
+															var payType = "";
+															var str_arr = sellBillData.frName
+																	.split(',');
+
+															for (i = 0; i < str_arr.length; i++) {
+
+																if (str_arr[i] === "1") {
+																	payType = "Cash";
+																}
+																if (str_arr[i] === "2") {
+																	payType = payType
+																			+ ", Card";
+																}
+																if (str_arr[i] === "3") {
+																	payType = payType
+																			+ ", Epay";
+																}
+																if (str_arr[i] === "4") {
+																	payType = payType
+																			+ ", Debit Card";
+																}
+																if (str_arr[i] === "5") {
+																	payType = payType
+																			+ ", Credit Card";
+																}
+																if (str_arr[i] === "6") {
+																	payType = payType
+																			+ ", Bank Transaction";
+																}
+																if (str_arr[i] === "7") {
+																	payType = payType
+																			+ ", Paytm";
+																}
+																if (str_arr[i] === "8") {
+																	payType = payType
+																			+ ", Google Pay";
+																}
+																if (str_arr[i] === "9") {
+																	payType = payType
+																			+ ", Amazon Pay";
+																}
+
+															}
+
+															payType = payType
+																	.replace(
+																			/^,/,
+																			'');
+
+															tr
+																	.append($(
+																			'<td  style="text-align:center;"></td>')
+																			.html(
+																					payType));
+
+															$(
+																	'#table_grid tbody')
+																	.append(tr);
+														}
+
 													})
 
 									var tr = "<tr>";
 									var total = "<td colspan='5'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
-									
 
 									var totalDiscAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (ttlDiscAmt).toFixed(2);
@@ -630,7 +740,7 @@ chosen-container {
 
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
-									$('#table_grid tbody').append(total);									
+									$('#table_grid tbody').append(total);
 									$('#table_grid tbody').append(
 											addCommas(totalDiscAmt));
 									$('#table_grid tbody').append(
@@ -669,25 +779,26 @@ chosen-container {
 			}
 			return result;
 		}
-		
-		 function addCommas(x){
 
-			 x=String(x).toString();
-			  var afterPoint = '';
-			  if(x.indexOf('.') > 0)
-			     afterPoint = x.substring(x.indexOf('.'),x.length);
-			  x = Math.floor(x);
-			  x=x.toString();
-			  var lastThree = x.substring(x.length-3);
-			  var otherNumbers = x.substring(0,x.length-3);
-			  if(otherNumbers != '')
-			      lastThree = ',' + lastThree;
-			  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
-			 }
+		function addCommas(x) {
+
+			x = String(x).toString();
+			var afterPoint = '';
+			if (x.indexOf('.') > 0)
+				afterPoint = x.substring(x.indexOf('.'), x.length);
+			x = Math.floor(x);
+			x = x.toString();
+			var lastThree = x.substring(x.length - 3);
+			var otherNumbers = x.substring(0, x.length - 3);
+			if (otherNumbers != '')
+				lastThree = ',' + lastThree;
+			return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",")
+					+ lastThree + afterPoint;
+		}
 	</script>
 
 	<script type="text/javascript">
-		 function addCommas(nStr) {
+		function addCommas(nStr) {
 			nStr += '';
 			x = nStr.split('.');
 			x1 = x[0];
@@ -697,7 +808,7 @@ chosen-container {
 				x1 = x1.replace(rgx, '$1' + ',' + '$2');
 			}
 			return x1 + x2;
-		} 
+		}
 
 		/* function addCommas(x){
 			
@@ -712,7 +823,7 @@ chosen-container {
 			  if(otherNumbers != '')
 			      lastThree = ',' + lastThree;
 			  return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
-			} */ 
+			} */
 	</script>
 
 
@@ -798,7 +909,13 @@ chosen-container {
 								+ '/'
 								+ frId
 								+ '/'
-								+ cust + '/' + rdType + '/' + rdSubType + '/' + age);
+								+ cust
+								+ '/'
+								+ rdType
+								+ '/'
+								+ rdSubType
+								+ '/'
+								+ age);
 			}
 
 		}

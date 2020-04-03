@@ -105,6 +105,12 @@
 								<td align="left">Sales Person:</td>
 								<td align="left" colspan="3">${frEmpMaster.frEmpName}</td>
 							</tr>
+							
+							<tr>
+								<td align="left">Payment Mode :</td>
+								<td align="left" colspan="3">${paymentMode}</td>
+							</tr>
+							
 							<tr>
 								<td colspan="4"><table width="100%" border="0"
 										cellspacing="0" cellpadding="4" class="tbl-inner">

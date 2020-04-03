@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +46,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.PosCreditBillPrint;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -156,6 +159,72 @@ public class OpsController {
 				e.printStackTrace();
 			}
 
+			StringBuilder payMode = new StringBuilder();
+
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("sellBillNo", billNo);
+				TransactionDetail trDetail = restTemplate.postForObject(Constant.URL + "/getTransactionByBillId", map,
+						TransactionDetail.class);
+				System.err.println("TR DETAIL - " + trDetail);
+
+				if (trDetail != null) {
+					List<Integer> mode = Stream.of(trDetail.getExVar1().split(",")).map(Integer::parseInt)
+							.collect(Collectors.toList());
+
+					System.err.println("ARRAY - " + mode);
+
+					if (mode.contains(1)) {
+						payMode.append("Cash");
+						payMode.append(",");
+					}
+					if (mode.contains(2)) {
+						payMode.append("Card");
+						payMode.append(",");
+					}
+					if (mode.contains(3)) {
+						payMode.append("E-Pay");
+						payMode.append(",");
+					}
+					if (mode.contains(4)) {
+						payMode.append("Debit Card");
+						payMode.append(",");
+					}
+					if (mode.contains(5)) {
+						payMode.append("Credit Card");
+						payMode.append(",");
+					}
+					if (mode.contains(6)) {
+						payMode.append("Bank Transcation");
+						payMode.append(",");
+					}
+					if (mode.contains(7)) {
+						payMode.append("Paytm");
+						payMode.append(",");
+					}
+					if (mode.contains(8)) {
+						payMode.append("Google Pay");
+						payMode.append(",");
+					}
+					if (mode.contains(9)) {
+						payMode.append("Amazon Pay");
+						payMode.append(",");
+					}
+
+					System.err.println("MODE - " + payMode);
+					
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			if(payMode.length()>0) {
+				model.addAttribute("paymentMode", payMode.substring(0, payMode.length() - 1));
+			}else{
+				model.addAttribute("paymentMode", payMode);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -201,6 +270,72 @@ public class OpsController {
 				model.addAttribute("frSup", frSup);
 			} catch (Exception e) {
 
+			}
+
+			StringBuilder payMode = new StringBuilder();
+
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("sellBillNo", billNo);
+				TransactionDetail trDetail = restTemplate.postForObject(Constant.URL + "/getTransactionByBillId", map,
+						TransactionDetail.class);
+				System.err.println("TR DETAIL - " + trDetail);
+
+				if (trDetail != null) {
+					List<Integer> mode = Stream.of(trDetail.getExVar1().split(",")).map(Integer::parseInt)
+							.collect(Collectors.toList());
+
+					System.err.println("ARRAY - " + mode);
+
+					if (mode.contains(1)) {
+						payMode.append("Cash");
+						payMode.append(",");
+					}
+					if (mode.contains(2)) {
+						payMode.append("Card");
+						payMode.append(",");
+					}
+					if (mode.contains(3)) {
+						payMode.append("E-Pay");
+						payMode.append(",");
+					}
+					if (mode.contains(4)) {
+						payMode.append("Debit Card");
+						payMode.append(",");
+					}
+					if (mode.contains(5)) {
+						payMode.append("Credit Card");
+						payMode.append(",");
+					}
+					if (mode.contains(6)) {
+						payMode.append("Bank Transcation");
+						payMode.append(",");
+					}
+					if (mode.contains(7)) {
+						payMode.append("Paytm");
+						payMode.append(",");
+					}
+					if (mode.contains(8)) {
+						payMode.append("Google Pay");
+						payMode.append(",");
+					}
+					if (mode.contains(9)) {
+						payMode.append("Amazon Pay");
+						payMode.append(",");
+					}
+
+					System.err.println("MODE - " + payMode);
+					
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			if(payMode.length()>0) {
+				model.addAttribute("paymentMode", payMode.substring(0, payMode.length() - 1));
+			}else{
+				model.addAttribute("paymentMode", payMode);
 			}
 
 		} catch (Exception e) {
@@ -2022,7 +2157,7 @@ public class OpsController {
 		 * invoiceNo = curStrYear + "-" + "0" + settingValue;
 		 */
 
-		//invoiceNo = frDetails.getFrCode() + invoiceNo;
+		// invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 
@@ -2415,6 +2550,30 @@ public class OpsController {
 		return itemsList;
 	}
 
+	// -------------------METHOD TO GET BILL BY CUST-----------------
+	public List<SellBillHeader> getCustCreditBillsById(int custId, int frId) {
+
+		List<SellBillHeader> itemsList = new ArrayList<SellBillHeader>();
+
+		try {
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("custId", custId);
+			mvm.add("frId", frId);
+			SellBillHeader[] itemsList1 = restTemplate.postForObject(Constant.URL + "/getSellBillByCustId", mvm,
+					SellBillHeader[].class);
+
+			itemsList = new ArrayList<SellBillHeader>(Arrays.asList(itemsList1));
+
+			System.err.println("getCustCreditBills*" + itemsList.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return itemsList;
+	}
+
 	@RequestMapping(value = "/getCustAdvanceOrder", method = RequestMethod.GET)
 	@ResponseBody
 	public List<AdvanceOrderHeader> getCustAdvanceOrder(HttpServletRequest request, HttpServletResponse responsel) {
@@ -2444,6 +2603,8 @@ public class OpsController {
 		return itemsList;
 	}
 
+	List<PosCreditBillPrint> crBillPrintList = new ArrayList<>();
+
 	@RequestMapping(value = "/submitResposeCredit", method = RequestMethod.POST)
 	public @ResponseBody int submitResposeCredit(HttpServletRequest request, HttpServletResponse response)
 			throws ParseException {
@@ -2466,6 +2627,8 @@ public class OpsController {
 			String[] checkedList = request.getParameterValues("chkItem");
 
 			String frId = (request.getParameter("frId"));
+			String custId = (request.getParameter("creditCustId"));
+			String custName = (request.getParameter("credCust"));
 
 			String modePay1 = request.getParameter("modePay1"); // single/split
 			int modType2 = 0;
@@ -2486,11 +2649,16 @@ public class OpsController {
 
 			String type = "0";
 
+			crBillPrintList = new ArrayList<>();
+			List<Integer> checkedBills = new ArrayList<>();
+
 			System.err.println("head id list " + checkedList.toString());
 			for (int i = 0; i < checkedList.length; i++) {
 
 				System.err.println("head id " + checkedList[i]);
 				int headId = Integer.parseInt(checkedList[i]);
+				checkedBills.add(headId);
+
 				String invoiceNo = (request.getParameter("invoiceNo" + headId));
 				float billAmt = Float.parseFloat(request.getParameter("grandTotal" + headId));
 				float paidAmt = Float.parseFloat(request.getParameter("paidAmt" + headId));
@@ -2499,6 +2667,13 @@ public class OpsController {
 				float settleAmt = Float.parseFloat(request.getParameter("settleAmt" + headId));
 				float discAmt = Float.parseFloat(request.getParameter("discAmt" + headId));
 				TransactionDetail expTrans = new TransactionDetail();
+
+				/*
+				 * System.err.println("BILL NO - "+headId);
+				 * System.err.println("PAID - "+paidAmt);
+				 * System.err.println("PENDING - "+pendingAmt);
+				 * System.err.println("SETTLE - "+settleAmt);
+				 */
 
 				if (modType1 == 1) {
 					cashAmt1 = settleAmt;
@@ -2536,15 +2711,21 @@ public class OpsController {
 				// field
 				expTransList.add(expTrans);
 
+				PosCreditBillPrint model = new PosCreditBillPrint(headId, invoiceNo, Integer.parseInt(custId), custName,
+						billAmt, paidAmt, pendingAmt, settleAmt);
+				crBillPrintList.add(model);
+
 			}
 
-			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveBillTransDetail", expTransList,
-					Info.class);
-			if (errorMessage.getMessage().equals("1")) {
-				flag = 2;
-			} else {
-				flag = 0;
-			}
+			System.err.println("PRINT - " + crBillPrintList);
+			flag = 2;
+//			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveBillTransDetail", expTransList,
+//					Info.class);
+//			if (errorMessage.getMessage().equals("1")) {
+//				flag = 2;
+//			} else {
+//				flag = 0;
+//			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2759,6 +2940,43 @@ public class OpsController {
 
 		return res;
 
+	}
+
+	@RequestMapping(value = "/printCreditBill", method = RequestMethod.GET)
+	public String printCreditBill(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String mav = "customerBill/printCreditBill";
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			model.addAttribute("frName", frDetails.getFrName());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			model.addAttribute("printData", crBillPrintList);
+
+			try {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("empId", 1);
+
+				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId", map,
+						FrEmpMaster.class);
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			} catch (Exception e) {
+				FrEmpMaster frEmpMaster = new FrEmpMaster();
+				frEmpMaster.setFrEmpName("-");
+				model.addAttribute("frEmpMaster", frEmpMaster);
+			}
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+			Calendar cal = Calendar.getInstance();
+			model.addAttribute("date", sdf.format(cal.getTime()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
 	}
 
 }

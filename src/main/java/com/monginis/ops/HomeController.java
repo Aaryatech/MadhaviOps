@@ -158,12 +158,9 @@ public class HomeController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
-			ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
+			
 			int frId = (Integer) session.getAttribute("frId");
 
-			System.out.println("***************Schedular List*****************" + schedulerLists);
-			System.out.println("***************msgList*****************" + msgList);
 			System.out.println("***************frId*****************" + frId);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -216,6 +213,25 @@ public class HomeController {
 			System.out.println("isSpDayShow" + spDayShow);
 
 			model.addObject("configureSpDayFrList", configureSpDayCk);
+			
+			
+			//----news and messages-------
+			
+			LatestNewsResponse latestNewsResponse = restTemplate.getForObject(Constant.URL + "/showLatestNews",
+					LatestNewsResponse.class);
+			List<SchedulerList> schedulerLists = new ArrayList<SchedulerList>();
+			schedulerLists = latestNewsResponse.getSchedulerList();
+			System.out.println("latest news  list " + schedulerLists.toString());
+
+			MessageListResponse messageListResponse = restTemplate.getForObject(Constant.URL + "/showFrontEndMessage",
+					MessageListResponse.class);
+			List<Message> msgList = new ArrayList<Message>();
+			msgList = messageListResponse.getMessage();
+			System.out.println("messages are " + msgList.toString());
+		
+			session.setAttribute("msgList", msgList);
+			session.setAttribute("schedulerLists", schedulerLists);
+			
 
 			model.addObject("schedulerLists", schedulerLists);
 			model.addObject("msgList", msgList);
