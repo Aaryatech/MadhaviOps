@@ -831,11 +831,16 @@ public class HomeController {
 		System.out.println("Login Response " + loginResponse.toString());
 
 		if (loginResponse.getLoginInfo().isError()) {
+			
+			session.setAttribute("loginError", "Invalid Login Credentials");
 
 			model.addObject("message", loginResponse.getLoginInfo().getMessage());
 			return "redirect:/";
 
 		} else {
+			
+			session.removeAttribute("loginError");
+			
 			System.out.println("Login Sucess");
 
 			session.setAttribute("frId", loginResponse.getFranchisee().getFrId());

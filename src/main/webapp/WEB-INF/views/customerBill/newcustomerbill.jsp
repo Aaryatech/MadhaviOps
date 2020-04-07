@@ -81,6 +81,8 @@
 <c:url var="getItemsOfBill" value="/getItemsOfBill" />
 <c:url var="alertSaveBillAfterPettyCashDayEnd"
 	value="/alertSaveBillAfterPettyCashDayEnd" />
+	
+	<c:url var="uomWiseBillQtyList" value="/uomWiseBillQtyList" />
 
 
 <style>
@@ -605,6 +607,12 @@ body {
 						<%-- <c:choose>
 							<c:when test="${key>0}"> --%>
 						<table width="100%">
+							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+								<td>Total UOM</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td style="font-weight: 600; text-align: right;" id="totaluom"></td>
+							</tr>
 							<tr bgcolor="#ffe5e6">
 								<td>Total Items</td>
 								<td id="totalItemLable">${totalItemCount}</td>
@@ -844,7 +852,7 @@ body {
 					<div class="add_frm_one">
 						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
-							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
+							<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
 								onchange="trim(this)" type="text" maxlength="15"
 								class="input_add" />
 						</div>
@@ -3735,9 +3743,54 @@ $("#enterQty").focus();
 
 							//document.getElementById("discPer").value =0;
 							//document.getElementById("discAmt").value =0;
+							
+							getUomList();
 				});
 		
 	}
+	
+	
+	function getUomList(){
+		
+		$
+		.post('${uomWiseBillQtyList}',{ 
+					ajax : 'true'
+		},
+		function(data) {
+			
+			//alert(JSON.stringify(data));
+			
+			var text="";
+			var i;
+			//for (i = 0; i < data.length; i++) {
+				
+				var totQty=0;
+				
+				$
+				.each(
+						data,
+						function(key, item) {
+								totQty=totQty+item.qty;
+							  text += item.uom+"&nbsp;=&nbsp;&nbsp;"+item.qty + "&nbsp;&nbsp;&nbsp;&nbsp;";							
+						});
+				
+				text += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TOTAL = &nbsp;"+totQty;
+
+			//} 
+			
+			document.getElementById("totaluom").innerHTML = text;
+			
+			
+		});
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	function billOnHold() {
 		   
 		var key =  $('#key').val() ;

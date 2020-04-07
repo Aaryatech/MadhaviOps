@@ -101,19 +101,20 @@
 						<div class="project-name">
 							<p id="selectedEmp" style="color: #FD2549;"></p>
 						</div>
-					
-					<div class="project-name">
+
+						<div class="project-name">
 							<p id="error" class="error" style="color: RED; display: none;">Loading...</p>
-							<p id="success" class="success" style="color: limegreen; display: none;">SUCCESS</p>
+							<p id="success" class="success"
+								style="color: limegreen; display: none;">SUCCESS</p>
 						</div>
-					
+
 					</div>
 
 					<div>
-					
-					
-						<input type="password" class="screen" id="screen" placeholder="Password"
-							autofocus="autofocus">
+
+
+						<input type="password" class="screen" id="screen"
+							placeholder="Password" autofocus="autofocus">
 
 
 
@@ -160,6 +161,24 @@
 	</div>
 	</div>
 	<script type="text/javascript">
+	
+	
+    $(document).on("keypress", "input", function(e){
+
+        if(e.which == 13){
+
+            var inputVal = $(this).val();
+
+          
+            checkPwd();
+
+        }
+
+    });
+	
+	
+	
+	
 		$(function() {
 			$(document).on("keypress", function() {
 				$("#screen").focus();
@@ -214,11 +233,13 @@
 			$('#screen').bind('input', function() {
 
 				var n = $(this).html();
+				
 				$('.screen').append(n);
 				window.tries++;
 				updateFlasher();
-				validate();
+				//validate();
 			});
+			
 		}
 
 		function updateFlasher() {
@@ -239,8 +260,10 @@
 		function validate() {
 			$('.error').hide();
 			$('#screen').keyup(function(e) {
+				
 
 				if (e.keyCode == 13) {
+					
 					$('.error').hide();
 					checkWin();
 					$('.screen').val('');
@@ -262,6 +285,7 @@
 			//alert(w+" ---------- "+window.pass);
 			
 			var flag=0;
+			
 			
 			if (w == window.pass) {
 				flag=1;
@@ -292,22 +316,78 @@
 				}); */
 			}
 			
+		
+			
+			
 			if(flag==1){
+				
+				document.getElementById("error").innerHTML = "Loading...";
+				
 				var u = window.redirectURL;
 				$(location).attr('href', u);
 				$('.error').hide();
 				
 				
 			}else{
-				$('.error').hide();
-				$('.error').show().delay(1000).queue(function(n) {
+				
+				
+					$('.error').show();
+					document.getElementById("error").innerHTML = "Invalid Password!";
+				
+				
+				//$('.error').hide();
+				/* $('.error').show().delay(1000).queue(function(n) {
 					$('.error').hide();
 					n();
 					
-				});
+				}); */
 			}
 			
 		}
+	</script>
+	
+	<script type="text/javascript">
+	
+
+	function checkPwd() {
+		$('.error').hide();
+		//$('.success').hide();
+		
+		var w = $('#screen').val();
+		
+		//alert(w+" ---------- "+window.pass);
+		
+		var flag=0;
+		
+		
+		if (w == window.pass) {
+			flag=1;
+
+			document.getElementById("overlay2").style.display = "block";
+			var u = window.redirectURL;
+			$(location).attr('href', u);
+
+		} else {
+			flag=0;
+		}
+		
+		
+		if(flag==1){
+			document.getElementById("error").innerHTML = "Loading...";
+			
+			var u = window.redirectURL;
+			$(location).attr('href', u);
+			$('.error').hide();
+			
+		}else{
+			
+				$('.error').show();
+				document.getElementById("error").innerHTML = "Invalid Password!";
+				document.getElementById("screen").value = "";
+		}
+		
+	}
+	
 	</script>
 
 

@@ -80,6 +80,10 @@
 
 <c:url var="getItemsOfBill" value="/getItemsOfBill" />
 
+<c:url var="uomWiseBillQtyList" value="/uomWiseBillQtyList" />
+
+
+
 
 <style>
 body {
@@ -614,6 +618,27 @@ body {
 						<%-- <c:choose>
 							<c:when test="${key>0}"> --%>
 						<table width="100%">
+							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
+								<td>Total UOM</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								
+								<c:set value="" var="data"></c:set>
+								<c:set value="0" var="dataQty"></c:set>
+
+								<c:forEach items="${uomList}" var="list">
+								
+								<c:set value="${dataQty+list.qty}" var="dataQty"></c:set>
+								<c:set value="${data}&nbsp;&nbsp;&nbsp;${list.uom}&nbsp;=&nbsp;${list.qty}" var="data"></c:set>
+								
+								</c:forEach>
+								
+								<c:set value="${data}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL&nbsp;=&nbsp;${dataQty}" var="data"></c:set>
+								
+								<td style="font-weight: 600; text-align: right;" id="totaluom">
+								${data}
+								</td>
+							</tr>
 							<tr bgcolor="#ffe5e6">
 								<td>Total Items</td>
 								<td id="totalItemLable">${totalItemCount}</td>
@@ -859,7 +884,7 @@ body {
 					<div class="add_frm_one">
 						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
-							<input placeholder="Enter GST Name" name="gstNo" id="gstNo"
+							<input placeholder="Enter GST Number" name="gstNo" id="gstNo"
 								onchange="trim(this)" type="text" class="input_add" />
 						</div>
 						<div class="clr"></div>
@@ -1706,8 +1731,8 @@ body {
 
 	</div>
 	<!-- Modal to show cust   Bill ends -->
-	
-	
+
+
 	<script type="text/javascript">
 	
 	function validateDefCustomer(custId){
@@ -3693,7 +3718,50 @@ function getCurrentItemList() {
 
 							//document.getElementById("discPer").value =0;
 							//document.getElementById("discAmt").value =0;
+							
+							getUomList();
 				});
+		
+	}
+	
+	</script>
+	
+	<script type="text/javascript">
+	
+function getUomList(){
+		
+		$
+		.post('${uomWiseBillQtyList}',{ 
+					ajax : 'true'
+		},
+		function(data) {
+			
+			//alert(JSON.stringify(data));
+			
+			var text="";
+			var i;
+			//for (i = 0; i < data.length; i++) {
+				
+				var totQty=0;
+				
+				$
+				.each(
+						data,
+						function(key, item) {
+								totQty=totQty+item.qty;
+							  text += item.uom+"&nbsp;=&nbsp;&nbsp;"+item.qty + "&nbsp;&nbsp;&nbsp;&nbsp;";							
+						});
+				
+				text += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TOTAL = &nbsp;"+totQty;
+
+			//} 
+			
+			document.getElementById("totaluom").innerHTML = text;
+			
+			
+		});
+		
+		
 		
 	}
 	

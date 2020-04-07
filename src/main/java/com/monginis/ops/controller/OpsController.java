@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeSet;
@@ -53,6 +54,7 @@ import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.newpos.SellBillHeaderAndDetail;
+import com.monginis.ops.model.newpos.UomWiseTotalList;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.pettycash.PettyCashManagmt;
 import com.monginis.ops.model.setting.NewSetting;
@@ -212,16 +214,16 @@ public class OpsController {
 					}
 
 					System.err.println("MODE - " + payMode);
-					
+
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			if(payMode.length()>0) {
+
+			if (payMode.length() > 0) {
 				model.addAttribute("paymentMode", payMode.substring(0, payMode.length() - 1));
-			}else{
+			} else {
 				model.addAttribute("paymentMode", payMode);
 			}
 
@@ -325,16 +327,16 @@ public class OpsController {
 					}
 
 					System.err.println("MODE - " + payMode);
-					
+
 				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			if(payMode.length()>0) {
+
+			if (payMode.length() > 0) {
 				model.addAttribute("paymentMode", payMode.substring(0, payMode.length() - 1));
-			}else{
+			} else {
 				model.addAttribute("paymentMode", payMode);
 			}
 
@@ -693,6 +695,34 @@ public class OpsController {
 				System.err.println("holdBill ------------------------- " + customerBillOnHold);
 
 				model.addAttribute("key", 0);
+
+				List<UomWiseTotalList> uomList = new ArrayList<>();
+
+				if (itemBillList != null) {
+					List<UomWiseTotalList> tempUomList = new ArrayList<>();
+					List<String> tempUom = new ArrayList<>();
+					HashSet<String> set = new HashSet<>();
+
+					for (ItemListForCustomerBill item : itemBillList) {
+						set.add(item.getUom());
+					}
+
+					tempUom.addAll(set);
+
+					for (String uom : tempUom) {
+						float qty = 0;
+						for (ItemListForCustomerBill item : itemBillList) {
+							if (uom.equalsIgnoreCase(item.getUom())) {
+								qty = qty + item.getQty();
+							}
+						}
+						UomWiseTotalList um = new UomWiseTotalList(uom, qty);
+						uomList.add(um);
+					}
+
+				}
+
+				model.addAttribute("uomList", uomList);
 
 			} catch (Exception e) {
 				itemBillList = new ArrayList<>();
@@ -2304,6 +2334,43 @@ public class OpsController {
 		return itemBillList;
 	}
 
+	@RequestMapping(value = "/uomWiseBillQtyList", method = RequestMethod.POST)
+	@ResponseBody
+	public List<UomWiseTotalList> uomWiseBillQtyList(HttpServletRequest request, HttpServletResponse responsel) {
+
+		List<UomWiseTotalList> uomList = new ArrayList<>();
+		try {
+
+			if (itemBillList != null) {
+				List<UomWiseTotalList> tempUomList = new ArrayList<>();
+				List<String> tempUom = new ArrayList<>();
+				HashSet<String> set = new HashSet<>();
+
+				for (ItemListForCustomerBill item : itemBillList) {
+					set.add(item.getUom());
+				}
+
+				tempUom.addAll(set);
+
+				for (String uom : tempUom) {
+					float qty = 0;
+					for (ItemListForCustomerBill item : itemBillList) {
+						if (uom.equalsIgnoreCase(item.getUom())) {
+							qty = qty + item.getQty();
+						}
+					}
+					UomWiseTotalList model = new UomWiseTotalList(uom, qty);
+					uomList.add(model);
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uomList;
+	}
+
 	@RequestMapping(value = "/editItemQty", method = RequestMethod.POST)
 	@ResponseBody
 	public ItemListForCustomerBill editItemQty(HttpServletRequest request, HttpServletResponse responsel) {
@@ -2719,13 +2786,13 @@ public class OpsController {
 
 			System.err.println("PRINT - " + crBillPrintList);
 			flag = 2;
-//			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveBillTransDetail", expTransList,
-//					Info.class);
-//			if (errorMessage.getMessage().equals("1")) {
-//				flag = 2;
-//			} else {
-//				flag = 0;
-//			}
+			Info errorMessage = restTemplate.postForObject(Constant.URL + "/saveBillTransDetail", expTransList,
+					Info.class);
+			if (errorMessage.getMessage().equals("1")) {
+				flag = 2;
+			} else {
+				flag = 0;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
