@@ -56,21 +56,12 @@
 }
 
  <!-- Custom styles for the popup page -->
- 
-    .wellnew {width: 25% !important; display:none; margin:0; min-height: 20px; padding: 19px;
+ 	/*.wellnew.popup_content{width: 25% !important; display:none; margin:0; min-height: 20px; padding: 19px;
     margin-bottom: 20px; background-color: #FFF !important; background:#FFF !important;}
-    .mob_no{font-family: arial; font-size: 20px; color: #333; text-align: center; margin: 0 0 15px 0;}
-    .frm_bx{display: block; width: 100%;}
-    .frm_one{width: 100%;}
-    .input_one{width: 100%; padding: 10px 0; text-indent: 10px; margin: 0 0 15px 0; font-size: 14px; color: #333;}
-    .sub_btn{background: #8d2117; border: 0; font-size: 14px; text-transform: uppercase; color: #FFF; cursor: pointer;
-    padding: 9px 22px; outline: none;}
-    .sub_btn:hover{background: #a72c20; color: #FFF;}
-    .close_btn{position: absolute; right: 13px; top: 5px; cursor:pointer;}
-
+	.wellnew 
     @media screen and (max-width:568px){
       .wellnew{width: 90% !important;}
-    }
+    }*/
     
 </style>
 </head>
@@ -147,7 +138,7 @@
 					<input type="hidden" id="employeeId"  name="employeeId"><br>
 					<input type="hidden" id="empContact"  name="empContact"><br>
 					<a class="initialism basic_open" href="#basic" onclick="getMobileNo()">Forgot Password</a>
-
+					<!--  onclick="getMobileNo()" -->
 
 
 					<!-- <div class="flasher"></div> -->
@@ -195,7 +186,7 @@
           </div>
           <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
         </div>
-        <div class="basic_close close_btn">x</div>
+        <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
      <!--  </form>  -->
     </div>
     <!--End basic pop up container-->
@@ -214,7 +205,7 @@
           </div>
           <input name="" type="submit" value="Submit" onclick="updatePass()" class="sub_btn" />
         </div>
-        <div class="basic_close close_btn">x</div>
+        <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
       <!-- </form>  -->
     </div>
     
