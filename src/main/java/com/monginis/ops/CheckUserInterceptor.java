@@ -73,7 +73,10 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
 				} else {
 					if (request.getServletPath().equals("/frEmpLogin")
 							|| request.getServletPath().equals("/frLoginProcess")
-							|| request.getServletPath().equals("/checkValidEmployee")) { // ||request.getServletPath().equals("/logout")
+							|| request.getServletPath().equals("/checkValidEmployee")
+							|| request.getServletPath().equals("/getEmpDetails")
+							|| request.getServletPath().equals("/checkOtp")
+							|| request.getServletPath().equals("/changeToNewPassword")) { // ||request.getServletPath().equals("/logout")
 						// System.out.println("Login request");
 						return true;
 					} else if (empObj == null) {

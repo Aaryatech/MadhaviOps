@@ -14,11 +14,18 @@
 	rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=VT323'
 	rel='stylesheet' type='text/css'>
+<!-- jQuery -->
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
 	type="text/javascript"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" />
+	
+<script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
+
+    <!-- jQuery Popup Overlay -->
+ <script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery.popupoverlay.js"></script>
 <link
 	href="${pageContext.request.contextPath}/resources/newpos/css/saleslogin.css"
 	rel="stylesheet" type="text/css" />
@@ -47,11 +54,32 @@
 	-ms-transform: translate(-50%, -50%);
 	z-index: 10000;
 }
+
+ <!-- Custom styles for the popup page -->
+ 
+    .wellnew {width: 25% !important; display:none; margin:0; min-height: 20px; padding: 19px;
+    margin-bottom: 20px; background-color: #FFF !important; background:#FFF !important;}
+    .mob_no{font-family: arial; font-size: 20px; color: #333; text-align: center; margin: 0 0 15px 0;}
+    .frm_bx{display: block; width: 100%;}
+    .frm_one{width: 100%;}
+    .input_one{width: 100%; padding: 10px 0; text-indent: 10px; margin: 0 0 15px 0; font-size: 14px; color: #333;}
+    .sub_btn{background: #8d2117; border: 0; font-size: 14px; text-transform: uppercase; color: #FFF; cursor: pointer;
+    padding: 9px 22px; outline: none;}
+    .sub_btn:hover{background: #a72c20; color: #FFF;}
+    .close_btn{position: absolute; right: 13px; top: 5px; cursor:pointer;}
+
+    @media screen and (max-width:568px){
+      .wellnew{width: 90% !important;}
+    }
+    
 </style>
 </head>
 
 <body>
 	<c:url var="checkValidEmployee" value="/checkValidEmployee" />
+	<c:url var="getEmpDetails" value="/getEmpDetails" />
+	<c:url var="checkOtp" value="/checkOtp" />
+	<c:url var="changeToNewPassword" value="/changeToNewPassword" />
 	<div style="color: #fff; text-align: right;">
 		<a href="${pageContext.request.contextPath}/logout"><i
 			class="fa fa-sign-out" aria-hidden="true"></i> Logout </a>
@@ -69,7 +97,7 @@
 			<input type="hidden" name="empId" id="empId${count.index}"
 				value="${empList.frEmpId}" />
 			<div class="items" id="items"
-				onclick="showNumPad(${empList.frEmpId},'${empList.frEmpName}')">
+				onclick="showNumPad(${empList.frEmpId},'${empList.frEmpName}','${empList.frEmpContact}')">
 				<div class="icon-wrapper">
 					<i class="fa fa-user-o "></i>
 				</div>
@@ -115,13 +143,10 @@
 
 						<input type="password" class="screen" id="screen"
 							placeholder="Password" autofocus="autofocus">
-
-
-
-
-
 					</div>
-
+					<input type="hidden" id="employeeId"  name="employeeId"><br>
+					<input type="hidden" id="empContact"  name="empContact"><br>
+					<a class="initialism basic_open" href="#basic" onclick="getMobileNo()">Forgot Password</a>
 
 
 
@@ -150,8 +175,7 @@
 
 
 
-				<!-- <a href="#" title="Close" class="modal-close" onclick="hideNumPad()"><input
-					type="button" value=Close></a> -->
+				<!-- <a href="#" title="Close" class="modal-close">Forgot Password</a> -->
 			</div>
 
 
@@ -159,9 +183,50 @@
 
 		</div>
 	</div>
-	</div>
-	<script type="text/javascript">
 	
+	
+	<!--basic pop up container-->
+    <div id="basic" class="wellnew">
+     <!--  <form action="" method="get">  -->
+        <div class="mob_no" id="empMob"></div>
+        <div class="frm_bx">
+          <div class="frm_one">
+          	<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp"/>
+          </div>
+          <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
+        </div>
+        <div class="basic_close close_btn">x</div>
+     <!--  </form>  -->
+    </div>
+    <!--End basic pop up container-->
+    
+    <!--Change Password Modal-->
+    <div id="basic_pass" class="wellnew" style="display: none;">
+     <!--  <form action="" method="get">  -->
+        <div class="mob_no" id="edit_pass_modal">Change Password</div>
+        <div class="frm_bx">
+          <div class="frm_one">
+          	<input name="newPass" type="text" class="input_one" placeholder="Enter New Password" id="newPass"/>
+          </div>
+          
+            <div class="frm_one">
+          	<input name="confirmPass" type="text" class="input_one" placeholder="Enter Confirm Password" id="confirmPass"/>
+          </div>
+          <input name="" type="submit" value="Submit" onclick="updatePass()" class="sub_btn" />
+        </div>
+        <div class="basic_close close_btn">x</div>
+      <!-- </form>  -->
+    </div>
+    
+    
+    <script type="text/javascript">
+    $(document).ready(function () {
+      $('#basic').popup();
+    });
+    </script>
+    
+    
+	<script type="text/javascript">
 	
     $(document).on("keypress", "input", function(e){
 
@@ -193,8 +258,8 @@
 		window.pass = "~~~~";
 		window.redirectURL = '${pageContext.request.contextPath}/frLoginProcess';
 
-		function showNumPad(empId, name) {
-
+		function showNumPad(empId, name, contact) {
+			//employeeId = empId;
 			$.post('${checkValidEmployee}', {
 				empId : empId,
 				ajax : 'true'
@@ -210,7 +275,8 @@
 			document.getElementById('screen').focus();
 
 			document.getElementById("selectedEmp").innerHTML = name;
-
+			document.getElementById('empContact').value = contact;
+			document.getElementById('employeeId').value = empId;
 		}
 		function hideNumPad() {
 
@@ -344,6 +410,65 @@
 			}
 			
 		}
+		
+	/************************************************  */	
+		function getMobileNo(){
+			hideNumPad();
+			var mob = $("#empContact").val();
+			
+			
+			$.getJSON('${getEmpDetails}', {
+				mob : mob,
+				ajax : 'true'
+			}, function(data) {
+				document.getElementById("empMob").innerHTML = data.frEmpContact
+				//alert("Emp---------"+JSON.stringify(data))
+
+				
+			}); 
+		}
+	
+	function validateOtp(){
+		
+		var otp = $("#otp").val();
+	
+		$.getJSON('${checkOtp}', {
+			otp : otp,
+			ajax : 'true'
+		}, function(data) {
+			
+		//alert("Emp---------"+JSON.stringify(data))
+			if(error!=true){
+				document.getElementById("basic_pass").style.display = "block";
+			}
+
+			
+		});
+	}
+	
+	
+function updatePass(){
+	var employeeId = $("#employeeId").val();
+		var newPass = $("#newPass").val();
+		alert("newPass--------------"+newPass+" "+employeeId )
+		$.getJSON('${changeToNewPassword}', {
+			employeeId : employeeId,
+			newPass : newPass,
+			ajax : 'true'
+		}, function(data) {
+			
+			alert("Emp---------"+JSON.stringify(data))
+			if(error!=true){
+			
+				document.getElementById('empContact').value = '';
+				document.getElementById('employeeId').value = '';
+				document.getElementById("basic_pass").style.display = "none";
+				
+			}
+
+			
+		});
+	}
 	</script>
 	
 	<script type="text/javascript">
