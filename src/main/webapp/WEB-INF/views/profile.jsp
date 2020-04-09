@@ -717,6 +717,17 @@
 								</div>
 								<div class="clr"></div>
 							</div>
+							<div class="add_frm_one">
+								<div class="add_customer_one">Is Active</div>
+								<div class="add_input">
+								
+									<input type="radio" id="emp_status_yes" ${emp.delStatus==0 ? 'checked' : ''} name="emp_status" value="0" checked > Yes
+									
+									<input type="radio" id="emp_status_no" ${emp.delStatus==1 ? 'checked' : ''} name="emp_status" value="1"> NO
+									 
+								</div>
+								<div class="clr"></div>
+							</div>
 						</div>
 
 					</div>
@@ -762,7 +773,8 @@
 						<th>Contact No</th>
 						<th>Address</th>
 						<th>Joining Date</th>
-						<th>Code</th>
+						<!-- <th>Code</th> -->
+						<th>Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -952,24 +964,28 @@
 																	'<td></td>')
 																	.html(
 																			emp.frEmpJoiningDate));
+													var stat = '';
+													if(emp.delStatus==0){
+														stat='Active'
+													}else{
+														stat='In-Active'
+													}
 													tr.append($('<td ></td>')
-															.html(emp.empCode));
+															.html(stat));
 													tr
 															.append($(
 																	'<td></td>')
 																	.html(
 																			"<a href='#' onclick=editFrEmp("
 																					+ emp.frEmpId
-																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>&nbsp&nbsp<a href='#' onclick=deletFrEmp("
-																					+ emp.frEmpId
-																					+ ") title='Delete'><i class='fa fa-trash'></i></a>"));
+																					+ ") title='Edit' class='addcust_open'><i class='fa fa-edit'></i></a>"));
 													$('#table_grid tbody')
 															.append(tr);
 
 												})
 
 							});
-		}
+		}/* "<a href='#' onclick=deletFrEmp("+ emp.frEmpId+") title='Delete'><i class='fa fa-trash'></i></a>" */
 
 		function deletFrEmp(empId) {
 			//alert("Id----------"+empId)
@@ -1057,7 +1073,7 @@
 								},
 								function(data) {
 
-									//alert(JSON.stringify(data)); 
+									//alert(JSON.stringify(data.delStatus)); 
 
 									//$('#addcust').show();
 									$('#fr_emp_id').val(data.frEmpId);
@@ -1079,6 +1095,13 @@
 									} else if (data.designation == 3) {
 										document.getElementById("designation").value = data.designation;
 									}
+									if(data.delStatus==0){
+										document.getElementById("emp_status_yes").checked = true;
+										
+									}else{
+										document.getElementById("emp_status_no").checked = true;
+									}
+									
 									$('#slide').popup('hide');
 								});
 			}

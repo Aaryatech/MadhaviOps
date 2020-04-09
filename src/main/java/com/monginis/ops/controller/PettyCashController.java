@@ -911,7 +911,7 @@ public class PettyCashController {
 
 			emp.setFrEmpId(frEmpId);
 			emp.setCurrentBillAmt(Float.parseFloat(req.getParameter("curr_bill_amt")));
-			emp.setDelStatus(0);
+			emp.setDelStatus(Integer.parseInt(req.getParameter("emp_status")));
 			emp.setDesignation(Integer.parseInt(req.getParameter("designation")));
 			emp.setEmpCode(req.getParameter("emp_code"));
 			emp.setExInt1(0);
