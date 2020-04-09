@@ -51,6 +51,7 @@ import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.CategoryList;
+import com.monginis.ops.model.Company;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCurrentStockDetails;
 import com.monginis.ops.model.MCategory;
@@ -2526,10 +2527,15 @@ public class GrnGvnController {
 		}
 
 		try {
+			RestTemplate restTemplate = new RestTemplate();
+			
+			Company company = restTemplate.getForObject(Constant.URL + "getCompany", Company.class);
+			model.addObject("company", company);
+			
 			// System.out.println("Inside getGrnPdf " +grnpdfList.toString());
 			List<GetGrnGvnDetails> grnDetailList = new ArrayList<>();
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			RestTemplate restTemplate = new RestTemplate();
+			
 			GrnGvnPdf grnPdf = new GrnGvnPdf();
 
 			// List<GetGrnGvnDetails> grnpdfList;

@@ -502,8 +502,9 @@ function genPdf(headerId) {
 		    
 		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
 		    
-	    window.open('${pageContext.request.contextPath}/billPdf?url=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
-	
+	    //window.open('${pageContext.request.contextPath}/billPdf?url=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+		window.open('${pageContext.request.contextPath}/pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+	    
 	}
 	</script>
 <script>

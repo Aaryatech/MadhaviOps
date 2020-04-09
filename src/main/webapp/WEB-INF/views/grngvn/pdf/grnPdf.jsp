@@ -70,13 +70,13 @@
 					style="padding: 2px; border-bottom: 1px solid #E7E7E7;"><p
 						class="style2">
 						<b>${grnPdf.frName}</b><br /> <span
-							style="font-size: 10px; font-family: Arial;">(The Madhvi
-							Cake Shop)</span>
+							style="font-size: 10px; font-family: verdana;">(Madhvi Dairy 
+							Retail Outlet)</span>
 					</p></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"
-					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
+					style="padding: 3px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">
 						<br /> <strong>${sessionScope.frDetails.frAddress}</strong><br /> <br />
 						
@@ -89,11 +89,11 @@
           
            <c:choose>
           <c:when test="${frGstType==2000000}">
-              <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE FIRM, NOT SUPPOSED TO<br />
+              <span style="font-size:9px; font-family: verdana;">COMPOSITION TAXABLE FIRM, NOT SUPPOSED TO<br />
                 BE COLLECT TAX ON SUPPLIES</span>
           </c:when>
           <c:when test="${frGstType==10000000}">
-           <span style="font-size:9px; font-family: Arial;">COMPOSITION TAXABLE PERSON, NOT TO<br />
+           <span style="font-size:9px; font-family: verdana;">COMPOSITION TAXABLE PERSON, NOT TO<br />
           COLLECT TAX ON SUPPLIES        </span>
           
           </c:when>
@@ -102,11 +102,11 @@
 			
 			<tr>
 			<td colspan="2" align="center"
-					style="padding: 3px; font-family: Arial; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
+					style="padding: 3px; font-family: verdana; border-bottom: 1px solid #E7E7E7; font-size: 12px;"><p
 						class="style5">
-						<br />To, <strong>${Constant.FACTORYNAME}</strong><br /> 
-						<br />${Constant.FACTORYADDRESS}<br /> 
-						<br />GSTIN: <strong>${Constant.FACTORYGSTIN}</strong><br />
+						<br />To, <strong>${company.compName}</strong><br />	 <!-- ${Constant.FACTORYNAME} -->
+						<br /><strong>${company.factAddress}</strong><br /> 						 <!-- ${Constant.FACTORYADDRESS} -->
+						<br />GSTIN: <strong>${company.gstin}</strong><br />	 <!-- ${Constant.FACTORYGSTIN} -->
                        
                
                 </p>
@@ -133,13 +133,13 @@
 										cellspacing="0" cellpadding="1" class="tbl-inner"><!--cellpading was 5   -->
 										<tbody>
 											<tr>
-												<th width="30%" align="left" bgcolor="#ECECEC">HsnCode-itemName</th>
+												<th width="30%" align="left" bgcolor="#ECECEC">HsnCode-ItemName</th>
 												<!-- <th width="30%" bgcolor="#ECECEC">Particular</th> -->
 												<th width="14%" bgcolor="#ECECEC">Type-InvoiceNo</th>
 												<th width="13%" bgcolor="#ECECEC">Rate-Qty</th>
-												<th width="13%" align="right" bgcolor="#ECECEC">Cgst %-Rs
+												<th width="13%" align="right" bgcolor="#ECECEC">CGST %-Rs
 													</th>
-												<th width="13%" align="right" bgcolor="#ECECEC">Sgst %-Rs
+												<th width="13%" align="right" bgcolor="#ECECEC">SGST %-Rs
 													</th>
 												<th width="17%" bgcolor="#ECECEC">Amt</th>
 											</tr>
@@ -231,14 +231,14 @@
 											
 											<tr>
 												<td colspan="5" align="right"><span class="style7">
-														Cgst Value:</span></td>
+														CGST Value:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" value="${cgstValue}" /></span></td>
 											</tr>
 											
 											<tr>
 												<td colspan="5" align="right"><span class="style7">
-														Sgst Value:</span></td>
+														SGST Value:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" value="${sgstValue}" /></span></td>
 											</tr>
