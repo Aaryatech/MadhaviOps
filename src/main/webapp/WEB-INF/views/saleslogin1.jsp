@@ -182,12 +182,13 @@
         <div class="mob_no" id="empMob"></div>
         <div class="frm_bx">
           <div class="frm_one">
-          	<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp" maxlength="6"/>
-          	 <span class="error_form text-danger" id="invalid_otp"
-			style="display: none; color: red;">Invalid OTP</span>
+          	<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp"/>
+          	<span class="error_form text-danger" id="error_otp"
+			style="display: none;">Invalid OTP.</span>
           </div>
-          <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
-          <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"/>
+          <button type="submit" onclick="validateOtp()" class="sub_btn" id="send_otp">Submit</button>    
+          <button type="submit" onclick="resendOtp()" class="sub_btn" id="resend_btn" disabled="disabled">Resend OTP</button>    
+          
         </div>
         <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
      <!--  </form>  -->
@@ -195,47 +196,31 @@
     <!--End basic pop up container-->
     
     <!--Change Password Modal-->
+     
+    
     <div id="basic_pass" class="wellnew" style="display: none;">
-     <!--  <form action="" method="get">  -->
+      <form action="" method="get"> 
         <div class="mob_no" id="edit_pass_modal">Change Password</div>
         <div class="frm_bx">
           <div class="frm_one">
-          	<input name="newPass" type="password" class="input_one" placeholder="Enter New Password" id="newPass"/>
-         <span class="error_form text-danger" id="error_newPass"
-			style="display: none; color: red;">This field is required</span>
+          	<input name="newPass" type="text" class="input_one" placeholder="Enter New Password" id="newPass"/>
           </div>
           
             <div class="frm_one">
-          	<input name="confirmPass" type="password" class="input_one" placeholder="Enter Confirm Password" id="confirmPass"/>
-         <span class="error_form text-danger" id="error_confirmPass"
-			style="display: none; color: red;">This field is required</span>
-			
-			<span class="error_form text-danger" id="error_match"
-			style="display: none; color: red;">New password not matched with confirm password</span>
+          	<input name="confirmPass" type="text" class="input_one" placeholder="Enter Confirm Password" id="confirmPass"/>
           </div>
-          
-          <input name="" type="submit" value="Submit" class="sub_btn" id="cng_pswrd"/>
+          <input name="" type="submit" value="Submit" onclick="updatePass()" class="sub_btn" />
         </div>
-        <div class="basic_pass_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-      <!-- </form>  -->
-    </div>
+        <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
+      </form> 
+    </div> 
     
     
     <script type="text/javascript">
     $(document).ready(function () {
       $('#basic').popup();
     });
-    
-    $('#otp').on('input', function() {
-    	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
-    	});
     </script>
-    
-    <!-- <script type="text/javascript">
-    $(document).ready(function () {
-      $('#basic_pass').popup();
-    });
-    </script> -->
     
     
 	<script type="text/javascript">
@@ -271,7 +256,7 @@
 		window.redirectURL = '${pageContext.request.contextPath}/frLoginProcess';
 
 		function showNumPad(empId, name, contact) {
-			document.getElementById("resend_btn").style.display = "none";
+		
 			$.post('${checkValidEmployee}', {
 				empId : empId,
 				ajax : 'true'
@@ -289,6 +274,7 @@
 			document.getElementById("selectedEmp").innerHTML = name;
 			document.getElementById('empContact').value = contact;
 			document.getElementById('employeeId').value = empId;
+			document.getElementById("resend_btn").style.display = "none";
 		}
 		function hideNumPad() {
 
@@ -439,56 +425,56 @@
 				
 			}); 
 		}
+		function resendOtp(){
+			var mob = $("#empContact").val();
+			$.getJSON('${getEmpDetails}', {
+				mob : mob,
+				ajax : 'true'
+			}, function(data) {
+				//alert("Emp---------"+JSON.stringify(data))
+
+			}); 
+		}
 	
 	function validateOtp(){
 		
 		var otp = $("#otp").val();
-	
 		$.getJSON('${checkOtp}', {
 			otp : otp,
 			ajax : 'true'
 		}, function(data) {
 			
-		alert("OTP---------"+JSON.stringify(data))
+		///alert("OTP---------"+JSON.stringify(data))
 			if(data.error!=true){
+				$("#error_otp").show()
+				document.getElementById('otp').value = '';
 				document.getElementById("basic").style.display = "none";
 				document.getElementById("basic_pass").style.display = "block";
-				$("#invalid_otp").hide()
-			}else{
-				$("#invalid_otp") .show()
-				document.getElementById("otp").value = "";
-				document.getElementById("resend_btn").disabled = false;
+				
+			}else{				
+				$("#error_otp").show()
+				document.getElementById('otp').value = '';
 				document.getElementById("resend_btn").style.display = "block";
+				document.getElementById("resend_btn").disabled = false;
+				
 			}
 
 			
 		});
 	}
 	
-	function reSendOtp(){
-		
-		var mob = $("#empContact").val();
-		
-		$.getJSON('${getEmpDetails}', {
-			mob : mob,
-			ajax : 'true'
-		}, function(data) {
-			//alert("Emp---------"+JSON.stringify(data))
-			
-		}); 
-	}
 	
 function updatePass(){
 	var employeeId = $("#employeeId").val();
 		var newPass = $("#newPass").val();
-		///alert("newPass--------------"+newPass+" "+employeeId )
+		alert("newPass--------------"+newPass+" "+employeeId )
 		$.getJSON('${changeToNewPassword}', {
 			employeeId : employeeId,
 			newPass : newPass,
 			ajax : 'true'
 		}, function(data) {
 			
-			alert("Res---------"+JSON.stringify(data))
+			alert("Emp---------"+JSON.stringify(data))
 			if(error!=true){
 			
 				document.getElementById('empContact').value = '';
@@ -500,63 +486,6 @@ function updatePass(){
 			
 		});
 	}
-$('#cng_pswrd').click(function () {
-
-						var isError = false;
-						
-
-						if (!$("#newPass").val()) {
-
-							isError = true;
-							
-							$("#error_newPass")
-									.show()
-							
-						} else {
-							$("#error_newPass")
-									.hide()
-						}
-						
-						if (!$("#confirmPass").val()) {
-
-							isError = true;
-							
-							$("#error_confirmPass")
-									.show()
-							
-						} else {
-							$("#error_confirmPass")
-									.hide()
-						}
-
-						if ($("#newPass").val() != $("#confirmPass").val()) { 
-							
-							isError = true; 
-							
-							$("#error_match")
-							.show()
-							
-						}else {
-							$("#error_match")
-								.hide()
-						}
-
-						if (!isError) {
-
-							var x = confirm("Do you really want to change your password?");
-							if (x == true) {
-								updatePass();
-								/* document
-										.getElementById("sub1").disabled = true;
-								document
-										.getElementById("sub2").disabled = true; */
-								return true;
-							}
-						}
-						return false;
-						
-					});
-
 	</script>
 	
 	<script type="text/javascript">

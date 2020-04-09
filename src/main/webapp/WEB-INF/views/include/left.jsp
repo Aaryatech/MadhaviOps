@@ -307,7 +307,7 @@
 
 
 				</c:choose>
-			</c:forEach>
+			</c:forEach>--%>
 		<c:if test="${flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div
@@ -315,7 +315,7 @@
 							<i class="fa fa-file-pdf-o icon"></i>
 						</div>
 						<div class="title">Other Item Stock</div></a></li>
-			</c:if> --%>
+			</c:if> 
 
 
 					<c:set var="flag" value="${0}"></c:set>
