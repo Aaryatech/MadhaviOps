@@ -183,8 +183,12 @@
         <div class="frm_bx">
           <div class="frm_one">
           	<input name="otp" type="text" class="input_one" placeholder="Enter OTP" id="otp"/>
+          	<span class="error_form text-danger" id="error_otp"
+			style="display: none;">Invalid OTP.</span>
           </div>
-          <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
+          <button type="submit" onclick="validateOtp()" class="sub_btn" id="send_otp">Submit</button>    
+          <button type="submit" onclick="resendOtp()" class="sub_btn" id="resend_btn" disabled="disabled">Resend OTP</button>    
+          
         </div>
         <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
      <!--  </form>  -->
@@ -192,8 +196,10 @@
     <!--End basic pop up container-->
     
     <!--Change Password Modal-->
+     
+    
     <div id="basic_pass" class="wellnew" style="display: none;">
-     <!--  <form action="" method="get">  -->
+      <form action="" method="get"> 
         <div class="mob_no" id="edit_pass_modal">Change Password</div>
         <div class="frm_bx">
           <div class="frm_one">
@@ -206,8 +212,8 @@
           <input name="" type="submit" value="Submit" onclick="updatePass()" class="sub_btn" />
         </div>
         <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
-      <!-- </form>  -->
-    </div>
+      </form> 
+    </div> 
     
     
     <script type="text/javascript">
@@ -250,7 +256,7 @@
 		window.redirectURL = '${pageContext.request.contextPath}/frLoginProcess';
 
 		function showNumPad(empId, name, contact) {
-			//employeeId = empId;
+		
 			$.post('${checkValidEmployee}', {
 				empId : empId,
 				ajax : 'true'
@@ -268,6 +274,7 @@
 			document.getElementById("selectedEmp").innerHTML = name;
 			document.getElementById('empContact').value = contact;
 			document.getElementById('employeeId').value = empId;
+			document.getElementById("resend_btn").style.display = "none";
 		}
 		function hideNumPad() {
 
@@ -418,19 +425,38 @@
 				
 			}); 
 		}
+		function resendOtp(){
+			var mob = $("#empContact").val();
+			$.getJSON('${getEmpDetails}', {
+				mob : mob,
+				ajax : 'true'
+			}, function(data) {
+				//alert("Emp---------"+JSON.stringify(data))
+
+			}); 
+		}
 	
 	function validateOtp(){
 		
 		var otp = $("#otp").val();
-	
 		$.getJSON('${checkOtp}', {
 			otp : otp,
 			ajax : 'true'
 		}, function(data) {
 			
-		//alert("Emp---------"+JSON.stringify(data))
-			if(error!=true){
+		///alert("OTP---------"+JSON.stringify(data))
+			if(data.error!=true){
+				$("#error_otp").show()
+				document.getElementById('otp').value = '';
+				document.getElementById("basic").style.display = "none";
 				document.getElementById("basic_pass").style.display = "block";
+				
+			}else{				
+				$("#error_otp").show()
+				document.getElementById('otp').value = '';
+				document.getElementById("resend_btn").style.display = "block";
+				document.getElementById("resend_btn").disabled = false;
+				
 			}
 
 			
