@@ -550,7 +550,7 @@ ${currentDate}
 												data,
 												function(i, v) {
 
-													alert(JSON.stringify(v));
+													//alert(JSON.stringify(v));
 
 													var acButton = '&nbsp;&nbsp;<a href="#" class="slide_open" onclick="editPettyCash('
 															+ v.pettycashId

@@ -289,7 +289,7 @@
 
 
 				</c:choose>
-			</c:forEach>
+			</c:forEach>--%>
 			<c:if test="${ flag==1}">
 				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
 							class="img">
@@ -307,7 +307,7 @@
 
 
 				</c:choose>
-			</c:forEach>--%>
+			</c:forEach>
 		<c:if test="${flag==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showOthItemStock"><div

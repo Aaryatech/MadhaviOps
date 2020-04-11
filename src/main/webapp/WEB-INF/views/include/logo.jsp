@@ -59,7 +59,7 @@
 	<div class="logo"><a href="${pageContext.request.contextPath}/home"><img src="${pageContext.request.contextPath}/resources/newpos/images/madhvi_logo.jpg" alt="madhvi_logo"></a> </div>
 	<div class="drop_menu">
 	
-		<div class="franchise_nm">${sessionScope.frName} <span>(${sessionScope.frEmpName})</span></div>	
+		<div class="franchise_nm"><img src="${frImgUrl}${sessionScope.img}" alt="img" id="img">&nbsp;&nbsp;${sessionScope.frName}<span>(${sessionScope.frEmpName})</span></div>	
 		<div class="hide_menu"><a href="#" onclick="SetRating()"><i class="fa fa-eye"  title="Hide/Show Menu Bar" aria-hidden="true"></i> 
 	</a></div>
 		<div class="full_scrn" id="fs-doc-button" alt="F"><a href="#"><abbr title="Full Screen"><i class="fa fa-arrows-alt"  aria-hidden="true"></i></abbr></a></div>

@@ -1246,6 +1246,7 @@ public class HomeController {
 		session.setAttribute("allMenuList", frMenuList);
 		session.setAttribute("eyeVal", "block");
 		session.setAttribute("frEmpName", loginResponse.getFrEmp().getFrEmpName());
+		session.setAttribute("img", Constant.FR_IMAGE_URL+loginResponse.getFranchisee().getFrImage());
 		session.setAttribute("frEmpDetails", loginResponse.getFrEmp());
 		session.setAttribute("frDetails", loginResponse.getFranchisee());
 		session.setAttribute("loginInfo", loginResponse.getLoginInfo());
