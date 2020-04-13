@@ -978,7 +978,7 @@ public class PettyCashController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("frId", frid);
-			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmpByFrid", map, FrEmpMaster[].class);
+			FrEmpMaster[] empArr = rest.postForObject(Constant.URL + "/getAllFrEmp", map, FrEmpMaster[].class);
 			empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
 
 			System.out.println("Emp List----------" + empList);
