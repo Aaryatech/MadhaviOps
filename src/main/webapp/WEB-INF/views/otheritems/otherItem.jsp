@@ -43,7 +43,7 @@
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
-		<div class="wrapperIn2">
+		<div> <!--  class="wrapperIn2" -->
 
 			<!--leftNav-->
 
@@ -54,8 +54,10 @@
 				 
 	<form name="frm_search" id="frm_search" method="post"	action="${pageContext.request.contextPath}/addOtherItemProcess">
 					
-						<div class="col-md -3">
-						<c:choose>
+						<div class="row" style="margin: 20px 0"><!-- col-md -3 -->
+						
+						<div class="col-md-6">
+							<c:choose>
 						<c:when test="${isEdit==1}">
 						<div class="col1title" align="left"><h3>Edit Other Item</h3></div>
 						</c:when>
@@ -63,6 +65,9 @@
 						<div class="col1title" align="left"><h3>Add Other Item</h3></div>
 						</c:otherwise>
 						</c:choose>
+						</div>
+						
+						<div class="col-md-6">
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	
 								<div class="col1title" align="right"> 
@@ -70,34 +75,40 @@
 							</a>
 					</div>
 						</div>
+							
 						
-					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title" align="left">Item Code*: </div>
+						
+							
 						</div>
-						<div class="col-md-3">
+						
+					
+					<!-- 1 -->
+						<div class="row" style="margin: 0 0 20px 0">
+							<div class="col-md-5">
+								<div class="col-md-4"><div class="col1title" align="left">Item Code*: </div></div>
+								<div class="col-md-8">
 							<input id="itemCode" class="form-control"
 								placeholder="Item Code" name="itemCode" autocomplete="off"  type="text" value="${code}" required>
 								
 						</div>
-						<div class="col-md-1">
-							 
-						</div>
-						<div class="col-md-2">
+							</div>
+							<div class="col-md-2">&nbsp;</div>
+							<div class="col-md-5">
+								<div class="col-md-4">
 							<div class="col1title" align="left">Item Name*: </div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-8">
 							<input id="itemName" class="form-control"
 								placeholder="Item Name" name="itemName" autocomplete="off"  type="text" value="${item.itemName}" required>
 						</div>
-					 
-					</div>
-					
-					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title" align="left">UOM*: </div>
+							</div>
 						</div>
-						<div class="col-md-3">
+						
+					<!-- 2 -->
+					<div class="row" style="margin: 0 0 15px 0">
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">UOM*: </div></div>
+							<div class="col-md-8">
 						    <input type="hidden" name="selectedUom" id="selectedUom">
 						
 							<select name="itemUom" required id="itemUom" class="form-control"placeholder="Item UOM" onchange="javascript:getSelectedLabel(this);"
@@ -116,98 +127,76 @@
 												</c:forEach>
 										</select>
 						</div>
-						<div class="col-md-1">
-							 
 						</div>
-
-						<div class="col-md-2">
-							<div class="col1title" align="left">HSN Code*: </div>
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">&nbsp;</div>
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">HSN Code*: </div></div>
+							<div class="col-md-8">
 							<input type="text" name="hsnCode" autocomplete="off"  id="hsnCode" 
 											placeholder="HSN Code" class="form-control"
 											required value="${itemSup.itemHsncd}"/>
 
 						</div>
-				 
+						</div>
+						
 					</div>
 					
-					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title" align="left">Purchase Rate*: </div>
-						</div>
-						<div class="col-md-3">
+					<!-- 3 -->
+					<div class="row" style="margin: 0 0 20px 0">
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Purchase Rate*: </div></div>
+							<div class="col-md-8">
 							<input id="purchaseRate" class="form-control"
 								placeholder="Purchase Rate" autocomplete="off"  name="purchaseRate" type="text" value="${item.itemRate1}" required>
 
 						</div>
-						<div class="col-md-1">
-							 
 						</div>
-
-						<div class="col-md-2">
-							<div class="col1title" align="left">Sale Rate(Inclusive Tax)*: </div>
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">&nbsp;</div>
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Sale Rate(Inclusive Tax)*: </div></div>
+							<div class="col-md-8">
 							<input id="saleRate" class="form-control"
 								placeholder="Sale Rate" autocomplete="off"  name="saleRate" type="text" value="${item.itemMrp1}"  required>
 
 						</div>
-				 
+						</div>
 					</div>
 					
-					<div class="colOuter">
-					<%-- 	<div class="col-md-2">
-							<div class="col1title" align="left">Tax Description*: </div>
-						</div>
-						<div class="col-md-3">
-							<input id="taxDesc" class="form-control"
-								placeholder="Tax Description" name="taxDesc" type="text" value="${otherItem.taxDesc}" required>
-
-						</div> --%>
-							<div class="col-md-2">
-							<div class="col1title" align="left">Sgst Per*: </div>
-						</div>
-						<div class="col-md-3">
+					<!-- 4 -->
+					<div class="row" style="margin: 0 0 20px 0">
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Sgst Per*: </div></div>
+							<div class="col-md-8">
 							<input id="sgstPer" class="form-control"
 								placeholder="Sgst Per" autocomplete="off"  name="sgstPer" type="text" value="${item.itemTax1}" onkeyup="changeTax()" required>
 
 						</div>
-						<div class="col-md-1">
-							 
 						</div>
-
-						<div class="col-md-2">
-							<div class="col1title" align="left">Cgst Per*: </div>
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">&nbsp;</div>
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Cgst Per*: </div></div>
+							<div class="col-md-8">
 							<input id="cgstPer" class="form-control"
 								placeholder="Cgst Per" autocomplete="off"  name="cgstPer" type="text" value="${item.itemTax2}" onkeyup="changeTax()" required>
 
 						</div>
-				 
+						</div>
 					</div>
 					
-					<div class="colOuter">
-					
-						<div class="col-md-2">
-							<div class="col1title" align="left">Igst Per*: </div>
-						</div>
-						<div class="col-md-3">
+					<!-- 5 -->
+					<div class="row" style="margin: 0 0 20px 0">
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Igst Per*: </div></div>
+							<div class="col-md-8">
 							<input id="igstPer" class="form-control"
 								placeholder="Igst Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
 
 						</div>
-				 
-						<div class="col-md-1">
-							 
 						</div>
-				 
-
-						<div class="col-md-2">
-							<div class="col1title" align="left">Is Active?* </div>
-						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">&nbsp;</div>
+						<div class="col-md-5">
+							<div class="col-md-4"><div class="col1title" align="left">Is Active?* </div></div>
+							<div class="col-md-8">
 						<select name="isActive" id="isActive" class="form-control" placeholder="Is Active"
 												 data-rule-required="true" >
 							<c:choose>	
@@ -227,14 +216,20 @@
 						</select>
 						</div>
 						</div>
-							<div class="colOuter">
+					</div>	
+					
+					<div class="row"></div>
 						<div align="center">
 						<!-- <button type="submit" name="submit" class="buttonsaveorder" id="submtbtn" disabled="disabled">Submit</button> -->
 							 <input name="submit" class="buttonsaveorder" value="Submit"
 								type="submit" align="center" id="submtbtn"> 
 						</div>
-				 
-					</div>
+						
+					
+					
+					
+					
+							
 					<div id="table-scroll">  <!-- class="table-scroll"> --> 
 					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
 					<div > <!-- class="table-wrap" -->
