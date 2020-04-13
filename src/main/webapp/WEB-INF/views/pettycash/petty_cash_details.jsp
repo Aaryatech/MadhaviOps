@@ -73,8 +73,6 @@ table, th, td {
 <body onload="getData()">
 
 
-${currentDate}
-
 	<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 	<link rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/loader.css">
