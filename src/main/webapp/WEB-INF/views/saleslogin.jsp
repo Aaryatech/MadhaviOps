@@ -187,7 +187,8 @@
 			style="display: none; color: red;">Invalid OTP</span>
           </div>
           <input name="" type="submit" value="Submit" onclick="validateOtp()" class="sub_btn" />
-          <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"/>
+          <input id="resend_btn" type="submit" value="Re Send OTP" onclick="reSendOtp()" class="sub_btn" disabled="disabled"
+          style="float: right;"/>
         </div>
         <div class="basic_close close_btn"><i class="fa fa-times" aria-hidden="true"></i></div>
      <!--  </form>  -->
@@ -195,7 +196,7 @@
     <!--End basic pop up container-->
     
     <!--Change Password Modal-->
-    <div id="basic_pass" class="wellnew" style="display: none;">
+    <div id="basic_pass" class="wellnew">
      <!--  <form action="" method="get">  -->
         <div class="mob_no" id="edit_pass_modal">Change Password</div>
         <div class="frm_bx">
@@ -224,6 +225,8 @@
     <script type="text/javascript">
     $(document).ready(function () {
       $('#basic').popup();
+      $('#basic_pass').popup({horizontaal:'center'});
+      //data-popup-ordinal
     });
     
     $('#otp').on('input', function() {
@@ -449,10 +452,18 @@
 			ajax : 'true'
 		}, function(data) {
 			
-		alert("OTP---------"+JSON.stringify(data))
+	//	alert("OTP---------"+JSON.stringify(data))
 			if(data.error!=true){
-				document.getElementById("basic").style.display = "none";
-				document.getElementById("basic_pass").style.display = "block";
+				
+					
+				      /////$('#basic').hide();
+				      $('#basic').popup('hide');
+				      //horizontalvvv
+				      $('#basic_pass').popup('show');
+				      
+				   
+				//document.getElementById("basic").style.display = "none";
+				//document.getElementById("basic_pass").style.display = "block";
 				$("#invalid_otp").hide()
 			}else{
 				$("#invalid_otp") .show()
@@ -488,12 +499,13 @@ function updatePass(){
 			ajax : 'true'
 		}, function(data) {
 			
-			alert("Res---------"+JSON.stringify(data))
+			alert(JSON.stringify(data.message))
 			if(error!=true){
 			
 				document.getElementById('empContact').value = '';
 				document.getElementById('employeeId').value = '';
 				document.getElementById("basic_pass").style.display = "none";
+				window.location.reload();
 				
 			}
 
