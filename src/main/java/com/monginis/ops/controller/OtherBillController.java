@@ -353,14 +353,14 @@ public class OtherBillController {
 			String suppId = request.getParameter("suppId");
 			String suppName = request.getParameter("suppName");
 			String suppAdd = request.getParameter("suppAdd");
-			String city = request.getParameter("city");
+			String city = "NA";//request.getParameter("city");
 			int isSameState = Integer.parseInt(request.getParameter("isSameState"));
 			String mob = request.getParameter("mob");
 			String email = request.getParameter("email");
 			String gstnNo = request.getParameter("gstnNo");
 			String panNo = request.getParameter("panNo");
-			String liceNo = request.getParameter("liceNo");
-			int creditDays = Integer.parseInt(request.getParameter("creditDays"));
+			String liceNo = "NA"; //request.getParameter("liceNo");
+			int creditDays = 0;//Integer.parseInt(request.getParameter("creditDays"));
 			 
 			FrSupplier frSupplier = new FrSupplier();
 			if(suppId.equals("") || suppId==null)

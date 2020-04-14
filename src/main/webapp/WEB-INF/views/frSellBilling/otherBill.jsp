@@ -235,15 +235,15 @@ body {
 					</div>
 					
 					<div class="order-right" style="margin-top: 5px;">
-					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="buttonsaveorder">
 										</a>
-					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="buttonsaveorder">
 										</a>
-					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="buttonsaveorder">
 										</a>
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="buttonsaveorder">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="buttonsaveorder">
 										</a>
 					</div>
 
@@ -345,7 +345,7 @@ body {
 																			class="form-control" name="discPer" id="discPer" value="0"
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
-																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
+																		 <td ><input type="button" class="buttonsaveorder" value="Add Item" onclick="addItem();"
 												id="b1"/> </td>
 																	</tr>
 																</table>
@@ -365,7 +365,7 @@ body {
 										<input name="rate1" id="rate1" type="hidden" value="00" />
 
 										 <%-- <center>
-											<button class="btn additem_btn" onclick="addItem();"
+											<button class="buttonsaveorder" onclick="addItem();"
 												id="b1">Add Item</button>
 										</center> --%>
 									</div>
@@ -454,7 +454,7 @@ body {
 
 
 								<center>
-									<input type="submit" class="btn additem_btn" id="insert"
+									<input type="submit" class="buttonsaveorder" id="insert"
 										 value="Submit" disabled>  
 								 
 								</center>  

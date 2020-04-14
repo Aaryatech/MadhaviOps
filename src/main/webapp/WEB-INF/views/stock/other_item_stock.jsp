@@ -134,12 +134,14 @@ table, th, td {
 			</div>
 
 			<!--rightSidebar-->
+			
 			<div class="sidebarright">
+			<div class="row" style="margin: 20px 0">
 				<div class="order-left">
 					<h2 class="pageTitle">Other Item Stock Details</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
-
+			</div>
 				<!-- 
 				<div class="colOuter">
 					<div class="col-md-2">
@@ -191,7 +193,7 @@ table, th, td {
 					</div>
 
 					<div class="col-md-1">
-						<button type="button" class="btn  buttonsaveorder" id='pdf'
+						<button type="button" class="buttonsaveorder" id='pdf'
 							onclick="genPdf()" disabled>PDF</button>
 					</div>
 					</div>
@@ -225,7 +227,7 @@ table, th, td {
 
 				</div> -->
 
-
+<div class="row">
 
 				<div class="colOuter" style="display: none" id=select_date>
 					<div class="col-md-2">
@@ -264,17 +266,13 @@ table, th, td {
 
 				</div>
 
+</div>
 
-
-
+<div class="row">
 				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
+					<div class="col4">
 
-
-						<div align="center" id="loader" style="display: none">
+						<div align="center" id="loader"  style="display: none;"> 
 
 							<span>
 								<h4>
@@ -285,9 +283,7 @@ table, th, td {
 							<span class="l-6"></span>
 						</div>
 					</div>
-
-
-
+				</div>
 				</div>
 
 				<div class="col-md-2">
@@ -344,13 +340,13 @@ table, th, td {
 									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
-												<th class="col-md-1">Item Code</th>
-												<th class="col-md-1">Item Name</th>
-												<th class="col-md-1">Opening Stock</th>
-												<th class="col-md-1">Purchase Qty</th>
-												<th class="col-md-1">Sale Qty</th>
-												<th class="col-md-1">Damage Qty</th>
-												<th class="col-md-1">Current Stock</th>
+												<th class="col-md-1" style="text-align: center;">Item Code</th>
+												<th class="col-md-1" style="text-align: center;">Item Name</th>
+												<th class="col-md-1" style="text-align: center;">Opening Stock</th>
+												<th class="col-md-1" style="text-align: center;">Purchase Qty</th>
+												<th class="col-md-1" style="text-align: center;">Sale Qty</th>
+												<th class="col-md-1" style="text-align: center;">Damage Qty</th>
+												<th class="col-md-1" style="text-align: center;">Current Stock</th>
 
 
 												<%-- 	<c:if test="${isMonthCloseApplicable eq true}">
@@ -370,7 +366,7 @@ table, th, td {
 
 							</div>
 							<div class="col-sm-3  controls">
-								<input type="button" id="expExcel" class="btn btn-primary"
+								<input type="button" id="expExcel" class="buttonsaveorder"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
 							</div>
@@ -587,13 +583,13 @@ table, th, td {
 														- (parseFloat(item.sellQty));//+parseFloat(item.damagedStock)
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td class="col-md-1"  style="text-align: center;"></td>')
 																.html(
 																		item.itemId
 																				+ '<input type="hidden" id="currStk'+item.id+'" value='+curStock+'  />'));
 												tr
 														.append($(
-																'<td class="col-md-1"></td>')
+																'<td class="col-md-1"  style="text-align: center;"></td>')
 																.html(
 																		item.itemName));
 												tr

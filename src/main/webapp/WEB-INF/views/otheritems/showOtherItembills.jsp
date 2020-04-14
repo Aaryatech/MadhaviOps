@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,27 +13,18 @@
 
 <title>Madhvi</title>
 
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/monginis.css"
-	rel="stylesheet" type="text/css" />
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/feviconicon.png"
-	type="image/x-icon" />
 <link href="${pageContext.request.contextPath}/resources/css/custom.css"
 	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="icon"
+
+<%-- <link rel="icon"
 	href="${pageContext.request.contextPath}/images/feviconicon.png"
-	type="image/x-icon" />
+	type="image/x-icon" /> --%><%-- 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-1.10.2.min.js"></script>
-
+ --%>
 <!--autocomplete-->
+<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
@@ -69,11 +61,11 @@
 <%--   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/styles.css" />   --%>
 
 <!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
-<!--new css added by kalpesh -->
+<!--new css added by kalpesh --><%-- 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/jquery.mCustomScrollbar.css">
 
-<script
+ --%><script
 	src="${pageContext.request.contextPath}/resources/css/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap-select.min.css" />
@@ -183,20 +175,13 @@ body {
 	$(function() {
 
 		 
-		$("#datepicker1").datepicker({
+		$("#datepicker").datepicker({
 			dateFormat : 'dd-mm-yy', 
 		});
 	});
+	 
 </script>
-<script>
-	$(function() {
 
-		 
-		$("#datepicker2").datepicker({
-			dateFormat : 'dd-mm-yy', 
-		});
-	});
-</script>
 </head>
 <body id="myBodyId" onload="showBill()">
 
@@ -251,9 +236,9 @@ body {
 					<br>
 					<div class="order-right" align="right">
 					 
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="buttonsaveorder">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="buttonsaveorder">
 										</a>
 					</div>
 
@@ -324,11 +309,12 @@ body {
 									   
 
 								</div>
-								<center>
-									<input type="submit" class="btn additem_btn" id="insert"  onclick="showBill()"
-										 value="Submit" >  
+								<div class="row"></div>
+										<div align="center">
+									<input type="submit" class="buttonsaveorder" id="insert"  onclick="showBill()"
+										 value="Submit" style="margin-top: 5px;">  
 								 
-								</center>  
+								</div>
 					
 <%-- 											<div>
 												<div class="shInnerwidth">

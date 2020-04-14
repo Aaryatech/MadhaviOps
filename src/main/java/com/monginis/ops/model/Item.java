@@ -16,7 +16,7 @@ private int itemGrp3;
 
 private float itemRate1;
 
-private float itemRate2;
+private int itemRate2; // Franchisee Id
 
 private float itemMrp1;
 
@@ -236,12 +236,12 @@ public void setItemRate1(float itemRate1) {
 }
 
 
-public float getItemRate2() {
+public int getItemRate2() {
 	return itemRate2;
 }
 
 
-public void setItemRate2(float itemRate2) {
+public void setItemRate2(int itemRate2) {
 	this.itemRate2 = itemRate2;
 }
 
