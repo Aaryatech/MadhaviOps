@@ -41,6 +41,7 @@
 
 			<!--rightSidebar-->
 			<div class="sidebarright">
+			<div class="row" style="margin: 20px 0">
 				<div class="order-left">
 					<h2 class="pageTitle">Other Purchase Bills</h2>
 					
@@ -49,6 +50,7 @@
 				<div class="col1title" align="right"> 
 						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="buttonsaveorder">
 										</a>
+										</div>
 										</div>
 				<form id="validation-form">
 
@@ -88,10 +90,12 @@
 						</div>
 
  
-<div class="col-md-1" align="left"></div>
-						<div class="col-md-1">
+<div class="row"></div>
+						<div align="center" style="margin-top: 2%;">
+					
 							<button type="button" class="btn  buttonsaveorder"
 								onclick="serchOtherBill()">Search</button>
+						
 						</div>
 
 					</div>
@@ -112,15 +116,15 @@
 								<table id="table_grid" class="responsive-table" ><!-- class="main-table" -->
 									<thead>
 										<tr class="bgpink">
-										<th class="col-md-1">Sr No</th>
-											<th class="col-md-1">Invoice No</th>
-											<th class="col-md-1">Date</th>
-											<th class="col-md-1">Supplier</th>
-											<th class="col-md-1" style="text-align:right;">Discount</th>
-											<th class="col-md-1" style="text-align:right;">Taxable Amt</th>
-											<th class="col-md-1" style="text-align:right;">Tax Amt</th>
-											<th class="col-md-1" style="text-align:right;">Grand Total</th> 
-											<th class="col-md-1"style="text-align:center;" >Action</th>
+										<th class="col-md-1" style="text-align: center;">Sr No</th>
+											<th class="col-md-1" style="text-align: center;">Invoice No</th>
+											<th class="col-md-1" style="text-align: center;">Date</th>
+											<th class="col-md-1" style="text-align: center;">Supplier</th>
+											<th class="col-md-1" style="text-align: center;">Discount</th>
+											<th class="col-md-1" style="text-align: center;">Taxable Amt</th>
+											<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+											<th class="col-md-1" style="text-align: center;">Grand Total</th> 
+											<th class="col-md-1" style="text-align: center;" >Action</th>
 
 										</tr>
 									</thead>
@@ -243,9 +247,9 @@ function serchOtherBill()
 
 								var tr = $('<tr></tr>');
 								 
-							  	tr.append($('<td></td>').html(key+1));
-							  	tr.append($('<td></td>').html(itemList.invoiceNo));
-							  	tr.append($('<td></td>').html(itemList.billDate)); 
+							  	tr.append($('<td style="text-align: left;"></td>').html(key+1));
+							  	tr.append($('<td style="text-align: center;"></td>').html(itemList.invoiceNo));
+							  	tr.append($('<td style="text-align: center;"></td>').html(itemList.billDate)); 
 							  	for(var i=0;i<len;i++)
 							  		{
 							  			if(supplierList[i].suppId==itemList.suppId)
@@ -253,7 +257,7 @@ function serchOtherBill()
 							  				suppName=supplierList[i].suppName;
 							  				}
 							  		}
-							  	tr.append($('<td></td>').html(suppName)); 
+							  	tr.append($('<td style="text-align: center;"></td>').html(suppName)); 
 							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.discAmt)); 
 							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.taxableAmt)); 
 							  	tr.append($('<td style="text-align:right;"></td>').html(itemList.totalTax));

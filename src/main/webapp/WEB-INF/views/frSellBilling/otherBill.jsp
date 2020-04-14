@@ -229,6 +229,7 @@ body {
 				<div class="sidebarright">
 			<form name="frm_search" id="frm_search" method="post"
 					action="${pageContext.request.contextPath}/submitOtherBill">
+					<div class="row" style="margin: 20px 0">
 					<div class="order-left">
 						<h2 class="pageTitle">Other Purchase Bill</h2>
 
@@ -245,6 +246,7 @@ body {
 										</a>
 						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="buttonsaveorder">
 										</a>
+					</div>
 					</div>
 
 					<!--tabNavigation-->
@@ -382,18 +384,18 @@ body {
 										<table id="table_grid1" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-sm-1">Sr no.</th>
-													<th class="col-md-1">Item Code</th>
-													<th class="col-md-2">Item Name</th>
-													<th class="col-md-1">Qty</th>
-													<th class="col-md-1">Rate</th>
-													<th class="col-md-1">Disc%</th>
-													<th class="col-md-1">Disc Amt</th>
-													<th class="col-md-1">Amount</th>
-													<th class="col-md-1">Tax%</th>
-													<th class="col-md-1">Tax Amt</th>
-													<th class="col-md-1">Total</th>
-													<th class="col-md-2">Action</th>
+													<th class="col-sm-1" style="text-align: center;">Sr no.</th>
+													<th class="col-md-1" style="text-align: center;">Item Code</th>
+													<th class="col-md-2" style="text-align: center;">Item Name</th>
+													<th class="col-md-1" style="text-align: center;">Qty</th>
+													<th class="col-md-1" style="text-align: center;">Rate</th>
+													<th class="col-md-1" style="text-align: center;">Disc%</th>
+													<th class="col-md-1" style="text-align: center;">Disc Amt</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>
+													<th class="col-md-1" style="text-align: center;">Tax%</th>
+													<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+													<th class="col-md-1" style="text-align: center;">Total</th>
+													<th class="col-md-2" style="text-align: center;">Action</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -573,8 +575,8 @@ body {
 											var tr = $('<tr></tr>');
 											 
 										  	tr.append($('<td></td>').html(key+1));
-										  	tr.append($('<td></td>').html(itemList.itemId));
-										  	tr.append($('<td></td>').html(itemList.itemName));
+										  	tr.append($('<td  style="text-align: center;"></td>').html(itemList.itemId));
+										  	tr.append($('<td  style="text-align: left;"></td>').html(itemList.itemName));
 										  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
 										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 										  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
