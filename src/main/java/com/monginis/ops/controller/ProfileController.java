@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
@@ -181,8 +182,7 @@ public class ProfileController {
 			map.add("grnTwo", frDetails.getGrnTwo());
 			map.add("delStatus", frDetails.getDelStatus());
 			map.add("ownerBirthDate", frDetails.getOwnerBirthDate());
-			map.add("fbaLicenseDate", frDetails.getFbaLicenseDate());
-			map.add("frAgreementDate", frDetails.getFrAgreementDate());
+			map.add("fbaLicenseDate", frDetails.getFbaLicenseDate());			
 			map.add("frGstType", frDetails.getFrGstType());
 			map.add("frGstNo", frDetails.getFrGstNo());
 			map.add("stockType", frDetails.getStockType());
@@ -202,6 +202,14 @@ public class ProfileController {
 			int intFrRate=(int) frDetails.getFrRate();
 			map.add("frRate",intFrRate);
 			map.add("frRmn1", frDetails.getFrRmn1());
+			String fdaDate = request.getParameter("fda_lics_date");
+			System.out.println("FDA Date-----------------"+fdaDate);
+			map.add("fdaLicsDate", DateConvertor.convertToYMD(fdaDate));
+			map.add("frAgreementDate",  DateConvertor.convertToYMD(request.getParameter("fr_agreement_date")));
+			map.add("weighingScale1Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date1")));
+			map.add("weighingScale2Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date2")));
+			map.add("shopEstbLicsDate",  DateConvertor.convertToYMD(request.getParameter("shop_estb_act_date")));
+			map.add("profTaxDate", DateConvertor.convertToYMD(request.getParameter("prof_tax_date")));
 			
 			 System.out.println(frName+""+frEmail+""+frMob+""+frOwner+""+frCity+""+frPassword);
 			

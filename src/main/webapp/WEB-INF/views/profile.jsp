@@ -33,16 +33,16 @@
 	});
 </script> --%>
 
-<%-- <!--datepicker-->
+<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$("#from_date").datepicker({
+			$(".datepicker_dmy").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 		});
-		$(function() {
+		/* $(function() {
 			$("#to_date").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -51,10 +51,10 @@
 			$("#join_date").datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-		});
+		}); */
 	</script>
 	<!--datepicker-->
- --%>
+ 
 
 
 
@@ -257,6 +257,27 @@
 											<div class="profileinput mardis">${frDetails.fbaLicenseDate}</div>
 
 										</div>
+										
+										<div class="profile">
+											<div class="profilefildset">Weighing Scale License Date 1</div>
+											<div class="profileinput">
+
+												<input class="texboxitemcode datepicker_dmy" placeholder="Weighing Scale License Date 1"
+													name="weighing_scale_date1" type="text" value="${frSup.pass2}" >
+
+											</div>
+										</div>
+										
+											<div class="profile">
+											<div class="profilefildset">License under Shops & Establishment Act Date</div>
+											<div class="profileinput">
+
+												<input class="texboxitemcode datepicker_dmy" placeholder="License under Shops & Establishment Act Date"
+													name="shop_estb_act_date" type="text" value="${frSup.pass4}">
+
+											</div>
+										</div>
+										
 
 									</div>
 
@@ -331,12 +352,36 @@
 										</div>
 										<div class="profile">
 											<div class="profilefildset">Agreement Date</div>
-											<div class="profileinput mardis">${frDetails.frAgreementDate}</div>
+											<div class="profileinput">
+												<input class="texboxitemcode datepicker_dmy" placeholder="Franchise Agreement Date"
+													name="fr_agreement_date" type="text" value="${frSup.pestControlDate}">
+											</div>
+											<%-- <div class="profileinput mardis">${frDetails.frAgreementDate}</div> --%>
 
 										</div>
 										<div class="profile">
-											<div class="profilefildset">Pest Control Date</div>
-											<div class="profileinput mardis">${frSup.pestControlDate}</div>
+											<div class="profilefildset">FDA License Date</div>
+											<div class="profileinput">
+												<input class="texboxitemcode datepicker_dmy" placeholder="FDA License Date" 
+													name="fda_lics_date" type="text" value="${frDetails.frAgreementDate}">
+											</div>
+
+										</div>
+										<div class="profile">
+											<div class="profilefildset">Weighing Scale License Date 2</div>
+											<div class="profileinput">
+												<input class="texboxitemcode datepicker_dmy" placeholder="Weighing Scale License Date 2"
+													name="weighing_scale_date2" type="text" value="${frSup.pass3}">
+											</div>
+
+										</div>
+										
+										<div class="profile">
+											<div class="profilefildset">Professional Tax License Date</div>
+											<div class="profileinput">
+												<input class="texboxitemcode datepicker_dmy" placeholder="Professional Tax License Date2"
+													name="prof_tax_date" type="text" value="${frSup.remainderDate}">
+											</div>
 
 										</div>
 
@@ -405,11 +450,6 @@
 
 
 										</div>
-
-
-
-
-
 
 
 

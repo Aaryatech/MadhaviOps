@@ -37,7 +37,7 @@ public class Franchisee {
       
       private String fbaLicenseDate;
       
-      private String frAgreementDate;
+      private String frAgreementDate;	//FDA License Date
       
 	  private Integer frGstType;
 	  
