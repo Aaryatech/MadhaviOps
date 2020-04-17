@@ -202,9 +202,7 @@ public class ProfileController {
 			int intFrRate=(int) frDetails.getFrRate();
 			map.add("frRate",intFrRate);
 			map.add("frRmn1", frDetails.getFrRmn1());
-			String fdaDate = request.getParameter("fda_lics_date");
-			System.out.println("FDA Date-----------------"+fdaDate);
-			map.add("fdaLicsDate", DateConvertor.convertToYMD(fdaDate));
+			map.add("fdaLicsDate", request.getParameter("fda_lics_date"));
 			map.add("frAgreementDate",  DateConvertor.convertToYMD(request.getParameter("fr_agreement_date")));
 			map.add("weighingScale1Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date1")));
 			map.add("weighingScale2Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date2")));
