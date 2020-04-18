@@ -18,9 +18,12 @@ public class VpsImageUpload {
 	*/
 	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/FR/";
 	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/SPCAKE/";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/CUSTCHOICEPHOTOCAKE/";
-	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/";
+	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/CUSTCHOICEPHOTOCAKE/";	
 	private static final String CH_PHOTO_FOLDER = "/home/lenovo/Downloads/";
+	
+	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/"; //Used in OPS - ExpenseController and
+																									// Admin - EspenseAdminController
+	//private static final String GVN_PHOTO_FOLDER = "/home/maddy/ats-11/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {
 

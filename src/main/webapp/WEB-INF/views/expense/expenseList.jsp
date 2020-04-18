@@ -195,6 +195,10 @@
 											
 
 											<td class="col-md-2" style="text-align: center;"><div>
+											<a
+													href="${pageContext.request.contextPath}/downloadExpense/${expList.expId}" target="_blank">
+															<abbr title='Download'><i class='fa fa-download'></i></abbr>
+														</a> &nbsp;&nbsp;
 
 													<c:if test="${expList.expType==1 && sessionScope.frEmpDetails.frEmpId==expList.exInt2 && (currDate == expList.expDate)}">
 														<a

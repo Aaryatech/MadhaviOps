@@ -1,20 +1,30 @@
 package com.monginis.ops.controller;
 
 import java.io.IOException;
-
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -104,7 +114,7 @@ public class ExpenseController {
 	@RequestMapping(value = "/showEditExpense/{id}", method = RequestMethod.GET)
 	public ModelAndView updateOtherItem(@PathVariable("id") int id, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("expense/addExpense");
+		ModelAndView mav = new ModelAndView("expense/expenseList");
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -125,6 +135,55 @@ public class ExpenseController {
 		}
 
 		return mav;
+
+	}
+	
+	@RequestMapping(value = "/downloadExpense/{id}", method = RequestMethod.GET)
+	public String downloadExpense(@PathVariable("id") int id, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
+	
+		RestTemplate restTemplate = new RestTemplate();
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("expId", id);
+
+		Expense expDoc = restTemplate.postForObject("" + Constant.URL + "getExpenseByExpId", map, Expense.class);		
+		String EXTERNAL_FILE_PATH = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/"; //OPS //Defined in VpsImageUpload
+		//String EXTERNAL_FILE_PATH = "/home/maddy/ats-11/";
+		
+		//System.out.println("Expense Document-------------"+EXTERNAL_FILE_PATH);
+		
+		File file = new File(EXTERNAL_FILE_PATH + expDoc.getImgName());
+		
+		if (file.exists()) {
+
+			//get the mimetype
+			String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+			if (mimeType == null) {
+				//unknown mimetype so set the mimetype to application/octet-stream
+				mimeType = "application/octet-stream";
+			}
+
+			response.setContentType(mimeType);
+			
+			response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() + "\""));
+				
+			//response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));	
+			
+			response.setContentLength((int) file.length());
+
+			InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+			try {
+				FileCopyUtils.copy(inputStream, response.getOutputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		return "redirect:/showAddExpense";
 
 	}
 
