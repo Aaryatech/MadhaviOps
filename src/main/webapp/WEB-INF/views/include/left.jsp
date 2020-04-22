@@ -290,32 +290,33 @@
 
 				</c:choose>
 			</c:forEach>--%>
-			<c:if test="${ flag==1}">
-				<li><a href="${pageContext.request.contextPath}/showOtherBill"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"></i>
-						</div>
-						<div class="title">Other Purchase Bill</div></a></li>
-			</c:if> 
-          <c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
-				<c:choose>
+					<c:if test="${ flag==1}">
+						<li><a
+							href="${pageContext.request.contextPath}/showOtherBill"><div
+									class="img">
+									<i class="fa fa-file-pdf-o icon"></i>
+								</div>
+								<div class="title">Other Purchase Bill</div></a></li>
+					</c:if>
+					<c:set var="flag" value="${0}"></c:set>
+					<c:forEach items="${setList}" var="setting" varStatus="count">
+						<c:choose>
 
-					<c:when test="${setting.settingKey eq 'Other Item Stock'}">
-						<c:set var="flag" value="${1}"></c:set>
-					</c:when>
+							<c:when test="${setting.settingKey eq 'Other Item Stock'}">
+								<c:set var="flag" value="${1}"></c:set>
+							</c:when>
 
 
-				</c:choose>
-			</c:forEach>
-		<c:if test="${flag==1}">
-				<li><a
-					href="${pageContext.request.contextPath}/showOthItemStock"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"></i>
-						</div>
-						<div class="title">Other Item Stock</div></a></li>
-			</c:if> 
+						</c:choose>
+					</c:forEach>
+					<c:if test="${flag==1}">
+						<li><a
+							href="${pageContext.request.contextPath}/showOthItemStock"><div
+									class="img">
+									<i class="fa fa-file-pdf-o icon"></i>
+								</div>
+								<div class="title">Other Item Stock</div></a></li>
+					</c:if>
 
 
 					<c:set var="flag" value="${0}"></c:set>
@@ -333,7 +334,7 @@
 
 
 					<c:if
-						test="${sessionScope.frEmpDetails.designation==1  && flag==1}">
+						test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2   && flag==1}">
 
 						<li><a href="#" onClick="openNav4()"><div class="img">
 									<!-- <i class="fa fa-file-o icon"></i> -->
@@ -588,30 +589,22 @@
 										%> <abbr title='${menu.menuDesc}'><a
 											class="listareaBox"
 											href="${pageContext.request.contextPath}/showsPlaceOrder/${loop.index}"><div
-													class="listareaBoximg"></abbr> 
-													
-					<%
- 						}
- 					} else {
- 						if (settingType != 1){
+													class="listareaBoximg"></abbr> <%
+ 	}
+ 				} else {
+ 					if (settingType != 1) {
  						//if
- 					%> 
- 					
- 					<abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
+ %> <abbr title='${menu.menuDesc}'><a
+											class="listareaBoxBlue"
 											href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-												<div class="listareaBoximg"></abbr> 
-												
-					<%
- 						} else {
- 					%> 
- 					
- 					<abbr title='${menu.menuDesc}'> <a class="listareaBox"
+												<div class="listareaBoximg"></abbr> <%
+ 	} else {
+ %> <abbr title='${menu.menuDesc}'> <a class="listareaBox"
 											href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
-												<div class="listareaBoximg"></abbr> 
-					<%
- 						}
- 					}
- 				} else if (catId == 5) {
+												<div class="listareaBoximg"></abbr> <%
+ 	}
+ 				}
+ 			} else if (catId == 5) {
 
  				// if
  				if (settingType != 1) {
@@ -645,18 +638,20 @@
 					<%
 						if (settingType == 1) {
 					%>
-						<h3 style="margin-bottom: 0; padding-bottom: 0;">Daily</h3>
+					<h3 style="margin-bottom: 0; padding-bottom: 0;">Daily</h3>
 					<%
 						} else if (settingType == 2) {
 					%>
-						<h3 style="margin-bottom: 0; padding-bottom: 0;">Date : ${menuDate}</h3>
+					<h3 style="margin-bottom: 0; padding-bottom: 0;">Date :
+						${menuDate}</h3>
 					<%
 						} else if (settingType == 3) {
 					%>
-						<h3 style="margin-bottom: 0; padding-bottom: 0;">Day : 
-						
-						<c:forTokens items="${menuDay}" delims="," var="name">  
-						
+					<h3 style="margin-bottom: 0; padding-bottom: 0;">
+						Day :
+
+						<c:forTokens items="${menuDay}" delims="," var="name">
+
 							<c:if test="${name eq '1'}">
 							Sunday,&nbsp; 
 							</c:if>
@@ -684,15 +679,15 @@
 							<c:if test="${name eq '7'}">
 							Saturday
 							</c:if>
-							
+
 						</c:forTokens>
-						
-						</h3>  
-						
+
+					</h3>
+
 					<%
 						}
 					%>
-					
+
 					</a>
 					</li>
 
@@ -723,9 +718,9 @@
 								To
 								<c:out value='${toTime}' />
 							</h3>
-							
-							
-							
+
+
+
 							</a>
 						</div>
 
@@ -823,46 +818,52 @@
 					<div class="row">
 
 
-						<li class="small-box">
+						<c:if
+							test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2}">
+							<li class="small-box">
 
-							<div class="ibox">
-								<div class="ibox-head">
-									<div class="ibox-title">Purchase Reports</div>
+								<div class="ibox">
+									<div class="ibox-head">
+										<div class="ibox-title">Purchase Reports</div>
+									</div>
+
+									<a
+										href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i
+										class="fa fa-files-o icon"></i>Billwise Purchase Report</a> <a
+										href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i
+										class="fa fa-files-o icon"></i>Monthwise Purchase Report</a> <a
+										href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i
+										class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
+										Purchase Report</a> <a
+										href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
+										class="fa fa-files-o icon"></i> Sub Category Summary Report</a> <a
+										href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
+										class="fa fa-files-o icon"></i> Bill Credit Note Summary
+										Report</a> <a
+										href="${pageContext.request.contextPath}/viewItemWiseReport"><i
+										class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> <a
+										href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
+										class="fa fa-files-o icon"></i>Month Wise Sub Category
+										Purchase Report Or Month Wise Item Purchase Report</a>
+
+
 								</div>
-
-								<a
-									href="${pageContext.request.contextPath}/viewBillWisePurchaseReport"><i
-									class="fa fa-files-o icon"></i>Billwise Purchase Report</a> <a
-									href="${pageContext.request.contextPath}/viewMonthWisePurchaseReport"><i
-									class="fa fa-files-o icon"></i>Monthwise Purchase Report</a> <a
-									href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i
-									class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
-									Purchase Report</a> <a
-									href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
-									class="fa fa-files-o icon"></i> Sub Category Summary Report</a> <a
-									href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
-									class="fa fa-files-o icon"></i> Bill Credit Note Summary Report</a>
-								<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
-									class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> <a
-									href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
-									class="fa fa-files-o icon"></i>Month Wise Sub Category Purchase
-									Report Or Month Wise Item Purchase Report</a>
+							</li>
+						</c:if>
 
 
-							</div>
-						</li>
+						<c:if
+							test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2}">
+							<li class="small-box">
 
-
-						<li class="small-box">
-
-							<div class="ibox">
-								<div class="ibox-head">
-									<div class="ibox-title">Other Reports</div>
-								</div>
-								<a
-									href="${pageContext.request.contextPath}/showCutomerPendingList"><i
-									class="fa fa-files-o icon"></i>Customer Pending Details</a>
-								<%-- 
+								<div class="ibox">
+									<div class="ibox-head">
+										<div class="ibox-title">Other Reports</div>
+									</div>
+									<a
+										href="${pageContext.request.contextPath}/showCutomerPendingList"><i
+										class="fa fa-files-o icon"></i>Customer Pending Details</a>
+									<%-- 
 								 <a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 									class="fa fa-files-o icon"></i>SP Advance Report</a>
 								 
@@ -880,45 +881,49 @@
 									href="${pageContext.request.contextPath}/gvnReport"><i
 									class="fa fa-files-o icon"></i> GVN Report (Sale)</a>  --%>
 
-								<a href="${pageContext.request.contextPath}/showCutomerList"><i
-									class="fa fa-files-o icon"></i>Customer List(Sale)</a>
-							</div>
-						</li>
-						<li class="small-box">
-
-							<div class="ibox">
-								<div class="ibox-head">
-									<div class="ibox-title">Punching Based Reports</div>
+									<a href="${pageContext.request.contextPath}/showCutomerList"><i
+										class="fa fa-files-o icon"></i>Customer List(Sale)</a>
 								</div>
-								<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i
-									class="fa fa-files-o icon"></i>Billwise Sale Report</a> <a
-									href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i
-									class="fa fa-calendar-o icon"></i>Datewise Sale Report</a> <a
-									href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i
-									class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a> <a
-									href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i
-									class="fa fa-chevron-circle-down icon"></i>Categorywise-
-									Itemwise Sale Report</a> <a
-									href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">
-									<i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise
-									Sale Report
-								</a> <a
-									href="${pageContext.request.contextPath}/showYearlySellReport"><i
-									class="fa fa-files-o icon"></i>Month Wise Sub Category Sell
-									Report Or Month Wise Item Sell Report</a> <a
-									href="${pageContext.request.contextPath}/showSubCatDateWiseSellReport"><i
-									class="fa fa-files-o icon"></i>Datewise Sub Category Sale
-									Report</a> <a
-									href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
-									class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a>
-									 <a
-									href="${pageContext.request.contextPath}/viewCustBillwiseSell"><i
-									class="fa fa-files-o icon"></i>Customer wise Sell Report</a>
+							</li>
+						</c:if>
+
+						<c:if
+							test="${sessionScope.frEmpDetails.designation==1 or sessionScope.frEmpDetails.designation==2}">
+							<li class="small-box">
+
+								<div class="ibox">
+									<div class="ibox-head">
+										<div class="ibox-title">Punching Based Reports</div>
+									</div>
+									<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i
+										class="fa fa-files-o icon"></i>Billwise Sale Report</a> <a
+										href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i
+										class="fa fa-calendar-o icon"></i>Datewise Sale Report</a> <a
+										href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i
+										class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a> <a
+										href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i
+										class="fa fa-chevron-circle-down icon"></i>Categorywise-
+										Itemwise Sale Report</a> <a
+										href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">
+										<i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise
+										Sale Report
+									</a> <a
+										href="${pageContext.request.contextPath}/showYearlySellReport"><i
+										class="fa fa-files-o icon"></i>Month Wise Sub Category Sell
+										Report Or Month Wise Item Sell Report</a> <a
+										href="${pageContext.request.contextPath}/showSubCatDateWiseSellReport"><i
+										class="fa fa-files-o icon"></i>Datewise Sub Category Sale
+										Report</a> <a
+										href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
+										class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a> <a
+										href="${pageContext.request.contextPath}/viewCustBillwiseSell"><i
+										class="fa fa-files-o icon"></i>Customer wise Sell Report</a>
 
 
-							</div>
+								</div>
 
-						</li>
+							</li>
+						</c:if>
 					</div>
 					<div class="row">
 						<li class="small-box">
@@ -972,27 +977,22 @@
 									href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i
 									class="fa fa-files-o icon"></i> Bill Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/hsnWiseReport"><i
-									class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a>
-									
-									<a
+									class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/itemWiseHsnReport"><i
-									class="fa fa-files-o icon"></i> Item wise HSN Report (Sale)</a>
-									
-									 <a
+									class="fa fa-files-o icon"></i> Item wise HSN Report (Sale)</a> <a
 									href="${pageContext.request.contextPath}/viewDailySalesReport"><i
-									class="fa fa-files-o icon"></i> Daily Sales Report</a>
-									
-									<a href="${pageContext.request.contextPath}/viewCrnTaxSellBill"><i
-									class="fa fa-file-text-o icon"></i> Tax Report Summary (Credit Note) </a>
-									
-									<a href="${pageContext.request.contextPath}/viewFrCRNTaxSellBill"><i
+									class="fa fa-files-o icon"></i> Daily Sales Report</a> <a
+									href="${pageContext.request.contextPath}/viewCrnTaxSellBill"><i
+									class="fa fa-file-text-o icon"></i> Tax Report Summary (Credit
+									Note) </a> <a
+									href="${pageContext.request.contextPath}/viewFrCRNTaxSellBill"><i
 									class="fa fa-file-text-o icon"></i> Bill Report (Credit Note) </a>
 							</div>
 
 						</li>
 
 
-				<%-- 		<li class="small-box">
+						<%-- 		<li class="small-box">
 
 							<div class="ibox">
 								<div class="ibox-head">

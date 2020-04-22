@@ -54,6 +54,13 @@
 					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 12px;"><span><b>Sales
 							Person:&nbsp;${frEmpMaster.frEmpName} </b><br /> </span></td>
 			</tr>
+			
+			<tr>
+				<td colspan="2" align="center"
+					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 12px;"><span><b>Customer
+							:&nbsp;${customer} </b><br /> </span></td>
+			</tr>
+			
 			<tr>
 				<td colspan="2" align="center"
 					style="padding: 2px; border-top: 1px solid #E7E7E7; font-size: 9px;"><span><b>Date

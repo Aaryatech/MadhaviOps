@@ -127,6 +127,7 @@ table, th, td {
 														<th class="col-md-1" style="text-align: center;">E-Pay</th>
 														<th class="col-md-1" style="text-align: center;">Disc
 															Amt</th>
+															<th class="col-md-1" style="text-align: center;">Round Off</th>
 														<th class="col-md-1" style="text-align: center;">Advance</th>
 														<th class="col-md-1" style="text-align: center;">Pending</th>
 														<th class="col-md-1" style="text-align: center;">Regular
@@ -290,6 +291,9 @@ table, th, td {
 									var ttlWithdra = 0;
 									var ttlCreditAmt = 0;
 									var ttlPettyCashAmt = 0;
+									
+									var ttlRound = 0;
+									
 									$
 											.each(
 													data,
@@ -362,6 +366,16 @@ table, th, td {
 																		.html(
 																				addCommas((sellBillData.discountAmt)
 																						.toFixed(2))));
+														
+														tr
+														.append($(
+																'<td class="col-md-1"style="text-align:right;"></td>')
+																.html(
+																		addCommas((sellBillData.roundOff)
+																				.toFixed(2))));
+														ttlRound = ttlRound
+														+ sellBillData.roundOff;
+														
 
 														ttlDisc = ttlDisc
 																+ sellBillData.discountAmt;
@@ -452,6 +466,10 @@ table, th, td {
 									var disc = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ addCommas((ttlDisc).toFixed(2));
 									+"</b></td>";
+									
+									var round = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ addCommas((ttlRound).toFixed(2));
+								+"</b></td>";
 
 									var pending = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ addCommas((ttlPendng).toFixed(2));
@@ -502,6 +520,7 @@ table, th, td {
 									$('#table_grid tbody').append(card);
 									$('#table_grid tbody').append(other);
 									$('#table_grid tbody').append(disc);
+									$('#table_grid tbody').append(round);
 									$('#table_grid tbody').append(adv);
 									$('#table_grid tbody').append(pending);
 									$('#table_grid tbody').append(regular);

@@ -1,23 +1,20 @@
 package com.monginis.ops.model;
 
-
-
 public class GetRepFrDatewiseSellResponse {
 
-	
-private int sellBillNo;
-	
- 	private String billDate;
-	
- 	private int frId;
-	
- 	private String month;
- 	private String day;
+	private int sellBillNo;
+
+	private String billDate;
+
+	private int frId;
+
+	private String month;
+	private String day;
 	private float cash;
 	private float card;
 	private float other;
-	
- 	private String frName;
+
+	private String frName;
 
 	private float discountAmt;
 	private float pendingAmt;
@@ -27,6 +24,8 @@ private int sellBillNo;
 	private float creditNoteTotalAmt;
 	private float withdrawalAmt;
 	private float grandTotal;
+
+	private float roundOff;
 
 	public String getDay() {
 		return day;
@@ -164,13 +163,21 @@ private int sellBillNo;
 		this.grandTotal = grandTotal;
 	}
 
+	public float getRoundOff() {
+		return roundOff;
+	}
+
+	public void setRoundOff(float roundOff) {
+		this.roundOff = roundOff;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRepFrDatewiseSellResponse [sellBillNo=" + sellBillNo + ", billDate=" + billDate + ", frId=" + frId
 				+ ", month=" + month + ", day=" + day + ", cash=" + cash + ", card=" + card + ", other=" + other
 				+ ", frName=" + frName + ", discountAmt=" + discountAmt + ", pendingAmt=" + pendingAmt + ", advAmt="
 				+ advAmt + ", regular=" + regular + ", chalan=" + chalan + ", creditNoteTotalAmt=" + creditNoteTotalAmt
-				+ ", withdrawalAmt=" + withdrawalAmt + ", grandTotal=" + grandTotal + "]";
+				+ ", withdrawalAmt=" + withdrawalAmt + ", grandTotal=" + grandTotal + ", roundOff=" + roundOff + "]";
 	}
 
 }

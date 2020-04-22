@@ -1103,6 +1103,11 @@ public class OpsController {
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+			
+			float roundOff=0;
+			roundOff=taxableAmt+taxAmt-Math.round(total);
+			sellBillHeader.setExtFloat1(roundOff);
+			
 			info.setError(false);
 			info.setMessage("Bill Submited");
 
@@ -1446,7 +1451,7 @@ public class OpsController {
 			sellBillHeader.setDiscountAmt(discAmt);//
 			if (creditBill == 1) {
 				sellBillHeader.setStatus(3);
-				sellBillHeader.setRemainingAmt(total - advAmt);
+				sellBillHeader.setRemainingAmt(Math.round(total) - advAmt);
 				sellBillHeader.setPaidAmt(advAmt);
 
 				sellBillHeader.setPaymentMode(1);
@@ -1459,6 +1464,12 @@ public class OpsController {
 			}
 
 			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
+			
+			float roundOff=0;
+			roundOff=taxableAmt+taxAmt-Math.round(total);
+			sellBillHeader.setExtFloat1(roundOff);
+			
+			System.err.println("ROUND OFF = "+roundOff);
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 
@@ -1945,6 +1956,12 @@ public class OpsController {
 			}
 
 			sellBillHeader.setDiscountAmt(discAmt);
+			
+			float roundOff=0;
+			roundOff=taxableAmt+taxAmt-Math.round(total);
+			sellBillHeader.setExtFloat1(roundOff);
+			
+			
 			/*
 			 * if (creditBill == 1) { sellBillHeader.setStatus(3);
 			 * sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
@@ -1967,7 +1984,7 @@ public class OpsController {
 						sellBillHeader.setRemainingAmt(total);
 					}
 				} else {
-					sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
+					sellBillHeader.setRemainingAmt(Math.round(total) - sellBillHeaderRes.getPaidAmt());
 				}
 				sellBillHeader.setPaidAmt(advAmt);
 
@@ -2695,7 +2712,7 @@ public class OpsController {
 
 			String frId = (request.getParameter("frId"));
 			String custId = (request.getParameter("creditCustId"));
-			String custName = (request.getParameter("credCust"));
+			String custName = (request.getParameter("credCust1"));
 
 			String modePay1 = request.getParameter("modePay1"); // single/split
 			int modType2 = 0;
@@ -3022,10 +3039,20 @@ public class OpsController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			model.addAttribute("printData", crBillPrintList);
+			
+			String custName="";
+			for(PosCreditBillPrint pos:crBillPrintList) {
+				custName=pos.getCustName();
+			}
+			model.addAttribute("customer", custName);
+			
 
 			try {
+				
+				FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
+				
 				map = new LinkedMultiValueMap<String, Object>();
-				map.add("empId", 1);
+				map.add("empId", frEmpDetails.getFrEmpId());
 
 				FrEmpMaster frEmpMaster = restTemplate.postForObject(Constant.URL + "/getFrEmpByEmpId", map,
 						FrEmpMaster.class);

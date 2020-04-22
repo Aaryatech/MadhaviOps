@@ -22,6 +22,10 @@
 <c:url var="getDatewiseSellList" value="/getDatewiseSellList" />
 
 
+
+
+
+
 <body onload="drawAllCharts() ">
 	<form action="" method="get">
 		<!--wrapper-start-->
@@ -76,9 +80,11 @@
 
 
 							</c:forEach>
-							<marquee behavior="scroll" direction="left"
+							 <marquee behavior="scroll" direction="left"
 								style="font-size: 16px; color: white; margin-left: -15px; margin-right: -15px;"
-								scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">${news} </marquee>
+								scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">${news} </marquee> 
+
+							
 
 						</div>
 					</div>
@@ -528,65 +534,65 @@
  -->
 						<div id="donutchart"></div>
 						<!-- style="width: 900px; height: 500px;" -->
-						</div>
-						<div class="chart_r">
-							<h3 class="bx_title">Top Products</h3>
-							<div class="right_btns">
-								<input name="submit" class="sub_btn" value="All" type="submit"
-									onclick="itemSellBillCal2(0)" id="submtbtn">
-								<button type="reset" class="sub_btn" value="Reset"
-									onclick="itemSellBillCal2(2)">
-									<i class="fa fa-arrow-down" aria-hidden="true"></i>
-								</button>
-								<button type="reset" class="sub_btn" value="Reset"
-									onclick="itemSellBillCal2(1)">
-									<i class="fa fa-arrow-up" aria-hidden="true"></i>
-								</button>
+					</div>
+					<div class="chart_r">
+						<h3 class="bx_title">Top Products</h3>
+						<div class="right_btns">
+							<input name="submit" class="sub_btn" value="All" type="submit"
+								onclick="itemSellBillCal2(0)" id="submtbtn">
+							<button type="reset" class="sub_btn" value="Reset"
+								onclick="itemSellBillCal2(2)">
+								<i class="fa fa-arrow-down" aria-hidden="true"></i>
+							</button>
+							<button type="reset" class="sub_btn" value="Reset"
+								onclick="itemSellBillCal2(1)">
+								<i class="fa fa-arrow-up" aria-hidden="true"></i>
+							</button>
 
-
-
-							</div>
-
-
-
-							<div class="scrollbars" id="scrollbarsmodaldiv">
-								<table id="custCreditTable">
-
-									<thead>
-										<tr>
-											<th style="text-align: center;">Sr</th>
-											<th style="text-align: center;">Item Name</th>
-											<th style="text-align: center;">Amount</th>
-										</tr>
-									</thead>
-									<tbody>
-
-									</tbody>
-								</table>
-							</div>
 
 
 						</div>
-						<div class="clr"></div>
+
+
+
+						<div class="scrollbars" id="scrollbarsmodaldiv">
+							<table id="custCreditTable">
+
+								<thead>
+									<tr>
+										<th style="text-align: center;">Sr</th>
+										<th style="text-align: center;">Item Name</th>
+										<th style="text-align: center;">Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
 
 
 					</div>
+					<div class="clr"></div>
 
-					<div class="charts_bx">
-						<div class="chart_l">
 
-							<!-- <div class="a">Map Put Here</div>
+				</div>
+
+				<div class="charts_bx">
+					<div class="chart_l">
+
+						<!-- <div class="a">Map Put Here</div>
  -->
-							<div id="chart_div"></div>
-							<!-- style="width: 900px; height: 500px;" -->
-
-
-						</div>
-
-						<div class="clr"></div>
+						<div id="chart_div"></div>
+						<!-- style="width: 900px; height: 500px;" -->
 
 
 					</div>
+
+					<div class="clr"></div>
+
+
+				</div>
 			</section>
 		</div>
 		<!--wrapper-end-->

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.constant.VpsImageUpload;
+import com.monginis.ops.model.BillReceiptDetail;
 import com.monginis.ops.model.Company;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.Expense;
@@ -233,7 +235,7 @@ public class ExpenseController {
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-			Expense[] frSetting = restTemplate.postForObject(Constant.URL + "getExpenseByFrId", map, Expense[].class);
+			Expense[] frSetting = restTemplate.postForObject(Constant.URL + "getExpenseByFrIdOps", map, Expense[].class);
 
 			List<Expense> expList = new ArrayList<Expense>(Arrays.asList(frSetting));
 
@@ -395,6 +397,38 @@ public class ExpenseController {
 		}
 
 		return "redirect:/showExpenseList";
+	}
+	
+
+	@RequestMapping(value = "/getBillReceiptDetailListForOpsByExpId", method = RequestMethod.GET)
+	public @ResponseBody List<BillReceiptDetail> getBillReceiptDetailListForOpsByExpId(HttpServletRequest request,
+			HttpServletResponse response) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		List<BillReceiptDetail> res = new ArrayList<BillReceiptDetail>();
+
+		try {
+			System.err.println("hii");
+			
+			int expId=Integer.parseInt(request.getParameter("expId"));
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("expId", expId);
+
+			BillReceiptDetail[] billList = restTemplate.postForObject(Constant.URL + "getBillReceiptDetailListForOpsByExpId",
+					map, BillReceiptDetail[].class);
+
+			res = new ArrayList<BillReceiptDetail>(Arrays.asList(billList));
+
+			System.err.println("BILL_LIST -------------> " + res);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+
 	}
 
 }

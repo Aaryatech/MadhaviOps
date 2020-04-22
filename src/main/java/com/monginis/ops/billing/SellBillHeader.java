@@ -65,6 +65,7 @@ public class SellBillHeader implements Serializable{
 
 	private int delStatus;
 	private int extInt1;
+	private float extFloat1;
 	
 	
    
@@ -333,6 +334,22 @@ public class SellBillHeader implements Serializable{
 
 	
 	
+
+
+	
+
+
+
+	public float getExtFloat1() {
+		return extFloat1;
+	}
+
+
+
+	public void setExtFloat1(float extFloat1) {
+		this.extFloat1 = extFloat1;
+	}
+
 
 
 	@Override

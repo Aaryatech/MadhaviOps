@@ -21,6 +21,16 @@ public class PettyCashManagmt {
 	private int exInt1;
 	private String exVar1;
 	private String exVar2;
+	private String del;
+	
+	
+	
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	public int getPettycashId() {
 		return pettycashId;
 	}

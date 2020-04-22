@@ -2365,6 +2365,7 @@ public class ReportsController {
 		rowData.add("Payable Amt");
 		rowData.add("Paid Amt");
 		rowData.add("Remaining Amt");
+		rowData.add("Round Off");
 		rowData.add("Payment Mode");
 
 		expoExcel.setRowData(rowData);
@@ -2381,6 +2382,7 @@ public class ReportsController {
 		float ttlCash = 0;
 		float ttlCard= 0;
 		float ttlEPay = 0;
+		float ttlRound = 0;
 
 		if (type == 1) {
 
@@ -2405,6 +2407,7 @@ public class ReportsController {
 					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+					rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 					rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2422,6 +2425,7 @@ public class ReportsController {
 					ttlCash = ttlCash+getSellBillHeaderList.get(i).getCash();
 					ttlCard = ttlCard+getSellBillHeaderList.get(i).getCard();
 					ttlEPay = ttlEPay+getSellBillHeaderList.get(i).getePay();
+					ttlRound = ttlRound+getSellBillHeaderList.get(i).getRoundOff();
 				}
 				
 				expoExcel = new ExportToExcel();
@@ -2439,6 +2443,7 @@ public class ReportsController {
 				rowData.add("" + roundUp(ttlPablAmt));
 				rowData.add("" + roundUp(ttlPaidAmt));
 				rowData.add("" + roundUp(ttlRemainAmt));
+				rowData.add("" + roundUp(ttlRound));
 				rowData.add("" + roundUp(ttlCash)+"-Cash, "+roundUp(ttlCard)+"-Card, "+roundUp(ttlEPay)+"-EPay");
 				
 
@@ -2468,6 +2473,7 @@ public class ReportsController {
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2536,6 +2542,7 @@ public class ReportsController {
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2553,6 +2560,8 @@ public class ReportsController {
 						ttlCash = ttlCash+getSellBillHeaderList.get(i).getCash();
 						ttlCard = ttlCard+getSellBillHeaderList.get(i).getCard();
 						ttlEPay = ttlEPay+getSellBillHeaderList.get(i).getePay();
+						
+						ttlRound = ttlRound+getSellBillHeaderList.get(i).getRoundOff();
 				}
 				
 				expoExcel = new ExportToExcel();
@@ -2570,6 +2579,7 @@ public class ReportsController {
 				rowData.add("" + roundUp(ttlPablAmt));
 				rowData.add("" + roundUp(ttlPaidAmt));
 				rowData.add("" + roundUp(ttlRemainAmt));
+				rowData.add("" + roundUp(ttlRound));
 				rowData.add("" + roundUp(ttlCash)+"-Cash, "+roundUp(ttlCard)+"-Card, "+roundUp(ttlEPay)+"-EPay");
 				
 				expoExcel.setRowData(rowData);
@@ -2600,6 +2610,7 @@ public class ReportsController {
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2665,6 +2676,7 @@ public class ReportsController {
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2729,6 +2741,7 @@ public class ReportsController {
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPayableAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getPaidAmt()));
 						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRemainingAmt()));
+						rowData.add("" + roundUp(getSellBillHeaderList.get(i).getRoundOff()));
 
 						rowData.add("" + getSellBillHeaderList.get(i).getPaymentMode());
 
@@ -2887,6 +2900,7 @@ public class ReportsController {
 		rowData.add("E-Pay");
 
 		rowData.add("Discount");
+		rowData.add("Round Off");
 		rowData.add("Advance");
 		rowData.add("Remaining");
 		
@@ -2915,6 +2929,8 @@ public class ReportsController {
 		float ttlWidthraw = 0;
 		float ttlCreditNote = 0;
 		float ttlpettyCash = 0;
+		
+		float ttlRound = 0;
 
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
@@ -2941,6 +2957,7 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getOther());
 			
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getDiscountAmt());
+			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getRoundOff());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getAdvAmt());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getPendingAmt());
 			
@@ -2969,6 +2986,8 @@ public class ReportsController {
 			ttlWidthraw = ttlWidthraw + getRepFrDatewiseSellResponse.get(i).getWithdrawalAmt();
 			ttlCreditNote = ttlCreditNote + getRepFrDatewiseSellResponse.get(i).getCreditNoteTotalAmt();
 			ttlpettyCash = ttlpettyCash + calPetty;
+			
+			ttlRound = ttlRound + getRepFrDatewiseSellResponse.get(i).getRoundOff();
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -2989,6 +3008,7 @@ public class ReportsController {
 		rowData.add("" + totalEPay);
 		
 		rowData.add("" + ttlDisc);
+		rowData.add("" + ttlRound);
 		rowData.add("" + ttlAdv);
 		rowData.add("" + ttlPending);
 		

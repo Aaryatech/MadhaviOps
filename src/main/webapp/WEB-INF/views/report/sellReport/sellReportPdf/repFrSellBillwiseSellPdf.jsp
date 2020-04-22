@@ -50,6 +50,7 @@ th {
 				<th style="text-align: center; width: 100px">Payable Amt</th>
 				<th style="text-align: center; width: 100px">Paid Amt</th>
 				<th style="text-align: center; width: 100px">Remaining Amt</th>
+				<th style="text-align: center; width: 100px">Round Off</th>
 				<th style="text-align: center; width: 100px">Payment Mode</th>
 
 
@@ -69,6 +70,8 @@ th {
 			<c:set var="totalCash" value="${0}" />
 			<c:set var="totalCard" value="${0}" />
 			<c:set var="totalEPay" value="${0}" />
+			
+			<c:set var="totalRound" value="${0}" />
 
 			<c:forEach items="${reportList}" var="reportList" varStatus="count">
 				<tr>
@@ -105,6 +108,10 @@ th {
 					<td style="text-align: right;"><fmt:formatNumber type="number"
 							minFractionDigits="2" maxFractionDigits="2"
 							value="${reportList.remainingAmt}" /></td>
+							
+							<td style="text-align: right;"><fmt:formatNumber type="number"
+							minFractionDigits="2" maxFractionDigits="2"
+							value="${reportList.roundOff}" /></td>
 
 
 					<c:set var="totalAmount"
@@ -127,6 +134,8 @@ th {
 					<c:set var="totalCash" value="${totalCash + reportList.cash}" />
 					<c:set var="totalCard" value="${totalCard + reportList.card}" />
 					<c:set var="totalEPay" value="${totalEPay + reportList.ePay}" />
+					
+					<c:set var="totalRound" value="${totalRound + reportList.roundOff}" />
 
 
 
@@ -157,6 +166,12 @@ th {
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalRemaining}" /></b></td>
+							
+							<td style="text-align: right;"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${totalRound}" /></b></td>
+							
+							
 				 <td style="text-align: right;"><b>
 				 <fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"

@@ -7,22 +7,22 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 <style>
-.chosen-single {
+/* .chosen-single {
 	text-align: left;
-}
+} */
 
 table, th, td {
 	border: 1px solid #9da88d;
 }
 
-chosen-container {
+/* chosen-container {
 	width: 82%;
-}
+} */
 </style>
 
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
+ <link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css"> 
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -341,6 +341,7 @@ chosen-container {
 													<th style="text-align: center;">Payable Amt</th>
 													<th style="text-align: center;">Paid Amt</th>
 													<th style="text-align: center;">Remaining Amt</th>
+													<th style="text-align: center;">Round Off</th>
 													<th style="text-align: center;">Payment Mode</th>
 													<th style="text-align: center;">Payment Sub Type</th>
 
@@ -502,6 +503,7 @@ chosen-container {
 									var cashTotal = 0;
 									var cardTotal = 0;
 									var epayTotal = 0;
+									var roundTotal = 0;
 
 									//var otherTotal=0;
 									$
@@ -520,9 +522,9 @@ chosen-container {
 														var card = sellBillData.card;
 														var epay = sellBillData.ePay;
 
-														if (cash != 0
+														/* if (cash != 0
 																|| card != 0
-																|| epay != 0) {
+																|| epay != 0) { */
 
 															tr
 																	.append($(
@@ -604,6 +606,13 @@ chosen-container {
 																			.html(
 																					addCommas((sellBillData.remainingAmt)
 																							.toFixed(2))));
+															
+															tr
+															.append($(
+																	'<td   style="text-align:right;"></td>')
+																	.html(
+																			addCommas((sellBillData.roundOff)
+																					.toFixed(2))));
 
 															amtTotal = amtTotal
 																	+ sellBillData.grandTotal;
@@ -624,17 +633,35 @@ chosen-container {
 																	+ sellBillData.card;
 															epayTotal = epayTotal
 																	+ sellBillData.ePay;
+															
+															roundTotal = roundTotal
+															+ sellBillData.roundOff;
 
 															ttlDiscAmt = ttlDiscAmt
 																	+ sellBillData.discountAmt;
 
 															var paymentMode = sellBillData.paymentMode;
 
+															var pMode = "";
+															var ch=sellBillData.cash;
+															var cd=sellBillData.card;
+															var ep=sellBillData.ePay;
+															
+															 if (sellBillData.cash > 0) {
+																pMode=ch+"-Cash";
+															}
+															 if (sellBillData.card > 0) {
+																pMode=pMode+"&nbsp;&nbsp;&nbsp;"+cd+"-Card";
+															}
+															if (sellBillData.ePay > 0) {
+																pMode=pMode+"&nbsp;&nbsp;&nbsp;"+ep+"-E-pay";
+															}  
+															
 															tr
 																	.append($(
 																			'<td  style="text-align:center;"></td>')
 																			.html(
-																					addCommas(paymentMode)));
+																					pMode));
 
 															/* PAYMENT SUB TYPE */
 
@@ -696,7 +723,7 @@ chosen-container {
 															$(
 																	'#table_grid tbody')
 																	.append(tr);
-														}
+														//}
 
 													})
 
@@ -727,6 +754,11 @@ chosen-container {
 									var remaining = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (remainingTotal).toFixed(2);
 									+"</b></td>";
+									
+									
+									var round = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+										+ (roundTotal).toFixed(2);
+								+"</b></td>";
 
 									var payMode = cashTotal + "-Cash ,"
 											+ cardTotal + "-Card ," + epayTotal
@@ -756,6 +788,8 @@ chosen-container {
 											addCommas(paid));
 									$('#table_grid tbody').append(
 											addCommas(remaining));
+									$('#table_grid tbody').append(
+											addCommas(round));
 									$('#table_grid tbody').append(pay);
 									$('#table_grid tbody').append(trclosed);
 									$('#table_grid tbody').append(trclosed);

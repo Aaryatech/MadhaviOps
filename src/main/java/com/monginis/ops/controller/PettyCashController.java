@@ -542,9 +542,9 @@ public class PettyCashController {
 					pettyInfo.get(i).setDate(ymdSDF1.format(cal1.getTime()));
 					
 					if(ymdSDF1.format(cal1.getTime()).equalsIgnoreCase(currntDat)) {
-						pettyInfo.get(i).setExVar2("1");
+						pettyInfo.get(i).setDel("1");
 					}else {
-						pettyInfo.get(i).setExVar2("0");
+						pettyInfo.get(i).setDel("0");
 					}
 					
 				}
@@ -613,7 +613,7 @@ public class PettyCashController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f });
+			table.setWidths(new float[] { 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f, 1.2f ,1.2f});
 			Font headFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
@@ -623,7 +623,11 @@ public class PettyCashController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Date", headFont1));
+			hcell = new PdfPCell(new Phrase("Date & Time", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Day End By", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 
@@ -658,12 +662,19 @@ public class PettyCashController {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(advance.getDate(), headFont));
+				cell = new PdfPCell(new Phrase(advance.getExVar1(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
 
+				cell = new PdfPCell(new Phrase(advance.getExVar2(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
+
+				
 				cell = new PdfPCell(new Phrase("" + advance.getOpeningAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);

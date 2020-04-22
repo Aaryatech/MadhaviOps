@@ -237,11 +237,13 @@ table, th, td {
 											<thead>
 												<tr class="bgpink">
 													<th style="text-align: center;">Sr. No</th>
-													<th style="text-align: center;">Date</th>
+													<th style="text-align: center;">Date & Time</th>
+														<th style="text-align: center;">Day End By</th>
 													<th style="text-align: center;">Opening Amt</th>
 													<th style="text-align: center;">Cash Amt</th>
 													<th style="text-align: center;">Withdrawal Amt</th>
 													<th style="text-align: center;">Closing Amt</th>
+													
 													<th style="text-align: center;">Action</th>
 												</tr>
 
@@ -562,11 +564,20 @@ table, th, td {
 															.append($(
 																	'<td style="text-align:center;"></td>')
 																	.html(i + 1));
+												
+													
 													tr
-															.append($(
-																	'<td style="text-align:center;"></td>')
-																	.html(
-																			v.date));
+													.append($(
+															'<td style="text-align:center;"></td>')
+															.html(
+																	v.exVar1));
+													
+													tr
+													.append($(
+															'<td style="text-align:left;"></td>')
+															.html(
+																	v.exVar2));
+													
 													tr
 															.append($(
 																	'<td style="text-align:right;"></td>')
@@ -590,7 +601,7 @@ table, th, td {
 
 													if ( i==0) {
 														
-														if(v.exVar2=="1"){
+														if(v.del=="1"){
 															tr
 															.append($(
 																	'<td style="text-align:center;"></td>')

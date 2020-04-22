@@ -1420,9 +1420,10 @@ body {
 						<div class="add_customer_one"
 							style="width: 40% ! important; float: left!importan!">
 							Customer Name:<span
-								style="color: red; width: 80%; padding-left: 7px;" id="credCust">
+								style="color: red; width: 80%; padding-left: 7px;" id="credCust" name="credCust">
 								NA</span>
 						</div>
+						<input type="hidden" id="credCust1" name="credCust1">
 						<input type="hidden" id="creditCustId" name="creditCustId">
 						<div class="add_customer_one">
 							Pending Amount:<span
@@ -2156,6 +2157,7 @@ function matchSplitAmt(flag){
 							//alert(data);
 												
 												document.getElementById("credCust").innerHTML = data.userName;
+												document.getElementById("credCust1").value = data.userName;
 												document.getElementById("creditCustId").value = data.custId; 
 												
 
@@ -2464,6 +2466,7 @@ function matchSplitAmt(flag){
 											function(key, data) {
 												
 												document.getElementById("credCust").innerHTML = data.userName; 
+												document.getElementById("credCust1").value = data.userName; 
 														var tr = $('<tr></tr>');
 
 														 
