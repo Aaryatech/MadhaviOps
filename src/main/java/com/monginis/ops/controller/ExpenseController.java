@@ -150,7 +150,7 @@ public class ExpenseController {
 		map.add("expId", id);
 
 		Expense expDoc = restTemplate.postForObject("" + Constant.URL + "getExpenseByExpId", map, Expense.class);		
-		String EXTERNAL_FILE_PATH = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/"; //OPS //Defined in VpsImageUpload
+		String EXTERNAL_FILE_PATH = Constant.GVN_IMAGE_URL;
 		//String EXTERNAL_FILE_PATH = "/home/maddy/ats-11/";
 		
 		//System.out.println("Expense Document-------------"+EXTERNAL_FILE_PATH);
