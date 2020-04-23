@@ -142,7 +142,7 @@ border-radius:50%;}
 .ordertop{float:right;}
 
 .orderTable{ width:100%; float:left; padding:27px; text-align:left; border:1px solid #ccc;}
-.table .bgpink{ background:#ed3f3c!important; color:#fff !important; font-size:18px;}
+.table .bgpink{ background:#ed1c24!important; color:#fff !important; font-size:18px;}
 .table td{ padding:8px 13px; text-align:center;}
 .table td:nth-child(1){ text-align:left;}
 .table td:nth-child(2){ text-align:left;}

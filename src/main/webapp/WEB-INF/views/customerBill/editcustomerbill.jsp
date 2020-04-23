@@ -82,7 +82,8 @@
 
 <c:url var="uomWiseBillQtyList" value="/uomWiseBillQtyList" />
 
-
+<c:url var="getItemCurrentStockForOps"
+	value="/getItemCurrentStockForOps" />
 
 
 <style>
@@ -247,6 +248,13 @@ body {
 										onclick="getCatListAndSubCatList(3)"> <label
 										for="g-option">All Items</label>
 										<div class="check"></div></li>
+
+
+									<li>&nbsp;&nbsp;<a href="#" class="pending_btn"
+										style="padding: 2px 11px;" onclick="showOutOfStockModal()">Out
+											Of Stock </a></li>
+
+
 									<!-- 	<li><div class="cat_srach">
 											<input name="myInput1" id="myInput1" type="text"
 												class="input_cat" onkeyup="myFunction1()"
@@ -622,22 +630,25 @@ body {
 								<td>Total UOM</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
-								
+
 								<c:set value="" var="data"></c:set>
 								<c:set value="0" var="dataQty"></c:set>
 
 								<c:forEach items="${uomList}" var="list">
-								
-								<c:set value="${dataQty+list.qty}" var="dataQty"></c:set>
-								<c:set value="${data}&nbsp;&nbsp;&nbsp;${list.uom}&nbsp;=&nbsp;${list.qty}" var="data"></c:set>
-								
+
+									<c:set value="${dataQty+list.qty}" var="dataQty"></c:set>
+									<c:set
+										value="${data}&nbsp;&nbsp;&nbsp;${list.uom}&nbsp;=&nbsp;${list.qty}"
+										var="data"></c:set>
+
 								</c:forEach>
-								
-								<c:set value="${data}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL&nbsp;=&nbsp;${dataQty}" var="data"></c:set>
-								
+
+								<c:set
+									value="${data}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL&nbsp;=&nbsp;${dataQty}"
+									var="data"></c:set>
+
 								<td style="font-weight: 600; text-align: right;" id="totaluom">
-								${data}
-								</td>
+									${data}</td>
 							</tr>
 							<tr bgcolor="#ffe5e6">
 								<td>Total Items</td>
@@ -1292,6 +1303,18 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
+						
+						<div class="add_frm_one">
+							<div class="add_customer_one">Remark</div>
+							<div class="add_input">
+								<input name="payRemark" id="payRemark" type="text"
+									class="input_add " style="font-size: 100%;"
+									placeholder="Enter Remark" value="" />
+							</div>
+							<div class="clr"></div>
+						</div>
+						
+						
 						<div class="add_frm_one">
 							<div class="add_customer_one">Amount</div>
 							<div class="add_input">
@@ -1318,6 +1341,31 @@ body {
 							</div>
 							<div class="clr"></div>
 						</div>
+						
+						<div class="add_frm_one">
+							<div class="add_customer_one"></div>
+							<div class="add_input">
+
+								<label style="font-weight: 700; padding-left: 5px;">Paid&nbsp;</label>
+								<input type="text" name="pAmt" id="pAmt"
+									oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+									onchange="amtReturnCal()" onkeyup="amtReturnCal()"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
+
+
+								&nbsp;&nbsp; <label style="font-weight: 700; padding-left: 5px;">Return&nbsp;</label>
+								<input type="text" name="rAmt" id="rAmt" readonly="readonly"
+									class="form-control" value="" placeholder="Amount"
+									style="text-align: center; width: 90px; border-radius: 20px;" />
+
+
+
+							</div>
+							<div class="clr"></div>
+						</div>
+						
+						
 					</div>
 					<!-- <div class="add_frm_one">
 						<div class="add_customer_one">Amount</div>
@@ -1731,6 +1779,46 @@ body {
 
 	</div>
 	<!-- Modal to show cust   Bill ends -->
+
+
+	<div id="outOfStock" class="modal">
+		<div id="overlayStock">
+			<div class="clock"></div>
+		</div>
+
+		<div class="modal-content" style="width: 80%">
+			<span class="close" onclick="closeMyModal('outOfStock')">&times;</span>
+
+			<form name="modalfrm11" id="modalfrm11" method="post">
+				<p>Item List</p>
+				<div class="clr"></div>
+
+				<div class="total_table_one" id="modalBody">
+					<div class="scrollbars" id="scrollbarsmodaldiv">
+						<table id="stockTable">
+
+							<thead>
+								<tr>
+
+									<th style="text-align: center;" width="2%">Sr</th>
+									<th style="text-align: center;">Item Name</th>
+									<th style="text-align: center;">Current Stock</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+
+	</div>
+
 
 
 	<script type="text/javascript">
@@ -2775,6 +2863,72 @@ function matchSplitAmt(flag){
 	<!-- ------------------------------------------------------------------------------------- -->
 
 
+	<script type="text/javascript">
+	
+	function showOutOfStockModal() {
+		 var modal1 = document.getElementById('outOfStock');
+		 modal1.style.display = "block"; 
+		 showOutOfStockItemList();
+		 
+	}
+	
+	</script>
+
+	<script type="text/javascript">
+	 
+		function showOutOfStockItemList()  {
+			
+			document.getElementById("overlay2").style.display = "block";
+			 
+ 				 $.post('${getItemCurrentStockForOps}',
+								{
+									ajax: 'true'
+								},
+								function(data) {
+									
+									document.getElementById("overlay2").style.display = "";
+									//alert(JSON.stringify(data));
+									
+									$('#stockTable td').remove();
+									
+									var sr=1;
+									
+									$
+									.each(
+											data,
+											function(key, data) {
+												
+												
+												if(data.currentStock<data.reorder){
+												
+														var tr = $('<tr></tr>');
+
+
+														//tr.append($('<td></td>').html(key + 1));
+														tr.append($('<td></td>').html(sr));
+														sr=sr+1;
+														
+														tr.append($('<td></td>').html(data.itemName));
+
+														var stock=0;
+														if(data.currentStock>0){
+															stock=data.currentStock;
+														}
+														
+														tr.append($('<td></td>').html(stock));
+														
+ 
+														$('#stockTable tbody')
+																.append(tr); 
+														
+											}	
+											}); 
+								}); 
+				
+ 			 
+		}
+	</script>
+
 
 	<script type="text/javascript">
 		function trim(el) {
@@ -3725,7 +3879,7 @@ function getCurrentItemList() {
 	}
 	
 	</script>
-	
+
 	<script type="text/javascript">
 	
 function getUomList(){
@@ -4202,7 +4356,8 @@ function getUomList(){
 	function openPaymentPopup() {
 									
 	//alert("hi");
-		
+		document.getElementById("pAmt").value=0;
+		document.getElementById("rAmt").value=0;
 
 	var advAmt = document.getElementById("advAmt").value;
 	var custId =  $('#cust').val() ;
@@ -4415,6 +4570,21 @@ function custBillPdf(sellBillNo)
 
 
 	</script>
+	
+	
+	<script type="text/javascript">
+
+	function amtReturnCal() {
+		
+		var amt=document.getElementById("payAmt").value;
+		var pay=document.getElementById("pAmt").value;
+		
+		var ret=amt-pay;
+		document.getElementById("rAmt").value=ret;
+		
+	}
+
+</script>
 
 
 

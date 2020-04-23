@@ -21,6 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -47,7 +51,9 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemResponse;
+import com.monginis.ops.model.OpsFrItemStock;
 import com.monginis.ops.model.PosCreditBillPrint;
+import com.monginis.ops.model.PostFrItemStockHeader;
 import com.monginis.ops.model.SubCategory;
 import com.monginis.ops.model.TransactionDetail;
 import com.monginis.ops.model.frsetting.FrSetting;
@@ -1103,11 +1109,11 @@ public class OpsController {
 			sellBillHeader.setStatus(2);
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
-			
-			float roundOff=0;
-			roundOff=taxableAmt+taxAmt-Math.round(total);
+
+			float roundOff = 0;
+			roundOff = taxableAmt + taxAmt - Math.round(total);
 			sellBillHeader.setExtFloat1(roundOff);
-			
+
 			info.setError(false);
 			info.setMessage("Bill Submited");
 
@@ -1239,6 +1245,7 @@ public class OpsController {
 			float billAmtWtDisc = Float.parseFloat(request.getParameter("billAmtWtDisc"));// without Disc BillAmt
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
+			String remark = request.getParameter("remark");
 
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
@@ -1464,12 +1471,12 @@ public class OpsController {
 			}
 
 			sellBillHeader.setExtInt1(frEmpDetails.getFrEmpId());
-			
-			float roundOff=0;
-			roundOff=taxableAmt+taxAmt-Math.round(total);
+
+			float roundOff = 0;
+			roundOff = taxableAmt + taxAmt - Math.round(total);
 			sellBillHeader.setExtFloat1(roundOff);
-			
-			System.err.println("ROUND OFF = "+roundOff);
+
+			System.err.println("ROUND OFF = " + roundOff);
 
 			sellBillHeader.setSellBillDetailsList(sellbilldetaillist);
 
@@ -1956,12 +1963,11 @@ public class OpsController {
 			}
 
 			sellBillHeader.setDiscountAmt(discAmt);
-			
-			float roundOff=0;
-			roundOff=taxableAmt+taxAmt-Math.round(total);
+
+			float roundOff = 0;
+			roundOff = taxableAmt + taxAmt - Math.round(total);
 			sellBillHeader.setExtFloat1(roundOff);
-			
-			
+
 			/*
 			 * if (creditBill == 1) { sellBillHeader.setStatus(3);
 			 * sellBillHeader.setRemainingAmt(total - sellBillHeaderRes.getPaidAmt());
@@ -2855,6 +2861,46 @@ public class OpsController {
 
 		return itemsList;
 	}
+	
+	@RequestMapping(value = "/deleteSellBillWithRemark", method = RequestMethod.POST)
+	@ResponseBody
+	public List<SellBillHeader> deleteSellBillWithRemark(HttpServletRequest request, HttpServletResponse responsel) {
+		System.err.println("showCustBillForAdvOrder");
+
+		SellBillHeader sellBillHeader = new SellBillHeader();
+		try {
+
+			int sellBillNo = Integer.parseInt(request.getParameter("sellBillNo"));
+			String remark = request.getParameter("remark");
+			
+			System.err.println("sellBillNo = "+sellBillNo+"             remark = "+remark);
+
+			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
+			mvm.add("sellBillNo", sellBillNo);
+			mvm.add("status", 1);
+			mvm.add("remark", remark);
+
+			Info info = restTemplate.postForObject(Constant.URL + "deleteBillByIdAddRemark", mvm, Info.class);
+
+			if (!info.isError()) {
+				for (int i = 0; i < itemsList.size(); i++) {
+					if (sellBillNo == itemsList.get(i).getSellBillNo()) {
+						sellBillHeader = itemsList.get(i);
+						itemsList.remove(i);
+					}
+				}
+			}
+
+			System.err.println("DELETED*" + info);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return itemsList;
+	}
+	
+	
 
 	@RequestMapping(value = "/getCustBills", method = RequestMethod.POST)
 	@ResponseBody
@@ -3039,18 +3085,17 @@ public class OpsController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			model.addAttribute("printData", crBillPrintList);
-			
-			String custName="";
-			for(PosCreditBillPrint pos:crBillPrintList) {
-				custName=pos.getCustName();
+
+			String custName = "";
+			for (PosCreditBillPrint pos : crBillPrintList) {
+				custName = pos.getCustName();
 			}
 			model.addAttribute("customer", custName);
-			
 
 			try {
-				
+
 				FrEmpMaster frEmpDetails = (FrEmpMaster) session.getAttribute("frEmpDetails");
-				
+
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("empId", frEmpDetails.getFrEmpId());
 
@@ -3071,6 +3116,113 @@ public class OpsController {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+
+	// Anmol-22-04-2020
+	@RequestMapping(value = "/getItemCurrentStockForOps", method = RequestMethod.POST)
+	@ResponseBody
+	public List<OpsFrItemStock> getItemCurrentStockForOps(HttpServletRequest request, HttpServletResponse responsel) {
+
+		List<OpsFrItemStock> res = new ArrayList<>();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat yearFormat = new SimpleDateFormat("yyyy");
+		boolean isMonthCloseApplicable = false;
+		
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frDetails.getFrId());
+			RestTemplate restTemplate = new RestTemplate();
+
+			ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
+			};
+			ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
+					Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+			List<PostFrItemStockHeader> list = responseEntity1.getBody();
+
+			int month = 0;
+
+			for (PostFrItemStockHeader header : list) {
+				month = header.getMonth();
+				break;
+			}
+			
+			Date todaysDate = new Date();
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(todaysDate);
+
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDay = cal.getTime();
+			
+			
+			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = new Date();
+			System.out.println(dateFormat1.format(date));
+
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(date);
+
+			int dayOfMonth = cal1.get(Calendar.DATE);
+
+			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
+			
+			if (month < calCurrentMonth) {
+
+				isMonthCloseApplicable = true;
+				System.out.println("Day Of Month End ......");
+
+			} else if (month == 12 && calCurrentMonth == 1) {
+				isMonthCloseApplicable = true;
+			}
+			
+			if (isMonthCloseApplicable) {
+				System.err.println("Inside iMonthclose app");
+				String strDate;
+				int year;
+				if (month == 12) {
+					System.err.println("running month =12");
+					year = (Calendar.getInstance().getWeekYear() - 1);
+					System.err.println("year value " + year);
+				} else {
+					System.err.println("running month not eq 12");
+					year = Calendar.getInstance().getWeekYear();
+					System.err.println("year value " + year);
+				}
+
+				if (month < 10) {
+					strDate = year + "-0" + month + "-01";
+				} else {
+					strDate = year + "-" + month + "-01";
+				}
+
+				map.add("fromDate", strDate);
+			} else {
+				map.add("fromDate", dateFormat.format(firstDay));
+			}
+			
+			
+
+			map.add("frId", frDetails.getFrId());
+			map.add("toDate", dateFormat.format(todaysDate));
+			map.add("month", month);
+			map.add("year", yearFormat.format(todaysDate));
+			map.add("frStockType", frDetails.getStockType());
+
+			OpsFrItemStock[] itemList = restTemplate.postForObject(Constant.URL + "getOpsFrCurrentStock", map,
+					OpsFrItemStock[].class);
+			res = new ArrayList<>(Arrays.asList(itemList));
+			
+			System.err.println("CURR STOCK - "+res);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 }

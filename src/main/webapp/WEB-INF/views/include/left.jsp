@@ -217,11 +217,16 @@
 
 						<li><a href="${pageContext.request.contextPath}/orderHistory"><div
 									class="img">
-									<i class="fa fa-file-text-o icon"></i>
+									<i class="fa fa-file-text-o" aria-hidden="true"></i>
 								</div>
 								<div class="title">
 									Order <span>History</span>
 								</div></a></li>
+								
+								
+								
+								
+								
 						<li style="display: none;"><a
 							href="${pageContext.request.contextPath}/showAdvanceOrderList"><div
 									class="img">
@@ -251,7 +256,7 @@
 						<li><a href="${pageContext.request.contextPath}/showBill">
 
 								<div class="img">
-									<i class="fa fa-money icon"></i>
+									<i class="fa fa-money"></i>
 								</div> <c:choose>
 									<c:when test="${sessionScope.frDetails.frKg1==1}">
 										<div class="title">Delivery Challan</div>
@@ -294,7 +299,7 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showOtherBill"><div
 									class="img">
-									<i class="fa fa-file-pdf-o icon"></i>
+									<i class="fa fa-file-pdf-o"></i>
 								</div>
 								<div class="title">Other Purchase Bill</div></a></li>
 					</c:if>
@@ -313,7 +318,7 @@
 						<li><a
 							href="${pageContext.request.contextPath}/showOthItemStock"><div
 									class="img">
-									<i class="fa fa-file-pdf-o icon"></i>
+									<i class="fa fa-file-pdf-o"></i>
 								</div>
 								<div class="title">Other Item Stock</div></a></li>
 					</c:if>

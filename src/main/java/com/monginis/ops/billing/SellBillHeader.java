@@ -4,88 +4,89 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+public class SellBillHeader implements Serializable {
 
-public class SellBillHeader implements Serializable{
-	
 	private int sellBillNo;
-	
-	private String invoiceNo;
-		
-	private String billDate;
-	
-	private String timestamp;
-		
-	private int frId;
-		
-	private String frCode;
-	
-	private int discType;   //new
-	
-	private float discAmtItem; //new
-	
-	private float taxableAmt;
-		
-	private float discountPer;
-	
-	private float discountAmt;
-	
-	private float payableAmt;
-	
-	private float totalTax;
-	
-	private float grandTotal;
-		
-	private float paidAmt;
-	
-	private float remainingAmt;
-	
-	private int paymentMode;
-	
-	private int isDairyMartBill;//new
-	
-	private float advanceAmt;  //new     
-	
-	private String couponNo;//new
-	
-	private int custId;//new
-	
-	private float custLoyaltyPtRate;//new
 
-	private float custLoyaltyPt;//new
-	
+	private String invoiceNo;
+
+	private String billDate;
+
+	private String timestamp;
+
+	private int frId;
+
+	private String frCode;
+
+	private int discType; // new
+
+	private float discAmtItem; // new
+
+	private float taxableAmt;
+
+	private float discountPer;
+
+	private float discountAmt;
+
+	private float payableAmt;
+
+	private float totalTax;
+
+	private float grandTotal;
+
+	private float paidAmt;
+
+	private float remainingAmt;
+
+	private int paymentMode;
+
+	private int isDairyMartBill;// new
+
+	private float advanceAmt; // new
+
+	private String couponNo;// new
+
+	private int custId;// new
+
+	private float custLoyaltyPtRate;// new
+
+	private float custLoyaltyPt;// new
+
 	private String userName;
-		
+
 	private String userGstNo;
-		
+
 	private String userPhone;
-	
+
 	private int status;
-	
+
 	private char billType;
 
 	private int delStatus;
 	private int extInt1;
 	private float extFloat1;
-	
-	
-   
+
+	private String extVar1;
+
+	public String getExtVar1() {
+		return extVar1;
+	}
+
+	public void setExtVar1(String extVar1) {
+		this.extVar1 = extVar1;
+	}
+
 	public int getCustId() {
 		return custId;
 	}
-
- 
 
 	public int getExtInt1() {
 		return extInt1;
 	}
 
-
-
 	public void setExtInt1(int extInt1) {
 		this.extInt1 = extInt1;
 	}
-
-
 
 	public void setCustId(int custId) {
 		this.custId = custId;
@@ -156,7 +157,7 @@ public class SellBillHeader implements Serializable{
 	}
 
 	List<SellBillDetail> sellBillDetailsList;
-	
+
 	public List<SellBillDetail> getSellBillDetailsList() {
 		return sellBillDetailsList;
 	}
@@ -172,7 +173,6 @@ public class SellBillHeader implements Serializable{
 	public void setSellBillNo(int sellBillNo) {
 		this.sellBillNo = sellBillNo;
 	}
-
 
 	public String getInvoiceNo() {
 		return invoiceNo;
@@ -318,39 +318,21 @@ public class SellBillHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	
-	
-
-
 	public String getTimestamp() {
 		return timestamp;
 	}
-
-
 
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	
-	
-
-
-	
-
-
-
 	public float getExtFloat1() {
 		return extFloat1;
 	}
 
-
-
 	public void setExtFloat1(float extFloat1) {
 		this.extFloat1 = extFloat1;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -363,8 +345,8 @@ public class SellBillHeader implements Serializable{
 				+ ", couponNo=" + couponNo + ", custId=" + custId + ", custLoyaltyPtRate=" + custLoyaltyPtRate
 				+ ", custLoyaltyPt=" + custLoyaltyPt + ", userName=" + userName + ", userGstNo=" + userGstNo
 				+ ", userPhone=" + userPhone + ", status=" + status + ", billType=" + billType + ", delStatus="
-				+ delStatus + ", extInt1=" + extInt1 + ", sellBillDetailsList=" + sellBillDetailsList + "]";
+				+ delStatus + ", extInt1=" + extInt1 + ", extFloat1=" + extFloat1 + ", extVar1=" + extVar1
+				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
 
-	 
 }
