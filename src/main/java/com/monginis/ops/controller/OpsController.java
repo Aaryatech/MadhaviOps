@@ -1542,6 +1542,8 @@ public class OpsController {
 					}
 
 				}
+				
+				transactionDetail.setRemark(remark);
 
 				dList.add(transactionDetail);
 				if (advAmt > 0) {
@@ -1554,6 +1556,8 @@ public class OpsController {
 					transactionDetail.setExInt1(frEmpDetails.getFrEmpId());
 
 					transactionDetail.setExInt2(1);
+					
+					transactionDetail.setRemark(remark);
 
 					dList.add(transactionDetail);
 				}
@@ -1641,6 +1645,7 @@ public class OpsController {
 			String customerName = request.getParameter("selectedText");
 			String payAmt = request.getParameter("payAmt");
 			float advAmt = Float.parseFloat(request.getParameter("advAmt"));
+			String remark=request.getParameter("remark");
 
 			String items = "0";
 			for (int i = 0; i < itemBillList.size(); i++) {
@@ -2107,6 +2112,8 @@ public class OpsController {
 
 				}
 
+				transactionDetail.setRemark(remark);
+				
 				dList.add(transactionDetail);
 
 				if (creditBill != 1) {

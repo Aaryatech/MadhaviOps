@@ -1,43 +1,45 @@
 package com.monginis.ops.model;
 
 import java.io.Serializable;
-public class TransactionDetail implements Serializable{
-	
+
+public class TransactionDetail implements Serializable {
+
 	private int trId;
-	
+
 	private int sellBillNo;
-	
+
 	private String transactionDate;
-	
+
 	private int payMode;
-	
+
 	private float cashAmt;
-	
+
 	private float cardAmt;
-	
+
 	private int ePayType;
-	
+
 	private float ePayAmt;
-	
+
 	private int discType;
-	
+
 	private int delStatus;
-	
+
 	private int exInt1;
-	
+
 	private int exInt2;
-	
+
 	private float exFloat1;
-	
+
 	private float exFloat2;
-	
+
 	private String exVar1;// Payment type
-		
+
 	private String exVar2;
-	
+
 	private float discAmt;
 	private float discPer;
-	
+
+	private String remark;
 
 	public int getTrId() {
 		return trId;
@@ -166,8 +168,6 @@ public class TransactionDetail implements Serializable{
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
-	
-	
 
 	public float getDiscAmt() {
 		return discAmt;
@@ -184,8 +184,14 @@ public class TransactionDetail implements Serializable{
 	public void setDiscPer(float discPer) {
 		this.discPer = discPer;
 	}
-	
-	
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	@Override
 	public String toString() {
@@ -193,6 +199,6 @@ public class TransactionDetail implements Serializable{
 				+ ", payMode=" + payMode + ", cashAmt=" + cashAmt + ", cardAmt=" + cardAmt + ", ePayType=" + ePayType
 				+ ", ePayAmt=" + ePayAmt + ", discType=" + discType + ", delStatus=" + delStatus + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", discAmt=" + discAmt + ", discPer=" + discPer + "]";
+				+ ", exVar2=" + exVar2 + ", discAmt=" + discAmt + ", discPer=" + discPer + ", remark=" + remark + "]";
 	}
 }

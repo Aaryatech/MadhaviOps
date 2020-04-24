@@ -333,7 +333,7 @@ table, th, td {
 <script type="text/javascript">
 function calcGvn(baseRate,itemId,sgstPer,cgstPer,billDetailNo){
 	
-	alert(baseRate);
+	//alert(baseRate);
 
 	$("#"+billDetailNo).prop("checked", false);
 		document.getElementById("row"+billDetailNo).style.backgroundColor="white";

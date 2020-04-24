@@ -1685,7 +1685,7 @@ body {
 			<div class="clock"></div>
 		</div>
 
-		<div class="modal-content" style="width: 80%">
+		<div class="modal-content" style="width: 90%">
 			<span class="close" onclick="closeMyModal('custBills')">&times;</span>
 
 			<form name="modalfrm" id="modalfrm" method="post">
@@ -1790,6 +1790,7 @@ body {
 									<th style="text-align: center;" width="13%">Pending Amt</th>
 									<th style="text-align: center;" width="2%" id="modeofpay">Mode
 										of Payment</th>
+										<th style="text-align: center;" width="2%" id="remarkTh">Remark</th>
 									<th style="text-align: center;" width="2%" id="trAction">Action</th>
 								</tr>
 							</thead>
@@ -1938,6 +1939,7 @@ body {
 			}	
 		if(tempType!=3)  {
 			$("#modeofpay").hide();
+			$("#remarkTh").hide();
 			$("#trAction").show();
 			$("#discTh").show();
 			$("#payableTh").show();
@@ -2067,6 +2069,7 @@ body {
 		  }else{
 			  
 				$("#modeofpay").show();
+				$("#remarkTh").show();
 				$("#trAction").hide();
 				$("#discTh").show();
 				$("#payableTh").hide();
@@ -2191,6 +2194,7 @@ body {
 														tr.append($('<td ></td>').html(paidAmount));
 														tr.append($('<td ></td>').html(data.exFloat2));
 														tr.append($('<td class="gradient-multiline"></td>').html(resultPayType));
+														tr.append($('<td ></td>').html(data.remark));
 														
 														$('#custTable tbody').append(tr);
 										}); 
@@ -4559,6 +4563,9 @@ if(parseInt(custId)==parseInt(dfCust)){
 					},
 					function(data) {
 						
+						var payRemark =  $('#payRemark').val() ;
+						//alert(payRemark);
+						
 						if(data==1){
 							
 							if (confirm("Todays day end process completed! Bill will be generated for next day.")) {
@@ -4687,7 +4694,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 									discAmt=0;
 								}
 								
-								var payRemark =  $('#payRemark').val() ;
+								
 								
 								if(creditBill==2 && single==1 && payAmt==""){
 									alert("Please Enter Amount");
@@ -5010,6 +5017,7 @@ if(parseInt(custId)==parseInt(dfCust)){
 													advAmt:advAmt,
 													advOrderDate:advOrderDate,
 													isAdvanceOrder:isAdvanceOrder,
+													remark : payRemark,
 													ajax : 'true'
 												},
 												function(data) {

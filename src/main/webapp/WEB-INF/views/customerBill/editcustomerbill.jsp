@@ -4055,6 +4055,8 @@ function getUomList(){
 		//alert("hi");
 		var sellBillNo =  $('#sellBillNo').val() ;
 		
+		var remark =  $('#payRemark').val() ;
+		
 		var advAmt = document.getElementById("advAmt").value;
 		var advOrderDate = document.getElementById("advOrderDate").value;
 		var isAdvanceOrder= document.getElementById("isAdvanceOrder").value;
@@ -4125,6 +4127,9 @@ function getUomList(){
 		var frtype =  $('#frtype').val() ;
 		var discPer =  $('#discPer').val() ;
 		var discAmt =  $('#discAmt').val() ;
+		
+		
+		
 		
 		var billAmtWtDisc;
 		
@@ -4223,6 +4228,7 @@ function getUomList(){
 									sellBillNo:sellBillNo,
 									mode:mode,
 									advAmt:trAdvanceAmt,
+									remark : remark,
 									ajax : 'true'
 								},
 								function(data) {
