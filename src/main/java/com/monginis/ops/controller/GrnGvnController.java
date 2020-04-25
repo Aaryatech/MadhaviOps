@@ -2560,7 +2560,7 @@ public class GrnGvnController {
 			GrnGvnHeader header = new GrnGvnHeader();
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("headerId", headerId);
-			header = restTemplate.postForObject(Constant.URL + "getHeaderByHeaderId", map, GrnGvnHeader.class);
+			header = restTemplate.postForObject(Constant.URL + "getHeaderByHeaderIdForOPS", map, GrnGvnHeader.class);
 
 			System.err.println("Header received " + header.toString());
 
@@ -2573,6 +2573,7 @@ public class GrnGvnController {
 			grnPdf.setDetail(grnDetailList);
 			grnPdf.setType(type);
 			grnPdf.setFrAddress(frAddress);
+			grnPdf.setEway(header.getApprovedDatetime());
 
 			model.addObject("grnPdf", grnPdf);
 

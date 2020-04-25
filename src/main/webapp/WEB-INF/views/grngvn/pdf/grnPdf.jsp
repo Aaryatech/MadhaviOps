@@ -123,6 +123,10 @@
 
 								<td style="font-size: 10px"><b>${grnPdf.date}</b></td>
 							</tr>
+							<tr>
+								<td style="font-size: 9px">E-Way No :</td>
+								<td style="font-size: 10px" colspan="3"><b>${grnPdf.eway}</b></td>
+							</tr>
 							<%--  <tr>
       <td>Det No</td>
       <td colspan="3">${exBill.sellBillDetailNo}</td>
@@ -163,7 +167,7 @@
 
 													<td><p style="font-size: 10px">${detail.itemHsncd}</p>
 														<p style="font-size: 10px">${detail.itemName}</p></td>
-													<c:set var="rate" value="aa"></c:set>
+													<c:set var="rate" value="0"></c:set>
 
 													<c:choose>
 														<c:when test="${detail.isGrn==0}">
@@ -256,74 +260,6 @@
 					</table>
 				</td>
 			</tr>
-			<%-- 			<c:choose>
-				<c:when test="${frGstType==10000000 }">
-					<tr>
-						<td colspan="2"><table width="100%" border="0"
-								cellspacing="0" cellpadding="7">
-								<tr>
-									<th width="17%" align="left" bgcolor="#ECECEC" rowspan="2">Taxable<br />
-										Value
-									</th>
-									<th bgcolor="#ECECEC" colspan="2">CGST</th>
-									<th bgcolor="#ECECEC" colspan="2">SGST</th>
-									<th width="25%" align="center" bgcolor="#ECECEC">Total</th>
-								</tr>
-
-								<tr>
-									<th width="14%" bgcolor="#ECECEC">%</th>
-									<th width="15%" bgcolor="#ECECEC">Amt</th>
-									<th width="16%" bgcolor="#ECECEC">%</th>
-									<th width="13%" bgcolor="#ECECEC">Amt</th>
-									<th width="25%" align="center" bgcolor="#ECECEC">GST</th>
-								</tr>
-								<c:set var="taxAmount" value="${0}" />
-								<c:set var="totaltax" value="${0 }" />
-								<c:set var="cgst" value="${0 }" />
-								<c:set var="sgst" value="${0 }" />
-									<c:forEach items="${custBilltax}" var="custBilltax"
-							varStatus="count">
-								<tr>
-									<td>${custBilltax.taxableAmt}</td>
-									<c:set var="taxAmount"
-										value="${taxAmount + custBilltax.taxableAmt}" />
-									<td>${custBilltax.cgstPer}</td>
-									<td>${custBilltax.cgstRs}</td>
-									<c:set var="cgst" value="${cgst+custBilltax.cgstRs }" />
-									<td>${custBilltax.sgstPer}</td>
-									<td>${custBilltax.sgstRs}</td>
-									<c:set var="sgst" value="${sgst+custBilltax.sgstRs }" />
-
-									<td><fmt:formatNumber type="number" maxFractionDigits="2"
-											minFractionDigits="2"
-											value="${custBilltax.cgstRs+custBilltax.sgstRs}" /></td>
-									<c:set var="totaltax"
-										value="${totaltax+custBilltax.sgstRs+custBilltax.cgstRs }" />
-								</tr>
-									</c:forEach>
-								<td width="14%" colspan="6">&nbsp;</td>
-
-								</tr>
-								<tr>
-									<td bgcolor="#ECECEC"><b><fmt:formatNumber
-												type="number" maxFractionDigits="2" minFractionDigits="2"
-												value="${taxAmount}" /></b></td>
-
-									<td bgcolor="#ECECEC"></td>
-									<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
-											maxFractionDigits="2" minFractionDigits="2" value="${cgst}" /></td>
-									<td bgcolor="#ECECEC"></td>
-									<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
-											maxFractionDigits="2" minFractionDigits="2" value="${sgst}" /></td>
-									<td align="center" bgcolor="#ECECEC"><fmt:formatNumber
-											type="number" maxFractionDigits="2" minFractionDigits="2"
-											value="${totaltax}" /></td>
-								</tr>
-
-							</table></td>
-					</tr>
-				</c:when>
-			</c:choose> --%>
 			<tr>
 
 				<td style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"
@@ -344,9 +280,6 @@
 					style="border-top: 1px solid #E7E7E7; padding: 20px 7px 2px 0px;">Authorised
 					Sign</span>
 				</td>
-				<%-- <td width="100" align="center"
-					style="border-top: 1px solid #E7E7E7; padding: 5px 7px;"><strong>For
-						${sessionScope.frDetails.frName}</strong></td> --%>
 
 
 				<td

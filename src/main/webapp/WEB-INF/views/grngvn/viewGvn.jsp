@@ -132,6 +132,8 @@ table, th, td {
 										<tr class="bgpink">
 											<th class="col-md-3" style="text-align: center;">GvnSr
 												No</th>
+												<th class="col-md-3" style="text-align: center;">E-Way Bill No
+												</th>
 											<th class="col-md-2" style="text-align: center;">Date</th>
 											<th class="col-md-2" style="text-align: center;">Taxable
 												Amt</th>
@@ -155,6 +157,11 @@ table, th, td {
 														value="${grnList.grngvnSrno}" /> <input type="hidden"
 													name="headerId" id="headerId"
 													value="${grnList.grnGvnHeaderId}"></td>
+													
+													<td class="col-md-1" style="text-align: center;"><c:out
+														value="${grnList.approvedDatetime}" /></td>
+														
+														
 												<td class="col-md-1" style="text-align: center;"><c:out
 														value="${grnList.grngvnDate}" /></td>
 
@@ -389,6 +396,7 @@ document.getElementById("headeIdText").value=0;
 							 }else{credited="No";}
 
 						tr.append($('<td class="col-md-2" style="text-align: center;"></td>').html(grndata.grngvnSrno));
+						tr.append($('<td class="col-md-2" style="text-align: center;"></td>').html(grndata.approvedDatetime));
 						tr.append($('<td class="col-md-1" style="text-align: center;"></td>').html(grndata.grngvnDate));
 				tr.append($('<td class="col-md-1" style="text-align: center;"></td>').html(grndata.taxableAmt));
 				tr.append($('<td class="col-md-1" style="text-align: center;"></td>').html(grndata.taxAmt));

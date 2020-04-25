@@ -16,6 +16,8 @@ public class GrnGvnPdf {
 	
 	String frAddress;
 	
+	String eway;
+	
 	
 	List<GetGrnGvnDetails> detail;
 
@@ -88,12 +90,24 @@ public class GrnGvnPdf {
 	public void setFrAddress(String frAddress) {
 		this.frAddress = frAddress;
 	}
+	
 
+
+	public String getEway() {
+		return eway;
+	}
+
+
+	public void setEway(String eway) {
+		this.eway = eway;
+	}
+
+	
 
 	@Override
 	public String toString() {
 		return "GrnGvnPdf [frName=" + frName + ", srNo=" + srNo + ", date=" + date + ", type=" + type + ", taxableAmt="
-				+ taxableAmt + ", frAddress=" + frAddress + ", detail=" + detail + "]";
+				+ taxableAmt + ", frAddress=" + frAddress + ", eway=" + eway + ", detail=" + detail + "]";
 	}
 
 

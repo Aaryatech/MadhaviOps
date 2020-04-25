@@ -123,27 +123,6 @@ table, th, td {
 
 						<div id="table-scroll">
 							<!-- class="table-scroll" -->
-							<div id="faux-table" aria="hidden">
-								<!-- class="faux-table" -->
-								<table id="table_grid" class="main-table" border="1px">
-									<thead>
-										<tr class="bgpink">
-											<!-- <th class="col-md-3" style="text-align: center;">GrnSr No</th>
-											<th  class="col-md-2" style="text-align: center;">Date</th>
-											<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
-											<th class="col-md-2" style="text-align: center;">Tax Amt</th>
-											<th class="col-md-2" style="text-align: center;">Amount</th>
-											<th class="col-md-2" style="text-align: center;">Approved Amt</th>
-											<th class="col-md-2" style="text-align: center;">Status</th>
-											<th class="col-md-1" style="text-align: center;">Credited?</th>
-											<th class="col-md-2" style="text-align: center;">Credit Number</th>
-											<th class="col-md-2" style="text-align: center;">Action</th>
-										 -->
-
-										</tr>
-									</thead>
-								</table>
-							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="responsive-table">
 									<!-- class="main-table"  -->
@@ -151,6 +130,7 @@ table, th, td {
 										<tr class="bgpink">
 											<th class="col-md-3" style="text-align: center;">GrnSr
 												No</th>
+											<th class="col-md-3" style="text-align: center;">E-Way Bill No</th>
 											<th class="col-md-2" style="text-align: center;">Date</th>
 											<th class="col-md-2" style="text-align: center;">Taxable
 												Amt</th>
@@ -169,11 +149,17 @@ table, th, td {
 									<tbody>
 
 										<c:forEach items="${grnList}" var="grnList" varStatus="count">
+									
+										
 											<tr>
 												<td class="col-md-3" style="text-align: center;"><c:out
 														value="${grnList.grngvnSrno}" /> <input type="hidden"
 													name="headerId" id="headerId"
 													value="${grnList.grnGvnHeaderId}"></td>
+													
+												<td class="col-md-3" style="text-align: center;"><c:out
+														value="${grnList.approvedDatetime}" /></td>
+													
 												<td class="col-md-2" style="text-align: center;"><c:out
 														value="${grnList.grngvnDate}" /></td>
 												<td class="col-md-2" style="text-align: right;"><c:out
@@ -370,6 +356,8 @@ x=String(x).toString();
 					ajax : 'true'
 
 				}, function(data) {
+					
+					//alert(JSON.stringify(data));
 
 					//$('#table_grid td').remove();
 document.getElementById("headeIdText").value=0;
@@ -417,6 +405,7 @@ document.getElementById("headeIdText").value=0;
 									isCredit="No";
 								
 						tr.append($('<td class="col-md-3" style="text-align: center;"></td>').html(grndata.grngvnSrno));
+						tr.append($('<td class="col-md-3" style="text-align: center;"></td>').html(grndata.approvedDatetime));
 						tr.append($('<td class="col-md-2" style="text-align: center;"></td>').html(grndata.grngvnDate));
 						tr.append($('<td class="col-md-2" style="text-align: center;"></td>').html(grndata.taxableAmt));
 						tr.append($('<td class="col-md-2" style="text-align: center;"></td>').html(grndata.taxAmt));
