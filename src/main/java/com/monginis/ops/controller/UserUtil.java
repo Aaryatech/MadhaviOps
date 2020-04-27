@@ -35,10 +35,15 @@ public class UserUtil {
 	try{
 		
 		RestTemplate rest = new RestTemplate();
+		
 		String mob = request.getParameter("mob");
-		System.out.println("mob--------------------------"+mob);
+		int empId = Integer.parseInt(request.getParameter("frEmpId"));
+		
+		System.out.println("mob--------------------------"+mob+" : "+empId);
+		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("mob", mob);
+		map.add("empId", empId);
 		
 		frEmp = rest.postForObject(Constant.URL + "getFranchiseeByMob", map, FrEmpMaster.class);
 		System.err.println("frEmp-----------"+frEmp);

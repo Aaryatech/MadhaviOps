@@ -429,17 +429,16 @@
 	/************************************************  */	
 		function getMobileNo(){
 			hideNumPad();
-			var mob = $("#empContact").val();
-			
-			
+			var mob = $("#empContact").val();			
+			var frEmpId = $("#employeeId").val();
+			//alert("Emp="+mob+"---"+frEmpId)
 			$.getJSON('${getEmpDetails}', {
 				mob : mob,
+				frEmpId : frEmpId,
 				ajax : 'true'
 			}, function(data) {
-				document.getElementById("empMob").innerHTML = data.frEmpContact
+				document.getElementById("empMob").innerHTML = data.frEmpContact;	
 				//alert("Emp---------"+JSON.stringify(data))
-
-				
 			}); 
 		}
 	
@@ -479,9 +478,11 @@
 	function reSendOtp(){
 		
 		var mob = $("#empContact").val();
+		var frEmpId = $("#employeeId").val();
 		
 		$.getJSON('${getEmpDetails}', {
 			mob : mob,
+			frEmpId: frEmpId,
 			ajax : 'true'
 		}, function(data) {
 			//alert("Emp---------"+JSON.stringify(data))
