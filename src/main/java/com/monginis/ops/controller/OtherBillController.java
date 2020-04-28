@@ -404,10 +404,9 @@ public class OtherBillController {
 		{
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			//map.add("itemGrp1", 7);
-			map.add("frId",frDetails.getFrId());
+			//map.add("frId",frDetails.getFrId());
 			RestTemplate rest = new RestTemplate();
-			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
-					Item[].class);
+			Item[] items  = rest.getForObject(Constant.URL + "/getOtherItemsByCatId", Item[].class); //getOtherItemsByCatIdAndFrId
 			
 			
 			additemsList = new ArrayList<>();

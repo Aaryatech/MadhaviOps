@@ -723,9 +723,7 @@ public class OtherItemsController {
 		//	List<Item> otherItmList = itemsList.getItemList();
 			map = new LinkedMultiValueMap<String, Object>();
 			//	map.add("itemGrp1", 7); 
-			map.add("frId", frDetails.getFrId()); 
-			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
-						Item[].class);  
+			Item[] items  = rest.getForObject(Constant.URL + "/getOtherItemsByCatId", Item[].class); 
 			
 			ArrayList<Item> otherItmList =new ArrayList<>(Arrays.asList(items));
 

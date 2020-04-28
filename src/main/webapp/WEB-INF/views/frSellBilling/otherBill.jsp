@@ -236,8 +236,8 @@ body {
 					</div>
 					
 					<div class="order-right" style="margin-top: 5px;">
-					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="buttonsaveorder">
-										</a>
+					<%--  <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="buttonsaveorder">
+										</a> --%>
 					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="buttonsaveorder">
 										</a>
 					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="buttonsaveorder">
