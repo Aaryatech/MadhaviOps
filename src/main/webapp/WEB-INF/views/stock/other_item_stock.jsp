@@ -186,6 +186,7 @@ table, th, td {
 
 						</select>
 					</div>
+					<div class="row" style="margin: 20px 0">
 					<div id="crnt_stk_btn">
 					<div class="col-md-2">
 						<input name="search_stock" class="buttonsaveorder" value="Search"
@@ -197,7 +198,7 @@ table, th, td {
 							onclick="genPdf()" disabled>PDF</button>
 					</div>
 					</div>
-
+</div>
 
 				</div>
 

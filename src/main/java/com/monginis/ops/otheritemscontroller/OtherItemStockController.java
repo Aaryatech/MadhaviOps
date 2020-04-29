@@ -134,7 +134,7 @@ public class OtherItemStockController {
 		String showOption = request.getParameter("show_option");
 
 		if (showOption.equals("1")) {
-
+			System.err.println("Get Current Stock");
 			map = new LinkedMultiValueMap<>();
 			map.add("frId", frDetails.getFrId());
 
@@ -164,7 +164,7 @@ public class OtherItemStockController {
 			otherStockList = new ArrayList<>(Arrays.asList(list));
 
 		} else {
-
+			System.err.println("Get Stock Between Date");
 			String fromDate = request.getParameter("fromDate");
 
 			String toDate = request.getParameter("toDate");
