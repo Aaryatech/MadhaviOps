@@ -16,12 +16,15 @@ public class VpsImageUpload {
 	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/CUSTCHOICEPHOTOCAKE/";
 	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploadspune/GVN/";
 	*/
-	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/FR/";
-	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/SPCAKE/";
-	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/CUSTCHOICEPHOTOCAKE/";	
-	private static final String CH_PHOTO_FOLDER = "/home/lenovo/Downloads/";
 	
-	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.37/webapps/uploads/GVN/";
+	private static final String FR_FOLDER = "/opt/apache-tomcat-8.5.49/webapps/uploads/FR/";
+	//private static final String FR_FOLDER = "C:/Users/MAXADMIN/Desktop/Report/";
+	private static final String SP_CAKE_FOLDER = "/opt/apache-tomcat-8.5.49/webapps/uploads/SPCAKE/";
+	private static final String CUST_CHOICE_PHOTO_CAKE_FOLDER = "/opt/apache-tomcat-8.5.49/webapps/uploads/CUSTCHOICEPHOTOCAKE/";	
+	private static final String CH_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.49/webapps/uploads/GVN/";
+	
+	private static final String GVN_PHOTO_FOLDER = "/opt/apache-tomcat-8.5.49/webapps/uploads/GVN/";
+	//private static final String GVN_PHOTO_FOLDER = "C:/Users/MAXADMIN/Desktop/Report/";
 
 	public void saveUploadedFiles(List<MultipartFile> files, int imageType, String imageName) throws IOException {
 

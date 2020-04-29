@@ -116,7 +116,7 @@ public class ExpenseController {
 	@RequestMapping(value = "/showEditExpense/{id}", method = RequestMethod.GET)
 	public ModelAndView updateOtherItem(@PathVariable("id") int id, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("expense/expenseList");
+		ModelAndView mav = new ModelAndView("expense/addExpense");
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -240,6 +240,7 @@ public class ExpenseController {
 			List<Expense> expList = new ArrayList<Expense>(Arrays.asList(frSetting));
 
 			model.addObject("expList", expList);
+			model.addObject("imageUrl", Constant.GVN_IMAGE_URL);
 
 		} catch (Exception e) {
 			System.out.println("Exception In Add  showAddExpense Process:" + e.getMessage());
@@ -282,7 +283,7 @@ public class ExpenseController {
 			VpsImageUpload upload = new VpsImageUpload();
 
 			Calendar cale = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH_mm_ss");
 			System.out.println(sdf.format(cale.getTime()));
 
 			String curTimeStamp = sdf.format(cale.getTime());
@@ -373,6 +374,7 @@ public class ExpenseController {
 
 		} catch (Exception e) {
 			System.out.println("Exception In Add  SubCategory Process:" + e.getMessage());
+			e.printStackTrace();
 
 			return "redirect:/showAddExpense";
 

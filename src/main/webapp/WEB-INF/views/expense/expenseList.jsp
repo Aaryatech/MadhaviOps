@@ -163,6 +163,7 @@
 										<th class="col-md-1" style="text-align: center;">Date</th>
 										<th class="col-md-1" style="text-align: center;">Amount</th>
 										<th class="col-md-1" style="text-align: center;">Remark</th>
+										<th class="col-md-1" style="text-align: center;">Attachment</th>
 										<th class="col-md-1" style="text-align: center;">User</th>
 										<th class="col-md-1" style="text-align: center;">Status</th>
 										<th class="col-md-1" style="text-align: center;">Action</th>
@@ -185,6 +186,14 @@
 
 											<td class="col-md-1" style="text-align: left;"><c:out
 													value="${expList.remark}" /></td>
+
+											<td class="col-md-1" style="text-align: left;"><a
+												href="${imageUrl}${expList.imgName}" download><img
+													src="${imageUrl}${expList.imgName}"
+													style="width: 80px; height: 80px;"
+													onerror="this.src='${pageContext.request.contextPath}/resources/images/No_Image_Available.jpg';"></a>
+
+											</td>
 
 											<td class="col-md-1" style="text-align: left;"><c:out
 													value="${expList.exVar2}" /></td>
@@ -266,7 +275,7 @@
 
 	</div>
 	<!--wrapper-end-->
-	
+
 	<div>
 		<div id="slide" class="pending_pop">
 
@@ -367,8 +376,8 @@
 			});
 		}
 	</script>
-	
-	
+
+
 	<!--easyTabs-->
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>

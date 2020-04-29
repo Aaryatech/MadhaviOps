@@ -39,7 +39,6 @@
 	font-size: 11px;
 	font-weight: bold;
 }
-
 </style>
 </head>
 
@@ -105,12 +104,12 @@
 								<td align="left">Sales Person:</td>
 								<td align="left" colspan="3">${frEmpMaster.frEmpName}</td>
 							</tr>
-							
+
 							<tr>
 								<td align="left">Payment Mode :</td>
 								<td align="left" colspan="3">${paymentMode}</td>
 							</tr>
-							
+
 							<tr>
 								<td colspan="4"><table width="100%" border="0"
 										cellspacing="0" cellpadding="4" class="tbl-inner">
@@ -120,7 +119,7 @@
 											<tr>
 												<th width="43%" align="left" bgcolor="#ECECEC">Item<span
 													style="font-size: 8">(HSN)</span></th>
-													
+
 												<th width="8%" bgcolor="#ECECEC" align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">QTY</th>
 												<th width="8%" bgcolor="#ECECEC" align="right">UOM</th>
@@ -131,14 +130,14 @@
 											<c:forEach items="${sellBillHeaderAndDetail.list}"
 												var="itemBillList" varStatus="count">
 												<tr>
-													<td ><span style="font-size: 11px">${itemBillList.itemName}<br />
+													<td><span style="font-size: 11px">${itemBillList.itemName}<br />
 															<span style="font-size: 8px">HSN-${itemBillList.qty}
 																${itemBillList.itemHsncd}</span></span></td>
-																
-														<td  align="right"><span style="font-size: 11px">
-															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></td>		
-																
-													<td  align="right"><span style="font-size: 11px">
+
+													<td align="right"><span style="font-size: 11px">
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></td>
+
+													<td align="right"><span style="font-size: 11px">
 															<c:choose>
 																<c:when test="${itemBillList.isDecimal==1}">
 																	<fmt:formatNumber type="number" groupingUsed="false"
@@ -152,13 +151,13 @@
 																</c:otherwise>
 															</c:choose>
 													</span></td>
-													<td  align="right"><span style="font-size: 11px">
+													<td align="right"><span style="font-size: 11px">
 															${itemBillList.itemUom} </span></td>
-													<td  align="right"><span style="font-size: 11px"><fmt:formatNumber
+													<td align="right"><span style="font-size: 11px"><fmt:formatNumber
 																type="number" groupingUsed="false"
 																value="${itemBillList.mrp}" maxFractionDigits="0"
 																minFractionDigits="0" /> </span></td>
-													<td  align="right"><span style="font-size: 11px">
+													<td align="right"><span style="font-size: 11px">
 															<fmt:formatNumber type="number" groupingUsed="false"
 																value="${itemBillList.discAmt+itemBillList.grandTotal}"
 																maxFractionDigits="2" minFractionDigits="2" var="total" />
@@ -187,14 +186,20 @@
 																groupingUsed="false" /></span></td>
 												</tr>
 											</c:if>
-											<fmt:formatNumber
-															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
-															groupingUsed="false" var="billTotal"/>
-											<fmt:formatNumber
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												minFractionDigits="2"
+												value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+												groupingUsed="false" var="billTotal" />
+											<%-- <fmt:formatNumber
 															type="number" maxFractionDigits="0" minFractionDigits="0"
 															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
-															groupingUsed="false" var="total"/>
+															groupingUsed="false" var="total"/> --%>
+
+											<fmt:formatNumber type="number" maxFractionDigits="0"
+												minFractionDigits="0"
+												value="${billTotal+ (billTotal % 1 == 0 ? 0 : 0.5)}"
+												groupingUsed="false" var="total" />
+
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Bill
 														Total:</span></td>
@@ -204,8 +209,7 @@
 												<td colspan="4" align="right"><span class="style7">R.Off:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" minFractionDigits="2"
-															value="${total-billTotal}"
-															groupingUsed="false" /></span></td>
+															value="${total-billTotal}" groupingUsed="false" /></span></td>
 											</tr>
 											<tr>
 												<td colspan="4" align="right"><span class="style7">Total:</span></td>
@@ -221,7 +225,7 @@
 			<tr>
 				<td colspan="2"><table width="100%" border="0" cellspacing="0"
 						cellpadding="7">
-						
+
 						<tr>
 							<td align="center"
 								style="border-top: 1px solid #E7E7E7; padding: 3px;" colspan="6"><span>
@@ -248,8 +252,8 @@
 								<tr>
 									<td align="center"
 										style="border-top: 1px solid #E7E7E7; padding: 3px;"
-										colspan="6"><span>Composition Taxable
-											Person,Not eligible to collect Tax on Supplies</span></td>
+										colspan="6"><span>Composition Taxable Person,Not
+											eligible to collect Tax on Supplies</span></td>
 								</tr>
 
 							</table></td>
@@ -273,11 +277,11 @@
 	</table>
 </body>
 <body onload="directPrint()">
-	 <script>
+	<script>
 		function directPrint() {
 			window.print();
 		}
-	</script> 
+	</script>
 </body>
 
 </html>

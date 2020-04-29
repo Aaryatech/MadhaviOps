@@ -127,7 +127,7 @@ table, th, td {
 														<th class="col-md-1" style="text-align: center;">E-Pay</th>
 														<th class="col-md-1" style="text-align: center;">Disc
 															Amt</th>
-															<th class="col-md-1" style="text-align: center;">Round Off</th>
+														<th class="col-md-1" style="text-align: center;">Round Off</th>
 														<th class="col-md-1" style="text-align: center;">Advance</th>
 														<th class="col-md-1" style="text-align: center;">Pending</th>
 														<th class="col-md-1" style="text-align: center;">Regular
@@ -165,6 +165,7 @@ table, th, td {
 													<th class="col-md-1" style="text-align: center;">E-Pay</th>
 													<th class="col-md-1" style="text-align: center;">Disc
 														Amt</th>
+													<th class="col-md-1" style="text-align: center;">Round Off</th>
 													<th class="col-md-1" style="text-align: center;">Advance</th>
 													<th class="col-md-1" style="text-align: center;">Pending</th>
 													<th class="col-md-1" style="text-align: center;">Regular
@@ -367,12 +368,13 @@ table, th, td {
 																				addCommas((sellBillData.discountAmt)
 																						.toFixed(2))));
 														
+														
 														tr
 														.append($(
 																'<td class="col-md-1"style="text-align:right;"></td>')
 																.html(
-																		addCommas((sellBillData.roundOff)
-																				.toFixed(2))));
+																		(sellBillData.roundOff)
+																				.toFixed(2)));
 														ttlRound = ttlRound
 														+ sellBillData.roundOff;
 														
@@ -468,7 +470,7 @@ table, th, td {
 									+"</b></td>";
 									
 									var round = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-										+ addCommas((ttlRound).toFixed(2));
+										+ (ttlRound).toFixed(2);
 								+"</b></td>";
 
 									var pending = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"

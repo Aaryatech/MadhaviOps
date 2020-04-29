@@ -58,6 +58,7 @@ import com.monginis.ops.model.GetOrder;
 import com.monginis.ops.model.GetOrderList;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
+import com.monginis.ops.model.OpsFrItemStock;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
 import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
@@ -365,7 +366,7 @@ public class ItemController {
 		}
 
 		subCatList.addAll(setName);
-		
+
 		List<TabTitleData> subCatListWithQtyTotal = new ArrayList<>();
 
 		for (int i = 0; i < subCatList.size(); i++) {
@@ -382,17 +383,14 @@ public class ItemController {
 
 					if (frDetails.getFrRateCat() == 1) {
 						double rate = 0;
-						
-						
+
 						if (frDetails.getFrKg1() == 1) {
 							rate = frItemList.get(j).getItemMrp1();
 						} else {
 							rate = frItemList.get(j).getItemRate1();
 						}
-						
-						
+
 						total = total + (rate * frItemList.get(j).getItemQty());
-						
 
 					} else if (frDetails.getFrRateCat() == 2) {
 						double rate = 0;
@@ -402,8 +400,6 @@ public class ItemController {
 							rate = frItemList.get(j).getItemRate2();
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
-						
-
 
 					} else if (frDetails.getFrRateCat() == 3) {
 						double rate = 0;
@@ -414,7 +410,6 @@ public class ItemController {
 						}
 						total = total + (rate * frItemList.get(j).getItemQty());
 
-
 					}
 
 				}
@@ -423,12 +418,12 @@ public class ItemController {
 
 			TabTitleData tabTitleData = new TabTitleData();
 			tabTitleData.setName(subCat);
-			System.err.println("isSameDayApplicable ---------------------------------- "+isSameDayApplicable);
+			System.err.println("isSameDayApplicable ---------------------------------- " + isSameDayApplicable);
 
 			if (isSameDayApplicable != 2) {
-				
-				System.err.println(""+isSameDayApplicable+" ***********************    "+total);
-				
+
+				System.err.println("" + isSameDayApplicable + " ***********************    " + total);
+
 				tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")");
 			} else if (isSameDayApplicable == 2) {
 				if (subCat.equalsIgnoreCase("FRESH CREAM PASTRIES (EL)")) {
@@ -500,6 +495,15 @@ public class ItemController {
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
 		model.addObject("url", Constant.ITEM_IMAGE_URL);
+
+		try {
+			List<OpsFrItemStock> itemStock = new OpsController().getItemCurrentStockForOps(request, response);
+			model.addObject("itemStock", itemStock);
+			System.err.println("ITEM CURR STOCK -------- "+itemStock);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return model;
 

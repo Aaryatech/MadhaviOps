@@ -807,7 +807,7 @@ public class StockController {
 			// int intPhysicalStock = Integer.parseInt(physicalStockQty);
 			float intPhysicalStock = Float.parseFloat(physicalStockQty);
 
-			if (intPhysicalStock > 0) {
+			//if (intPhysicalStock > 0) {
 
 				postFrItemStockDetail.setItemId(String.valueOf(stockDetails.getId()));
 				postFrItemStockDetail.setItemName(stockDetails.getItemName());
@@ -834,7 +834,7 @@ public class StockController {
 				postFrItemStockDetail.setRegTotalSell(stockDetails.getRegTotalSell());
 
 				stockDetailList.add(postFrItemStockDetail);
-			}
+			//}
 		}
 
 		postFrItemStockHeader.setPostFrItemStockDetailList(stockDetailList);

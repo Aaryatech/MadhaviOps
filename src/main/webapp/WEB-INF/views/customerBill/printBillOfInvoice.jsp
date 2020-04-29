@@ -206,10 +206,20 @@
 															type="number" maxFractionDigits="2" minFractionDigits="2"
 															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
 															groupingUsed="false" var="billTotal"/>
-											<fmt:formatNumber
+															
+															
+											<%-- <fmt:formatNumber
 															type="number" maxFractionDigits="0" minFractionDigits="0"
 															value="${calTotalAmt-sellBillHeaderAndDetail.discountAmt}"
+															groupingUsed="false" var="total"/> --%>
+															
+															<fmt:formatNumber
+															type="number" maxFractionDigits="0" minFractionDigits="0"
+															value="${billTotal+ (billTotal % 1 == 0 ? 0 : 0.5)}"
 															groupingUsed="false" var="total"/>
+															
+															
+															
 										<tr>
 												<td colspan="4" align="right"><span class="style7">Bill
 														Total:</span></td>

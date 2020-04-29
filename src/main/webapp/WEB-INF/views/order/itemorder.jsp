@@ -244,6 +244,7 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Min Quantity</th>
+													<th class="col-md-1">Current Stock</th>
 													<th class="col-md-1">Quantity</th>
 													<th class="col-md-1">MRP</th>
 													<th class="col-md-1">Rate</th>
@@ -267,6 +268,7 @@ a:hover {
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>
 													<th class="col-md-1">Min Quantity</th>
+													<th class="col-md-1">Current Stock</th>
 													<th class="col-md-1">Quantity</th>
 													<th class="col-md-1">MRP</th>
 													<th class="col-md-1">Rate</th>
@@ -291,9 +293,22 @@ a:hover {
 																	<td class="col-md-2">${items.itemName}<a
 																		href="${url}${items.itemImage}"
 																		data-lightbox="image-1" tabindex="-1"></a></td>
-																		
+
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
+
+																	<c:forEach var="stock" items="${itemStock}">
+
+																		<c:if test="${stock.id==items.id}">
+																			<td class="col-md-1"><c:out
+																					value='${stock.currentStock}' /></td>
+
+																		</c:if>
+
+
+
+																	</c:forEach>
+
 
 																	<td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
@@ -312,20 +327,18 @@ a:hover {
 																	<c:set var="rate" value="${items.itemRate1}" />
 																	<c:set var="mrp" value="${items.itemMrp1}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}">
-																	<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																	<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																		<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" />
-																	</c:otherwise>
-																	</c:choose>
-																	</td>
+																	<td class="col-md-1" id="total${items.id}"><c:choose>
+																			<c:when test="${frDetails.frKg1==1}">
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${mrp * qty}" />
+																			</c:when>
+																			<c:otherwise>
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${rate * qty}" />
+																			</c:otherwise>
+																		</c:choose></td>
 
 
 																	<c:choose>
@@ -380,20 +393,18 @@ a:hover {
 																	<c:set var="rate" value="${items.itemRate2}" />
 																	<c:set var="mrp" value="${items.itemMrp2}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td id="total${items.id}">
-																	<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																	<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																	<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" />
-																	</c:otherwise>
-																	</c:choose>		
-																	</td>
+																	<td id="total${items.id}"><c:choose>
+																			<c:when test="${frDetails.frKg1==1}">
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${mrp * qty}" />
+																			</c:when>
+																			<c:otherwise>
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${rate * qty}" />
+																			</c:otherwise>
+																		</c:choose></td>
 																	<c:choose>
 																		<c:when test="${menuIdFc eq menuIdShow}">
 																			<c:choose>
@@ -445,20 +456,18 @@ a:hover {
 																	<c:set var="rate" value="${items.itemRate3}" />
 																	<c:set var="mrp" value="${items.itemMrp3}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}">
-																	<c:choose>
-																	<c:when test="${frDetails.frKg1==1}">
-																	<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${mrp * qty}" />
-																	</c:when>
-																	<c:otherwise>
-																	<fmt:formatNumber
-																			type="number" minFractionDigits="2"
-																			maxFractionDigits="2" value="${rate * qty}" />
-																	</c:otherwise>
-																	</c:choose>		
-																	</td>
+																	<td class="col-md-1" id="total${items.id}"><c:choose>
+																			<c:when test="${frDetails.frKg1==1}">
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${mrp * qty}" />
+																			</c:when>
+																			<c:otherwise>
+																				<fmt:formatNumber type="number"
+																					minFractionDigits="2" maxFractionDigits="2"
+																					value="${rate * qty}" />
+																			</c:otherwise>
+																		</c:choose></td>
 
 																	<c:choose>
 																		<c:when test="${menuIdFc eq menuIdShow}">
@@ -508,15 +517,16 @@ a:hover {
 						</ul>
 					</div>
 					<!--tabNavigation-->
-					
+
 
 					<div class="order-btn textright">
- <a href="#" onClick="openNav()">   <input type="button" value="Go Back"  class="buttonsaveorder" /> </a>
-						<input name="" id="subm" class="buttonsaveorder"
+						<a href="#" onClick="openNav()"> <input type="button"
+							value="Go Back" class="buttonsaveorder" />
+						</a> <input name="" id="subm" class="buttonsaveorder"
 							value="SAVE ORDER" type="button" ONCLICK="button1()">
 					</div>
 
-        
+
 
 				</form>
 

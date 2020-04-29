@@ -1832,6 +1832,7 @@ body {
 									<th style="text-align: center;" width="2%">Sr</th>
 									<th style="text-align: center;">Item Name</th>
 									<th style="text-align: center;">Current Stock</th>
+									<th style="text-align: center;">ROL</th>
 
 								</tr>
 							</thead>
@@ -2754,7 +2755,9 @@ function matchSplitAmt(flag){
 															stock=data.currentStock;
 														}
 														
-														tr.append($('<td></td>').html(stock));
+														tr.append($('<td style="text-align:right;"></td>').html(stock));
+														
+														tr.append($('<td style="text-align:right;"></td>').html(data.reorder));
 														
  
 														$('#stockTable tbody')
