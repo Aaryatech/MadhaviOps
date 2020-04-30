@@ -130,7 +130,8 @@ public class ProfileController {
 		String frCity=request.getParameter("fr_city");
 		String frPassword=request.getParameter("fr_password");
 		// String frImage=ImageS3Util.uploadFrImage(file);
-		
+		String fdaDate = request.getParameter("fda_lics_date");
+		//System.out.println("Update Fda Date-------------: " +fdaDate);
 		
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -202,7 +203,10 @@ public class ProfileController {
 			int intFrRate=(int) frDetails.getFrRate();
 			map.add("frRate",intFrRate);
 			map.add("frRmn1", frDetails.getFrRmn1());
-			map.add("fdaLicsDate", request.getParameter("fda_lics_date"));
+			map.add("fdaAgreementDate", fdaDate);// FDA License Date
+			
+			
+			//Fr Supplement
 			map.add("frAgreementDate",  DateConvertor.convertToYMD(request.getParameter("fr_agreement_date")));
 			map.add("weighingScale1Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date1")));
 			map.add("weighingScale2Date",  DateConvertor.convertToYMD(request.getParameter("weighing_scale_date2")));

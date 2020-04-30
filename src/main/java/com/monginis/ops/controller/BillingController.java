@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,8 +17,23 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -238,6 +256,8 @@ public class BillingController {
 	public @ResponseBody void updateBillStatus(HttpServletRequest request,
 		HttpServletResponse response) {
 		
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		
 		String billNo=request.getParameter("billNo");
 		System.out.println("Bill No : "+ billNo);
@@ -293,9 +313,74 @@ public class BillingController {
 			System.out.println("Message :   "+info.getMessage());
 			System.out.println("Error  :    "+info.getError());
 			if(info.getError()==false) {
+			System.out.println("Bill Received--------------------"+getBillHeader);
 			
-			HttpSession session = request.getSession();
-			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			try {
+				String url = Constant.ReportURL + "pdf/showBillPdf/By-Road/0/"+billNo;
+				doConversion(url, Constant.REPORT_SAVE);
+				
+				final String emailSMTPserver = "smtp.gmail.com";
+				final String emailSMTPPort = "587";
+				final String mailStoreType = "imaps";
+				
+				final String username ="madhvierp@gmail.com";
+				final String password ="madhvi@#2020";				
+				String mailsubject ="Delivery Challan";
+				System.out.println("username : " + username);
+				System.out.println("password : " + password);
+
+				Properties props = new Properties();
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.socketFactory.port", "465");
+				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.port", "587");
+				props.put("mail.smtp.starttls.enable", "true");
+
+				Session sess = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
+
+				try {
+					Store mailStore = sess.getStore(mailStoreType);
+					mailStore.connect(emailSMTPserver, username, password);
+					
+					Message mimeMessage = new MimeMessage(sess);
+					mimeMessage.setFrom(new InternetAddress(username));
+					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(frDetails.getFrEmail()));
+					mimeMessage.setSubject(mailsubject);
+					mimeMessage.setFileName("Bill Print");
+					BodyPart mbodypart = new MimeBodyPart();
+					Multipart multipart = new MimeMultipart();
+					DataSource source = new FileDataSource(Constant.REPORT_SAVE);
+					mbodypart.setDataHandler(new DataHandler(source));
+					mbodypart.setFileName(new File(Constant.REPORT_SAVE).getName());
+					// mbodypart.setFileName(Constants.REPORT_SAVE);
+					multipart.addBodyPart(mbodypart);
+					mimeMessage.setContent(multipart);
+
+					MimeBodyPart messageBodyPart = new MimeBodyPart();
+					messageBodyPart = new MimeBodyPart();
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("<html><body>");
+					sb.append("<br><p>Outlet Code:"+getBillHeader.getFrCode()+" Bill Date: "+getBillHeader.getBillDate()+" Bill Amt: "+getBillHeader.getGrandTotal()+"</p><br>"); 
+					sb.append("</body></html>");
+					messageBodyPart.setContent(""+sb,"text/html; charset=utf-8");
+					multipart.addBodyPart(messageBodyPart);
+					mimeMessage.setContent(multipart);
+
+					Transport.send(mimeMessage);
+				}catch (Exception e) {
+					System.err.println("Ex in Receive Bill1: "+e.getMessage());
+					e.printStackTrace();
+				}	
+			}catch (Exception e) {
+				System.err.println("Ex in Receive Bill2: "+e.getMessage());
+				e.printStackTrace();
+			}
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -400,6 +485,48 @@ public class BillingController {
 		e.printStackTrace();
 	}
 		
+	}
+	
+	public void doConversion(String url, String outputPath)
+			throws InvalidParameterException, MalformedURLException, IOException {
+		File output = new File(outputPath);
+		java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+		PD4ML pd4ml = new PD4ML();
+
+		try {
+
+			PD4PageMark footer = new PD4PageMark();
+			footer.setPageNumberTemplate("page $[page] of $[total]");
+			footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);
+			footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);
+			footer.setInitialPageNumber(1);
+			footer.setFontSize(8);
+			footer.setAreaHeight(15);
+
+			pd4ml.setPageFooter(footer);
+
+		} catch (Exception e) {
+			System.out.println("Pdf conversion method excep " + e.getMessage());
+		}
+		try {
+			pd4ml.setPageSize(landscapeValue ? pd4ml.changePageOrientation(format) : format);
+		} catch (Exception e) {
+			System.out.println("Pdf conversion ethod excep " + e.getMessage());
+		}
+
+		if (unitsValue.equals("mm")) {
+			pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+		} else {
+			pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+		}
+
+		pd4ml.setHtmlWidth(userSpaceWidth);
+
+		pd4ml.render(new URL(url), fos);
+		fos.close();
+
+		System.out.println(outputPath + "\ndone.");
 	}
 	
 	@RequestMapping(value = "pdf/showBillPdf/{transportMode}/{vehicleNo}/{selectedBills}", method = RequestMethod.GET)
