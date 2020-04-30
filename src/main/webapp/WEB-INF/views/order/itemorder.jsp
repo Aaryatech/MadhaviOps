@@ -297,17 +297,17 @@ a:hover {
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
-																	<c:forEach var="stock" items="${itemStock}">
+																	<td class="col-md-1"><c:set value="0" var="temp"></c:set>
+																		<c:forEach var="stock" items="${itemStock}">
 
-																		<c:if test="${stock.id==items.id}">
-																			<td class="col-md-1"><c:out
-																					value='${stock.currentStock}' /></td>
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
 
-																		</c:if>
-
-
-
-																	</c:forEach>
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
 
 
 																	<td class="col-md-1"><input name='${items.id}'
@@ -378,6 +378,20 @@ a:hover {
 																		data-lightbox="image-1" tabindex="-1"></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
+
+																	<td class="col-md-1"><c:set value="0" var="temp"></c:set>
+																		<c:forEach var="stock" items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
+
 																	<td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
@@ -441,6 +455,19 @@ a:hover {
 																		data-lightbox="image-1" tabindex="-1"></a></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
+
+																	<td class="col-md-1"><c:set value="0" var="temp"></c:set>
+																		<c:forEach var="stock" items="${itemStock}">
+
+																			<c:if test="${temp==0}">
+																				<c:if test="${stock.id==items.id}">
+																					<c:set value="1" var="temp"></c:set>
+																					<c:out value='${stock.currentStock}' />
+
+																				</c:if>
+																			</c:if>
+																		</c:forEach></td>
+
 																	<td class="col-md-1"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
