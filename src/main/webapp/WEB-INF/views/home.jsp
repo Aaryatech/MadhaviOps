@@ -434,8 +434,8 @@
 									<h5 class="price_sale">
 										Rs.
 										<fmt:formatNumber type="number" pattern="#"
-											value="${countDetails.creditAmt-creditAdvAmt}" />
-									</h5>
+											value="${countDetails.creditAmt}" />
+									</h5><%-- ${countDetails.creditAmt-creditAdvAmt} --%>
 								</div>
 								<div class="clr"></div>
 							</div>
