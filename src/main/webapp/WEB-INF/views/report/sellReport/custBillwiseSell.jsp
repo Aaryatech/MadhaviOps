@@ -138,6 +138,16 @@ chosen-container {
 									</select>
 	
 								</div>
+								
+								<div class="col-sm-6 col-lg-6">
+								
+								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
+									View</button>
+
+								<button class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()">PDF</button>
+									
+								</div>
 						</div>
 					</div>
 
@@ -149,11 +159,7 @@ chosen-container {
 						<div class="form-group">
 
 							
-								<button class="buttonsaveorder" onclick="searchSellBill()">HTML
-									View</button>
-
-								<button class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()">PDF</button>
+								
 							
 
 							<div align="center" id="loader" style="display: none">
@@ -244,10 +250,11 @@ chosen-container {
 	<%-- <script src="${pageContext.request.contextPath}/resources/js/main.js"></script> --%>
 	<!--easyTabs-->
 
-	<script type="text/javascript"
-		src="/ops/resources/dropdownmultiple/chosen.jquery.js"></script>
-	<script type="text/javascript"
-		src="/ops/resources/dropdownmultiple/chosen-active.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+
 
 
 	<script type="text/javascript">

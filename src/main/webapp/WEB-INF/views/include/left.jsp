@@ -918,7 +918,7 @@
 										Report Or Month Wise Item Sell Report</a> <a
 										href="${pageContext.request.contextPath}/showSubCatDateWiseSellReport"><i
 										class="fa fa-files-o icon"></i>Datewise Sub Category Sale
-										Report</a> <a
+										Report</a> <a style="display: none;"
 										href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
 										class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a> <a
 										href="${pageContext.request.contextPath}/viewCustBillwiseSell"><i

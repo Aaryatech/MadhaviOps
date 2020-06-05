@@ -262,12 +262,12 @@ body {
 							<!--tab1-->
 							<li data-content="tab1" class="selected" onshow="onloadTab(1)">
 								<div class="row">
-									<div class="col-md-9">
+									<div class="col-md-12">
 										<div class="control-label">
 										
 										<div class="row">
 											<div class="col-md-4">
-												<h4 class="col-md-7">
+												<h4 class="col-md-8" style="margin-top: 5px">
 													<b>Invoice No:-</b>
 												</h4>
 												<input type="text" class="form-control" autocomplete="off"

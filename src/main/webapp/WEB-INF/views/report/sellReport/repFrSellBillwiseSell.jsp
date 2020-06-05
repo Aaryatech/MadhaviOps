@@ -10,7 +10,6 @@
 /* .chosen-single {
 	text-align: left;
 } */
-
 table, th, td {
 	border: 1px solid #9da88d;
 }
@@ -21,8 +20,10 @@ table, th, td {
 </style>
 
 
- <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css"> 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
+	
+	
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/loader.css">
@@ -390,11 +391,13 @@ table, th, td {
 	<!--easyTabs-->
 	<%-- <script src="${pageContext.request.contextPath}/resources/js/main.js"></script> --%>
 	<!--easyTabs-->
+	
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
 
-	<script type="text/javascript"
-		src="/ops/resources/dropdownmultiple/chosen.jquery.js"></script>
-	<script type="text/javascript"
-		src="/ops/resources/dropdownmultiple/chosen-active.js"></script>
+	
 
 
 	<script type="text/javascript">
@@ -505,6 +508,16 @@ table, th, td {
 									var epayTotal = 0;
 									var roundTotal = 0;
 
+									var subCashTotal = 0;
+									var subCardTotal = 0;
+									var subEpayTotal = 0;
+									var subCreditCardTotal = 0;
+									var subDebitCardTotal = 0;
+									var subBankTrTotal = 0;
+									var subPaytmTotal = 0;
+									var subGooglePayTotal = 0;
+									var subAmazonPayTotal = 0;
+
 									//var otherTotal=0;
 									$
 											.each(
@@ -526,203 +539,241 @@ table, th, td {
 																|| card != 0
 																|| epay != 0) { */
 
-															tr
-																	.append($(
-																			'<td  style="text-align:center;"></td>')
-																			.html(
-																					key + 1));
+														tr
+																.append($(
+																		'<td  style="text-align:center;"></td>')
+																		.html(
+																				key + 1));
 
-															tr
-																	.append($(
-																			'<td  style="text-align:center;" ></td>')
-																			.html(
-																					sellBillData.invoiceNo));
+														tr
+																.append($(
+																		'<td  style="text-align:center;" ></td>')
+																		.html(
+																				sellBillData.invoiceNo));
 
-															tr
-																	.append($(
-																			'<td style="text-align:center;"></td>')
-																			.html(
-																					sellBillData.billDate));
+														tr
+																.append($(
+																		'<td style="text-align:center;"></td>')
+																		.html(
+																				sellBillData.billDate));
 
-															var cust = sellBillData.custName
-																	+ "_"
-																	+ sellBillData.phoneNumber;
+														var cust = sellBillData.custName
+																+ "_"
+																+ sellBillData.phoneNumber;
 
-															tr
-																	.append($(
-																			'<td ></td>')
-																			.html(
-																					cust));
+														tr.append($(
+																'<td ></td>')
+																.html(cust));
 
-															tr
-																	.append($(
-																			'<td style="text-align:right;"></td>')
-																			.html(
-																					sellBillData.discountPer
-																							.toFixed(2)));
-															tr
-																	.append($(
-																			'<td style="text-align:right;"></td>')
-																			.html(
-																					addCommas(sellBillData.discountAmt
-																							.toFixed(2))));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				sellBillData.discountPer
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				addCommas(sellBillData.discountAmt
+																						.toFixed(2))));
 
-															tr
-																	.append($(
-																			'<td style="text-align:right;"></td>')
-																			.html(
-																					addCommas(sellBillData.taxableAmt
-																							.toFixed(2))));
-															tr
-																	.append($(
-																			'<td style="text-align:right;"></td>')
-																			.html(
-																					addCommas(sellBillData.totalTax
-																							.toFixed(2))));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				addCommas(sellBillData.taxableAmt
+																						.toFixed(2))));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				addCommas(sellBillData.totalTax
+																						.toFixed(2))));
 
-															tr
-																	.append($(
-																			'<td   style="text-align:right;"></td>')
-																			.html(
-																					addCommas((sellBillData.grandTotal)
-																							.toFixed(2))));
-															tr
-																	.append($(
-																			'<td  style="text-align:right;"></td>')
-																			.html(
-																					addCommas((sellBillData.payableAmt)
-																							.toFixed(2))));
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.grandTotal)
+																						.toFixed(2))));
+														tr
+																.append($(
+																		'<td  style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.payableAmt)
+																						.toFixed(2))));
 
-															tr
-																	.append($(
-																			'<td   style="text-align:right;"></td>')
-																			.html(
-																					addCommas((sellBillData.paidAmt)
-																							.toFixed(2))));
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.paidAmt)
+																						.toFixed(2))));
 
-															tr
-																	.append($(
-																			'<td   style="text-align:right;"></td>')
-																			.html(
-																					addCommas((sellBillData.remainingAmt)
-																							.toFixed(2))));
-															
-															tr
-															.append($(
-																	'<td   style="text-align:right;"></td>')
-																	.html(
-																			addCommas((sellBillData.roundOff)
-																					.toFixed(2))));
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.remainingAmt)
+																						.toFixed(2))));
 
-															amtTotal = amtTotal
-																	+ sellBillData.grandTotal;
-															taxableTotal = taxableTotal
-																	+ sellBillData.taxableAmt;
-															taxTotal = taxTotal
-																	+ sellBillData.totalTax;
-															payableTotal = payableTotal
-																	+ sellBillData.payableAmt;
-															paidTotal = paidTotal
-																	+ sellBillData.paidAmt;
-															remainingTotal = remainingTotal
-																	+ sellBillData.remainingAmt;
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				addCommas((sellBillData.roundOff)
+																						.toFixed(2))));
 
-															cashTotal = cashTotal
-																	+ sellBillData.cash;
-															cardTotal = cardTotal
-																	+ sellBillData.card;
-															epayTotal = epayTotal
-																	+ sellBillData.ePay;
-															
-															roundTotal = roundTotal
-															+ sellBillData.roundOff;
+														amtTotal = amtTotal
+																+ sellBillData.grandTotal;
+														taxableTotal = taxableTotal
+																+ sellBillData.taxableAmt;
+														taxTotal = taxTotal
+																+ sellBillData.totalTax;
+														payableTotal = payableTotal
+																+ sellBillData.payableAmt;
+														paidTotal = paidTotal
+																+ sellBillData.paidAmt;
+														remainingTotal = remainingTotal
+																+ sellBillData.remainingAmt;
 
-															ttlDiscAmt = ttlDiscAmt
-																	+ sellBillData.discountAmt;
+														cashTotal = cashTotal
+																+ sellBillData.cash;
+														cardTotal = cardTotal
+																+ sellBillData.card;
+														epayTotal = epayTotal
+																+ sellBillData.ePay;
 
-															var paymentMode = sellBillData.paymentMode;
+														roundTotal = roundTotal
+																+ sellBillData.roundOff;
 
-															var pMode = "";
-															var ch=sellBillData.cash;
-															var cd=sellBillData.card;
-															var ep=sellBillData.ePay;
-															
-															 if (sellBillData.cash > 0) {
-																pMode=ch+"-Cash";
+														ttlDiscAmt = ttlDiscAmt
+																+ sellBillData.discountAmt;
+
+														var paymentMode = sellBillData.paymentMode;
+
+														var pMode = "";
+														var ch = sellBillData.cash;
+														var cd = sellBillData.card;
+														var ep = sellBillData.ePay;
+
+														if (sellBillData.cash > 0) {
+															pMode = ch
+																	+ "-Cash";
+														}
+														if (sellBillData.card > 0) {
+															pMode = pMode
+																	+ "&nbsp;&nbsp;&nbsp;"
+																	+ cd
+																	+ "-Card";
+														}
+														if (sellBillData.ePay > 0) {
+															pMode = pMode
+																	+ "&nbsp;&nbsp;&nbsp;"
+																	+ ep
+																	+ "-E-pay";
+														}
+
+														tr
+																.append($(
+																		'<td  style="text-align:center;"></td>')
+																		.html(
+																				pMode));
+
+														/* PAYMENT SUB TYPE */
+
+														var payType = "";
+														var str_arr = sellBillData.frName
+																.split(',');
+
+														for (i = 0; i < str_arr.length; i++) {
+
+															if (str_arr[i] === "1") {
+																payType = ch
+																		+ "-Cash";
+																subCashTotal = subCashTotal
+																		+ ch;
 															}
-															 if (sellBillData.card > 0) {
-																pMode=pMode+"&nbsp;&nbsp;&nbsp;"+cd+"-Card";
+															if (str_arr[i] === "2") {
+																payType = payType
+																		+ ", "
+																		+ cd
+																		+ "-Card";
+																subCardTotal = subCardTotal
+																		+ cd;
 															}
-															if (sellBillData.ePay > 0) {
-																pMode=pMode+"&nbsp;&nbsp;&nbsp;"+ep+"-E-pay";
-															}  
-															
-															tr
-																	.append($(
-																			'<td  style="text-align:center;"></td>')
-																			.html(
-																					pMode));
-
-															/* PAYMENT SUB TYPE */
-
-															var payType = "";
-															var str_arr = sellBillData.frName
-																	.split(',');
-
-															for (i = 0; i < str_arr.length; i++) {
-
-																if (str_arr[i] === "1") {
-																	payType = "Cash";
-																}
-																if (str_arr[i] === "2") {
-																	payType = payType
-																			+ ", Card";
-																}
-																if (str_arr[i] === "3") {
-																	payType = payType
-																			+ ", Epay";
-																}
-																if (str_arr[i] === "4") {
-																	payType = payType
-																			+ ", Debit Card";
-																}
-																if (str_arr[i] === "5") {
-																	payType = payType
-																			+ ", Credit Card";
-																}
-																if (str_arr[i] === "6") {
-																	payType = payType
-																			+ ", Bank Transaction";
-																}
-																if (str_arr[i] === "7") {
-																	payType = payType
-																			+ ", Paytm";
-																}
-																if (str_arr[i] === "8") {
-																	payType = payType
-																			+ ", Google Pay";
-																}
-																if (str_arr[i] === "9") {
-																	payType = payType
-																			+ ", Amazon Pay";
-																}
-
+															if (str_arr[i] === "3") {
+																payType = payType
+																		+ ", "
+																		+ ep
+																		+ "-Epay";
+																subEpayTotal = subEpayTotal
+																		+ ep;
+															}
+															if (str_arr[i] === "4") {
+																payType = payType
+																		+ ", "
+																		+ cd
+																		+ "-Debit Card";
+																subDebitCardTotal = subDebitCardTotal
+																		+ cd;
+															}
+															if (str_arr[i] === "5") {
+																payType = payType
+																		+ ", "
+																		+ cd
+																		+ "-Credit Card";
+																subCreditCardTotal = subCreditCardTotal
+																		+ cd;
+															}
+															if (str_arr[i] === "6") {
+																payType = payType
+																		+ ", "
+																		+ ep
+																		+ "-Bank Transaction";
+																subBankTrTotal = subBankTrTotal
+																		+ ep;
+															}
+															if (str_arr[i] === "7") {
+																payType = payType
+																		+ ", "
+																		+ ep
+																		+ "-Paytm";
+																subPaytmTotal = subPaytmTotal
+																		+ ep;
+															}
+															if (str_arr[i] === "8") {
+																payType = payType
+																		+ ", "
+																		+ ep
+																		+ "-Google Pay";
+																subGooglePayTotal = subGooglePayTotal
+																		+ ep;
+															}
+															if (str_arr[i] === "9") {
+																payType = payType
+																		+ ", "
+																		+ ep
+																		+ "-Amazon Pay";
+																subAmazonPayTotal = subAmazonPayTotal
+																		+ ep;
 															}
 
-															payType = payType
-																	.replace(
-																			/^,/,
-																			'');
+														}
 
-															tr
-																	.append($(
-																			'<td  style="text-align:center;"></td>')
-																			.html(
-																					payType));
+														payType = payType
+																.replace(/^,/,
+																		'');
 
-															$(
-																	'#table_grid tbody')
-																	.append(tr);
+														tr
+																.append($(
+																		'<td  style="text-align:center;"></td>')
+																		.html(
+																				payType));
+
+														$('#table_grid tbody')
+																.append(tr);
 														//}
 
 													})
@@ -754,18 +805,39 @@ table, th, td {
 									var remaining = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (remainingTotal).toFixed(2);
 									+"</b></td>";
-									
-									
+
 									var round = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
-										+ (roundTotal).toFixed(2);
-								+"</b></td>";
+											+ (roundTotal).toFixed(2);
+									+"</b></td>";
 
-									var payMode = cashTotal + "-Cash ,"
-											+ cardTotal + "-Card ," + epayTotal
-											+ "-E-pay";
+									var payMode = cashTotal
+											+ "-Cash,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ cardTotal
+											+ "-Card,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ epayTotal + "-E-pay";
 
-									var pay = "<td style=text-align:right;><b>"
+									var pay = "<td style=text-align:center;><b>"
 											+ addCommas(payMode) + "</b></td>";
+
+									var subPayMode = "<td style=text-align:center;><b>"
+											+ addCommas(subCashTotal)
+											+ "-Cash,&nbsp;&nbsp;&nbsp;&nbsp;"
+											/* + addCommas(subCardTotal)
+											+ "-Card,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ addCommas(subEpayTotal)
+											+ "-E-Pay,<br>" */
+											+ addCommas(subDebitCardTotal)
+											+ "-Debit Card,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ addCommas(subCreditCardTotal)
+											+ "-Credit Card,<br>"
+											+ addCommas(subBankTrTotal)
+											+ "-Bank Transaction,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ addCommas(subPaytmTotal)
+											+ "-Paytm,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ addCommas(subGooglePayTotal)
+											+ "-Google Pay,&nbsp;&nbsp;&nbsp;&nbsp;"
+											+ addCommas(subAmazonPayTotal)
+											+ "-Amazon Pay" + "</b></td>";
 
 									var td = "<td></td>";
 
@@ -791,6 +863,8 @@ table, th, td {
 									$('#table_grid tbody').append(
 											addCommas(round));
 									$('#table_grid tbody').append(pay);
+									$('#table_grid tbody').append(subPayMode);
+
 									$('#table_grid tbody').append(trclosed);
 									$('#table_grid tbody').append(trclosed);
 								});

@@ -4271,10 +4271,12 @@ public class ReportsController {
 	public @ResponseBody List<GetRepTaxSell> getFrBillwiseTaxSellBill(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		String fromDate="",toDate="";
+		
 		try {
 			System.out.println("in method");
-			String fromDate = request.getParameter("fromDate");
-			String toDate = request.getParameter("toDate");
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -4385,8 +4387,15 @@ public class ReportsController {
 		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
-		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "BillWiseSellTaxReport");
+		//session.setAttribute("exportExcelListNew", exportToExcelList);
+		//session.setAttribute("excelName", "BillWiseSellTaxReport");
+		session.setAttribute("exportExcelListNew", exportToExcelList);
+		session.setAttribute("excelNameNew", "BillWiseSellTaxReport");
+		session.setAttribute("reportNameNew", "Sale Tax Bill Wise Report");
+		session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+		session.setAttribute("mergeUpto1", "$A$1:$J$1");
+		session.setAttribute("mergeUpto2", "$A$2:$J$2");
+		session.setAttribute("mergeUpto2", "$A$2:$J$2");
 
 		return getRepTaxSell;
 

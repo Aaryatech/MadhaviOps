@@ -648,8 +648,7 @@ body {
 										maxFractionDigits="2" minFractionDigits="2" /></td>
 							</tr>
 							<tr bgcolor="#fefcd5" style="border-top: 1px solid #f4f4f4;">
-								<td style="font-weight: 600;">Total Payable 
-								</td>
+								<td style="font-weight: 600;">Total Payable</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td style="font-weight: 600; text-align: right;" id="totalLable"><fmt:formatNumber
@@ -741,29 +740,22 @@ body {
 					<div class="clr"></div>
 				</div>
 
-				<div class="add_frm_one">
-					<div class="add_customer_one">Address *</div>
-					<div class="add_input">
-						<input placeholder="Enter Address" name="custAdd" id="custAdd"
-							onchange="trim(this)" type="text" class="input_add" />
-					</div>
-					<div class="clr"></div>
-				</div>
 
-				<div class="add_frm_one">
+
+				<div class="add_frm_one" style="display: none;">
 					<div class="add_customer_one">Pin Code</div>
 					<div class="add_input">
 
-						<input type="text" class="input_add" placeholder="Enter Pin Code"
+						<input type="text" class="input_add" placeholder="Enter Pin Code" value="0"
 							name="pincode" id="pincode" onchange="trim(this)" maxlength="6"
 							pattern="[0-9]" />
 					</div>
 					<div class="clr"></div>
 				</div>
-				<div class="add_frm_one">
+				<div class="add_frm_one" style="display: none;">
 					<div class="add_customer_one">Distance(In Kms)</div>
 					<div class="add_input">
-						<input placeholder="Enter distance in kms" name="kms" id="kms"
+						<input placeholder="Enter distance in kms" name="kms" id="kms" value="0"
 							onchange="trim(this)" type="text" class="input_add" />
 					</div>
 					<div class="clr"></div>
@@ -869,6 +861,16 @@ body {
 						</div>
 						<div class="clr"></div>
 					</div>
+
+					<div class="add_frm_one">
+						<div class="add_customer_one">Address </div>
+						<div class="add_input">
+							<input placeholder="Enter Address" name="custAdd" id="custAdd"
+								onchange="trim(this)" type="text" class="input_add" />
+						</div>
+						<div class="clr"></div>
+					</div>
+
 					<div class="add_frm_one">
 						<div class="add_customer_one">GST Number *</div>
 						<div class="add_input">
@@ -1790,7 +1792,7 @@ body {
 									<th style="text-align: center;" width="13%">Pending Amt</th>
 									<th style="text-align: center;" width="2%" id="modeofpay">Mode
 										of Payment</th>
-										<th style="text-align: center;" width="2%" id="remarkTh">Remark</th>
+									<th style="text-align: center;" width="2%" id="remarkTh">Remark</th>
 									<th style="text-align: center;" width="2%" id="trAction">Action</th>
 								</tr>
 							</thead>
@@ -3088,10 +3090,12 @@ function matchSplitAmt(flag){
 			if (customerName == "") {
 				alert("Enter Customer Name");
 				flag = 1;
-			} else if (custAdd == "") {
+			} 
+			/* else if (custAdd == "") {
 				alert("Please Enter Address");
 				flag = 1;
-			}else if (mobileNo == "" || !validateMobile(mobileNo)) {
+			} */
+			else if (mobileNo == "" || !validateMobile(mobileNo)) {
 				alert("Enter Valid Mobile No");
 				flag = 1;
 			}  else if (ageRange == 0) {
@@ -3144,7 +3148,8 @@ function matchSplitAmt(flag){
 
 									if (data.error == false) {
 
-										var html = '<option value="0" selected>Select Customer</option>';
+										//var html = '<option value="0" selected>Select Customer</option>';
+										var html = '';
 										var len = data.customerList.length;
 										//alert(data.addCustomerId);
 										for (var i = 0; i < len; i++) {
@@ -3197,6 +3202,7 @@ function matchSplitAmt(flag){
 											alert("Update Successfully");
 										} else {
 											alert("Customer Add Successfully");
+											$("#cust").trigger("chosen:updated");
 											
 										}
 										$('#addcust').popup('hide'); 

@@ -532,7 +532,11 @@ public class HistoryController {
 		
 		String str = cust.getExVar2();
 		String[] strArr = str.split("-");
-		String remark = strArr[1];
+		String remark="";
+		if(strArr.length>1) {
+			remark = strArr[1];
+		}
+		
 		headDet.setOrderDate(DateConvertor.convertToDMY(headDet.getOrderDate()));
 		System.err.println("cust list" + cust.toString());
 		model.addObject("itemList", itemOrderHistory);

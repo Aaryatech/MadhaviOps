@@ -61,7 +61,7 @@
 						</div>
 					</div> --%>
 
-					<div class="row"
+					<%-- <div class="row"
 						style="display: inline-block; height: 44px; background: #ed1c24; width: 100%; line-height: 44px; margin: 0 0 20px 0;">
 
 						<div class="col-md-2"
@@ -80,13 +80,49 @@
 
 
 							</c:forEach>
-							 <marquee behavior="scroll" direction="left"
+							<marquee behavior="scroll" direction="left"
 								style="font-size: 16px; color: white; margin-left: -15px; margin-right: -15px;"
-								scrollamount="4" onmouseover="this.stop()" onmouseout="this.start()">${news} </marquee> 
+								scrollamount="4" onmouseover="this.stop()"
+								onmouseout="this.start()">${news} </marquee>
 
-							
+
 
 						</div>
+					</div> --%>
+
+
+					<div class="row">
+
+						<div class="col-sm-12" style="margin: 0 0 20px 0; ">
+
+							<div class="col-sm-2"
+								style="background: #fcf300; color: #111111; text-align: center; font-size: 20px; padding-top: 10px; padding-bottom: 10px;">Latest
+								News</div>
+							<div class="col-sm-10" style="background: #ed1c24; padding-top: 10px; padding-bottom: 5px;">
+
+								<c:set var="news" value=""></c:set>
+
+
+								<c:forEach items="${schedulerLists}" var="schedulerLists"
+									varStatus="count">
+
+									<c:set var="news"
+										value="${news}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${schedulerLists.schMessage}"></c:set>
+
+
+								</c:forEach>
+								<marquee behavior="scroll" direction="left"
+									style="font-size: 16px; color: white; margin-left: -15px; margin-right: -15px; margin-top: 5px;"
+									scrollamount="4" onmouseover="this.stop()"
+									onmouseout="this.start()">${news} </marquee>
+
+
+
+							</div>
+
+						</div>
+
+
 					</div>
 
 
@@ -435,7 +471,8 @@
 										Rs.
 										<fmt:formatNumber type="number" pattern="#"
 											value="${countDetails.creditAmt}" />
-									</h5><%-- ${countDetails.creditAmt-creditAdvAmt} --%>
+									</h5>
+									<%-- ${countDetails.creditAmt-creditAdvAmt} --%>
 								</div>
 								<div class="clr"></div>
 							</div>

@@ -402,7 +402,7 @@
 
 	function exportToExcel() {
 
-		window.open("${pageContext.request.contextPath}/exportToExcel");
+		window.open("${pageContext.request.contextPath}/exportToExcelNew");
 		document.getElementById("expExcel").disabled = true;
 	}
 </script>
