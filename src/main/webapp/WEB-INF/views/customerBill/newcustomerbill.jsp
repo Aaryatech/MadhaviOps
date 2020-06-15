@@ -1004,7 +1004,7 @@ body {
 										onclick="changeSplitSingle(1)" checked> <label
 										for="single">Single</label>
 										<div class="check"></div></li>
-									<li><input type="radio" id="split" name="modePay"
+									<li style="display: none;"><input type="radio" id="split" name="modePay"
 										onclick="changeSplitSingle(2)"> <label for="split">Split
 									</label>
 										<div class="check">

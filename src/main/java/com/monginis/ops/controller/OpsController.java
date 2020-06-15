@@ -1449,6 +1449,13 @@ public class OpsController {
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(grandTot));
+			
+			//billType=1 => CASH
+			//billType=2 => CARD
+			//billType=3 => EPAY
+			sellBillHeader.setPaymentMode(billType);
+			
+			
 			if (discPer != 0) {
 				sellBillHeader.setDiscountPer(discPer);//
 			} else {
@@ -1461,11 +1468,11 @@ public class OpsController {
 				sellBillHeader.setRemainingAmt(Math.round(total) - advAmt);
 				sellBillHeader.setPaidAmt(advAmt);
 
-				sellBillHeader.setPaymentMode(1);
+				//sellBillHeader.setPaymentMode(1);
 			} else {
 				sellBillHeader.setStatus(2);
 				sellBillHeader.setRemainingAmt(0);
-				sellBillHeader.setPaymentMode(paymentMode);
+				//sellBillHeader.setPaymentMode(paymentMode);
 				sellBillHeader.setPaidAmt(Math.round(total));
 
 			}
@@ -1961,6 +1968,12 @@ public class OpsController {
 			sellBillHeader.setPayableAmt(Math.round(total));
 			sellBillHeader.setTotalTax(taxAmt);
 			sellBillHeader.setGrandTotal(Math.round(grandTot));
+			
+			//billType=1 => CASH
+			//billType=2 => CARD
+			//billType=3 => EPAY
+			sellBillHeader.setPaymentMode(billType);
+			
 			if (discPer != 0) {
 				sellBillHeader.setDiscountPer(discPer);
 			} else {
@@ -1999,11 +2012,11 @@ public class OpsController {
 				}
 				sellBillHeader.setPaidAmt(advAmt);
 
-				sellBillHeader.setPaymentMode(1);
+				//sellBillHeader.setPaymentMode(1);
 			} else {
 				sellBillHeader.setStatus(2);
 				sellBillHeader.setRemainingAmt(0);
-				sellBillHeader.setPaymentMode(paymentMode);
+				//sellBillHeader.setPaymentMode(paymentMode);
 				sellBillHeader.setPaidAmt(Math.round(total));
 
 			}
