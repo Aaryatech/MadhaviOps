@@ -770,6 +770,7 @@ table, th, td {
 						.getElementById("cgstPer_" + x).innerHTML);
 
 				var billTot = parseFloat((rate - (discAmt / oldQty)) * qty);
+				alert(billTot);
 
 				var tempGrandTot = (billTot * retPer) / 100;
 
