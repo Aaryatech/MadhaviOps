@@ -639,6 +639,7 @@ table, th, td {
 								tr.append($('<td colspan="2"></td>').html(
 										"TOTAL"));
 								tr.append($('<td></td>').html(" "));
+								tr.append($('<td></td>').html(" "));
 								tr.append($(
 										'<td style="text-align:right;"></td>')
 										.html("" + cashTotal));
@@ -647,6 +648,7 @@ table, th, td {
 										.html("" + withdrawlTotal));
 								tr.append($('<td></td>').html(" "));
 								tr.append($('<td></td>').html(" "));
+								
 
 								$('#table_grid tbody').append(tr);
 

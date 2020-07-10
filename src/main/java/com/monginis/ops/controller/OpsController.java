@@ -1308,8 +1308,16 @@ public class OpsController {
 						 * (discAmt / 100));
 						 */
 
-						float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
-						float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+						float detailDiscPer = 0;
+						float detailDiscAmt = 0;
+
+						if(discAmt>0) {
+							detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+							detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+						}
+						
+						//float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+						//float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
 						float detailGrandTotal = CustomerBillController
 								.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
@@ -1755,8 +1763,15 @@ public class OpsController {
 									 * .roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
 									 */
 
-									float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
-									float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+									float detailDiscPer = 0;
+									float detailDiscAmt = 0;
+
+									if(discAmt>0) {
+										detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+										detailDiscAmt = ((detailDiscPer * discAmt) / 100);
+									}
+									//float detailDiscPer = ((itemBillList.get(i).getTotal() * 100) / grandTot);
+									//float detailDiscAmt = ((detailDiscPer * discAmt) / 100);
 
 									float detailGrandTotal = CustomerBillController
 											.roundUp(itemBillList.get(i).getTotal() - detailDiscAmt);
