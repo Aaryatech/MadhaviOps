@@ -565,6 +565,96 @@
 				</div>
 
 				<div class="charts_bx">
+					<div class="chart_l">					
+					
+						<h3 class="bx_title">Pending Orders</h3>
+						
+						<div class="scrollbars" id="scrollbarsmodaldiv">
+							<table id="custCreditTable">
+
+								<thead>
+									<tr>
+										<th style="text-align: center;">Sr</th>
+										<th style="text-align: center;">Invoice No.</th>
+										<th style="text-align: center;">Customer Detail</th>
+										<th style="text-align: center;">Delivery Details</th>
+										<th style="text-align: center;">Delivery Boy</th>
+										<th style="text-align: center;">Mode Of Payment</th>
+										<th style="text-align: center;">Amount</th>
+										<th style="text-align: center;">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+										<tr>
+											<td>1</td>
+											<td style="text-align: center;">SP008</td>
+											<td style="text-align: left;">Suresh Shah - 9547895887</td>
+											<td style="text-align: center;">15-07-2020 - 12:20pm</td>
+											<td style="text-align: left;">Ankit</td>
+											<td style="text-align: center;">E-Pay</td>
+											<td style="text-align: right;">1000</td>
+											<td class="col-md-1" style="text-align: center;"><a
+													onclick="openBillPopup()" title="view/generate bill"><i
+														class="fa fa-shopping-cart" aria-hidden="true"></i></a></td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td style="text-align: center;">SP012</td>
+											<td style="text-align: left;">Sonam Yadav - 9589658521</td>
+											<td style="text-align: center;">15-07-2020 - 12:30pm</td>
+											<td style="text-align: left;">Pankaj</td>
+											<td style="text-align: center;">COD</td>
+											<td style="text-align: right;">1200</td>
+											<td class="col-md-1" style="text-align: center;"><a
+													onclick="openBillPopup()" title="view/generate bill"><i
+														class="fa fa-shopping-cart" aria-hidden="true"></i></a></td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td style="text-align: center;">SP013</td>
+											<td style="text-align: left;">Niki Singh - 9625447858</td>
+											<td style="text-align: center;">15-07-2020 - 01:00pm</td>
+											<td style="text-align: left;">Ankit</td>
+											<td style="text-align: center;">E-Pay</td>
+											<td style="text-align: right;">1000</td>
+											<td class="col-md-1" style="text-align: center;"><a
+													onclick="openBillPopup()" title="view/generate bill"><i
+														class="fa fa-shopping-cart" aria-hidden="true"></i></a></td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td style="text-align: center;">SP0020</td>
+											<td style="text-align: left;">Jayshree Patel - 7898574585</td>
+											<td style="text-align: center;">15-07-2020 - 02:00pm</td>
+											<td style="text-align: left;">Sujit</td>
+											<td style="text-align: center;">COD</td>
+											<td style="text-align: right;">450</td>
+											<td class="col-md-1" style="text-align: center;"><a
+													onclick="openBillPopup()" title="view/generate bill"><i
+														class="fa fa-shopping-cart" aria-hidden="true"></i></a></td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td style="text-align: center;">SP022</td>
+											<td style="text-align: left;">Geeta Patel - 9696585258</td>
+											<td style="text-align: center;">15-07-2020 - 03:15pm</td>
+											<td style="text-align: left;">Pankaj</td>
+											<td style="text-align: center;">COD</td>
+											<td style="text-align: right;">2000</td>
+											<td class="col-md-1" style="text-align: center;"><a
+													onclick="openBillPopup()" title="view/generate bill"><i
+														class="fa fa-shopping-cart" aria-hidden="true"></i></a></td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					
+					<div class="clr"></div>
+				</div>
+
+				<div class="charts_bx">
 					<div class="chart_l">
 
 						<!-- <div class="a">Map Put Here</div>
@@ -950,6 +1040,589 @@
 			});
 		});
 	</script>
+	<!-- *********************************************************************** -->
+	<div id="billPopup" class="add_customer" style="width: 60%;">
+			<button class="addcust_close close_popup" onclick="closeBillPopup()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</button>
+			<h3 class="pop_head">
+				<div class="row" style="margin-right: 25px;">
+
+					<div class="col-lg-3" style="margin-top: 5px;">Generate Bill</div>
+					<div class="col-lg-9">
+
+						<input type="text" readonly="readonly"
+							style="text-align: center; border-radius: 50px 50px 50px 50px; background: #fffed2; padding: 5px; width: 100px; border: 1px solid #fffed2;"
+							value="Process">
+
+					</div>
+
+				</div>
+			</h3>
+
+			<div class="col-lg-12">
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-2" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Order ID :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">#2132</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Delivery Date :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">13/07/2020 11:30am
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-2" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Customer :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">Test Customer</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Mobile Number :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">9090909090</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-2" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Address :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-10">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">MADHVI DAIRY PVT
+									LTD Pratiti House, Opp. Adarsh High School, Dairy Road,
+									Palanpur</div>
+							</div>
+
+						</div>
+					</div>
+
+
+				</div>
+
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-2" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Pincode :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">400000</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Kilometer :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%;">7</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<br>
+
+				<div class="row">
+
+					<div id="table-scroll" class="table-scroll" style="width: 90%">
+						<div class="table-responsive"
+							style="max-height: none; min-height: none;">
+							<table id="table_grid" class="main-table">
+								<thead>
+									<tr class="bgpink">
+										<th class="col-md-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">SR</th>
+										<th class="col-md-2"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">PRODUCT</th>
+										<th class="col-md-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">QTY</th>
+										<th class="col-sm-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">UOM</th>
+										<th class="col-md-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">PRICE</th>
+										<th class="col-md-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">DISCOUNT</th>
+										<th class="col-md-1"
+											style="text-align: center; padding: 0 !important; font-size: 14px;">TOTAL</th>
+
+									</tr>
+								</thead>
+								<tbody>
+
+									<c:forEach var="i" begin="1" end="3">
+
+										<tr>
+											<td class="col-md-1"
+												style="padding: 2 !important; font-size: 14px;">${i}</td>
+											<td class="col-md-1"
+												style="padding: 2 !important; font-size: 14px;">Madhvi
+												Penda</td>
+											<td class="col-md-1"
+												style="text-align: right; padding: 2 !important; font-size: 14px;">5.00</td>
+											<td class="col-md-1"
+												style="padding: 2 !important; font-size: 14px;">Kgs</td>
+											<td class="col-md-1"
+												style="text-align: right; padding: 2 !important; font-size: 14px;">480</td>
+											<td class="col-md-1"
+												style="text-align: right; padding: 2 !important; font-size: 14px;">0</td>
+											<td class="col-md-1"
+												style="text-align: right; padding: 2 !important; font-size: 14px;">2400.00</td>
+
+										</tr>
+
+									</c:forEach>
+
+
+								</tbody>
+
+							</table>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-6" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">Total
+									UOM :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">Kgs
+									= 5 &nbsp;&nbsp;&nbsp;TOTAL = 5</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #ffe5e6">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Total Items :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">5</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Total :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">2285.71
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-3" style="padding-left: 15px;"></div>
+
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Order Tax :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">114.29
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #e5ffeb">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Item Discount :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">0</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Bill Discount :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">0
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #fefcd5">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Total Payable :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%"></div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">2400.00
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<!-- <div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Payment Mode :</div>
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="col-lg-9" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">COD</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div> -->
+				
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #e5ffeb">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Payment Mode :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">COD</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Grievance :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">Good
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #fff">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Remark :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">NA</div>
+							</div>
+
+						</div>
+					</div>
+
+					
+
+					
+
+				</div>
+
+				<br>
+				<!-- <div class="row" style="margin-left: 15px; margin-right: 15px;">
+
+					<div class="col-lg-4">
+						<button class="hold can_btn" onclick="closeBillPopup()">REJECT</button>
+					</div>
+					<div class="col-lg-4">
+						<button class="hold hold_btn" onclick="closeBillPopup()">KOT</button>
+					</div>
+					<div class="col-lg-4">
+						<button class="hold pay_btn" onclick="closeBillPopup()">GST
+							BILL</button>
+					</div>
+
+
+				</div> -->
+				<br>
+
+
+			</div>
+		</div>
+		
+<!-- **************************************************************** -->
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#billPopup').popup({
+				focusdelay : 400,
+				outline : true,
+				vertical : 'top'
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function openBillPopup() {
+
+			$('#billPopup').popup('show');
+
+		}
+
+		function closeBillPopup() {
+
+			$('#billPopup').popup('hide');
+
+		}
+	</script>
+<!-- **************************************************************** -->
 </body>
 </html>
 <%--	<!--topLeft-nav-->

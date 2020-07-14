@@ -24,6 +24,7 @@ import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.spadvreport.GetDeliveryBoyWiseReport;
+import com.monginis.ops.model.spadvreport.GetDeliveryDetailList;
 import com.monginis.ops.model.spadvreport.GetOnlineOrderHistory;
 
 @Controller
@@ -523,4 +524,92 @@ public class OtherReportController {
 		return model;
 	}
 	
+	
+	@RequestMapping(value = "pdf/getDeliveryDetailsPdf", method = RequestMethod.GET)
+	public ModelAndView getDeliveryDetailsPdf(HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("In Pdf");
+		
+		ModelAndView model = new ModelAndView("report/other/getDeliveryDetailPdf");
+		List<GetDeliveryDetailList> list = new ArrayList<GetDeliveryDetailList>();
+		try {
+			GetDeliveryDetailList order1 = new GetDeliveryDetailList();
+			order1.setOrderId(101);
+			order1.setCustomer("Nikhil Takhur");
+			order1.setMobNo("9545999985");
+			order1.setInvoiceNo("SP101");
+			order1.setDeliveryDate("01-07-2020");
+			order1.setDeliveryTime("05:00 pm");
+			order1.setAmount(600);
+			order1.setModeOfPayment("Cash");
+			list.add(order1);
+			
+			GetDeliveryDetailList order2 = new GetDeliveryDetailList();
+			order2.setOrderId(101);
+			order2.setCustomer("Vishal Saulanki");
+			order2.setMobNo("7845741474");
+			order2.setInvoiceNo("SP102");
+			order2.setDeliveryDate("01-07-2020");
+			order2.setDeliveryTime("10:30 am");
+			order2.setAmount(600);
+			order2.setModeOfPayment("COD");
+			list.add(order2);
+			
+			GetDeliveryDetailList order3 = new GetDeliveryDetailList();
+			order3.setOrderId(101);
+			order3.setCustomer("Ajit Dhongde");
+			order3.setMobNo("9525632541");
+			order3.setInvoiceNo("SP103");
+			order3.setDeliveryDate("06-07-2020");
+			order3.setDeliveryTime("05:00 pm");
+			order3.setAmount(600);
+			order3.setModeOfPayment("E-Pay");
+			list.add(order3);
+			
+			GetDeliveryDetailList order4 = new GetDeliveryDetailList();
+			order4.setOrderId(101);
+			order4.setCustomer("Pooja Mishra");
+			order4.setMobNo("7547444112");
+			order4.setInvoiceNo("SP101");
+			order4.setDeliveryDate("08-07-2020");
+			order4.setDeliveryTime("12:00 pm");
+			order4.setDeliveryBoy("Joy");
+			order4.setAmount(600);
+			order4.setModeOfPayment("COD");
+			list.add(order4);
+			
+			GetDeliveryDetailList order5 = new GetDeliveryDetailList();
+			order5.setOrderId(101);
+			order5.setCustomer("Ravi Joshi");
+			order5.setMobNo("9698585474");
+			order5.setInvoiceNo("SP105");
+			order5.setDeliveryDate("10-07-2020");
+			order5.setDeliveryTime("04:00 pm");
+			order5.setAmount(600);
+			order5.setModeOfPayment("Cash");
+			list.add(order5);
+			
+			GetDeliveryDetailList order6 = new GetDeliveryDetailList();
+			order6.setOrderId(101);
+			order6.setCustomer("Shrikant Shrikhe");
+			order6.setMobNo("9658741147");
+			order6.setInvoiceNo("SP106");
+			order6.setDeliveryDate("13-07-2020");
+			order6.setDeliveryTime("01:00 pm");
+			order6.setAmount(600);
+			order6.setModeOfPayment("E-Pay");
+			list.add(order6);
+			
+			System.out.println("List---"+list);
+
+			model.addObject("list", list);
+
+		} catch (Exception e) {
+			System.err.println("Exce Occured ");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+	}
 }

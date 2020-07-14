@@ -28,17 +28,21 @@ th {
 </style>
 </head>
 <body>
-	<h4 align="center">Delivery Boy Wise Report</h4>
-
+	<h4 align="center">Delivery Details</h4>
+	<h4 align="center">Delivery Boy : Amit</h4>
+	<h4 align="center">Delivery Between  : 01-07-2020 to 20-07-2020</h4>
+	<h4 align="center">Order Total : 3600.00</h4>
 	<table align="center" border="1" cellspacing="0" cellpadding="1"
 		cellpadding="0" id="table_grid" class="table table-bordered">
 		<thead>
 			<tr class="bgpink">
 				<th style="text-align: center;">Sr.No.</th>
-				<th style="text-align: center;  width: 40px;">Delivery Boy Name</th>
-				<th style="text-align: center;">No. Of Kilometers</th>
-				<th style="text-align: center;">No. Of Orders Delivered</th>		
-				<th style="text-align: center;">Amounts</th> 
+				<th style="text-align: center;">Invoice No.</th>
+				<th style="text-align: left;  width: 40px;">Customer Details</th>
+				<th style="text-align: center;  width: 40px;">Delivery Details</th>
+				<th style="text-align: center;">No. Of Kilometers</th>		
+				<th style="text-align: right;">Amounts</th> 
+				<th style="text-align: center;">Mode Of Payment</th>
 			</tr>
 		</thead>
 
@@ -49,15 +53,17 @@ th {
 			<c:forEach items="${list}" var="list" varStatus="count">
 				<tr>
 					<td align="center"><c:out value="${count.index+1}" /></td>
-
-					<td style="text-align: left; width: 10%;"><c:out
-							value="${list.deliveryBoyName}" /></td>
+					<td style="text-align: center;"><c:out value="${list.invoiceNo}" /></td>
+					<td style="text-align: left; width: 20%;"><c:out
+							value="${list.customer} - ${list.mobNo}" /></td>
+					<td style="text-align: center; width: 15%;"><c:out
+							value="${list.deliveryDate} - ${list.deliveryTime}" /></td>
 					<td style="text-align: right;"><c:out
 							value="${list.noOfKm}" /></td>
 					<td style="text-align: right;"><c:out
-							value="${list.noOfOrders}" /></td>
-					<td style="text-align: right;"><c:out
 							value="${list.amount}" /></td>
+					<td style="text-align: center;"><c:out
+							value="${list.modeOfPayment}" /></td>
 				</tr>
 			</c:forEach>
 

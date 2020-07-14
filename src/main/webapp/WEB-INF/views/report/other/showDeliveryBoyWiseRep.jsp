@@ -209,7 +209,8 @@ table, th, td {
 													<th style="text-align: center;  width: 40px;">Delivery Boy Name</th>
 													<th style="text-align: center;">No. Of Kilometers</th>
 													<th style="text-align: center;">No. Of Orders Delivered</th>		
-													<th style="text-align: center;">Amounts</th> 
+													<th style="text-align: center;">Amounts</th>
+													<th style="text-align: center;">Action</th> 
 												</tr>
 											</thead>
 											<tbody>
@@ -369,6 +370,13 @@ table, th, td {
 																'<td style="text-align:right;"></td>')
 																.html(
 																		value.amount));
+														tr
+														.append($(
+																'<td style="text-align:center;"></td>')
+																.html(
+																		"<a href='#' onclick=getDeliveryDetails("
+																				+ 1
+																				+ ") title='Delivery Detail' class='addcust_open'><i class='fa fa-edit'></i></a>"));
 														
 														$('#table_grid tbody')
 																.append(tr);
@@ -379,6 +387,12 @@ table, th, td {
 
 			}
 		}
+		
+function getDeliveryDetails(value){
+		//alert(value)
+	window
+	.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getDeliveryDetailsPdf');
+	}
 	</script>
 
 	<script type="text/javascript">
