@@ -574,7 +574,7 @@
 
 								<thead>
 									<tr>
-										<th style="text-align: center;">Sr</th>
+										<th style="text-align: center;">Sr. No.</th>
 										<th style="text-align: center;">Invoice No.</th>
 										<th style="text-align: center;">Customer Detail</th>
 										<th style="text-align: center;">Delivery Details</th>
