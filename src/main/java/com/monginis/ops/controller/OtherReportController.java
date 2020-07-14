@@ -23,11 +23,13 @@ import com.monginis.ops.model.CustList;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
+import com.monginis.ops.model.spadvreport.GetDeliveryBoyWiseReport;
 import com.monginis.ops.model.spadvreport.GetOnlineOrderHistory;
 
 @Controller
 public class OtherReportController {
 	MultiValueMap<String, Object> map;
+	
 	@RequestMapping(value = "/showOnlineOrderHistory")
 	public ModelAndView showCutomerList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -301,4 +303,224 @@ public class OtherReportController {
 
 		return model;
 	}
+	
+	
+	@RequestMapping(value = "/showDeliveryBoyWiseReport")
+	public ModelAndView showDeliveryBoyWiseReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mav = null;
+
+		mav = new ModelAndView("report/other/showDeliveryBoyWiseRep");
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		List<FrEmpMaster> empList = null;
+		try {
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			map.add("desig", 4);
+			RestTemplate restTemplate = new RestTemplate();
+			
+			FrEmpMaster[] empArr = restTemplate.postForObject(Constant.URL + "/getAllFrEmpsByDesination", map, FrEmpMaster[].class);
+			empList = new ArrayList<FrEmpMaster>(Arrays.asList(empArr));
+
+			System.out.println("Emp List----------" + empList);
+
+			mav.addObject("empList", empList);
+			mav.addObject("frId", frDetails.getFrId());
+
+			List<GetDeliveryBoyWiseReport> list = new ArrayList<GetDeliveryBoyWiseReport>();
+			
+			GetDeliveryBoyWiseReport order1 = new GetDeliveryBoyWiseReport();			
+			order1.setDeliveryBoyName("Amit");
+			order1.setNoOfKm(54);
+			order1.setNoOfOrders(6);
+			order1.setAmount(3600);
+			list.add(order1);
+			
+			GetDeliveryBoyWiseReport order2 = new GetDeliveryBoyWiseReport();
+			order2.setDeliveryBoyName("Ritesh");
+			order2.setNoOfKm(20);
+			order2.setNoOfOrders(2);
+			order2.setAmount(1000);
+			list.add(order2);
+			
+			GetDeliveryBoyWiseReport order3 = new GetDeliveryBoyWiseReport();
+			order3.setDeliveryBoyName("Mohit");
+			order3.setNoOfKm(54);
+			order3.setNoOfOrders(8);
+			order3.setAmount(4000);
+			list.add(order3);
+			
+			GetDeliveryBoyWiseReport order4 = new GetDeliveryBoyWiseReport();
+			order4.setDeliveryBoyName("Brijesh");
+			order4.setNoOfKm(5);
+			order4.setNoOfOrders(2);
+			order4.setAmount(700);
+			list.add(order4);
+			
+			GetDeliveryBoyWiseReport order5 = new GetDeliveryBoyWiseReport();
+			order5.setDeliveryBoyName("Arjun");
+			order5.setNoOfKm(10);
+			order5.setNoOfOrders(3);
+			order5.setAmount(1500);
+			list.add(order5);
+			
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Delivery Boy");
+			rowData.add("No. Of Kilometers");
+			rowData.add("No. Of Orders Delivered");
+			rowData.add("Amount");
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			for (int i = 0; i < list.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + (i + 1));
+				rowData.add("" + list.get(i).getDeliveryBoyName());
+				rowData.add("" + list.get(i).getNoOfKm());
+				rowData.add("" + list.get(i).getNoOfOrders());
+				rowData.add("" + list.get(i).getAmount());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelNameNew", "DeliveryBoyWiseList");
+			session.setAttribute("reportNameNew", "DeliveryBoyWiseList");
+			session.setAttribute("mergeUpto1", "$A$1:$D$1");
+			session.setAttribute("mergeUpto2", "$A$2:$D$2");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return mav;
+
+	}
+	
+	@RequestMapping(value = "/getDeliveryBoyWiseReport")
+	@ResponseBody
+	public List<GetDeliveryBoyWiseReport> getDeliveryBoyWiseReport(HttpServletRequest request, HttpServletResponse response) {
+		List<GetDeliveryBoyWiseReport> list = new ArrayList<GetDeliveryBoyWiseReport>();
+		try {
+			
+			
+			GetDeliveryBoyWiseReport order1 = new GetDeliveryBoyWiseReport();			
+			order1.setDeliveryBoyName("Amit");
+			order1.setNoOfKm(54);
+			order1.setNoOfOrders(6);
+			order1.setAmount(3600);
+			list.add(order1);
+			
+			GetDeliveryBoyWiseReport order2 = new GetDeliveryBoyWiseReport();
+			order2.setDeliveryBoyName("Ritesh");
+			order2.setNoOfKm(20);
+			order2.setNoOfOrders(2);
+			order2.setAmount(1000);
+			list.add(order2);
+			
+			GetDeliveryBoyWiseReport order3 = new GetDeliveryBoyWiseReport();
+			order3.setDeliveryBoyName("Mohit");
+			order3.setNoOfKm(54);
+			order3.setNoOfOrders(8);
+			order3.setAmount(4000);
+			list.add(order3);
+			
+			GetDeliveryBoyWiseReport order4 = new GetDeliveryBoyWiseReport();
+			order4.setDeliveryBoyName("Brijesh");
+			order4.setNoOfKm(5);
+			order4.setNoOfOrders(2);
+			order4.setAmount(700);
+			list.add(order4);
+			
+			GetDeliveryBoyWiseReport order5 = new GetDeliveryBoyWiseReport();
+			order5.setDeliveryBoyName("Arjun");
+			order5.setNoOfKm(10);
+			order5.setNoOfOrders(3);
+			order5.setAmount(1500);
+			list.add(order5);
+			
+			System.out.println("List---"+list);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return list;
+		
+	}
+	
+	
+	
+	@RequestMapping(value = "pdf/getDeliveryBoyWiseListPdf", method = RequestMethod.GET)
+	public ModelAndView getDeliveryBoyWiseListPdf(HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("In Pdf");
+		
+		ModelAndView model = new ModelAndView("report/other/getDeliveryBoyWisePdf");
+		List<GetDeliveryBoyWiseReport> list = new ArrayList<GetDeliveryBoyWiseReport>();
+		try {
+			//RestTemplate restTemplate = new RestTemplate();
+
+		//	MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+
+			GetDeliveryBoyWiseReport order1 = new GetDeliveryBoyWiseReport();			
+			order1.setDeliveryBoyName("Amit");
+			order1.setNoOfKm(54);
+			order1.setNoOfOrders(6);
+			order1.setAmount(3600);
+			list.add(order1);
+			
+			GetDeliveryBoyWiseReport order2 = new GetDeliveryBoyWiseReport();
+			order2.setDeliveryBoyName("Ritesh");
+			order2.setNoOfKm(20);
+			order2.setNoOfOrders(2);
+			order2.setAmount(1000);
+			list.add(order2);
+			
+			GetDeliveryBoyWiseReport order3 = new GetDeliveryBoyWiseReport();
+			order3.setDeliveryBoyName("Mohit");
+			order3.setNoOfKm(54);
+			order3.setNoOfOrders(8);
+			order3.setAmount(4000);
+			list.add(order3);
+			
+			GetDeliveryBoyWiseReport order4 = new GetDeliveryBoyWiseReport();
+			order4.setDeliveryBoyName("Brijesh");
+			order4.setNoOfKm(5);
+			order4.setNoOfOrders(2);
+			order4.setAmount(700);
+			list.add(order4);
+			
+			GetDeliveryBoyWiseReport order5 = new GetDeliveryBoyWiseReport();
+			order5.setDeliveryBoyName("Arjun");
+			order5.setNoOfKm(10);
+			order5.setNoOfOrders(3);
+			order5.setAmount(1500);
+			list.add(order5);
+			
+			System.out.println("List---"+list);
+
+			model.addObject("list", list);
+
+		} catch (Exception e) {
+			System.err.println("Exce Occured ");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
 }

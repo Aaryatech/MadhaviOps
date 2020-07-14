@@ -49,7 +49,7 @@ table, th, td {
 	</script>
 	<!--datepicker-->
 
-	<c:url var="getOnlineOrderHistoryReport" value="/getOnlineOrderHistoryReport" />
+	<c:url var="getDeliveryBoyWiseReport" value="/getDeliveryBoyWiseReport" />
 
 	<div class="sidebarOuter"></div>
 
@@ -87,7 +87,7 @@ table, th, td {
 					<div class="row">
 						<br>
 						<div class="col-md-12">
-							<h2 class="pageTitle">Online Order History Report</h2>
+							<h2 class="pageTitle">Delivery Boy Wise Report</h2>
 
 						</div>
 						<br>
@@ -122,7 +122,7 @@ table, th, td {
 
 					<div class="row">
 						<br>
-						<div class="form-group">
+						<%-- <div class="form-group">
 
 							<label class="col-sm-3 col-lg-2 control-label"
 									style="text-align: right;">Status</label>
@@ -139,7 +139,7 @@ table, th, td {
 										<option value="3"><c:out value="Canceled" /></option>
 									</select>
 								</div>
-						</div>
+						</div> --%>
 						
 								<div class="form-group">
 
@@ -206,13 +206,12 @@ table, th, td {
 											<thead>
 												<tr class="bgpink">
 													<th style="text-align: center;">Sr.No.</th>
-													<th style="text-align: center;">Invoice No</th>
-													<th style="text-align: center; width: 40px;">Customer</th>
-													<th style="text-align: center;">Delivery Date</th>
-													<th style="text-align: center;">Mode Of Payment</th>													
+													<th style="text-align: center;  width: 40px;">Delivery Boy Name</th>
+													<th style="text-align: center;">No. Of Kilometers</th>
+													<th style="text-align: center;">No. Of Orders Delivered</th>		
+													<th style="text-align: center;">Amounts</th> 
 												</tr>
 											</thead>
-
 											<tbody>
 												
 											</tbody>
@@ -299,12 +298,12 @@ table, th, td {
 				
 				var fromDate = document.getElementById("fromdatepicker").value;
 				var toDate = document.getElementById("todatepicker").value;
-				var status = document.getElementById("status").value;
+				//var status = document.getElementById("status").value;
 				//var delBoy = document.getElementById("delBoy").value;
 				var delBoy = $("#delBoy").val();
 				$
 						.getJSON(
-								'${getOnlineOrderHistoryReport}',
+								'${getDeliveryBoyWiseReport}',
 								{
 
 									fromDate : fromDate,
@@ -348,28 +347,28 @@ table, th, td {
 
 														tr
 																.append($(
-																		'<td  style="text-align:center;" ></td>')
+																		'<td  style="text-align:left;" ></td>')
 																		.html(
-																				value.invoiceNo));
+																				value.deliveryBoyName));
 
 														tr
 																.append($(
-																		'<td style="text-align:center;"></td>')
+																		'<td style="text-align:right;"></td>')
 																		.html(
-																				value.customer+" - "+value.mobNo));
+																				value.noOfKm));
 														
 
 														tr
 														.append($(
-																'<td style="text-align:center;"></td>')
+																'<td style="text-align:right;"></td>')
 																.html(
-																		value.deliveryDate+" - "+value.deliveryTime));														
+																		value.noOfOrders));														
 
 														tr
 														.append($(
-																'<td style="text-align:center;"></td>')
+																'<td style="text-align:right;"></td>')
 																.html(
-																		value.modeOfPayment));
+																		value.amount));
 														
 														$('#table_grid tbody')
 																.append(tr);
@@ -451,7 +450,7 @@ table, th, td {
 			var fromDate = $("#fromdatepicker").val();
 			var toDate = $("#todatepicker").val();
 			var cust = $("#delBoy").val();
-			var status = $("#status").val();
+		//	var status = $("#status").val();
 
 			//alert(cust);
 
@@ -509,7 +508,7 @@ table, th, td {
 
 				
 				window
-				.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getOnlineOrderHistoryListPdf');
+				.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getDeliveryBoyWiseListPdf');
 				/* window
 						.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSellBillwiseReportPdf/'
 								+ fromDate

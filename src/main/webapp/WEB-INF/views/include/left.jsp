@@ -913,6 +913,9 @@
 										
 									<a href="${pageContext.request.contextPath}/showOnlineOrderHistory"><i
 										class="fa fa-files-o icon"></i>Online Order History</a>
+										
+									<a href="${pageContext.request.contextPath}/showDeliveryBoyWiseReport"><i
+										class="fa fa-files-o icon"></i>Delivery Boy Wise Report</a>
 								</div>
 							</li>
 						</c:if>
