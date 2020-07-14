@@ -683,7 +683,7 @@ table, th, td {
 
 				</div>
 
-				<div class="row" style="margin-left: 15px; margin-right: 15px;">
+				<!-- <div class="row" style="margin-left: 15px; margin-right: 15px;">
 
 					<div class="col-lg-3" style="padding-left: 15px;">
 						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
@@ -706,6 +706,80 @@ table, th, td {
 
 						</div>
 					</div>
+
+				</div> -->
+				
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #e5ffeb">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Payment Mode :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">COD</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Grievance :</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-4" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%; text-align: right;">Good
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				
+				<div class="row"
+					style="margin-left: 15px; margin-right: 15px; background: #fff">
+
+					<div class="col-lg-3" style="padding-left: 15px;">
+						<div class="add_frm" style="padding: 0px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0;">
+								<div class="add_customer_one"
+									style="font-size: 14px; width: 100%">Remark :</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="add_frm"
+							style="padding: 0px 0px 0px 15px; border-bottom: 0px">
+							<div class="add_frm_one" style="margin: 0">
+								<div class="add_customer_one" style="font-size: 14px;">NA</div>
+							</div>
+
+						</div>
+					</div>
+
+					
+
+					
 
 				</div>
 
