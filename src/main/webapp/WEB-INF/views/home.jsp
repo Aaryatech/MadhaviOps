@@ -578,8 +578,8 @@
 										<th style="text-align: center;">Invoice No.</th>
 										<th style="text-align: center;">Customer Detail</th>
 										<th style="text-align: center;">Delivery Details</th>
-										<th style="text-align: center;">Delivery Boy</th>
-										<th style="text-align: center;">Mode Of Payment</th>
+										<!-- <th style="text-align: center;">Delivery Boy</th>
+										<th style="text-align: center;">Mode Of Payment</th> -->
 										<th style="text-align: center;">Amount</th>
 										<th style="text-align: center;">Action</th>
 									</tr>
@@ -590,8 +590,8 @@
 											<td style="text-align: center;">SP008</td>
 											<td style="text-align: left;">Suresh Shah - 9547895887</td>
 											<td style="text-align: center;">15-07-2020 - 12:20pm</td>
-											<td style="text-align: left;">Ankit</td>
-											<td style="text-align: center;">E-Pay</td>
+											<!-- <td style="text-align: left;">Ankit</td>
+											<td style="text-align: center;">E-Pay</td> -->
 											<td style="text-align: right;">1000</td>
 											<td class="col-md-1" style="text-align: center;"><a
 													onclick="openBillPopup()" title="view/generate bill"><i
@@ -602,8 +602,8 @@
 											<td style="text-align: center;">SP012</td>
 											<td style="text-align: left;">Sonam Yadav - 9589658521</td>
 											<td style="text-align: center;">15-07-2020 - 12:30pm</td>
-											<td style="text-align: left;">Pankaj</td>
-											<td style="text-align: center;">COD</td>
+											<!-- <td style="text-align: left;">Pankaj</td>
+											<td style="text-align: center;">COD</td> -->
 											<td style="text-align: right;">1200</td>
 											<td class="col-md-1" style="text-align: center;"><a
 													onclick="openBillPopup()" title="view/generate bill"><i
@@ -614,8 +614,8 @@
 											<td style="text-align: center;">SP013</td>
 											<td style="text-align: left;">Niki Singh - 9625447858</td>
 											<td style="text-align: center;">15-07-2020 - 01:00pm</td>
-											<td style="text-align: left;">Ankit</td>
-											<td style="text-align: center;">E-Pay</td>
+											<!-- <td style="text-align: left;">Ankit</td>
+											<td style="text-align: center;">E-Pay</td> -->
 											<td style="text-align: right;">1000</td>
 											<td class="col-md-1" style="text-align: center;"><a
 													onclick="openBillPopup()" title="view/generate bill"><i
@@ -626,8 +626,8 @@
 											<td style="text-align: center;">SP0020</td>
 											<td style="text-align: left;">Jayshree Patel - 7898574585</td>
 											<td style="text-align: center;">15-07-2020 - 02:00pm</td>
-											<td style="text-align: left;">Sujit</td>
-											<td style="text-align: center;">COD</td>
+											<!-- <td style="text-align: left;">Sujit</td>
+											<td style="text-align: center;">COD</td> -->
 											<td style="text-align: right;">450</td>
 											<td class="col-md-1" style="text-align: center;"><a
 													onclick="openBillPopup()" title="view/generate bill"><i
@@ -638,8 +638,8 @@
 											<td style="text-align: center;">SP022</td>
 											<td style="text-align: left;">Geeta Patel - 9696585258</td>
 											<td style="text-align: center;">15-07-2020 - 03:15pm</td>
-											<td style="text-align: left;">Pankaj</td>
-											<td style="text-align: center;">COD</td>
+											<!-- <td style="text-align: left;">Pankaj</td>
+											<td style="text-align: center;">COD</td> -->
 											<td style="text-align: right;">2000</td>
 											<td class="col-md-1" style="text-align: center;"><a
 													onclick="openBillPopup()" title="view/generate bill"><i
