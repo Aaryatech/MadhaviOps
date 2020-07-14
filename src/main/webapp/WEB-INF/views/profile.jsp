@@ -91,6 +91,8 @@
 	<c:url var="delFrEmpById" value="/delFrEmpById" />
 	<c:url var="verifyUniqueContactNo" value="/verifyUniqueContactNo" />
 	<c:url var="getCurrentEmpCodeValue" value="/getCurrentEmpCodeValue" />
+	<c:url var="getFrEditEmpById" value="/getFrEditEmpById" />
+	
 
 
 
@@ -683,7 +685,16 @@
 									<option value="1" style="text-align: left;" selected>Admin</option>
 									<option value="2" style="text-align: left;">Manager</option>
 									<option value="3" style="text-align: left;">Cashier</option>
+									<option value="4" style="text-align: left;">Delivery Boy</option>
 								</select>
+								<div class="clr"></div>
+							</div>
+							<div class="add_frm_one" id="vehicle_div" style="display: none;">
+								<div class="add_customer_one">Vehicle No.</div>
+								<div class="add_input">
+									<input name="vehicle_no" type="text" class="input_add" id="vehicle_no"
+										value="${emp.exVar1}" required style="text-transform: uppercase;"/>
+								</div>
 								<div class="clr"></div>
 							</div>
 						</div>
@@ -768,6 +779,14 @@
 								</div>
 								<div class="clr"></div>
 							</div>
+							<div class="add_frm_one" id="license_div" style="display: none;">
+								<div class="add_customer_one">License Expiry Date</div>
+								<div class="add_input">
+									<input name="lic_exp_date" type="date" class="input_add" id="lic_exp_date"
+										value="${emp.exVar2}" required />
+								</div>
+								<div class="clr"></div>
+							</div>
 						</div>
 
 					</div>
@@ -810,6 +829,7 @@
 					<tr>
 						<th>Sr.No.</th>
 						<th>Employee Name</th>
+						<th>Designation</th>
 						<th>Contact No</th>
 						<th>Address</th>
 						<th>Joining Date</th>
@@ -873,7 +893,8 @@
 		$('#sbtbtn4').click(function() {
 			var mobNo = $('#emp_contact').val();
 			var empId = $('#fr_emp_id').val();
-
+			var desig = $('#designation').val();
+			
 			var valid = 0;
 			if ($('#emp_name').val() == "") {
 				valid = 1;
@@ -887,28 +908,8 @@
 			} else if ($('#emp_address').val() == "") {
 				valid = 1;
 				alert("Enter Employee Address");
-			} 
-			/* else if ($('#ttl_limit').val() == 0) {
-				valid = 1;
-				alert("Enter Total Limit");
-			} */
-			/* else if ($('#curr_bill_amt').val() == 0) {
-				valid = 1;
-				alert("Enter Current Bill Amount");
-			} */
-			/*  else if ($('#from_date').val() == "") {
-				 valid = 1;
-				alert("Enter From Date"); 
-				
-				
-				 
-				
-			}  */
-			/*  else if ($('#to_date').val() == "") {
-				 valid = 1;
-				alert("Enter To Date"); 
-
-			 }  */
+			} 			
+						
 			else if ($('#pass').val() == "") {
 				valid = 1;
 				alert("Enter Password");
@@ -921,7 +922,16 @@
 				valid = 1;
 				alert("Enter Employee Code");
 			}
-
+			if(desig==4){
+				  if ($('#vehicle_no').val() == "") {
+					valid = 1;
+					alert("Enter Vehicle No");
+				} 
+				  else if ($('#lic_exp_date').val() == "") {
+					valid = 1;
+					alert("Enter License Expiry Date");
+				} 
+			}
 			if (valid == 0) {
 				save();
 			}
@@ -989,6 +999,21 @@
 																	'<td></td>')
 																	.html(
 																			emp.frEmpName));
+													var desig = '';
+													if(emp.designation==1){
+														desig='Admin'
+													}else if(emp.designation==2){
+														desig='Manager'
+													}
+													else if(emp.designation==3){
+														desig='Cashier'
+													}
+													else if(emp.designation==4){
+														desig='Delivery Boy'
+													}
+													
+													tr.append($('<td ></td>')
+															.html(desig));
 													tr
 															.append($(
 																	'<td></td>')
@@ -1105,7 +1130,7 @@
 
 				$
 						.getJSON(
-								'${getFrEmpById}',
+								'${getFrEditEmpById}',
 
 								{
 									empId : empId,
@@ -1123,17 +1148,28 @@
 									$('#emp_code').val(data.empCode);
 									$('#emp_address').val(data.frEmpAddress);
 									$('#emp_contact').val(data.frEmpContact);
-									$('#join_date').val(data.exVar1);
+									$('#join_date').val(data.frEmpJoiningDate);
 									$('#from_date').val(data.exVar2);
 									$('#to_date').val(data.exVar3);
 									$('#pass').val(data.password);
 									$('#ttl_limit').val(data.totalLimit);
+									$('#vehicle_no').val(data.exVar1);
+									$('#lic_exp_date').val(data.exVar2);
 									if (data.designation == 1) {
 										document.getElementById("designation").value = data.designation;
 									} else if (data.designation == 2) {
 										document.getElementById("designation").value = data.designation;
 									} else if (data.designation == 3) {
 										document.getElementById("designation").value = data.designation;
+									} else if (data.designation == 4) {
+										document.getElementById("designation").value = data.designation;
+									}
+									if(data.designation == 4){
+										document.getElementById('vehicle_div').style.display = "block";
+										document.getElementById('license_div').style.display = "block";
+									}else{
+										document.getElementById('vehicle_div').style.display = "none";
+										document.getElementById('license_div').style.display = "none";
 									}
 									if(data.delStatus==0){
 										document.getElementById("emp_status_yes").checked = true;
@@ -1637,6 +1673,18 @@
 		// read the image file as a data URL.
 		reader.readAsDataURL(this.files[0]);
 	};
+	
+	$("#designation").change(function(){   // 1st
+	   var desig = $('#designation').val();
+	
+		if(desig==4){
+			document.getElementById('vehicle_div').style.display = "block";
+			document.getElementById('license_div').style.display = "block";
+		}else{
+			document.getElementById('vehicle_div').style.display = "none";
+			document.getElementById('license_div').style.display = "none";
+		}
+	});
 </script>
 
 

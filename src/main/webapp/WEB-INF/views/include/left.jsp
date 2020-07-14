@@ -910,6 +910,9 @@
 
 									<a href="${pageContext.request.contextPath}/showCutomerList"><i
 										class="fa fa-files-o icon"></i>Customer List(Sale)</a>
+										
+									<a href="${pageContext.request.contextPath}/showOnlineOrderHistory"><i
+										class="fa fa-files-o icon"></i>Online Order History</a>
 								</div>
 							</li>
 						</c:if>

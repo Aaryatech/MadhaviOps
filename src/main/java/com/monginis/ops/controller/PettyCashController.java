@@ -928,8 +928,8 @@ public class PettyCashController {
 			emp.setExInt1(0);
 			emp.setExInt2(0);
 			emp.setExInt3(0);
-			emp.setExVar1("NA");
-			emp.setExVar2("NA");
+			emp.setExVar1(req.getParameter("vehicle_no"));
+			emp.setExVar2(req.getParameter("lic_exp_date"));
 			emp.setExVar3("NA");
 			emp.setFrEmpAddress(req.getParameter("emp_address"));
 			emp.setFrEmpContact(req.getParameter("emp_contact"));
@@ -1015,6 +1015,35 @@ public class PettyCashController {
 			emp.setExVar2(DateConvertor.convertToYMD(emp.getFromDate()));
 			emp.setExVar3(DateConvertor.convertToYMD(emp.getToDate()));
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return emp;
+	}
+	
+	@RequestMapping(value = "/getFrEditEmpById", method = RequestMethod.GET)
+	public @ResponseBody FrEmpMaster getFrEditEmpById(HttpServletRequest req, HttpServletResponse resp,
+			HttpSession session) {
+		FrEmpMaster emp = new FrEmpMaster();
+		try {
+			
+				SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+				String stringDate = null;
+				
+				int empId = Integer.parseInt(req.getParameter("empId"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("empId", empId);
+	
+				emp = rest.postForObject(Constant.URL + "/getFrEmpByEmpId", map, FrEmpMaster.class);
+				emp.setFrEmpJoiningDate(DateConvertor.convertToYMD(emp.getFrEmpJoiningDate()));
+				try {
+					stringDate= DateFor.format(emp.getExVar2());
+				}catch (Exception e) {
+					e.printStackTrace();
+					stringDate= DateFor.format(emp.getExVar2());
+				}
+				 
+				emp.setExVar2(stringDate);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
