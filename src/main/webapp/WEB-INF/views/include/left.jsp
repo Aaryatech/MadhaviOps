@@ -222,11 +222,11 @@
 								<div class="title">
 									Order <span>History</span>
 								</div></a></li>
-								
-								
-								
-								
-								
+
+
+
+
+
 						<li style="display: none;"><a
 							href="${pageContext.request.contextPath}/showAdvanceOrderList"><div
 									class="img">
@@ -448,6 +448,29 @@
 					<c:if test="${sessionScope.frEmpDetails.designation==1 && flag==1}">
 
 						<li><a
+							href="${pageContext.request.contextPath}/showCkOrders"><div
+									class="img">
+
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-list  " aria-hidden="true"></i>
+								</div>
+								<div class="title">
+									Orders 
+								</div></a></li>
+
+						<li><a
+							href="${pageContext.request.contextPath}/showItemConfig"><div
+									class="img">
+
+									<!-- <i class="fa fa-file-pdf-o" aria-hidden="true"></i> -->
+									<i class="fa fa-cog " aria-hidden="true"></i>
+								</div>
+								<div class="title">
+									Item <span>Configuration</span>
+								</div></a></li>
+
+
+						<li><a
 							href="${pageContext.request.contextPath}/showeditprofile"><div
 									class="img">
 
@@ -599,8 +622,7 @@
  				} else {
  					if (settingType != 1) {
  						//if
- %> <abbr title='${menu.menuDesc}'><a
-											class="listareaBoxBlue"
+ %> <abbr title='${menu.menuDesc}'><a class="listareaBoxBlue"
 											href="${pageContext.request.contextPath}/showSavouries/${loop.index}">
 												<div class="listareaBoximg"></abbr> <%
  	} else {
