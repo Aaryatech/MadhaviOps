@@ -512,8 +512,8 @@ public class GrnGvnController {
 			// calculate autogrnQty
 			for (int i = 0; i < grnConfList.size(); i++) {
 				// nw code
-				int purQty = grnConfList.get(i).getBillQty();
-				int tempGQty = grnConfList.get(i).getAutoGrnQty();
+				float purQty = grnConfList.get(i).getBillQty();
+				float tempGQty = grnConfList.get(i).getAutoGrnQty();
 
 				for (int k = 0; k < i; k++) {
 					System.out.println(
@@ -534,7 +534,7 @@ public class GrnGvnController {
 
 						if (grnConfList.get(i).getGrnType() != 4) {
 
-							int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
+							float autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
 									- (stockForAutoGrn.get(j).getRegSellQty() + stockForAutoGrn.get(j).getGrnGvnQty()
 											+ tempGQty);
 
@@ -549,7 +549,7 @@ public class GrnGvnController {
 						} // end of inner if
 						else {
 							System.out.println("In Else ");
-							int autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
+							float autoGrnQty = (stockForAutoGrn.get(j).getRegCurrentStock() + purQty)
 									- (stockForAutoGrn.get(j).getRegSellQty() + stockForAutoGrn.get(j).getGrnGvnQty()
 											+ tempGQty);
 							System.out.println("4444444");
@@ -866,8 +866,8 @@ public class GrnGvnController {
 
 				System.out.println("tempGrnQtyAuto ===" + tempGrnQtyAuto);
 
-				int grnQty = Integer.parseInt(tempGrnQtyAuto);
-				int fixedGrnQty = Integer.parseInt(tempGrnQty);
+				float grnQty = Float.parseFloat(tempGrnQtyAuto);
+				float fixedGrnQty = Float.parseFloat(tempGrnQty);
 
 				int isEdit = 0;
 				if (grnQty != fixedGrnQty) {
@@ -1003,7 +1003,7 @@ public class GrnGvnController {
 
 				// setting new field added on 23 FEB
 
-				postGrnGvn.setAprQtyGate(Integer.parseInt(tempGrnQty));
+				postGrnGvn.setAprQtyGate(Float.parseFloat(tempGrnQty));
 				postGrnGvn.setAprQtyStore(0);
 				postGrnGvn.setAprQtyAcc(0);
 				postGrnGvn.setAprTaxableAmt(0);
@@ -1029,7 +1029,7 @@ public class GrnGvnController {
 					System.err.println("Item Name " + objShowGrnList.get(i).getItemName());
 					System.err.println("Qty Variation found : For Item Id " + postGrnGvn.getItemId() + "Qty = "
 							+ (objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty()));
-					int exBillQty = objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty();
+					float exBillQty = objShowGrnList.get(i).getAutoGrnQty() - postGrnGvn.getGrnGvnQty();
 
 					objShowGrnList.get(i).setAutoGrnQty(exBillQty);
 					sellBillData.add(objShowGrnList.get(i));
@@ -1244,7 +1244,7 @@ public class GrnGvnController {
 						float tax2 = sellBillData.get(i).getCgstPer();
 						float tax3 = sellBillData.get(i).getIgstPer();
 
-						int qty = sellBillData.get(i).getAutoGrnQty();
+						float qty = sellBillData.get(i).getAutoGrnQty();
 
 						Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
 						mrpBaseRate = roundUp(mrpBaseRate);
@@ -1698,7 +1698,7 @@ public class GrnGvnController {
 
 						String strGvnQty = request.getParameter("gvn_qty" + objShowGvnList.get(j).getBillDetailNo());
 
-						int gvnQty = Integer.parseInt(strGvnQty);
+						float gvnQty = Float.parseFloat(strGvnQty);
 
 						System.out.println("GVN QTY " + gvnQty);
 						if(gvnQty>0) {
@@ -1759,7 +1759,7 @@ public class GrnGvnController {
 				// gvnList.get(i).getItemId());
 				// int gvnQty = Integer.parseInt(strGvnQty);
 
-				int gvnQty = gvnList.get(i).getAutoGrnQty();
+				float gvnQty = gvnList.get(i).getAutoGrnQty();
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 

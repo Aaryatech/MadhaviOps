@@ -13,15 +13,15 @@ public class StockForAutoGrnGvn {
 
 	private int spCurrentStock;
 	
-	private int purchaseQty;
+	private float purchaseQty;
 
-	private int pushQty;
+	private float pushQty;
 
-	private int regSellQty;
+	private float regSellQty;
 
-	private int spSellQty;
+	private float spSellQty;
 
-	private int grnGvnQty;
+	private float grnGvnQty;
 	
 	
 	
@@ -67,44 +67,44 @@ public class StockForAutoGrnGvn {
 		this.id = id;
 	}
 
-	public int getPurchaseQty() {
+	public float getPurchaseQty() {
 		return purchaseQty;
 	}
 
-	public void setPurchaseQty(int purchaseQty) {
+	public void setPurchaseQty(float purchaseQty) {
 		this.purchaseQty = purchaseQty;
 	}
 
-	public int getPushQty() {
+	public float getPushQty() {
 		return pushQty;
 	}
 
-	public void setPushQty(int pushQty) {
+	public void setPushQty(float pushQty) {
 		this.pushQty = pushQty;
 	}
 
 	
-	public int getRegSellQty() {
+	public float getRegSellQty() {
 		return regSellQty;
 	}
 
-	public void setRegSellQty(int regSellQty) {
+	public void setRegSellQty(float regSellQty) {
 		this.regSellQty = regSellQty;
 	}
 
-	public int getSpSellQty() {
+	public float getSpSellQty() {
 		return spSellQty;
 	}
 
-	public void setSpSellQty(int spSellQty) {
+	public void setSpSellQty(float spSellQty) {
 		this.spSellQty = spSellQty;
 	}
 
-	public int getGrnGvnQty() {
+	public float getGrnGvnQty() {
 		return grnGvnQty;
 	}
 
-	public void setGrnGvnQty(int grnGvnQty) {
+	public void setGrnGvnQty(float grnGvnQty) {
 		this.grnGvnQty = grnGvnQty;
 	}
 

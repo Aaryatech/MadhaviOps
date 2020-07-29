@@ -12,7 +12,7 @@ public class ShowGrnBean {
 	    private Integer billNo;
 	    private float rate;
 	    private float mrp;
-	    private Integer billQty;
+	    private float billQty;
 	    Date billDate;
 	    float sgstPer;
 	    float cgstPer;
@@ -21,7 +21,7 @@ public class ShowGrnBean {
 	    private int menuId;
 		private int catId;
 		private String invoiceNo;
-	    private int autoGrnQty;
+	    private float autoGrnQty;
     	private float taxPer;
 	    private float grnAmt;
 	    private String billDateTime;
@@ -155,10 +155,10 @@ public class ShowGrnBean {
 			this.mrp = mrp;
 		}
 
-		public Integer getBillQty() {
+		public float getBillQty() {
 			return billQty;
 		}
-		public void setBillQty(Integer billQty) {
+		public void setBillQty(float billQty) {
 			this.billQty = billQty;
 		}
 		
@@ -197,11 +197,11 @@ public class ShowGrnBean {
 			this.calcBaseRate = calcBaseRate;
 		}
 
-		public int getAutoGrnQty() {
+		public float getAutoGrnQty() {
 			return autoGrnQty;
 		}
 
-		public void setAutoGrnQty(int autoGrnQty) {
+		public void setAutoGrnQty(float autoGrnQty) {
 			this.autoGrnQty = autoGrnQty;
 		}
 
