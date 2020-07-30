@@ -66,6 +66,7 @@ import com.monginis.ops.model.Message;
 import com.monginis.ops.model.MessageListResponse;
 import com.monginis.ops.model.SchedulerList;
 import com.monginis.ops.model.Setting;
+import com.monginis.ops.model.cloudkitchen.GetOrderHeaderDisplay;
 import com.monginis.ops.model.newpos.ItemListForCustomerBill;
 import com.monginis.ops.model.pettycash.FrEmpMaster;
 import com.monginis.ops.model.posdash.CategorywiseItemSell;
@@ -1441,5 +1442,35 @@ public class HomeController {
 		return "redirect:/frEmpLogin";
 		// return "redirect:/";
 	}
+	
+	
+	//---------------------PENDING ORDERS LIST--------------------------------------
+	
+	List<GetOrderHeaderDisplay> orderList = new ArrayList<>();
+
+	// AJAX
+	@RequestMapping(value = "/getPendingOrdersByFrAjax", method = RequestMethod.GET)
+	public @ResponseBody List<GetOrderHeaderDisplay> getPendingOrdersByFrAjax(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		orderList = new ArrayList<>();
+
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		int frId = frDetails.getFrId();
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+		map.add("frId", frId);
+		map.add("status", "1");
+
+		RestTemplate restTemplate = new RestTemplate();
+		GetOrderHeaderDisplay[] orderArr = restTemplate.postForObject(Constant.URL + "getOrdersByFrAndStatus",
+				map, GetOrderHeaderDisplay[].class);
+		orderList = new ArrayList<GetOrderHeaderDisplay>(Arrays.asList(orderArr));
+		System.err.println("ORDERS = " + orderList);
+
+		return orderList;
+	}
+	
 
 }
