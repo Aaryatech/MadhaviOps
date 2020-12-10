@@ -1020,6 +1020,10 @@
 									Note) </a> <a
 									href="${pageContext.request.contextPath}/viewFrCRNTaxSellBill"><i
 									class="fa fa-file-text-o icon"></i> Bill Report (Credit Note) </a>
+									<a
+									href="${pageContext.request.contextPath}/viewb2bSalesReport"><i
+									class="fa fa-file-text-o icon"></i>B2B Sales Report</a>
+									
 							</div>
 
 						</li>

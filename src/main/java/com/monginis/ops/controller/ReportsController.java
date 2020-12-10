@@ -100,6 +100,7 @@ import com.monginis.ops.model.SpCakeResponse;
 import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.TaxSummaryReportModel;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
+import com.monginis.ops.model.reportv2.B2BSalesReport;
 import com.monginis.ops.model.reportv2.CrNoteRegItem;
 import com.monginis.ops.model.reportv2.CrNoteRegSp;
 import com.monginis.ops.model.reportv2.CrNoteRegisterList;
@@ -7451,6 +7452,158 @@ public class ReportsController {
 		}
 
 		model.addObject("reportList", getSellBillHeaderList);
+		return model;
+	}
+	
+	
+	//viewFrDatewiseTaxSellBill
+	@RequestMapping(value = "/viewb2bSalesReport", method = RequestMethod.GET)
+	public ModelAndView view2SalesReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/b2bSalesReport");
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	List<B2BSalesReport> b2bSales=new ArrayList<B2BSalesReport>();
+	@RequestMapping(value = "/getB2BSellReport", method = RequestMethod.GET)
+	public @ResponseBody List<B2BSalesReport> getB2BSellReport(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+			System.out.println("in method");
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+			
+			System.out.println("in method"+fromDate+" to "+toDate);
+			
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int frId = frDetails.getFrId();
+			map.add("frId", frId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			b2bSales = new ArrayList<B2BSalesReport>();
+
+			ParameterizedTypeReference<List<B2BSalesReport>> typeRef = new ParameterizedTypeReference<List<B2BSalesReport>>() {
+			};
+			ResponseEntity<List<B2BSalesReport>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getB2BSalesReportBetDate", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			b2bSales = responseEntity.getBody();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		
+		// export to excel
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr.No");
+		rowData.add("Bill No.");
+		rowData.add("Bill Date");
+		rowData.add("Bill Amt.");
+		/* rowData.add("Pending Amt."); */
+		rowData.add("Payment Mode");
+		rowData.add("Customer Name");
+		rowData.add("Contact No.");
+		rowData.add("GST No.");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
+		
+		float ttlPending = 0;
+		float ttlBill = 0;
+		
+		for (int i = 0; i < b2bSales.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("" + (i + 1));
+			rowData.add("" + b2bSales.get(i).getInvoiceNo());
+			rowData.add("" + b2bSales.get(i).getBillDate());			
+			rowData.add("" + roundUp(b2bSales.get(i).getGrandTotal()));
+			/* rowData.add("" + roundUp(b2bSales.get(i).getRemainingAmt())); */
+			rowData.add(b2bSales.get(i).getPaymentMode()==1 ? "Cash" : b2bSales.get(i).getPaymentMode()==2 ? "Card" : "Other");
+			rowData.add("" + b2bSales.get(i).getUserName());
+			rowData.add("" + b2bSales.get(i).getUserPhone());	
+			rowData.add("" + b2bSales.get(i).getUserGstNo());
+			
+
+			
+			
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			ttlPending = ttlPending+b2bSales.get(i).getRemainingAmt();			
+			ttlBill = ttlBill+b2bSales.get(i).getGrandTotal();
+			
+		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		
+		rowData.add("Total");	
+		rowData.add("");
+		rowData.add(""); 
+		rowData.add("" + roundUp(ttlBill));
+		/* rowData.add("" + roundUp(ttlPending)); */
+		rowData.add("");
+		rowData.add("");
+		rowData.add("");
+		rowData.add("");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "B2BSalesRport");
+
+		return b2bSales;
+
+	}
+	
+	
+	@RequestMapping(value = "pdf/showB2BSalesReportpPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showB2BSalesReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/b2bSalesPdf");
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			b2bSales = new ArrayList<B2BSalesReport>();
+
+			ParameterizedTypeReference<List<B2BSalesReport>> typeRef = new ParameterizedTypeReference<List<B2BSalesReport>>() {
+			};
+			ResponseEntity<List<B2BSalesReport>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getB2BSalesReportBetDate", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			b2bSales = responseEntity.getBody();
+
+			model.addObject("reportList", b2bSales);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 		return model;
 	}
 }
